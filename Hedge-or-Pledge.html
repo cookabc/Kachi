@@ -2465,7 +2465,10 @@ function renderLesson() {
     '<div class="hearts">' + heartRow(session.hearts, 5, session.phase === "feedback" && !session.lastCorrect) + "</div></div>";
   html += '<div class="prompt">' + renderPromptBody() + "</div>";
   if (session.phase === "answer") {
-    html += '<div class="foot"><button class="btn btn-gold" data-act="check"' + (canCheck() ? "" : " disabled") + ">Check</button></div>";
+    // match prompts judge themselves (last pair locks = correct, mispair = wrong); no Check button
+    if (session.presented.type !== "match") {
+      html += '<div class="foot"><button class="btn btn-gold" data-act="check"' + (canCheck() ? "" : " disabled") + ">Check</button></div>";
+    }
   } else {
     const ok = session.lastCorrect;
     html += '<div class="sheet ' + (ok ? "ok" : "no") + '" role="status">';
@@ -2508,10 +2511,14 @@ function renderComplete() {
   if (!session.isPractice) {
     const i = lessonIndex(session.lessonId);
     const nxt = LESSONS[i + 1];
-    if (nxt) html += '<button class="btn btn-gold" data-act="start" data-id="' + nxt.id + '">Next: ' + esc(nxt.title) + "</button>";
-    else html += '<button class="btn btn-gold" data-act="tab" data-tab="learn">Back to the path</button>';
-    if (s.mix.length) html += '<button class="btn btn-green" data-act="practice-those">Practice those</button>';
-    html += '<button class="btn btn-ghost" data-act="tab" data-tab="learn">Back to the path</button>';
+    if (nxt) {
+      html += '<button class="btn btn-gold" data-act="start" data-id="' + nxt.id + '">Next: ' + esc(nxt.title) + "</button>";
+      if (s.mix.length) html += '<button class="btn btn-green" data-act="practice-those">Practice those</button>';
+      html += '<button class="btn btn-ghost" data-act="tab" data-tab="learn">Back to the path</button>';
+    } else {
+      html += '<button class="btn btn-gold" data-act="tab" data-tab="learn">Back to the path</button>';
+      if (s.mix.length) html += '<button class="btn btn-green" data-act="practice-those">Practice those</button>';
+    }
   } else {
     html += '<button class="btn btn-gold" data-act="practice">Practice again</button>';
     html += '<button class="btn btn-ghost" data-act="tab" data-tab="learn">The path</button>';
@@ -2589,6 +2596,11 @@ function onMatch(side, id) {
       session.matchL = null;
       session.matchR = null;
       session.shake = [];
+      if (session.matchLocked.length === session.presented.pairs.length) {
+        // last pair locked: judge immediately (correct), same as a mispair does
+        doCheck(true);
+        return;
+      }
     } else {
       // first wrong pairing judges the whole prompt: reveal, dock a heart, score it
       session.selection = false;

@@ -71,7 +71,7 @@ Rule: green owns "go/correct," yellow owns "reward/attention," coral owns "wrong
 - Meaning / scenario: 2×2 tile options, each with art (84px) + text — text is **never truncated**; long definitions shrink to 12.5px instead.
 - True/false: two big tiles with ✓/✗ art.
 - Fill: story with underlined blank that live-fills with the tapped bank chip.
-- Match: two columns of chips; correct pairs lock green. A **wrong pairing judges the prompt immediately** — the sheet docks a heart and names the mix-up, and the re-shuffled match re-queues right after feedback so the player can still finish the pairs. No Check button; the prompt cannot be silently retried to 100%.
+- Match: two columns of chips; correct pairs lock green, and locking the **last pair judges the prompt immediately** as correct. A **wrong pairing judges the prompt immediately** — the sheet docks a heart and names the mix-up, and the re-shuffled match re-queues right after feedback so the player can still finish the pairs. No Check button; the prompt cannot be silently retried to 100%.
 
 **Complete.** Confetti burst, hedgehog mascot, "Flawless." (perfect) or "Lesson done.", accuracy line, yellow XP breakdown card, up to 3 "you mix these up" chips (term vs its mix-up). Buttons always offer the path: Next lesson (primary), "Practice those" (green, only when there were misses), "Back to the path" (ghost). Practice rounds show a per-answer XP line instead of the lesson breakdown.
 
