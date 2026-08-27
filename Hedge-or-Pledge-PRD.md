@@ -1,8 +1,8 @@
 # Hedge or Pledge
 ## Product Requirements Document — v0.1
-**Status:** draft for review, not build-ready until you sign off  
-**Product:** a Duolingo-style game that teaches financial vocabulary  
-**Date:** 26 Aug 2026
+**Status:** accepted — 27 Aug 2026, defaults approved as written
+**Product:** a Duolingo-style game that teaches financial vocabulary
+**Date:** 26 Aug 2026 (accepted 27 Aug 2026)
 
 ---
 
@@ -211,12 +211,16 @@ If we later add analytics: lesson completion, accuracy by confusion pair, day-2 
 
 ## 14. Open decisions (need you)
 
-These are the only things that should change the build if you disagree:
+**Resolved 27 Aug 2026: all defaults approved.**
 
 1. **Audience tightness.** Keep it "news-literate beginner," or tilt toward someone who will actually pledge/hedge at work?
+   → **Default kept:** news-literate beginner.
 2. **Hearts on / off.** Some people hate losing a run to one mix-up. We can do XP-only if you want kinder.
+   → **Default kept:** hearts on, 5 per lesson, retry refills.
 3. **Unit 5 tone.** Descriptive "this is the move wealthy people use" vs skip buy-borrow-die entirely to avoid looking like a tax pitch.
+   → **Default kept:** descriptive; buy-borrow-die stays as description, with tax/margin-call/forced-sale consequences shown.
 4. **Name lock.** Hedge or Pledge is the working title. Keep it?
+   → **Default kept:** Hedge or Pledge.
 
 Everything else in this doc is a recommended default. Push back on the thesis (confusion pairs) if you want a more glossary-like product; that would be a different game.
 
@@ -224,4 +228,4 @@ Everything else in this doc is a recommended default. Push back on the thesis (c
 
 ## 15. Build trigger
 
-Do not implement until this PRD is accepted, with any edits above. Acceptance means: thesis stands, Unit 1–2 list is right, the four open decisions are answered (or "your defaults are fine").
+Accepted 27 Aug 2026 — build is approved. Thesis stands, Unit 1–2 list confirmed, all four open decisions resolved to their defaults.
