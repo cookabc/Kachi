@@ -170,7 +170,7 @@ Sounds like the teacher in this chat: warm, short, slightly dry. Not a fintech b
 
 Numbers when they make the mechanism visible. No ticker symbols, no "not financial advice" wallpaper on every screen. One quiet line in Glossary footer is enough.
 
-Working palette: deep green (hedge, staying in) + gold (pledge, borrowing against). Dark-mode-first is allowed if it still feels friendly. Distinctive, not a generic dashboard theme. Mascot can be a small invented creature (not Duo the owl). Optional for v1; a strong wordmark is enough.
+**Visual system (updated 27 Aug 2026):** the prototype shipped with a light, Duolingo-style system — white cards on a sky/mint gradient, green = correct/go, yellow = reward, coral = wrong-but-safe, a hedgehog mascot, and a teach-card caption that explains what each piece of term art shows. The original sketch ("deep green + gold, dark-mode-first") is superseded. Full tokens, components, motion, and accessibility rules live in [DESIGN.md](DESIGN.md); change the look there, not ad hoc in the HTML.
 
 ---
 
