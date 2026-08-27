@@ -91,10 +91,13 @@ input { font: inherit; color: inherit; }
 .brand {
   font-family: var(--display);
   font-weight: 800;
-  font-size: 20px;
+  font-size: 17px;
   letter-spacing: -.03em;
   color: var(--ink);
   line-height: 1.1;
+  white-space: nowrap;
+  flex-shrink: 1;
+  min-width: 0;
 }
 .brand em {
   color: var(--green);
@@ -1132,7 +1135,7 @@ const LESSONS = [
     id: "u1l1", unit: 1, title: "Two moves", icon: "🌿", review: false,
     prompts: [
       M("u1l1a", "hedge", "What does hedge mean?", [{text:"Insurance on a bet you already have.",art:"hedge"},{text:"Putting an asset up so a lender can take it.",art:"pledge"},{text:"Selling everything so you cannot lose.",art:"sell"},{text:"A promise to buy more if it drops.",art:"long"}], 0, "A hedge protects a position you already have. A pledge puts that position up as collateral."),
-      M("u1l1b", "pledge", "What does pledge mean here?", [{text:"Put an asset up so a lender can seize it if you don't pay.",art:"pledge"},{text:"Buy insurance on a stock you own.",art:"hedge"},{text:"Sell the stock and hope to buy it back cheaper.",art:"short selling"},{text:"A legally binding New Year's resolution.",art:"joke"}], 0, "You still own it. Pledge = collateral. Sell = it's gone."),
+      M("u1l1b", "pledge", "What does pledge mean here?", [{text:"Put an asset up so a lender can seize it if you don't pay.",art:"pledge"},{text:"Buy insurance on a stock you own.",art:"hedge"},{text:"Sell the stock and hope to buy it back cheaper.",art:"short selling"},{text:"The pile of cash a broker holds as a cushion.",art:"margin"}], 0, "You still own it. Pledge = collateral. Sell = it's gone."),
       T("u1l1c", "pledge", "Pledging stock means you sold it.", false,
         "You still own it. Pledge = collateral. Sell = it's gone."),
       F("u1l1d", "hedge", "You own $200k of stock and worry about a crash. Buying a put is a ____.",
@@ -1144,9 +1147,9 @@ const LESSONS = [
       K("u1l1f", [
         { id: "hedge", left: "hedge", right: "Insurance on a position you own" },
         { id: "pledge", left: "pledge", right: "Put the asset up for a loan" },
-        { id: "collateral", left: "collateral", right: "What the lender can seize" },
-        { id: "sell", left: "sell", right: "It's gone — you don't own it" }
-      ], "Hedge protects. Pledge borrows against. Collateral is what they can take. Sell means you left."),
+        { id: "sell", left: "sell", right: "It's gone — you don't own it" },
+        { id: "put_u1intro", left: "a put", right: "The contract that pays in a crash" }
+      ], "Hedge protects. Pledge borrows against. The put is the insurance contract. Sell means you left."),
       S("u1l1g", "hedge",
         "You own 1,000 shares. You buy a contract that pays if they crash. You still hold the shares.",
         "What did you do?",
@@ -1200,7 +1203,7 @@ const LESSONS = [
     id: "u1l3", unit: 1, title: "When it drops 40%", icon: "📉", review: false,
     prompts: [
       M("u1l3a", "margin", "What is margin?", [{text:"Cash or equity you must keep in the account as a cushion.",art:"margin"},{text:"The multiplier on a borrowed bet.",art:"leverage"},{text:"The discount applied to collateral on day one.",art:"haircut"},{text:"A contract that pays if the stock falls.",art:"put"}], 0, "Margin is the cushion. Leverage is the size of the bet that cushion supports."),
-      M("u1l3b", "margin call", "What is a margin call?", [{text:"The lender demanding more cash — or selling you out — because the cushion got too thin.",art:"margin call"},{text:"The discount they applied when they first lent.",art:"haircut"},{text:"Buying a put after the crash.",art:"put"},{text:"A polite request to pledge more birthday cards.",art:"joke"}], 0, "The haircut was set at the start. A margin call happens later, when prices move against you."),
+      M("u1l3b", "margin call", "What is a margin call?", [{text:"The lender demanding more cash — or selling you out — because the cushion got too thin.",art:"margin call"},{text:"The discount they applied when they first lent.",art:"haircut"},{text:"Buying a put after the crash.",art:"put"},{text:"Putting the shares up as collateral for a new loan.",art:"pledge"}], 0, "The haircut was set at the start. A margin call happens later, when prices move against you."),
       T("u1l3c", "margin", "Margin and leverage are the same word.", false,
         "Margin is the cushion. Leverage is the multiplier. People say them interchangeably until the call comes."),
       F("u1l3d", "margin", "You buy $10k of stock with $5k cash. That $5k cushion is ____.",
@@ -1304,7 +1307,7 @@ const LESSONS = [
       ], "You can use a derivative as a hedge, or as leverage. Same toolkit, opposite intent."),
       T("u2l1i", "derivative", "Every derivative is an option.", false,
         "Options are one species. Futures and swaps are derivatives too, and they don't let you walk away."),
-      M("u2l1j", "leverage", "A hedge can use derivatives. Leverage can too. The difference is:", [{text:"Intent: protection vs. a bigger bet.",art:"hedge"},{text:"Hedges never cost money.",art:"hedge"},{text:"Leverage is only for banks.",art:"joke"},{text:"Derivatives are only for hedges.",art:"derivative"}], 0, "A put you own as insurance is a hedge. The same put bought as a naked down-bet is just a leveraged wager.")
+      M("u2l1j", "leverage", "A hedge can use derivatives. Leverage can too. The difference is:", [{text:"Intent: protection vs. a bigger bet.",art:"hedge"},{text:"Hedges never cost money.",art:"hedge"},{text:"Leverage means the lender seizes the asset.",art:"margin call"},{text:"Derivatives are only for hedges.",art:"derivative"}], 0, "A put you own as insurance is a hedge. The same put bought as a naked down-bet is just a leveraged wager.")
     ]
   },
   {
@@ -1936,7 +1939,7 @@ function artIdForLabel(w) {
 }
 function termArtHtml(id, size) {
   size = size || "lg";
-  const inner = TERM_ART[id] || TERM_ART.joke;
+  const inner = TERM_ART[id] || TERM_ART[id.replace(/_u1intro$/, "")] || TERM_ART.joke;
   return '<span class="term-art ' + size + '">' + inner + "</span>";
 }
 
@@ -2082,20 +2085,20 @@ function startPractice(focus) {
 function canCheck() {
   if (!session || session.phase !== "answer") return false;
   const p = session.presented;
-  if (p.type === "match") return session.matchLocked.length === p.pairs.length;
+  if (p.type === "match") return false; // judged live: correct pairs lock, a wrong pair docks a heart
   return session.selection !== null && session.selection !== undefined;
 }
 
 function isRight() {
   const p = session.presented;
-  if (p.type === "match") return session.matchLocked.length === p.pairs.length;
+  if (p.type === "match") return session.selection !== false && session.matchLocked.length === p.pairs.length;
   if (p.type === "truefalse") return session.selection === p.answer;
   if (p.type === "fill") return session.selection === p.answer;
   return session.selection === p.correctText;
 }
 
-function doCheck() {
-  if (!canCheck()) return;
+function doCheck(force) {
+  if (!force && !canCheck()) return;
   const p = session.presented;
   const ok = isRight();
   const ids = realTermIds(p);
@@ -2130,7 +2133,13 @@ function doContinue() {
   session.matchL = null;
   session.matchR = null;
   session.shake = [];
-  session.presented = present(session.prompts[next]);
+  let nextPresented = present(session.prompts[next]);
+  // a failed match re-queues itself so the player can still complete the pairs they know
+  if (session.presented.type === "match" && !session.lastCorrect) {
+    session.prompts.splice(next, 0, session.presented);
+    nextPresented = present(session.prompts[next]);
+  }
+  session.presented = nextPresented;
   markSeen(session.presented);
   render();
 }
@@ -2139,16 +2148,18 @@ function finishLesson() {
   const total = session.results.length;
   const correct = session.results.filter(function (r) { return r.correct; }).length;
   const xpHit = correct * 10;
-  const xpDone = 20;
-  const xpPerfect = correct === total && total > 0 ? 20 : 0;
+  // practice rounds pay per correct answer only — no completion/perfect bonus, no streak,
+  // so XP and streak keep measuring lessons on the path
+  const xpDone = session.isPractice ? 0 : 20;
+  const xpPerfect = !session.isPractice && correct === total && total > 0 ? 20 : 0;
   const gained = xpHit + xpDone + xpPerfect;
   store.xp += gained;
   if (!session.isPractice) {
     if (store.completedLessonIds.indexOf(session.lessonId) === -1) {
       store.completedLessonIds.push(session.lessonId);
     }
+    bumpStreak();
   }
-  bumpStreak();
   const missMap = {};
   session.results.forEach(function (r) {
     if (!r.correct) r.termIds.forEach(function (id) { missMap[id] = true; });
@@ -2205,7 +2216,6 @@ function statsHtml() {
   return '<div class="stats">' +
     '<div class="stat xp"><span class="ic">◆</span>' + store.xp + "</div>" +
     '<div class="stat streak"><span class="ic">🔥</span>' + store.streak + "</div>" +
-    '<div class="stat hearts">' + heartRow(5) + "</div>" +
     "</div>";
 }
 
@@ -2381,7 +2391,7 @@ function mchip(c, side) {
   const locked = session.matchLocked.indexOf(c.id) !== -1;
   const sel = (side === "L" ? session.matchL : session.matchR) === c.id;
   let cls = "mchip";
-  if (locked || (session.phase === "feedback" && locked)) cls += " good";
+  if (locked) cls += " good";
   if (sel && !locked) cls += " sel";
   if (session.shake.indexOf(side + c.id) !== -1) cls += " shake";
   const act = session.phase === "answer" && !locked ? ' data-act="m" data-side="' + side + '" data-id="' + esc(c.id) + '"' : "";
@@ -2476,10 +2486,15 @@ function renderComplete() {
   html += "<h1>" + (s.xpPerfect ? "Flawless." : "Lesson done.") + "</h1>";
   html += '<p class="sub">' + acc + "% accuracy · " + s.correct + "/" + s.total + "</p>";
   html += '<div class="xp-card">';
-  html += '<div class="xp-row"><span>Correct answers</span><span>+' + s.xpHit + " XP</span></div>";
-  html += '<div class="xp-row"><span>Lesson complete</span><span>+' + s.xpDone + " XP</span></div>";
-  if (s.xpPerfect) html += '<div class="xp-row"><span>No-mistake bonus</span><span>+' + s.xpPerfect + " XP</span></div>";
-  html += '<div class="xp-row total"><span>Total</span><span>+' + s.gained + " XP</span></div>";
+  if (session.isPractice) {
+    html += '<div class="xp-row"><span>Correct answers</span><span>+' + s.xpHit + " XP</span></div>";
+    html += '<div class="xp-row total"><span>Total</span><span>+' + s.gained + " XP</span></div>";
+  } else {
+    html += '<div class="xp-row"><span>Correct answers</span><span>+' + s.xpHit + " XP</span></div>";
+    html += '<div class="xp-row"><span>Lesson complete</span><span>+' + s.xpDone + " XP</span></div>";
+    if (s.xpPerfect) html += '<div class="xp-row"><span>No-mistake bonus</span><span>+' + s.xpPerfect + " XP</span></div>";
+    html += '<div class="xp-row total"><span>Total</span><span>+' + s.gained + " XP</span></div>";
+  }
   html += "</div>";
   if (s.mix.length) {
     html += '<p class="sub" style="margin-bottom:8px">You mix these up</p><div class="chips">';
@@ -2495,8 +2510,8 @@ function renderComplete() {
     const nxt = LESSONS[i + 1];
     if (nxt) html += '<button class="btn btn-gold" data-act="start" data-id="' + nxt.id + '">Next: ' + esc(nxt.title) + "</button>";
     else html += '<button class="btn btn-gold" data-act="tab" data-tab="learn">Back to the path</button>';
-    if (s.mix.length) html += '<button class="btn btn-ghost" data-act="practice-those">Practice those</button>';
-    else html += '<button class="btn btn-ghost" data-act="tab" data-tab="learn">The path</button>';
+    if (s.mix.length) html += '<button class="btn btn-green" data-act="practice-those">Practice those</button>';
+    html += '<button class="btn btn-ghost" data-act="tab" data-tab="learn">Back to the path</button>';
   } else {
     html += '<button class="btn btn-gold" data-act="practice">Practice again</button>';
     html += '<button class="btn btn-ghost" data-act="tab" data-tab="learn">The path</button>';
@@ -2575,15 +2590,9 @@ function onMatch(side, id) {
       session.matchR = null;
       session.shake = [];
     } else {
-      const a = session.matchL, b = session.matchR;
-      session.shake = ["L" + a, "R" + b];
-      session.matchL = null;
-      session.matchR = null;
-      render();
-      setTimeout(function () {
-        if (session) { session.shake = []; render(); }
-      }, 380);
-      try { navigator.vibrate && navigator.vibrate(12); } catch (e) {}
+      // first wrong pairing judges the whole prompt: reveal, dock a heart, score it
+      session.selection = false;
+      doCheck(true);
       return;
     }
   }

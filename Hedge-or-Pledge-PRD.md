@@ -134,11 +134,11 @@ A lesson must use at least three of these. Scenario is mandatory after Unit 1 Le
 
 | System | v1 rule | Why |
 |---|---|---|
-| Hearts | 5 per lesson. −1 on wrong. 0 = lesson failed, retry refills | Stops a death spiral without a wait-gate |
-| XP | +10 correct, +20 lesson complete, +20 no-mistake bonus | Visible progress, not a career |
-| Streak | +1 if ≥1 lesson completed today | Come-back hook. No streak freeze, no guilt copy |
+| Hearts | 5 per lesson. −1 on wrong — **every** exercise type, match judged live on a wrong pairing. 0 = lesson failed, retry refills | Stops a death spiral without a wait-gate |
+| XP | +10 correct, +20 lesson complete, +20 no-mistake bonus. **Practice rounds: +10/correct only, no bonuses** | Visible progress, not a career |
+| Streak | +1 if ≥1 *lesson* (not practice round) completed today | Come-back hook. No streak freeze, no guilt copy |
 | Path | Vertical unit path, next lesson unlocked on complete | Duolingo home, completable length |
-| Practice | Weighted toward misses + weak terms; if nothing learned yet, Unit 1 | The actual memory product |
+| Practice | Weighted toward misses + weak terms; pool capped at unlocked lessons; 10-prompt rounds; pays XP but never unlocks or feeds streak | The actual memory product |
 | Glossary | All terms, searchable, checkmark once seen in a lesson | Reference without leaving the app |
 
 **Explicitly out of v1:** accounts, leaderboards, leagues, energy timers, push notifications, paid hearts, audio, streaks that punish a skipped Saturday as if it were a character flaw.

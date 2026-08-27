@@ -60,7 +60,7 @@ Rule: green owns "go/correct," yellow owns "reward/attention," coral owns "wrong
 
 ## 5. Screens
 
-**Learn (home).** Brand + stats header → tagline → repeating [unit banner → vertical snake path]. Nodes are 76px circles (88px for "up next"), snake offsets `[0, 56, 8, -56]` px connected by a green/yellow dashed spine. States: done (green + ✓), next (green, bobbing, shine sweep, halo), locked (gray, 🔒, not clickable). Node labels sit in white pill badges so the dashed line never strikes through text.
+**Learn (home).** Brand + stats header (XP, streak — hearts live inside lessons only) → tagline → repeating [unit banner → vertical snake path]. Nodes are 76px circles (88px for "up next"), snake offsets `[0, 56, 8, -56]` px connected by a green/yellow dashed spine. States: done (green + ✓), next (green, bobbing, shine sweep, halo), locked (gray, 🔒, not clickable). Node labels sit in white pill badges so the dashed line never strikes through text.
 
 **Lesson — teach phase.** Card per new term: hero art (168px) → **caption** (one line explaining what the artwork shows and how it maps to the mechanism — the image must teach, not decorate) → term 34px → one-sentence definition → green example panel → yellow "Don't mix this up" panel with the sibling term's mini art. Unit reviews get a recap strip of pills instead. Progress pips in sky blue during teach.
 
@@ -71,13 +71,13 @@ Rule: green owns "go/correct," yellow owns "reward/attention," coral owns "wrong
 - Meaning / scenario: 2×2 tile options, each with art (84px) + text — text is **never truncated**; long definitions shrink to 12.5px instead.
 - True/false: two big tiles with ✓/✗ art.
 - Fill: story with underlined blank that live-fills with the tapped bank chip.
-- Match: two columns of chips; correct pairs lock green, wrong pairs shake once and release (plus a 12ms vibration where supported).
+- Match: two columns of chips; correct pairs lock green. A **wrong pairing judges the prompt immediately** — the sheet docks a heart and names the mix-up, and the re-shuffled match re-queues right after feedback so the player can still finish the pairs. No Check button; the prompt cannot be silently retried to 100%.
 
-**Complete.** Confetti burst, hedgehog mascot, "Flawless." (perfect) or "Lesson done.", accuracy line, yellow XP breakdown card, up to 3 "you mix these up" chips (term vs its mix-up), CTA next lesson; ghost CTA "Practice those" when there were misses.
+**Complete.** Confetti burst, hedgehog mascot, "Flawless." (perfect) or "Lesson done.", accuracy line, yellow XP breakdown card, up to 3 "you mix these up" chips (term vs its mix-up). Buttons always offer the path: Next lesson (primary), "Practice those" (green, only when there were misses), "Back to the path" (ghost). Practice rounds show a per-answer XP line instead of the lesson breakdown.
 
 **Fail (0 hearts).** 💔, "Out of hearts.", retry refills immediately — no wait gate, no guilt copy.
 
-**Practice.** Hedgehog hero, miss-count line, one button. Infinite until quit; hearts still apply.
+**Practice.** Hedgehog hero, miss-count line, one button. Rounds of 10 prompts ending in the complete screen; "Practice again" starts a fresh round. Hearts still apply. Practice pays +10 XP per correct answer only — no completion/perfect bonus, and it never touches the streak — so XP and streak keep measuring lessons on the path. The pool is capped at unlocked lessons; a brand-new player (no misses) drills Unit 1 Lessons 1–2 only, never content a lesson ahead.
 
 **Glossary.** Search box (no auto-focus, so mobile keyboards don't pop up uninvited), compact unit banners, term cards (definition, example, mix-up, green ✓ once seen). Search updates **only the list** (IME-safe); empty state suggests starting terms. Footer: "Not investment advice. Words, not recommendations." — the only disclaimer in the app.
 
@@ -110,5 +110,7 @@ Press feedback is physical: buttons translate down 2px and lose bottom-border th
 ## 10. Known deviations from the PRD
 
 - PRD §11 sketched "deep green + gold, dark-mode-first." Shipped: the light Duolingo-style system above. PRD §11 is updated to point here.
-- Hearts, XP, streak, path lock match the PRD's v1 table exactly; no leagues/gems/timers were added.
+- Hearts, XP, streak, and path lock follow the PRD's v1 table, with two deliberate tightenings: practice rounds pay per correct answer only (no +20 completion/perfect bonus, no streak — the PRD only banned path unlocking, this keeps XP meaningful), and match prompts are judged live on a first wrong pairing (hearts −1 applies to every exercise type, closing the "match is always 100%" loophole).
+- Practice is 10-prompt rounds, not literally "infinite until they quit" (PRD §10). Same engine, bounded rounds; a round of drills felt better than an endless mode.
+- Banana distractors are banned: three joke answers that slipped into Unit 1–2 were replaced with real sibling terms (PRD §4.2). The `joke` art remains only as a fallback for art lookups, never as a distractor.
 - Build shape remains a single typed HTML file (PRD §12 allowed Vite+React+TS as a recommendation, not a requirement). Content is still data (`TERMS` / `UNITS` / `LESSONS`), so a later port stays mechanical.
