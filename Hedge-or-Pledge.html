@@ -805,6 +805,15 @@ svg.icon { fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: 
   font-weight: 800;
 }
 .teach-art { display: flex; justify-content: center; }
+.teach-cap {
+  font-size: 13px;
+  line-height: 1.45;
+  text-align: center;
+  color: var(--ink-soft);
+  font-weight: 700;
+  margin: -2px auto 14px;
+  max-width: 300px;
+}
 /* compact unit header for glossary */
 .unit-banner.mini {
   padding: 10px 14px 9px;
@@ -856,6 +865,7 @@ const STORE_KEY = "hedge-or-pledge-v1";
 const TERMS = {
   hedge: {
     id: "hedge", unit: 1, term: "hedge",
+    caption: "An umbrella over what you already own. You keep the stock - the put absorbs the crash.",
     definition: "Insurance on a bet you already have.",
     example: "You own $100,000 of stock and buy a put so a crash hurts less.",
     mixUp: "pledge",
@@ -863,6 +873,7 @@ const TERMS = {
   },
   pledge: {
     id: "pledge", unit: 1, term: "pledge",
+    caption: "You keep the shares, but they are on a leash: miss the loan and the bank takes them.",
     definition: "Put an asset up so a lender can take it if you don't pay.",
     example: "You pledge $1M of stock for a $700k loan. You still own the stock — until you don't pay.",
     mixUp: "hedge",
@@ -870,6 +881,7 @@ const TERMS = {
   },
   collateral: {
     id: "collateral", unit: 1, term: "collateral",
+    caption: "The pile the lender is allowed to grab if you stop paying.",
     definition: "The thing the lender can seize if you skip payments.",
     example: "The pledged stock is the collateral. Miss the loan, the bank takes the shares.",
     mixUp: "haircut",
@@ -877,6 +889,7 @@ const TERMS = {
   },
   haircut: {
     id: "haircut", unit: 1, term: "haircut",
+    caption: "The discount: $1M of stock gets treated as $700k before anyone lends a cent.",
     definition: "The discount a lender applies to collateral before they'll lend against it.",
     example: "$1M stock, 30% haircut → they treat it as $700k. That's the max loan.",
     mixUp: "margin",
@@ -884,6 +897,7 @@ const TERMS = {
   },
   margin: {
     id: "margin", unit: 1, term: "margin",
+    caption: "The cash cushion that has to stay in the account while the bet sits on top.",
     definition: "Cash or equity you must keep in the account as a cushion.",
     example: "Broker lets you buy $10k of stock with $5k cash. That $5k is margin.",
     mixUp: "leverage",
@@ -891,6 +905,7 @@ const TERMS = {
   },
   "margin call": {
     id: "margin call", unit: 1, term: "margin call",
+    caption: "The phone rings when the cushion is gone: post more cash, or get sold out.",
     definition: "The lender demanding more cash — or selling you out — because the cushion got too thin.",
     example: "Stock drops 40%. Collateral is now $600k against a $700k loan. The bank calls.",
     mixUp: "haircut",
@@ -898,6 +913,7 @@ const TERMS = {
   },
   leverage: {
     id: "leverage", unit: 2, term: "leverage",
+    caption: "A small pile of your own cash holding up a much bigger bet.",
     definition: "Using borrowed money or derivatives to make a bigger bet than your cash.",
     example: "$10k of yours plus $40k borrowed = 5× leverage. A 10% drop wipes half your cash.",
     mixUp: "margin",
@@ -905,6 +921,7 @@ const TERMS = {
   },
   derivative: {
     id: "derivative", unit: 2, term: "derivative",
+    caption: "The contract is not the thing - its value just comes from the thing.",
     definition: "A contract whose value comes from something else — a stock, a rate, a barrel of oil.",
     example: "A put on Apple is a derivative. The put is not Apple stock; it just bets on Apple's price.",
     mixUp: "option",
@@ -912,6 +929,7 @@ const TERMS = {
   },
   option: {
     id: "option", unit: 2, term: "option",
+    caption: "A ticket you can tear up: the right to buy or sell, never the duty.",
     definition: "The right, not the obligation, to buy or sell something at a set price.",
     example: "Pay $3 for the right to sell a $100 stock at $90. That's an option. You can walk away.",
     mixUp: "futures",
@@ -919,6 +937,7 @@ const TERMS = {
   },
   put: {
     id: "put", unit: 2, term: "put",
+    caption: "The right to sell at a floor price. It pays when the price falls.",
     definition: "An option to sell at a set price. Pays off when the thing falls.",
     example: "Stock at $100. A $90 put pays if it drops below $90. Crash insurance if you own it.",
     mixUp: "call",
@@ -926,6 +945,7 @@ const TERMS = {
   },
   call: {
     id: "call", unit: 2, term: "call",
+    caption: "The right to buy at a set price. It pays when the price rises.",
     definition: "An option to buy at a set price. Pays off when the thing rises.",
     example: "Stock at $100. A $110 call pays if it rips above $110. That's a bullish bet.",
     mixUp: "put",
@@ -933,6 +953,7 @@ const TERMS = {
   },
   "short selling": {
     id: "short selling", unit: 2, term: "short selling",
+    caption: "Sell borrowed shares today, buy them back tomorrow - cheaper, you hope.",
     definition: "Borrow shares, sell them now, hope to buy back cheaper later.",
     example: "Borrow 100 shares, sell at $50, buy back at $30, return them. You keep $20. If it goes to $80, you owe.",
     mixUp: "put",
@@ -940,6 +961,7 @@ const TERMS = {
   },
   liquidity: {
     id: "liquidity", unit: 3, term: "liquidity",
+    caption: "A wide exit: you can sell fast without shoving the price around.",
     definition: "How fast you can sell without moving the price much.",
     example: "Apple stock is liquid — dump $1M and the price barely budges. Your cousin's startup is not.",
     mixUp: "notional",
@@ -947,6 +969,7 @@ const TERMS = {
   },
   notional: {
     id: "notional", unit: 3, term: "notional",
+    caption: "The face size printed on the contract - not the price you paid for it.",
     definition: "The face amount a derivative is written on — not what you paid.",
     example: "An option on $100,000 of stock might cost $2,000. Notional is $100k. Premium is $2k.",
     mixUp: "premium",
@@ -954,6 +977,7 @@ const TERMS = {
   },
   premium: {
     id: "premium", unit: 3, term: "premium",
+    caption: "The ticket price of the contract. This is what protection costs.",
     definition: "What you pay for an option — the price of the insurance.",
     example: "That put costs $3 a share. The $3 is the premium.",
     mixUp: "yield",
@@ -961,6 +985,7 @@ const TERMS = {
   },
   yield: {
     id: "yield", unit: 3, term: "yield",
+    caption: "What the investment pays you, measured as a percent of its price.",
     definition: "What an investment pays you, as a percent of its price.",
     example: "A $100 bond that pays $5 a year yields 5%. Price falls to $50, yield is 10%.",
     mixUp: "duration",
@@ -968,6 +993,7 @@ const TERMS = {
   },
   duration: {
     id: "duration", unit: 3, term: "duration",
+    caption: "The rate bruise: how hard the price jumps when interest rates move.",
     definition: "How sensitive a bond's price is to interest-rate changes, in years.",
     example: "A 10-year duration bond drops about 10% if rates rise 1%. That's the rate bruise.",
     mixUp: "yield",
@@ -975,6 +1001,7 @@ const TERMS = {
   },
   "basis risk": {
     id: "basis risk", unit: 3, term: "basis risk",
+    caption: "Two lines that were supposed to move together, drifting apart.",
     definition: "When your hedge doesn't move 1-for-1 with what you were trying to protect.",
     example: "You hedge airline stock with an oil future. Oil falls, the stock doesn't. The hedge missed.",
     mixUp: "hedge",
@@ -982,6 +1009,7 @@ const TERMS = {
   },
   long: {
     id: "long", unit: 4, term: "long",
+    caption: "You own it and you want it higher.",
     definition: "You own it, or you're betting it goes up.",
     example: "You bought 50 shares. You're long. You want the price higher.",
     mixUp: "short selling",
@@ -989,6 +1017,7 @@ const TERMS = {
   },
   volatility: {
     id: "volatility", unit: 4, term: "volatility",
+    caption: "The weather report: how hard the price swings, not where it ends up.",
     definition: "How violently the price swings — the weather, not the direction.",
     example: "A stock that rips 8% some days is more volatile than a utility that moves 0.3%.",
     mixUp: "diversification",
@@ -996,6 +1025,7 @@ const TERMS = {
   },
   diversification: {
     id: "diversification", unit: 4, term: "diversification",
+    caption: "Many baskets, so one dropped basket does not take the eggs.",
     definition: "Owning different things so one disaster doesn't take the whole pile.",
     example: "20 stocks across 5 industries vs. your whole net worth in one employer.",
     mixUp: "hedge",
@@ -1003,6 +1033,7 @@ const TERMS = {
   },
   counterparty: {
     id: "counterparty", unit: 4, term: "counterparty",
+    caption: "The person standing on the other side of the contract, owing you.",
     definition: "The other person in the contract — the one who has to pay you.",
     example: "You bought a put from Bank X. Bank X is your counterparty. If they fail, the put is a napkin.",
     mixUp: "default",
@@ -1010,6 +1041,7 @@ const TERMS = {
   },
   default: {
     id: "default", unit: 4, term: "default",
+    caption: "The promise snaps: the payment they owed never arrives.",
     definition: "Not paying what you owe, on a loan or a contract.",
     example: "The company misses a bond payment. That's default. Bondholders may seize assets.",
     mixUp: "mark-to-market",
@@ -1017,6 +1049,7 @@ const TERMS = {
   },
   "mark-to-market": {
     id: "mark-to-market", unit: 4, term: "mark-to-market",
+    caption: "The price tag gets rewritten at today's number - sold or not.",
     definition: "Re-pricing a position at today's market, even if you haven't sold.",
     example: "Your $1M pledge is now worth $600k. The loan is marked to market. That's when the call comes.",
     mixUp: "default",
@@ -1024,6 +1057,7 @@ const TERMS = {
   },
   "securities-backed loan": {
     id: "securities-backed loan", unit: 5, term: "securities-backed loan",
+    caption: "Your portfolio, pledged for cash - with a nicer name on the term sheet.",
     definition: "A loan that uses your portfolio as collateral. You keep the shares.",
     example: "$10M stock, 30% haircut, $7M loan. You didn't sell, so you didn't trigger capital gains — yet.",
     mixUp: "pledge",
@@ -1031,6 +1065,7 @@ const TERMS = {
   },
   "capital gains": {
     id: "capital gains", unit: 5, term: "capital gains",
+    caption: "The tax bill that only appears when you actually sell.",
     definition: "The taxable profit when you sell an asset for more than you paid.",
     example: "Bought at $1M, sell at $4M. $3M is a capital gain. A loan is not a sale.",
     mixUp: "buy-borrow-die",
@@ -1038,6 +1073,7 @@ const TERMS = {
   },
   "buy-borrow-die": {
     id: "buy-borrow-die", unit: 5, term: "buy-borrow-die",
+    caption: "Buy, borrow against it, never sell. The pattern, not advice.",
     definition: "Buy assets, borrow against them to spend, hold until death so heirs may get a stepped-up basis. A tax pattern — not a plan we recommend.",
     example: "Owns $2B of stock, borrows $20M a year against it, never sells. A crash can still force a sale.",
     mixUp: "securities-backed loan",
@@ -1045,6 +1081,7 @@ const TERMS = {
   },
   futures: {
     id: "futures", unit: 5, term: "futures",
+    caption: "A promise with a date on it. Come December, you settle. No walk-away.",
     definition: "A contract to buy or sell something at a set price on a set date — obligation, not a right.",
     example: "Agree now to buy 1,000 barrels at $80 in December. Come December, you settle. You cannot walk away like an option.",
     mixUp: "option",
@@ -1052,6 +1089,7 @@ const TERMS = {
   },
   swap: {
     id: "swap", unit: 5, term: "swap",
+    caption: "Two payment streams crossing: fixed on one side, floating on the other.",
     definition: "Two parties exchange cash flows — often a fixed rate for a floating one.",
     example: "You pay 4% fixed, receive SOFR. If rates jump, the swap pays you. That's a rate hedge, not a loan.",
     mixUp: "futures",
@@ -2347,6 +2385,7 @@ function renderTeachCard(termId) {
   const sib = TERMS[t.mixUp];
   let h = '<div class="kicker2">New word</div>';
   h += '<div class="teach-art">' + termArtHtml(termId, "hero") + "</div>";
+  if (t.caption) h += '<p class="teach-cap">' + esc(t.caption) + "</p>";
   h += '<div class="teach-term">' + esc(t.term) + "</div>";
   h += '<p class="teach-def">' + esc(t.definition) + "</p>";
   h += '<div class="teach-ex">' + esc(t.example) + "</div>";
