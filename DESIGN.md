@@ -114,3 +114,16 @@ Press feedback is physical: buttons translate down 2px and lose bottom-border th
 - Practice is 10-prompt rounds, not literally "infinite until they quit" (PRD §10). Same engine, bounded rounds; a round of drills felt better than an endless mode.
 - Banana distractors are banned: three joke answers that slipped into Unit 1–2 were replaced with real sibling terms (PRD §4.2). The `joke` art remains only as a fallback for art lookups, never as a distractor.
 - Build shape remains a single typed HTML file (PRD §12 allowed Vite+React+TS as a recommendation, not a requirement). Content is still data (`TERMS` / `UNITS` / `LESSONS`), so a later port stays mechanical.
+
+## 11. The workspace app (`apps/web`) port
+
+The pnpm-workspace app implements this system on Vite + React + TS, rendering from
+`content/packs/hedge-or-pledge/zh-CN/course.json` through `@kachi/learning-engine`.
+The prototype HTML stays as the visual/behavioral reference. Port notes and deltas:
+
+- CSS tokens, components, and motion are ported near-verbatim (`apps/web/src/styles.css`); the DOM keeps the prototype's class names. Term art, aliases, and the mascot live in `apps/web/src/art.tsx`, extracted from the prototype unchanged.
+- UI chrome is Chinese (the rewrite's shipped direction): verdicts 「不错。/ 正是。/ 答对了。/ 漂亮。」 and 「还差一点。/ 混淆了。/ 又是这一对。/ 岔路走反了。」 replace the English §9 pools; kickers, buttons, and screen copy are translated. Course content (stems, options, whys, captions, examples) stays English — 中文界面、英文术语教学. Teach cards and feedback sheets add the term's Chinese definition / 辨析 line from `localization.ts` under the English copy.
+- A fourth nav tab, 设置 (export/import learner data, privacy copy), exists beyond the prototype's three tabs.
+- No remote font loading: the `Nunito` stack resolves only if installed locally (README's 本地优先 rule).
+- Engine deltas that back the ported behavior: the +20 no-mistake bonus and the hearts-gated finish live in `@kachi/learning-engine` (`applyAnswer` with `heartsAfter`; a failed finish never completes the lesson), and a failed match re-queues itself via `requeuePrompt`. The practice focus set (recent misses ∪ due confusion pairs) derives from the attempt log via `recentMissTermIds`.
+- Smoke coverage: `.playtest/verify-new.mjs` drives the full lesson → practice → glossary → fail loop against a dev server and captures `shots-new/`.
