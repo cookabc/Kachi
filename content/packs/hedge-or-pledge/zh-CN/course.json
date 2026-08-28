@@ -3651,6 +3651,37 @@
           ],
           "answer": "long",
           "why": "The boring, correct word. Short is the other seat."
+        },
+        {
+          "id": "u4ri",
+          "type": "scenario",
+          "termId": "long",
+          "termIds": [
+            "long",
+            "short selling"
+          ],
+          "story": "You borrow 100 shares and sell them at $50, hoping to buy back cheaper. Your friend just buys 100 shares at $50 and keeps them.",
+          "stem": "Your friend's move is:",
+          "options": [
+            {
+              "text": "Long. She owns the shares and wants them up.",
+              "art": "long"
+            },
+            {
+              "text": "Short. She borrowed and sold.",
+              "art": "short selling"
+            },
+            {
+              "text": "A put — insurance on shares she owns.",
+              "art": "put"
+            },
+            {
+              "text": "A hedge — she sold to offset a risk.",
+              "art": "hedge"
+            }
+          ],
+          "answer": 0,
+          "why": "She bought and holds: long. Borrow, sell, hope to buy back cheaper — that's your move, short. Up is the direction that hurts you."
         }
       ]
     },

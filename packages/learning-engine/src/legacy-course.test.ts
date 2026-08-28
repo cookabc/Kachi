@@ -30,7 +30,7 @@ describe("migrated Hedge or Pledge course", () => {
   it("has the expected legacy coverage and passes structural validation", () => {
     expect(course.lessons).toHaveLength(17);
     expect(course.concepts).toHaveLength(29);
-    expect(new Set(course.lessons.flatMap((lesson) => lesson.prompts.map((prompt) => prompt.id))).size).toBe(155);
+    expect(new Set(course.lessons.flatMap((lesson) => lesson.prompts.map((prompt) => prompt.id))).size).toBe(156);
     expect(validateCourse(course)).toEqual([]);
   });
 

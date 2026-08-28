@@ -147,7 +147,9 @@ while (!(await page.$('.hero')) && promptsSeen < 20) {
     await jsClickText('.bank .bank-chip', published.answer);
   } else {
     const stem = await page.$eval('.stem', (el) => el.textContent.trim());
-    const published = lesson.prompts.find((p) => p.type === type && p.stem === stem);
+    const visible = await page.$$eval('.opts .opt.tile .cap', (els) => els.map((e) => e.textContent.trim()).sort().join('|'));
+    const fingerprint = (p) => (p.options || []).map((o) => o.text).sort().join('|');
+    const published = lesson.prompts.find((p) => p.type === type && p.stem === stem && fingerprint(p) === visible);
     if (!published) throw new Error(`unknown ${type}: ` + stem);
     await jsClickText('.opts .opt.tile', published.options[published.answer].text);
   }
@@ -225,7 +227,10 @@ while (!(await page.$('.hero')) && practiceAnswers < 30) {
     await jsClickText('.bank .bank-chip', published.answer);
   } else {
     const stem = await page.$eval('.stem', (el) => el.textContent.trim());
-    const published = course.lessons.filter((l) => l.id === 'u1l1' || l.id === 'u1l2').flatMap((l) => l.prompts).find((p) => p.type === type && p.stem === stem);
+    const visible = await page.$$eval('.opts .opt.tile .cap', (els) => els.map((e) => e.textContent.trim()).sort().join('|'));
+    const fingerprint = (p) => (p.options || []).map((o) => o.text).sort().join('|');
+    const published = course.lessons.filter((l) => l.id === 'u1l1' || l.id === 'u1l2').flatMap((l) => l.prompts)
+      .find((p) => p.type === type && p.stem === stem && fingerprint(p) === visible);
     if (!published) throw new Error('practice unknown stem: ' + stem);
     await jsClickText('.opts .opt.tile', published.options[published.answer].text);
   }
