@@ -112,7 +112,7 @@ The name of the game, and the first fork in the road.
 - At least one named mix-up
 - At least two prompts in the live curriculum, in two different exercise types
 
-Lessons unlock in order. A unit review sits at the end of each unit and only reuses terms from that unit plus one callback from the previous unit (so Unit 2 review can throw *pledge* in against *leverage*).
+Lessons unlock in order. A unit review sits at the end of each unit and reuses that unit's terms plus a mix-up-driven callback from earlier units — usually one, but a confusion pair can reach further back (basis risk's pair is *hedge* from Unit 1; securities-backed loan's is *pledge*). A review never tests a term from a later unit. (Amended 29 Aug 2026: the old "one callback from the previous unit" rule fought the confusion-pair thesis in §3 — the shipped reviews follow the pairs. The enforceable part — no untaught terms in reviews, ≥3 exercise types per lesson, scenario mandatory after u1l1, two prompts in two types per term — is now enforced by the content validator.)
 
 ---
 
@@ -147,7 +147,7 @@ A lesson must use at least three of these. Scenario is mandatory after Unit 1 Le
 
 ## 10. Surfaces
 
-**Learn (home).** Brand header (XP, hearts, streak). Vertical path of units and lessons. One clearly marked "up next."
+**Learn (home).** Brand header (XP, streak — hearts live inside lessons only; updated 27 Aug 2026, see [DESIGN.md](DESIGN.md) §5). Vertical path of units and lessons. One clearly marked "up next."
 
 **Lesson.** Full-screen prompt. Big tap targets. Check → feedback sheet → Continue. No chrome except hearts + progress pips.
 
@@ -181,7 +181,7 @@ Numbers when they make the mechanism visible. No ticker symbols, no "not financi
 - Units 3–5 content present in data, even if later lessons are shorter
 - All five exercise types
 - Hearts, XP, streak, path lock, Practice, Glossary
-- Progress in localStorage, no account
+- Progress on-device in IndexedDB, no account (updated 29 Aug 2026 from "localStorage"; export/import covers portability)
 - Mobile-first web, usable on desktop
 - ≥40 unique prompts, every v1 term at least twice
 
