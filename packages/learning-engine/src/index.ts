@@ -132,13 +132,23 @@ function nextMastery(previous: MasteryState | undefined, attempt: AttemptEvent, 
   };
 }
 
+export interface ApplyOptions {
+  hintUsed?: boolean;
+  /**
+   * Hearts left after this answer, when the caller tracks hearts (0 = lesson failed).
+   * A failed finish records the attempt but must not complete the lesson,
+   * pay the completion/perfect bonuses, or touch the streak.
+   */
+  heartsAfter?: number;
+}
+
 export function applyAnswer(
   course: Course,
   state: LearnerState,
   session: SessionState,
   answer: string | boolean,
   environment: Environment,
-  hintUsed = false
+  options: ApplyOptions = {}
 ): { state: LearnerState; session: SessionState; attempt: AttemptEvent; finished: boolean } {
   const exercise = currentExercise(course, session);
   if (!exercise) throw new Error("Cannot answer a finished session");
@@ -155,7 +165,7 @@ export function applyAnswer(
     exerciseType: exercise.type,
     answer: String(answer),
     correct: isCorrect(exercise, answer),
-    hintUsed,
+    hintUsed: options.hintUsed ?? false,
     latencyMs: 0,
     occurredAt: now.toISOString()
   };
@@ -169,10 +179,15 @@ export function applyAnswer(
     results: [...session.results, attempt]
   };
   const finished = nextSession.index >= nextSession.promptIds.length;
-  const completedLessonIds = finished && session.mode === "lesson"
+  // A wrong final answer that also spends the last heart is a failed finish (PRD §9):
+  // retry refills hearts, so the lesson is not completed by the failing run.
+  const failedFinish = finished && !attempt.correct && options.heartsAfter !== undefined && options.heartsAfter <= 0;
+  const completesLesson = finished && session.mode === "lesson" && !failedFinish;
+  const flawless = completesLesson && attempt.correct && session.results.every((result) => result.correct);
+  const completedLessonIds = completesLesson
     ? Array.from(new Set([...state.completedLessonIds, session.lessonId]))
     : state.completedLessonIds;
-  const completedToday = finished && session.mode === "lesson" && state.lastLessonDate !== localDate(now);
+  const completedToday = completesLesson && state.lastLessonDate !== localDate(now);
   const streak = completedToday
     ? state.lastLessonDate === localDate(new Date(now.getTime() - 86_400_000))
       ? state.streak + 1
@@ -182,7 +197,11 @@ export function applyAnswer(
   return {
     state: {
       ...state,
-      xp: state.xp + (attempt.correct ? 10 : 0) + (finished && session.mode === "lesson" ? 20 : 0),
+      xp:
+        state.xp +
+        (attempt.correct ? 10 : 0) +
+        (completesLesson ? 20 : 0) +
+        (flawless ? 20 : 0),
       streak,
       lastLessonDate: completedToday ? localDate(now) : state.lastLessonDate,
       completedLessonIds,
@@ -210,4 +229,32 @@ export function isVerifiedMastery(item: MasteryState | undefined): boolean {
       item.evidenceTypes.length >= 2 &&
       item.unseenScenarioCorrect
   );
+}
+
+/**
+ * Put a prompt back at the front of the remaining queue. The match exercise
+ * re-queues itself after a wrong pairing so the player can still finish the
+ * pairs they know; the failed attempt stays on record.
+ */
+export function requeuePrompt(session: SessionState, exerciseId: string): SessionState {
+  const promptIds = [...session.promptIds];
+  const at = Math.min(Math.max(session.index, 0), promptIds.length);
+  promptIds.splice(at, 0, exerciseId);
+  return { ...session, promptIds };
+}
+
+/**
+ * Terms whose most recent attempt was wrong — the practice focus set.
+ * Derived from the attempt log so it needs no extra persisted field.
+ */
+export function recentMissTermIds(state: LearnerState): string[] {
+  const latest = new Map<string, boolean>();
+  for (const attempt of state.attempts) {
+    for (const conceptId of attempt.conceptIds) latest.set(conceptId, attempt.correct);
+  }
+  const missed: string[] = [];
+  for (const [conceptId, correct] of latest) {
+    if (!correct) missed.push(conceptId);
+  }
+  return missed;
 }
