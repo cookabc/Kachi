@@ -1,0 +1,8 @@
+SPDX-License-Identifier: AGPL-3.0-only
+
+Kachi program code is licensed under the GNU Affero General Public License,
+version 3 only. The authoritative license text is available at:
+https://www.gnu.org/licenses/agpl-3.0.html
+
+Before a public binary or hosted release, vendor the unmodified canonical AGPL
+text in this file and keep this SPDX identifier unchanged.

@@ -1,0 +1,17 @@
+{
+  "name": "@kachi/web",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build"
+  },
+  "dependencies": {
+    "@kachi/content-schema": "workspace:*",
+    "@kachi/domain": "workspace:*",
+    "@kachi/learning-engine": "workspace:*",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  }
+}

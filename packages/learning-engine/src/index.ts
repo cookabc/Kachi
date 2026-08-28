@@ -1,0 +1,213 @@
+import type {
+  AttemptEvent,
+  Concept,
+  Course,
+  Environment,
+  Exercise,
+  ExerciseType,
+  LearnerState,
+  MasteryState,
+  SessionState
+} from "@kachi/domain";
+
+export const ENGINE_VERSION = "0.1.0";
+export const REVIEW_INTERVAL_DAYS = [1, 3, 7, 14, 30, 60] as const;
+
+export function emptyLearnerState(): LearnerState {
+  return {
+    version: 1,
+    xp: 0,
+    streak: 0,
+    completedLessonIds: [],
+    seenConceptIds: [],
+    mastery: {},
+    attempts: []
+  };
+}
+
+export function pairIdForConcept(concept: Concept | undefined): string | undefined {
+  if (!concept?.mixUp) return undefined;
+  return [concept.id, concept.mixUp].sort().join("::");
+}
+
+export function getExercise(course: Course, exerciseId: string): Exercise {
+  for (const lesson of course.lessons) {
+    const found = lesson.prompts.find((prompt) => prompt.id === exerciseId);
+    if (found) return found;
+  }
+  throw new Error(`Unknown exercise: ${exerciseId}`);
+}
+
+export function startSession(course: Course, lessonId: string, environment: Environment): SessionState {
+  const lesson = course.lessons.find((item) => item.id === lessonId);
+  if (!lesson) throw new Error(`Unknown lesson: ${lessonId}`);
+
+  return {
+    lessonId,
+    mode: "lesson",
+    // Deliberately copy IDs: retry behavior must never mutate published content.
+    promptIds: lesson.prompts.map((prompt) => prompt.id),
+    index: 0,
+    results: [],
+    startedAt: environment.now().toISOString()
+  };
+}
+
+export function startPracticeSession(promptIds: string[], environment: Environment): SessionState {
+  if (!promptIds.length) throw new Error("Practice needs at least one prompt");
+  return {
+    lessonId: "practice",
+    mode: "practice",
+    promptIds: [...promptIds],
+    index: 0,
+    results: [],
+    startedAt: environment.now().toISOString()
+  };
+}
+
+export function currentExercise(course: Course, session: SessionState): Exercise | undefined {
+  const id = session.promptIds[session.index];
+  return id ? getExercise(course, id) : undefined;
+}
+
+export function isLessonUnlocked(state: LearnerState, course: Course, lessonId: string): boolean {
+  const index = course.lessons.findIndex((lesson) => lesson.id === lessonId);
+  if (index < 0) return false;
+  return index === 0 || state.completedLessonIds.includes(course.lessons[index - 1].id);
+}
+
+export function isCorrect(exercise: Exercise, answer: string | boolean): boolean {
+  if (exercise.type === "truefalse") return answer === exercise.answer;
+  if (exercise.type === "fill") return answer === exercise.answer;
+  if (exercise.type === "match") return answer === "matched";
+  if (typeof exercise.answer !== "number" || !exercise.options) return false;
+  return answer === exercise.options[exercise.answer]?.text;
+}
+
+function localDate(date: Date): string {
+  return date.toISOString().slice(0, 10);
+}
+
+function addDays(date: Date, days: number): string {
+  const next = new Date(date);
+  next.setUTCDate(next.getUTCDate() + days);
+  return next.toISOString();
+}
+
+function nextMastery(previous: MasteryState | undefined, attempt: AttemptEvent, isUnseenScenario: boolean): MasteryState | undefined {
+  if (!attempt.confusionPairId) return undefined;
+  const base: MasteryState = previous ?? {
+    confusionPairId: attempt.confusionPairId,
+    consecutiveCorrect: 0,
+    lapses: 0,
+    evidenceTypes: [],
+    unseenScenarioCorrect: false,
+    schedulerVersion: ENGINE_VERSION
+  };
+
+  if (!attempt.correct || attempt.hintUsed) {
+    return {
+      ...base,
+      consecutiveCorrect: 0,
+      lapses: base.lapses + 1,
+      lastReviewedAt: attempt.occurredAt,
+      dueAt: addDays(new Date(attempt.occurredAt), 1),
+      firstSeenAt: base.firstSeenAt ?? attempt.occurredAt
+    };
+  }
+
+  const consecutiveCorrect = Math.min(base.consecutiveCorrect + 1, REVIEW_INTERVAL_DAYS.length);
+  const interval = REVIEW_INTERVAL_DAYS[consecutiveCorrect - 1];
+  return {
+    ...base,
+    consecutiveCorrect,
+    evidenceTypes: base.evidenceTypes.includes(attempt.exerciseType)
+      ? base.evidenceTypes
+      : [...base.evidenceTypes, attempt.exerciseType],
+    unseenScenarioCorrect: base.unseenScenarioCorrect || isUnseenScenario,
+    firstSeenAt: base.firstSeenAt ?? attempt.occurredAt,
+    lastReviewedAt: attempt.occurredAt,
+    dueAt: addDays(new Date(attempt.occurredAt), interval),
+    schedulerVersion: ENGINE_VERSION
+  };
+}
+
+export function applyAnswer(
+  course: Course,
+  state: LearnerState,
+  session: SessionState,
+  answer: string | boolean,
+  environment: Environment,
+  hintUsed = false
+): { state: LearnerState; session: SessionState; attempt: AttemptEvent; finished: boolean } {
+  const exercise = currentExercise(course, session);
+  if (!exercise) throw new Error("Cannot answer a finished session");
+  const concept = course.concepts.find((item) => item.id === exercise.termId);
+  const now = environment.now();
+  const attempt: AttemptEvent = {
+    eventId: environment.eventId(),
+    deviceId: environment.deviceId,
+    contentVersion: course.contentVersion,
+    engineVersion: ENGINE_VERSION,
+    exerciseId: exercise.id,
+    conceptIds: exercise.termIds.filter((id) => course.concepts.some((conceptItem) => conceptItem.id === id)),
+    confusionPairId: pairIdForConcept(concept),
+    exerciseType: exercise.type,
+    answer: String(answer),
+    correct: isCorrect(exercise, answer),
+    hintUsed,
+    latencyMs: 0,
+    occurredAt: now.toISOString()
+  };
+  const prior = attempt.confusionPairId ? state.mastery[attempt.confusionPairId] : undefined;
+  const mastery = nextMastery(prior, attempt, Boolean(exercise.assessmentOnly && exercise.type === "scenario"));
+  const nextMasteryMap = mastery ? { ...state.mastery, [mastery.confusionPairId]: mastery } : state.mastery;
+  const seenConceptIds = Array.from(new Set([...state.seenConceptIds, ...attempt.conceptIds]));
+  const nextSession: SessionState = {
+    ...session,
+    index: session.index + 1,
+    results: [...session.results, attempt]
+  };
+  const finished = nextSession.index >= nextSession.promptIds.length;
+  const completedLessonIds = finished && session.mode === "lesson"
+    ? Array.from(new Set([...state.completedLessonIds, session.lessonId]))
+    : state.completedLessonIds;
+  const completedToday = finished && session.mode === "lesson" && state.lastLessonDate !== localDate(now);
+  const streak = completedToday
+    ? state.lastLessonDate === localDate(new Date(now.getTime() - 86_400_000))
+      ? state.streak + 1
+      : 1
+    : state.streak;
+
+  return {
+    state: {
+      ...state,
+      xp: state.xp + (attempt.correct ? 10 : 0) + (finished && session.mode === "lesson" ? 20 : 0),
+      streak,
+      lastLessonDate: completedToday ? localDate(now) : state.lastLessonDate,
+      completedLessonIds,
+      seenConceptIds,
+      mastery: nextMasteryMap,
+      attempts: [...state.attempts, attempt]
+    },
+    session: nextSession,
+    attempt,
+    finished
+  };
+}
+
+export function duePairIds(state: LearnerState, now: Date): string[] {
+  return Object.values(state.mastery)
+    .filter((item) => item.dueAt && new Date(item.dueAt).getTime() <= now.getTime())
+    .sort((a, b) => (a.dueAt ?? "").localeCompare(b.dueAt ?? ""))
+    .map((item) => item.confusionPairId);
+}
+
+export function isVerifiedMastery(item: MasteryState | undefined): boolean {
+  return Boolean(
+    item &&
+      item.consecutiveCorrect >= 3 &&
+      item.evidenceTypes.length >= 2 &&
+      item.unseenScenarioCorrect
+  );
+}
