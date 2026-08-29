@@ -84,8 +84,12 @@ export function isCorrect(exercise: Exercise, answer: string | boolean): boolean
   return answer === exercise.options[exercise.answer]?.text;
 }
 
+// "Today" follows the learner's wall clock (PRD §9), not UTC — a lesson
+// finished at 00:30 in UTC+8 belongs to the local day it was played in.
 function localDate(date: Date): string {
-  return date.toISOString().slice(0, 10);
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return `${date.getFullYear()}-${month}-${day}`;
 }
 
 function addDays(date: Date, days: number): string {
