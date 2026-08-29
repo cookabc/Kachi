@@ -622,6 +622,8 @@ input { font: inherit; color: inherit; }
   color: var(--green-dark);
 }
 .hero .sub { color: var(--ink-soft); margin-bottom: 18px; font-weight: 700; }
+.prac-hero .sub { color: var(--ink-soft); margin: 6px 0 18px; font-weight: 700; }
+.hero .sub, .prac-hero .sub, .tagline { text-wrap: balance; }
 .xp-card {
   background: #fff;
   border: 3px solid #FFF1B8;

@@ -114,7 +114,7 @@ export const UI: Record<Lang, UiText> = {
       settings: { label: "设置", aria: "设置" }
     },
     home: {
-      tagline: "读懂财经英语，先分清容易混淆的词。五分钟，没有投资建议。",
+      tagline: "分清易混的财经英语。五分钟，没有投资建议。",
       unit: (id) => `单元 ${id}`,
       upNext: "接下来 · ",
       missedNote: (n) => `有 ${n} 个术语等着复习——它们在「复习」页。`,
@@ -123,8 +123,8 @@ export const UI: Record<Lang, UiText> = {
     practice: {
       brand: "今日复习",
       title: "练掉混淆。",
-      missCopy: (n) => `你有 ${n} 个术语最近答错过。复习不会解锁路径。`,
-      noMissCopy: "还没有错题。先用第 1 单元练手。复习不会解锁路径。",
+      missCopy: (n) => `有 ${n} 个术语等着复习。复习不会解锁路径。`,
+      noMissCopy: "还没有错题。先练第 1 单元。",
       start: (n) => `开始 ${n} 题复习`
     },
     glossary: {
@@ -141,7 +141,7 @@ export const UI: Record<Lang, UiText> = {
     settings: {
       brand: "设置",
       title: "数据归你。",
-      copy: "学习记录只保存在这台设备的浏览器里：没有账号、没有广告、没有第三方分析。可随时导出成文件，或导入到其他设备。",
+      copy: "学习记录只存在这台设备的浏览器里。没有账号、广告或第三方分析。可随时导出或导入。",
       exportBtn: "导出学习数据",
       importBtn: "导入学习数据",
       contentNote: "课程以 Git 内容包发布；涉及税务、法规与金融工具的条目会标注适用范围与复核状态。",
@@ -188,7 +188,7 @@ export const UI: Record<Lang, UiText> = {
     },
     fail: {
       title: "爱心用完了。",
-      copy: "这一课的混淆坑了你。重试——爱心立刻补满，不用等。",
+      copy: "这一课的混淆坑了你。重试，爱心立刻补满。",
       retryLesson: "重试本课",
       retryPractice: "再来一轮",
       backToPath: "回到路径"
@@ -205,7 +205,7 @@ export const UI: Record<Lang, UiText> = {
       settings: { label: "Settings", aria: "Settings" }
     },
     home: {
-      tagline: "Read finance in English by telling the mix-ups apart. Five minutes. No advice.",
+      tagline: "Tell the mix-ups apart. Five minutes. No advice.",
       unit: (id) => `Unit ${id}`,
       upNext: "Up next · ",
       missedNote: (n) => `${n} term${n === 1 ? "" : "s"} waiting to be reviewed — they live in Practice.`,
@@ -214,8 +214,8 @@ export const UI: Record<Lang, UiText> = {
     practice: {
       brand: "Practice",
       title: "Drill the mix-up.",
-      missCopy: (n) => `You have ${n} term${n === 1 ? "" : "s"} with a recent miss. Practice does not unlock the path.`,
-      noMissCopy: "No misses yet. We'll use Unit 1 until you have mix-ups of your own. Practice does not unlock the path.",
+      missCopy: (n) => `${n} term${n === 1 ? "" : "s"} to review. Practice never unlocks the path.`,
+      noMissCopy: "No misses yet — we'll drill Unit 1.",
       start: (n) => `Start a ${n}-prompt round`
     },
     glossary: {
@@ -232,7 +232,7 @@ export const UI: Record<Lang, UiText> = {
     settings: {
       brand: "Settings",
       title: "Your data stays yours.",
-      copy: "Your learning record lives in this browser only: no account, no ads, no third-party analytics. Export it to a file any time, or import it on another device.",
+      copy: "Your record lives in this browser. No account, no ads, no analytics. Export or import any time.",
       exportBtn: "Export learning data",
       importBtn: "Import learning data",
       contentNote: "Courses ship as Git content packs; entries touching tax, regulation, and instruments carry scope and review status.",
@@ -279,7 +279,7 @@ export const UI: Record<Lang, UiText> = {
     },
     fail: {
       title: "Out of hearts.",
-      copy: "That mix-up got you. Retry — hearts refill now. No wait.",
+      copy: "That mix-up got you. Retry — hearts refill now.",
       retryLesson: "Retry lesson",
       retryPractice: "Retry practice",
       backToPath: "Back to the path"
