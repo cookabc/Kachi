@@ -31,7 +31,7 @@ pnpm dev
 pnpm check
 ```
 
-课程由 `content/packs/` 下的 Git 内容包提供。当前课程由旧原型机械迁移；需要重新生成时运行：
+课程由 `content/packs/` 下的 Git 内容包提供。当前课程为原生中文包（界面与讲解全中文，术语保留英文），由旧原型迁移并本地化；需要重新生成时运行：
 
 ```bash
 pnpm migrate:legacy-content
