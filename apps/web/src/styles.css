@@ -40,6 +40,7 @@ body {
     radial-gradient(circle at 94% 18%, rgba(28, 176, 246, .20), transparent 40%),
     var(--sky);
   min-height: 100dvh;
+  overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;
@@ -167,6 +168,7 @@ input { font: inherit; color: inherit; }
   gap: 22px;
   padding: 8px 0 16px;
   position: relative;
+  overflow-x: clip;
 }
 .path::before {
   content: "";
@@ -605,6 +607,7 @@ input { font: inherit; color: inherit; }
   flex: 1;
   min-height: 0;
   overflow-y: auto;
+  position: relative;
   display: flex;
   flex-direction: column;
   padding: 28px 22px calc(20px + env(safe-area-inset-bottom, 0px));
@@ -706,6 +709,13 @@ input { font: inherit; color: inherit; }
 }
 .prac-hero { padding: 28px 22px 20px; text-align: center; flex: 1; }
 .prac-hero h1 { font-family: var(--display); font-size: 30px; margin: 10px 0; font-weight: 800; letter-spacing: -.02em; }
+.confetti-layer {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 5;
+}
 .bit {
   position: absolute;
   left: 50%; top: 30%;
@@ -927,4 +937,16 @@ svg.icon { fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: 
   border-color: var(--green);
   background: #F3FFE6;
   color: var(--green-dark);
+}
+
+/* hide scrollbars — the phone frame scrolls by touch/wheel, no visible bars */
+.scroll, .hero, .prompt, .g-list {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.scroll::-webkit-scrollbar,
+.hero::-webkit-scrollbar,
+.prompt::-webkit-scrollbar,
+.g-list::-webkit-scrollbar {
+  display: none;
 }

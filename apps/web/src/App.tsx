@@ -105,7 +105,7 @@ function Confetti() {
     const timer = setTimeout(() => setBits([]), 1200);
     return () => clearTimeout(timer);
   }, []);
-  return <>{bits.map((style, i) => <i key={i} className="bit" style={style} />)}</>;
+  return <div className="confetti-layer">{bits.map((style, i) => <i key={i} className="bit" style={style} />)}</div>;
 }
 
 function App() {

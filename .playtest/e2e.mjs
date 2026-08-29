@@ -211,6 +211,8 @@ await page.waitForSelector('.path');
   check('S1 exactly one next node and 16 locked', nextCount === 1 && lockedCount === 16, `next=${nextCount} locked=${lockedCount}`);
   check('S1 header XP is 0', (await readXp()) === 0);
   check('S1 title is the Kachi app', (await page.title()) === 'Kachi — 财经英语学习');
+  const hLock = await page.evaluate(() => { const el = document.querySelector('.scroll'); el.scrollLeft = 999; return el.scrollLeft; });
+  check('S1 the path cannot scroll horizontally', hLock === 0, String(hLock));
   await shot('01-home-fresh');
 }
 
@@ -232,6 +234,8 @@ await page.waitForSelector('.path');
   check('S2 mix-up chips name hedge vs pledge', chips.includes('hedge vs pledge'), JSON.stringify(chips));
   check('S2 three path buttons offered', await page.$$eval('.hero .btn', (els) => els.length) === 3);
   check('S2 verdict stream holds 1 mispair wrong + rerun correct', verdicts.filter((v) => !v).length === 2, JSON.stringify(verdicts));
+  const heroLock = await page.evaluate(() => { const el = document.querySelector('.hero'); el.scrollLeft = 999; return el.scrollLeft; });
+  check('S2 the complete screen cannot scroll horizontally (confetti overflow locked)', heroLock === 0, String(heroLock));
   await shot('03-complete');
 
   // 练一练这些 -> focused practice round
