@@ -93,9 +93,28 @@ export async function exportLearnerData(): Promise<Blob> {
   ], { type: "application/json" });
 }
 
+// An imported file must carry a complete learner state: a partial one used to
+// slip past the version check and crash the next save (state.attempts.forEach).
+function isLearnerState(value: unknown): value is LearnerState {
+  if (!value || typeof value !== "object") return false;
+  const state = value as LearnerState;
+  return (
+    state.version === 1 &&
+    typeof state.xp === "number" &&
+    Number.isFinite(state.xp) &&
+    typeof state.streak === "number" &&
+    Number.isFinite(state.streak) &&
+    Array.isArray(state.completedLessonIds) &&
+    Array.isArray(state.seenConceptIds) &&
+    Array.isArray(state.attempts) &&
+    state.mastery !== undefined &&
+    typeof state.mastery === "object"
+  );
+}
+
 export async function importLearnerData(file: File): Promise<LearnerState> {
   const parsed = JSON.parse(await file.text()) as { schemaVersion?: number; learnerState?: LearnerState };
-  if (parsed.schemaVersion !== 1 || !parsed.learnerState || parsed.learnerState.version !== 1) {
+  if (parsed.schemaVersion !== 1 || !isLearnerState(parsed.learnerState)) {
     throw new Error("这不是兼容的 Kachi 学习数据文件。");
   }
   await saveLearnerState(parsed.learnerState);
