@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
   "packId": "hedge-or-pledge",
-  "contentVersion": "2026.08.28-legacy",
+  "contentVersion": "2026.08.29-zh-full",
   "locale": "zh-CN",
-  "generatedAt": "2026-08-28T08:04:17.387Z",
+  "generatedAt": "2026-08-29T13:00:00.000Z",
   "units": [
     {
       "id": 1,
@@ -12,23 +12,23 @@
     },
     {
       "id": 2,
-      "title": "A bigger bet",
-      "blurb": "Names for bets — including bets used as hedges."
+      "title": "更大的赌注",
+      "blurb": "给赌注起名字——包括那些被当作对冲用的赌注。"
     },
     {
       "id": 3,
-      "title": "Money in motion",
-      "blurb": "Size, the price of protection, hedges that miss."
+      "title": "钱的流动",
+      "blurb": "规模、保护的价格，以及落空的对冲。"
     },
     {
       "id": 4,
-      "title": "Markets and damage",
-      "blurb": "How books move, and where the other person fails you."
+      "title": "市场与伤害",
+      "blurb": "账本怎么动，对面的人在哪里让你受伤。"
     },
     {
       "id": 5,
-      "title": "How the rich actually do it",
-      "blurb": "The pattern, not a pitch. Tax, loans, and the ugly part."
+      "title": "富人实际怎么做",
+      "blurb": "是模式，不是推销。税务、贷款，以及难看的部分。"
     }
   ],
   "concepts": [
@@ -36,11 +36,11 @@
       "id": "hedge",
       "unit": 1,
       "term": "hedge",
-      "caption": "An umbrella over what you already own. You keep the stock - the put absorbs the crash.",
-      "definition": "Insurance on a bet you already have.",
-      "example": "You own $100,000 of stock and buy a put so a crash hurts less.",
+      "caption": "撑在你已有资产上的一把伞。股票你留着，崩盘由 put 吸收。",
+      "definition": "为已经持有的仓位买保险，而不是把它卖掉。",
+      "example": "你持有 $100,000 的股票，买入一张 put，崩盘时就不那么疼。",
       "mixUp": "pledge",
-      "mixUpWhy": "A hedge protects what you own. A pledge puts it up as collateral.",
+      "mixUpWhy": "hedge 保护你已有的仓位；pledge 把这个仓位押出去做担保。",
       "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "legacy"
@@ -49,11 +49,11 @@
       "id": "pledge",
       "unit": 1,
       "term": "pledge",
-      "caption": "You keep the shares, but they are on a leash: miss the loan and the bank takes them.",
-      "definition": "Put an asset up so a lender can take it if you don't pay.",
-      "example": "You pledge $1M of stock for a $700k loan. You still own the stock — until you don't pay.",
+      "caption": "股票还攥在手里，但已被拴上绳子：还不上贷款，银行就把股票牵走。",
+      "definition": "把资产押出去做担保；还不上钱时，贷方可以处置它。",
+      "example": "你把 $1M 的股票 pledge 出去借 $700k。股票还是你的——直到你还不上。",
       "mixUp": "hedge",
-      "mixUpWhy": "You still own it. Pledge = collateral. Sell = it's gone.",
+      "mixUpWhy": "股票还是你的。pledge = 押出担保；sell = 卖了就没了。",
       "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "legacy"
@@ -62,11 +62,11 @@
       "id": "collateral",
       "unit": 1,
       "term": "collateral",
-      "caption": "The pile the lender is allowed to grab if you stop paying.",
-      "definition": "The thing the lender can seize if you skip payments.",
-      "example": "The pledged stock is the collateral. Miss the loan, the bank takes the shares.",
+      "caption": "那堆贷方获准在你违约时搬走的东西。",
+      "definition": "借款人违约时，贷方可以拿走的那个资产。",
+      "example": "被押出去的股票就是 collateral。还不上贷款，银行就把股票收走。",
       "mixUp": "haircut",
-      "mixUpWhy": "Collateral is the asset. The haircut is how much they knock off its value before lending.",
+      "mixUpWhy": "collateral 是资产本身；haircut 是放款前对它打的折扣。",
       "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "legacy"
@@ -75,11 +75,11 @@
       "id": "haircut",
       "unit": 1,
       "term": "haircut",
-      "caption": "The discount: $1M of stock gets treated as $700k before anyone lends a cent.",
-      "definition": "The discount a lender applies to collateral before they'll lend against it.",
-      "example": "$1M stock, 30% haircut → they treat it as $700k. That's the max loan.",
+      "caption": "折扣：$1M 的股票在放款前只被当作 $700k。",
+      "definition": "贷方在放款前对抵押品价值的打折。",
+      "example": "$1M 的股票，30% 的 haircut → 按 $700k 计价。这就是贷款上限。",
       "mixUp": "margin",
-      "mixUpWhy": "Haircut is the discount on collateral. Margin is the cash cushion you must keep.",
+      "mixUpWhy": "haircut 是对抵押品的折扣；margin 是你必须留着的现金缓冲。",
       "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "legacy"
@@ -88,11 +88,11 @@
       "id": "margin",
       "unit": 1,
       "term": "margin",
-      "caption": "The cash cushion that has to stay in the account while the bet sits on top.",
-      "definition": "Cash or equity you must keep in the account as a cushion.",
-      "example": "Broker lets you buy $10k of stock with $5k cash. That $5k is margin.",
+      "caption": "赌注底下必须一直垫着的那层现金垫子。",
+      "definition": "维持仓位必须在账户里留着的现金或权益缓冲。",
+      "example": "券商允许你用 $5k 现金买 $10k 的股票。这 $5k 就是 margin。",
       "mixUp": "leverage",
-      "mixUpWhy": "Margin is the cushion. Leverage is the size of the bet that cushion supports.",
+      "mixUpWhy": "margin 是缓冲；leverage 是缓冲支撑的仓位大小。",
       "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "legacy"
@@ -101,11 +101,11 @@
       "id": "margin call",
       "unit": 1,
       "term": "margin call",
-      "caption": "The phone rings when the cushion is gone: post more cash, or get sold out.",
-      "definition": "The lender demanding more cash — or selling you out — because the cushion got too thin.",
-      "example": "Stock drops 40%. Collateral is now $600k against a $700k loan. The bank calls.",
+      "caption": "垫子被抽干时电话就响了：要么补钱，要么被卖掉。",
+      "definition": "缓冲太薄时，贷方要求补钱——或者直接把你卖出局。",
+      "example": "股票跌 40%。抵押品只剩 $600k，贷款却是 $700k。银行的电话来了。",
       "mixUp": "haircut",
-      "mixUpWhy": "The haircut was set at the start. A margin call happens later, when prices move against you.",
+      "mixUpWhy": "haircut 通常在开始时设定；margin call 发生在价格变动之后。",
       "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "legacy"
@@ -114,11 +114,11 @@
       "id": "leverage",
       "unit": 2,
       "term": "leverage",
-      "caption": "A small pile of your own cash holding up a much bigger bet.",
-      "definition": "Using borrowed money or derivatives to make a bigger bet than your cash.",
-      "example": "$10k of yours plus $40k borrowed = 5× leverage. A 10% drop wipes half your cash.",
+      "caption": "一小堆自己的现金，撑起一张大得多的赌注。",
+      "definition": "用借来的钱或衍生品，做出比你现金更大的赌注。",
+      "example": "$10k 自己的加 $40k 借的 = 5× 杠杆。跌 10% 就抹掉你一半现金。",
       "mixUp": "margin",
-      "mixUpWhy": "Leverage is the multiplier. Margin is the cushion that makes the multiplier possible.",
+      "mixUpWhy": "leverage 是倍数；margin 是让这个倍数成为可能的缓冲。",
       "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "legacy"
@@ -127,11 +127,11 @@
       "id": "derivative",
       "unit": 2,
       "term": "derivative",
-      "caption": "The contract is not the thing - its value just comes from the thing.",
-      "definition": "A contract whose value comes from something else — a stock, a rate, a barrel of oil.",
-      "example": "A put on Apple is a derivative. The put is not Apple stock; it just bets on Apple's price.",
+      "caption": "合约不是那个东西——它的价值只是来自那个东西。",
+      "definition": "价值来自另一种资产、利率或指数的合约。",
+      "example": "苹果股票的 put 是衍生品。put 不是苹果股票，它只是押注苹果的股价。",
       "mixUp": "option",
-      "mixUpWhy": "An option is one kind of derivative. Futures and swaps are derivatives too.",
+      "mixUpWhy": "option 只是衍生品的一种；futures 和 swap 也是。股票本身不是。",
       "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "legacy"
@@ -140,11 +140,11 @@
       "id": "option",
       "unit": 2,
       "term": "option",
-      "caption": "A ticket you can tear up: the right to buy or sell, never the duty.",
-      "definition": "The right, not the obligation, to buy or sell something at a set price.",
-      "example": "Pay $3 for the right to sell a $100 stock at $90. That's an option. You can walk away.",
+      "caption": "一张可以撕掉的票：买卖的权利，绝不是义务。",
+      "definition": "按约定价格买入或卖出的权利，而不是义务。",
+      "example": "花 $3 买下以 $90 卖出 $100 股票的权利。这就是 option，你可以反悔。",
       "mixUp": "futures",
-      "mixUpWhy": "An option you can abandon. A futures contract you must settle.",
+      "mixUpWhy": "option 可以放弃；futures 通常必须结算。",
       "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "legacy"
@@ -153,11 +153,11 @@
       "id": "put",
       "unit": 2,
       "term": "put",
-      "caption": "The right to sell at a floor price. It pays when the price falls.",
-      "definition": "An option to sell at a set price. Pays off when the thing falls.",
-      "example": "Stock at $100. A $90 put pays if it drops below $90. Crash insurance if you own it.",
+      "caption": "以保底价卖出的权利。价格下跌时它赚钱。",
+      "definition": "按约定价格卖出的权利。标的价格下跌时通常更有价值。",
+      "example": "股票 $100。一张 $90 的 put 在跌破 $90 后开始赔付。对持有者来说就是崩盘保险。",
       "mixUp": "call",
-      "mixUpWhy": "Put = right to sell (you want it down). Call = right to buy (you want it up).",
+      "mixUpWhy": "put 是卖出权（你希望它跌）；call 是买入权（你希望它涨）。",
       "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "legacy"
@@ -166,11 +166,11 @@
       "id": "call",
       "unit": 2,
       "term": "call",
-      "caption": "The right to buy at a set price. It pays when the price rises.",
-      "definition": "An option to buy at a set price. Pays off when the thing rises.",
-      "example": "Stock at $100. A $110 call pays if it rips above $110. That's a bullish bet.",
+      "caption": "以约定价格买入的权利。价格上涨时它赚钱。",
+      "definition": "按约定价格买入的权利。标的价格上涨时通常更有价值。",
+      "example": "股票 $100。一张 $110 的 call 在冲破 $110 后开始赔付。那是看涨的赌注。",
       "mixUp": "put",
-      "mixUpWhy": "Call = right to buy (up). Put = right to sell (down).",
+      "mixUpWhy": "call 是买入权（涨）；put 是卖出权（跌）。",
       "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "legacy"
@@ -179,11 +179,11 @@
       "id": "short selling",
       "unit": 2,
       "term": "short selling",
-      "caption": "Sell borrowed shares today, buy them back tomorrow - cheaper, you hope.",
-      "definition": "Borrow shares, sell them now, hope to buy back cheaper later.",
-      "example": "Borrow 100 shares, sell at $50, buy back at $30, return them. You keep $20. If it goes to $80, you owe.",
+      "caption": "今天把借来的股票卖掉，明天低价买回来——但愿吧。",
+      "definition": "先借入并卖出资产，期待日后以更低价格买回归还。",
+      "example": "借 100 股，$50 卖出，$30 买回归还，赚 $20。涨到 $80 的话，亏的是你。",
       "mixUp": "put",
-      "mixUpWhy": "A put is a limited-loss down bet. A short can lose without a ceiling if the stock rips.",
+      "mixUpWhy": "put 是损失有上限的看跌赌注；卖空的亏损没有天花板。",
       "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "legacy"
@@ -192,11 +192,11 @@
       "id": "liquidity",
       "unit": 3,
       "term": "liquidity",
-      "caption": "A wide exit: you can sell fast without shoving the price around.",
-      "definition": "How fast you can sell without moving the price much.",
-      "example": "Apple stock is liquid — dump $1M and the price barely budges. Your cousin's startup is not.",
+      "caption": "一个宽敞的出口：你能快速卖出，还不用把价格撞得到处跑。",
+      "definition": "在不显著冲击价格的情况下快速买卖的能力。",
+      "example": "苹果股票是流动的——砸 $1M 出去价格几乎不动。你表弟的创业公司股票就不是了。",
       "mixUp": "notional",
-      "mixUpWhy": "Liquidity is ease of exit. Notional is the face size of a contract.",
+      "mixUpWhy": "liquidity 是退出难易；notional 是合约面值规模。",
       "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "legacy"
@@ -205,11 +205,11 @@
       "id": "notional",
       "unit": 3,
       "term": "notional",
-      "caption": "The face size printed on the contract - not the price you paid for it.",
-      "definition": "The face amount a derivative is written on — not what you paid.",
-      "example": "An option on $100,000 of stock might cost $2,000. Notional is $100k. Premium is $2k.",
+      "caption": "印在合约上的面值——不是你付的价钱。",
+      "definition": "衍生合约所对应标的面值规模，不等于你实际支付的金额。",
+      "example": "一份关于 $100,000 股票的期权可能只花 $2,000。notional 是 $100k，premium 是 $2k。",
       "mixUp": "premium",
-      "mixUpWhy": "Notional is the size of the underlying. Premium is what you paid for the contract.",
+      "mixUpWhy": "notional 是标的规模；premium 是你为合约付出的价格。",
       "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "legacy"
@@ -218,11 +218,11 @@
       "id": "premium",
       "unit": 3,
       "term": "premium",
-      "caption": "The ticket price of the contract. This is what protection costs.",
-      "definition": "What you pay for an option — the price of the insurance.",
-      "example": "That put costs $3 a share. The $3 is the premium.",
+      "caption": "合约的票价。这就是保护的价格。",
+      "definition": "购买期权这类合约所支付的价格。",
+      "example": "那张 put 每股 $3。这 $3 就是 premium。",
       "mixUp": "yield",
-      "mixUpWhy": "Premium is the price of the contract. Yield is what an investment pays you over time.",
+      "mixUpWhy": "premium 是合约的价格；yield 是投资随时间付给你的收益率。",
       "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "legacy"
@@ -231,11 +231,11 @@
       "id": "yield",
       "unit": 3,
       "term": "yield",
-      "caption": "What the investment pays you, measured as a percent of its price.",
-      "definition": "What an investment pays you, as a percent of its price.",
-      "example": "A $100 bond that pays $5 a year yields 5%. Price falls to $50, yield is 10%.",
+      "caption": "投资付给你的钱，按价格的百分比计。",
+      "definition": "投资带来的收益，相对于其价格的百分比。",
+      "example": "$100 的债券每年付 $5，yield 是 5%。价格跌到 $50，yield 变成 10%。",
       "mixUp": "duration",
-      "mixUpWhy": "Yield is the income rate. Duration is how much the price jumps when rates move.",
+      "mixUpWhy": "yield 是收益率；duration 是利率变化时价格的敏感度。",
       "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "legacy"
@@ -244,11 +244,11 @@
       "id": "duration",
       "unit": 3,
       "term": "duration",
-      "caption": "The rate bruise: how hard the price jumps when interest rates move.",
-      "definition": "How sensitive a bond's price is to interest-rate changes, in years.",
-      "example": "A 10-year duration bond drops about 10% if rates rise 1%. That's the rate bruise.",
+      "caption": "利率淤青：利率一动，价格跳多狠。",
+      "definition": "债券价格对利率变化的敏感程度，以年计。",
+      "example": "久期 10 年的债券，利率升 1% 价格大约跌 10%。这就是利率淤青。",
       "mixUp": "yield",
-      "mixUpWhy": "Duration is the bruise from rate moves. Yield is the coupon you collect.",
+      "mixUpWhy": "duration 关心利率冲击下的价格变化；yield 关心你收到的票息。",
       "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "legacy"
@@ -257,11 +257,11 @@
       "id": "basis risk",
       "unit": 3,
       "term": "basis risk",
-      "caption": "Two lines that were supposed to move together, drifting apart.",
-      "definition": "When your hedge doesn't move 1-for-1 with what you were trying to protect.",
-      "example": "You hedge airline stock with an oil future. Oil falls, the stock doesn't. The hedge missed.",
+      "caption": "两条本该同步的线，慢慢漂开了。",
+      "definition": "你的对冲工具和被保护对象没有同步变化的风险。",
+      "example": "你用石油期货对冲航空公司股票。油价崩了，票价没动。对冲落空了。",
       "mixUp": "hedge",
-      "mixUpWhy": "A hedge is the protection. Basis risk is the gap when that protection doesn't track.",
+      "mixUpWhy": "hedge 是保护动作；basis risk 是保护没有贴合的那道缝。",
       "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "legacy"
@@ -270,11 +270,11 @@
       "id": "long",
       "unit": 4,
       "term": "long",
-      "caption": "You own it and you want it higher.",
-      "definition": "You own it, or you're betting it goes up.",
-      "example": "You bought 50 shares. You're long. You want the price higher.",
+      "caption": "你拥有它，并且希望它涨。",
+      "definition": "你持有资产，或者押注它上涨。",
+      "example": "你买了 50 股。你是 long。你希望价格更高。",
       "mixUp": "short selling",
-      "mixUpWhy": "Long = you want it up. Short = you want it down.",
+      "mixUpWhy": "long 希望上涨；short 通常希望下跌。",
       "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "legacy"
@@ -283,11 +283,11 @@
       "id": "volatility",
       "unit": 4,
       "term": "volatility",
-      "caption": "The weather report: how hard the price swings, not where it ends up.",
-      "definition": "How violently the price swings — the weather, not the direction.",
-      "example": "A stock that rips 8% some days is more volatile than a utility that moves 0.3%.",
+      "caption": "天气预报：价格摆得多狠，而不是往哪边结束。",
+      "definition": "价格上下摆动的幅度与剧烈程度，而不是方向。",
+      "example": "有些日子暴涨 8% 的股票，比每天只动 0.3% 的公用事业股波动大得多。",
       "mixUp": "diversification",
-      "mixUpWhy": "Volatility is how hard one thing swings. Diversification is owning several so one swing doesn't sink you.",
+      "mixUpWhy": "volatility 描述单一资产怎么摆；diversification 是组合层面的风险管理。",
       "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "legacy"
@@ -296,11 +296,11 @@
       "id": "diversification",
       "unit": 4,
       "term": "diversification",
-      "caption": "Many baskets, so one dropped basket does not take the eggs.",
-      "definition": "Owning different things so one disaster doesn't take the whole pile.",
-      "example": "20 stocks across 5 industries vs. your whole net worth in one employer.",
+      "caption": "多几个篮子，摔了一个篮子不至于砸了全部鸡蛋。",
+      "definition": "持有不同的资产，让单一灾难不至于吞掉整堆积蓄。",
+      "example": "20 只股票横跨 5 个行业，对比全部身家压在一家雇主的股票上。",
       "mixUp": "hedge",
-      "mixUpWhy": "Diversification spreads bets. A hedge is insurance on a bet you already have.",
+      "mixUpWhy": "diversification 是分散下注；hedge 是给你已有的某一注买保险。",
       "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "legacy"
@@ -309,11 +309,11 @@
       "id": "counterparty",
       "unit": 4,
       "term": "counterparty",
-      "caption": "The person standing on the other side of the contract, owing you.",
-      "definition": "The other person in the contract — the one who has to pay you.",
-      "example": "You bought a put from Bank X. Bank X is your counterparty. If they fail, the put is a napkin.",
+      "caption": "站在合约另一边、欠着你的那个人。",
+      "definition": "合约另一端、对你负有履约义务的一方。",
+      "example": "你的 put 是从 X 银行买的。X 银行就是你的 counterparty。它倒了，那张 put 就是一张餐巾纸。",
       "mixUp": "default",
-      "mixUpWhy": "Counterparty is who sits across from you. Default is them failing to pay.",
+      "mixUpWhy": "counterparty 是『是谁』；default 是『它没履约』。",
       "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "legacy"
@@ -322,11 +322,11 @@
       "id": "default",
       "unit": 4,
       "term": "default",
-      "caption": "The promise snaps: the payment they owed never arrives.",
-      "definition": "Not paying what you owe, on a loan or a contract.",
-      "example": "The company misses a bond payment. That's default. Bondholders may seize assets.",
+      "caption": "承诺断了：该付的钱没有到。",
+      "definition": "未能按合同支付或履行义务。",
+      "example": "公司错过了一次债券付息。这就是 default。债券持有人可能接管资产。",
       "mixUp": "mark-to-market",
-      "mixUpWhy": "Default is a missed payment. Mark-to-market is just re-pricing the position while it's still alive.",
+      "mixUpWhy": "default 是没履约；mark-to-market 只是给还活着的仓位重新定价。",
       "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "legacy"
@@ -335,11 +335,11 @@
       "id": "mark-to-market",
       "unit": 4,
       "term": "mark-to-market",
-      "caption": "The price tag gets rewritten at today's number - sold or not.",
-      "definition": "Re-pricing a position at today's market, even if you haven't sold.",
-      "example": "Your $1M pledge is now worth $600k. The loan is marked to market. That's when the call comes.",
+      "caption": "价格标签按今天的数字重写——卖没卖都一样。",
+      "definition": "用当前市场价格重新评估未平仓头寸。",
+      "example": "你 $1M 的质押股票现在值 $600k。贷款被 mark-to-market。追缴就是从这里来的。",
       "mixUp": "default",
-      "mixUpWhy": "Mark-to-market is a re-price. Default is a broken promise. You can be marked down and still paying.",
+      "mixUpWhy": "mark-to-market 只是重新定价；default 是真的没履约。被减记不代表违约。",
       "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "legacy"
@@ -348,11 +348,11 @@
       "id": "securities-backed loan",
       "unit": 5,
       "term": "securities-backed loan",
-      "caption": "Your portfolio, pledged for cash - with a nicer name on the term sheet.",
-      "definition": "A loan that uses your portfolio as collateral. You keep the shares.",
-      "example": "$10M stock, 30% haircut, $7M loan. You didn't sell, so you didn't trigger capital gains — yet.",
+      "caption": "你的投资组合被押出去换现金——条款书上写了个更好听的名字。",
+      "definition": "以证券组合为担保取得的贷款，通常仍持有证券。",
+      "example": "$10M 的股票，30% 的 haircut，贷 $7M。你没卖，所以还没触发资本利得——目前。",
       "mixUp": "pledge",
-      "mixUpWhy": "It's a pledge of securities for a loan. Pledge is the move; this is the product with a nicer name.",
+      "mixUpWhy": "它就是把证券 pledge 出去的贷款。pledge 是动作，这个是给动作起了个更好听名字的产品。",
       "sourceIds": [],
       "risk": "jurisdictional",
       "jurisdiction": "US context in legacy content",
@@ -362,11 +362,11 @@
       "id": "capital gains",
       "unit": 5,
       "term": "capital gains",
-      "caption": "The tax bill that only appears when you actually sell.",
-      "definition": "The taxable profit when you sell an asset for more than you paid.",
-      "example": "Bought at $1M, sell at $4M. $3M is a capital gain. A loan is not a sale.",
+      "caption": "只有当你真的卖出时才出现的税单。",
+      "definition": "出售资产价格高于成本时产生的应税收益。",
+      "example": "$1M 买的，$4M 卖的。$3M 是 capital gain。贷款不是卖出。",
       "mixUp": "buy-borrow-die",
-      "mixUpWhy": "Capital gains hit when you sell. Buy-borrow-die is the pattern of never selling so the tax doesn't trigger.",
+      "mixUpWhy": "capital gains 在卖出时触发。buy-borrow-die 描述的正是『永不卖出』来避开它的模式。",
       "sourceIds": [],
       "risk": "jurisdictional",
       "jurisdiction": "US context in legacy content",
@@ -376,11 +376,11 @@
       "id": "buy-borrow-die",
       "unit": 5,
       "term": "buy-borrow-die",
-      "caption": "Buy, borrow against it, never sell. The pattern, not advice.",
-      "definition": "Buy assets, borrow against them to spend, hold until death so heirs may get a stepped-up basis. A tax pattern — not a plan we recommend.",
-      "example": "Owns $2B of stock, borrows $20M a year against it, never sells. A crash can still force a sale.",
+      "caption": "买入、押着借钱、永不卖出。这是模式描述，不是建议。",
+      "definition": "买入资产，押着借钱消费，持有至去世让继承人可能获得成本基础重置。一种税务模式——不是我们推荐的做法。",
+      "example": "某人持有几十亿的集中持仓，每年押着借 $20M 过日子，永不卖出。一次崩盘仍然可能强制卖出。",
       "mixUp": "securities-backed loan",
-      "mixUpWhy": "A securities-backed loan is the borrowing tool. Buy-borrow-die is the whole life-cycle pattern that uses that tool.",
+      "mixUpWhy": "securities-backed loan 是借钱工具；buy-borrow-die 是使用这套工具的整个人生周期模式。",
       "sourceIds": [],
       "risk": "jurisdictional",
       "jurisdiction": "US context in legacy content",
@@ -390,11 +390,11 @@
       "id": "futures",
       "unit": 5,
       "term": "futures",
-      "caption": "A promise with a date on it. Come December, you settle. No walk-away.",
-      "definition": "A contract to buy or sell something at a set price on a set date — obligation, not a right.",
-      "example": "Agree now to buy 1,000 barrels at $80 in December. Come December, you settle. You cannot walk away like an option.",
+      "caption": "一份标着日期的承诺。到了十二月就得结算，没有反悔。",
+      "definition": "在约定日期按约定价格买卖的义务型合约。",
+      "example": "现在约定十二月以 $80 买 1,000 桶油。到了十二月就结算。你不能像 option 那样走开。",
       "mixUp": "option",
-      "mixUpWhy": "Futures are a promise you must keep. An option is a right you can abandon.",
+      "mixUpWhy": "futures 是必须履行的承诺；option 是可以放弃的权利。",
       "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "legacy"
@@ -403,11 +403,11 @@
       "id": "swap",
       "unit": 5,
       "term": "swap",
-      "caption": "Two payment streams crossing: fixed on one side, floating on the other.",
-      "definition": "Two parties exchange cash flows — often a fixed rate for a floating one.",
-      "example": "You pay 4% fixed, receive SOFR. If rates jump, the swap pays you. That's a rate hedge, not a loan.",
+      "caption": "两股现金流交叉而过：一边固定，一边浮动。",
+      "definition": "双方在一段时间内交换现金流的合约，常见的是固定利率换浮动利率。",
+      "example": "你付 4% 固定，收 SOFR 浮动。利率暴涨时这份合约赔你。那是利率 hedge，不是贷款。",
       "mixUp": "futures",
-      "mixUpWhy": "A swap is an ongoing exchange of payments. A future is one settlement on one date.",
+      "mixUpWhy": "swap 是持续的现金流交换；future 是某一日的单次结算。",
       "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "legacy"
@@ -417,7 +417,7 @@
     {
       "id": "u1l1",
       "unit": 1,
-      "title": "Two moves",
+      "title": "两个动作",
       "icon": "🌿",
       "review": false,
       "prompts": [
@@ -428,27 +428,27 @@
           "termIds": [
             "hedge"
           ],
-          "stem": "What does hedge mean?",
+          "stem": "hedge 是什么意思？",
           "options": [
             {
-              "text": "Insurance on a bet you already have.",
+              "text": "给你已经持有的仓位买保险。",
               "art": "hedge"
             },
             {
-              "text": "Putting an asset up so a lender can take it.",
+              "text": "把资产交出去，还不上钱时贷方可以拿走它。",
               "art": "pledge"
             },
             {
-              "text": "Selling everything so you cannot lose.",
+              "text": "全卖掉，这样就再也不会亏。",
               "art": "sell"
             },
             {
-              "text": "A promise to buy more if it drops.",
+              "text": "答应自己跌了就加仓。",
               "art": "long"
             }
           ],
           "answer": 0,
-          "why": "A hedge protects a position you already have. A pledge puts that position up as collateral."
+          "why": "hedge 保护你已有的仓位；pledge 把这个仓位押出去做担保。"
         },
         {
           "id": "u1l1b",
@@ -457,27 +457,27 @@
           "termIds": [
             "pledge"
           ],
-          "stem": "What does pledge mean here?",
+          "stem": "这里的 pledge 是什么意思？",
           "options": [
             {
-              "text": "Put an asset up so a lender can seize it if you don't pay.",
+              "text": "把资产押给贷方，还不上钱时它会被拿走。",
               "art": "pledge"
             },
             {
-              "text": "Buy insurance on a stock you own.",
+              "text": "给你持有的股票买保险。",
               "art": "hedge"
             },
             {
-              "text": "Sell the stock and hope to buy it back cheaper.",
+              "text": "把股票卖掉，指望以后低价买回来。",
               "art": "short selling"
             },
             {
-              "text": "The pile of cash a broker holds as a cushion.",
+              "text": "券商替你垫着的那堆现金。",
               "art": "margin"
             }
           ],
           "answer": 0,
-          "why": "You still own it. Pledge = collateral. Sell = it's gone."
+          "why": "股票还是你的。pledge = 押出担保；sell = 卖了就没了。"
         },
         {
           "id": "u1l1c",
@@ -486,9 +486,9 @@
           "termIds": [
             "pledge"
           ],
-          "stem": "Pledging stock means you sold it.",
+          "stem": "把股票 pledge 出去，等于把它卖了。",
           "answer": false,
-          "why": "You still own it. Pledge = collateral. Sell = it's gone."
+          "why": "股票还是你的。pledge = 押出担保；sell = 卖了就没了。"
         },
         {
           "id": "u1l1d",
@@ -497,7 +497,7 @@
           "termIds": [
             "hedge"
           ],
-          "story": "You own $200k of stock and worry about a crash. Buying a put is a ____.",
+          "story": "你持有 $200k 的股票，担心崩盘。买入一张 put，就是一个 ____。",
           "bank": [
             "hedge",
             "pledge",
@@ -505,7 +505,7 @@
             "haircut"
           ],
           "answer": "hedge",
-          "why": "A put on stock you already own is a hedge. A pledge would be using those shares as loan collateral."
+          "why": "给你已持有的股票买 put 是 hedge；pledge 则是把这些股票押出去做贷款担保。"
         },
         {
           "id": "u1l1e",
@@ -514,7 +514,7 @@
           "termIds": [
             "pledge"
           ],
-          "story": "You need cash but don't want to sell. You ____ the shares to a bank for a loan.",
+          "story": "你需要现金，但不想卖股票。你把这些股票 ____ 给银行换一笔贷款。",
           "bank": [
             "pledge",
             "hedge",
@@ -522,7 +522,7 @@
             "yield"
           ],
           "answer": "pledge",
-          "why": "You still own it. Pledge = collateral. Hedge = protection, not a loan."
+          "why": "股票还是你的。pledge = 押出担保；hedge = 买保护，不是借钱。"
         },
         {
           "id": "u1l1f",
@@ -537,25 +537,25 @@
             {
               "id": "hedge",
               "left": "hedge",
-              "right": "Insurance on a position you own"
+              "right": "给你持有的仓位上保险"
             },
             {
               "id": "pledge",
               "left": "pledge",
-              "right": "Put the asset up for a loan"
+              "right": "把资产押出去换贷款"
             },
             {
               "id": "sell",
               "left": "sell",
-              "right": "It's gone — you don't own it"
+              "right": "已经卖掉了——它不再是你的"
             },
             {
               "id": "put_u1intro",
               "left": "a put",
-              "right": "The contract that pays in a crash"
+              "right": "崩盘时会赔付的那张合约"
             }
           ],
-          "why": "Hedge protects. Pledge borrows against. The put is the insurance contract. Sell means you left."
+          "why": "hedge 保护，pledge 押钱，put 是保险合约，sell 表示你已经离场。"
         },
         {
           "id": "u1l1g",
@@ -564,8 +564,8 @@
           "termIds": [
             "hedge"
           ],
-          "story": "You own 1,000 shares. You buy a contract that pays if they crash. You still hold the shares.",
-          "stem": "What did you do?",
+          "story": "你持有 1,000 股。你买了一张在股价崩盘时会赔付的合约。股票你一股没卖。",
+          "stem": "你做的是哪个动作？",
           "options": [
             {
               "text": "Hedge",
@@ -580,12 +580,12 @@
               "art": "short selling"
             },
             {
-              "text": "Take out a margin loan",
+              "text": "用 margin 贷款",
               "art": "margin"
             }
           ],
           "answer": 0,
-          "why": "You kept the stock and bought protection. That's a hedge, not a pledge."
+          "why": "股票留着、买了保护，这是 hedge，不是 pledge。"
         },
         {
           "id": "u1l1h",
@@ -594,8 +594,8 @@
           "termIds": [
             "pledge"
           ],
-          "story": "You own 1,000 shares. A bank lends you cash and can take the shares if you miss payments. You still get dividends — for now.",
-          "stem": "What did you do?",
+          "story": "你持有 1,000 股。银行借你现金，还不上时可以拿走这些股票。分红你照拿——暂时。",
+          "stem": "你做的是哪个动作？",
           "options": [
             {
               "text": "Pledge",
@@ -615,7 +615,7 @@
             }
           ],
           "answer": 0,
-          "why": "You still own it. Pledge = collateral. A hedge would be buying protection, not borrowing."
+          "why": "股票还是你的。pledge = 押出担保；hedge 是买保护，不是借钱。"
         },
         {
           "id": "u1l1i",
@@ -624,9 +624,9 @@
           "termIds": [
             "hedge"
           ],
-          "stem": "A hedge is the same as pledging your shares for a loan.",
+          "stem": "hedge 和把股票押给银行换贷款，是一回事。",
           "answer": false,
-          "why": "Opposite moves. Hedge = protect. Pledge = borrow against. Same stock, different fork."
+          "why": "正好相反。hedge = 保护；pledge = 押股票借钱。同一批股票，两条岔路。"
         },
         {
           "id": "u1l1j",
@@ -635,34 +635,34 @@
           "termIds": [
             "pledge"
           ],
-          "stem": "You own stock. You want cash without selling. You would:",
+          "stem": "你持有股票，想要现金但不想卖。你会：",
           "options": [
             {
-              "text": "Pledge it as collateral for a loan.",
+              "text": "把它 pledge 出去做贷款担保。",
               "art": "pledge"
             },
             {
-              "text": "Buy a put.",
+              "text": "买一张 put。",
               "art": "put"
             },
             {
-              "text": "Short the same stock.",
+              "text": "做空这只股票。",
               "art": "short selling"
             },
             {
-              "text": "Wait for a margin call.",
+              "text": "等着 margin call。",
               "art": "margin call"
             }
           ],
           "answer": 0,
-          "why": "Cash without selling is a pledge. A put is crash insurance, not a withdrawal."
+          "why": "不卖也能拿到现金，是 pledge。put 是崩盘保险，取不出钱。"
         }
       ]
     },
     {
       "id": "u1l2",
       "unit": 1,
-      "title": "Collateral & haircuts",
+      "title": "抵押品与折扣",
       "icon": "✂️",
       "review": false,
       "prompts": [
@@ -673,27 +673,27 @@
           "termIds": [
             "collateral"
           ],
-          "stem": "What is collateral?",
+          "stem": "collateral 是什么？",
           "options": [
             {
-              "text": "The thing the lender can seize if you skip payments.",
+              "text": "还不上钱时贷方可以拿走的那个资产。",
               "art": "collateral"
             },
             {
-              "text": "The discount the bank knocks off before lending.",
+              "text": "银行放款前先打掉的折扣。",
               "art": "haircut"
             },
             {
-              "text": "Insurance on a bet you already have.",
+              "text": "给你已有的赌注买保险。",
               "art": "hedge"
             },
             {
-              "text": "The extra cash a broker demands after a drop.",
+              "text": "大跌之后券商追要的额外现金。",
               "art": "margin call"
             }
           ],
           "answer": 0,
-          "why": "Collateral is the asset. The haircut is how much they knock off its value before lending."
+          "why": "collateral 是资产本身；haircut 是放款前打掉的折扣。"
         },
         {
           "id": "u1l2b",
@@ -702,27 +702,27 @@
           "termIds": [
             "haircut"
           ],
-          "stem": "What is a haircut here — not the salon?",
+          "stem": "这里的 haircut 指的是什么？（不是理发）",
           "options": [
             {
-              "text": "The discount a lender applies to collateral before they'll lend against it.",
+              "text": "贷方在放款前对抵押品打的折扣。",
               "art": "haircut"
             },
             {
-              "text": "A fee for selling your shares.",
+              "text": "卖股票时要付的手续费。",
               "art": "sell"
             },
             {
-              "text": "The cash cushion you must keep in a brokerage account.",
+              "text": "券商账户里必须留着的现金缓冲。",
               "art": "margin"
             },
             {
-              "text": "When the bank already sold 30% of your stock.",
+              "text": "银行已经把你 30% 的股票卖掉了。",
               "art": "sell"
             }
           ],
           "answer": 0,
-          "why": "Haircut is the discount on collateral. Margin is the cash cushion you must keep."
+          "why": "haircut 是对抵押品的折扣；margin 是你必须留着的现金缓冲。"
         },
         {
           "id": "u1l2c",
@@ -731,7 +731,7 @@
           "termIds": [
             "haircut"
           ],
-          "story": "$1M of stock, 30% ____ → the bank treats it as $700k. That's the max loan.",
+          "story": "$1M 的股票，30% 的 ____ → 银行按 $700k 计价。这就是贷款上限。",
           "bank": [
             "haircut",
             "margin",
@@ -739,7 +739,7 @@
             "yield"
           ],
           "answer": "haircut",
-          "why": "The 30% is the haircut — a discount, not a sale. You still own the $1M pile, with a $700k claim on it."
+          "why": "30% 是 haircut——折扣，不是卖出。$1M 还是你的，只是银行只肯借 $700k。"
         },
         {
           "id": "u1l2d",
@@ -748,7 +748,7 @@
           "termIds": [
             "collateral"
           ],
-          "story": "The pledged stock is the ____. Miss the loan, the bank takes the shares.",
+          "story": "被押出去的股票就是 ____。还不上贷款，银行就拿走这些股票。",
           "bank": [
             "collateral",
             "haircut",
@@ -756,7 +756,7 @@
             "notional"
           ],
           "answer": "collateral",
-          "why": "Collateral is the asset they can seize. Haircut is only the discount they applied on day one."
+          "why": "collateral 是他们能拿走的资产；haircut 只是第一天打过的折扣。"
         },
         {
           "id": "u1l2e",
@@ -765,8 +765,8 @@
           "termIds": [
             "haircut"
           ],
-          "story": "Private bank: you show $1M of listed stock. They will not lend $1M. They knock 30% off and offer $700k.",
-          "stem": "That 30% knock is called a:",
+          "story": "私人银行：你亮出 $1M 的上市股票。他们不肯借 $1M，先砍掉 30%，只肯借 $700k。",
+          "stem": "这个 30% 的折扣叫：",
           "options": [
             {
               "text": "Haircut",
@@ -786,7 +786,7 @@
             }
           ],
           "answer": 0,
-          "why": "Haircut is set at the start. A margin call is the later panic when prices move."
+          "why": "haircut 在第一天就定好了；margin call 是之后价格变动时的追缴。"
         },
         {
           "id": "u1l2f",
@@ -795,9 +795,9 @@
           "termIds": [
             "haircut"
           ],
-          "stem": "A 30% haircut means the bank already sold 30% of your shares.",
+          "stem": "30% 的 haircut 意味着银行已经卖掉你 30% 的股票。",
           "answer": false,
-          "why": "Nobody sold anything. They just won't lend against the full sticker price. You still own all of it."
+          "why": "谁都没卖。他们只是不肯按原价足额放款。股票全还是你的。"
         },
         {
           "id": "u1l2g",
@@ -812,25 +812,25 @@
             {
               "id": "collateral",
               "left": "collateral",
-              "right": "The asset they can take"
+              "right": "他们能拿走的资产"
             },
             {
               "id": "haircut",
               "left": "haircut",
-              "right": "Discount before they lend"
+              "right": "放款前先打的折扣"
             },
             {
               "id": "pledge",
               "left": "pledge",
-              "right": "Putting the asset up"
+              "right": "把资产押出去"
             },
             {
               "id": "hedge",
               "left": "hedge",
-              "right": "Protection, not a loan"
+              "right": "买保护，不是借钱"
             }
           ],
-          "why": "One story: you pledge collateral, they apply a haircut, you still might want a separate hedge."
+          "why": "同一个故事：你 pledge 出 collateral，他们打个 haircut，你可能还想另外买份 hedge。"
         },
         {
           "id": "u1l2h",
@@ -839,8 +839,8 @@
           "termIds": [
             "collateral"
           ],
-          "story": "You borrow $700k. The shares stay in an account the bank controls. If you vanish, they don't sue your house first — they take the shares.",
-          "stem": "Those shares are:",
+          "story": "你借了 $700k。股票放在银行控制的账户里。如果你消失了，他们不会先去告你的房子——他们直接拿走股票。",
+          "stem": "这些股票是：",
           "options": [
             {
               "text": "Collateral",
@@ -860,7 +860,7 @@
             }
           ],
           "answer": 0,
-          "why": "Collateral is what they seize. A hedge would be a separate contract that pays you if the shares fall."
+          "why": "collateral 就是被拿走的东西。hedge 会是另一张合约：股票跌了它赔你。"
         },
         {
           "id": "u1l2i",
@@ -869,9 +869,9 @@
           "termIds": [
             "pledge"
           ],
-          "stem": "Once you pledge shares, you still get the upside if they rally.",
+          "stem": "把股票 pledge 出去之后，如果股票大涨，上涨的收益还是你的。",
           "answer": true,
-          "why": "You still own them. The bank has a claim, not the upside — unless you default."
+          "why": "股票还是你的。银行只对贷款有请求权，对上涨没有——除非你违约。"
         },
         {
           "id": "u1l2j",
@@ -880,34 +880,34 @@
           "termIds": [
             "haircut"
           ],
-          "stem": "Why won't the bank lend 100% against your stock?",
+          "stem": "银行为什么不肯按股票面值 100% 放款？",
           "options": [
             {
-              "text": "Stock can fall. The haircut is their cushion.",
+              "text": "股票会跌，haircut 就是他们的缓冲。",
               "art": "haircut"
             },
             {
-              "text": "Because pledging means you sold it.",
+              "text": "因为 pledge 等于已经卖了。",
               "art": "sell"
             },
             {
-              "text": "Because a hedge already used up the value.",
+              "text": "因为 hedge 已经把价值用掉了。",
               "art": "hedge"
             },
             {
-              "text": "Because haircuts are a tax.",
+              "text": "因为 haircut 是一种税。",
               "art": "haircut"
             }
           ],
           "answer": 0,
-          "why": "Haircut is the bank's 'what if it drops' buffer. That's different from a margin call, which is the later demand."
+          "why": "haircut 是银行『万一跌了怎么办』的缓冲。和之后追缴的 margin call 是两回事。"
         }
       ]
     },
     {
       "id": "u1l3",
       "unit": 1,
-      "title": "When it drops 40%",
+      "title": "跌 40% 的时候",
       "icon": "📉",
       "review": false,
       "prompts": [
@@ -918,27 +918,27 @@
           "termIds": [
             "margin"
           ],
-          "stem": "What is margin?",
+          "stem": "margin 是什么？",
           "options": [
             {
-              "text": "Cash or equity you must keep in the account as a cushion.",
+              "text": "你必须留在账户里的现金或权益缓冲。",
               "art": "margin"
             },
             {
-              "text": "The multiplier on a borrowed bet.",
+              "text": "借来的赌注的放大倍数。",
               "art": "leverage"
             },
             {
-              "text": "The discount applied to collateral on day one.",
+              "text": "第一天对抵押品打的折扣。",
               "art": "haircut"
             },
             {
-              "text": "A contract that pays if the stock falls.",
+              "text": "股价下跌时会赔付的合约。",
               "art": "put"
             }
           ],
           "answer": 0,
-          "why": "Margin is the cushion. Leverage is the size of the bet that cushion supports."
+          "why": "margin 是缓冲；leverage 是这个缓冲支撑起来的仓位大小。"
         },
         {
           "id": "u1l3b",
@@ -947,27 +947,27 @@
           "termIds": [
             "margin call"
           ],
-          "stem": "What is a margin call?",
+          "stem": "margin call 是什么？",
           "options": [
             {
-              "text": "The lender demanding more cash — or selling you out — because the cushion got too thin.",
+              "text": "缓冲太薄时，贷方要求补钱——或者直接把你卖出局。",
               "art": "margin call"
             },
             {
-              "text": "The discount they applied when they first lent.",
+              "text": "他们第一次放款时打的折扣。",
               "art": "haircut"
             },
             {
-              "text": "Buying a put after the crash.",
+              "text": "崩盘之后才去买 put。",
               "art": "put"
             },
             {
-              "text": "Putting the shares up as collateral for a new loan.",
+              "text": "把股票再押出去借一笔新的钱。",
               "art": "pledge"
             }
           ],
           "answer": 0,
-          "why": "The haircut was set at the start. A margin call happens later, when prices move against you."
+          "why": "haircut 在第一天就定了。margin call 是之后价格不利于你时才发生的。"
         },
         {
           "id": "u1l3c",
@@ -976,9 +976,9 @@
           "termIds": [
             "margin"
           ],
-          "stem": "Margin and leverage are the same word.",
+          "stem": "margin 和 leverage 是同一个词。",
           "answer": false,
-          "why": "Margin is the cushion. Leverage is the multiplier. People say them interchangeably until the call comes."
+          "why": "margin 是缓冲，leverage 是倍数。大家平时混着说，直到追缴电话打来。"
         },
         {
           "id": "u1l3d",
@@ -987,7 +987,7 @@
           "termIds": [
             "margin"
           ],
-          "story": "You buy $10k of stock with $5k cash. That $5k cushion is ____.",
+          "story": "你用 $5k 现金买了 $10k 的股票。这 $5k 的缓冲就是 ____。",
           "bank": [
             "margin",
             "a haircut",
@@ -995,7 +995,7 @@
             "notional"
           ],
           "answer": "margin",
-          "why": "Margin is the cash you posted. The $10k position is the leveraged bet sitting on it."
+          "why": "margin 是你交出去的现金。$10k 的仓位就是压在这缓冲上的杠杆仓位。"
         },
         {
           "id": "u1l3e",
@@ -1004,7 +1004,7 @@
           "termIds": [
             "margin call"
           ],
-          "story": "The stock you pledged just fell 40%. The bank wants cash today or it sells you out. That's a ____.",
+          "story": "你押出去的股票刚跌了 40%。银行要你今天补钱，否则把你卖出局。这就是一次 ____。",
           "bank": [
             "margin call",
             "haircut",
@@ -1012,7 +1012,7 @@
             "premium"
           ],
           "answer": "margin call",
-          "why": "Haircut was the original discount. This later demand is a margin call."
+          "why": "haircut 是最初的折扣。这种事后的追缴才是 margin call。"
         },
         {
           "id": "u1l3f",
@@ -1021,8 +1021,8 @@
           "termIds": [
             "margin call"
           ],
-          "story": "You own $1M of stock. You pledge it. 30% haircut, $700k loan. Then the stock drops 40%. Collateral is now $600k against $700k. The bank does not shrug.",
-          "stem": "What happens next is called a:",
+          "story": "你持有 $1M 股票，把它 pledge 了出去。30% haircut，借 $700k。然后股票跌了 40%，抵押品只剩 $600k，贷款却是 $700k。银行不会装没看见。",
+          "stem": "接下来发生的事叫：",
           "options": [
             {
               "text": "Margin call",
@@ -1042,7 +1042,7 @@
             }
           ],
           "answer": 0,
-          "why": "The haircut already happened on day one. This is the call: post cash or they sell the stock."
+          "why": "haircut 第一天就发生了。这是追缴：补钱，否则卖股票。"
         },
         {
           "id": "u1l3g",
@@ -1051,8 +1051,8 @@
           "termIds": [
             "hedge"
           ],
-          "story": "Same $1M stock. Instead of pledging, you spend $20k on puts. The stock drops 40%. The shares are worth $600k, but the puts pay. You still own the stock. Nobody calls you for cash.",
-          "stem": "That $20k put was a:",
+          "story": "同样 $1M 的股票。你不押出去，而是花 $20k 买 put。股票跌了 40%，股票只值 $600k，但 put 赔付。股票还是你的，也没人打电话来要钱。",
+          "stem": "那张 $20k 的 put 是一个：",
           "options": [
             {
               "text": "Hedge",
@@ -1072,7 +1072,7 @@
             }
           ],
           "answer": 0,
-          "why": "You paid for protection. You did not borrow. No lender, no call. That's the fork: hedge vs pledge."
+          "why": "你花钱买了保护，没有借钱。没有贷方，就没有追缴。这就是岔路口：hedge 还是 pledge。"
         },
         {
           "id": "u1l3h",
@@ -1087,25 +1087,25 @@
             {
               "id": "margin",
               "left": "margin",
-              "right": "The cushion you must keep"
+              "right": "你必须留着的缓冲"
             },
             {
               "id": "margin call",
               "left": "margin call",
-              "right": "Post more, or you're sold out"
+              "right": "补钱，否则卖掉你"
             },
             {
               "id": "haircut",
               "left": "haircut",
-              "right": "Day-one discount on collateral"
+              "right": "第一天对抵押品打的折扣"
             },
             {
               "id": "hedge",
               "left": "hedge",
-              "right": "A put on stock you already own"
+              "right": "给已持有股票买张 put"
             }
           ],
-          "why": "Haircut is booked at the start. Margin is the cushion. The call is the later threat. A hedge is a different fork."
+          "why": "haircut 是开始时定的，margin 是缓冲，call 是事后的威胁，hedge 是另一条岔路。"
         },
         {
           "id": "u1l3i",
@@ -1114,28 +1114,28 @@
           "termIds": [
             "margin call"
           ],
-          "story": "The bank called. You ignore it. They sell the pledged shares into a falling market, pay off the loan, and hand you whatever crumbs are left.",
-          "stem": "You just got:",
+          "story": "银行打来电话。你不理。他们把被押的股票砸进下跌的市场，还掉贷款，把剩下的零头递给你。",
+          "stem": "你刚刚经历的是：",
           "options": [
             {
-              "text": "Sold out on a margin call",
+              "text": "被 margin call 卖出局",
               "art": "margin call"
             },
             {
-              "text": "A free hedge",
+              "text": "一份免费的 hedge",
               "art": "hedge"
             },
             {
-              "text": "A haircut gift",
+              "text": "白送的 haircut",
               "art": "haircut"
             },
             {
-              "text": "A capital-gains holiday",
+              "text": "资本利得假期",
               "art": "capital gains"
             }
           ],
           "answer": 0,
-          "why": "That's the ugly part of a pledge. A hedge can lose only the premium you paid."
+          "why": "这就是 pledge 难看的那一面。hedge 最多亏掉你付的权利金。"
         },
         {
           "id": "u1l3j",
@@ -1144,16 +1144,16 @@
           "termIds": [
             "haircut"
           ],
-          "stem": "The haircut is what happens after the crash.",
+          "stem": "haircut 指的是崩盘之后发生的事。",
           "answer": false,
-          "why": "Haircut is the opening discount. The after-crash demand is a margin call."
+          "why": "haircut 是开场时的折扣。崩盘后的追缴叫 margin call。"
         }
       ]
     },
     {
       "id": "u1r",
       "unit": 1,
-      "title": "Unit 1 review",
+      "title": "第一单元回顾",
       "icon": "🏆",
       "review": true,
       "prompts": [
@@ -1164,8 +1164,8 @@
           "termIds": [
             "pledge"
           ],
-          "story": "Friend: 'I need cash but I don't want to sell Tesla.' They call the bank and leave the shares there.",
-          "stem": "Name the move.",
+          "story": "朋友：『我需要现金，但不想卖掉特斯拉。』他们给银行打电话，把股票放在了银行那里。",
+          "stem": "说出这个动作。",
           "options": [
             {
               "text": "Pledge",
@@ -1185,7 +1185,7 @@
             }
           ],
           "answer": 0,
-          "why": "You still own it. Pledge = collateral. A hedge would be buying a put, which costs money instead of giving you cash."
+          "why": "股票还是你的。pledge = 押出担保。hedge 是花钱买 put，是支出，不是来钱。"
         },
         {
           "id": "u1rb",
@@ -1194,8 +1194,8 @@
           "termIds": [
             "hedge"
           ],
-          "story": "Same friend instead buys puts and keeps every share. No loan. Sleeps better, poorer by the premium.",
-          "stem": "Name the move.",
+          "story": "同一位朋友改为买入 put，一股不卖。没有贷款。睡得更香，钱包少了权利金。",
+          "stem": "说出这个动作。",
           "options": [
             {
               "text": "Hedge",
@@ -1215,7 +1215,7 @@
             }
           ],
           "answer": 0,
-          "why": "Protection on a position you kept. Not a loan."
+          "why": "给留下的仓位买保护。不是贷款。"
         },
         {
           "id": "u1rc",
@@ -1224,27 +1224,27 @@
           "termIds": [
             "collateral"
           ],
-          "stem": "Collateral is:",
+          "stem": "collateral 是：",
           "options": [
             {
-              "text": "The asset the lender can take.",
+              "text": "贷方可以拿走的资产。",
               "art": "collateral"
             },
             {
-              "text": "The discount they apply before lending.",
+              "text": "他们放款前打的折扣。",
               "art": "haircut"
             },
             {
-              "text": "The extra cash after a drop.",
+              "text": "大跌之后追要的额外现金。",
               "art": "margin call"
             },
             {
-              "text": "Insurance on the position.",
+              "text": "给仓位买的保险。",
               "art": "hedge"
             }
           ],
           "answer": 0,
-          "why": "Collateral is the thing. Haircut is the discount. Margin call is the later threat."
+          "why": "collateral 是东西本身；haircut 是折扣；margin call 是事后的威胁。"
         },
         {
           "id": "u1rd",
@@ -1253,9 +1253,9 @@
           "termIds": [
             "pledge"
           ],
-          "stem": "If the pledged stock doubles, the bank owns the extra gain.",
+          "stem": "如果被押的股票翻倍，多出来的涨幅归银行。",
           "answer": false,
-          "why": "You still own it. The bank's claim is the loan, not the upside — unless you blow the margin call."
+          "why": "股票还是你的。银行只握有贷款请求权，不是上涨收益——除非你搞砸到被 margin call。"
         },
         {
           "id": "u1re",
@@ -1264,7 +1264,7 @@
           "termIds": [
             "haircut"
           ],
-          "story": "Loan max = collateral value × (1 − ____).",
+          "story": "贷款上限 = 抵押品价值 ×（1 − ____）。",
           "bank": [
             "haircut",
             "yield",
@@ -1272,7 +1272,7 @@
             "duration"
           ],
           "answer": "haircut",
-          "why": "$1M and a 30% haircut → $700k. The haircut is the lender's fear, priced in advance."
+          "why": "$1M 打 30% haircut → $700k。haircut 是贷方提前定价的恐惧。"
         },
         {
           "id": "u1rf",
@@ -1281,7 +1281,7 @@
           "termIds": [
             "margin call"
           ],
-          "story": "Prices fell, cushion gone, lender on the phone. That's a ____.",
+          "story": "价格跌了，缓冲没了，贷方的电话来了。这是一次 ____。",
           "bank": [
             "margin call",
             "haircut",
@@ -1289,7 +1289,7 @@
             "yield"
           ],
           "answer": "margin call",
-          "why": "Not the haircut. The haircut already happened. This is the call."
+          "why": "不是 haircut。haircut 早就发生过了。这是 call。"
         },
         {
           "id": "u1rg",
@@ -1304,25 +1304,25 @@
             {
               "id": "hedge",
               "left": "hedge",
-              "right": "Pay for crash insurance"
+              "right": "花钱买崩盘保险"
             },
             {
               "id": "pledge",
               "left": "pledge",
-              "right": "Borrow, keep the shares"
+              "right": "借钱，股票留着"
             },
             {
               "id": "margin",
               "left": "margin",
-              "right": "Required cushion"
+              "right": "必须留着的缓冲"
             },
             {
               "id": "margin call",
               "left": "margin call",
-              "right": "Cushion failed. Pay or sell."
+              "right": "缓冲击穿：补钱或被卖"
             }
           ],
-          "why": "The whole unit in four chips. If you mix two, that's the homework."
+          "why": "整个单元就在这四张牌里。混了哪两张，就去练哪两张。"
         },
         {
           "id": "u1rh",
@@ -1331,8 +1331,8 @@
           "termIds": [
             "margin"
           ],
-          "story": "Broker: you can buy $20k of stock if you deposit $10k. The $10k isn't a fee. It has to stay.",
-          "stem": "The $10k is:",
+          "story": "券商说：存 $10k 进来，就可以买 $20k 的股票。这 $10k 不是手续费，它必须一直留在账户里。",
+          "stem": "这 $10k 是：",
           "options": [
             {
               "text": "Margin",
@@ -1352,7 +1352,7 @@
             }
           ],
           "answer": 0,
-          "why": "Margin is the cushion. The $20k buy is the leveraged position sitting on it."
+          "why": "margin 是缓冲。$20k 的买入就是压在缓冲上的杠杆仓位。"
         },
         {
           "id": "u1ri",
@@ -1361,9 +1361,9 @@
           "termIds": [
             "hedge"
           ],
-          "stem": "Buying a put on stock you own is a hedge, not a pledge.",
+          "stem": "给你持有的股票买 put 是 hedge，不是 pledge。",
           "answer": true,
-          "why": "Correct. Put = protection. Pledge = the bank can take the shares."
+          "why": "对。put = 保护；pledge = 银行可以拿走股票。"
         },
         {
           "id": "u1rj",
@@ -1372,7 +1372,7 @@
           "termIds": [
             "margin call"
           ],
-          "stem": "Stock pledged for a loan drops 40%. The next word in the sentence is usually:",
+          "stem": "为贷款而押出去的股票跌了 40%。接下来这个词通常是：",
           "options": [
             {
               "text": "Margin call",
@@ -1392,14 +1392,14 @@
             }
           ],
           "answer": 0,
-          "why": "Haircut was last quarter. Today is the call."
+          "why": "haircut 是上季度的事，今天到的是 call。"
         }
       ]
     },
     {
       "id": "u2l1",
       "unit": 2,
-      "title": "Leverage & derivatives",
+      "title": "杠杆与衍生品",
       "icon": "📈",
       "review": false,
       "prompts": [
@@ -1410,27 +1410,27 @@
           "termIds": [
             "leverage"
           ],
-          "stem": "What is leverage?",
+          "stem": "leverage 是什么？",
           "options": [
             {
-              "text": "Using borrowed money or derivatives to make a bigger bet than your cash.",
+              "text": "用借来的钱或衍生品，做出比你现金更大的赌注。",
               "art": "leverage"
             },
             {
-              "text": "The cash cushion you must keep in the account.",
+              "text": "你必须留在账户里的现金缓冲。",
               "art": "margin"
             },
             {
-              "text": "The discount a lender applies to collateral.",
+              "text": "贷方对抵押品打的折扣。",
               "art": "haircut"
             },
             {
-              "text": "Selling shares you borrowed.",
+              "text": "把你借来的股票卖掉。",
               "art": "short selling"
             }
           ],
           "answer": 0,
-          "why": "Leverage is the multiplier. Margin is the cushion that makes the multiplier possible."
+          "why": "leverage 是倍数；margin 是让倍数成为可能的缓冲。"
         },
         {
           "id": "u2l1b",
@@ -1439,27 +1439,27 @@
           "termIds": [
             "derivative"
           ],
-          "stem": "What is a derivative?",
+          "stem": "derivative（衍生品）是什么？",
           "options": [
             {
-              "text": "A contract whose value comes from something else.",
+              "text": "价值来自另一种东西的合约。",
               "art": "derivative"
             },
             {
-              "text": "A loan against your shares.",
+              "text": "用你的股票做的抵押贷款。",
               "art": "pledge"
             },
             {
-              "text": "Owning the stock itself.",
+              "text": "直接持有股票本身。",
               "art": "long"
             },
             {
-              "text": "The cash you posted as margin.",
+              "text": "你交出去的那笔 margin 现金。",
               "art": "margin"
             }
           ],
           "answer": 0,
-          "why": "An option is one kind of derivative. Futures and swaps are derivatives too. The stock itself is not."
+          "why": "option 是衍生品的一种，futures 和 swap 也是。股票本身不是。"
         },
         {
           "id": "u2l1c",
@@ -1468,9 +1468,9 @@
           "termIds": [
             "leverage"
           ],
-          "stem": "More leverage always means a bigger margin cushion.",
+          "stem": "杠杆越高，margin 缓冲就一定越大。",
           "answer": false,
-          "why": "Usually the opposite. More leverage means less of your own money under a bigger position. Margin is the cushion, not the multiplier."
+          "why": "通常正相反。杠杆越高，意味着更大的仓位底下垫着越少的自有资金。margin 是缓冲，不是倍数。"
         },
         {
           "id": "u2l1d",
@@ -1479,7 +1479,7 @@
           "termIds": [
             "leverage"
           ],
-          "story": "$10k of yours plus $40k borrowed = 5× ____. A 10% drop wipes half your cash.",
+          "story": "$10k 自己的加 $40k 借的 = 5× ____。跌 10% 就抹掉你一半现金。",
           "bank": [
             "leverage",
             "margin",
@@ -1487,7 +1487,7 @@
             "yield"
           ],
           "answer": "leverage",
-          "why": "5× is the leverage. The $10k is the margin. Mix those two and the crash math won't make sense."
+          "why": "5× 是 leverage。$10k 是 margin。把这两个混了，崩盘的算术你就看不懂了。"
         },
         {
           "id": "u2l1e",
@@ -1496,7 +1496,7 @@
           "termIds": [
             "derivative"
           ],
-          "story": "A put on Apple is a ____. It is not Apple stock; it just bets on Apple's price.",
+          "story": "苹果股票的 put 是一种 ____。它不是苹果股票，只是押注苹果的股价。",
           "bank": [
             "derivative",
             "pledge",
@@ -1504,7 +1504,7 @@
             "yield"
           ],
           "answer": "derivative",
-          "why": "The put derives from Apple. Calling every derivative an 'option' is the next mix-up — wait one lesson."
+          "why": "put 的价值源自苹果。把所有衍生品都叫『option』是下一个易混点——下节课再说。"
         },
         {
           "id": "u2l1f",
@@ -1513,8 +1513,8 @@
           "termIds": [
             "leverage"
           ],
-          "story": "You have $20k. You want $100k of stock. The broker lends the rest. A 20% drop doesn't lose you 20% of $20k. It wipes you.",
-          "stem": "You used:",
+          "story": "你有 $20k，想要 $100k 的股票，差额券商借你。跌 20% 时，你亏的不是 $20k 的 20%——你会被清零。",
+          "stem": "你用的是：",
           "options": [
             {
               "text": "Leverage",
@@ -1534,7 +1534,7 @@
             }
           ],
           "answer": 0,
-          "why": "Borrowed size is leverage. A hedge would have been buying protection, not more stock."
+          "why": "借来的规模就是 leverage。hedge 应该是买保护，而不是买更多股票。"
         },
         {
           "id": "u2l1g",
@@ -1543,8 +1543,8 @@
           "termIds": [
             "derivative"
           ],
-          "story": "You don't buy the oil. You buy a contract that pays if oil's price moves. The contract is not a barrel.",
-          "stem": "The contract is a:",
+          "story": "你不买石油本身，而是买一份在油价变动时赔付的合约。合约不是一桶油。",
+          "stem": "这份合约是：",
           "options": [
             {
               "text": "Derivative",
@@ -1564,7 +1564,7 @@
             }
           ],
           "answer": 0,
-          "why": "Value comes from oil. That's a derivative. Pledging would mean putting up an asset for a loan."
+          "why": "价值来自石油，这就是 derivative。pledge 是把资产押出去借钱。"
         },
         {
           "id": "u2l1h",
@@ -1579,25 +1579,25 @@
             {
               "id": "leverage",
               "left": "leverage",
-              "right": "Bigger bet than your cash"
+              "right": "比你的现金更大的赌注"
             },
             {
               "id": "margin",
               "left": "margin",
-              "right": "The cushion under that bet"
+              "right": "赌注底下那层缓冲"
             },
             {
               "id": "derivative",
               "left": "derivative",
-              "right": "A contract on something else"
+              "right": "关于别的东西的合约"
             },
             {
               "id": "hedge",
               "left": "hedge",
-              "right": "Insurance on a bet you have"
+              "right": "给你已有赌注买的保险"
             }
           ],
-          "why": "You can use a derivative as a hedge, or as leverage. Same toolkit, opposite intent."
+          "why": "衍生品可以当 hedge 用，也可以当 leverage 用。同一套工具，相反的意图。"
         },
         {
           "id": "u2l1i",
@@ -1606,9 +1606,9 @@
           "termIds": [
             "derivative"
           ],
-          "stem": "Every derivative is an option.",
+          "stem": "所有衍生品都是期权（option）。",
           "answer": false,
-          "why": "Options are one species. Futures and swaps are derivatives too, and they don't let you walk away."
+          "why": "期权只是一个物种。futures 和 swap 也是衍生品，而且它们不让你反悔。"
         },
         {
           "id": "u2l1j",
@@ -1617,34 +1617,34 @@
           "termIds": [
             "leverage"
           ],
-          "stem": "A hedge can use derivatives. Leverage can too. The difference is:",
+          "stem": "hedge 可以用衍生品，leverage 也可以。区别在于：",
           "options": [
             {
-              "text": "Intent: protection vs. a bigger bet.",
+              "text": "意图：买保护，还是下更大的注。",
               "art": "hedge"
             },
             {
-              "text": "Hedges never cost money.",
+              "text": "hedge 从来不花钱。",
               "art": "hedge"
             },
             {
-              "text": "Leverage means the lender seizes the asset.",
+              "text": "leverage 意味着贷方会拿走资产。",
               "art": "margin call"
             },
             {
-              "text": "Derivatives are only for hedges.",
+              "text": "衍生品只能用来对冲。",
               "art": "derivative"
             }
           ],
           "answer": 0,
-          "why": "A put you own as insurance is a hedge. The same put bought as a naked down-bet is just a leveraged wager."
+          "why": "当保险持有的 put 是 hedge；同样的 put 被当作裸看跌赌注，就只是加了杠杆的 wager。"
         }
       ]
     },
     {
       "id": "u2l2",
       "unit": 2,
-      "title": "Puts and calls",
+      "title": "看跌与看涨",
       "icon": "🎯",
       "review": false,
       "prompts": [
@@ -1655,27 +1655,27 @@
           "termIds": [
             "option"
           ],
-          "stem": "What is an option?",
+          "stem": "option（期权）是什么？",
           "options": [
             {
-              "text": "The right, not the obligation, to buy or sell at a set price.",
+              "text": "按约定价格买入或卖出的权利，而非义务。",
               "art": "option"
             },
             {
-              "text": "A promise you must settle on a set date.",
+              "text": "一份必须在约定日期结算的承诺。",
               "art": "futures"
             },
             {
-              "text": "Borrowing shares to sell them now.",
+              "text": "借来股票现在卖掉。",
               "art": "short selling"
             },
             {
-              "text": "The cash cushion in your account.",
+              "text": "你账户里的现金缓冲。",
               "art": "margin"
             }
           ],
           "answer": 0,
-          "why": "An option you can abandon. A futures contract you must settle."
+          "why": "option 可以放弃；futures 必须结算。"
         },
         {
           "id": "u2l2b",
@@ -1684,27 +1684,27 @@
           "termIds": [
             "put"
           ],
-          "stem": "A put is:",
+          "stem": "put 是：",
           "options": [
             {
-              "text": "An option to sell at a set price. Pays off when the thing falls.",
+              "text": "按约定价格卖出的权利，标的下跌时赚钱。",
               "art": "put"
             },
             {
-              "text": "An option to buy at a set price. Pays off when it rises.",
+              "text": "按约定价格买入的权利，标的上涨时赚钱。",
               "art": "call"
             },
             {
-              "text": "Borrowing shares and selling them.",
+              "text": "借入股票并卖掉。",
               "art": "short selling"
             },
             {
-              "text": "Pledging stock for a loan.",
+              "text": "把股票押出去换贷款。",
               "art": "pledge"
             }
           ],
           "answer": 0,
-          "why": "Put = right to sell (you want it down). Call = right to buy (you want it up)."
+          "why": "put = 卖出权（你希望它跌）。call = 买入权（你希望它涨）。"
         },
         {
           "id": "u2l2c",
@@ -1713,27 +1713,27 @@
           "termIds": [
             "call"
           ],
-          "stem": "A call is:",
+          "stem": "call 是：",
           "options": [
             {
-              "text": "An option to buy at a set price. Pays off when the thing rises.",
+              "text": "按约定价格买入的权利，标的上涨时赚钱。",
               "art": "call"
             },
             {
-              "text": "An option to sell at a set price. Pays off when it falls.",
+              "text": "按约定价格卖出的权利，标的下跌时赚钱。",
               "art": "put"
             },
             {
-              "text": "A lender's demand for more cash.",
+              "text": "贷方追要更多现金。",
               "art": "margin call"
             },
             {
-              "text": "A discount on collateral.",
+              "text": "对抵押品打的折扣。",
               "art": "haircut"
             }
           ],
           "answer": 0,
-          "why": "Call = right to buy (up). Put = right to sell (down)."
+          "why": "call = 买入权（涨）。put = 卖出权（跌）。"
         },
         {
           "id": "u2l2d",
@@ -1742,9 +1742,9 @@
           "termIds": [
             "put"
           ],
-          "stem": "If you are scared the stock you own will crash, you want a call.",
+          "stem": "如果你担心自己持有的股票崩盘，你想要的是 call。",
           "answer": false,
-          "why": "You want a put — the right to sell at a floor. A call pays when it rips higher."
+          "why": "你要的是 put——以保底价卖出的权利。call 是在它暴涨时才赚钱。"
         },
         {
           "id": "u2l2e",
@@ -1753,7 +1753,7 @@
           "termIds": [
             "put"
           ],
-          "story": "Stock at $100. A $90 ____ pays if it drops below $90. That's crash insurance if you own it.",
+          "story": "股票 $100。一张 $90 的 ____ 在跌破 $90 后赔付。对持有者来说就是崩盘保险。",
           "bank": [
             "put",
             "call",
@@ -1761,7 +1761,7 @@
             "haircut"
           ],
           "answer": "put",
-          "why": "Puts pay when it falls. Calls pay when it rises. Mix them and your 'insurance' cheers for the crash's opposite."
+          "why": "put 在下跌时赚钱，call 在上涨时赚钱。混了的话，你的『保险』就在为崩盘的反面欢呼。"
         },
         {
           "id": "u2l2f",
@@ -1770,7 +1770,7 @@
           "termIds": [
             "call"
           ],
-          "story": "Stock at $100. A $110 ____ pays if it rips above $110.",
+          "story": "股票 $100。一张 $110 的 ____ 在冲破 $110 后赔付。",
           "bank": [
             "call",
             "put",
@@ -1778,7 +1778,7 @@
             "margin"
           ],
           "answer": "call",
-          "why": "Call = up. Put = down. Same family, opposite direction."
+          "why": "call = 涨，put = 跌。同一家族，方向相反。"
         },
         {
           "id": "u2l2g",
@@ -1787,8 +1787,8 @@
           "termIds": [
             "put"
           ],
-          "story": "You own the stock. You pay $3 a share for the right to sell it at $90. The stock goes to $70. You exercise. Pain, but capped.",
-          "stem": "The $3 contract was a:",
+          "story": "你持有股票。你花每股 $3 买下以 $90 卖出的权利。股票跌到 $70，你行权。疼，但封顶了。",
+          "stem": "那份 $3 的合约是：",
           "options": [
             {
               "text": "Put",
@@ -1808,7 +1808,7 @@
             }
           ],
           "answer": 0,
-          "why": "Right to sell at a floor = put. A call would have been the right to buy more, which is the last thing you wanted."
+          "why": "以保底价卖出的权利 = put。call 是买入更多的权利——恰恰是你最不想要的。"
         },
         {
           "id": "u2l2h",
@@ -1817,8 +1817,8 @@
           "termIds": [
             "call"
           ],
-          "story": "You think the stock rips. You don't want to park $100 a share. You pay $4 for the right to buy it at $110. If it never gets there, you're out $4, not $100.",
-          "stem": "You bought a:",
+          "story": "你觉得股票要暴涨，但又不想每股押 $100。你花 $4 买下以 $110 买入的权利。它永远不到 $110 的话，你只亏 $4，不是 $100。",
+          "stem": "你买的是：",
           "options": [
             {
               "text": "Call",
@@ -1838,7 +1838,7 @@
             }
           ],
           "answer": 0,
-          "why": "Right to buy = call. A put would pay if it fell, which is the other bet."
+          "why": "买入的权利 = call。put 是下跌时才赔，那是相反的赌注。"
         },
         {
           "id": "u2l2i",
@@ -1853,25 +1853,25 @@
             {
               "id": "put",
               "left": "put",
-              "right": "Right to sell. Wants down."
+              "right": "卖出权。盼着跌。"
             },
             {
               "id": "call",
               "left": "call",
-              "right": "Right to buy. Wants up."
+              "right": "买入权。盼着涨。"
             },
             {
               "id": "option",
               "left": "option",
-              "right": "Right, not obligation"
+              "right": "是权利，不是义务"
             },
             {
               "id": "futures",
               "left": "futures",
-              "right": "Obligation on a date"
+              "right": "某日必须履行的义务"
             }
           ],
-          "why": "Put vs call is direction. Option vs futures is whether you can walk away."
+          "why": "put 对 call 是方向之争。option 对 futures 是能不能反悔之争。"
         },
         {
           "id": "u2l2j",
@@ -1880,16 +1880,16 @@
           "termIds": [
             "option"
           ],
-          "stem": "With an option, you can let it expire and lose only what you paid.",
+          "stem": "持有期权，你可以放着让它到期，只亏掉付出的权利金。",
           "answer": true,
-          "why": "That's the 'right, not obligation' part. Futures don't give you that courtesy."
+          "why": "这就是『权利而非义务』的部分。futures 没有这种待遇。"
         }
       ]
     },
     {
       "id": "u2l3",
       "unit": 2,
-      "title": "Going short",
+      "title": "做空",
       "icon": "🐻",
       "review": false,
       "prompts": [
@@ -1900,27 +1900,27 @@
           "termIds": [
             "short selling"
           ],
-          "stem": "What is short selling?",
+          "stem": "short selling（卖空）是什么？",
           "options": [
             {
-              "text": "Borrow shares, sell them now, hope to buy back cheaper later.",
+              "text": "借入股票，现在卖掉，指望以后低价买回。",
               "art": "short selling"
             },
             {
-              "text": "Buy a put on stock you own.",
+              "text": "给你持有的股票买张 put。",
               "art": "put"
             },
             {
-              "text": "Pledge shares for a loan.",
+              "text": "把股票押出去借钱。",
               "art": "pledge"
             },
             {
-              "text": "Buy a call and hope it rips.",
+              "text": "买张 call 盼它暴涨。",
               "art": "call"
             }
           ],
           "answer": 0,
-          "why": "A put is a limited-loss down bet. A short can lose without a ceiling if the stock rips."
+          "why": "put 是损失封顶的看跌赌注。股票暴涨时，卖空的亏损没有上限。"
         },
         {
           "id": "u2l3b",
@@ -1929,9 +1929,9 @@
           "termIds": [
             "short selling"
           ],
-          "stem": "Short selling is just another word for buying a put.",
+          "stem": "short selling 就是买 put 的另一种说法。",
           "answer": false,
-          "why": "Same direction, different shape. Put: max loss is the premium. Short: the stock can go to the moon and you still owe."
+          "why": "方向相同，形状不同。put：最大亏损是权利金。short：股票涨到天上去你也照样欠着。"
         },
         {
           "id": "u2l3c",
@@ -1940,7 +1940,7 @@
           "termIds": [
             "short selling"
           ],
-          "story": "Borrow 100 shares, sell at $50, buy back at $30, return them. That's ____.",
+          "story": "借 100 股，$50 卖出，$30 买回归还。这就是 ____。",
           "bank": [
             "short selling",
             "a put",
@@ -1948,7 +1948,7 @@
             "a call"
           ],
           "answer": "short selling",
-          "why": "You borrowed and sold. A put would have been a separate contract, with a capped loss."
+          "why": "你借了、卖了。put 则是一张单独的合约，亏损封顶。"
         },
         {
           "id": "u2l3d",
@@ -1957,8 +1957,8 @@
           "termIds": [
             "short selling"
           ],
-          "story": "You think the stock is a bubble. You borrow shares from a prime broker, sell them at $80, and wait. It goes to $120. You still have to return the shares.",
-          "stem": "This is:",
+          "story": "你觉得这只股票是泡沫。你从主经纪商那里借来股票，$80 卖出，然后等。它涨到了 $120，但你仍然得还股票。",
+          "stem": "这是：",
           "options": [
             {
               "text": "Short selling",
@@ -1978,7 +1978,7 @@
             }
           ],
           "answer": 0,
-          "why": "Borrowed and sold = short. A put would have expired; you wouldn't owe the extra $40."
+          "why": "借了又卖 = short。put 会到期作废，你不用多赔那 $40。"
         },
         {
           "id": "u2l3e",
@@ -1987,8 +1987,8 @@
           "termIds": [
             "put"
           ],
-          "story": "Same bearish view. Instead of shorting, you buy puts. Stock rips. The puts go to zero. You lose the premium. You do not have to buy the stock at $120.",
-          "stem": "You used a:",
+          "story": "同样的看空观点。你不卖空，而是买 put。股票暴涨，put 归零，你亏掉权利金。你不需要按 $120 买回股票。",
+          "stem": "你用的是：",
           "options": [
             {
               "text": "Put",
@@ -2008,7 +2008,7 @@
             }
           ],
           "answer": 0,
-          "why": "Limited-loss down bet = put. The short was the uncapped cousin."
+          "why": "损失封顶的看跌赌注 = put。short 是那个不封顶的表亲。"
         },
         {
           "id": "u2l3f",
@@ -2023,25 +2023,25 @@
             {
               "id": "short selling",
               "left": "short selling",
-              "right": "Borrow, sell, buy back later"
+              "right": "借来、卖掉、以后买回"
             },
             {
               "id": "put",
               "left": "put",
-              "right": "Down bet, loss capped"
+              "right": "看跌赌注，亏损封顶"
             },
             {
               "id": "call",
               "left": "call",
-              "right": "Up bet, right to buy"
+              "right": "看涨赌注，买入的权利"
             },
             {
               "id": "leverage",
               "left": "leverage",
-              "right": "A bigger bet than your cash"
+              "right": "比你的现金更大的赌注"
             }
           ],
-          "why": "Shorts are leveraged down-bets. Puts are too, with a lid on the pain."
+          "why": "short 是带杠杆的看跌赌注。put 也是——只是给痛苦加了盖。"
         },
         {
           "id": "u2l3g",
@@ -2050,9 +2050,9 @@
           "termIds": [
             "short selling"
           ],
-          "stem": "You can use a short as a hedge if you already own something that moves with the thing you short.",
+          "stem": "如果你持有的资产与你卖空的东西同涨同跌，卖空也可以是一种 hedge。",
           "answer": true,
-          "why": "A short index against a stock pile is a hedge. A short of a stock you don't own is just a bet. Same tool, different job."
+          "why": "卖空指数对着股票堆，是 hedge。卖空一只你根本不持有的股票，只是赌。同一工具，不同岗位。"
         },
         {
           "id": "u2l3h",
@@ -2061,27 +2061,27 @@
           "termIds": [
             "put"
           ],
-          "stem": "Why might someone buy a put instead of shorting?",
+          "stem": "为什么有人买 put 而不是卖空？",
           "options": [
             {
-              "text": "Max loss is the premium. A short can blow through that.",
+              "text": "最大亏损是权利金。short 能亏穿它。",
               "art": "put"
             },
             {
-              "text": "Puts pay when the stock rises.",
+              "text": "put 在股票上涨时赚钱。",
               "art": "call"
             },
             {
-              "text": "Shorts are a kind of pledge.",
+              "text": "short 是一种 pledge。",
               "art": "pledge"
             },
             {
-              "text": "Puts require you to borrow shares.",
+              "text": "put 要求你先借入股票。",
               "art": "short selling"
             }
           ],
           "answer": 0,
-          "why": "Put = lid. Short = no lid. That's the mix-up that ruins a weekend."
+          "why": "put 有盖，short 没有。这就是会毁掉一个周末的那个混淆。"
         },
         {
           "id": "u2l3i",
@@ -2090,8 +2090,8 @@
           "termIds": [
             "leverage"
           ],
-          "story": "Shorting $50k of stock with $10k in the account is not a small opinion. The position is 5× your cash.",
-          "stem": "That's also:",
+          "story": "账户里只有 $10k 却卖空 $50k 的股票，这不是一个小的观点。仓位是你现金的 5 倍。",
+          "stem": "这同时也是：",
           "options": [
             {
               "text": "Leverage",
@@ -2111,7 +2111,7 @@
             }
           ],
           "answer": 0,
-          "why": "Shorts are leveraged. They are only a hedge if they protect something you already have."
+          "why": "卖空自带杠杆。只有当它保护你已有的东西时，才是 hedge。"
         },
         {
           "id": "u2l3j",
@@ -2120,7 +2120,7 @@
           "termIds": [
             "call"
           ],
-          "story": "You are short a stock and terrified of a squeeze. Buying a ____ caps how much you can lose on the upside.",
+          "story": "你卖空了一只股票，怕被轧空。买入一张 ____ 可以给你的上行亏损封顶。",
           "bank": [
             "call",
             "put",
@@ -2128,14 +2128,14 @@
             "haircut"
           ],
           "answer": "call",
-          "why": "Short wants it down. A call is upside insurance on that short. A put would double the down-bet."
+          "why": "short 盼着跌。call 是给这个空头上的上涨保险。put 只会把看跌赌注加倍。"
         }
       ]
     },
     {
       "id": "u2r",
       "unit": 2,
-      "title": "Unit 2 review",
+      "title": "第二单元回顾",
       "icon": "🏆",
       "review": true,
       "prompts": [
@@ -2146,27 +2146,27 @@
           "termIds": [
             "put"
           ],
-          "stem": "Put vs call, in one line:",
+          "stem": "put 对 call，一句话：",
           "options": [
             {
-              "text": "Put pays when it falls. Call pays when it rises.",
+              "text": "put 在下跌时赔，call 在上涨时赔。",
               "art": "put"
             },
             {
-              "text": "Put is a loan. Call is a hedge.",
+              "text": "put 是贷款，call 是 hedge。",
               "art": "pledge"
             },
             {
-              "text": "Put is an obligation. Call is optional.",
+              "text": "put 是义务，call 可选。",
               "art": "futures"
             },
             {
-              "text": "They are the same contract with different fees.",
+              "text": "它们是同一种合约，只是费率不同。",
               "art": "option"
             }
           ],
           "answer": 0,
-          "why": "Direction. That's the whole mix-up."
+          "why": "方向。整个混淆就这一个词。"
         },
         {
           "id": "u2rb",
@@ -2175,8 +2175,8 @@
           "termIds": [
             "pledge"
           ],
-          "story": "Callback from Unit 1. You want cash from stock you own, without selling, without a down-bet.",
-          "stem": "You would:",
+          "story": "第一单元的回环。你想从持有的股票里拿到现金——不卖出，也不下看跌的注。",
+          "stem": "你会：",
           "options": [
             {
               "text": "Pledge it",
@@ -2196,7 +2196,7 @@
             }
           ],
           "answer": 0,
-          "why": "Pledge = borrow against. Put and short are views on a drop. Call is a view on a rise."
+          "why": "pledge = 押股票借钱。put 和 short 都是看跌的注。call 是看涨的注。"
         },
         {
           "id": "u2rc",
@@ -2205,7 +2205,7 @@
           "termIds": [
             "option"
           ],
-          "story": "Right, not obligation, to buy or sell at a set price: an ____.",
+          "story": "按约定价格买入或卖出的权利而非义务：一个 ____。",
           "bank": [
             "option",
             "future",
@@ -2213,7 +2213,7 @@
             "pledge"
           ],
           "answer": "option",
-          "why": "If you must settle, that's a future. Options you can abandon."
+          "why": "必须结算的是 future。option 可以放弃。"
         },
         {
           "id": "u2rd",
@@ -2222,9 +2222,9 @@
           "termIds": [
             "short selling"
           ],
-          "stem": "A short's losses are capped at what you paid for it.",
+          "stem": "卖空的亏损封顶在你付出的金额。",
           "answer": false,
-          "why": "That's a put. A short has no ceiling. The stock can keep rising and you still have to buy it back."
+          "why": "那是 put。short 没有天花板。股票可以一直涨，你还是得买回来。"
         },
         {
           "id": "u2re",
@@ -2233,8 +2233,8 @@
           "termIds": [
             "call"
           ],
-          "story": "You are already short. The stock starts to squeeze. You buy the right to purchase shares at $60 so a melt-up can't take your house.",
-          "stem": "That insurance is a:",
+          "story": "你已经卖空。股票开始被轧。你买下以 $60 买入股票的权利，免得行情失控把你家赔进去。",
+          "stem": "这份保险是：",
           "options": [
             {
               "text": "Call",
@@ -2254,7 +2254,7 @@
             }
           ],
           "answer": 0,
-          "why": "A call caps a short. A put would add to the down-bet."
+          "why": "call 给卖空封顶。put 只会加重看跌赌注。"
         },
         {
           "id": "u2rf",
@@ -2269,25 +2269,25 @@
             {
               "id": "put",
               "left": "put",
-              "right": "Right to sell"
+              "right": "卖出的权利"
             },
             {
               "id": "call",
               "left": "call",
-              "right": "Right to buy"
+              "right": "买入的权利"
             },
             {
               "id": "short selling",
               "left": "short selling",
-              "right": "Borrow and sell"
+              "right": "借来并卖出"
             },
             {
               "id": "leverage",
               "left": "leverage",
-              "right": "Borrowed size"
+              "right": "借来的规模"
             }
           ],
-          "why": "Four ways people say 'I have a view' — two are options, one is a borrow, one is a multiplier."
+          "why": "人们说『我有观点』的四种方式——两个是期权，一个是借券，一个是倍数。"
         },
         {
           "id": "u2rg",
@@ -2296,27 +2296,27 @@
           "termIds": [
             "derivative"
           ],
-          "stem": "Which of these is not a derivative?",
+          "stem": "下面哪个不是衍生品？",
           "options": [
             {
-              "text": "Owning 100 shares of the stock itself.",
+              "text": "直接持有这只股票的 100 股。",
               "art": "long"
             },
             {
-              "text": "A put on the stock.",
+              "text": "这只股票的 put。",
               "art": "put"
             },
             {
-              "text": "A call on the stock.",
+              "text": "这只股票的 call。",
               "art": "call"
             },
             {
-              "text": "A futures contract on the stock.",
+              "text": "这只股票的 futures 合约。",
               "art": "futures"
             }
           ],
           "answer": 0,
-          "why": "The shares are the thing. Derivatives are contracts on the thing."
+          "why": "股票是那个东西本身。衍生品是关于它的合约。"
         },
         {
           "id": "u2rh",
@@ -2325,8 +2325,8 @@
           "termIds": [
             "hedge"
           ],
-          "story": "You own $500k of a company you cannot sell this year. You buy puts. You are not trying to get rich on the crash. You are trying to still have a house if it happens.",
-          "stem": "The puts are a:",
+          "story": "你持有 $500k 一年内不能卖的公司股票。你买入 put。你不想靠崩盘发财，只想崩盘发生时还有一个家。",
+          "stem": "这些 put 是：",
           "options": [
             {
               "text": "Hedge",
@@ -2346,7 +2346,7 @@
             }
           ],
           "answer": 0,
-          "why": "Insurance on a bet you already have. That's the first sentence of this game."
+          "why": "给你已有的赌注买保险。这是这门课的第一句话。"
         },
         {
           "id": "u2ri",
@@ -2355,9 +2355,9 @@
           "termIds": [
             "leverage"
           ],
-          "stem": "Buying stock with 50% margin is a form of leverage.",
+          "stem": "用 50% margin 买股票是 leverage 的一种形式。",
           "answer": true,
-          "why": "Your cash is the margin. The extra stock is the leverage. Same trade, two names."
+          "why": "你的现金是 margin，多出来的股票是 leverage。同一笔交易，两个名字。"
         },
         {
           "id": "u2rj",
@@ -2366,7 +2366,7 @@
           "termIds": [
             "short selling"
           ],
-          "story": "Borrow, sell now, buy later if you're lucky: ____.",
+          "story": "借来、现在卖、走运的话以后买回：____。",
           "bank": [
             "short selling",
             "a call",
@@ -2374,14 +2374,14 @@
             "a haircut"
           ],
           "answer": "short selling",
-          "why": "Not a call (that's up). Not a pledge (that's a loan against shares you still own)."
+          "why": "不是 call（那是涨）。不是 pledge（那是用还属于你的股票借钱）。"
         }
       ]
     },
     {
       "id": "u3l1",
       "unit": 3,
-      "title": "Size and cash",
+      "title": "规模与现金",
       "icon": "💧",
       "review": false,
       "prompts": [
@@ -2392,27 +2392,27 @@
           "termIds": [
             "liquidity"
           ],
-          "stem": "What is liquidity?",
+          "stem": "liquidity（流动性）是什么？",
           "options": [
             {
-              "text": "How fast you can sell without moving the price much.",
+              "text": "不把价格撞得太厉害就能卖掉的速度。",
               "art": "liquidity"
             },
             {
-              "text": "The face amount a derivative is written on.",
+              "text": "衍生合约所写的面值规模。",
               "art": "notional"
             },
             {
-              "text": "What you pay for an option.",
+              "text": "你为期权付出的钱。",
               "art": "premium"
             },
             {
-              "text": "How sensitive a bond is to rates.",
+              "text": "债券对利率有多敏感。",
               "art": "duration"
             }
           ],
           "answer": 0,
-          "why": "Liquidity is ease of exit. Notional is the face size of a contract."
+          "why": "liquidity 是退出难易；notional 是合约面值。"
         },
         {
           "id": "u3l1b",
@@ -2421,27 +2421,27 @@
           "termIds": [
             "notional"
           ],
-          "stem": "Notional means:",
+          "stem": "notional 指的是：",
           "options": [
             {
-              "text": "The face amount a derivative is written on — not what you paid.",
+              "text": "衍生合约所写的面值——不是你付的钱。",
               "art": "notional"
             },
             {
-              "text": "The price of the option itself.",
+              "text": "期权本身的价格。",
               "art": "premium"
             },
             {
-              "text": "How easily you can sell.",
+              "text": "你卖出的难易程度。",
               "art": "liquidity"
             },
             {
-              "text": "The income a bond pays.",
+              "text": "债券付给你的收益。",
               "art": "yield"
             }
           ],
           "answer": 0,
-          "why": "Notional is the size of the underlying. Premium is what you paid for the contract."
+          "why": "notional 是标的规模；premium 是你为合约付出的价格。"
         },
         {
           "id": "u3l1c",
@@ -2450,27 +2450,27 @@
           "termIds": [
             "premium"
           ],
-          "stem": "Premium, for an option, is:",
+          "stem": "期权的 premium 是：",
           "options": [
             {
-              "text": "What you pay for the contract — the price of the insurance.",
+              "text": "你为合约付出的钱——保险的价格。",
               "art": "premium"
             },
             {
-              "text": "The face size of the underlying.",
+              "text": "标的的面值规模。",
               "art": "notional"
             },
             {
-              "text": "What a bond pays you each year.",
+              "text": "债券每年付你的钱。",
               "art": "yield"
             },
             {
-              "text": "The gap when a hedge doesn't track.",
+              "text": "对冲没贴合时的那道缝。",
               "art": "basis risk"
             }
           ],
           "answer": 0,
-          "why": "Premium is the price of the contract. Yield is what an investment pays you over time."
+          "why": "premium 是合约的价格；yield 是投资随时间付给你的收益率。"
         },
         {
           "id": "u3l1d",
@@ -2479,7 +2479,7 @@
           "termIds": [
             "notional"
           ],
-          "story": "An option on $100,000 of stock costs $2,000. The $100,000 is the ____.",
+          "story": "一份关于 $100,000 股票的期权要 $2,000。那 $100,000 是 ____。",
           "bank": [
             "notional",
             "premium",
@@ -2487,7 +2487,7 @@
             "margin"
           ],
           "answer": "notional",
-          "why": "Notional = $100k. Premium = $2k. Mixing them makes a cheap option sound like a $100k bill."
+          "why": "notional = $100k，premium = $2k。混了的话，一张便宜的期权听起来像一张 $100k 的账单。"
         },
         {
           "id": "u3l1e",
@@ -2496,7 +2496,7 @@
           "termIds": [
             "premium"
           ],
-          "story": "That put costs $3 a share. The $3 is the ____.",
+          "story": "那张 put 每股 $3。这 $3 是 ____。",
           "bank": [
             "premium",
             "notional",
@@ -2504,7 +2504,7 @@
             "haircut"
           ],
           "answer": "premium",
-          "why": "You pay the premium. You do not pay the notional unless you exercise into the stock."
+          "why": "你付出的是 premium。除非行权换成股票，否则你不碰 notional。"
         },
         {
           "id": "u3l1f",
@@ -2513,8 +2513,8 @@
           "termIds": [
             "liquidity"
           ],
-          "story": "You try to sell $2M of a tiny stock. The bid vanishes. You get filled $80k lower than the last print. Apple would not have done that to you.",
-          "stem": "You just learned about:",
+          "story": "你想卖掉 $2M 的一只小盘股。买盘消失了。你比上一笔成交价低了 $80k 才成交。苹果不会这样对你。",
+          "stem": "你刚见识的是：",
           "options": [
             {
               "text": "Liquidity",
@@ -2534,7 +2534,7 @@
             }
           ],
           "answer": 0,
-          "why": "Ease of exit. Notional would be a contract size. This was the market refusing to catch your sale."
+          "why": "退出难易。notional 是合约规模。这里是市场拒绝接你的卖单。"
         },
         {
           "id": "u3l1g",
@@ -2543,9 +2543,9 @@
           "termIds": [
             "premium"
           ],
-          "stem": "The premium of an option is the same as its notional.",
+          "stem": "期权的 premium 和它的 notional 是一回事。",
           "answer": false,
-          "why": "Premium is the ticket price. Notional is the stadium. $2k vs $100k."
+          "why": "premium 是票价，notional 是整个体育场。$2k 对 $100k。"
         },
         {
           "id": "u3l1h",
@@ -2560,32 +2560,32 @@
             {
               "id": "liquidity",
               "left": "liquidity",
-              "right": "Can you leave without a bruise?"
+              "right": "能不能不挨淤青地离场？"
             },
             {
               "id": "notional",
               "left": "notional",
-              "right": "Face size of the contract"
+              "right": "合约的面值规模"
             },
             {
               "id": "premium",
               "left": "premium",
-              "right": "What the option costs"
+              "right": "期权卖多少钱"
             },
             {
               "id": "hedge",
               "left": "hedge",
-              "right": "Why you might buy that option"
+              "right": "你买这份期权的理由"
             }
           ],
-          "why": "You buy a $2k premium on $100k notional as a hedge — if you can actually trade it. That's liquidity."
+          "why": "你花 $2k 的 premium 买 $100k notional 的对冲——前提是它真的流动。这就是 liquidity。"
         }
       ]
     },
     {
       "id": "u3l2",
       "unit": 3,
-      "title": "Yields that bite",
+      "title": "咬人的收益率",
       "icon": "📏",
       "review": false,
       "prompts": [
@@ -2596,27 +2596,27 @@
           "termIds": [
             "yield"
           ],
-          "stem": "Yield is:",
+          "stem": "yield（收益率）是：",
           "options": [
             {
-              "text": "What an investment pays you, as a percent of its price.",
+              "text": "投资付给你的钱，占其价格的百分比。",
               "art": "yield"
             },
             {
-              "text": "How much a bond's price jumps when rates move.",
+              "text": "利率变动时债券价格跳多少。",
               "art": "duration"
             },
             {
-              "text": "What you pay for an option.",
+              "text": "你为期权付出的钱。",
               "art": "premium"
             },
             {
-              "text": "When a hedge doesn't track.",
+              "text": "对冲没跟上的情况。",
               "art": "basis risk"
             }
           ],
           "answer": 0,
-          "why": "Yield is the income rate. Duration is how much the price jumps when rates move."
+          "why": "yield 是收益率；duration 是利率变动时价格跳多狠。"
         },
         {
           "id": "u3l2b",
@@ -2625,27 +2625,27 @@
           "termIds": [
             "duration"
           ],
-          "stem": "Duration is:",
+          "stem": "duration（久期）是：",
           "options": [
             {
-              "text": "How sensitive a bond's price is to interest-rate changes, in years.",
+              "text": "债券价格对利率变化的敏感度，以年计。",
               "art": "duration"
             },
             {
-              "text": "The coupon divided by the price.",
+              "text": "票息除以价格。",
               "art": "yield"
             },
             {
-              "text": "How fast you can sell.",
+              "text": "你卖出的速度有多快。",
               "art": "liquidity"
             },
             {
-              "text": "The face size of a swap.",
+              "text": "swap 的面值规模。",
               "art": "notional"
             }
           ],
           "answer": 0,
-          "why": "Duration is the bruise from rate moves. Yield is the coupon you collect."
+          "why": "duration 是利率变动留下的淤青；yield 是你收着的票息。"
         },
         {
           "id": "u3l2c",
@@ -2654,27 +2654,27 @@
           "termIds": [
             "basis risk"
           ],
-          "stem": "Basis risk is:",
+          "stem": "basis risk（基差风险）是：",
           "options": [
             {
-              "text": "When your hedge doesn't move 1-for-1 with what you were trying to protect.",
+              "text": "你的对冲没有和被保护对象同步变化。",
               "art": "basis risk"
             },
             {
-              "text": "The fee for an option.",
+              "text": "期权的费用。",
               "art": "premium"
             },
             {
-              "text": "Owning too many of the same stock.",
+              "text": "持有太多同一只股票。",
               "art": "diversification"
             },
             {
-              "text": "A lender's day-one discount.",
+              "text": "贷方第一天的折扣。",
               "art": "haircut"
             }
           ],
           "answer": 0,
-          "why": "A hedge is the protection. Basis risk is the gap when that protection doesn't track."
+          "why": "hedge 是保护；basis risk 是保护没贴合时剩下的那道缝。"
         },
         {
           "id": "u3l2d",
@@ -2683,9 +2683,9 @@
           "termIds": [
             "duration"
           ],
-          "stem": "Higher yield always means higher duration.",
+          "stem": "收益率越高，久期就一定越长。",
           "answer": false,
-          "why": "Often the opposite vibe: a fat current yield can sit on a short-duration bond. Duration is rate sensitivity, not the coupon."
+          "why": "感受常常相反：丰厚的高收益可以坐在一只短久期债券上。duration 是利率敏感度，不是票息。"
         },
         {
           "id": "u3l2e",
@@ -2694,7 +2694,7 @@
           "termIds": [
             "duration"
           ],
-          "story": "A 10-year ____ bond drops about 10% if rates rise 1%.",
+          "story": "一只久期 10 年的债券，利率升 1%，价格大约跌 10%。",
           "bank": [
             "duration",
             "yield",
@@ -2702,7 +2702,7 @@
             "premium"
           ],
           "answer": "duration",
-          "why": "That's the bruise. Yield is what it was paying you while you waited."
+          "why": "这就是那块淤青。yield 是你等待期间它付你的钱。"
         },
         {
           "id": "u3l2f",
@@ -2711,8 +2711,8 @@
           "termIds": [
             "basis risk"
           ],
-          "story": "Airline. You worry about oil. You buy oil futures as a 'hedge.' Oil crashes. Ticket prices barely move. The futures lose money. The stock does not rally enough to save you.",
-          "stem": "The gap is called:",
+          "story": "航空公司，担心油价，买入石油期货当『对冲』。油价崩了，机票价格几乎没动。期货在亏钱，股票也没涨到能救你的程度。",
+          "stem": "这道缝叫：",
           "options": [
             {
               "text": "Basis risk",
@@ -2732,7 +2732,7 @@
             }
           ],
           "answer": 0,
-          "why": "You had a hedge. It didn't track. That's basis risk, not 'hedges are fake.'"
+          "why": "你有对冲，但它没贴合。这是 basis risk，不是『对冲都是骗人的』。"
         },
         {
           "id": "u3l2g",
@@ -2741,8 +2741,8 @@
           "termIds": [
             "yield"
           ],
-          "story": "A $100 bond pays $5 a year. Price falls to $50. New buyers now earn 10% on that same $5.",
-          "stem": "The 10% is the:",
+          "story": "$100 的债券每年付 $5。价格跌到 $50。新买家在同一笔 $5 上现在能赚 10%。",
+          "stem": "这个 10% 是：",
           "options": [
             {
               "text": "Yield",
@@ -2762,7 +2762,7 @@
             }
           ],
           "answer": 0,
-          "why": "Income over price. Duration would tell you how hard that price fall was when rates moved."
+          "why": "收益除以价格。duration 告诉你的是利率变动时那次价格下跌有多疼。"
         },
         {
           "id": "u3l2h",
@@ -2777,25 +2777,25 @@
             {
               "id": "yield",
               "left": "yield",
-              "right": "Income / price"
+              "right": "收益 / 价格"
             },
             {
               "id": "duration",
               "left": "duration",
-              "right": "Rate-bruise, in years"
+              "right": "利率淤青，以年计"
             },
             {
               "id": "basis risk",
               "left": "basis risk",
-              "right": "Hedge that doesn't track"
+              "right": "没贴合的对冲"
             },
             {
               "id": "premium",
               "left": "premium",
-              "right": "Price of an option"
+              "right": "期权的价格"
             }
           ],
-          "why": "Four words journalists stack. Pull them apart: income, rate-pain, a sloppy hedge, and the ticket for a put."
+          "why": "记者爱把这四个词堆在一句里。拆开：收益、利率之痛、不太贴合的对冲、还有一张 put 的票价。"
         },
         {
           "id": "u3l2i",
@@ -2804,16 +2804,16 @@
           "termIds": [
             "basis risk"
           ],
-          "stem": "If a hedge is perfect, basis risk is roughly zero.",
+          "stem": "如果对冲是完美的，basis risk 大约是零。",
           "answer": true,
-          "why": "Perfect 1-for-1. In real life you get close and hope. The leftover is basis risk."
+          "why": "完美的 1:1。现实中你只能做到接近然后祈祷。剩下的就是 basis risk。"
         }
       ]
     },
     {
       "id": "u3r",
       "unit": 3,
-      "title": "Unit 3 review",
+      "title": "第三单元回顾",
       "icon": "🏆",
       "review": true,
       "prompts": [
@@ -2824,7 +2824,7 @@
           "termIds": [
             "liquidity"
           ],
-          "stem": "A tiny stock that cannot absorb a $1M sale has poor:",
+          "stem": "一只接不住 $1M 卖单的小盘股，缺的是：",
           "options": [
             {
               "text": "Liquidity",
@@ -2844,7 +2844,7 @@
             }
           ],
           "answer": 0,
-          "why": "Ease of exit. Duration is a bond's rate-bruise, not a traffic jam in the shares."
+          "why": "退出难易。duration 是债券的利率淤青，不是股票堵车。"
         },
         {
           "id": "u3rb",
@@ -2853,7 +2853,7 @@
           "termIds": [
             "notional"
           ],
-          "story": "Swap written on $50M of loans. You didn't pay $50M. That $50M is ____.",
+          "story": "一份写在 $50M 贷款上的 swap。你没有付出 $50M。那 $50M 是 ____。",
           "bank": [
             "notional",
             "premium",
@@ -2861,7 +2861,7 @@
             "margin"
           ],
           "answer": "notional",
-          "why": "Face size. Premium would be what an option on that pile costs."
+          "why": "面值。premium 会是这堆东西上一份期权的价格。"
         },
         {
           "id": "u3rc",
@@ -2870,8 +2870,8 @@
           "termIds": [
             "duration"
           ],
-          "story": "Rates jump 1%. Your long bond fund is suddenly down about 12%. The manager mutters a number in years.",
-          "stem": "That number is:",
+          "story": "利率跳升 1%。你的长债基金突然跌了约 12%。基金经理嘴里念叨着一个以年计的数字。",
+          "stem": "这个数字是：",
           "options": [
             {
               "text": "Duration",
@@ -2891,7 +2891,7 @@
             }
           ],
           "answer": 0,
-          "why": "Rate sensitivity. Yield is what it was paying. The 12% bruise is duration doing its thing."
+          "why": "利率敏感度。yield 是它之前付你的钱。12% 的淤青是 duration 在干活。"
         },
         {
           "id": "u3rd",
@@ -2900,9 +2900,9 @@
           "termIds": [
             "premium"
           ],
-          "stem": "Paying a premium for a put is the same as earning yield on a bond.",
+          "stem": "为期权付 premium，和持有债券赚 yield，是一回事。",
           "answer": false,
-          "why": "Premium is money you spend for a contract. Yield is money an asset pays you."
+          "why": "premium 是你为合约付出的钱。yield 是资产付给你的钱。"
         },
         {
           "id": "u3re",
@@ -2917,25 +2917,25 @@
             {
               "id": "liquidity",
               "left": "liquidity",
-              "right": "Exit without moving price"
+              "right": "不撼动价格地离场"
             },
             {
               "id": "notional",
               "left": "notional",
-              "right": "Contract face size"
+              "right": "合约面值"
             },
             {
               "id": "yield",
               "left": "yield",
-              "right": "What it pays you"
+              "right": "它付给你多少"
             },
             {
               "id": "basis risk",
               "left": "basis risk",
-              "right": "Hedge slippage"
+              "right": "对冲滑脱"
             }
           ],
-          "why": "If a sentence in the Journal has two of these, slow down."
+          "why": "如果《华尔街日报》的一句话里出现了其中两个，放慢速度。"
         },
         {
           "id": "u3rf",
@@ -2944,8 +2944,8 @@
           "termIds": [
             "hedge"
           ],
-          "story": "Unit 1 callback. You own the stock. You buy a put. The put is imperfect — it tracks an index, not your name.",
-          "stem": "You have a hedge with:",
+          "story": "第一单元的回环。你持有股票，买了一张 put。put 不完美——它跟踪的是指数，不是你这家公司。",
+          "stem": "你的对冲带着：",
           "options": [
             {
               "text": "Basis risk",
@@ -2965,7 +2965,7 @@
             }
           ],
           "answer": 0,
-          "why": "Still a hedge. The leftover mismatch is basis risk."
+          "why": "它仍是 hedge。剩下没对齐的部分就是 basis risk。"
         },
         {
           "id": "u3rg",
@@ -2974,27 +2974,27 @@
           "termIds": [
             "duration"
           ],
-          "stem": "Yield vs duration:",
+          "stem": "yield 对 duration：",
           "options": [
             {
-              "text": "Yield is income. Duration is rate sensitivity.",
+              "text": "yield 是收益，duration 是利率敏感度。",
               "art": "duration"
             },
             {
-              "text": "They are two words for coupon.",
+              "text": "它们是票息的两个说法。",
               "art": "yield"
             },
             {
-              "text": "Duration is what you pay for a put.",
+              "text": "duration 是你为 put 付出的钱。",
               "art": "premium"
             },
             {
-              "text": "Yield measures how fast you can sell.",
+              "text": "yield 衡量你卖出的速度。",
               "art": "liquidity"
             }
           ],
           "answer": 0,
-          "why": "Income vs bruise. Keep them in different pockets."
+          "why": "收益对淤青。把它们放不同的口袋。"
         },
         {
           "id": "u3rh",
@@ -3003,7 +3003,7 @@
           "termIds": [
             "premium"
           ],
-          "story": "Crash insurance on your shares costs $4. That $4 is the ____.",
+          "story": "你股票的崩盘保险要 $4。这 $4 是 ____。",
           "bank": [
             "premium",
             "notional",
@@ -3011,14 +3011,14 @@
             "duration"
           ],
           "answer": "premium",
-          "why": "Ticket price of the put. Notional would be the size of stock it covers."
+          "why": "put 的票价。notional 会是它覆盖的股票规模。"
         }
       ]
     },
     {
       "id": "u4l1",
       "unit": 4,
-      "title": "Long, vol, spread",
+      "title": "做多、波动、分散",
       "icon": "🌊",
       "review": false,
       "prompts": [
@@ -3029,27 +3029,27 @@
           "termIds": [
             "long"
           ],
-          "stem": "To be long means:",
+          "stem": "long（做多）的意思是：",
           "options": [
             {
-              "text": "You own it, or you're betting it goes up.",
+              "text": "你拥有它，或者押注它上涨。",
               "art": "long"
             },
             {
-              "text": "You borrowed it and sold it.",
+              "text": "你借来了它并且卖掉了。",
               "art": "short selling"
             },
             {
-              "text": "You pledged it to a bank.",
+              "text": "你把它押给了银行。",
               "art": "pledge"
             },
             {
-              "text": "You bought a put.",
+              "text": "你买了一张 put。",
               "art": "put"
             }
           ],
           "answer": 0,
-          "why": "Long = you want it up. Short = you want it down."
+          "why": "long 希望它涨。short 希望它跌。"
         },
         {
           "id": "u4l1b",
@@ -3058,27 +3058,27 @@
           "termIds": [
             "volatility"
           ],
-          "stem": "Volatility is:",
+          "stem": "volatility（波动率）是：",
           "options": [
             {
-              "text": "How violently the price swings — the weather, not the direction.",
+              "text": "价格摆动的剧烈程度——是天气，不是方向。",
               "art": "volatility"
             },
             {
-              "text": "Owning many different things.",
+              "text": "持有很多不同的东西。",
               "art": "diversification"
             },
             {
-              "text": "A bet that it only goes up.",
+              "text": "一个『只涨不跌』的赌注。",
               "art": "long"
             },
             {
-              "text": "The other person in the contract.",
+              "text": "合约里的另一个人。",
               "art": "counterparty"
             }
           ],
           "answer": 0,
-          "why": "Volatility is how hard one thing swings. Diversification is owning several so one swing doesn't sink you."
+          "why": "volatility 是单一资产的摆动幅度。diversification 是多拿几个，让一次摆动不至于掀翻你。"
         },
         {
           "id": "u4l1c",
@@ -3087,27 +3087,27 @@
           "termIds": [
             "diversification"
           ],
-          "stem": "Diversification is:",
+          "stem": "diversification（分散化）是：",
           "options": [
             {
-              "text": "Owning different things so one disaster doesn't take the whole pile.",
+              "text": "持有不同的资产，让单一灾难吞不掉整堆积蓄。",
               "art": "diversification"
             },
             {
-              "text": "Insurance on a single bet you already have.",
+              "text": "给你已有的某一注买的保险。",
               "art": "hedge"
             },
             {
-              "text": "How hard one price swings.",
+              "text": "一个价格摆得多狠。",
               "art": "volatility"
             },
             {
-              "text": "Re-pricing a position every day.",
+              "text": "每天给仓位重新定价。",
               "art": "mark-to-market"
             }
           ],
           "answer": 0,
-          "why": "Diversification spreads bets. A hedge is insurance on a bet you already have."
+          "why": "diversification 分摊下注。hedge 是给已有的一注买保险。"
         },
         {
           "id": "u4l1d",
@@ -3116,9 +3116,9 @@
           "termIds": [
             "diversification"
           ],
-          "stem": "Diversification is just a fancy word for a hedge.",
+          "stem": "diversification 就是 hedge 的花哨说法。",
           "answer": false,
-          "why": "Spreading bets vs. insuring one bet. 20 stocks is diversification. A put on your Tesla is a hedge."
+          "why": "分散下注对比给一注上保险。20 只股票是 diversification；给你特斯拉买 put 是 hedge。"
         },
         {
           "id": "u4l1e",
@@ -3127,7 +3127,7 @@
           "termIds": [
             "long"
           ],
-          "story": "You bought 50 shares. You're ____. You want the price higher.",
+          "story": "你买了 50 股。你是 ____。你希望价格更高。",
           "bank": [
             "long",
             "short",
@@ -3135,7 +3135,7 @@
             "marked"
           ],
           "answer": "long",
-          "why": "Long = own / want up. Short = borrowed and sold / want down."
+          "why": "long = 持有 / 盼涨。short = 借来卖掉 / 盼跌。"
         },
         {
           "id": "u4l1f",
@@ -3144,8 +3144,8 @@
           "termIds": [
             "volatility"
           ],
-          "story": "Two funds. Same +8% year. One got there in a straight line. The other halved twice and recovered.",
-          "stem": "The second one had more:",
+          "story": "两只基金，同样 +8% 的一年。一只走的是直线。另一只腰斩了两次才恢复过来。",
+          "stem": "第二只基金有更多的：",
           "options": [
             {
               "text": "Volatility",
@@ -3165,7 +3165,7 @@
             }
           ],
           "answer": 0,
-          "why": "Weather, not destination. Diversification is how many names, not how jumpy one path was."
+          "why": "是天气，不是终点。diversification 看的是拿了几只票，不是一条路径多颠簸。"
         },
         {
           "id": "u4l1g",
@@ -3174,8 +3174,8 @@
           "termIds": [
             "diversification"
           ],
-          "story": "Your entire net worth is one employer's stock. A product recall hits. There is no put. There is no second industry.",
-          "stem": "What you lacked is:",
+          "story": "你的全部身家是一家雇主的股票。产品召回了。没有 put，没有第二个行业。",
+          "stem": "你缺的是：",
           "options": [
             {
               "text": "Diversification",
@@ -3195,7 +3195,7 @@
             }
           ],
           "answer": 0,
-          "why": "One pile. One disaster. A hedge could have helped that one name; diversification would have meant other names too."
+          "why": "一堆筹码，一场灾难。hedge 能帮到那一只票；diversification 意味着还有别的票。"
         },
         {
           "id": "u4l1h",
@@ -3210,32 +3210,32 @@
             {
               "id": "long",
               "left": "long",
-              "right": "Want it up"
+              "right": "盼着涨"
             },
             {
               "id": "short selling",
               "left": "short",
-              "right": "Want it down"
+              "right": "盼着跌"
             },
             {
               "id": "volatility",
               "left": "volatility",
-              "right": "Size of the swings"
+              "right": "摆动的幅度"
             },
             {
               "id": "diversification",
               "left": "diversification",
-              "right": "Many things, not one"
+              "right": "很多样，而不是一样"
             }
           ],
-          "why": "Direction, weather, and whether one storm can take the farm."
+          "why": "方向、天气，以及一场风暴能不能掀翻整个农场。"
         }
       ]
     },
     {
       "id": "u4l2",
       "unit": 4,
-      "title": "The other person",
+      "title": "对面的人",
       "icon": "🤝",
       "review": false,
       "prompts": [
@@ -3246,27 +3246,27 @@
           "termIds": [
             "counterparty"
           ],
-          "stem": "A counterparty is:",
+          "stem": "counterparty（交易对手方）是：",
           "options": [
             {
-              "text": "The other person in the contract — the one who has to pay you.",
+              "text": "合约另一端的人——必须付钱给你的那一方。",
               "art": "counterparty"
             },
             {
-              "text": "A missed payment.",
+              "text": "一次没付的款。",
               "art": "default"
             },
             {
-              "text": "Re-pricing a live position.",
+              "text": "给未平仓头寸重新定价。",
               "art": "mark-to-market"
             },
             {
-              "text": "How jumpy the market is.",
+              "text": "市场有多颠。",
               "art": "volatility"
             }
           ],
           "answer": 0,
-          "why": "Counterparty is who sits across from you. Default is them failing to pay."
+          "why": "counterparty 是坐在你对面的谁；default 是他们没付钱。"
         },
         {
           "id": "u4l2b",
@@ -3275,27 +3275,27 @@
           "termIds": [
             "default"
           ],
-          "stem": "Default is:",
+          "stem": "default（违约）是：",
           "options": [
             {
-              "text": "Not paying what you owe, on a loan or a contract.",
+              "text": "该付的钱没付——贷款或合约都算。",
               "art": "default"
             },
             {
-              "text": "Re-pricing the position at today's market.",
+              "text": "按今天的市场价给仓位重新定价。",
               "art": "mark-to-market"
             },
             {
-              "text": "The other bank in the trade.",
+              "text": "这笔交易里的另一家银行。",
               "art": "counterparty"
             },
             {
-              "text": "A discount on collateral.",
+              "text": "对抵押品的折扣。",
               "art": "haircut"
             }
           ],
           "answer": 0,
-          "why": "Default is a missed payment. Mark-to-market is just re-pricing the position while it's still alive."
+          "why": "default 是一次未付。mark-to-market 只是给还活着的仓位重新定价。"
         },
         {
           "id": "u4l2c",
@@ -3304,27 +3304,27 @@
           "termIds": [
             "mark-to-market"
           ],
-          "stem": "Mark-to-market means:",
+          "stem": "mark-to-market（盯市）的意思是：",
           "options": [
             {
-              "text": "Re-pricing a position at today's market, even if you haven't sold.",
+              "text": "按今天的市场价给仓位重新定价，哪怕你没卖。",
               "art": "mark-to-market"
             },
             {
-              "text": "Missing a payment.",
+              "text": "错过一次付款。",
               "art": "default"
             },
             {
-              "text": "Spreading money across many stocks.",
+              "text": "把钱分散到很多股票上。",
               "art": "diversification"
             },
             {
-              "text": "Buying a put.",
+              "text": "买一张 put。",
               "art": "put"
             }
           ],
           "answer": 0,
-          "why": "Mark-to-market is a re-price. Default is a broken promise. You can be marked down and still paying."
+          "why": "mark-to-market 是重新定价；default 是被打破的承诺。被减记的人照样可能一直按时付款。"
         },
         {
           "id": "u4l2d",
@@ -3333,9 +3333,9 @@
           "termIds": [
             "mark-to-market"
           ],
-          "stem": "If your loan is marked to market after a drop, that automatically means you defaulted.",
+          "stem": "下跌之后如果你的贷款被盯市了，就等于你自动违约了。",
           "answer": false,
-          "why": "Marked down ≠ default. Default is when you miss the payment or the call. The mark is just the new number."
+          "why": "被减记 ≠ 违约。违约是你错过付款或错过追缴。盯市只是那个新数字。"
         },
         {
           "id": "u4l2e",
@@ -3344,7 +3344,7 @@
           "termIds": [
             "counterparty"
           ],
-          "story": "You bought a put from Bank X. If Bank X fails, the put is a napkin. Bank X is your ____.",
+          "story": "你的 put 是从 X 银行买的。X 银行倒闭的话，那张 put 就是张餐巾纸。X 银行是你的 ____。",
           "bank": [
             "counterparty",
             "default",
@@ -3352,7 +3352,7 @@
             "duration"
           ],
           "answer": "counterparty",
-          "why": "Who sits across from you. Default is the failure itself."
+          "why": "counterparty 是坐在你对面的谁；default 是那次失约本身。"
         },
         {
           "id": "u4l2f",
@@ -3361,8 +3361,8 @@
           "termIds": [
             "default"
           ],
-          "story": "The company skips a bond payment. Lawyers. Maybe seizing assets. The price already fell last month when people guessed this was coming.",
-          "stem": "The skipped payment is:",
+          "story": "公司错过了一次债券付息。律师进场，也许接管资产。上个月大家猜到会有这一天时，价格已经先跌过了。",
+          "stem": "被跳过的那次付款是：",
           "options": [
             {
               "text": "Default",
@@ -3382,7 +3382,7 @@
             }
           ],
           "answer": 0,
-          "why": "The earlier price drop was a mark. The skipped payment is default."
+          "why": "之前那次下跌是盯市。这次跳过的付款才是 default。"
         },
         {
           "id": "u4l2g",
@@ -3391,8 +3391,8 @@
           "termIds": [
             "mark-to-market"
           ],
-          "story": "Your $1M pledge is now worth $600k. Nobody missed a payment yet. The loan desk still re-values the collateral tonight.",
-          "stem": "Tonight's re-value is:",
+          "story": "你 $1M 的质押股票现在值 $600k。还没有人错过任何付款。但贷款台今晚照样要重新评估抵押品。",
+          "stem": "今晚的重新估值是：",
           "options": [
             {
               "text": "Mark-to-market",
@@ -3412,7 +3412,7 @@
             }
           ],
           "answer": 0,
-          "why": "A re-price. The margin call may follow. Default is only if the promise actually breaks."
+          "why": "只是重新定价。margin call 也许跟着来。default 只有在承诺真的断掉时才算。"
         },
         {
           "id": "u4l2h",
@@ -3427,32 +3427,32 @@
             {
               "id": "counterparty",
               "left": "counterparty",
-              "right": "Who owes you"
+              "right": "谁欠着你"
             },
             {
               "id": "default",
               "left": "default",
-              "right": "They didn't pay"
+              "right": "他们没付钱"
             },
             {
               "id": "mark-to-market",
               "left": "mark-to-market",
-              "right": "Tonight's price, live"
+              "right": "今晚的实时价格"
             },
             {
               "id": "margin call",
               "left": "margin call",
-              "right": "Cushion too thin"
+              "right": "缓冲太薄了"
             }
           ],
-          "why": "Person, broken promise, new number, and the phone call the new number triggers."
+          "why": "人、被打破的承诺、新数字，以及新数字引出的那通电话。"
         }
       ]
     },
     {
       "id": "u4r",
       "unit": 4,
-      "title": "Unit 4 review",
+      "title": "第四单元回顾",
       "icon": "🏆",
       "review": true,
       "prompts": [
@@ -3463,9 +3463,9 @@
           "termIds": [
             "long"
           ],
-          "stem": "If you are long a stock, you want it to fall.",
+          "stem": "如果你 long 一只股票，你希望它下跌。",
           "answer": false,
-          "why": "Long = up. Short = down. The oldest mix-up in the paper."
+          "why": "long = 涨。short = 跌。报纸上最古老的混淆。"
         },
         {
           "id": "u4rb",
@@ -3474,8 +3474,8 @@
           "termIds": [
             "counterparty"
           ],
-          "story": "Your beautiful put is with a bank that just hit the news for all the wrong reasons.",
-          "stem": "Your real risk is the:",
+          "story": "你那张漂亮的 put，存在一家刚因为各种坏消息上了新闻的银行手里。",
+          "stem": "你真正的风险是：",
           "options": [
             {
               "text": "Counterparty",
@@ -3495,7 +3495,7 @@
             }
           ],
           "answer": 0,
-          "why": "The other person. If they default, the contract's model price is a postcard."
+          "why": "对面那个人。他们一旦 default，合约的理论价格就是一张明信片。"
         },
         {
           "id": "u4rc",
@@ -3504,7 +3504,7 @@
           "termIds": [
             "volatility"
           ],
-          "story": "8% days vs 0.3% days. That's ____, not a forecast of direction.",
+          "story": "单日 ±8% 对比单日 0.3%。这是 ____，不是对方向的预测。",
           "bank": [
             "volatility",
             "diversification",
@@ -3512,7 +3512,7 @@
             "notional"
           ],
           "answer": "volatility",
-          "why": "Weather. Diversification is how many roofs, not how hard the wind blows on one."
+          "why": "是天气。diversification 是有几片屋顶，不是风往一片屋顶上吹多狠。"
         },
         {
           "id": "u4rd",
@@ -3521,27 +3521,27 @@
           "termIds": [
             "diversification"
           ],
-          "stem": "A put on one stock vs. 30 different stocks:",
+          "stem": "一只股票的 put 对比 30 只不同的股票：",
           "options": [
             {
-              "text": "Put is a hedge. 30 names is diversification.",
+              "text": "put 是 hedge，30 只票是 diversification。",
               "art": "diversification"
             },
             {
-              "text": "Both are hedges.",
+              "text": "两者都是 hedge。",
               "art": "hedge"
             },
             {
-              "text": "Both are diversification.",
+              "text": "两者都是 diversification。",
               "art": "diversification"
             },
             {
-              "text": "30 names is a margin call.",
+              "text": "30 只票会招来 margin call。",
               "art": "joke"
             }
           ],
           "answer": 0,
-          "why": "Insurance on one bet vs. not making one bet the whole farm."
+          "why": "给一注上保险，对比不把整个农场押在一注上。"
         },
         {
           "id": "u4re",
@@ -3556,25 +3556,25 @@
             {
               "id": "long",
               "left": "long",
-              "right": "You're in. You want up."
+              "right": "你在场内，盼着涨"
             },
             {
               "id": "volatility",
               "left": "volatility",
-              "right": "How jumpy"
+              "right": "有多颠"
             },
             {
               "id": "default",
               "left": "default",
-              "right": "Missed the payment"
+              "right": "错过了付款"
             },
             {
               "id": "mark-to-market",
               "left": "mark-to-market",
-              "right": "Priced again today"
+              "right": "今天重新定价"
             }
           ],
-          "why": "Four Journal words. None of them mean each other."
+          "why": "四个财经版词汇，谁也不等于谁。"
         },
         {
           "id": "u4rf",
@@ -3583,8 +3583,8 @@
           "termIds": [
             "mark-to-market"
           ],
-          "story": "Pledged stock, Unit 1 style. Price drops. Desk revalues tonight. Tomorrow they may call.",
-          "stem": "Tonight is ____. Tomorrow may be a margin call.",
+          "story": "质押的股票，第一单元的剧情。价格跌了。交易台今晚重新估值。明天他们也许会打来电话。",
+          "stem": "今晚是 ____。明天可能才是 margin call。",
           "options": [
             {
               "text": "Mark-to-market",
@@ -3604,7 +3604,7 @@
             }
           ],
           "answer": 0,
-          "why": "Re-price first. Call second. Default only if you don't meet it."
+          "why": "先重新定价，再是追缴。default 只在你做不到时才出现。"
         },
         {
           "id": "u4rg",
@@ -3613,27 +3613,27 @@
           "termIds": [
             "default"
           ],
-          "stem": "Default vs mark-to-market:",
+          "stem": "default 对 mark-to-market：",
           "options": [
             {
-              "text": "Default is a broken promise. Mark-to-market is a new price.",
+              "text": "default 是被打破的承诺，mark-to-market 是一个新价格。",
               "art": "default"
             },
             {
-              "text": "They are synonyms on loan desks.",
+              "text": "在贷款台上它们是同义词。",
               "art": "joke"
             },
             {
-              "text": "Default is a type of put.",
+              "text": "default 是一种 put。",
               "art": "default"
             },
             {
-              "text": "Mark-to-market means the other bank vanished.",
+              "text": "mark-to-market 意味着对面银行消失了。",
               "art": "mark-to-market"
             }
           ],
           "answer": 0,
-          "why": "You can be marked down and still current. Default is the miss."
+          "why": "你可以被减记但仍然一切正常。default 是那一次未付。"
         },
         {
           "id": "u4rh",
@@ -3642,7 +3642,7 @@
           "termIds": [
             "long"
           ],
-          "story": "Bought it, still holding it, want it higher: you're ____.",
+          "story": "买了、还拿着、盼着更高：你是 ____。",
           "bank": [
             "long",
             "short",
@@ -3650,7 +3650,7 @@
             "a counterparty"
           ],
           "answer": "long",
-          "why": "The boring, correct word. Short is the other seat."
+          "why": "那个无聊但正确的词。short 是对面的座位。"
         },
         {
           "id": "u4ri",
@@ -3660,35 +3660,35 @@
             "long",
             "short selling"
           ],
-          "story": "You borrow 100 shares and sell them at $50, hoping to buy back cheaper. Your friend just buys 100 shares at $50 and keeps them.",
-          "stem": "Your friend's move is:",
+          "story": "你借来 100 股、$50 卖出，希望以后低价买回。你朋友则以 $50 买了 100 股，然后一直拿着。",
+          "stem": "你朋友的动作是：",
           "options": [
             {
-              "text": "Long. She owns the shares and wants them up.",
+              "text": "Long。她拥有股票，盼着涨。",
               "art": "long"
             },
             {
-              "text": "Short. She borrowed and sold.",
+              "text": "Short。她借来又卖了。",
               "art": "short selling"
             },
             {
-              "text": "A put — insurance on shares she owns.",
+              "text": "一张 put——给她持有的股票上的保险。",
               "art": "put"
             },
             {
-              "text": "A hedge — she sold to offset a risk.",
+              "text": "一份 hedge——她卖出是为了对冲风险。",
               "art": "hedge"
             }
           ],
           "answer": 0,
-          "why": "She bought and holds: long. Borrow, sell, hope to buy back cheaper — that's your move, short. Up is the direction that hurts you."
+          "why": "买了并持有：long。借、卖、盼低价买回——那是你的 short。上涨正是让你疼的方向。"
         }
       ]
     },
     {
       "id": "u5l1",
       "unit": 5,
-      "title": "Borrow, don't sell",
+      "title": "借，而不卖",
       "icon": "🏦",
       "review": false,
       "prompts": [
@@ -3699,27 +3699,27 @@
           "termIds": [
             "securities-backed loan"
           ],
-          "stem": "A securities-backed loan is:",
+          "stem": "securities-backed loan（证券质押贷款）是：",
           "options": [
             {
-              "text": "A loan that uses your portfolio as collateral. You keep the shares.",
+              "text": "用你的投资组合做担保的贷款。股票还是你的。",
               "art": "securities-backed loan"
             },
             {
-              "text": "Selling the portfolio to harvest losses.",
+              "text": "卖掉组合去收割亏损。",
               "art": "capital gains"
             },
             {
-              "text": "A put on the whole account.",
+              "text": "给整个账户买的 put。",
               "art": "put"
             },
             {
-              "text": "A swap of dividends for a fee.",
+              "text": "用股息换手续费的一份 swap。",
               "art": "swap"
             }
           ],
           "answer": 0,
-          "why": "It's a pledge of securities for a loan. Pledge is the move; this is the product with a nicer name."
+          "why": "它就是把证券 pledge 出去的贷款。pledge 是动作，这是起了个好名字的产品。"
         },
         {
           "id": "u5l1b",
@@ -3728,27 +3728,27 @@
           "termIds": [
             "capital gains"
           ],
-          "stem": "Capital gains are:",
+          "stem": "capital gains（资本利得）是：",
           "options": [
             {
-              "text": "The taxable profit when you sell an asset for more than you paid.",
+              "text": "卖价比买价高时，卖出产生的应税收益。",
               "art": "capital gains"
             },
             {
-              "text": "The interest on a securities-backed loan.",
+              "text": "证券质押贷款的利息。",
               "art": "securities-backed loan"
             },
             {
-              "text": "A stepped-up basis at death.",
+              "text": "去世时的成本基础重置。",
               "art": "buy-borrow-die"
             },
             {
-              "text": "The haircut on pledged stock.",
+              "text": "被押股票上的 haircut。",
               "art": "haircut"
             }
           ],
           "answer": 0,
-          "why": "Capital gains hit when you sell. A loan is not a sale. That's the whole trick — and the whole risk."
+          "why": "capital gains 在卖出时触发。贷款不是卖出。这就是全部的窍门——也是全部的风险。"
         },
         {
           "id": "u5l1c",
@@ -3757,27 +3757,27 @@
           "termIds": [
             "buy-borrow-die"
           ],
-          "stem": "Buy-borrow-die describes:",
+          "stem": "buy-borrow-die 描述的是：",
           "options": [
             {
-              "text": "Buy assets, borrow against them to spend, hold until death so heirs may get a stepped-up basis. A pattern, not a plan we recommend.",
+              "text": "买入资产、押着借钱消费、持有至去世让继承人获得成本重置。一种模式，不是我们推荐的做法。",
               "art": "buy-borrow-die"
             },
             {
-              "text": "A strategy this app is telling you to use.",
+              "text": "本应用建议你使用的策略。",
               "art": "joke"
             },
             {
-              "text": "Selling every year to lock in gains.",
+              "text": "每年卖出锁定收益。",
               "art": "capital gains"
             },
             {
-              "text": "Shorting your heirs' inheritance.",
+              "text": "做空你继承人的遗产。",
               "art": "joke"
             }
           ],
           "answer": 0,
-          "why": "A securities-backed loan is the borrowing tool. Buy-borrow-die is the life-cycle pattern that uses that tool. Description ≠ advice."
+          "why": "securities-backed loan 是借钱工具；buy-borrow-die 是使用这套工具的人生周期模式。描述 ≠ 建议。"
         },
         {
           "id": "u5l1d",
@@ -3786,9 +3786,9 @@
           "termIds": [
             "buy-borrow-die"
           ],
-          "stem": "This lesson is recommending you pledge stock and never sell.",
+          "stem": "这一课是在建议你把股票押出去并且永不卖出。",
           "answer": false,
-          "why": "No. We're naming a pattern wealthy people use, including the ugly part: a crash can still force a sale. Not advice."
+          "why": "不是。我们在给一个富人使用的模式命名，包括难看的那部分：崩盘仍然可能强制卖出。不是建议。"
         },
         {
           "id": "u5l1e",
@@ -3797,7 +3797,7 @@
           "termIds": [
             "capital gains"
           ],
-          "story": "Bought at $1M, sell at $4M. The $3M is a ____. A loan against the $4M is not a sale.",
+          "story": "$1M 买入，$4M 卖出。那 $3M 是一份 ____。押着 $4M 借钱不是卖出。",
           "bank": [
             "capital gain",
             "haircut",
@@ -3805,7 +3805,7 @@
             "notional"
           ],
           "answer": "capital gain",
-          "why": "Tax (sometimes) follows the sale. The loan follows a pledge. Different doors."
+          "why": "税（有时）跟着卖出走。贷款跟着 pledge 走。不同的门。"
         },
         {
           "id": "u5l1f",
@@ -3814,8 +3814,8 @@
           "termIds": [
             "securities-backed loan"
           ],
-          "story": "$10M stock. 30% haircut. Bank offers $7M. Shares stay yours. You spend the $7M. No sale. Yet.",
-          "stem": "The product is a:",
+          "story": "$10M 的股票，30% 的 haircut，银行提出借 $7M。股票仍然是你的。你把这 $7M 花了。没有卖出。暂时。",
+          "stem": "这个产品是：",
           "options": [
             {
               "text": "Securities-backed loan",
@@ -3835,7 +3835,7 @@
             }
           ],
           "answer": 0,
-          "why": "Unit 1's pledge, in private-bank clothing. Same margin-call risk if it drops 40%."
+          "why": "第一单元的 pledge，穿上了私人银行的外套。跌 40% 时，同样的 margin call 风险还在。"
         },
         {
           "id": "u5l1g",
@@ -3844,8 +3844,8 @@
           "termIds": [
             "buy-borrow-die"
           ],
-          "story": "Person owns a giant concentrated position. Borrows against it for living costs. Never sells. The pitch is: heirs get a reset. The footnote is: one crash plus a call can dump the shares into a taxable event anyway.",
-          "stem": "The pattern has a nickname:",
+          "story": "某人持有巨大的集中持仓。押着它借钱过日子。永不卖出。卖点：继承人拿到成本重置。脚注：一次崩盘加一通追缴，照样能把股票推进应税事件里。",
+          "stem": "这套模式有个外号：",
           "options": [
             {
               "text": "Buy-borrow-die",
@@ -3865,7 +3865,7 @@
             }
           ],
           "answer": 0,
-          "why": "Nickname for a tax pattern. The footnote is the Unit 1 margin call. We are not selling the pitch."
+          "why": "一个税务模式的外号。脚注就是第一单元的 margin call。我们不替这个卖点站台。"
         },
         {
           "id": "u5l1h",
@@ -3880,25 +3880,25 @@
             {
               "id": "securities-backed loan",
               "left": "securities-backed loan",
-              "right": "Portfolio as collateral"
+              "right": "组合做担保的贷款"
             },
             {
               "id": "capital gains",
               "left": "capital gains",
-              "right": "Tax when you actually sell"
+              "right": "真的卖出时才来的税"
             },
             {
               "id": "pledge",
               "left": "pledge",
-              "right": "The underlying move"
+              "right": "底下那个动作"
             },
             {
               "id": "margin call",
               "left": "margin call",
-              "right": "The ugly footnote"
+              "right": "难看的脚注"
             }
           ],
-          "why": "Pretty name, old move, tax reason, crash ending. Hold all four."
+          "why": "好听的名字、古老的动作、税务的理由、崩盘的结尾。四个都要拿住。"
         },
         {
           "id": "u5l1i",
@@ -3907,16 +3907,16 @@
           "termIds": [
             "capital gains"
           ],
-          "stem": "Taking a loan against stock is the same as selling it for tax purposes.",
+          "stem": "押着股票借钱，在税务意义上等于把它卖了。",
           "answer": false,
-          "why": "Usually not — that's why the pattern exists. A forced sale after a margin call *is* a sale. The tax shows up when you didn't want it."
+          "why": "通常不是——这正是这套模式存在的原因。但被 margin call 强制的卖出确实是卖出。税会在你最不想要的时候出现。"
         }
       ]
     },
     {
       "id": "u5l2",
       "unit": 5,
-      "title": "Futures & swaps",
+      "title": "期货与互换",
       "icon": "🔄",
       "review": false,
       "prompts": [
@@ -3927,27 +3927,27 @@
           "termIds": [
             "futures"
           ],
-          "stem": "A futures contract is:",
+          "stem": "futures（期货）合约是：",
           "options": [
             {
-              "text": "A promise to buy or sell at a set price on a set date — obligation, not a right.",
+              "text": "在约定日期按约定价格买卖的承诺——是义务，不是权利。",
               "art": "futures"
             },
             {
-              "text": "The right to walk away after paying a premium.",
+              "text": "付一笔权利金后就可以走开的权利。",
               "art": "option"
             },
             {
-              "text": "A loan against your shares.",
+              "text": "用你的股票做的贷款。",
               "art": "pledge"
             },
             {
-              "text": "An exchange of interest payments over years.",
+              "text": "多年间的利率支付交换。",
               "art": "swap"
             }
           ],
           "answer": 0,
-          "why": "Futures are a promise you must keep. An option is a right you can abandon."
+          "why": "futures 是必须遵守的承诺。option 是可以放弃的权利。"
         },
         {
           "id": "u5l2b",
@@ -3956,27 +3956,27 @@
           "termIds": [
             "swap"
           ],
-          "stem": "A swap is:",
+          "stem": "swap（互换）是：",
           "options": [
             {
-              "text": "Two parties exchanging cash flows — often a fixed rate for a floating one.",
+              "text": "双方交换现金流——常见的是固定利率换浮动利率。",
               "art": "swap"
             },
             {
-              "text": "A single settlement on one date for a barrel or a bushel.",
+              "text": "某一日期就一桶油或一蒲式耳做的单次结算。",
               "art": "futures"
             },
             {
-              "text": "The right to sell stock at a floor.",
+              "text": "以保底价卖出股票的权利。",
               "art": "put"
             },
             {
-              "text": "A portfolio pledged to a bank.",
+              "text": "押给银行的投资组合。",
               "art": "securities-backed loan"
             }
           ],
           "answer": 0,
-          "why": "A swap is an ongoing exchange of payments. A future is one settlement on one date."
+          "why": "swap 是持续的支付交换。future 是某一日的单次结算。"
         },
         {
           "id": "u5l2c",
@@ -3985,9 +3985,9 @@
           "termIds": [
             "futures"
           ],
-          "stem": "You can let a futures contract expire unused, like an option, and only lose the premium.",
+          "stem": "你可以像期权一样放着 futures 不用让它到期，只亏权利金。",
           "answer": false,
-          "why": "No walk-away. Futures mark to market. You settle. Options are the ones you can abandon."
+          "why": "没有走开的门。futures 逐日盯市，你必须结算。能放弃的只有 option。"
         },
         {
           "id": "u5l2d",
@@ -3996,7 +3996,7 @@
           "termIds": [
             "futures"
           ],
-          "story": "Agree now to buy 1,000 barrels at $80 in December. Come December, you settle. That's a ____ contract.",
+          "story": "现在约定十二月以 $80 买 1,000 桶。到了十二月就结算。这是一份 ____ 合约。",
           "bank": [
             "futures",
             "option",
@@ -4004,7 +4004,7 @@
             "put"
           ],
           "answer": "futures",
-          "why": "Obligation on a date. An option would have let you shrug if $80 became a bad idea."
+          "why": "某日必须履行的义务。如果是 option，当 $80 变成坏主意时你耸耸肩就走了。"
         },
         {
           "id": "u5l2e",
@@ -4013,7 +4013,7 @@
           "termIds": [
             "swap"
           ],
-          "story": "You pay 4% fixed, receive SOFR. If rates jump, it pays you. That's a ____, not a loan.",
+          "story": "你付 4% 固定，收 SOFR 浮动。利率暴涨时它赔你。这是一份 ____，不是贷款。",
           "bank": [
             "swap",
             "future",
@@ -4021,7 +4021,7 @@
             "call"
           ],
           "answer": "swap",
-          "why": "Ongoing payments. A future would be one settlement. A loan would be principal you owe."
+          "why": "持续的支付。future 是单次结算。贷款是你欠的本金。"
         },
         {
           "id": "u5l2f",
@@ -4030,8 +4030,8 @@
           "termIds": [
             "futures"
           ],
-          "story": "Farmer locks a sale price for harvest. Buyer locks a purchase price. Neither of them has an option to bail because the weather was weird.",
-          "stem": "They used:",
+          "story": "农场主锁定收割时的卖价，买家锁定收购价。天气再怪，谁也没有中途退出的选择权。",
+          "stem": "他们用的是：",
           "options": [
             {
               "text": "Futures",
@@ -4051,7 +4051,7 @@
             }
           ],
           "answer": 0,
-          "why": "Obligation. If they wanted the right to bail, they'd have paid a premium for options."
+          "why": "是义务。想要退出的权利，他们得为 option 付权利金。"
         },
         {
           "id": "u5l2g",
@@ -4060,8 +4060,8 @@
           "termIds": [
             "swap"
           ],
-          "story": "Company has a floating-rate loan and hates the uncertainty. It enters a contract: it will pay fixed, receive floating, for five years. No barrels. No expiration Friday.",
-          "stem": "That contract is a:",
+          "story": "公司有一笔浮动利率贷款，讨厌这种不确定。它签下一份合约：付固定、收浮动，为期五年。没有油桶，没有到期星期五。",
+          "stem": "这份合约是：",
           "options": [
             {
               "text": "Swap",
@@ -4081,7 +4081,7 @@
             }
           ],
           "answer": 0,
-          "why": "Exchange of cash flows over time. A future is one date, one settlement."
+          "why": "随时间的现金流交换。future 是一个日期、一次结算。"
         },
         {
           "id": "u5l2h",
@@ -4096,25 +4096,25 @@
             {
               "id": "futures",
               "left": "futures",
-              "right": "Must settle on a date"
+              "right": "某日必须结算"
             },
             {
               "id": "option",
               "left": "option",
-              "right": "Right, not must"
+              "right": "是权利，不是必须"
             },
             {
               "id": "swap",
               "left": "swap",
-              "right": "Exchange cash flows"
+              "right": "交换现金流"
             },
             {
               "id": "derivative",
               "left": "derivative",
-              "right": "Value from something else"
+              "right": "价值来自别的东西"
             }
           ],
-          "why": "All three are derivatives. The mix-up is which one lets you walk, which one you must keep, which one drips payments."
+          "why": "三者都是衍生品。混淆点在于：哪个能让你走开，哪个必须坚持，哪个慢慢滴着付款。"
         },
         {
           "id": "u5l2i",
@@ -4123,16 +4123,16 @@
           "termIds": [
             "swap"
           ],
-          "stem": "A swap is just a futures contract with a friendlier name.",
+          "stem": "swap 就是名字更友好的 futures 合约。",
           "answer": false,
-          "why": "Futures: one date. Swaps: an ongoing exchange. Related family, different choreography."
+          "why": "futures：一个日期。swap：持续的交换。同一家族，不同的舞步。"
         }
       ]
     },
     {
       "id": "u5r",
       "unit": 5,
-      "title": "Unit 5 review",
+      "title": "第五单元回顾",
       "icon": "🏆",
       "review": true,
       "prompts": [
@@ -4143,8 +4143,8 @@
           "termIds": [
             "securities-backed loan"
           ],
-          "story": "Private bank, concentrated stock, cash without a sale. Unit 1 is whispering 'pledge.'",
-          "stem": "The product name on the term sheet is:",
+          "story": "私人银行、集中持仓、不卖股票拿现金。第一单元在你耳边低语：pledge。",
+          "stem": "条款书上的产品名是：",
           "options": [
             {
               "text": "Securities-backed loan",
@@ -4164,7 +4164,7 @@
             }
           ],
           "answer": 0,
-          "why": "Pretty label on a pledge. Haircut and margin call still live here."
+          "why": "pledge 上的漂亮标签。haircut 和 margin call 都还住在这里。"
         },
         {
           "id": "u5rb",
@@ -4173,27 +4173,27 @@
           "termIds": [
             "buy-borrow-die"
           ],
-          "stem": "Buy-borrow-die, said honestly:",
+          "stem": "诚实地描述 buy-borrow-die：",
           "options": [
             {
-              "text": "A tax pattern some wealthy people use. A crash can still force a taxable sale. Not advice.",
+              "text": "一些富人使用的税务模式。崩盘仍可能强制一次应税卖出。不是建议。",
               "art": "buy-borrow-die"
             },
             {
-              "text": "A free lunch this app endorses.",
+              "text": "本应用背书的免费午餐。",
               "art": "joke"
             },
             {
-              "text": "The same thing as diversification.",
+              "text": "和 diversification 是一回事。",
               "art": "diversification"
             },
             {
-              "text": "A kind of put.",
+              "text": "一种 put。",
               "art": "put"
             }
           ],
           "answer": 0,
-          "why": "We describe it because you'll read it. We do not hand you the keys."
+          "why": "我们描述它，因为你迟早会读到。我们不把钥匙递给你。"
         },
         {
           "id": "u5rc",
@@ -4202,7 +4202,7 @@
           "termIds": [
             "futures"
           ],
-          "story": "Right vs obligation: an option you can drop. A ____ you must settle.",
+          "story": "权利对比义务：option 可以扔掉。____ 必须结算。",
           "bank": [
             "future",
             "put",
@@ -4210,7 +4210,7 @@
             "premium"
           ],
           "answer": "future",
-          "why": "That's the fork from Unit 2, grown up."
+          "why": "这是第二单元那道岔路，长大了而已。"
         },
         {
           "id": "u5rd",
@@ -4219,9 +4219,9 @@
           "termIds": [
             "capital gains"
           ],
-          "stem": "If a margin call forces a sale of pledged stock, capital gains can show up even if you never wanted to sell.",
+          "stem": "如果 margin call 强制卖出被押的股票，capital gains 会出现——哪怕你从没想卖。",
           "answer": true,
-          "why": "That's the ugly footnote. The pattern assumes you never sell. The market does not assume that."
+          "why": "这就是那道难看的脚注。这套模式假设你永不卖出。市场不做这个假设。"
         },
         {
           "id": "u5re",
@@ -4236,25 +4236,25 @@
             {
               "id": "securities-backed loan",
               "left": "SBL",
-              "right": "Loan on a portfolio"
+              "right": "组合上的贷款"
             },
             {
               "id": "buy-borrow-die",
               "left": "buy-borrow-die",
-              "right": "The life-cycle nickname"
+              "right": "人生周期的外号"
             },
             {
               "id": "futures",
               "left": "futures",
-              "right": "Obligatory settlement"
+              "right": "必须履行的结算"
             },
             {
               "id": "swap",
               "left": "swap",
-              "right": "Cash-flow exchange"
+              "right": "现金流交换"
             }
           ],
-          "why": "Two borrowing words, two derivative words. Don't let the nickname do the thinking."
+          "why": "两个借钱词，两个衍生品词。别让外号替你思考。"
         },
         {
           "id": "u5rf",
@@ -4263,8 +4263,8 @@
           "termIds": [
             "swap"
           ],
-          "story": "Airline wants to lock jet-fuel economics without taking delivery of tankers each month. It exchanges payments tied to a fuel index for years.",
-          "stem": "Closest word:",
+          "story": "航空公司想锁定燃油成本，又不想每月真的接收油罐车。它交换了多年与燃油指数挂钩的付款。",
+          "stem": "最贴切的词：",
           "options": [
             {
               "text": "Swap",
@@ -4284,7 +4284,7 @@
             }
           ],
           "answer": 0,
-          "why": "Ongoing exchange. A future would be dated lots. A put would be crash insurance with a premium."
+          "why": "持续的交换。future 是有日期的分批结算。put 是带权利金的崩盘保险。"
         },
         {
           "id": "u5rg",
@@ -4293,27 +4293,27 @@
           "termIds": [
             "pledge"
           ],
-          "stem": "The through-line of this whole game:",
+          "stem": "整门课的贯穿线：",
           "options": [
             {
-              "text": "Hedge protects. Pledge borrows against. Same asset, different fork.",
+              "text": "hedge 保护，pledge 押着借钱。同一资产，不同岔路。",
               "art": "hedge"
             },
             {
-              "text": "Hedge and pledge are synonyms.",
+              "text": "hedge 和 pledge 是同义词。",
               "art": "hedge"
             },
             {
-              "text": "Futures are a kind of pledge.",
+              "text": "futures 是一种 pledge。",
               "art": "futures"
             },
             {
-              "text": "Buy-borrow-die is a hedge.",
+              "text": "buy-borrow-die 是一种 hedge。",
               "art": "buy-borrow-die"
             }
           ],
           "answer": 0,
-          "why": "If you leave with one sentence, take that one."
+          "why": "如果只带走一句话，带走这一句。"
         },
         {
           "id": "u5rh",
@@ -4322,7 +4322,7 @@
           "termIds": [
             "capital gains"
           ],
-          "story": "Loan against stock: usually no sale, so usually no ____. Forced sale after a call: hello tax.",
+          "story": "押着股票借钱：通常没有卖出，所以通常没有 ____。追缴之后的强制卖出：税来了。",
           "bank": [
             "capital gains",
             "duration",
@@ -4330,7 +4330,7 @@
             "liquidity"
           ],
           "answer": "capital gains",
-          "why": "Tax follows the sale. The call can create the sale you were avoiding."
+          "why": "税跟着卖出走。追缴能制造出你一直躲着的那个卖出。"
         }
       ]
     }

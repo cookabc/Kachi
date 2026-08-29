@@ -13,7 +13,7 @@ import {
   startSession
 } from "@kachi/learning-engine";
 import { course } from "./course";
-import { localizedTerm, termLocalization } from "./localization";
+import { localizedTerm } from "./localization";
 import { exportLearnerData, importLearnerData, loadLearnerState, saveLearnerState } from "./storage";
 import { artIdForLabel, Hedgehog, NAV_ICONS, TermArt } from "./art";
 import {
@@ -60,11 +60,6 @@ function pick<T>(arr: T[]): T {
 
 const conceptById = (id: string) => conceptOf(course, id);
 const realTermIds = (prompt: Exercise) => publishedTermIds(prompt, course);
-
-function zhMixHint(prompt: Exercise): string | undefined {
-  const termId = (prompt.termIds ?? []).find((id) => termLocalization[id]);
-  return termId ? localizedTerm(termId).mixUpWhyZh : undefined;
-}
 
 function StatsBar({ state }: { state: LearnerState }) {
   return (
@@ -475,7 +470,7 @@ function PracticeHome({ missedCount, onStart }: { missedCount: number; onStart: 
 function Glossary({ state, query, onQuery }: { state: LearnerState; query: string; onQuery: (value: string) => void }) {
   const q = query.trim().toLowerCase();
   const matches = (concept: Concept) =>
-    !q || `${concept.term} ${concept.definition} ${concept.mixUp} ${localizedTerm(concept.id).termZh} ${localizedTerm(concept.id).definitionZh}`.toLowerCase().includes(q);
+    !q || `${concept.term} ${concept.definition} ${concept.mixUp} ${localizedTerm(concept.id).termZh}`.toLowerCase().includes(q);
   let total = 0;
   return (
     <>
@@ -503,10 +498,9 @@ function Glossary({ state, query, onQuery }: { state: LearnerState; query: strin
                 return (
                   <article className="g-card" key={concept.id}>
                     <h3>{concept.term}<span className="zh">{zh.termZh}</span>{seen && <span className="seen" title="已在课程中见过">✓</span>}</h3>
-                    <p className="def">{zh.definitionZh}</p>
-                    <p className="def-en">{concept.definition}</p>
-                    <p className="ex">e.g. {concept.example}</p>
-                    <p className="mu">混淆：<strong>{concept.mixUp}</strong> — {zh.mixUpWhyZh}</p>
+                    <p className="def">{concept.definition}</p>
+                    <p className="ex">例如：{concept.example}</p>
+                    <p className="mu">混淆：<strong>{concept.mixUp}</strong> — {concept.mixUpWhy}</p>
                   </article>
                 );
               })}
@@ -608,7 +602,6 @@ function LessonScreen(props: {
         <div className={"sheet " + (props.lastCorrect ? "ok" : "no")} role="status">
           <h3>{pick(props.lastCorrect ? NICE : NOPE)}</h3>
           <p>{presented.why}</p>
-          {zhMixHint(presented) && <p className="why-zh">{zhMixHint(presented)}</p>}
           <button className={"btn " + (props.lastCorrect ? "btn-green" : "btn-red")} onClick={props.onContinue}>继续</button>
         </div>
       )}
@@ -627,12 +620,11 @@ function TeachCard({ termId }: { termId: string }) {
       <div className="teach-art"><TermArt id={concept.id} size="hero" /></div>
       {concept.caption && <p className="teach-cap">{concept.caption}</p>}
       <div className="teach-term">{concept.term}</div>
-      <p className="teach-def">{zh.definitionZh}</p>
-      <p className="teach-def-en">{concept.definition}</p>
+      <p className="teach-def">{concept.definition}</p>
       <div className="teach-ex">{concept.example}</div>
       <div className="teach-mix">
         <TermArt id={sibling ? sibling.id : concept.mixUp} size="xs" />
-        <div><strong>别混淆</strong>：{concept.mixUp}。{zh.mixUpWhyZh}</div>
+        <div><strong>别混淆</strong>：{concept.mixUp}。{concept.mixUpWhy}</div>
       </div>
     </>
   );
