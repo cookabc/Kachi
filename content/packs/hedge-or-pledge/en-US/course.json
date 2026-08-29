@@ -1,0 +1,4339 @@
+{
+  "schemaVersion": 1,
+  "packId": "hedge-or-pledge",
+  "contentVersion": "2026.08.29-en",
+  "locale": "en-US",
+  "generatedAt": "2026-08-29T14:00:00.000Z",
+  "units": [
+    {
+      "id": 1,
+      "title": "Hedge or Pledge",
+      "blurb": "Protect it, or borrow against it?"
+    },
+    {
+      "id": 2,
+      "title": "A bigger bet",
+      "blurb": "Names for bets — including bets used as hedges."
+    },
+    {
+      "id": 3,
+      "title": "Money in motion",
+      "blurb": "Size, the price of protection, hedges that miss."
+    },
+    {
+      "id": 4,
+      "title": "Markets and damage",
+      "blurb": "How books move, and where the other person fails you."
+    },
+    {
+      "id": 5,
+      "title": "How the rich actually do it",
+      "blurb": "The pattern, not a pitch. Tax, loans, and the ugly part."
+    }
+  ],
+  "concepts": [
+    {
+      "id": "hedge",
+      "unit": 1,
+      "term": "hedge",
+      "caption": "An umbrella over what you already own. You keep the stock - the put absorbs the crash.",
+      "definition": "Insurance on a bet you already have.",
+      "example": "You own $100,000 of stock and buy a put so a crash hurts less.",
+      "mixUp": "pledge",
+      "mixUpWhy": "A hedge protects what you own. A pledge puts it up as collateral.",
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "legacy"
+    },
+    {
+      "id": "pledge",
+      "unit": 1,
+      "term": "pledge",
+      "caption": "You keep the shares, but they are on a leash: miss the loan and the bank takes them.",
+      "definition": "Put an asset up so a lender can take it if you don't pay.",
+      "example": "You pledge $1M of stock for a $700k loan. You still own the stock — until you don't pay.",
+      "mixUp": "hedge",
+      "mixUpWhy": "You still own it. Pledge = collateral. Sell = it's gone.",
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "legacy"
+    },
+    {
+      "id": "collateral",
+      "unit": 1,
+      "term": "collateral",
+      "caption": "The pile the lender is allowed to grab if you stop paying.",
+      "definition": "The thing the lender can seize if you skip payments.",
+      "example": "The pledged stock is the collateral. Miss the loan, the bank takes the shares.",
+      "mixUp": "haircut",
+      "mixUpWhy": "Collateral is the asset. The haircut is how much they knock off its value before lending.",
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "legacy"
+    },
+    {
+      "id": "haircut",
+      "unit": 1,
+      "term": "haircut",
+      "caption": "The discount: $1M of stock gets treated as $700k before anyone lends a cent.",
+      "definition": "The discount a lender applies to collateral before they'll lend against it.",
+      "example": "$1M stock, 30% haircut → they treat it as $700k. That's the max loan.",
+      "mixUp": "margin",
+      "mixUpWhy": "Haircut is the discount on collateral. Margin is the cash cushion you must keep.",
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "legacy"
+    },
+    {
+      "id": "margin",
+      "unit": 1,
+      "term": "margin",
+      "caption": "The cash cushion that has to stay in the account while the bet sits on top.",
+      "definition": "Cash or equity you must keep in the account as a cushion.",
+      "example": "Broker lets you buy $10k of stock with $5k cash. That $5k is margin.",
+      "mixUp": "leverage",
+      "mixUpWhy": "Margin is the cushion. Leverage is the size of the bet that cushion supports.",
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "legacy"
+    },
+    {
+      "id": "margin call",
+      "unit": 1,
+      "term": "margin call",
+      "caption": "The phone rings when the cushion is gone: post more cash, or get sold out.",
+      "definition": "The lender demanding more cash — or selling you out — because the cushion got too thin.",
+      "example": "Stock drops 40%. Collateral is now $600k against a $700k loan. The bank calls.",
+      "mixUp": "haircut",
+      "mixUpWhy": "The haircut was set at the start. A margin call happens later, when prices move against you.",
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "legacy"
+    },
+    {
+      "id": "leverage",
+      "unit": 2,
+      "term": "leverage",
+      "caption": "A small pile of your own cash holding up a much bigger bet.",
+      "definition": "Using borrowed money or derivatives to make a bigger bet than your cash.",
+      "example": "$10k of yours plus $40k borrowed = 5× leverage. A 10% drop wipes half your cash.",
+      "mixUp": "margin",
+      "mixUpWhy": "Leverage is the multiplier. Margin is the cushion that makes the multiplier possible.",
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "legacy"
+    },
+    {
+      "id": "derivative",
+      "unit": 2,
+      "term": "derivative",
+      "caption": "The contract is not the thing - its value just comes from the thing.",
+      "definition": "A contract whose value comes from something else — a stock, a rate, a barrel of oil.",
+      "example": "A put on Apple is a derivative. The put is not Apple stock; it just bets on Apple's price.",
+      "mixUp": "option",
+      "mixUpWhy": "An option is one kind of derivative. Futures and swaps are derivatives too.",
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "legacy"
+    },
+    {
+      "id": "option",
+      "unit": 2,
+      "term": "option",
+      "caption": "A ticket you can tear up: the right to buy or sell, never the duty.",
+      "definition": "The right, not the obligation, to buy or sell something at a set price.",
+      "example": "Pay $3 for the right to sell a $100 stock at $90. That's an option. You can walk away.",
+      "mixUp": "futures",
+      "mixUpWhy": "An option you can abandon. A futures contract you must settle.",
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "legacy"
+    },
+    {
+      "id": "put",
+      "unit": 2,
+      "term": "put",
+      "caption": "The right to sell at a floor price. It pays when the price falls.",
+      "definition": "An option to sell at a set price. Pays off when the thing falls.",
+      "example": "Stock at $100. A $90 put pays if it drops below $90. Crash insurance if you own it.",
+      "mixUp": "call",
+      "mixUpWhy": "Put = right to sell (you want it down). Call = right to buy (you want it up).",
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "legacy"
+    },
+    {
+      "id": "call",
+      "unit": 2,
+      "term": "call",
+      "caption": "The right to buy at a set price. It pays when the price rises.",
+      "definition": "An option to buy at a set price. Pays off when the thing rises.",
+      "example": "Stock at $100. A $110 call pays if it rips above $110. That's a bullish bet.",
+      "mixUp": "put",
+      "mixUpWhy": "Call = right to buy (up). Put = right to sell (down).",
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "legacy"
+    },
+    {
+      "id": "short selling",
+      "unit": 2,
+      "term": "short selling",
+      "caption": "Sell borrowed shares today, buy them back tomorrow - cheaper, you hope.",
+      "definition": "Borrow shares, sell them now, hope to buy back cheaper later.",
+      "example": "Borrow 100 shares, sell at $50, buy back at $30, return them. You keep $20. If it goes to $80, you owe.",
+      "mixUp": "put",
+      "mixUpWhy": "A put is a limited-loss down bet. A short can lose without a ceiling if the stock rips.",
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "legacy"
+    },
+    {
+      "id": "liquidity",
+      "unit": 3,
+      "term": "liquidity",
+      "caption": "A wide exit: you can sell fast without shoving the price around.",
+      "definition": "How fast you can sell without moving the price much.",
+      "example": "Apple stock is liquid — dump $1M and the price barely budges. Your cousin's startup is not.",
+      "mixUp": "notional",
+      "mixUpWhy": "Liquidity is ease of exit. Notional is the face size of a contract.",
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "legacy"
+    },
+    {
+      "id": "notional",
+      "unit": 3,
+      "term": "notional",
+      "caption": "The face size printed on the contract - not the price you paid for it.",
+      "definition": "The face amount a derivative is written on — not what you paid.",
+      "example": "An option on $100,000 of stock might cost $2,000. Notional is $100k. Premium is $2k.",
+      "mixUp": "premium",
+      "mixUpWhy": "Notional is the size of the underlying. Premium is what you paid for the contract.",
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "legacy"
+    },
+    {
+      "id": "premium",
+      "unit": 3,
+      "term": "premium",
+      "caption": "The ticket price of the contract. This is what protection costs.",
+      "definition": "What you pay for an option — the price of the insurance.",
+      "example": "That put costs $3 a share. The $3 is the premium.",
+      "mixUp": "yield",
+      "mixUpWhy": "Premium is the price of the contract. Yield is what an investment pays you over time.",
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "legacy"
+    },
+    {
+      "id": "yield",
+      "unit": 3,
+      "term": "yield",
+      "caption": "What the investment pays you, measured as a percent of its price.",
+      "definition": "What an investment pays you, as a percent of its price.",
+      "example": "A $100 bond that pays $5 a year yields 5%. Price falls to $50, yield is 10%.",
+      "mixUp": "duration",
+      "mixUpWhy": "Yield is the income rate. Duration is how much the price jumps when rates move.",
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "legacy"
+    },
+    {
+      "id": "duration",
+      "unit": 3,
+      "term": "duration",
+      "caption": "The rate bruise: how hard the price jumps when interest rates move.",
+      "definition": "How sensitive a bond's price is to interest-rate changes, in years.",
+      "example": "A 10-year duration bond drops about 10% if rates rise 1%. That's the rate bruise.",
+      "mixUp": "yield",
+      "mixUpWhy": "Duration is the bruise from rate moves. Yield is the coupon you collect.",
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "legacy"
+    },
+    {
+      "id": "basis risk",
+      "unit": 3,
+      "term": "basis risk",
+      "caption": "Two lines that were supposed to move together, drifting apart.",
+      "definition": "When your hedge doesn't move 1-for-1 with what you were trying to protect.",
+      "example": "You hedge airline stock with an oil future. Oil falls, the stock doesn't. The hedge missed.",
+      "mixUp": "hedge",
+      "mixUpWhy": "A hedge is the protection. Basis risk is the gap when that protection doesn't track.",
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "legacy"
+    },
+    {
+      "id": "long",
+      "unit": 4,
+      "term": "long",
+      "caption": "You own it and you want it higher.",
+      "definition": "You own it, or you're betting it goes up.",
+      "example": "You bought 50 shares. You're long. You want the price higher.",
+      "mixUp": "short selling",
+      "mixUpWhy": "Long = you want it up. Short = you want it down.",
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "legacy"
+    },
+    {
+      "id": "volatility",
+      "unit": 4,
+      "term": "volatility",
+      "caption": "The weather report: how hard the price swings, not where it ends up.",
+      "definition": "How violently the price swings — the weather, not the direction.",
+      "example": "A stock that rips 8% some days is more volatile than a utility that moves 0.3%.",
+      "mixUp": "diversification",
+      "mixUpWhy": "Volatility is how hard one thing swings. Diversification is owning several so one swing doesn't sink you.",
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "legacy"
+    },
+    {
+      "id": "diversification",
+      "unit": 4,
+      "term": "diversification",
+      "caption": "Many baskets, so one dropped basket does not take the eggs.",
+      "definition": "Owning different things so one disaster doesn't take the whole pile.",
+      "example": "20 stocks across 5 industries vs. your whole net worth in one employer.",
+      "mixUp": "hedge",
+      "mixUpWhy": "Diversification spreads bets. A hedge is insurance on a bet you already have.",
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "legacy"
+    },
+    {
+      "id": "counterparty",
+      "unit": 4,
+      "term": "counterparty",
+      "caption": "The person standing on the other side of the contract, owing you.",
+      "definition": "The other person in the contract — the one who has to pay you.",
+      "example": "You bought a put from Bank X. Bank X is your counterparty. If they fail, the put is a napkin.",
+      "mixUp": "default",
+      "mixUpWhy": "Counterparty is who sits across from you. Default is them failing to pay.",
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "legacy"
+    },
+    {
+      "id": "default",
+      "unit": 4,
+      "term": "default",
+      "caption": "The promise snaps: the payment they owed never arrives.",
+      "definition": "Not paying what you owe, on a loan or a contract.",
+      "example": "The company misses a bond payment. That's default. Bondholders may seize assets.",
+      "mixUp": "mark-to-market",
+      "mixUpWhy": "Default is a missed payment. Mark-to-market is just re-pricing the position while it's still alive.",
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "legacy"
+    },
+    {
+      "id": "mark-to-market",
+      "unit": 4,
+      "term": "mark-to-market",
+      "caption": "The price tag gets rewritten at today's number - sold or not.",
+      "definition": "Re-pricing a position at today's market, even if you haven't sold.",
+      "example": "Your $1M pledge is now worth $600k. The loan is marked to market. That's when the call comes.",
+      "mixUp": "default",
+      "mixUpWhy": "Mark-to-market is a re-price. Default is a broken promise. You can be marked down and still paying.",
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "legacy"
+    },
+    {
+      "id": "securities-backed loan",
+      "unit": 5,
+      "term": "securities-backed loan",
+      "caption": "Your portfolio, pledged for cash - with a nicer name on the term sheet.",
+      "definition": "A loan that uses your portfolio as collateral. You keep the shares.",
+      "example": "$10M stock, 30% haircut, $7M loan. You didn't sell, so you didn't trigger capital gains — yet.",
+      "mixUp": "pledge",
+      "mixUpWhy": "It's a pledge of securities for a loan. Pledge is the move; this is the product with a nicer name.",
+      "sourceIds": [],
+      "risk": "jurisdictional",
+      "jurisdiction": "US context in legacy content",
+      "reviewStatus": "legacy"
+    },
+    {
+      "id": "capital gains",
+      "unit": 5,
+      "term": "capital gains",
+      "caption": "The tax bill that only appears when you actually sell.",
+      "definition": "The taxable profit when you sell an asset for more than you paid.",
+      "example": "Bought at $1M, sell at $4M. $3M is a capital gain. A loan is not a sale.",
+      "mixUp": "buy-borrow-die",
+      "mixUpWhy": "Capital gains hit when you sell. Buy-borrow-die is the pattern of never selling so the tax doesn't trigger.",
+      "sourceIds": [],
+      "risk": "jurisdictional",
+      "jurisdiction": "US context in legacy content",
+      "reviewStatus": "legacy"
+    },
+    {
+      "id": "buy-borrow-die",
+      "unit": 5,
+      "term": "buy-borrow-die",
+      "caption": "Buy, borrow against it, never sell. The pattern, not advice.",
+      "definition": "Buy assets, borrow against them to spend, hold until death so heirs may get a stepped-up basis. A tax pattern — not a plan we recommend.",
+      "example": "Owns $2B of stock, borrows $20M a year against it, never sells. A crash can still force a sale.",
+      "mixUp": "securities-backed loan",
+      "mixUpWhy": "A securities-backed loan is the borrowing tool. Buy-borrow-die is the whole life-cycle pattern that uses that tool.",
+      "sourceIds": [],
+      "risk": "jurisdictional",
+      "jurisdiction": "US context in legacy content",
+      "reviewStatus": "legacy"
+    },
+    {
+      "id": "futures",
+      "unit": 5,
+      "term": "futures",
+      "caption": "A promise with a date on it. Come December, you settle. No walk-away.",
+      "definition": "A contract to buy or sell something at a set price on a set date — obligation, not a right.",
+      "example": "Agree now to buy 1,000 barrels at $80 in December. Come December, you settle. You cannot walk away like an option.",
+      "mixUp": "option",
+      "mixUpWhy": "Futures are a promise you must keep. An option is a right you can abandon.",
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "legacy"
+    },
+    {
+      "id": "swap",
+      "unit": 5,
+      "term": "swap",
+      "caption": "Two payment streams crossing: fixed on one side, floating on the other.",
+      "definition": "Two parties exchange cash flows — often a fixed rate for a floating one.",
+      "example": "You pay 4% fixed, receive SOFR. If rates jump, the swap pays you. That's a rate hedge, not a loan.",
+      "mixUp": "futures",
+      "mixUpWhy": "A swap is an ongoing exchange of payments. A future is one settlement on one date.",
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "legacy"
+    }
+  ],
+  "lessons": [
+    {
+      "id": "u1l1",
+      "unit": 1,
+      "title": "Two moves",
+      "icon": "🌿",
+      "review": false,
+      "prompts": [
+        {
+          "id": "u1l1a",
+          "type": "meaning",
+          "termId": "hedge",
+          "termIds": [
+            "hedge"
+          ],
+          "stem": "What does hedge mean?",
+          "options": [
+            {
+              "text": "Insurance on a bet you already have.",
+              "art": "hedge"
+            },
+            {
+              "text": "Putting an asset up so a lender can take it.",
+              "art": "pledge"
+            },
+            {
+              "text": "Selling everything so you cannot lose.",
+              "art": "sell"
+            },
+            {
+              "text": "A promise to buy more if it drops.",
+              "art": "long"
+            }
+          ],
+          "answer": 0,
+          "why": "A hedge protects a position you already have. A pledge puts that position up as collateral."
+        },
+        {
+          "id": "u1l1b",
+          "type": "meaning",
+          "termId": "pledge",
+          "termIds": [
+            "pledge"
+          ],
+          "stem": "What does pledge mean here?",
+          "options": [
+            {
+              "text": "Put an asset up so a lender can seize it if you don't pay.",
+              "art": "pledge"
+            },
+            {
+              "text": "Buy insurance on a stock you own.",
+              "art": "hedge"
+            },
+            {
+              "text": "Sell the stock and hope to buy it back cheaper.",
+              "art": "short selling"
+            },
+            {
+              "text": "The pile of cash a broker holds as a cushion.",
+              "art": "margin"
+            }
+          ],
+          "answer": 0,
+          "why": "You still own it. Pledge = collateral. Sell = it's gone."
+        },
+        {
+          "id": "u1l1c",
+          "type": "truefalse",
+          "termId": "pledge",
+          "termIds": [
+            "pledge"
+          ],
+          "stem": "Pledging stock means you sold it.",
+          "answer": false,
+          "why": "You still own it. Pledge = collateral. Sell = it's gone."
+        },
+        {
+          "id": "u1l1d",
+          "type": "fill",
+          "termId": "hedge",
+          "termIds": [
+            "hedge"
+          ],
+          "story": "You own $200k of stock and worry about a crash. Buying a put is a ____.",
+          "bank": [
+            "hedge",
+            "pledge",
+            "margin",
+            "haircut"
+          ],
+          "answer": "hedge",
+          "why": "A put on stock you already own is a hedge. A pledge would be using those shares as loan collateral."
+        },
+        {
+          "id": "u1l1e",
+          "type": "fill",
+          "termId": "pledge",
+          "termIds": [
+            "pledge"
+          ],
+          "story": "You need cash but don't want to sell. You ____ the shares to a bank for a loan.",
+          "bank": [
+            "pledge",
+            "hedge",
+            "call",
+            "yield"
+          ],
+          "answer": "pledge",
+          "why": "You still own it. Pledge = collateral. Hedge = protection, not a loan."
+        },
+        {
+          "id": "u1l1f",
+          "type": "match",
+          "termIds": [
+            "hedge",
+            "pledge",
+            "sell",
+            "put_u1intro"
+          ],
+          "pairs": [
+            {
+              "id": "hedge",
+              "left": "hedge",
+              "right": "Insurance on a position you own"
+            },
+            {
+              "id": "pledge",
+              "left": "pledge",
+              "right": "Put the asset up for a loan"
+            },
+            {
+              "id": "sell",
+              "left": "sell",
+              "right": "It's gone — you don't own it"
+            },
+            {
+              "id": "put_u1intro",
+              "left": "a put",
+              "right": "The contract that pays in a crash"
+            }
+          ],
+          "why": "Hedge protects. Pledge borrows against. The put is the insurance contract. Sell means you left."
+        },
+        {
+          "id": "u1l1g",
+          "type": "scenario",
+          "termId": "hedge",
+          "termIds": [
+            "hedge"
+          ],
+          "story": "You own 1,000 shares. You buy a contract that pays if they crash. You still hold the shares.",
+          "stem": "What did you do?",
+          "options": [
+            {
+              "text": "Hedge",
+              "art": "hedge"
+            },
+            {
+              "text": "Pledge",
+              "art": "pledge"
+            },
+            {
+              "text": "Short sell",
+              "art": "short selling"
+            },
+            {
+              "text": "Take out a margin loan",
+              "art": "margin"
+            }
+          ],
+          "answer": 0,
+          "why": "You kept the stock and bought protection. That's a hedge, not a pledge."
+        },
+        {
+          "id": "u1l1h",
+          "type": "scenario",
+          "termId": "pledge",
+          "termIds": [
+            "pledge"
+          ],
+          "story": "You own 1,000 shares. A bank lends you cash and can take the shares if you miss payments. You still get dividends — for now.",
+          "stem": "What did you do?",
+          "options": [
+            {
+              "text": "Pledge",
+              "art": "pledge"
+            },
+            {
+              "text": "Hedge",
+              "art": "hedge"
+            },
+            {
+              "text": "Short sell",
+              "art": "short selling"
+            },
+            {
+              "text": "Diversify",
+              "art": "diversification"
+            }
+          ],
+          "answer": 0,
+          "why": "You still own it. Pledge = collateral. A hedge would be buying protection, not borrowing."
+        },
+        {
+          "id": "u1l1i",
+          "type": "truefalse",
+          "termId": "hedge",
+          "termIds": [
+            "hedge"
+          ],
+          "stem": "A hedge is the same as pledging your shares for a loan.",
+          "answer": false,
+          "why": "Opposite moves. Hedge = protect. Pledge = borrow against. Same stock, different fork."
+        },
+        {
+          "id": "u1l1j",
+          "type": "meaning",
+          "termId": "pledge",
+          "termIds": [
+            "pledge"
+          ],
+          "stem": "You own stock. You want cash without selling. You would:",
+          "options": [
+            {
+              "text": "Pledge it as collateral for a loan.",
+              "art": "pledge"
+            },
+            {
+              "text": "Buy a put.",
+              "art": "put"
+            },
+            {
+              "text": "Short the same stock.",
+              "art": "short selling"
+            },
+            {
+              "text": "Wait for a margin call.",
+              "art": "margin call"
+            }
+          ],
+          "answer": 0,
+          "why": "Cash without selling is a pledge. A put is crash insurance, not a withdrawal."
+        }
+      ]
+    },
+    {
+      "id": "u1l2",
+      "unit": 1,
+      "title": "Collateral & haircuts",
+      "icon": "✂️",
+      "review": false,
+      "prompts": [
+        {
+          "id": "u1l2a",
+          "type": "meaning",
+          "termId": "collateral",
+          "termIds": [
+            "collateral"
+          ],
+          "stem": "What is collateral?",
+          "options": [
+            {
+              "text": "The thing the lender can seize if you skip payments.",
+              "art": "collateral"
+            },
+            {
+              "text": "The discount the bank knocks off before lending.",
+              "art": "haircut"
+            },
+            {
+              "text": "Insurance on a bet you already have.",
+              "art": "hedge"
+            },
+            {
+              "text": "The extra cash a broker demands after a drop.",
+              "art": "margin call"
+            }
+          ],
+          "answer": 0,
+          "why": "Collateral is the asset. The haircut is how much they knock off its value before lending."
+        },
+        {
+          "id": "u1l2b",
+          "type": "meaning",
+          "termId": "haircut",
+          "termIds": [
+            "haircut"
+          ],
+          "stem": "What is a haircut here — not the salon?",
+          "options": [
+            {
+              "text": "The discount a lender applies to collateral before they'll lend against it.",
+              "art": "haircut"
+            },
+            {
+              "text": "A fee for selling your shares.",
+              "art": "sell"
+            },
+            {
+              "text": "The cash cushion you must keep in a brokerage account.",
+              "art": "margin"
+            },
+            {
+              "text": "When the bank already sold 30% of your stock.",
+              "art": "sell"
+            }
+          ],
+          "answer": 0,
+          "why": "Haircut is the discount on collateral. Margin is the cash cushion you must keep."
+        },
+        {
+          "id": "u1l2c",
+          "type": "fill",
+          "termId": "haircut",
+          "termIds": [
+            "haircut"
+          ],
+          "story": "$1M of stock, 30% ____ → the bank treats it as $700k. That's the max loan.",
+          "bank": [
+            "haircut",
+            "margin",
+            "hedge",
+            "yield"
+          ],
+          "answer": "haircut",
+          "why": "The 30% is the haircut — a discount, not a sale. You still own the $1M pile, with a $700k claim on it."
+        },
+        {
+          "id": "u1l2d",
+          "type": "fill",
+          "termId": "collateral",
+          "termIds": [
+            "collateral"
+          ],
+          "story": "The pledged stock is the ____. Miss the loan, the bank takes the shares.",
+          "bank": [
+            "collateral",
+            "haircut",
+            "premium",
+            "notional"
+          ],
+          "answer": "collateral",
+          "why": "Collateral is the asset they can seize. Haircut is only the discount they applied on day one."
+        },
+        {
+          "id": "u1l2e",
+          "type": "scenario",
+          "termId": "haircut",
+          "termIds": [
+            "haircut"
+          ],
+          "story": "Private bank: you show $1M of listed stock. They will not lend $1M. They knock 30% off and offer $700k.",
+          "stem": "That 30% knock is called a:",
+          "options": [
+            {
+              "text": "Haircut",
+              "art": "haircut"
+            },
+            {
+              "text": "Margin call",
+              "art": "margin call"
+            },
+            {
+              "text": "Hedge",
+              "art": "hedge"
+            },
+            {
+              "text": "Premium",
+              "art": "premium"
+            }
+          ],
+          "answer": 0,
+          "why": "Haircut is set at the start. A margin call is the later panic when prices move."
+        },
+        {
+          "id": "u1l2f",
+          "type": "truefalse",
+          "termId": "haircut",
+          "termIds": [
+            "haircut"
+          ],
+          "stem": "A 30% haircut means the bank already sold 30% of your shares.",
+          "answer": false,
+          "why": "Nobody sold anything. They just won't lend against the full sticker price. You still own all of it."
+        },
+        {
+          "id": "u1l2g",
+          "type": "match",
+          "termIds": [
+            "collateral",
+            "haircut",
+            "pledge",
+            "hedge"
+          ],
+          "pairs": [
+            {
+              "id": "collateral",
+              "left": "collateral",
+              "right": "The asset they can take"
+            },
+            {
+              "id": "haircut",
+              "left": "haircut",
+              "right": "Discount before they lend"
+            },
+            {
+              "id": "pledge",
+              "left": "pledge",
+              "right": "Putting the asset up"
+            },
+            {
+              "id": "hedge",
+              "left": "hedge",
+              "right": "Protection, not a loan"
+            }
+          ],
+          "why": "One story: you pledge collateral, they apply a haircut, you still might want a separate hedge."
+        },
+        {
+          "id": "u1l2h",
+          "type": "scenario",
+          "termId": "collateral",
+          "termIds": [
+            "collateral"
+          ],
+          "story": "You borrow $700k. The shares stay in an account the bank controls. If you vanish, they don't sue your house first — they take the shares.",
+          "stem": "Those shares are:",
+          "options": [
+            {
+              "text": "Collateral",
+              "art": "collateral"
+            },
+            {
+              "text": "A hedge",
+              "art": "hedge"
+            },
+            {
+              "text": "A premium",
+              "art": "premium"
+            },
+            {
+              "text": "A yield",
+              "art": "yield"
+            }
+          ],
+          "answer": 0,
+          "why": "Collateral is what they seize. A hedge would be a separate contract that pays you if the shares fall."
+        },
+        {
+          "id": "u1l2i",
+          "type": "truefalse",
+          "termId": "pledge",
+          "termIds": [
+            "pledge"
+          ],
+          "stem": "Once you pledge shares, you still get the upside if they rally.",
+          "answer": true,
+          "why": "You still own them. The bank has a claim, not the upside — unless you default."
+        },
+        {
+          "id": "u1l2j",
+          "type": "meaning",
+          "termId": "haircut",
+          "termIds": [
+            "haircut"
+          ],
+          "stem": "Why won't the bank lend 100% against your stock?",
+          "options": [
+            {
+              "text": "Stock can fall. The haircut is their cushion.",
+              "art": "haircut"
+            },
+            {
+              "text": "Because pledging means you sold it.",
+              "art": "sell"
+            },
+            {
+              "text": "Because a hedge already used up the value.",
+              "art": "hedge"
+            },
+            {
+              "text": "Because haircuts are a tax.",
+              "art": "haircut"
+            }
+          ],
+          "answer": 0,
+          "why": "Haircut is the bank's 'what if it drops' buffer. That's different from a margin call, which is the later demand."
+        }
+      ]
+    },
+    {
+      "id": "u1l3",
+      "unit": 1,
+      "title": "When it drops 40%",
+      "icon": "📉",
+      "review": false,
+      "prompts": [
+        {
+          "id": "u1l3a",
+          "type": "meaning",
+          "termId": "margin",
+          "termIds": [
+            "margin"
+          ],
+          "stem": "What is margin?",
+          "options": [
+            {
+              "text": "Cash or equity you must keep in the account as a cushion.",
+              "art": "margin"
+            },
+            {
+              "text": "The multiplier on a borrowed bet.",
+              "art": "leverage"
+            },
+            {
+              "text": "The discount applied to collateral on day one.",
+              "art": "haircut"
+            },
+            {
+              "text": "A contract that pays if the stock falls.",
+              "art": "put"
+            }
+          ],
+          "answer": 0,
+          "why": "Margin is the cushion. Leverage is the size of the bet that cushion supports."
+        },
+        {
+          "id": "u1l3b",
+          "type": "meaning",
+          "termId": "margin call",
+          "termIds": [
+            "margin call"
+          ],
+          "stem": "What is a margin call?",
+          "options": [
+            {
+              "text": "The lender demanding more cash — or selling you out — because the cushion got too thin.",
+              "art": "margin call"
+            },
+            {
+              "text": "The discount they applied when they first lent.",
+              "art": "haircut"
+            },
+            {
+              "text": "Buying a put after the crash.",
+              "art": "put"
+            },
+            {
+              "text": "Putting the shares up as collateral for a new loan.",
+              "art": "pledge"
+            }
+          ],
+          "answer": 0,
+          "why": "The haircut was set at the start. A margin call happens later, when prices move against you."
+        },
+        {
+          "id": "u1l3c",
+          "type": "truefalse",
+          "termId": "margin",
+          "termIds": [
+            "margin"
+          ],
+          "stem": "Margin and leverage are the same word.",
+          "answer": false,
+          "why": "Margin is the cushion. Leverage is the multiplier. People say them interchangeably until the call comes."
+        },
+        {
+          "id": "u1l3d",
+          "type": "fill",
+          "termId": "margin",
+          "termIds": [
+            "margin"
+          ],
+          "story": "You buy $10k of stock with $5k cash. That $5k cushion is ____.",
+          "bank": [
+            "margin",
+            "a haircut",
+            "a hedge",
+            "notional"
+          ],
+          "answer": "margin",
+          "why": "Margin is the cash you posted. The $10k position is the leveraged bet sitting on it."
+        },
+        {
+          "id": "u1l3e",
+          "type": "fill",
+          "termId": "margin call",
+          "termIds": [
+            "margin call"
+          ],
+          "story": "The stock you pledged just fell 40%. The bank wants cash today or it sells you out. That's a ____.",
+          "bank": [
+            "margin call",
+            "haircut",
+            "hedge",
+            "premium"
+          ],
+          "answer": "margin call",
+          "why": "Haircut was the original discount. This later demand is a margin call."
+        },
+        {
+          "id": "u1l3f",
+          "type": "scenario",
+          "termId": "margin call",
+          "termIds": [
+            "margin call"
+          ],
+          "story": "You own $1M of stock. You pledge it. 30% haircut, $700k loan. Then the stock drops 40%. Collateral is now $600k against $700k. The bank does not shrug.",
+          "stem": "What happens next is called a:",
+          "options": [
+            {
+              "text": "Margin call",
+              "art": "margin call"
+            },
+            {
+              "text": "Haircut",
+              "art": "haircut"
+            },
+            {
+              "text": "Hedge",
+              "art": "hedge"
+            },
+            {
+              "text": "Put",
+              "art": "put"
+            }
+          ],
+          "answer": 0,
+          "why": "The haircut already happened on day one. This is the call: post cash or they sell the stock."
+        },
+        {
+          "id": "u1l3g",
+          "type": "scenario",
+          "termId": "hedge",
+          "termIds": [
+            "hedge"
+          ],
+          "story": "Same $1M stock. Instead of pledging, you spend $20k on puts. The stock drops 40%. The shares are worth $600k, but the puts pay. You still own the stock. Nobody calls you for cash.",
+          "stem": "That $20k put was a:",
+          "options": [
+            {
+              "text": "Hedge",
+              "art": "hedge"
+            },
+            {
+              "text": "Pledge",
+              "art": "pledge"
+            },
+            {
+              "text": "Margin call",
+              "art": "margin call"
+            },
+            {
+              "text": "Haircut",
+              "art": "haircut"
+            }
+          ],
+          "answer": 0,
+          "why": "You paid for protection. You did not borrow. No lender, no call. That's the fork: hedge vs pledge."
+        },
+        {
+          "id": "u1l3h",
+          "type": "match",
+          "termIds": [
+            "margin",
+            "margin call",
+            "haircut",
+            "hedge"
+          ],
+          "pairs": [
+            {
+              "id": "margin",
+              "left": "margin",
+              "right": "The cushion you must keep"
+            },
+            {
+              "id": "margin call",
+              "left": "margin call",
+              "right": "Post more, or you're sold out"
+            },
+            {
+              "id": "haircut",
+              "left": "haircut",
+              "right": "Day-one discount on collateral"
+            },
+            {
+              "id": "hedge",
+              "left": "hedge",
+              "right": "A put on stock you already own"
+            }
+          ],
+          "why": "Haircut is booked at the start. Margin is the cushion. The call is the later threat. A hedge is a different fork."
+        },
+        {
+          "id": "u1l3i",
+          "type": "scenario",
+          "termId": "margin call",
+          "termIds": [
+            "margin call"
+          ],
+          "story": "The bank called. You ignore it. They sell the pledged shares into a falling market, pay off the loan, and hand you whatever crumbs are left.",
+          "stem": "You just got:",
+          "options": [
+            {
+              "text": "Sold out on a margin call",
+              "art": "margin call"
+            },
+            {
+              "text": "A free hedge",
+              "art": "hedge"
+            },
+            {
+              "text": "A haircut gift",
+              "art": "haircut"
+            },
+            {
+              "text": "A capital-gains holiday",
+              "art": "capital gains"
+            }
+          ],
+          "answer": 0,
+          "why": "That's the ugly part of a pledge. A hedge can lose only the premium you paid."
+        },
+        {
+          "id": "u1l3j",
+          "type": "truefalse",
+          "termId": "haircut",
+          "termIds": [
+            "haircut"
+          ],
+          "stem": "The haircut is what happens after the crash.",
+          "answer": false,
+          "why": "Haircut is the opening discount. The after-crash demand is a margin call."
+        }
+      ]
+    },
+    {
+      "id": "u1r",
+      "unit": 1,
+      "title": "Unit 1 review",
+      "icon": "🏆",
+      "review": true,
+      "prompts": [
+        {
+          "id": "u1ra",
+          "type": "scenario",
+          "termId": "pledge",
+          "termIds": [
+            "pledge"
+          ],
+          "story": "Friend: 'I need cash but I don't want to sell Tesla.' They call the bank and leave the shares there.",
+          "stem": "Name the move.",
+          "options": [
+            {
+              "text": "Pledge",
+              "art": "pledge"
+            },
+            {
+              "text": "Hedge",
+              "art": "hedge"
+            },
+            {
+              "text": "Short selling",
+              "art": "short selling"
+            },
+            {
+              "text": "Diversification",
+              "art": "diversification"
+            }
+          ],
+          "answer": 0,
+          "why": "You still own it. Pledge = collateral. A hedge would be buying a put, which costs money instead of giving you cash."
+        },
+        {
+          "id": "u1rb",
+          "type": "scenario",
+          "termId": "hedge",
+          "termIds": [
+            "hedge"
+          ],
+          "story": "Same friend instead buys puts and keeps every share. No loan. Sleeps better, poorer by the premium.",
+          "stem": "Name the move.",
+          "options": [
+            {
+              "text": "Hedge",
+              "art": "hedge"
+            },
+            {
+              "text": "Pledge",
+              "art": "pledge"
+            },
+            {
+              "text": "Margin call",
+              "art": "margin call"
+            },
+            {
+              "text": "Haircut",
+              "art": "haircut"
+            }
+          ],
+          "answer": 0,
+          "why": "Protection on a position you kept. Not a loan."
+        },
+        {
+          "id": "u1rc",
+          "type": "meaning",
+          "termId": "collateral",
+          "termIds": [
+            "collateral"
+          ],
+          "stem": "Collateral is:",
+          "options": [
+            {
+              "text": "The asset the lender can take.",
+              "art": "collateral"
+            },
+            {
+              "text": "The discount they apply before lending.",
+              "art": "haircut"
+            },
+            {
+              "text": "The extra cash after a drop.",
+              "art": "margin call"
+            },
+            {
+              "text": "Insurance on the position.",
+              "art": "hedge"
+            }
+          ],
+          "answer": 0,
+          "why": "Collateral is the thing. Haircut is the discount. Margin call is the later threat."
+        },
+        {
+          "id": "u1rd",
+          "type": "truefalse",
+          "termId": "pledge",
+          "termIds": [
+            "pledge"
+          ],
+          "stem": "If the pledged stock doubles, the bank owns the extra gain.",
+          "answer": false,
+          "why": "You still own it. The bank's claim is the loan, not the upside — unless you blow the margin call."
+        },
+        {
+          "id": "u1re",
+          "type": "fill",
+          "termId": "haircut",
+          "termIds": [
+            "haircut"
+          ],
+          "story": "Loan max = collateral value × (1 − ____).",
+          "bank": [
+            "haircut",
+            "yield",
+            "premium",
+            "duration"
+          ],
+          "answer": "haircut",
+          "why": "$1M and a 30% haircut → $700k. The haircut is the lender's fear, priced in advance."
+        },
+        {
+          "id": "u1rf",
+          "type": "fill",
+          "termId": "margin call",
+          "termIds": [
+            "margin call"
+          ],
+          "story": "Prices fell, cushion gone, lender on the phone. That's a ____.",
+          "bank": [
+            "margin call",
+            "haircut",
+            "swap",
+            "yield"
+          ],
+          "answer": "margin call",
+          "why": "Not the haircut. The haircut already happened. This is the call."
+        },
+        {
+          "id": "u1rg",
+          "type": "match",
+          "termIds": [
+            "hedge",
+            "pledge",
+            "margin",
+            "margin call"
+          ],
+          "pairs": [
+            {
+              "id": "hedge",
+              "left": "hedge",
+              "right": "Pay for crash insurance"
+            },
+            {
+              "id": "pledge",
+              "left": "pledge",
+              "right": "Borrow, keep the shares"
+            },
+            {
+              "id": "margin",
+              "left": "margin",
+              "right": "Required cushion"
+            },
+            {
+              "id": "margin call",
+              "left": "margin call",
+              "right": "Cushion failed. Pay or sell."
+            }
+          ],
+          "why": "The whole unit in four chips. If you mix two, that's the homework."
+        },
+        {
+          "id": "u1rh",
+          "type": "scenario",
+          "termId": "margin",
+          "termIds": [
+            "margin"
+          ],
+          "story": "Broker: you can buy $20k of stock if you deposit $10k. The $10k isn't a fee. It has to stay.",
+          "stem": "The $10k is:",
+          "options": [
+            {
+              "text": "Margin",
+              "art": "margin"
+            },
+            {
+              "text": "A haircut",
+              "art": "haircut"
+            },
+            {
+              "text": "A premium",
+              "art": "premium"
+            },
+            {
+              "text": "Notional",
+              "art": "notional"
+            }
+          ],
+          "answer": 0,
+          "why": "Margin is the cushion. The $20k buy is the leveraged position sitting on it."
+        },
+        {
+          "id": "u1ri",
+          "type": "truefalse",
+          "termId": "hedge",
+          "termIds": [
+            "hedge"
+          ],
+          "stem": "Buying a put on stock you own is a hedge, not a pledge.",
+          "answer": true,
+          "why": "Correct. Put = protection. Pledge = the bank can take the shares."
+        },
+        {
+          "id": "u1rj",
+          "type": "meaning",
+          "termId": "margin call",
+          "termIds": [
+            "margin call"
+          ],
+          "stem": "Stock pledged for a loan drops 40%. The next word in the sentence is usually:",
+          "options": [
+            {
+              "text": "Margin call",
+              "art": "margin call"
+            },
+            {
+              "text": "Haircut",
+              "art": "haircut"
+            },
+            {
+              "text": "Diversification",
+              "art": "diversification"
+            },
+            {
+              "text": "Yield",
+              "art": "yield"
+            }
+          ],
+          "answer": 0,
+          "why": "Haircut was last quarter. Today is the call."
+        }
+      ]
+    },
+    {
+      "id": "u2l1",
+      "unit": 2,
+      "title": "Leverage & derivatives",
+      "icon": "📈",
+      "review": false,
+      "prompts": [
+        {
+          "id": "u2l1a",
+          "type": "meaning",
+          "termId": "leverage",
+          "termIds": [
+            "leverage"
+          ],
+          "stem": "What is leverage?",
+          "options": [
+            {
+              "text": "Using borrowed money or derivatives to make a bigger bet than your cash.",
+              "art": "leverage"
+            },
+            {
+              "text": "The cash cushion you must keep in the account.",
+              "art": "margin"
+            },
+            {
+              "text": "The discount a lender applies to collateral.",
+              "art": "haircut"
+            },
+            {
+              "text": "Selling shares you borrowed.",
+              "art": "short selling"
+            }
+          ],
+          "answer": 0,
+          "why": "Leverage is the multiplier. Margin is the cushion that makes the multiplier possible."
+        },
+        {
+          "id": "u2l1b",
+          "type": "meaning",
+          "termId": "derivative",
+          "termIds": [
+            "derivative"
+          ],
+          "stem": "What is a derivative?",
+          "options": [
+            {
+              "text": "A contract whose value comes from something else.",
+              "art": "derivative"
+            },
+            {
+              "text": "A loan against your shares.",
+              "art": "pledge"
+            },
+            {
+              "text": "Owning the stock itself.",
+              "art": "long"
+            },
+            {
+              "text": "The cash you posted as margin.",
+              "art": "margin"
+            }
+          ],
+          "answer": 0,
+          "why": "An option is one kind of derivative. Futures and swaps are derivatives too. The stock itself is not."
+        },
+        {
+          "id": "u2l1c",
+          "type": "truefalse",
+          "termId": "leverage",
+          "termIds": [
+            "leverage"
+          ],
+          "stem": "More leverage always means a bigger margin cushion.",
+          "answer": false,
+          "why": "Usually the opposite. More leverage means less of your own money under a bigger position. Margin is the cushion, not the multiplier."
+        },
+        {
+          "id": "u2l1d",
+          "type": "fill",
+          "termId": "leverage",
+          "termIds": [
+            "leverage"
+          ],
+          "story": "$10k of yours plus $40k borrowed = 5× ____. A 10% drop wipes half your cash.",
+          "bank": [
+            "leverage",
+            "margin",
+            "haircut",
+            "yield"
+          ],
+          "answer": "leverage",
+          "why": "5× is the leverage. The $10k is the margin. Mix those two and the crash math won't make sense."
+        },
+        {
+          "id": "u2l1e",
+          "type": "fill",
+          "termId": "derivative",
+          "termIds": [
+            "derivative"
+          ],
+          "story": "A put on Apple is a ____. It is not Apple stock; it just bets on Apple's price.",
+          "bank": [
+            "derivative",
+            "pledge",
+            "haircut",
+            "yield"
+          ],
+          "answer": "derivative",
+          "why": "The put derives from Apple. Calling every derivative an 'option' is the next mix-up — wait one lesson."
+        },
+        {
+          "id": "u2l1f",
+          "type": "scenario",
+          "termId": "leverage",
+          "termIds": [
+            "leverage"
+          ],
+          "story": "You have $20k. You want $100k of stock. The broker lends the rest. A 20% drop doesn't lose you 20% of $20k. It wipes you.",
+          "stem": "You used:",
+          "options": [
+            {
+              "text": "Leverage",
+              "art": "leverage"
+            },
+            {
+              "text": "A hedge",
+              "art": "hedge"
+            },
+            {
+              "text": "A haircut",
+              "art": "haircut"
+            },
+            {
+              "text": "Diversification",
+              "art": "diversification"
+            }
+          ],
+          "answer": 0,
+          "why": "Borrowed size is leverage. A hedge would have been buying protection, not more stock."
+        },
+        {
+          "id": "u2l1g",
+          "type": "scenario",
+          "termId": "derivative",
+          "termIds": [
+            "derivative"
+          ],
+          "story": "You don't buy the oil. You buy a contract that pays if oil's price moves. The contract is not a barrel.",
+          "stem": "The contract is a:",
+          "options": [
+            {
+              "text": "Derivative",
+              "art": "derivative"
+            },
+            {
+              "text": "Pledge",
+              "art": "pledge"
+            },
+            {
+              "text": "Margin call",
+              "art": "margin call"
+            },
+            {
+              "text": "Capital gain",
+              "art": "capital gains"
+            }
+          ],
+          "answer": 0,
+          "why": "Value comes from oil. That's a derivative. Pledging would mean putting up an asset for a loan."
+        },
+        {
+          "id": "u2l1h",
+          "type": "match",
+          "termIds": [
+            "leverage",
+            "margin",
+            "derivative",
+            "hedge"
+          ],
+          "pairs": [
+            {
+              "id": "leverage",
+              "left": "leverage",
+              "right": "Bigger bet than your cash"
+            },
+            {
+              "id": "margin",
+              "left": "margin",
+              "right": "The cushion under that bet"
+            },
+            {
+              "id": "derivative",
+              "left": "derivative",
+              "right": "A contract on something else"
+            },
+            {
+              "id": "hedge",
+              "left": "hedge",
+              "right": "Insurance on a bet you have"
+            }
+          ],
+          "why": "You can use a derivative as a hedge, or as leverage. Same toolkit, opposite intent."
+        },
+        {
+          "id": "u2l1i",
+          "type": "truefalse",
+          "termId": "derivative",
+          "termIds": [
+            "derivative"
+          ],
+          "stem": "Every derivative is an option.",
+          "answer": false,
+          "why": "Options are one species. Futures and swaps are derivatives too, and they don't let you walk away."
+        },
+        {
+          "id": "u2l1j",
+          "type": "meaning",
+          "termId": "leverage",
+          "termIds": [
+            "leverage"
+          ],
+          "stem": "A hedge can use derivatives. Leverage can too. The difference is:",
+          "options": [
+            {
+              "text": "Intent: protection vs. a bigger bet.",
+              "art": "hedge"
+            },
+            {
+              "text": "Hedges never cost money.",
+              "art": "hedge"
+            },
+            {
+              "text": "Leverage means the lender seizes the asset.",
+              "art": "margin call"
+            },
+            {
+              "text": "Derivatives are only for hedges.",
+              "art": "derivative"
+            }
+          ],
+          "answer": 0,
+          "why": "A put you own as insurance is a hedge. The same put bought as a naked down-bet is just a leveraged wager."
+        }
+      ]
+    },
+    {
+      "id": "u2l2",
+      "unit": 2,
+      "title": "Puts and calls",
+      "icon": "🎯",
+      "review": false,
+      "prompts": [
+        {
+          "id": "u2l2a",
+          "type": "meaning",
+          "termId": "option",
+          "termIds": [
+            "option"
+          ],
+          "stem": "What is an option?",
+          "options": [
+            {
+              "text": "The right, not the obligation, to buy or sell at a set price.",
+              "art": "option"
+            },
+            {
+              "text": "A promise you must settle on a set date.",
+              "art": "futures"
+            },
+            {
+              "text": "Borrowing shares to sell them now.",
+              "art": "short selling"
+            },
+            {
+              "text": "The cash cushion in your account.",
+              "art": "margin"
+            }
+          ],
+          "answer": 0,
+          "why": "An option you can abandon. A futures contract you must settle."
+        },
+        {
+          "id": "u2l2b",
+          "type": "meaning",
+          "termId": "put",
+          "termIds": [
+            "put"
+          ],
+          "stem": "A put is:",
+          "options": [
+            {
+              "text": "An option to sell at a set price. Pays off when the thing falls.",
+              "art": "put"
+            },
+            {
+              "text": "An option to buy at a set price. Pays off when it rises.",
+              "art": "call"
+            },
+            {
+              "text": "Borrowing shares and selling them.",
+              "art": "short selling"
+            },
+            {
+              "text": "Pledging stock for a loan.",
+              "art": "pledge"
+            }
+          ],
+          "answer": 0,
+          "why": "Put = right to sell (you want it down). Call = right to buy (you want it up)."
+        },
+        {
+          "id": "u2l2c",
+          "type": "meaning",
+          "termId": "call",
+          "termIds": [
+            "call"
+          ],
+          "stem": "A call is:",
+          "options": [
+            {
+              "text": "An option to buy at a set price. Pays off when the thing rises.",
+              "art": "call"
+            },
+            {
+              "text": "An option to sell at a set price. Pays off when it falls.",
+              "art": "put"
+            },
+            {
+              "text": "A lender's demand for more cash.",
+              "art": "margin call"
+            },
+            {
+              "text": "A discount on collateral.",
+              "art": "haircut"
+            }
+          ],
+          "answer": 0,
+          "why": "Call = right to buy (up). Put = right to sell (down)."
+        },
+        {
+          "id": "u2l2d",
+          "type": "truefalse",
+          "termId": "put",
+          "termIds": [
+            "put"
+          ],
+          "stem": "If you are scared the stock you own will crash, you want a call.",
+          "answer": false,
+          "why": "You want a put — the right to sell at a floor. A call pays when it rips higher."
+        },
+        {
+          "id": "u2l2e",
+          "type": "fill",
+          "termId": "put",
+          "termIds": [
+            "put"
+          ],
+          "story": "Stock at $100. A $90 ____ pays if it drops below $90. That's crash insurance if you own it.",
+          "bank": [
+            "put",
+            "call",
+            "swap",
+            "haircut"
+          ],
+          "answer": "put",
+          "why": "Puts pay when it falls. Calls pay when it rises. Mix them and your 'insurance' cheers for the crash's opposite."
+        },
+        {
+          "id": "u2l2f",
+          "type": "fill",
+          "termId": "call",
+          "termIds": [
+            "call"
+          ],
+          "story": "Stock at $100. A $110 ____ pays if it rips above $110.",
+          "bank": [
+            "call",
+            "put",
+            "pledge",
+            "margin"
+          ],
+          "answer": "call",
+          "why": "Call = up. Put = down. Same family, opposite direction."
+        },
+        {
+          "id": "u2l2g",
+          "type": "scenario",
+          "termId": "put",
+          "termIds": [
+            "put"
+          ],
+          "story": "You own the stock. You pay $3 a share for the right to sell it at $90. The stock goes to $70. You exercise. Pain, but capped.",
+          "stem": "The $3 contract was a:",
+          "options": [
+            {
+              "text": "Put",
+              "art": "put"
+            },
+            {
+              "text": "Call",
+              "art": "call"
+            },
+            {
+              "text": "Future",
+              "art": "futures"
+            },
+            {
+              "text": "Pledge",
+              "art": "pledge"
+            }
+          ],
+          "answer": 0,
+          "why": "Right to sell at a floor = put. A call would have been the right to buy more, which is the last thing you wanted."
+        },
+        {
+          "id": "u2l2h",
+          "type": "scenario",
+          "termId": "call",
+          "termIds": [
+            "call"
+          ],
+          "story": "You think the stock rips. You don't want to park $100 a share. You pay $4 for the right to buy it at $110. If it never gets there, you're out $4, not $100.",
+          "stem": "You bought a:",
+          "options": [
+            {
+              "text": "Call",
+              "art": "call"
+            },
+            {
+              "text": "Put",
+              "art": "put"
+            },
+            {
+              "text": "Short",
+              "art": "short selling"
+            },
+            {
+              "text": "Swap",
+              "art": "swap"
+            }
+          ],
+          "answer": 0,
+          "why": "Right to buy = call. A put would pay if it fell, which is the other bet."
+        },
+        {
+          "id": "u2l2i",
+          "type": "match",
+          "termIds": [
+            "put",
+            "call",
+            "option",
+            "futures"
+          ],
+          "pairs": [
+            {
+              "id": "put",
+              "left": "put",
+              "right": "Right to sell. Wants down."
+            },
+            {
+              "id": "call",
+              "left": "call",
+              "right": "Right to buy. Wants up."
+            },
+            {
+              "id": "option",
+              "left": "option",
+              "right": "Right, not obligation"
+            },
+            {
+              "id": "futures",
+              "left": "futures",
+              "right": "Obligation on a date"
+            }
+          ],
+          "why": "Put vs call is direction. Option vs futures is whether you can walk away."
+        },
+        {
+          "id": "u2l2j",
+          "type": "truefalse",
+          "termId": "option",
+          "termIds": [
+            "option"
+          ],
+          "stem": "With an option, you can let it expire and lose only what you paid.",
+          "answer": true,
+          "why": "That's the 'right, not obligation' part. Futures don't give you that courtesy."
+        }
+      ]
+    },
+    {
+      "id": "u2l3",
+      "unit": 2,
+      "title": "Going short",
+      "icon": "🐻",
+      "review": false,
+      "prompts": [
+        {
+          "id": "u2l3a",
+          "type": "meaning",
+          "termId": "short selling",
+          "termIds": [
+            "short selling"
+          ],
+          "stem": "What is short selling?",
+          "options": [
+            {
+              "text": "Borrow shares, sell them now, hope to buy back cheaper later.",
+              "art": "short selling"
+            },
+            {
+              "text": "Buy a put on stock you own.",
+              "art": "put"
+            },
+            {
+              "text": "Pledge shares for a loan.",
+              "art": "pledge"
+            },
+            {
+              "text": "Buy a call and hope it rips.",
+              "art": "call"
+            }
+          ],
+          "answer": 0,
+          "why": "A put is a limited-loss down bet. A short can lose without a ceiling if the stock rips."
+        },
+        {
+          "id": "u2l3b",
+          "type": "truefalse",
+          "termId": "short selling",
+          "termIds": [
+            "short selling"
+          ],
+          "stem": "Short selling is just another word for buying a put.",
+          "answer": false,
+          "why": "Same direction, different shape. Put: max loss is the premium. Short: the stock can go to the moon and you still owe."
+        },
+        {
+          "id": "u2l3c",
+          "type": "fill",
+          "termId": "short selling",
+          "termIds": [
+            "short selling"
+          ],
+          "story": "Borrow 100 shares, sell at $50, buy back at $30, return them. That's ____.",
+          "bank": [
+            "short selling",
+            "a put",
+            "a pledge",
+            "a call"
+          ],
+          "answer": "short selling",
+          "why": "You borrowed and sold. A put would have been a separate contract, with a capped loss."
+        },
+        {
+          "id": "u2l3d",
+          "type": "scenario",
+          "termId": "short selling",
+          "termIds": [
+            "short selling"
+          ],
+          "story": "You think the stock is a bubble. You borrow shares from a prime broker, sell them at $80, and wait. It goes to $120. You still have to return the shares.",
+          "stem": "This is:",
+          "options": [
+            {
+              "text": "Short selling",
+              "art": "short selling"
+            },
+            {
+              "text": "A put hedge",
+              "art": "put"
+            },
+            {
+              "text": "A pledge",
+              "art": "pledge"
+            },
+            {
+              "text": "A call",
+              "art": "call"
+            }
+          ],
+          "answer": 0,
+          "why": "Borrowed and sold = short. A put would have expired; you wouldn't owe the extra $40."
+        },
+        {
+          "id": "u2l3e",
+          "type": "scenario",
+          "termId": "put",
+          "termIds": [
+            "put"
+          ],
+          "story": "Same bearish view. Instead of shorting, you buy puts. Stock rips. The puts go to zero. You lose the premium. You do not have to buy the stock at $120.",
+          "stem": "You used a:",
+          "options": [
+            {
+              "text": "Put",
+              "art": "put"
+            },
+            {
+              "text": "Short sale",
+              "art": "short selling"
+            },
+            {
+              "text": "Call",
+              "art": "call"
+            },
+            {
+              "text": "Margin call",
+              "art": "margin call"
+            }
+          ],
+          "answer": 0,
+          "why": "Limited-loss down bet = put. The short was the uncapped cousin."
+        },
+        {
+          "id": "u2l3f",
+          "type": "match",
+          "termIds": [
+            "short selling",
+            "put",
+            "call",
+            "leverage"
+          ],
+          "pairs": [
+            {
+              "id": "short selling",
+              "left": "short selling",
+              "right": "Borrow, sell, buy back later"
+            },
+            {
+              "id": "put",
+              "left": "put",
+              "right": "Down bet, loss capped"
+            },
+            {
+              "id": "call",
+              "left": "call",
+              "right": "Up bet, right to buy"
+            },
+            {
+              "id": "leverage",
+              "left": "leverage",
+              "right": "A bigger bet than your cash"
+            }
+          ],
+          "why": "Shorts are leveraged down-bets. Puts are too, with a lid on the pain."
+        },
+        {
+          "id": "u2l3g",
+          "type": "truefalse",
+          "termId": "short selling",
+          "termIds": [
+            "short selling"
+          ],
+          "stem": "You can use a short as a hedge if you already own something that moves with the thing you short.",
+          "answer": true,
+          "why": "A short index against a stock pile is a hedge. A short of a stock you don't own is just a bet. Same tool, different job."
+        },
+        {
+          "id": "u2l3h",
+          "type": "meaning",
+          "termId": "put",
+          "termIds": [
+            "put"
+          ],
+          "stem": "Why might someone buy a put instead of shorting?",
+          "options": [
+            {
+              "text": "Max loss is the premium. A short can blow through that.",
+              "art": "put"
+            },
+            {
+              "text": "Puts pay when the stock rises.",
+              "art": "call"
+            },
+            {
+              "text": "Shorts are a kind of pledge.",
+              "art": "pledge"
+            },
+            {
+              "text": "Puts require you to borrow shares.",
+              "art": "short selling"
+            }
+          ],
+          "answer": 0,
+          "why": "Put = lid. Short = no lid. That's the mix-up that ruins a weekend."
+        },
+        {
+          "id": "u2l3i",
+          "type": "scenario",
+          "termId": "leverage",
+          "termIds": [
+            "leverage"
+          ],
+          "story": "Shorting $50k of stock with $10k in the account is not a small opinion. The position is 5× your cash.",
+          "stem": "That's also:",
+          "options": [
+            {
+              "text": "Leverage",
+              "art": "leverage"
+            },
+            {
+              "text": "A haircut",
+              "art": "haircut"
+            },
+            {
+              "text": "A hedge by definition",
+              "art": "hedge"
+            },
+            {
+              "text": "A capital gain",
+              "art": "capital gains"
+            }
+          ],
+          "answer": 0,
+          "why": "Shorts are leveraged. They are only a hedge if they protect something you already have."
+        },
+        {
+          "id": "u2l3j",
+          "type": "fill",
+          "termId": "call",
+          "termIds": [
+            "call"
+          ],
+          "story": "You are short a stock and terrified of a squeeze. Buying a ____ caps how much you can lose on the upside.",
+          "bank": [
+            "call",
+            "put",
+            "pledge",
+            "haircut"
+          ],
+          "answer": "call",
+          "why": "Short wants it down. A call is upside insurance on that short. A put would double the down-bet."
+        }
+      ]
+    },
+    {
+      "id": "u2r",
+      "unit": 2,
+      "title": "Unit 2 review",
+      "icon": "🏆",
+      "review": true,
+      "prompts": [
+        {
+          "id": "u2ra",
+          "type": "meaning",
+          "termId": "put",
+          "termIds": [
+            "put"
+          ],
+          "stem": "Put vs call, in one line:",
+          "options": [
+            {
+              "text": "Put pays when it falls. Call pays when it rises.",
+              "art": "put"
+            },
+            {
+              "text": "Put is a loan. Call is a hedge.",
+              "art": "pledge"
+            },
+            {
+              "text": "Put is an obligation. Call is optional.",
+              "art": "futures"
+            },
+            {
+              "text": "They are the same contract with different fees.",
+              "art": "option"
+            }
+          ],
+          "answer": 0,
+          "why": "Direction. That's the whole mix-up."
+        },
+        {
+          "id": "u2rb",
+          "type": "scenario",
+          "termId": "pledge",
+          "termIds": [
+            "pledge"
+          ],
+          "story": "Callback from Unit 1. You want cash from stock you own, without selling, without a down-bet.",
+          "stem": "You would:",
+          "options": [
+            {
+              "text": "Pledge it",
+              "art": "pledge"
+            },
+            {
+              "text": "Buy a put",
+              "art": "put"
+            },
+            {
+              "text": "Short it",
+              "art": "short selling"
+            },
+            {
+              "text": "Buy a call",
+              "art": "call"
+            }
+          ],
+          "answer": 0,
+          "why": "Pledge = borrow against. Put and short are views on a drop. Call is a view on a rise."
+        },
+        {
+          "id": "u2rc",
+          "type": "fill",
+          "termId": "option",
+          "termIds": [
+            "option"
+          ],
+          "story": "Right, not obligation, to buy or sell at a set price: an ____.",
+          "bank": [
+            "option",
+            "future",
+            "swap",
+            "pledge"
+          ],
+          "answer": "option",
+          "why": "If you must settle, that's a future. Options you can abandon."
+        },
+        {
+          "id": "u2rd",
+          "type": "truefalse",
+          "termId": "short selling",
+          "termIds": [
+            "short selling"
+          ],
+          "stem": "A short's losses are capped at what you paid for it.",
+          "answer": false,
+          "why": "That's a put. A short has no ceiling. The stock can keep rising and you still have to buy it back."
+        },
+        {
+          "id": "u2re",
+          "type": "scenario",
+          "termId": "call",
+          "termIds": [
+            "call"
+          ],
+          "story": "You are already short. The stock starts to squeeze. You buy the right to purchase shares at $60 so a melt-up can't take your house.",
+          "stem": "That insurance is a:",
+          "options": [
+            {
+              "text": "Call",
+              "art": "call"
+            },
+            {
+              "text": "Put",
+              "art": "put"
+            },
+            {
+              "text": "Pledge",
+              "art": "pledge"
+            },
+            {
+              "text": "Haircut",
+              "art": "haircut"
+            }
+          ],
+          "answer": 0,
+          "why": "A call caps a short. A put would add to the down-bet."
+        },
+        {
+          "id": "u2rf",
+          "type": "match",
+          "termIds": [
+            "put",
+            "call",
+            "short selling",
+            "leverage"
+          ],
+          "pairs": [
+            {
+              "id": "put",
+              "left": "put",
+              "right": "Right to sell"
+            },
+            {
+              "id": "call",
+              "left": "call",
+              "right": "Right to buy"
+            },
+            {
+              "id": "short selling",
+              "left": "short selling",
+              "right": "Borrow and sell"
+            },
+            {
+              "id": "leverage",
+              "left": "leverage",
+              "right": "Borrowed size"
+            }
+          ],
+          "why": "Four ways people say 'I have a view' — two are options, one is a borrow, one is a multiplier."
+        },
+        {
+          "id": "u2rg",
+          "type": "meaning",
+          "termId": "derivative",
+          "termIds": [
+            "derivative"
+          ],
+          "stem": "Which of these is not a derivative?",
+          "options": [
+            {
+              "text": "Owning 100 shares of the stock itself.",
+              "art": "long"
+            },
+            {
+              "text": "A put on the stock.",
+              "art": "put"
+            },
+            {
+              "text": "A call on the stock.",
+              "art": "call"
+            },
+            {
+              "text": "A futures contract on the stock.",
+              "art": "futures"
+            }
+          ],
+          "answer": 0,
+          "why": "The shares are the thing. Derivatives are contracts on the thing."
+        },
+        {
+          "id": "u2rh",
+          "type": "scenario",
+          "termId": "hedge",
+          "termIds": [
+            "hedge"
+          ],
+          "story": "You own $500k of a company you cannot sell this year. You buy puts. You are not trying to get rich on the crash. You are trying to still have a house if it happens.",
+          "stem": "The puts are a:",
+          "options": [
+            {
+              "text": "Hedge",
+              "art": "hedge"
+            },
+            {
+              "text": "Short sale",
+              "art": "short selling"
+            },
+            {
+              "text": "Pledge",
+              "art": "pledge"
+            },
+            {
+              "text": "Margin call",
+              "art": "margin call"
+            }
+          ],
+          "answer": 0,
+          "why": "Insurance on a bet you already have. That's the first sentence of this game."
+        },
+        {
+          "id": "u2ri",
+          "type": "truefalse",
+          "termId": "leverage",
+          "termIds": [
+            "leverage"
+          ],
+          "stem": "Buying stock with 50% margin is a form of leverage.",
+          "answer": true,
+          "why": "Your cash is the margin. The extra stock is the leverage. Same trade, two names."
+        },
+        {
+          "id": "u2rj",
+          "type": "fill",
+          "termId": "short selling",
+          "termIds": [
+            "short selling"
+          ],
+          "story": "Borrow, sell now, buy later if you're lucky: ____.",
+          "bank": [
+            "short selling",
+            "a call",
+            "a pledge",
+            "a haircut"
+          ],
+          "answer": "short selling",
+          "why": "Not a call (that's up). Not a pledge (that's a loan against shares you still own)."
+        }
+      ]
+    },
+    {
+      "id": "u3l1",
+      "unit": 3,
+      "title": "Size and cash",
+      "icon": "💧",
+      "review": false,
+      "prompts": [
+        {
+          "id": "u3l1a",
+          "type": "meaning",
+          "termId": "liquidity",
+          "termIds": [
+            "liquidity"
+          ],
+          "stem": "What is liquidity?",
+          "options": [
+            {
+              "text": "How fast you can sell without moving the price much.",
+              "art": "liquidity"
+            },
+            {
+              "text": "The face amount a derivative is written on.",
+              "art": "notional"
+            },
+            {
+              "text": "What you pay for an option.",
+              "art": "premium"
+            },
+            {
+              "text": "How sensitive a bond is to rates.",
+              "art": "duration"
+            }
+          ],
+          "answer": 0,
+          "why": "Liquidity is ease of exit. Notional is the face size of a contract."
+        },
+        {
+          "id": "u3l1b",
+          "type": "meaning",
+          "termId": "notional",
+          "termIds": [
+            "notional"
+          ],
+          "stem": "Notional means:",
+          "options": [
+            {
+              "text": "The face amount a derivative is written on — not what you paid.",
+              "art": "notional"
+            },
+            {
+              "text": "The price of the option itself.",
+              "art": "premium"
+            },
+            {
+              "text": "How easily you can sell.",
+              "art": "liquidity"
+            },
+            {
+              "text": "The income a bond pays.",
+              "art": "yield"
+            }
+          ],
+          "answer": 0,
+          "why": "Notional is the size of the underlying. Premium is what you paid for the contract."
+        },
+        {
+          "id": "u3l1c",
+          "type": "meaning",
+          "termId": "premium",
+          "termIds": [
+            "premium"
+          ],
+          "stem": "Premium, for an option, is:",
+          "options": [
+            {
+              "text": "What you pay for the contract — the price of the insurance.",
+              "art": "premium"
+            },
+            {
+              "text": "The face size of the underlying.",
+              "art": "notional"
+            },
+            {
+              "text": "What a bond pays you each year.",
+              "art": "yield"
+            },
+            {
+              "text": "The gap when a hedge doesn't track.",
+              "art": "basis risk"
+            }
+          ],
+          "answer": 0,
+          "why": "Premium is the price of the contract. Yield is what an investment pays you over time."
+        },
+        {
+          "id": "u3l1d",
+          "type": "fill",
+          "termId": "notional",
+          "termIds": [
+            "notional"
+          ],
+          "story": "An option on $100,000 of stock costs $2,000. The $100,000 is the ____.",
+          "bank": [
+            "notional",
+            "premium",
+            "yield",
+            "margin"
+          ],
+          "answer": "notional",
+          "why": "Notional = $100k. Premium = $2k. Mixing them makes a cheap option sound like a $100k bill."
+        },
+        {
+          "id": "u3l1e",
+          "type": "fill",
+          "termId": "premium",
+          "termIds": [
+            "premium"
+          ],
+          "story": "That put costs $3 a share. The $3 is the ____.",
+          "bank": [
+            "premium",
+            "notional",
+            "yield",
+            "haircut"
+          ],
+          "answer": "premium",
+          "why": "You pay the premium. You do not pay the notional unless you exercise into the stock."
+        },
+        {
+          "id": "u3l1f",
+          "type": "scenario",
+          "termId": "liquidity",
+          "termIds": [
+            "liquidity"
+          ],
+          "story": "You try to sell $2M of a tiny stock. The bid vanishes. You get filled $80k lower than the last print. Apple would not have done that to you.",
+          "stem": "You just learned about:",
+          "options": [
+            {
+              "text": "Liquidity",
+              "art": "liquidity"
+            },
+            {
+              "text": "Notional",
+              "art": "notional"
+            },
+            {
+              "text": "Duration",
+              "art": "duration"
+            },
+            {
+              "text": "A haircut",
+              "art": "haircut"
+            }
+          ],
+          "answer": 0,
+          "why": "Ease of exit. Notional would be a contract size. This was the market refusing to catch your sale."
+        },
+        {
+          "id": "u3l1g",
+          "type": "truefalse",
+          "termId": "premium",
+          "termIds": [
+            "premium"
+          ],
+          "stem": "The premium of an option is the same as its notional.",
+          "answer": false,
+          "why": "Premium is the ticket price. Notional is the stadium. $2k vs $100k."
+        },
+        {
+          "id": "u3l1h",
+          "type": "match",
+          "termIds": [
+            "liquidity",
+            "notional",
+            "premium",
+            "hedge"
+          ],
+          "pairs": [
+            {
+              "id": "liquidity",
+              "left": "liquidity",
+              "right": "Can you leave without a bruise?"
+            },
+            {
+              "id": "notional",
+              "left": "notional",
+              "right": "Face size of the contract"
+            },
+            {
+              "id": "premium",
+              "left": "premium",
+              "right": "What the option costs"
+            },
+            {
+              "id": "hedge",
+              "left": "hedge",
+              "right": "Why you might buy that option"
+            }
+          ],
+          "why": "You buy a $2k premium on $100k notional as a hedge — if you can actually trade it. That's liquidity."
+        }
+      ]
+    },
+    {
+      "id": "u3l2",
+      "unit": 3,
+      "title": "Yields that bite",
+      "icon": "📏",
+      "review": false,
+      "prompts": [
+        {
+          "id": "u3l2a",
+          "type": "meaning",
+          "termId": "yield",
+          "termIds": [
+            "yield"
+          ],
+          "stem": "Yield is:",
+          "options": [
+            {
+              "text": "What an investment pays you, as a percent of its price.",
+              "art": "yield"
+            },
+            {
+              "text": "How much a bond's price jumps when rates move.",
+              "art": "duration"
+            },
+            {
+              "text": "What you pay for an option.",
+              "art": "premium"
+            },
+            {
+              "text": "When a hedge doesn't track.",
+              "art": "basis risk"
+            }
+          ],
+          "answer": 0,
+          "why": "Yield is the income rate. Duration is how much the price jumps when rates move."
+        },
+        {
+          "id": "u3l2b",
+          "type": "meaning",
+          "termId": "duration",
+          "termIds": [
+            "duration"
+          ],
+          "stem": "Duration is:",
+          "options": [
+            {
+              "text": "How sensitive a bond's price is to interest-rate changes, in years.",
+              "art": "duration"
+            },
+            {
+              "text": "The coupon divided by the price.",
+              "art": "yield"
+            },
+            {
+              "text": "How fast you can sell.",
+              "art": "liquidity"
+            },
+            {
+              "text": "The face size of a swap.",
+              "art": "notional"
+            }
+          ],
+          "answer": 0,
+          "why": "Duration is the bruise from rate moves. Yield is the coupon you collect."
+        },
+        {
+          "id": "u3l2c",
+          "type": "meaning",
+          "termId": "basis risk",
+          "termIds": [
+            "basis risk"
+          ],
+          "stem": "Basis risk is:",
+          "options": [
+            {
+              "text": "When your hedge doesn't move 1-for-1 with what you were trying to protect.",
+              "art": "basis risk"
+            },
+            {
+              "text": "The fee for an option.",
+              "art": "premium"
+            },
+            {
+              "text": "Owning too many of the same stock.",
+              "art": "diversification"
+            },
+            {
+              "text": "A lender's day-one discount.",
+              "art": "haircut"
+            }
+          ],
+          "answer": 0,
+          "why": "A hedge is the protection. Basis risk is the gap when that protection doesn't track."
+        },
+        {
+          "id": "u3l2d",
+          "type": "truefalse",
+          "termId": "duration",
+          "termIds": [
+            "duration"
+          ],
+          "stem": "Higher yield always means higher duration.",
+          "answer": false,
+          "why": "Often the opposite vibe: a fat current yield can sit on a short-duration bond. Duration is rate sensitivity, not the coupon."
+        },
+        {
+          "id": "u3l2e",
+          "type": "fill",
+          "termId": "duration",
+          "termIds": [
+            "duration"
+          ],
+          "story": "A 10-year ____ bond drops about 10% if rates rise 1%.",
+          "bank": [
+            "duration",
+            "yield",
+            "liquidity",
+            "premium"
+          ],
+          "answer": "duration",
+          "why": "That's the bruise. Yield is what it was paying you while you waited."
+        },
+        {
+          "id": "u3l2f",
+          "type": "scenario",
+          "termId": "basis risk",
+          "termIds": [
+            "basis risk"
+          ],
+          "story": "Airline. You worry about oil. You buy oil futures as a 'hedge.' Oil crashes. Ticket prices barely move. The futures lose money. The stock does not rally enough to save you.",
+          "stem": "The gap is called:",
+          "options": [
+            {
+              "text": "Basis risk",
+              "art": "basis risk"
+            },
+            {
+              "text": "A margin call",
+              "art": "margin call"
+            },
+            {
+              "text": "Liquidity",
+              "art": "liquidity"
+            },
+            {
+              "text": "A put",
+              "art": "put"
+            }
+          ],
+          "answer": 0,
+          "why": "You had a hedge. It didn't track. That's basis risk, not 'hedges are fake.'"
+        },
+        {
+          "id": "u3l2g",
+          "type": "scenario",
+          "termId": "yield",
+          "termIds": [
+            "yield"
+          ],
+          "story": "A $100 bond pays $5 a year. Price falls to $50. New buyers now earn 10% on that same $5.",
+          "stem": "The 10% is the:",
+          "options": [
+            {
+              "text": "Yield",
+              "art": "yield"
+            },
+            {
+              "text": "Duration",
+              "art": "duration"
+            },
+            {
+              "text": "Premium",
+              "art": "premium"
+            },
+            {
+              "text": "Notional",
+              "art": "notional"
+            }
+          ],
+          "answer": 0,
+          "why": "Income over price. Duration would tell you how hard that price fall was when rates moved."
+        },
+        {
+          "id": "u3l2h",
+          "type": "match",
+          "termIds": [
+            "yield",
+            "duration",
+            "basis risk",
+            "premium"
+          ],
+          "pairs": [
+            {
+              "id": "yield",
+              "left": "yield",
+              "right": "Income / price"
+            },
+            {
+              "id": "duration",
+              "left": "duration",
+              "right": "Rate-bruise, in years"
+            },
+            {
+              "id": "basis risk",
+              "left": "basis risk",
+              "right": "Hedge that doesn't track"
+            },
+            {
+              "id": "premium",
+              "left": "premium",
+              "right": "Price of an option"
+            }
+          ],
+          "why": "Four words journalists stack. Pull them apart: income, rate-pain, a sloppy hedge, and the ticket for a put."
+        },
+        {
+          "id": "u3l2i",
+          "type": "truefalse",
+          "termId": "basis risk",
+          "termIds": [
+            "basis risk"
+          ],
+          "stem": "If a hedge is perfect, basis risk is roughly zero.",
+          "answer": true,
+          "why": "Perfect 1-for-1. In real life you get close and hope. The leftover is basis risk."
+        }
+      ]
+    },
+    {
+      "id": "u3r",
+      "unit": 3,
+      "title": "Unit 3 review",
+      "icon": "🏆",
+      "review": true,
+      "prompts": [
+        {
+          "id": "u3ra",
+          "type": "meaning",
+          "termId": "liquidity",
+          "termIds": [
+            "liquidity"
+          ],
+          "stem": "A tiny stock that cannot absorb a $1M sale has poor:",
+          "options": [
+            {
+              "text": "Liquidity",
+              "art": "liquidity"
+            },
+            {
+              "text": "Duration",
+              "art": "duration"
+            },
+            {
+              "text": "Notional",
+              "art": "notional"
+            },
+            {
+              "text": "Premium",
+              "art": "premium"
+            }
+          ],
+          "answer": 0,
+          "why": "Ease of exit. Duration is a bond's rate-bruise, not a traffic jam in the shares."
+        },
+        {
+          "id": "u3rb",
+          "type": "fill",
+          "termId": "notional",
+          "termIds": [
+            "notional"
+          ],
+          "story": "Swap written on $50M of loans. You didn't pay $50M. That $50M is ____.",
+          "bank": [
+            "notional",
+            "premium",
+            "yield",
+            "margin"
+          ],
+          "answer": "notional",
+          "why": "Face size. Premium would be what an option on that pile costs."
+        },
+        {
+          "id": "u3rc",
+          "type": "scenario",
+          "termId": "duration",
+          "termIds": [
+            "duration"
+          ],
+          "story": "Rates jump 1%. Your long bond fund is suddenly down about 12%. The manager mutters a number in years.",
+          "stem": "That number is:",
+          "options": [
+            {
+              "text": "Duration",
+              "art": "duration"
+            },
+            {
+              "text": "Yield",
+              "art": "yield"
+            },
+            {
+              "text": "Liquidity",
+              "art": "liquidity"
+            },
+            {
+              "text": "Basis risk",
+              "art": "basis risk"
+            }
+          ],
+          "answer": 0,
+          "why": "Rate sensitivity. Yield is what it was paying. The 12% bruise is duration doing its thing."
+        },
+        {
+          "id": "u3rd",
+          "type": "truefalse",
+          "termId": "premium",
+          "termIds": [
+            "premium"
+          ],
+          "stem": "Paying a premium for a put is the same as earning yield on a bond.",
+          "answer": false,
+          "why": "Premium is money you spend for a contract. Yield is money an asset pays you."
+        },
+        {
+          "id": "u3re",
+          "type": "match",
+          "termIds": [
+            "liquidity",
+            "notional",
+            "yield",
+            "basis risk"
+          ],
+          "pairs": [
+            {
+              "id": "liquidity",
+              "left": "liquidity",
+              "right": "Exit without moving price"
+            },
+            {
+              "id": "notional",
+              "left": "notional",
+              "right": "Contract face size"
+            },
+            {
+              "id": "yield",
+              "left": "yield",
+              "right": "What it pays you"
+            },
+            {
+              "id": "basis risk",
+              "left": "basis risk",
+              "right": "Hedge slippage"
+            }
+          ],
+          "why": "If a sentence in the Journal has two of these, slow down."
+        },
+        {
+          "id": "u3rf",
+          "type": "scenario",
+          "termId": "hedge",
+          "termIds": [
+            "hedge"
+          ],
+          "story": "Unit 1 callback. You own the stock. You buy a put. The put is imperfect — it tracks an index, not your name.",
+          "stem": "You have a hedge with:",
+          "options": [
+            {
+              "text": "Basis risk",
+              "art": "basis risk"
+            },
+            {
+              "text": "A haircut",
+              "art": "haircut"
+            },
+            {
+              "text": "A short squeeze",
+              "art": "short selling"
+            },
+            {
+              "text": "A capital gain",
+              "art": "capital gains"
+            }
+          ],
+          "answer": 0,
+          "why": "Still a hedge. The leftover mismatch is basis risk."
+        },
+        {
+          "id": "u3rg",
+          "type": "meaning",
+          "termId": "duration",
+          "termIds": [
+            "duration"
+          ],
+          "stem": "Yield vs duration:",
+          "options": [
+            {
+              "text": "Yield is income. Duration is rate sensitivity.",
+              "art": "duration"
+            },
+            {
+              "text": "They are two words for coupon.",
+              "art": "yield"
+            },
+            {
+              "text": "Duration is what you pay for a put.",
+              "art": "premium"
+            },
+            {
+              "text": "Yield measures how fast you can sell.",
+              "art": "liquidity"
+            }
+          ],
+          "answer": 0,
+          "why": "Income vs bruise. Keep them in different pockets."
+        },
+        {
+          "id": "u3rh",
+          "type": "fill",
+          "termId": "premium",
+          "termIds": [
+            "premium"
+          ],
+          "story": "Crash insurance on your shares costs $4. That $4 is the ____.",
+          "bank": [
+            "premium",
+            "notional",
+            "yield",
+            "duration"
+          ],
+          "answer": "premium",
+          "why": "Ticket price of the put. Notional would be the size of stock it covers."
+        }
+      ]
+    },
+    {
+      "id": "u4l1",
+      "unit": 4,
+      "title": "Long, vol, spread",
+      "icon": "🌊",
+      "review": false,
+      "prompts": [
+        {
+          "id": "u4l1a",
+          "type": "meaning",
+          "termId": "long",
+          "termIds": [
+            "long"
+          ],
+          "stem": "To be long means:",
+          "options": [
+            {
+              "text": "You own it, or you're betting it goes up.",
+              "art": "long"
+            },
+            {
+              "text": "You borrowed it and sold it.",
+              "art": "short selling"
+            },
+            {
+              "text": "You pledged it to a bank.",
+              "art": "pledge"
+            },
+            {
+              "text": "You bought a put.",
+              "art": "put"
+            }
+          ],
+          "answer": 0,
+          "why": "Long = you want it up. Short = you want it down."
+        },
+        {
+          "id": "u4l1b",
+          "type": "meaning",
+          "termId": "volatility",
+          "termIds": [
+            "volatility"
+          ],
+          "stem": "Volatility is:",
+          "options": [
+            {
+              "text": "How violently the price swings — the weather, not the direction.",
+              "art": "volatility"
+            },
+            {
+              "text": "Owning many different things.",
+              "art": "diversification"
+            },
+            {
+              "text": "A bet that it only goes up.",
+              "art": "long"
+            },
+            {
+              "text": "The other person in the contract.",
+              "art": "counterparty"
+            }
+          ],
+          "answer": 0,
+          "why": "Volatility is how hard one thing swings. Diversification is owning several so one swing doesn't sink you."
+        },
+        {
+          "id": "u4l1c",
+          "type": "meaning",
+          "termId": "diversification",
+          "termIds": [
+            "diversification"
+          ],
+          "stem": "Diversification is:",
+          "options": [
+            {
+              "text": "Owning different things so one disaster doesn't take the whole pile.",
+              "art": "diversification"
+            },
+            {
+              "text": "Insurance on a single bet you already have.",
+              "art": "hedge"
+            },
+            {
+              "text": "How hard one price swings.",
+              "art": "volatility"
+            },
+            {
+              "text": "Re-pricing a position every day.",
+              "art": "mark-to-market"
+            }
+          ],
+          "answer": 0,
+          "why": "Diversification spreads bets. A hedge is insurance on a bet you already have."
+        },
+        {
+          "id": "u4l1d",
+          "type": "truefalse",
+          "termId": "diversification",
+          "termIds": [
+            "diversification"
+          ],
+          "stem": "Diversification is just a fancy word for a hedge.",
+          "answer": false,
+          "why": "Spreading bets vs. insuring one bet. 20 stocks is diversification. A put on your Tesla is a hedge."
+        },
+        {
+          "id": "u4l1e",
+          "type": "fill",
+          "termId": "long",
+          "termIds": [
+            "long"
+          ],
+          "story": "You bought 50 shares. You're ____. You want the price higher.",
+          "bank": [
+            "long",
+            "short",
+            "pledged",
+            "marked"
+          ],
+          "answer": "long",
+          "why": "Long = own / want up. Short = borrowed and sold / want down."
+        },
+        {
+          "id": "u4l1f",
+          "type": "scenario",
+          "termId": "volatility",
+          "termIds": [
+            "volatility"
+          ],
+          "story": "Two funds. Same +8% year. One got there in a straight line. The other halved twice and recovered.",
+          "stem": "The second one had more:",
+          "options": [
+            {
+              "text": "Volatility",
+              "art": "volatility"
+            },
+            {
+              "text": "Diversification",
+              "art": "diversification"
+            },
+            {
+              "text": "Yield",
+              "art": "yield"
+            },
+            {
+              "text": "Notional",
+              "art": "notional"
+            }
+          ],
+          "answer": 0,
+          "why": "Weather, not destination. Diversification is how many names, not how jumpy one path was."
+        },
+        {
+          "id": "u4l1g",
+          "type": "scenario",
+          "termId": "diversification",
+          "termIds": [
+            "diversification"
+          ],
+          "story": "Your entire net worth is one employer's stock. A product recall hits. There is no put. There is no second industry.",
+          "stem": "What you lacked is:",
+          "options": [
+            {
+              "text": "Diversification",
+              "art": "diversification"
+            },
+            {
+              "text": "A short squeeze",
+              "art": "short selling"
+            },
+            {
+              "text": "Duration",
+              "art": "duration"
+            },
+            {
+              "text": "A haircut",
+              "art": "haircut"
+            }
+          ],
+          "answer": 0,
+          "why": "One pile. One disaster. A hedge could have helped that one name; diversification would have meant other names too."
+        },
+        {
+          "id": "u4l1h",
+          "type": "match",
+          "termIds": [
+            "long",
+            "short selling",
+            "volatility",
+            "diversification"
+          ],
+          "pairs": [
+            {
+              "id": "long",
+              "left": "long",
+              "right": "Want it up"
+            },
+            {
+              "id": "short selling",
+              "left": "short",
+              "right": "Want it down"
+            },
+            {
+              "id": "volatility",
+              "left": "volatility",
+              "right": "Size of the swings"
+            },
+            {
+              "id": "diversification",
+              "left": "diversification",
+              "right": "Many things, not one"
+            }
+          ],
+          "why": "Direction, weather, and whether one storm can take the farm."
+        }
+      ]
+    },
+    {
+      "id": "u4l2",
+      "unit": 4,
+      "title": "The other person",
+      "icon": "🤝",
+      "review": false,
+      "prompts": [
+        {
+          "id": "u4l2a",
+          "type": "meaning",
+          "termId": "counterparty",
+          "termIds": [
+            "counterparty"
+          ],
+          "stem": "A counterparty is:",
+          "options": [
+            {
+              "text": "The other person in the contract — the one who has to pay you.",
+              "art": "counterparty"
+            },
+            {
+              "text": "A missed payment.",
+              "art": "default"
+            },
+            {
+              "text": "Re-pricing a live position.",
+              "art": "mark-to-market"
+            },
+            {
+              "text": "How jumpy the market is.",
+              "art": "volatility"
+            }
+          ],
+          "answer": 0,
+          "why": "Counterparty is who sits across from you. Default is them failing to pay."
+        },
+        {
+          "id": "u4l2b",
+          "type": "meaning",
+          "termId": "default",
+          "termIds": [
+            "default"
+          ],
+          "stem": "Default is:",
+          "options": [
+            {
+              "text": "Not paying what you owe, on a loan or a contract.",
+              "art": "default"
+            },
+            {
+              "text": "Re-pricing the position at today's market.",
+              "art": "mark-to-market"
+            },
+            {
+              "text": "The other bank in the trade.",
+              "art": "counterparty"
+            },
+            {
+              "text": "A discount on collateral.",
+              "art": "haircut"
+            }
+          ],
+          "answer": 0,
+          "why": "Default is a missed payment. Mark-to-market is just re-pricing the position while it's still alive."
+        },
+        {
+          "id": "u4l2c",
+          "type": "meaning",
+          "termId": "mark-to-market",
+          "termIds": [
+            "mark-to-market"
+          ],
+          "stem": "Mark-to-market means:",
+          "options": [
+            {
+              "text": "Re-pricing a position at today's market, even if you haven't sold.",
+              "art": "mark-to-market"
+            },
+            {
+              "text": "Missing a payment.",
+              "art": "default"
+            },
+            {
+              "text": "Spreading money across many stocks.",
+              "art": "diversification"
+            },
+            {
+              "text": "Buying a put.",
+              "art": "put"
+            }
+          ],
+          "answer": 0,
+          "why": "Mark-to-market is a re-price. Default is a broken promise. You can be marked down and still paying."
+        },
+        {
+          "id": "u4l2d",
+          "type": "truefalse",
+          "termId": "mark-to-market",
+          "termIds": [
+            "mark-to-market"
+          ],
+          "stem": "If your loan is marked to market after a drop, that automatically means you defaulted.",
+          "answer": false,
+          "why": "Marked down ≠ default. Default is when you miss the payment or the call. The mark is just the new number."
+        },
+        {
+          "id": "u4l2e",
+          "type": "fill",
+          "termId": "counterparty",
+          "termIds": [
+            "counterparty"
+          ],
+          "story": "You bought a put from Bank X. If Bank X fails, the put is a napkin. Bank X is your ____.",
+          "bank": [
+            "counterparty",
+            "default",
+            "yield",
+            "duration"
+          ],
+          "answer": "counterparty",
+          "why": "Who sits across from you. Default is the failure itself."
+        },
+        {
+          "id": "u4l2f",
+          "type": "scenario",
+          "termId": "default",
+          "termIds": [
+            "default"
+          ],
+          "story": "The company skips a bond payment. Lawyers. Maybe seizing assets. The price already fell last month when people guessed this was coming.",
+          "stem": "The skipped payment is:",
+          "options": [
+            {
+              "text": "Default",
+              "art": "default"
+            },
+            {
+              "text": "Mark-to-market",
+              "art": "mark-to-market"
+            },
+            {
+              "text": "A haircut",
+              "art": "haircut"
+            },
+            {
+              "text": "A hedge",
+              "art": "hedge"
+            }
+          ],
+          "answer": 0,
+          "why": "The earlier price drop was a mark. The skipped payment is default."
+        },
+        {
+          "id": "u4l2g",
+          "type": "scenario",
+          "termId": "mark-to-market",
+          "termIds": [
+            "mark-to-market"
+          ],
+          "story": "Your $1M pledge is now worth $600k. Nobody missed a payment yet. The loan desk still re-values the collateral tonight.",
+          "stem": "Tonight's re-value is:",
+          "options": [
+            {
+              "text": "Mark-to-market",
+              "art": "mark-to-market"
+            },
+            {
+              "text": "Default",
+              "art": "default"
+            },
+            {
+              "text": "A put",
+              "art": "put"
+            },
+            {
+              "text": "Diversification",
+              "art": "diversification"
+            }
+          ],
+          "answer": 0,
+          "why": "A re-price. The margin call may follow. Default is only if the promise actually breaks."
+        },
+        {
+          "id": "u4l2h",
+          "type": "match",
+          "termIds": [
+            "counterparty",
+            "default",
+            "mark-to-market",
+            "margin call"
+          ],
+          "pairs": [
+            {
+              "id": "counterparty",
+              "left": "counterparty",
+              "right": "Who owes you"
+            },
+            {
+              "id": "default",
+              "left": "default",
+              "right": "They didn't pay"
+            },
+            {
+              "id": "mark-to-market",
+              "left": "mark-to-market",
+              "right": "Tonight's price, live"
+            },
+            {
+              "id": "margin call",
+              "left": "margin call",
+              "right": "Cushion too thin"
+            }
+          ],
+          "why": "Person, broken promise, new number, and the phone call the new number triggers."
+        }
+      ]
+    },
+    {
+      "id": "u4r",
+      "unit": 4,
+      "title": "Unit 4 review",
+      "icon": "🏆",
+      "review": true,
+      "prompts": [
+        {
+          "id": "u4ra",
+          "type": "truefalse",
+          "termId": "long",
+          "termIds": [
+            "long"
+          ],
+          "stem": "If you are long a stock, you want it to fall.",
+          "answer": false,
+          "why": "Long = up. Short = down. The oldest mix-up in the paper."
+        },
+        {
+          "id": "u4rb",
+          "type": "scenario",
+          "termId": "counterparty",
+          "termIds": [
+            "counterparty"
+          ],
+          "story": "Your beautiful put is with a bank that just hit the news for all the wrong reasons.",
+          "stem": "Your real risk is the:",
+          "options": [
+            {
+              "text": "Counterparty",
+              "art": "counterparty"
+            },
+            {
+              "text": "Duration",
+              "art": "duration"
+            },
+            {
+              "text": "Haircut",
+              "art": "haircut"
+            },
+            {
+              "text": "Yield",
+              "art": "yield"
+            }
+          ],
+          "answer": 0,
+          "why": "The other person. If they default, the contract's model price is a postcard."
+        },
+        {
+          "id": "u4rc",
+          "type": "fill",
+          "termId": "volatility",
+          "termIds": [
+            "volatility"
+          ],
+          "story": "8% days vs 0.3% days. That's ____, not a forecast of direction.",
+          "bank": [
+            "volatility",
+            "diversification",
+            "duration",
+            "notional"
+          ],
+          "answer": "volatility",
+          "why": "Weather. Diversification is how many roofs, not how hard the wind blows on one."
+        },
+        {
+          "id": "u4rd",
+          "type": "meaning",
+          "termId": "diversification",
+          "termIds": [
+            "diversification"
+          ],
+          "stem": "A put on one stock vs. 30 different stocks:",
+          "options": [
+            {
+              "text": "Put is a hedge. 30 names is diversification.",
+              "art": "diversification"
+            },
+            {
+              "text": "Both are hedges.",
+              "art": "hedge"
+            },
+            {
+              "text": "Both are diversification.",
+              "art": "diversification"
+            },
+            {
+              "text": "30 names is a margin call.",
+              "art": "joke"
+            }
+          ],
+          "answer": 0,
+          "why": "Insurance on one bet vs. not making one bet the whole farm."
+        },
+        {
+          "id": "u4re",
+          "type": "match",
+          "termIds": [
+            "long",
+            "volatility",
+            "default",
+            "mark-to-market"
+          ],
+          "pairs": [
+            {
+              "id": "long",
+              "left": "long",
+              "right": "You're in. You want up."
+            },
+            {
+              "id": "volatility",
+              "left": "volatility",
+              "right": "How jumpy"
+            },
+            {
+              "id": "default",
+              "left": "default",
+              "right": "Missed the payment"
+            },
+            {
+              "id": "mark-to-market",
+              "left": "mark-to-market",
+              "right": "Priced again today"
+            }
+          ],
+          "why": "Four Journal words. None of them mean each other."
+        },
+        {
+          "id": "u4rf",
+          "type": "scenario",
+          "termId": "mark-to-market",
+          "termIds": [
+            "mark-to-market"
+          ],
+          "story": "Pledged stock, Unit 1 style. Price drops. Desk revalues tonight. Tomorrow they may call.",
+          "stem": "Tonight is ____. Tomorrow may be a margin call.",
+          "options": [
+            {
+              "text": "Mark-to-market",
+              "art": "mark-to-market"
+            },
+            {
+              "text": "Default",
+              "art": "default"
+            },
+            {
+              "text": "A short",
+              "art": "short selling"
+            },
+            {
+              "text": "A premium",
+              "art": "premium"
+            }
+          ],
+          "answer": 0,
+          "why": "Re-price first. Call second. Default only if you don't meet it."
+        },
+        {
+          "id": "u4rg",
+          "type": "meaning",
+          "termId": "default",
+          "termIds": [
+            "default"
+          ],
+          "stem": "Default vs mark-to-market:",
+          "options": [
+            {
+              "text": "Default is a broken promise. Mark-to-market is a new price.",
+              "art": "default"
+            },
+            {
+              "text": "They are synonyms on loan desks.",
+              "art": "joke"
+            },
+            {
+              "text": "Default is a type of put.",
+              "art": "default"
+            },
+            {
+              "text": "Mark-to-market means the other bank vanished.",
+              "art": "mark-to-market"
+            }
+          ],
+          "answer": 0,
+          "why": "You can be marked down and still current. Default is the miss."
+        },
+        {
+          "id": "u4rh",
+          "type": "fill",
+          "termId": "long",
+          "termIds": [
+            "long"
+          ],
+          "story": "Bought it, still holding it, want it higher: you're ____.",
+          "bank": [
+            "long",
+            "short",
+            "in default",
+            "a counterparty"
+          ],
+          "answer": "long",
+          "why": "The boring, correct word. Short is the other seat."
+        },
+        {
+          "id": "u4ri",
+          "type": "scenario",
+          "termId": "long",
+          "termIds": [
+            "long",
+            "short selling"
+          ],
+          "story": "You borrow 100 shares and sell them at $50, hoping to buy back cheaper. Your friend just buys 100 shares at $50 and keeps them.",
+          "stem": "Your friend's move is:",
+          "options": [
+            {
+              "text": "Long. She owns the shares and wants them up.",
+              "art": "long"
+            },
+            {
+              "text": "Short. She borrowed and sold.",
+              "art": "short selling"
+            },
+            {
+              "text": "A put — insurance on shares she owns.",
+              "art": "put"
+            },
+            {
+              "text": "A hedge — she sold to offset a risk.",
+              "art": "hedge"
+            }
+          ],
+          "answer": 0,
+          "why": "She bought and holds: long. Borrow, sell, hope to buy back cheaper — that's your move, short. Up is the direction that hurts you."
+        }
+      ]
+    },
+    {
+      "id": "u5l1",
+      "unit": 5,
+      "title": "Borrow, don't sell",
+      "icon": "🏦",
+      "review": false,
+      "prompts": [
+        {
+          "id": "u5l1a",
+          "type": "meaning",
+          "termId": "securities-backed loan",
+          "termIds": [
+            "securities-backed loan"
+          ],
+          "stem": "A securities-backed loan is:",
+          "options": [
+            {
+              "text": "A loan that uses your portfolio as collateral. You keep the shares.",
+              "art": "securities-backed loan"
+            },
+            {
+              "text": "Selling the portfolio to harvest losses.",
+              "art": "capital gains"
+            },
+            {
+              "text": "A put on the whole account.",
+              "art": "put"
+            },
+            {
+              "text": "A swap of dividends for a fee.",
+              "art": "swap"
+            }
+          ],
+          "answer": 0,
+          "why": "It's a pledge of securities for a loan. Pledge is the move; this is the product with a nicer name."
+        },
+        {
+          "id": "u5l1b",
+          "type": "meaning",
+          "termId": "capital gains",
+          "termIds": [
+            "capital gains"
+          ],
+          "stem": "Capital gains are:",
+          "options": [
+            {
+              "text": "The taxable profit when you sell an asset for more than you paid.",
+              "art": "capital gains"
+            },
+            {
+              "text": "The interest on a securities-backed loan.",
+              "art": "securities-backed loan"
+            },
+            {
+              "text": "A stepped-up basis at death.",
+              "art": "buy-borrow-die"
+            },
+            {
+              "text": "The haircut on pledged stock.",
+              "art": "haircut"
+            }
+          ],
+          "answer": 0,
+          "why": "Capital gains hit when you sell. A loan is not a sale. That's the whole trick — and the whole risk."
+        },
+        {
+          "id": "u5l1c",
+          "type": "meaning",
+          "termId": "buy-borrow-die",
+          "termIds": [
+            "buy-borrow-die"
+          ],
+          "stem": "Buy-borrow-die describes:",
+          "options": [
+            {
+              "text": "Buy assets, borrow against them to spend, hold until death so heirs may get a stepped-up basis. A pattern, not a plan we recommend.",
+              "art": "buy-borrow-die"
+            },
+            {
+              "text": "A strategy this app is telling you to use.",
+              "art": "joke"
+            },
+            {
+              "text": "Selling every year to lock in gains.",
+              "art": "capital gains"
+            },
+            {
+              "text": "Shorting your heirs' inheritance.",
+              "art": "joke"
+            }
+          ],
+          "answer": 0,
+          "why": "A securities-backed loan is the borrowing tool. Buy-borrow-die is the life-cycle pattern that uses that tool. Description ≠ advice."
+        },
+        {
+          "id": "u5l1d",
+          "type": "truefalse",
+          "termId": "buy-borrow-die",
+          "termIds": [
+            "buy-borrow-die"
+          ],
+          "stem": "This lesson is recommending you pledge stock and never sell.",
+          "answer": false,
+          "why": "No. We're naming a pattern wealthy people use, including the ugly part: a crash can still force a sale. Not advice."
+        },
+        {
+          "id": "u5l1e",
+          "type": "fill",
+          "termId": "capital gains",
+          "termIds": [
+            "capital gains"
+          ],
+          "story": "Bought at $1M, sell at $4M. The $3M is a ____. A loan against the $4M is not a sale.",
+          "bank": [
+            "capital gain",
+            "haircut",
+            "premium",
+            "notional"
+          ],
+          "answer": "capital gain",
+          "why": "Tax (sometimes) follows the sale. The loan follows a pledge. Different doors."
+        },
+        {
+          "id": "u5l1f",
+          "type": "scenario",
+          "termId": "securities-backed loan",
+          "termIds": [
+            "securities-backed loan"
+          ],
+          "story": "$10M stock. 30% haircut. Bank offers $7M. Shares stay yours. You spend the $7M. No sale. Yet.",
+          "stem": "The product is a:",
+          "options": [
+            {
+              "text": "Securities-backed loan",
+              "art": "securities-backed loan"
+            },
+            {
+              "text": "Put",
+              "art": "put"
+            },
+            {
+              "text": "Swap",
+              "art": "swap"
+            },
+            {
+              "text": "Short sale",
+              "art": "short selling"
+            }
+          ],
+          "answer": 0,
+          "why": "Unit 1's pledge, in private-bank clothing. Same margin-call risk if it drops 40%."
+        },
+        {
+          "id": "u5l1g",
+          "type": "scenario",
+          "termId": "buy-borrow-die",
+          "termIds": [
+            "buy-borrow-die"
+          ],
+          "story": "Person owns a giant concentrated position. Borrows against it for living costs. Never sells. The pitch is: heirs get a reset. The footnote is: one crash plus a call can dump the shares into a taxable event anyway.",
+          "stem": "The pattern has a nickname:",
+          "options": [
+            {
+              "text": "Buy-borrow-die",
+              "art": "buy-borrow-die"
+            },
+            {
+              "text": "Diversification",
+              "art": "diversification"
+            },
+            {
+              "text": "A covered call",
+              "art": "call"
+            },
+            {
+              "text": "Mark-to-market",
+              "art": "mark-to-market"
+            }
+          ],
+          "answer": 0,
+          "why": "Nickname for a tax pattern. The footnote is the Unit 1 margin call. We are not selling the pitch."
+        },
+        {
+          "id": "u5l1h",
+          "type": "match",
+          "termIds": [
+            "securities-backed loan",
+            "capital gains",
+            "pledge",
+            "margin call"
+          ],
+          "pairs": [
+            {
+              "id": "securities-backed loan",
+              "left": "securities-backed loan",
+              "right": "Portfolio as collateral"
+            },
+            {
+              "id": "capital gains",
+              "left": "capital gains",
+              "right": "Tax when you actually sell"
+            },
+            {
+              "id": "pledge",
+              "left": "pledge",
+              "right": "The underlying move"
+            },
+            {
+              "id": "margin call",
+              "left": "margin call",
+              "right": "The ugly footnote"
+            }
+          ],
+          "why": "Pretty name, old move, tax reason, crash ending. Hold all four."
+        },
+        {
+          "id": "u5l1i",
+          "type": "truefalse",
+          "termId": "capital gains",
+          "termIds": [
+            "capital gains"
+          ],
+          "stem": "Taking a loan against stock is the same as selling it for tax purposes.",
+          "answer": false,
+          "why": "Usually not — that's why the pattern exists. A forced sale after a margin call *is* a sale. The tax shows up when you didn't want it."
+        }
+      ]
+    },
+    {
+      "id": "u5l2",
+      "unit": 5,
+      "title": "Futures & swaps",
+      "icon": "🔄",
+      "review": false,
+      "prompts": [
+        {
+          "id": "u5l2a",
+          "type": "meaning",
+          "termId": "futures",
+          "termIds": [
+            "futures"
+          ],
+          "stem": "A futures contract is:",
+          "options": [
+            {
+              "text": "A promise to buy or sell at a set price on a set date — obligation, not a right.",
+              "art": "futures"
+            },
+            {
+              "text": "The right to walk away after paying a premium.",
+              "art": "option"
+            },
+            {
+              "text": "A loan against your shares.",
+              "art": "pledge"
+            },
+            {
+              "text": "An exchange of interest payments over years.",
+              "art": "swap"
+            }
+          ],
+          "answer": 0,
+          "why": "Futures are a promise you must keep. An option is a right you can abandon."
+        },
+        {
+          "id": "u5l2b",
+          "type": "meaning",
+          "termId": "swap",
+          "termIds": [
+            "swap"
+          ],
+          "stem": "A swap is:",
+          "options": [
+            {
+              "text": "Two parties exchanging cash flows — often a fixed rate for a floating one.",
+              "art": "swap"
+            },
+            {
+              "text": "A single settlement on one date for a barrel or a bushel.",
+              "art": "futures"
+            },
+            {
+              "text": "The right to sell stock at a floor.",
+              "art": "put"
+            },
+            {
+              "text": "A portfolio pledged to a bank.",
+              "art": "securities-backed loan"
+            }
+          ],
+          "answer": 0,
+          "why": "A swap is an ongoing exchange of payments. A future is one settlement on one date."
+        },
+        {
+          "id": "u5l2c",
+          "type": "truefalse",
+          "termId": "futures",
+          "termIds": [
+            "futures"
+          ],
+          "stem": "You can let a futures contract expire unused, like an option, and only lose the premium.",
+          "answer": false,
+          "why": "No walk-away. Futures mark to market. You settle. Options are the ones you can abandon."
+        },
+        {
+          "id": "u5l2d",
+          "type": "fill",
+          "termId": "futures",
+          "termIds": [
+            "futures"
+          ],
+          "story": "Agree now to buy 1,000 barrels at $80 in December. Come December, you settle. That's a ____ contract.",
+          "bank": [
+            "futures",
+            "option",
+            "pledge",
+            "put"
+          ],
+          "answer": "futures",
+          "why": "Obligation on a date. An option would have let you shrug if $80 became a bad idea."
+        },
+        {
+          "id": "u5l2e",
+          "type": "fill",
+          "termId": "swap",
+          "termIds": [
+            "swap"
+          ],
+          "story": "You pay 4% fixed, receive SOFR. If rates jump, it pays you. That's a ____, not a loan.",
+          "bank": [
+            "swap",
+            "future",
+            "haircut",
+            "call"
+          ],
+          "answer": "swap",
+          "why": "Ongoing payments. A future would be one settlement. A loan would be principal you owe."
+        },
+        {
+          "id": "u5l2f",
+          "type": "scenario",
+          "termId": "futures",
+          "termIds": [
+            "futures"
+          ],
+          "story": "Farmer locks a sale price for harvest. Buyer locks a purchase price. Neither of them has an option to bail because the weather was weird.",
+          "stem": "They used:",
+          "options": [
+            {
+              "text": "Futures",
+              "art": "futures"
+            },
+            {
+              "text": "Puts",
+              "art": "put"
+            },
+            {
+              "text": "A securities-backed loan",
+              "art": "securities-backed loan"
+            },
+            {
+              "text": "A call",
+              "art": "call"
+            }
+          ],
+          "answer": 0,
+          "why": "Obligation. If they wanted the right to bail, they'd have paid a premium for options."
+        },
+        {
+          "id": "u5l2g",
+          "type": "scenario",
+          "termId": "swap",
+          "termIds": [
+            "swap"
+          ],
+          "story": "Company has a floating-rate loan and hates the uncertainty. It enters a contract: it will pay fixed, receive floating, for five years. No barrels. No expiration Friday.",
+          "stem": "That contract is a:",
+          "options": [
+            {
+              "text": "Swap",
+              "art": "swap"
+            },
+            {
+              "text": "Future",
+              "art": "futures"
+            },
+            {
+              "text": "Put",
+              "art": "put"
+            },
+            {
+              "text": "Haircut",
+              "art": "haircut"
+            }
+          ],
+          "answer": 0,
+          "why": "Exchange of cash flows over time. A future is one date, one settlement."
+        },
+        {
+          "id": "u5l2h",
+          "type": "match",
+          "termIds": [
+            "futures",
+            "option",
+            "swap",
+            "derivative"
+          ],
+          "pairs": [
+            {
+              "id": "futures",
+              "left": "futures",
+              "right": "Must settle on a date"
+            },
+            {
+              "id": "option",
+              "left": "option",
+              "right": "Right, not must"
+            },
+            {
+              "id": "swap",
+              "left": "swap",
+              "right": "Exchange cash flows"
+            },
+            {
+              "id": "derivative",
+              "left": "derivative",
+              "right": "Value from something else"
+            }
+          ],
+          "why": "All three are derivatives. The mix-up is which one lets you walk, which one you must keep, which one drips payments."
+        },
+        {
+          "id": "u5l2i",
+          "type": "truefalse",
+          "termId": "swap",
+          "termIds": [
+            "swap"
+          ],
+          "stem": "A swap is just a futures contract with a friendlier name.",
+          "answer": false,
+          "why": "Futures: one date. Swaps: an ongoing exchange. Related family, different choreography."
+        }
+      ]
+    },
+    {
+      "id": "u5r",
+      "unit": 5,
+      "title": "Unit 5 review",
+      "icon": "🏆",
+      "review": true,
+      "prompts": [
+        {
+          "id": "u5ra",
+          "type": "scenario",
+          "termId": "securities-backed loan",
+          "termIds": [
+            "securities-backed loan"
+          ],
+          "story": "Private bank, concentrated stock, cash without a sale. Unit 1 is whispering 'pledge.'",
+          "stem": "The product name on the term sheet is:",
+          "options": [
+            {
+              "text": "Securities-backed loan",
+              "art": "securities-backed loan"
+            },
+            {
+              "text": "A covered call",
+              "art": "call"
+            },
+            {
+              "text": "A short",
+              "art": "short selling"
+            },
+            {
+              "text": "Duration",
+              "art": "duration"
+            }
+          ],
+          "answer": 0,
+          "why": "Pretty label on a pledge. Haircut and margin call still live here."
+        },
+        {
+          "id": "u5rb",
+          "type": "meaning",
+          "termId": "buy-borrow-die",
+          "termIds": [
+            "buy-borrow-die"
+          ],
+          "stem": "Buy-borrow-die, said honestly:",
+          "options": [
+            {
+              "text": "A tax pattern some wealthy people use. A crash can still force a taxable sale. Not advice.",
+              "art": "buy-borrow-die"
+            },
+            {
+              "text": "A free lunch this app endorses.",
+              "art": "joke"
+            },
+            {
+              "text": "The same thing as diversification.",
+              "art": "diversification"
+            },
+            {
+              "text": "A kind of put.",
+              "art": "put"
+            }
+          ],
+          "answer": 0,
+          "why": "We describe it because you'll read it. We do not hand you the keys."
+        },
+        {
+          "id": "u5rc",
+          "type": "fill",
+          "termId": "futures",
+          "termIds": [
+            "futures"
+          ],
+          "story": "Right vs obligation: an option you can drop. A ____ you must settle.",
+          "bank": [
+            "future",
+            "put",
+            "call",
+            "premium"
+          ],
+          "answer": "future",
+          "why": "That's the fork from Unit 2, grown up."
+        },
+        {
+          "id": "u5rd",
+          "type": "truefalse",
+          "termId": "capital gains",
+          "termIds": [
+            "capital gains"
+          ],
+          "stem": "If a margin call forces a sale of pledged stock, capital gains can show up even if you never wanted to sell.",
+          "answer": true,
+          "why": "That's the ugly footnote. The pattern assumes you never sell. The market does not assume that."
+        },
+        {
+          "id": "u5re",
+          "type": "match",
+          "termIds": [
+            "securities-backed loan",
+            "buy-borrow-die",
+            "futures",
+            "swap"
+          ],
+          "pairs": [
+            {
+              "id": "securities-backed loan",
+              "left": "SBL",
+              "right": "Loan on a portfolio"
+            },
+            {
+              "id": "buy-borrow-die",
+              "left": "buy-borrow-die",
+              "right": "The life-cycle nickname"
+            },
+            {
+              "id": "futures",
+              "left": "futures",
+              "right": "Obligatory settlement"
+            },
+            {
+              "id": "swap",
+              "left": "swap",
+              "right": "Cash-flow exchange"
+            }
+          ],
+          "why": "Two borrowing words, two derivative words. Don't let the nickname do the thinking."
+        },
+        {
+          "id": "u5rf",
+          "type": "scenario",
+          "termId": "swap",
+          "termIds": [
+            "swap"
+          ],
+          "story": "Airline wants to lock jet-fuel economics without taking delivery of tankers each month. It exchanges payments tied to a fuel index for years.",
+          "stem": "Closest word:",
+          "options": [
+            {
+              "text": "Swap",
+              "art": "swap"
+            },
+            {
+              "text": "Put",
+              "art": "put"
+            },
+            {
+              "text": "Pledge",
+              "art": "pledge"
+            },
+            {
+              "text": "Haircut",
+              "art": "haircut"
+            }
+          ],
+          "answer": 0,
+          "why": "Ongoing exchange. A future would be dated lots. A put would be crash insurance with a premium."
+        },
+        {
+          "id": "u5rg",
+          "type": "meaning",
+          "termId": "pledge",
+          "termIds": [
+            "pledge"
+          ],
+          "stem": "The through-line of this whole game:",
+          "options": [
+            {
+              "text": "Hedge protects. Pledge borrows against. Same asset, different fork.",
+              "art": "hedge"
+            },
+            {
+              "text": "Hedge and pledge are synonyms.",
+              "art": "hedge"
+            },
+            {
+              "text": "Futures are a kind of pledge.",
+              "art": "futures"
+            },
+            {
+              "text": "Buy-borrow-die is a hedge.",
+              "art": "buy-borrow-die"
+            }
+          ],
+          "answer": 0,
+          "why": "If you leave with one sentence, take that one."
+        },
+        {
+          "id": "u5rh",
+          "type": "fill",
+          "termId": "capital gains",
+          "termIds": [
+            "capital gains"
+          ],
+          "story": "Loan against stock: usually no sale, so usually no ____. Forced sale after a call: hello tax.",
+          "bank": [
+            "capital gains",
+            "duration",
+            "notional",
+            "liquidity"
+          ],
+          "answer": "capital gains",
+          "why": "Tax follows the sale. The call can create the sale you were avoiding."
+        }
+      ]
+    }
+  ],
+  "sources": []
+}

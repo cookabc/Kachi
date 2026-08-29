@@ -908,3 +908,23 @@ svg.icon { fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: 
   flex: 1;
   min-height: 0;
 }
+.lang-switch {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin: 4px 0 16px;
+}
+.lang-switch button {
+  padding: 8px 18px;
+  border-radius: 999px;
+  border: 2px solid var(--line);
+  background: #fff;
+  font-weight: 800;
+  font-size: 14px;
+  color: var(--muted);
+}
+.lang-switch button.on {
+  border-color: var(--green);
+  background: #F3FFE6;
+  color: var(--green-dark);
+}

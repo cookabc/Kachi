@@ -1,18 +1,16 @@
 import { ChangeEvent, CSSProperties, useEffect, useMemo, useState } from "react";
-import type { Concept, Exercise, LearnerState, SessionState } from "@kachi/domain";
+import type { Exercise, LearnerState, SessionState } from "@kachi/domain";
 import {
   applyAnswer,
   currentExercise,
-  duePairIds,
   emptyLearnerState,
   isLessonUnlocked,
-  pairIdForConcept,
   recentMissTermIds,
   requeuePrompt,
   startPracticeSession,
   startSession
 } from "@kachi/learning-engine";
-import { course } from "./course";
+import { courseFor } from "./course";
 import { localizedTerm } from "./localization";
 import { exportLearnerData, importLearnerData, loadLearnerState, saveLearnerState } from "./storage";
 import { artIdForLabel, Hedgehog, NAV_ICONS, TermArt } from "./art";
@@ -29,21 +27,14 @@ import {
   type Summary,
   type TeachMode
 } from "./flow";
+import { loadLang, saveLang, UI, type Lang, type UiText } from "./ui";
+import type { Course, Concept } from "@kachi/domain";
 
 type Tab = "learn" | "practice" | "glossary" | "settings";
 type Phase = "teach" | "question" | "feedback" | "complete" | "fail";
 
 const MAX_HEARTS = 5;
 const SNAKE = [0, 56, 8, -56];
-const NICE = ["不错。", "正是。", "答对了。", "漂亮。"];
-const NOPE = ["还差一点。", "混淆了。", "又是这一对。", "岔路走反了。"];
-const KICKERS: Record<Exercise["type"], string> = {
-  meaning: "词义辨析",
-  truefalse: "判断正误",
-  fill: "补全句子",
-  scenario: "真实情境",
-  match: "配对练习"
-};
 
 const deviceId = crypto.randomUUID();
 let eventCounter = 0;
@@ -58,21 +49,20 @@ function pick<T>(arr: T[]): T {
   return arr[Math.floor(Math.random() * arr.length)];
 }
 
-const conceptById = (id: string) => conceptOf(course, id);
-const realTermIds = (prompt: Exercise) => publishedTermIds(prompt, course);
+const realTermIds = (prompt: Exercise, course: Course) => publishedTermIds(prompt, course);
 
 function StatsBar({ state }: { state: LearnerState }) {
   return (
-    <div className="stats" aria-label={`经验 ${state.xp}，连续学习 ${state.streak} 天`}>
+    <div className="stats" aria-label={`XP ${state.xp} · ${state.streak}`}>
       <div className="stat xp"><span className="ic">◆</span>{state.xp}</div>
       <div className="stat streak"><span className="ic">🔥</span>{state.streak}</div>
     </div>
   );
 }
 
-function HeartRow({ n, popped }: { n: number; popped: boolean }) {
+function HeartRow({ n, popped, t }: { n: number; popped: boolean; t: UiText }) {
   return (
-    <div className="hearts" aria-label={`剩余爱心 ${n}/${MAX_HEARTS}`}>
+    <div className="hearts" aria-label={t.lesson.heartsAria(n, MAX_HEARTS)}>
       {Array.from({ length: MAX_HEARTS }, (_, i) => (
         <span key={i} className={"ht " + (i < n ? "full" : popped && i === n ? "empty pop" : "empty")}>♥</span>
       ))}
@@ -80,19 +70,19 @@ function HeartRow({ n, popped }: { n: number; popped: boolean }) {
   );
 }
 
-function Nav({ tab, onTab }: { tab: Tab; onTab: (tab: Tab) => void }) {
-  const items: Array<{ id: Tab; label: string; aria: string }> = [
-    { id: "learn", label: "学习", aria: "学习路径" },
-    { id: "practice", label: "复习", aria: "复习练习" },
-    { id: "glossary", label: "词汇", aria: "词汇表" },
-    { id: "settings", label: "设置", aria: "设置" }
+function Nav({ tab, onTab, t }: { tab: Tab; onTab: (tab: Tab) => void; t: UiText }) {
+  const items: Array<{ id: Tab; text: UiText["nav"]["learn"] }> = [
+    { id: "learn", text: t.nav.learn },
+    { id: "practice", text: t.nav.practice },
+    { id: "glossary", text: t.nav.glossary },
+    { id: "settings", text: t.nav.settings }
   ];
   return (
-    <nav className="nav" aria-label="主导航">
+    <nav className="nav" aria-label={t.navAria}>
       {items.map((item) => (
-        <button key={item.id} className={tab === item.id ? "on" : ""} aria-label={item.aria} onClick={() => onTab(item.id)}>
+        <button key={item.id} className={tab === item.id ? "on" : ""} aria-label={item.text.aria} onClick={() => onTab(item.id)}>
           <span dangerouslySetInnerHTML={{ __html: NAV_ICONS[item.id] }} />
-          {item.label}
+          {item.text.label}
         </button>
       ))}
     </nav>
@@ -122,6 +112,7 @@ function App() {
   const [state, setState] = useState<LearnerState>(emptyLearnerState());
   const [ready, setReady] = useState(false);
   const [tab, setTab] = useState<Tab>("learn");
+  const [lang, setLangState] = useState<Lang>(() => loadLang());
   const [session, setSession] = useState<SessionState | null>(null);
   const [phase, setPhase] = useState<Phase>("teach");
   const [presented, setPresented] = useState<PresentedExercise | null>(null);
@@ -138,6 +129,9 @@ function App() {
   const [glossaryQuery, setGlossaryQuery] = useState("");
   const [updateReady, setUpdateReady] = useState(false);
 
+  const course = useMemo(() => courseFor(lang), [lang]);
+  const t = UI[lang];
+
   useEffect(() => {
     loadLearnerState().then((loaded) => {
       setState(loaded);
@@ -153,6 +147,11 @@ function App() {
   const persist = (next: LearnerState) => {
     setState(next);
     void saveLearnerState(next);
+  };
+
+  const setLang = (next: Lang) => {
+    setLangState(next);
+    saveLang(next);
   };
 
   const markSeen = (ids: string[]) => {
@@ -174,7 +173,7 @@ function App() {
     const first = currentExercise(course, fresh);
     if (first) {
       setPresented(present(first));
-      markSeen(realTermIds(first));
+      markSeen(realTermIds(first, course));
     }
   };
 
@@ -251,7 +250,7 @@ function App() {
     const next = currentExercise(course, working);
     if (next) {
       setPresented(present(next));
-      markSeen(realTermIds(next));
+      markSeen(realTermIds(next, course));
     }
   };
 
@@ -349,28 +348,31 @@ function App() {
     if (!file) return;
     try {
       persist(await importLearnerData(file));
-      alert("学习数据已导入。");
+      alert(t.settings.imported);
     } catch (error) {
-      alert(error instanceof Error ? error.message : "导入失败。");
+      alert(error instanceof Error ? error.message : t.settings.importFailed);
     } finally {
       event.target.value = "";
     }
   };
 
-  if (!ready) return <main className="loading">正在准备离线学习空间…</main>;
+  if (!ready) return <main className="loading">{t.loading}</main>;
 
   if (session && phase === "complete" && summary) {
-    return <CompleteScreen summary={summary} isPractice={session.mode === "practice"} lessonId={session.lessonId} onStart={beginLesson} onPractice={beginPractice} onPath={closeLesson} />;
+    return <CompleteScreen summary={summary} isPractice={session.mode === "practice"} lessonId={session.lessonId} course={course} t={t} onStart={beginLesson} onPractice={beginPractice} onPath={closeLesson} />;
   }
   if (session && phase === "fail") {
-    return <FailScreen isPractice={session.mode === "practice"} lessonId={session.lessonId} onRetryLesson={beginLesson} onRetryPractice={() => beginPractice()} onPath={closeLesson} />;
+    return <FailScreen isPractice={session.mode === "practice"} lessonId={session.lessonId} t={t} onRetryLesson={beginLesson} onRetryPractice={() => beginPractice()} onPath={closeLesson} />;
   }
   if (session && (phase === "teach" || phase === "question" || phase === "feedback")) {
     const activeLesson = course.lessons.find((item) => item.id === session.lessonId);
     return (
       <LessonScreen
-        lessonTitle={session.mode === "practice" ? "今日复习" : activeLesson?.title ?? "课程"}
+        lessonTitle={session.mode === "practice" ? t.lesson.practiceTitle : activeLesson?.title ?? ""}
         phase={phase}
+        t={t}
+        lang={lang}
+        course={course}
         teachMode={teachMode}
         teachTerms={teachTerms}
         teachIndex={teachIndex}
@@ -395,19 +397,19 @@ function App() {
 
   return (
     <main className="shell">
-      {updateReady && <button className="update" onClick={() => window.location.reload()}>新版本已准备好，完成当前学习后点击更新</button>}
+      {updateReady && <button className="update" onClick={() => window.location.reload()}>{t.updateBanner}</button>}
 
-      {tab === "learn" && <LearnHome state={state} missedCount={missedCount} onStart={beginLesson} />}
-      {tab === "practice" && <PracticeHome missedCount={missedCount} onStart={() => beginPractice()} />}
-      {tab === "glossary" && <Glossary state={state} query={glossaryQuery} onQuery={setGlossaryQuery} />}
-      {tab === "settings" && <Settings onExport={downloadExport} onImport={onImport} />}
+      {tab === "learn" && <LearnHome state={state} course={course} t={t} missedCount={missedCount} onStart={beginLesson} />}
+      {tab === "practice" && <PracticeHome t={t} missedCount={missedCount} onStart={() => beginPractice()} />}
+      {tab === "glossary" && <Glossary state={state} course={course} t={t} lang={lang} query={glossaryQuery} onQuery={setGlossaryQuery} />}
+      {tab === "settings" && <Settings t={t} lang={lang} onLang={setLang} onExport={downloadExport} onImport={onImport} />}
 
-      <Nav tab={tab} onTab={setTab} />
+      <Nav tab={tab} onTab={setTab} t={t} />
     </main>
   );
 }
 
-function LearnHome({ state, missedCount, onStart }: { state: LearnerState; missedCount: number; onStart: (id: string) => void }) {
+function LearnHome({ state, course, t, missedCount, onStart }: { state: LearnerState; course: Course; t: UiText; missedCount: number; onStart: (id: string) => void }) {
   const upNext = course.lessons.find((lesson) => !state.completedLessonIds.includes(lesson.id) && isLessonUnlocked(state, course, lesson.id));
   return (
     <>
@@ -415,12 +417,12 @@ function LearnHome({ state, missedCount, onStart }: { state: LearnerState; misse
         <div className="brand">Kachi</div>
         <StatsBar state={state} />
       </header>
-      <p className="tagline">读懂财经英语，先分清容易混淆的词。五分钟，没有投资建议。</p>
+      <p className="tagline">{t.home.tagline}</p>
       <div className="scroll">
         {course.units.map((unit) => (
           <section key={unit.id}>
             <div className={`unit-banner u${unit.id}`}>
-              <div className="kicker">单元 {unit.id}</div>
+              <div className="kicker">{t.home.unit(unit.id)}</div>
               <h2>{unit.title}</h2>
               <p>{unit.blurb}</p>
             </div>
@@ -435,39 +437,39 @@ function LearnHome({ state, missedCount, onStart }: { state: LearnerState; misse
                     <button className={cls} aria-label={lesson.title} onClick={() => unlocked && onStart(lesson.id)}>
                       {!unlocked ? <span className="lock">🔒</span> : done ? "✓" : lesson.review ? "★" : lesson.icon || index + 1}
                     </button>
-                    <div className="node-label">{isNext ? "接下来 · " : ""}{lesson.title}</div>
+                    <div className="node-label">{isNext ? t.home.upNext : ""}{lesson.title}</div>
                   </div>
                 );
               })}
             </div>
           </section>
         ))}
-        {missedCount > 0 && <p className="unit-note">有 {missedCount} 个术语等着复习——它们在「复习」页。</p>}
-        <p className="unit-note">第 1–2 单元是正在进行的对话；3–5 单元在路径上等你。</p>
+        {missedCount > 0 && <p className="unit-note">{t.home.missedNote(missedCount)}</p>}
+        <p className="unit-note">{t.home.unitNote}</p>
       </div>
     </>
   );
 }
 
-function PracticeHome({ missedCount, onStart }: { missedCount: number; onStart: () => void }) {
+function PracticeHome({ t, missedCount, onStart }: { t: UiText; missedCount: number; onStart: () => void }) {
   return (
     <>
       <header className="top">
-        <div className="brand">今日复习</div>
+        <div className="brand">{t.practice.brand}</div>
       </header>
       <div className="prac-hero">
         <Hedgehog />
-        <h1>练掉混淆。</h1>
+        <h1>{t.practice.title}</h1>
         {missedCount > 0
-          ? <p className="sub">你有 {missedCount} 个术语最近答错过。复习不会解锁路径。</p>
-          : <p className="sub">还没有错题。先用第 1 单元练手。复习不会解锁路径。</p>}
-        <button className="btn btn-gold" onClick={onStart}>开始 {PRACTICE_ROUND} 题复习</button>
+          ? <p className="sub">{t.practice.missCopy(missedCount)}</p>
+          : <p className="sub">{t.practice.noMissCopy}</p>}
+        <button className="btn btn-gold" onClick={onStart}>{t.practice.start(PRACTICE_ROUND)}</button>
       </div>
     </>
   );
 }
 
-function Glossary({ state, query, onQuery }: { state: LearnerState; query: string; onQuery: (value: string) => void }) {
+function Glossary({ state, course, t, lang, query, onQuery }: { state: LearnerState; course: Course; t: UiText; lang: Lang; query: string; onQuery: (value: string) => void }) {
   const q = query.trim().toLowerCase();
   const matches = (concept: Concept) =>
     !q || `${concept.term} ${concept.definition} ${concept.mixUp} ${localizedTerm(concept.id).termZh}`.toLowerCase().includes(q);
@@ -475,11 +477,10 @@ function Glossary({ state, query, onQuery }: { state: LearnerState; query: strin
   return (
     <>
       <header className="top">
-        <div className="brand">词汇表</div>
-        <StatsBar state={state} />
+        <div className="brand">{t.glossary.brand}</div>
       </header>
       <div className="g-search">
-        <input type="search" placeholder="搜索术语，如 hedge、put" value={query} onChange={(event) => onQuery(event.target.value)} autoComplete="off" aria-label="搜索术语" />
+        <input type="search" placeholder={t.glossary.placeholder} value={query} onChange={(event) => onQuery(event.target.value)} autoComplete="off" aria-label={t.glossary.searchAria} />
       </div>
       <div className="g-list">
         {course.units.map((unit) => {
@@ -489,43 +490,51 @@ function Glossary({ state, query, onQuery }: { state: LearnerState; query: strin
           return (
             <section key={unit.id}>
               <div className={`unit-banner mini u${unit.id}`}>
-                <div className="kicker">单元 {unit.id}</div>
+                <div className="kicker">{t.home.unit(unit.id)}</div>
                 <h2>{unit.title}</h2>
               </div>
               {terms.map((concept) => {
-                const zh = localizedTerm(concept.id);
                 const seen = state.seenConceptIds.includes(concept.id);
                 return (
                   <article className="g-card" key={concept.id}>
-                    <h3>{concept.term}<span className="zh">{zh.termZh}</span>{seen && <span className="seen" title="已在课程中见过">✓</span>}</h3>
+                    <h3>
+                      {concept.term}
+                      {lang === "zh-CN" && <span className="zh">{localizedTerm(concept.id).termZh}</span>}
+                      {seen && <span className="seen" title={t.glossary.seenTitle}>✓</span>}
+                    </h3>
                     <p className="def">{concept.definition}</p>
-                    <p className="ex">例如：{concept.example}</p>
-                    <p className="mu">混淆：<strong>{concept.mixUp}</strong> — {concept.mixUpWhy}</p>
+                    <p className="ex">{t.glossary.forExample}{concept.example}</p>
+                    <p className="mu">{t.glossary.mix}<strong>{concept.mixUp}</strong> — {concept.mixUpWhy}</p>
                   </article>
                 );
               })}
             </section>
           );
         })}
-        {total === 0 && <div className="g-empty">没有匹配「{query.trim()}」的术语。<br />试试 hedge、put、swap、margin call。</div>}
+        {total === 0 && <div className="g-empty">{t.glossary.empty(query.trim())}<br />{t.glossary.emptyHint}</div>}
       </div>
-      <p className="fine">不构成投资建议。只讲词语，不作推荐。</p>
+      <p className="fine">{t.glossary.footer}</p>
     </>
   );
 }
 
-function Settings({ onExport, onImport }: { onExport: () => void; onImport: (event: ChangeEvent<HTMLInputElement>) => void }) {
+function Settings({ t, lang, onLang, onExport, onImport }: { t: UiText; lang: Lang; onLang: (lang: Lang) => void; onExport: () => void; onImport: (event: ChangeEvent<HTMLInputElement>) => void }) {
   return (
     <>
       <header className="top">
-        <div className="brand">设置</div>
+        <div className="brand">{t.settings.brand}</div>
       </header>
       <div className="prac-hero">
-        <h1>数据归你。</h1>
-        <p className="sub">学习记录只保存在这台设备的浏览器里：没有账号、没有广告、没有第三方分析。可随时导出成文件，或导入到其他设备。</p>
-        <button className="btn btn-green" onClick={onExport}>导出学习数据</button>
-        <label className="file-button">导入学习数据<input type="file" accept="application/json" onChange={onImport} /></label>
-        <p className="fine">课程以 Git 内容包发布；涉及税务、法规与金融工具的条目会标注适用范围与复核状态。</p>
+        <h1>{t.settings.title}</h1>
+        <p className="sub">{t.settings.copy}</p>
+        <div className="lang-switch" role="group" aria-label={t.settings.langLabel}>
+          {(Object.entries(t.settings.langNames) as Array<[Lang, string]>).map(([value, name]) => (
+            <button key={value} className={lang === value ? "on" : ""} aria-pressed={lang === value} onClick={() => onLang(value)}>{name}</button>
+          ))}
+        </div>
+        <button className="btn btn-green" onClick={onExport}>{t.settings.exportBtn}</button>
+        <label className="file-button">{t.settings.importBtn}<input type="file" accept="application/json" onChange={onImport} /></label>
+        <p className="fine">{t.settings.contentNote}</p>
       </div>
     </>
   );
@@ -534,6 +543,9 @@ function Settings({ onExport, onImport }: { onExport: () => void; onImport: (eve
 function LessonScreen(props: {
   lessonTitle: string;
   phase: Phase;
+  t: UiText;
+  lang: Lang;
+  course: Course;
   teachMode: TeachMode;
   teachTerms: string[];
   teachIndex: number;
@@ -553,7 +565,7 @@ function LessonScreen(props: {
   onContinue: () => void;
   onClose: () => void;
 }) {
-  const { phase, presented } = props;
+  const { phase, presented, t } = props;
   if (phase === "teach") {
     const recap = props.teachMode === "recap";
     const termId = props.teachTerms[props.teachIndex];
@@ -561,8 +573,8 @@ function LessonScreen(props: {
     return (
       <main className="lesson">
         <div className="l-top">
-          <button className="xbtn" aria-label="退出课程" onClick={props.onClose}>×</button>
-          <div className="learn-tag">学习</div>
+          <button className="xbtn" aria-label={t.lesson.close} onClick={props.onClose}>×</button>
+          <div className="learn-tag">{t.lesson.learnTag}</div>
           {!recap && (
             <div className="pips dim">
               {props.teachTerms.map((_, index) => (
@@ -572,10 +584,10 @@ function LessonScreen(props: {
           )}
         </div>
         <div className="prompt teach">
-          {recap ? <RecapCard terms={props.teachTerms} /> : termId && <TeachCard termId={termId} />}
+          {recap ? <RecapCard terms={props.teachTerms} course={props.course} t={t} /> : termId && <TeachCard termId={termId} course={props.course} t={t} lang={props.lang} />}
         </div>
         <div className="foot">
-          <button className="btn btn-gold" onClick={props.onTeachContinue}>{recap ? "该你了" : last ? "开始练习" : "继续"}</button>
+          <button className="btn btn-gold" onClick={props.onTeachContinue}>{recap ? t.lesson.recapGo : last ? t.lesson.teachStart : t.lesson.teachContinue}</button>
         </div>
       </main>
     );
@@ -584,39 +596,39 @@ function LessonScreen(props: {
   return (
     <main className="lesson">
       <div className="l-top">
-        <button className="xbtn" aria-label="退出课程" onClick={props.onClose}>×</button>
+        <button className="xbtn" aria-label={t.lesson.close} onClick={props.onClose}>×</button>
         <div className="pips">
           {Array.from({ length: props.total }, (_, index) => (
             <div key={index} className={"pip" + (index < props.questionIndex ? " on" : index === props.questionIndex ? " now" : "")} />
           ))}
         </div>
-        <HeartRow n={props.hearts} popped={phase === "feedback" && !props.lastCorrect} />
+        <HeartRow n={props.hearts} popped={phase === "feedback" && !props.lastCorrect} t={t} />
       </div>
-      <div className="prompt">{presented && <PromptBody presented={presented} selection={props.selection} locked={phase === "feedback"} selL={props.selL} selR={props.selR} lockedIds={props.locked} onPick={props.onPick} onMatch={props.onMatch} />}</div>
+      <div className="prompt">{presented && <PromptBody presented={presented} t={t} selection={props.selection} locked={phase === "feedback"} selL={props.selL} selR={props.selR} lockedIds={props.locked} onPick={props.onPick} onMatch={props.onMatch} />}</div>
       {phase === "question" && presented?.type !== "match" && (
         <div className="foot">
-          <button className="btn btn-gold" disabled={props.selection === null} onClick={props.onSubmit}>检查</button>
+          <button className="btn btn-gold" disabled={props.selection === null} onClick={props.onSubmit}>{t.lesson.check}</button>
         </div>
       )}
       {phase === "feedback" && presented && (
         <div className={"sheet " + (props.lastCorrect ? "ok" : "no")} role="status">
-          <h3>{pick(props.lastCorrect ? NICE : NOPE)}</h3>
+          <h3>{pick(props.lastCorrect ? t.verdicts.nice : t.verdicts.nope)}</h3>
           <p>{presented.why}</p>
-          <button className={"btn " + (props.lastCorrect ? "btn-green" : "btn-red")} onClick={props.onContinue}>继续</button>
+          <button className={"btn " + (props.lastCorrect ? "btn-green" : "btn-red")} onClick={props.onContinue}>{t.lesson.continue}</button>
         </div>
       )}
     </main>
   );
 }
 
-function TeachCard({ termId }: { termId: string }) {
-  const concept = conceptById(termId);
+function TeachCard({ termId, course, t, lang }: { termId: string; course: Course; t: UiText; lang: Lang }) {
+  const concept = conceptOf(course, termId);
   if (!concept) return null;
-  const zh = localizedTerm(termId);
-  const sibling = conceptById(concept.mixUp);
+  const sibling = conceptOf(course, concept.mixUp);
+  const termZh = lang === "zh-CN" ? localizedTerm(termId).termZh : null;
   return (
     <>
-      <div className="kicker2">新术语 · {zh.termZh}</div>
+      <div className="kicker2">{t.lesson.teachKicker(termZh)}</div>
       <div className="teach-art"><TermArt id={concept.id} size="hero" /></div>
       {concept.caption && <p className="teach-cap">{concept.caption}</p>}
       <div className="teach-term">{concept.term}</div>
@@ -624,31 +636,35 @@ function TeachCard({ termId }: { termId: string }) {
       <div className="teach-ex">{concept.example}</div>
       <div className="teach-mix">
         <TermArt id={sibling ? sibling.id : concept.mixUp} size="xs" />
-        <div><strong>别混淆</strong>：{concept.mixUp}。{concept.mixUpWhy}</div>
+        <div>
+          <strong>{lang === "zh-CN" ? "别混淆" : "Don't mix up"}</strong>
+          {lang === "zh-CN" ? "：" : ": "}{concept.mixUp}。{concept.mixUpWhy}
+        </div>
       </div>
     </>
   );
 }
 
-function RecapCard({ terms }: { terms: string[] }) {
+function RecapCard({ terms, course, t }: { terms: string[]; course: Course; t: UiText }) {
   return (
     <>
-      <div className="kicker2">单元回顾</div>
-      <div className="stem" style={{ textAlign: "center", marginBottom: 12 }}>这些词又见面了。</div>
+      <div className="kicker2">{t.lesson.recapKicker}</div>
+      <div className="stem" style={{ textAlign: "center", marginBottom: 12 }}>{t.lesson.recapTitle}</div>
       <div className="recap-strip">
         {terms.map((id) => {
-          const concept = conceptById(id);
+          const concept = conceptOf(course, id);
           if (!concept) return null;
           return <div className="recap-item" key={id}><TermArt id={id} size="sm" /><span>{concept.term}</span></div>;
         })}
       </div>
-      <p className="teach-def" style={{ marginTop: 16 }}>本单元的简短练习，没有新词。</p>
+      <p className="teach-def" style={{ marginTop: 16 }}>{t.lesson.recapSub}</p>
     </>
   );
 }
 
 function PromptBody(props: {
   presented: PresentedExercise;
+  t: UiText;
   selection: string | boolean | null;
   locked: boolean;
   selL: string | null;
@@ -657,16 +673,16 @@ function PromptBody(props: {
   onPick: (value: string | boolean) => void;
   onMatch: (side: "left" | "right", id: string) => void;
 }) {
-  const { presented, selection, locked } = props;
+  const { presented, selection, locked, t } = props;
   return (
     <>
-      <div className="kicker2">{KICKERS[presented.type]}</div>
+      <div className="kicker2">{t.lesson.kickers[presented.type]}</div>
       {presented.type === "scenario" && presented.story && <div className="story">{presented.story}</div>}
       {presented.type === "fill" && presented.story ? <FillStory presented={presented} selection={selection} /> : presented.stem && <div className="stem">{presented.stem}</div>}
 
       {(presented.type === "meaning" || presented.type === "scenario") && (
         <div className="opts">
-          {presented.options?.map((option, index) => {
+          {presented.options?.map((option) => {
             let cls = "opt tile";
             if (option.text.length > 42) cls += " longcap";
             if (selection === option.text) cls += " sel";
@@ -724,7 +740,7 @@ function PromptBody(props: {
 
       {presented.type === "match" && (
         <>
-          <div className="stem">先点术语，再点解释。</div>
+          <div className="stem">{t.lesson.matchHint}</div>
           <div className="match">
             <div>
               {presented.left.map((chip) => (
@@ -783,40 +799,40 @@ function CompleteScreen(props: {
   summary: Summary;
   isPractice: boolean;
   lessonId: string;
+  course: Course;
+  t: UiText;
   onStart: (id: string) => void;
   onPractice: (focus?: string[]) => void;
   onPath: () => void;
 }) {
-  const { summary } = props;
+  const { summary, t } = props;
   const acc = summary.total ? Math.round((summary.correct / summary.total) * 100) : 0;
-  const lessonIndex = course.lessons.findIndex((lesson) => lesson.id === props.lessonId);
-  const next = props.isPractice ? undefined : course.lessons[lessonIndex + 1];
+  const lessonIndex = props.course.lessons.findIndex((lesson) => lesson.id === props.lessonId);
+  const next = props.isPractice ? undefined : props.course.lessons[lessonIndex + 1];
   return (
     <main className="hero">
       <Confetti />
       <div className="mascot"><Hedgehog /></div>
-      <h1>{summary.xpPerfect ? "完美。" : props.isPractice ? "这轮复习完成。" : "课程完成。"}</h1>
-      <p className="sub">{acc}% 正确率 · {summary.correct}/{summary.total}</p>
+      <h1>{summary.xpPerfect ? t.complete.flawless : props.isPractice ? t.complete.practiceDone : t.complete.done}</h1>
+      <p className="sub">{t.complete.accuracy(acc, summary.correct, summary.total)}</p>
       <div className="xp-card">
         {props.isPractice ? (
-          <>
-            <div className="xp-row"><span>答对的题</span><span>+{summary.xpHit} XP</span></div>
-          </>
+          <div className="xp-row"><span>{t.complete.xpCorrect}</span><span>+{summary.xpHit} XP</span></div>
         ) : (
           <>
-            <div className="xp-row"><span>答对的题</span><span>+{summary.xpHit} XP</span></div>
-            <div className="xp-row"><span>完成课程</span><span>+{summary.xpDone} XP</span></div>
-            {summary.xpPerfect > 0 && <div className="xp-row"><span>全对奖励</span><span>+{summary.xpPerfect} XP</span></div>}
+            <div className="xp-row"><span>{t.complete.xpCorrect}</span><span>+{summary.xpHit} XP</span></div>
+            <div className="xp-row"><span>{t.complete.xpLesson}</span><span>+{summary.xpDone} XP</span></div>
+            {summary.xpPerfect > 0 && <div className="xp-row"><span>{t.complete.xpPerfect}</span><span>+{summary.xpPerfect} XP</span></div>}
           </>
         )}
-        <div className="xp-row total"><span>合计</span><span>+{summary.gained} XP</span></div>
+        <div className="xp-row total"><span>{t.complete.xpTotal}</span><span>+{summary.gained} XP</span></div>
       </div>
       {summary.mix.length > 0 && (
         <>
-          <p className="sub" style={{ marginBottom: 8 }}>你容易混淆</p>
+          <p className="sub" style={{ marginBottom: 8 }}>{t.complete.mixTitle}</p>
           <div className="chips">
             {summary.mix.map((id) => {
-              const concept = conceptById(id);
+              const concept = conceptOf(props.course, id);
               if (!concept) return null;
               return <span className="chip" key={id}>{concept.term} vs {concept.mixUp}</span>;
             })}
@@ -825,19 +841,19 @@ function CompleteScreen(props: {
       )}
       {props.isPractice ? (
         <>
-          <button className="btn btn-gold" onClick={() => props.onPractice()}>再来一轮</button>
-          <button className="btn btn-ghost" onClick={props.onPath}>回到路径</button>
+          <button className="btn btn-gold" onClick={() => props.onPractice()}>{t.complete.practiceAgain}</button>
+          <button className="btn btn-ghost" onClick={props.onPath}>{t.complete.backToPath}</button>
         </>
       ) : next ? (
         <>
-          <button className="btn btn-gold" onClick={() => props.onStart(next.id)}>下一课：{next.title}</button>
-          {summary.mix.length > 0 && <button className="btn btn-green" onClick={() => props.onPractice(summary.mix)}>练一练这些</button>}
-          <button className="btn btn-ghost" onClick={props.onPath}>回到路径</button>
+          <button className="btn btn-gold" onClick={() => props.onStart(next.id)}>{t.complete.nextLesson(next.title)}</button>
+          {summary.mix.length > 0 && <button className="btn btn-green" onClick={() => props.onPractice(summary.mix)}>{t.complete.practiceThose}</button>}
+          <button className="btn btn-ghost" onClick={props.onPath}>{t.complete.backToPath}</button>
         </>
       ) : (
         <>
-          {summary.mix.length > 0 && <button className="btn btn-green" onClick={() => props.onPractice(summary.mix)}>练一练这些</button>}
-          <button className="btn btn-ghost" onClick={props.onPath}>回到路径</button>
+          {summary.mix.length > 0 && <button className="btn btn-green" onClick={() => props.onPractice(summary.mix)}>{t.complete.practiceThose}</button>}
+          <button className="btn btn-ghost" onClick={props.onPath}>{t.complete.backToPath}</button>
         </>
       )}
     </main>
@@ -847,19 +863,21 @@ function CompleteScreen(props: {
 function FailScreen(props: {
   isPractice: boolean;
   lessonId: string;
+  t: UiText;
   onRetryLesson: (id: string) => void;
   onRetryPractice: () => void;
   onPath: () => void;
 }) {
+  const { t } = props;
   return (
     <main className="hero">
       <div className="mascot">💔</div>
-      <h1>爱心用完了。</h1>
-      <p className="sub">这一课的混淆坑了你。重试——爱心立刻补满，不用等。</p>
+      <h1>{t.fail.title}</h1>
+      <p className="sub">{t.fail.copy}</p>
       {props.isPractice
-        ? <button className="btn btn-gold" onClick={props.onRetryPractice}>再来一轮</button>
-        : <button className="btn btn-gold" onClick={() => props.onRetryLesson(props.lessonId)}>重试本课</button>}
-      <button className="btn btn-ghost" onClick={props.onPath}>回到路径</button>
+        ? <button className="btn btn-gold" onClick={props.onRetryPractice}>{t.fail.retryPractice}</button>
+        : <button className="btn btn-gold" onClick={() => props.onRetryLesson(props.lessonId)}>{t.fail.retryLesson}</button>}
+      <button className="btn btn-ghost" onClick={props.onPath}>{t.fail.backToPath}</button>
     </main>
   );
 }
