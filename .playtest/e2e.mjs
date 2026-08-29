@@ -412,7 +412,129 @@ await page.waitForSelector('.path');
   await shot('08-imported');
 }
 
+
+/* ---- S10: abandon mid-lesson leaves the lesson uncompleted ---- */
+{
+  const xpBefore = await readXp();
+  await jsClick('button.node.next'); // u2l2
+  await page.waitForSelector('.lesson');
+  await exitTeach();
+  // answer two prompts correctly, then walk out
+  for (let i = 0; i < 2; i += 1) {
+    await page.waitForSelector('.prompt:not(.teach)');
+    await solveCurrent(false);
+    await sleep(120);
+    await page.click('.foot .btn');
+    await sleep(150);
+    await page.click('.sheet .btn');
+    await sleep(150);
+  }
+  await page.click('.xbtn');
+  await page.waitForSelector('.path');
+  const states = await page.$$eval('.node', (els) => els.map((el) => el.className));
+  check('S10 abandoned lesson is not marked done', !states[5].includes('done'), states[5]);
+  check('S10 abandoned lesson stays unlocked', !states[5].includes('locked'), states[5]);
+  check('S10 partial XP from correct answers is kept (incremental engine)', (await readXp()) === xpBefore + 20, `${await readXp()} vs ${xpBefore + 20}`);
+}
+
+/* ---- S11: drain hearts in a lesson -> fail -> retry refills -> complete ---- */
+{
+  const lesson = course.lessons.find((l) => l.id === 'u2l2');
+  const wrongIds = lesson.prompts.map((p) => p.id);
+  await jsClick('button.node.next');
+  await page.waitForSelector('.lesson');
+  await exitTeach();
+  const verdicts = await driveSession({ wrongIds });
+  const failH1 = await page.$eval('.hero h1', (el) => el.textContent.trim());
+  check('S11 five wrongs end the lesson on the fail screen', failH1 === '爱心用完了。', failH1);
+  check('S11 exactly five verdicts before the fail screen', verdicts.filter((v) => !v).length === 5 && verdicts.length === 5, JSON.stringify(verdicts));
+  await shot('10-fail');
+  await page.click('.hero .btn'); // 重试本课
+  await page.waitForSelector('.lesson');
+  await exitTeach(); // hearts live in the quiz header, not the teach header
+  check('S11 retry refills hearts immediately', await page.$$eval('.hearts .ht.full', (els) => els.length) === 5);
+  await driveSession({});
+  const complete = await readComplete();
+  check('S11 retried lesson completes', complete.h1 === '课程完成。' || complete.h1 === '完美。', complete.h1);
+  await page.click('.hero .btn-ghost');
+  await page.waitForSelector('.path');
+  const states = await page.$$eval('.node', (els) => els.map((el) => el.className));
+  check('S11 retried lesson now marked done', states[5].includes('done'), states[5]);
+}
+
+/* ---- S9: language switch (zh <-> en), shared progress, persisted choice ---- */
+{
+  const xpBefore = await readXp();
+  await page.click('.nav button:nth-child(4)');
+  await page.waitForSelector('.lang-switch');
+  await page.click('.lang-switch button:has-text("English")');
+  await sleep(250);
+  // chrome switched
+  const navLabels = await page.$$eval('.nav button', (els) => els.map((el) => el.textContent.trim()));
+  check('S9 nav labels switch to English', JSON.stringify(navLabels) === JSON.stringify(['Learn', 'Practice', 'Glossary', 'Settings']), JSON.stringify(navLabels));
+  // course content switched: open the next lesson and read the teach card
+  await page.click('.nav button:nth-child(1)');
+  await page.waitForSelector('.path');
+  const nodeLabel = await page.evaluate(() => document.querySelector('.node.next')?.closest('.node-wrap')?.querySelector('.node-label')?.textContent);
+  check('S9 the up-next label is English', /Up next · /.test(nodeLabel ?? ''), nodeLabel ?? 'none');
+  await jsClick('button.node.next');
+  await page.waitForSelector('.prompt.teach');
+  const kicker = await page.$eval('.kicker2', (el) => el.textContent.trim());
+  const term = await page.$eval('.teach-term', (el) => el.textContent.trim());
+  const def = await page.$eval('.teach-def', (el) => el.textContent.trim());
+  check('S9 teach card kicker is English', kicker === 'New word', kicker);
+  check('S9 teach content comes from the en pack (no Chinese in the definition)', /[a-z]/i.test(def) && !/[\u4e00-\u9fff]/.test(def), `${term}: ${def.slice(0, 40)}`);
+  await shot('11-english-teach');
+  await page.click('.xbtn');
+  await page.waitForSelector('.path');
+  check('S9 XP is shared across languages', (await readXp()) === xpBefore, String(await readXp()));
+  // persists across reload
+  await page.reload();
+  await page.waitForSelector('.path');
+  const navAfterReload = await page.$$eval('.nav button', (els) => els.map((el) => el.textContent.trim()));
+  check('S9 language choice survives reload', navAfterReload[0] === 'Learn', JSON.stringify(navAfterReload));
+  // back to Chinese
+  await page.click('.nav button:nth-child(4)');
+  await page.waitForSelector('.lang-switch');
+  await page.click('.lang-switch button:has-text("中文")');
+  await sleep(250);
+  const navZh = await page.$$eval('.nav button', (els) => els.map((el) => el.textContent.trim()));
+  check('S9 switching back restores Chinese chrome', navZh[0] === '学习', JSON.stringify(navZh));
+}
+
+/* ---- S13: keyboard focus reaches the nav (a11y spot check) ---- */
+{
+  await page.reload();
+  await page.waitForSelector('.path');
+  await page.keyboard.press('Tab');
+  const focused = await page.evaluate(() => ({
+    tag: document.activeElement?.tagName,
+    aria: document.activeElement?.getAttribute('aria-label'),
+    visible: document.activeElement?.matches(':focus-visible')
+  }));
+  check('S13 first Tab lands on a labelled button', focused.tag === 'BUTTON' && Boolean(focused.aria), JSON.stringify(focused));
+  check('S13 focused button shows the focus ring', focused.visible === true);
+}
+
 await context.close();
+
+/* ---- S12: desktop viewport shows the centered phone frame ---- */
+{
+  const desktop = await browser.newContext({ viewport: { width: 1280, height: 800 } });
+  const p = await desktop.newPage();
+  p.on('pageerror', (e) => consoleProblems.push('pageerror: ' + e.message));
+  await p.goto(BASE);
+  await p.waitForSelector('.path');
+  const box = await p.$eval('#root', (el) => {
+    const rect = el.getBoundingClientRect();
+    return { x: rect.x, width: rect.width, height: rect.height };
+  });
+  check('S12 phone frame is 420px wide on desktop', Math.round(box.width) === 420, String(box.width));
+  check('S12 phone frame is horizontally centered', Math.abs(box.x - (1280 - 420) / 2) < 2, String(box.x));
+  check('S12 frame fills the viewport height minus padding', Math.abs(box.height - (800 - 48)) < 2, String(box.height));
+  await p.screenshot({ path: path.join(SHOTS, '12-desktop.png') });
+  await desktop.close();
+}
 
 /* ---- S8: production PWA boots offline (fresh context, preview server) ---- */
 {
