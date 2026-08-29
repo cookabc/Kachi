@@ -1,5 +1,5 @@
 import { ChangeEvent, CSSProperties, useEffect, useMemo, useState } from "react";
-import type { Concept, Exercise, LearnerState, Lesson, SessionState } from "@kachi/domain";
+import type { Concept, Exercise, LearnerState, SessionState } from "@kachi/domain";
 import {
   applyAnswer,
   currentExercise,
@@ -16,13 +16,24 @@ import { course } from "./course";
 import { localizedTerm, termLocalization } from "./localization";
 import { exportLearnerData, importLearnerData, loadLearnerState, saveLearnerState } from "./storage";
 import { artIdForLabel, Hedgehog, NAV_ICONS, TermArt } from "./art";
+import {
+  PRACTICE_ROUND,
+  conceptOf,
+  practicePool,
+  present,
+  realTermIds as publishedTermIds,
+  resolveMatch,
+  sessionSummary,
+  teachPlan,
+  type PresentedExercise,
+  type Summary,
+  type TeachMode
+} from "./flow";
 
 type Tab = "learn" | "practice" | "glossary" | "settings";
 type Phase = "teach" | "question" | "feedback" | "complete" | "fail";
-type TeachMode = "first" | "recap";
 
 const MAX_HEARTS = 5;
-const PRACTICE_ROUND = 10;
 const SNAKE = [0, 56, 8, -56];
 const NICE = ["不错。", "正是。", "答对了。", "漂亮。"];
 const NOPE = ["还差一点。", "混淆了。", "又是这一对。", "岔路走反了。"];
@@ -47,88 +58,8 @@ function pick<T>(arr: T[]): T {
   return arr[Math.floor(Math.random() * arr.length)];
 }
 
-function shuffle<T>(arr: T[]): T[] {
-  const copy = arr.slice();
-  for (let i = copy.length - 1; i > 0; i -= 1) {
-    const j = Math.floor(Math.random() * (i + 1));
-    const t = copy[i];
-    copy[i] = copy[j];
-    copy[j] = t;
-  }
-  return copy;
-}
-
-/* A presentation copy of a published exercise: shuffled options/bank/columns
-   plus the derived correct text. Published content is never mutated. */
-interface PresentedExercise extends Exercise {
-  correctText?: string;
-  left: Array<{ id: string; text: string }>;
-  right: Array<{ id: string; text: string }>;
-}
-
-function present(prompt: Exercise): PresentedExercise {
-  const copy: PresentedExercise = {
-    ...prompt,
-    left: [],
-    right: []
-  };
-  if (prompt.type === "match" && prompt.pairs) {
-    copy.left = shuffle(prompt.pairs.map((pair) => ({ id: pair.id, text: pair.left })));
-    copy.right = shuffle(prompt.pairs.map((pair) => ({ id: pair.id, text: pair.right })));
-  }
-  if (prompt.options && typeof prompt.answer === "number") {
-    copy.correctText = prompt.options[prompt.answer]?.text;
-    copy.options = shuffle(prompt.options);
-  }
-  if (prompt.type === "fill" && prompt.bank) copy.bank = shuffle(prompt.bank);
-  return copy;
-}
-
-interface Summary {
-  gained: number;
-  xpHit: number;
-  xpDone: number;
-  xpPerfect: number;
-  correct: number;
-  total: number;
-  mix: string[];
-}
-
-const conceptById = (id: string): Concept | undefined => course.concepts.find((concept) => concept.id === id);
-const conceptExists = (id: string): boolean => course.concepts.some((concept) => concept.id === id);
-const realTermIds = (prompt: Exercise): string[] => (prompt.termIds ?? []).filter(conceptExists);
-
-function primaryTermIds(lesson: Lesson): string[] {
-  const ids: string[] = [];
-  lesson.prompts.forEach((prompt) => {
-    if (prompt.termId && conceptExists(prompt.termId) && ids.indexOf(prompt.termId) === -1) ids.push(prompt.termId);
-  });
-  return ids;
-}
-
-function unitTermIds(unit: number): string[] {
-  const ids: string[] = [];
-  course.concepts.forEach((concept) => {
-    if (concept.unit === unit && ids.indexOf(concept.id) === -1) ids.push(concept.id);
-  });
-  return ids;
-}
-
-function taughtInEarlierLessons(lesson: Lesson): Set<string> {
-  const seen = new Set<string>();
-  const here = course.lessons.findIndex((item) => item.id === lesson.id);
-  course.lessons.forEach((item, index) => {
-    if (item.unit !== lesson.unit || item.review || index >= here) return;
-    primaryTermIds(item).forEach((id) => seen.add(id));
-  });
-  return seen;
-}
-
-function teachPlan(lesson: Lesson): { mode: TeachMode; terms: string[] } {
-  if (lesson.review) return { mode: "recap", terms: unitTermIds(lesson.unit) };
-  const seen = taughtInEarlierLessons(lesson);
-  return { mode: "first", terms: primaryTermIds(lesson).filter((id) => !seen.has(id)) };
-}
+const conceptById = (id: string) => conceptOf(course, id);
+const realTermIds = (prompt: Exercise) => publishedTermIds(prompt, course);
 
 function zhMixHint(prompt: Exercise): string | undefined {
   const termId = (prompt.termIds ?? []).find((id) => termLocalization[id]);
@@ -256,7 +187,7 @@ function App() {
     const lesson = course.lessons.find((item) => item.id === lessonId);
     if (!lesson || !isLessonUnlocked(state, course, lessonId)) return;
     const fresh = startSession(course, lessonId, environment);
-    const plan = teachPlan(lesson);
+    const plan = teachPlan(lesson, course);
     setTeachMode(plan.mode);
     setTeachTerms(plan.terms);
     setTeachIndex(0);
@@ -278,39 +209,7 @@ function App() {
   };
 
   const beginPractice = (focusIds?: string[]) => {
-    const due = new Set(duePairIds(state, new Date()));
-    const focus = new Set<string>(focusIds ?? []);
-    if (!focus.size) {
-      course.concepts.forEach((concept) => {
-        const pairId = pairIdForConcept(concept);
-        if (pairId && due.has(pairId)) {
-          focus.add(concept.id);
-          focus.add(concept.mixUp);
-        }
-      });
-    }
-    if (!focus.size) recentMissTermIds(state).forEach((id) => focus.add(id));
-
-    // pool capped at unlocked lessons; u1l2 stays open as the fresh-player seed
-    const available = course.lessons
-      .filter((lesson) => isLessonUnlocked(state, course, lesson.id) || lesson.id === "u1l2")
-      .flatMap((lesson) => lesson.prompts);
-    let pool: Exercise[];
-    if (focus.size) {
-      const weak = shuffle(available.filter((prompt) => realTermIds(prompt).some((id) => focus.has(id))));
-      const rest = shuffle(available.filter((prompt) => weak.indexOf(prompt) === -1));
-      pool = weak.concat(rest);
-    } else {
-      pool = shuffle(course.lessons.filter((lesson) => lesson.id === "u1l1" || lesson.id === "u1l2").flatMap((lesson) => lesson.prompts));
-    }
-    const picked: string[] = [];
-    const seenIds = new Set<string>();
-    for (const prompt of pool) {
-      if (picked.length >= PRACTICE_ROUND) break;
-      if (seenIds.has(prompt.id)) continue;
-      seenIds.add(prompt.id);
-      picked.push(prompt.id);
-    }
+    const picked = practicePool(state, course, focusIds);
     if (!picked.length) return;
 
     const fresh = startPracticeSession(picked, environment);
@@ -331,22 +230,7 @@ function App() {
   };
 
   const finish = (working: SessionState) => {
-    const results = working.results;
-    const total = results.length;
-    const correct = results.filter((result) => result.correct).length;
-    const isPractice = working.mode === "practice";
-    const xpHit = correct * 10;
-    const xpDone = isPractice ? 0 : 20;
-    const xpPerfect = !isPractice && total > 0 && correct === total ? 20 : 0;
-    const mix: string[] = [];
-    results.forEach((result) => {
-      if (!result.correct) {
-        result.conceptIds.forEach((id) => {
-          if (mix.indexOf(id) === -1) mix.push(id);
-        });
-      }
-    });
-    setSummary({ gained: xpHit + xpDone + xpPerfect, xpHit, xpDone, xpPerfect, correct, total, mix: mix.slice(0, 3) });
+    setSummary(sessionSummary(working));
     setPhase("complete");
   };
 
@@ -412,16 +296,13 @@ function App() {
   };
 
   const resolvePair = (leftId: string, rightId: string) => {
-    if (leftId === rightId) {
-      const next = [...locked, leftId];
-      setLocked(next);
-      setSelL(null);
-      setSelR(null);
-      if (presented?.pairs && next.length === presented.pairs.length) submit("matched");
-    } else {
-      // first wrong pairing judges the whole prompt: reveal, dock a heart, score it
-      submit(false);
-    }
+    if (!presented?.pairs) return;
+    const outcome = resolveMatch(locked, presented.pairs, leftId, rightId);
+    setLocked(outcome.locked);
+    setSelL(null);
+    setSelR(null);
+    if (outcome.judged === "matched") submit("matched");
+    else if (outcome.judged === false) submit(false); // first wrong pairing judges the whole prompt
   };
 
   // keyboard: Enter drives the lesson; 1-4 pick options; Enter presses the hero CTA on complete/fail
