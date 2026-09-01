@@ -1,6 +1,6 @@
 import { fileURLToPath, URL } from "node:url";
-import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
+import { defineConfig } from "vite";
 import { VitePWA } from "vite-plugin-pwa";
 
 export default defineConfig({
@@ -21,28 +21,32 @@ export default defineConfig({
             src: "/icon.svg",
             sizes: "any",
             type: "image/svg+xml",
-            purpose: "any maskable"
-          }
-        ]
+            purpose: "any maskable",
+          },
+        ],
       },
       workbox: {
-        globPatterns: ["**/*.{js,css,html,svg,json}"]
-      }
-    })
+        globPatterns: ["**/*.{js,css,html,svg,json}"],
+      },
+    }),
   ],
   resolve: {
     alias: {
       "@kachi/domain": fileURLToPath(new URL("./packages/domain/src/index.ts", import.meta.url)),
-      "@kachi/learning-engine": fileURLToPath(new URL("./packages/learning-engine/src/index.ts", import.meta.url)),
-      "@kachi/content-schema": fileURLToPath(new URL("./packages/content-schema/src/index.ts", import.meta.url))
-    }
+      "@kachi/learning-engine": fileURLToPath(
+        new URL("./packages/learning-engine/src/index.ts", import.meta.url),
+      ),
+      "@kachi/content-schema": fileURLToPath(
+        new URL("./packages/content-schema/src/index.ts", import.meta.url),
+      ),
+    },
   },
   build: {
     outDir: "../../dist",
-    emptyOutDir: true
+    emptyOutDir: true,
   },
   test: {
     environment: "jsdom",
-    include: ["../../packages/**/*.test.ts", "src/**/*.test.ts", "src/**/*.test.tsx"]
-  }
+    include: ["../../packages/**/*.test.ts", "src/**/*.test.ts", "src/**/*.test.tsx"],
+  },
 });

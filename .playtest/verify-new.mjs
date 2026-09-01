@@ -1,7 +1,7 @@
-import { chromium } from 'playwright-core';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { chromium } from 'playwright-core';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const REPO = path.resolve(HERE, '..');
@@ -9,7 +9,9 @@ const BASE = 'http://localhost:5199/';
 const SHOTS = path.resolve(HERE, 'shots-new');
 fs.mkdirSync(SHOTS, { recursive: true });
 
-const course = JSON.parse(fs.readFileSync(path.join(REPO, 'content/packs/hedge-or-pledge/zh-CN/course.json'), 'utf8'));
+const course = JSON.parse(
+  fs.readFileSync(path.join(REPO, 'content/packs/hedge-or-pledge/zh-CN/course.json'), 'utf8'),
+);
 const lesson = course.lessons.find((l) => l.id === 'u1l1');
 const conceptById = (id) => course.concepts.find((c) => c.id === id);
 
@@ -17,22 +19,42 @@ const log = { errors: [], notes: [], xp: [], hearts: [] };
 const note = (k, v) => log.notes.push(`${k}: ${v}`);
 
 const browser = await chromium.launch({ channel: 'chrome', headless: true });
-const ctx = await browser.newContext({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 2, isMobile: true, hasTouch: true });
+const ctx = await browser.newContext({
+  viewport: { width: 390, height: 844 },
+  deviceScaleFactor: 2,
+  isMobile: true,
+  hasTouch: true,
+});
 const page = await ctx.newPage();
-page.on('console', (m) => { if (m.type() === 'error') log.errors.push('console: ' + m.text()); });
+page.on('console', (m) => {
+  if (m.type() === 'error') log.errors.push('console: ' + m.text());
+});
 page.on('pageerror', (e) => log.errors.push('pageerror: ' + e.message));
 
-async function shot(name) { await page.screenshot({ path: path.join(SHOTS, name + '.png') }); }
+async function shot(name) {
+  await page.screenshot({ path: path.join(SHOTS, name + '.png') });
+}
 const sleep = (ms) => page.waitForTimeout(ms);
 // JS click that bypasses actionability checks (the "next" node bobs forever)
-const jsClick = (sel) => page.evaluate((s) => { const el = document.querySelector(s); if (!el) throw new Error('no el: ' + s); el.click(); }, sel);
-const jsClickText = (sel, text) => page.evaluate(([s, t]) => {
-  const el = Array.from(document.querySelectorAll(s)).find((n) => n.textContent.trim() === t);
-  if (!el) throw new Error(`no ${s} with text ${t}`);
-  el.click();
-}, [sel, text]);
+const jsClick = (sel) =>
+  page.evaluate((s) => {
+    const el = document.querySelector(s);
+    if (!el) throw new Error('no el: ' + s);
+    el.click();
+  }, sel);
+const jsClickText = (sel, text) =>
+  page.evaluate(
+    ([s, t]) => {
+      const el = Array.from(document.querySelectorAll(s)).find((n) => n.textContent.trim() === t);
+      if (!el) throw new Error(`no ${s} with text ${t}`);
+      el.click();
+    },
+    [sel, text],
+  );
 
-async function readXp() { return page.$eval('.stat.xp', (el) => el.textContent.trim()).catch(() => 'n/a'); }
+async function readXp() {
+  return page.$eval('.stat.xp', (el) => el.textContent.trim()).catch(() => 'n/a');
+}
 async function fullHearts() {
   return page.evaluate(() => document.querySelectorAll('.hearts .ht.full').length).catch(() => -1);
 }
@@ -48,7 +70,7 @@ await page.waitForSelector('.prompt.teach');
 note('teach kicker', await page.$eval('.kicker2', (el) => el.textContent.trim()));
 await shot('02-teach-card');
 let teachClicks = 0;
-while (await page.$('.prompt.teach') && teachClicks < 8) {
+while ((await page.$('.prompt.teach')) && teachClicks < 8) {
   const btn = await page.$('.foot .btn');
   const label = await btn.evaluate((el) => el.textContent.trim());
   await btn.click();
@@ -63,7 +85,11 @@ note('first kicker', await page.$eval('.kicker2', (el) => el.textContent.trim())
 note('hearts at quiz start', String(await fullHearts()));
 
 // walk the quiz. Plan: mispair the first match once; answer the first meaning/scenario wrong once.
-let mispaired = false, answeredWrong = false, promptsSeen = 0, requeuedMatch = false, prompts = [];
+let mispaired = false,
+  answeredWrong = false,
+  promptsSeen = 0,
+  requeuedMatch = false,
+  prompts = [];
 while (!(await page.$('.hero')) && promptsSeen < 20) {
   await page.waitForSelector('.prompt:not(.teach)');
   const kicker = await page.$eval('.kicker2', (el) => el.textContent.trim());
@@ -79,15 +105,28 @@ while (!(await page.$('.hero')) && promptsSeen < 20) {
     continue;
   }
   promptsSeen += 1;
-  const type = Object.entries({ 词义辨析: 'meaning', 判断正误: 'truefalse', 补全句子: 'fill', 真实情境: 'scenario', 配对练习: 'match' }).find(([k]) => k === kicker)?.[1];
+  const type = Object.entries({
+    词义辨析: 'meaning',
+    判断正误: 'truefalse',
+    补全句子: 'fill',
+    真实情境: 'scenario',
+    配对练习: 'match',
+  }).find(([k]) => k === kicker)?.[1];
   if (!type) throw new Error('unknown kicker: ' + kicker);
   if (type === 'match' && !mispaired) {
     // deliberate mispair: first left chip against a right chip from another pair
     mispaired = true;
     const pairTexts = await page.evaluate(() => {
-      const left = Array.from(document.querySelectorAll('.match > div:nth-child(1) .mchip')).filter((c) => !c.disabled);
-      const right = Array.from(document.querySelectorAll('.match > div:nth-child(2) .mchip')).filter((c) => !c.disabled);
-      return { left: left[0] && left[0].textContent.trim(), right: right[right.length - 1] && right[right.length - 1].textContent.trim() };
+      const left = Array.from(document.querySelectorAll('.match > div:nth-child(1) .mchip')).filter(
+        (c) => !c.disabled,
+      );
+      const right = Array.from(document.querySelectorAll('.match > div:nth-child(2) .mchip')).filter(
+        (c) => !c.disabled,
+      );
+      return {
+        left: left[0] && left[0].textContent.trim(),
+        right: right[right.length - 1] && right[right.length - 1].textContent.trim(),
+      };
     });
     await jsClickText('.match > div:nth-child(1) .mchip', pairTexts.left);
     await jsClickText('.match > div:nth-child(2) .mchip', pairTexts.right);
@@ -118,8 +157,12 @@ while (!(await page.$('.hero')) && promptsSeen < 20) {
     const pairs = lesson.prompts.filter((p) => p.type === 'match').flatMap((p) => p.pairs);
     for (;;) {
       const remaining = await page.evaluate(() => ({
-        left: Array.from(document.querySelectorAll('.match > div:nth-child(1) .mchip')).filter((c) => !c.disabled).map((c) => c.textContent.trim()),
-        right: Array.from(document.querySelectorAll('.match > div:nth-child(2) .mchip')).filter((c) => !c.disabled).map((c) => c.textContent.trim())
+        left: Array.from(document.querySelectorAll('.match > div:nth-child(1) .mchip'))
+          .filter((c) => !c.disabled)
+          .map((c) => c.textContent.trim()),
+        right: Array.from(document.querySelectorAll('.match > div:nth-child(2) .mchip'))
+          .filter((c) => !c.disabled)
+          .map((c) => c.textContent.trim()),
       }));
       if (!remaining.left.length || !remaining.right.length) break;
       const pair = pairs.find((p) => remaining.left.includes(p.left) && remaining.right.includes(p.right));
@@ -142,14 +185,27 @@ while (!(await page.$('.hero')) && promptsSeen < 20) {
   } else if (type === 'fill') {
     // the story identifies the prompt (stem is hidden for fill)
     const story = await page.$eval('.story', (el) => el.textContent.trim());
-    const published = lesson.prompts.find((p) => p.type === 'fill' && p.story && story.startsWith(p.story.split('____')[0].slice(0, 24)));
+    const published = lesson.prompts.find(
+      (p) => p.type === 'fill' && p.story && story.startsWith(p.story.split('____')[0].slice(0, 24)),
+    );
     if (!published) throw new Error('unknown fill: ' + story.slice(0, 40));
     await jsClickText('.bank .bank-chip', published.answer);
   } else {
     const stem = await page.$eval('.stem', (el) => el.textContent.trim());
-    const visible = await page.$$eval('.opts .opt.tile .cap', (els) => els.map((e) => e.textContent.trim()).sort().join('|'));
-    const fingerprint = (p) => (p.options || []).map((o) => o.text).sort().join('|');
-    const published = lesson.prompts.find((p) => p.type === type && p.stem === stem && fingerprint(p) === visible);
+    const visible = await page.$$eval('.opts .opt.tile .cap', (els) =>
+      els
+        .map((e) => e.textContent.trim())
+        .sort()
+        .join('|'),
+    );
+    const fingerprint = (p) =>
+      (p.options || [])
+        .map((o) => o.text)
+        .sort()
+        .join('|');
+    const published = lesson.prompts.find(
+      (p) => p.type === type && p.stem === stem && fingerprint(p) === visible,
+    );
     if (!published) throw new Error(`unknown ${type}: ` + stem);
     await jsClickText('.opts .opt.tile', published.options[published.answer].text);
   }
@@ -169,7 +225,11 @@ log.xp.push(['after u1l1 (8✓ 1✗ 1 re-run✓ = 10 answers)', await readXp()])
 // back to the path: node 1 done, node 2 unlocked
 await page.click('.hero .btn-ghost');
 await page.waitForSelector('.path');
-const nodeStates = await page.evaluate(() => Array.from(document.querySelectorAll('.node')).slice(0, 4).map((n) => n.className.replace('node', '').trim() || 'plain'));
+const nodeStates = await page.evaluate(() =>
+  Array.from(document.querySelectorAll('.node'))
+    .slice(0, 4)
+    .map((n) => n.className.replace('node', '').trim() || 'plain'),
+);
 note('first 4 node states', JSON.stringify(nodeStates));
 await shot('07-path-after-lesson');
 
@@ -193,16 +253,29 @@ while (!(await page.$('.hero')) && practiceAnswers < 30) {
     continue;
   }
   const kicker = await page.$eval('.kicker2', (el) => el.textContent.trim());
-  const type = { 词义辨析: 'meaning', 判断正误: 'truefalse', 补全句子: 'fill', 真实情境: 'scenario', 配对练习: 'match' }[kicker];
+  const type = {
+    词义辨析: 'meaning',
+    判断正误: 'truefalse',
+    补全句子: 'fill',
+    真实情境: 'scenario',
+    配对练习: 'match',
+  }[kicker];
   if (!type) throw new Error('practice unknown kicker: ' + kicker);
   practiceAnswers += 1;
   if (type === 'match') {
-    const pairs = course.lessons.flatMap((l) => l.prompts).filter((p) => p.type === 'match').flatMap((p) => p.pairs);
+    const pairs = course.lessons
+      .flatMap((l) => l.prompts)
+      .filter((p) => p.type === 'match')
+      .flatMap((p) => p.pairs);
     let done = 0;
     while (done < 4) {
       const remaining = await page.evaluate(() => ({
-        left: Array.from(document.querySelectorAll('.match > div:nth-child(1) .mchip')).filter((c) => !c.disabled).map((c) => c.textContent.trim()),
-        right: Array.from(document.querySelectorAll('.match > div:nth-child(2) .mchip')).filter((c) => !c.disabled).map((c) => c.textContent.trim())
+        left: Array.from(document.querySelectorAll('.match > div:nth-child(1) .mchip'))
+          .filter((c) => !c.disabled)
+          .map((c) => c.textContent.trim()),
+        right: Array.from(document.querySelectorAll('.match > div:nth-child(2) .mchip'))
+          .filter((c) => !c.disabled)
+          .map((c) => c.textContent.trim()),
       }));
       const pair = pairs.find((p) => remaining.left.includes(p.left) && remaining.right.includes(p.right));
       if (!pair) break;
@@ -217,19 +290,36 @@ while (!(await page.$('.hero')) && practiceAnswers < 30) {
   }
   if (type === 'truefalse') {
     const stem = await page.$eval('.stem', (el) => el.textContent.trim());
-    const published = course.lessons.filter((l) => l.id === 'u1l1' || l.id === 'u1l2').flatMap((l) => l.prompts).find((p) => p.type === 'truefalse' && p.stem === stem);
+    const published = course.lessons
+      .filter((l) => l.id === 'u1l1' || l.id === 'u1l2')
+      .flatMap((l) => l.prompts)
+      .find((p) => p.type === 'truefalse' && p.stem === stem);
     if (!published) throw new Error('practice unknown truefalse');
     await jsClickText('.tf .opt.tile .cap', published.answer ? 'True' : 'False');
   } else if (type === 'fill') {
     const story = await page.$eval('.story', (el) => el.textContent.trim());
-    const published = course.lessons.filter((l) => l.id === 'u1l1' || l.id === 'u1l2').flatMap((l) => l.prompts).find((p) => p.type === 'fill' && p.story && story.startsWith(p.story.split('____')[0].slice(0, 24)));
+    const published = course.lessons
+      .filter((l) => l.id === 'u1l1' || l.id === 'u1l2')
+      .flatMap((l) => l.prompts)
+      .find((p) => p.type === 'fill' && p.story && story.startsWith(p.story.split('____')[0].slice(0, 24)));
     if (!published) throw new Error('practice unknown fill');
     await jsClickText('.bank .bank-chip', published.answer);
   } else {
     const stem = await page.$eval('.stem', (el) => el.textContent.trim());
-    const visible = await page.$$eval('.opts .opt.tile .cap', (els) => els.map((e) => e.textContent.trim()).sort().join('|'));
-    const fingerprint = (p) => (p.options || []).map((o) => o.text).sort().join('|');
-    const published = course.lessons.filter((l) => l.id === 'u1l1' || l.id === 'u1l2').flatMap((l) => l.prompts)
+    const visible = await page.$$eval('.opts .opt.tile .cap', (els) =>
+      els
+        .map((e) => e.textContent.trim())
+        .sort()
+        .join('|'),
+    );
+    const fingerprint = (p) =>
+      (p.options || [])
+        .map((o) => o.text)
+        .sort()
+        .join('|');
+    const published = course.lessons
+      .filter((l) => l.id === 'u1l1' || l.id === 'u1l2')
+      .flatMap((l) => l.prompts)
       .find((p) => p.type === type && p.stem === stem && fingerprint(p) === visible);
     if (!published) throw new Error('practice unknown stem: ' + stem);
     await jsClickText('.opts .opt.tile', published.options[published.answer].text);
@@ -241,7 +331,10 @@ while (!(await page.$('.hero')) && practiceAnswers < 30) {
 await page.waitForSelector('.hero');
 await shot('09-practice-complete');
 note('practice h1', await page.$eval('.hero h1', (el) => el.textContent.trim()));
-note('practice xp rows', await page.$$eval('.xp-row', (rows) => rows.map((r) => r.textContent.trim()).join(' | ')));
+note(
+  'practice xp rows',
+  await page.$$eval('.xp-row', (rows) => rows.map((r) => r.textContent.trim()).join(' | ')),
+);
 log.xp.push(['after practice round (all correct)', await readXp()]);
 
 // Glossary search updates only the list
@@ -252,7 +345,9 @@ await page.waitForSelector('.g-search input');
 const totalCards = await page.$$eval('.g-card', (cards) => cards.length);
 await page.fill('.g-search input', 'put');
 await sleep(200);
-const filtered = await page.$$eval('.g-card', (cards) => cards.map((c) => c.querySelector('h3').textContent.trim()));
+const filtered = await page.$$eval('.g-card', (cards) =>
+  cards.map((c) => c.querySelector('h3').textContent.trim()),
+);
 note(`glossary cards total=${totalCards} filtered=put`, JSON.stringify(filtered));
 await shot('10-glossary-search');
 
@@ -270,14 +365,27 @@ while (!(await page.$('.hero')) && wrongs < 12) {
     continue;
   }
   const kicker = await page.$eval('.kicker2', (el) => el.textContent.trim());
-  const type = { 词义辨析: 'meaning', 判断正误: 'truefalse', 补全句子: 'fill', 真实情境: 'scenario', 配对练习: 'match' }[kicker];
+  const type = {
+    词义辨析: 'meaning',
+    判断正误: 'truefalse',
+    补全句子: 'fill',
+    真实情境: 'scenario',
+    配对练习: 'match',
+  }[kicker];
   if (type === 'match') {
     // guaranteed mispair: click a left chip and a right chip that is not its partner
     const rem = await page.evaluate(() => ({
-      left: Array.from(document.querySelectorAll('.match > div:nth-child(1) .mchip')).filter((c) => !c.disabled).map((c) => c.textContent.trim()),
-      right: Array.from(document.querySelectorAll('.match > div:nth-child(2) .mchip')).filter((c) => !c.disabled).map((c) => c.textContent.trim())
+      left: Array.from(document.querySelectorAll('.match > div:nth-child(1) .mchip'))
+        .filter((c) => !c.disabled)
+        .map((c) => c.textContent.trim()),
+      right: Array.from(document.querySelectorAll('.match > div:nth-child(2) .mchip'))
+        .filter((c) => !c.disabled)
+        .map((c) => c.textContent.trim()),
     }));
-    const allPairs = course.lessons.flatMap((l) => l.prompts).filter((p) => p.type === 'match').flatMap((p) => p.pairs);
+    const allPairs = course.lessons
+      .flatMap((l) => l.prompts)
+      .filter((p) => p.type === 'match')
+      .flatMap((p) => p.pairs);
     const relevant = allPairs.filter((p) => rem.left.includes(p.left) && rem.right.includes(p.right));
     const leftPick = rem.left[0];
     const partner = relevant.find((p) => p.left === leftPick)?.right;
@@ -301,16 +409,25 @@ while (!(await page.$('.hero')) && wrongs < 12) {
   // guaranteed wrong answers from published data
   if (type === 'truefalse') {
     const stem = await page.$eval('.stem', (el) => el.textContent.trim());
-    const published = course.lessons.filter((l) => l.id === 'u1l1' || l.id === 'u1l2').flatMap((l) => l.prompts).find((p) => p.type === 'truefalse' && p.stem === stem);
+    const published = course.lessons
+      .filter((l) => l.id === 'u1l1' || l.id === 'u1l2')
+      .flatMap((l) => l.prompts)
+      .find((p) => p.type === 'truefalse' && p.stem === stem);
     await jsClickText('.tf .opt.tile .cap', published.answer ? 'False' : 'True');
   } else if (type === 'fill') {
     const story = await page.$eval('.story', (el) => el.textContent.trim());
-    const published = course.lessons.filter((l) => l.id === 'u1l1' || l.id === 'u1l2').flatMap((l) => l.prompts).find((p) => p.type === 'fill' && p.story && story.startsWith(p.story.split('____')[0].slice(0, 24)));
+    const published = course.lessons
+      .filter((l) => l.id === 'u1l1' || l.id === 'u1l2')
+      .flatMap((l) => l.prompts)
+      .find((p) => p.type === 'fill' && p.story && story.startsWith(p.story.split('____')[0].slice(0, 24)));
     const wrong = published.bank.find((w) => w !== published.answer);
     await jsClickText('.bank .bank-chip', wrong);
   } else {
     const stem = await page.$eval('.stem', (el) => el.textContent.trim());
-    const published = course.lessons.filter((l) => l.id === 'u1l1' || l.id === 'u1l2').flatMap((l) => l.prompts).find((p) => p.type === type && p.stem === stem);
+    const published = course.lessons
+      .filter((l) => l.id === 'u1l1' || l.id === 'u1l2')
+      .flatMap((l) => l.prompts)
+      .find((p) => p.type === type && p.stem === stem);
     const wrong = published.options.find((o) => o.text !== published.options[published.answer].text);
     await jsClickText('.opts .opt.tile', wrong.text);
   }

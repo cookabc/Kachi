@@ -29,7 +29,7 @@ export const termLocalization: Record<string, { termZh: string }> = {
   "capital gains": { termZh: "资本利得" },
   "buy-borrow-die": { termZh: "买入—借款—持有至死亡" },
   futures: { termZh: "期货" },
-  swap: { termZh: "互换" }
+  swap: { termZh: "互换" },
 };
 
 export function localizedTerm(id: string) {

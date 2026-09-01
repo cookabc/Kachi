@@ -1,13 +1,8 @@
-import { describe, expect, it } from "vitest";
-import type { Course, Environment, Exercise } from "@kachi/domain";
 import { validateCourse } from "@kachi/content-schema";
-import {
-  applyAnswer,
-  currentExercise,
-  emptyLearnerState,
-  startSession
-} from "./index";
+import type { Course, Environment, Exercise } from "@kachi/domain";
+import { describe, expect, it } from "vitest";
 import rawCourse from "../../../content/packs/hedge-or-pledge/zh-CN/course.json";
+import { applyAnswer, currentExercise, emptyLearnerState, startSession } from "./index";
 
 const course = rawCourse as Course;
 let sequence = 0;
@@ -15,14 +10,15 @@ const environment: Environment = {
   now: () => new Date("2026-08-28T12:00:00.000Z"),
   random: () => 0.5,
   deviceId: "test-device",
-  eventId: () => `event-${++sequence}`
+  eventId: () => `event-${++sequence}`,
 };
 
 function correctAnswer(prompt: Exercise): string | boolean {
   if (prompt.type === "match") return "matched";
   if (prompt.type === "truefalse") return Boolean(prompt.answer);
   if (prompt.type === "fill") return String(prompt.answer);
-  if (typeof prompt.answer !== "number" || !prompt.options) throw new Error(`No choice answer for ${prompt.id}`);
+  if (typeof prompt.answer !== "number" || !prompt.options)
+    throw new Error(`No choice answer for ${prompt.id}`);
   return prompt.options[prompt.answer].text;
 }
 
@@ -30,7 +26,9 @@ describe("migrated Hedge or Pledge course", () => {
   it("has the expected legacy coverage and passes structural validation", () => {
     expect(course.lessons).toHaveLength(17);
     expect(course.concepts).toHaveLength(29);
-    expect(new Set(course.lessons.flatMap((lesson) => lesson.prompts.map((prompt) => prompt.id))).size).toBe(156);
+    expect(new Set(course.lessons.flatMap((lesson) => lesson.prompts.map((prompt) => prompt.id))).size).toBe(
+      156,
+    );
     expect(validateCourse(course)).toEqual([]);
   });
 

@@ -1,7 +1,7 @@
-import { chromium } from 'playwright-core';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { chromium } from 'playwright-core';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const REPO = path.resolve(HERE, '..');
@@ -9,7 +9,9 @@ const BASE = 'http://localhost:5210/';
 const SHOTS = path.resolve(HERE, 'shots-e2e');
 fs.mkdirSync(SHOTS, { recursive: true });
 
-const course = JSON.parse(fs.readFileSync(path.join(REPO, 'content/packs/hedge-or-pledge/zh-CN/course.json'), 'utf8'));
+const course = JSON.parse(
+  fs.readFileSync(path.join(REPO, 'content/packs/hedge-or-pledge/zh-CN/course.json'), 'utf8'),
+);
 const ALL_PROMPTS = course.lessons.flatMap((l) => l.prompts);
 const ALL_PAIRS = ALL_PROMPTS.filter((p) => p.type === 'match').flatMap((p) => p.pairs);
 
@@ -19,28 +21,55 @@ function check(name, cond, detail = '') {
   console.log(`${cond ? 'PASS' : 'FAIL'}  ${name}${cond ? '' : '  -> ' + detail}`);
 }
 const sleep = (ms) => page.waitForTimeout(ms);
-async function shot(name) { await page.screenshot({ path: path.join(SHOTS, name + '.png') }); }
-const jsClick = (sel) => page.evaluate((s) => { const el = document.querySelector(s); if (!el) throw new Error('no el: ' + s); el.click(); }, sel);
-const jsClickText = (sel, text) => page.evaluate(([s, t]) => {
-  const el = Array.from(document.querySelectorAll(s)).find((n) => n.textContent.trim() === t);
-  if (!el) throw new Error(`no ${s} with text ${t}`);
-  el.click();
-}, [sel, text]);
+async function shot(name) {
+  await page.screenshot({ path: path.join(SHOTS, name + '.png') });
+}
+const jsClick = (sel) =>
+  page.evaluate((s) => {
+    const el = document.querySelector(s);
+    if (!el) throw new Error('no el: ' + s);
+    el.click();
+  }, sel);
+const jsClickText = (sel, text) =>
+  page.evaluate(
+    ([s, t]) => {
+      const el = Array.from(document.querySelectorAll(s)).find((n) => n.textContent.trim() === t);
+      if (!el) throw new Error(`no ${s} with text ${t}`);
+      el.click();
+    },
+    [sel, text],
+  );
 
-const fingerprint = (p) => (p.options || []).map((o) => o.text).sort().join('|');
+const fingerprint = (p) =>
+  (p.options || [])
+    .map((o) => o.text)
+    .sort()
+    .join('|');
 async function visibleOptions() {
-  return page.$$eval('.opts .opt.tile .cap', (els) => els.map((e) => e.textContent.trim()).sort().join('|'));
+  return page.$$eval('.opts .opt.tile .cap', (els) =>
+    els
+      .map((e) => e.textContent.trim())
+      .sort()
+      .join('|'),
+  );
 }
 
 function findPublished(type, { stem, story, sig }) {
   if (type === 'scenario') return ALL_PROMPTS.find((p) => p.type === 'scenario' && p.story === story);
   // the rendered fill story has the blank filled in, so match on the prefix before ____
-  if (type === 'fill') return ALL_PROMPTS.find((p) => p.type === 'fill' && story && story.startsWith(p.story.split('____')[0]));
+  if (type === 'fill')
+    return ALL_PROMPTS.find((p) => p.type === 'fill' && story && story.startsWith(p.story.split('____')[0]));
   if (type === 'truefalse') return ALL_PROMPTS.find((p) => p.type === 'truefalse' && p.stem === stem);
   return ALL_PROMPTS.find((p) => p.type === type && p.stem === stem && fingerprint(p) === sig);
 }
 
-const kickerType = { 词义辨析: 'meaning', 判断正误: 'truefalse', 补全句子: 'fill', 真实情境: 'scenario', 配对练习: 'match' };
+const kickerType = {
+  词义辨析: 'meaning',
+  判断正误: 'truefalse',
+  补全句子: 'fill',
+  真实情境: 'scenario',
+  配对练习: 'match',
+};
 
 async function readXp() {
   return Number((await page.$eval('.stat.xp', (el) => el.textContent)).replace(/\D/g, ''));
@@ -54,20 +83,35 @@ async function solveCurrent(forceWrong) {
   if (!type) throw new Error('unknown kicker: ' + kicker);
   if (type === 'match') {
     const visible = await page.evaluate(() => ({
-      left: Array.from(document.querySelectorAll('.match > div:nth-child(1) .mchip')).filter((c) => !c.disabled).map((c) => c.textContent.trim()),
-      right: Array.from(document.querySelectorAll('.match > div:nth-child(2) .mchip')).filter((c) => !c.disabled).map((c) => c.textContent.trim())
+      left: Array.from(document.querySelectorAll('.match > div:nth-child(1) .mchip'))
+        .filter((c) => !c.disabled)
+        .map((c) => c.textContent.trim()),
+      right: Array.from(document.querySelectorAll('.match > div:nth-child(2) .mchip'))
+        .filter((c) => !c.disabled)
+        .map((c) => c.textContent.trim()),
     }));
     // prefer the pairs of the exact visible prompt; fall back to the course-wide union
     const lefts = [...visible.left].sort().join('|');
     const rights = [...visible.right].sort().join('|');
-    const publishedMatch = ALL_PROMPTS.find((p) => p.type === 'match'
-      && p.pairs.map((x) => x.left).sort().join('|') === lefts
-      && p.pairs.map((x) => x.right).sort().join('|') === rights);
+    const publishedMatch = ALL_PROMPTS.find(
+      (p) =>
+        p.type === 'match' &&
+        p.pairs
+          .map((x) => x.left)
+          .sort()
+          .join('|') === lefts &&
+        p.pairs
+          .map((x) => x.right)
+          .sort()
+          .join('|') === rights,
+    );
     const pairs = publishedMatch ? publishedMatch.pairs : ALL_PAIRS;
     if (forceWrong) {
       const leftPick = visible.left[0];
       const leftId = pairs.find((p) => p.left === leftPick).id;
-      const wrongRight = visible.right.find((t) => pairs.find((p) => p.left === leftPick && p.right === t) === undefined);
+      const wrongRight = visible.right.find(
+        (t) => pairs.find((p) => p.left === leftPick && p.right === t) === undefined,
+      );
       if (!wrongRight) throw new Error('no wrong right chip for ' + leftPick);
       await jsClickText('.match > div:nth-child(1) .mchip', leftPick);
       await jsClickText('.match > div:nth-child(2) .mchip', wrongRight);
@@ -75,8 +119,12 @@ async function solveCurrent(forceWrong) {
     }
     for (;;) {
       const remaining = await page.evaluate(() => ({
-        left: Array.from(document.querySelectorAll('.match > div:nth-child(1) .mchip')).filter((c) => !c.disabled).map((c) => c.textContent.trim()),
-        right: Array.from(document.querySelectorAll('.match > div:nth-child(2) .mchip')).filter((c) => !c.disabled).map((c) => c.textContent.trim())
+        left: Array.from(document.querySelectorAll('.match > div:nth-child(1) .mchip'))
+          .filter((c) => !c.disabled)
+          .map((c) => c.textContent.trim()),
+        right: Array.from(document.querySelectorAll('.match > div:nth-child(2) .mchip'))
+          .filter((c) => !c.disabled)
+          .map((c) => c.textContent.trim()),
       }));
       if (!remaining.left.length) break;
       const pair = pairs.find((p) => remaining.left.includes(p.left) && remaining.right.includes(p.right));
@@ -105,7 +153,9 @@ async function solveCurrent(forceWrong) {
     return;
   }
   const stem = await page.$eval('.stem', (el) => el.textContent.trim());
-  const story = await page.$('.story') ? await page.$eval('.story', (el) => el.textContent.trim()) : undefined;
+  const story = (await page.$('.story'))
+    ? await page.$eval('.story', (el) => el.textContent.trim())
+    : undefined;
   const sig = await visibleOptions();
   const published = findPublished(type, { stem, sig, story });
   if (!published) throw new Error(`unknown ${type}: ` + stem);
@@ -118,7 +168,7 @@ async function solveCurrent(forceWrong) {
 async function driveSession({ wrongIds = [], mispairIds = [], maxSteps = 40 } = {}) {
   const wrongDone = new Set();
   const mispairDone = new Set();
-  let verdicts = [];
+  const verdicts = [];
   for (let step = 0; step < maxSteps; step += 1) {
     if (await page.$('.hero')) return verdicts;
     if (await page.$('.sheet')) {
@@ -139,20 +189,42 @@ async function driveSession({ wrongIds = [], mispairIds = [], maxSteps = 40 } = 
     let id = null;
     if (type === 'match') {
       // fingerprint the visible match by its two columns
-      const lefts = await page.$$eval('.match > div:nth-child(1) .mchip', (els) => els.map((e) => e.textContent.trim()).sort().join('|'));
-      const rights = await page.$$eval('.match > div:nth-child(2) .mchip', (els) => els.map((e) => e.textContent.trim()).sort().join('|'));
-      const publishedMatch = ALL_PROMPTS.find((p) => p.type === 'match'
-        && p.pairs.map((x) => x.left).sort().join('|') === lefts
-        && p.pairs.map((x) => x.right).sort().join('|') === rights);
+      const lefts = await page.$$eval('.match > div:nth-child(1) .mchip', (els) =>
+        els
+          .map((e) => e.textContent.trim())
+          .sort()
+          .join('|'),
+      );
+      const rights = await page.$$eval('.match > div:nth-child(2) .mchip', (els) =>
+        els
+          .map((e) => e.textContent.trim())
+          .sort()
+          .join('|'),
+      );
+      const publishedMatch = ALL_PROMPTS.find(
+        (p) =>
+          p.type === 'match' &&
+          p.pairs
+            .map((x) => x.left)
+            .sort()
+            .join('|') === lefts &&
+          p.pairs
+            .map((x) => x.right)
+            .sort()
+            .join('|') === rights,
+      );
       id = publishedMatch ? publishedMatch.id : null;
     } else {
       const published = findPublished(type, {
-        stem: stemOrStory.stem, story: type === 'scenario' || type === 'fill' ? stemOrStory.story : undefined,
-        sig: (type === 'meaning' || type === 'scenario') ? await visibleOptions() : undefined
+        stem: stemOrStory.stem,
+        story: type === 'scenario' || type === 'fill' ? stemOrStory.story : undefined,
+        sig: type === 'meaning' || type === 'scenario' ? await visibleOptions() : undefined,
       });
       id = published ? published.id : null;
     }
-    const forceWrong = (wrongIds.includes(id) && !wrongDone.has(id)) || (type === 'match' && mispairIds.includes(id) && !mispairDone.has(id));
+    const forceWrong =
+      (wrongIds.includes(id) && !wrongDone.has(id)) ||
+      (type === 'match' && mispairIds.includes(id) && !mispairDone.has(id));
     if (wrongIds.includes(id)) wrongDone.add(id);
     if (type === 'match' && mispairIds.includes(id)) mispairDone.add(id);
     await solveCurrent(forceWrong);
@@ -190,14 +262,22 @@ let page, context;
 const consoleProblems = [];
 async function newPage(ctx) {
   const p = await ctx.newPage();
-  p.on('console', (m) => { if (m.type() === 'error') consoleProblems.push('console: ' + m.text()); });
+  p.on('console', (m) => {
+    if (m.type() === 'error') consoleProblems.push('console: ' + m.text());
+  });
   p.on('pageerror', (e) => consoleProblems.push('pageerror: ' + e.message));
   p.on('dialog', (d) => d.accept().catch(() => {}));
   return p;
 }
 
 const browser = await chromium.launch({ channel: 'chrome', headless: true });
-context = await browser.newContext({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 2, isMobile: true, hasTouch: true, acceptDownloads: true });
+context = await browser.newContext({
+  viewport: { width: 390, height: 844 },
+  deviceScaleFactor: 2,
+  isMobile: true,
+  hasTouch: true,
+  acceptDownloads: true,
+});
 page = await newPage(context);
 
 /* ---- S1: fresh home ---- */
@@ -208,10 +288,18 @@ await page.waitForSelector('.path');
   check('S1 home renders 17 lesson nodes', nodes.length === 17, String(nodes.length));
   const nextCount = await page.$$eval('.node.next', (els) => els.length);
   const lockedCount = await page.$$eval('.node.locked', (els) => els.length);
-  check('S1 exactly one next node and 16 locked', nextCount === 1 && lockedCount === 16, `next=${nextCount} locked=${lockedCount}`);
+  check(
+    'S1 exactly one next node and 16 locked',
+    nextCount === 1 && lockedCount === 16,
+    `next=${nextCount} locked=${lockedCount}`,
+  );
   check('S1 header XP is 0', (await readXp()) === 0);
   check('S1 title is the Kachi app', (await page.title()) === 'Kachi — 财经英语学习');
-  const hLock = await page.evaluate(() => { const el = document.querySelector('.scroll'); el.scrollLeft = 999; return el.scrollLeft; });
+  const hLock = await page.evaluate(() => {
+    const el = document.querySelector('.scroll');
+    el.scrollLeft = 999;
+    return el.scrollLeft;
+  });
   check('S1 the path cannot scroll horizontally', hLock === 0, String(hLock));
   await shot('01-home-fresh');
 }
@@ -223,19 +311,35 @@ await page.waitForSelector('.path');
   await page.waitForSelector('.prompt.teach');
   const teachCards = await exitTeach();
   check('S2 u1l1 teaches 2 terms', teachCards === 2, String(teachCards));
-  check('S2 hearts start at 5', await page.$$eval('.hearts .ht.full', (els) => els.length) === 5);
+  check('S2 hearts start at 5', (await page.$$eval('.hearts .ht.full', (els) => els.length)) === 5);
   await shot('02-quiz');
   const verdicts = await driveSession({ wrongIds: ['u1l1a'], mispairIds: ['u1l1f'] });
   const complete = await readComplete();
   check('S2 complete verdict is 课程完成 (not flawless)', complete.h1 === '课程完成。', complete.h1);
   check('S2 accuracy line is 9/11 (requeued match re-run)', complete.sub.includes('9/11'), complete.sub);
-  check('S2 xp rows sum to the total (90+20=110)', complete.xpTotal === complete.sum && complete.xpTotal === 110, JSON.stringify(complete.rows));
+  check(
+    'S2 xp rows sum to the total (90+20=110)',
+    complete.xpTotal === complete.sum && complete.xpTotal === 110,
+    JSON.stringify(complete.rows),
+  );
   const chips = await page.$$eval('.chip', (els) => els.map((el) => el.textContent.trim()));
   check('S2 mix-up chips name hedge vs pledge', chips.includes('hedge vs pledge'), JSON.stringify(chips));
-  check('S2 three path buttons offered', await page.$$eval('.hero .btn', (els) => els.length) === 3);
-  check('S2 verdict stream holds 1 mispair wrong + rerun correct', verdicts.filter((v) => !v).length === 2, JSON.stringify(verdicts));
-  const heroLock = await page.evaluate(() => { const el = document.querySelector('.hero'); el.scrollLeft = 999; return el.scrollLeft; });
-  check('S2 the complete screen cannot scroll horizontally (confetti overflow locked)', heroLock === 0, String(heroLock));
+  check('S2 three path buttons offered', (await page.$$eval('.hero .btn', (els) => els.length)) === 3);
+  check(
+    'S2 verdict stream holds 1 mispair wrong + rerun correct',
+    verdicts.filter((v) => !v).length === 2,
+    JSON.stringify(verdicts),
+  );
+  const heroLock = await page.evaluate(() => {
+    const el = document.querySelector('.hero');
+    el.scrollLeft = 999;
+    return el.scrollLeft;
+  });
+  check(
+    'S2 the complete screen cannot scroll horizontally (confetti overflow locked)',
+    heroLock === 0,
+    String(heroLock),
+  );
   await shot('03-complete');
 
   // 练一练这些 -> focused practice round
@@ -243,14 +347,34 @@ await page.waitForSelector('.path');
   await page.waitForSelector('.prompt:not(.teach)');
   const focusVerdicts = await driveSession({});
   const practiceComplete = await readComplete();
-  check('S2b focused practice completes (这轮复习完成。)', practiceComplete.h1 === '这轮复习完成。', practiceComplete.h1);
-  check('S2b practice pays per-answer only', practiceComplete.rows.length === 2 && practiceComplete.xpTotal === practiceComplete.sum, JSON.stringify(practiceComplete.rows));
-  check('S2b focused round was 10/10', focusVerdicts.length === 10 && focusVerdicts.every(Boolean), String(focusVerdicts.length));
+  check(
+    'S2b focused practice completes (这轮复习完成。)',
+    practiceComplete.h1 === '这轮复习完成。',
+    practiceComplete.h1,
+  );
+  check(
+    'S2b practice pays per-answer only',
+    practiceComplete.rows.length === 2 && practiceComplete.xpTotal === practiceComplete.sum,
+    JSON.stringify(practiceComplete.rows),
+  );
+  check(
+    'S2b focused round was 10/10',
+    focusVerdicts.length === 10 && focusVerdicts.every(Boolean),
+    String(focusVerdicts.length),
+  );
   await page.click('.hero .btn-ghost'); // 回到路径
   await page.waitForSelector('.path');
-  check('S2 header XP = before + 110 + practice total', (await readXp()) === xpBefore + 110 + practiceComplete.xpTotal, String(await readXp()));
+  check(
+    'S2 header XP = before + 110 + practice total',
+    (await readXp()) === xpBefore + 110 + practiceComplete.xpTotal,
+    String(await readXp()),
+  );
   const states = await page.$$eval('.node', (els) => els.slice(0, 2).map((el) => el.className));
-  check('S2 path: u1l1 done, u1l2 next', states[0].includes('done') && states[1].includes('next'), JSON.stringify(states));
+  check(
+    'S2 path: u1l1 done, u1l2 next',
+    states[0].includes('done') && states[1].includes('next'),
+    JSON.stringify(states),
+  );
 }
 
 /* ---- S3: flawless u1l2 -> u1l3 -> u1r recap -> into u2l1 ---- */
@@ -258,7 +382,11 @@ await page.waitForSelector('.path');
   const xpAtUnitStart = await readXp();
   let unitGained = 0;
   let firstIteration = true;
-  for (const [lessonId, expectReview] of [['u1l2', false], ['u1l3', false], ['u1r', true]]) {
+  for (const [lessonId, expectReview] of [
+    ['u1l2', false],
+    ['u1l3', false],
+    ['u1r', true],
+  ]) {
     if (firstIteration) {
       await jsClick('button.node.next');
       firstIteration = false;
@@ -267,7 +395,10 @@ await page.waitForSelector('.path');
     if (expectReview) {
       const pills = await page.$$eval('.recap-item', (els) => els.map((el) => el.textContent.trim()));
       check('S3 u1r recap shows all six unit-1 terms', pills.length === 6, JSON.stringify(pills));
-      check('S3 u1r recap button says 该你了', (await page.$eval('.foot .btn', (el) => el.textContent.trim())) === '该你了');
+      check(
+        'S3 u1r recap button says 该你了',
+        (await page.$eval('.foot .btn', (el) => el.textContent.trim())) === '该你了',
+      );
       await shot('04-recap');
     }
     const teachCards = await exitTeach();
@@ -275,7 +406,11 @@ await page.waitForSelector('.path');
     await driveSession({});
     const complete = await readComplete();
     check(`S3 ${lessonId} flawless verdict`, complete.h1 === '完美。', complete.h1);
-    check(`S3 ${lessonId} no-mistake bonus paid`, complete.rows.some((r) => r.includes('全对奖励')), JSON.stringify(complete.rows));
+    check(
+      `S3 ${lessonId} no-mistake bonus paid`,
+      complete.rows.some((r) => r.includes('全对奖励')),
+      JSON.stringify(complete.rows),
+    );
     check(`S3 ${lessonId} xp math`, complete.xpTotal === complete.sum, JSON.stringify(complete.rows));
     unitGained += complete.xpTotal;
     await page.click('.hero .btn-gold'); // 下一课：… chains straight on
@@ -285,9 +420,17 @@ await page.waitForSelector('.path');
   // we are now inside u2l1 teach; exit to the path
   await page.click('.xbtn');
   await page.waitForSelector('.path');
-  check('S3 unit-1 chain banked exactly the sum of its complete screens', (await readXp()) === xpAtUnitStart + unitGained, `${await readXp()} vs ${xpAtUnitStart + unitGained}`);
+  check(
+    'S3 unit-1 chain banked exactly the sum of its complete screens',
+    (await readXp()) === xpAtUnitStart + unitGained,
+    `${await readXp()} vs ${xpAtUnitStart + unitGained}`,
+  );
   const states = await page.$$eval('.node', (els) => els.slice(0, 5).map((el) => el.className));
-  check('S3 first five nodes: 4 done + u2l1 next', states.slice(0, 4).every((s) => s.includes('done')) && states[4].includes('next'), JSON.stringify(states));
+  check(
+    'S3 first five nodes: 4 done + u2l1 next',
+    states.slice(0, 4).every((s) => s.includes('done')) && states[4].includes('next'),
+    JSON.stringify(states),
+  );
 }
 
 /* ---- S4: persistence across reload ---- */
@@ -299,7 +442,11 @@ await page.waitForSelector('.path');
   const streak = await page.$eval('.stat.streak', (el) => el.textContent.replace(/\D/g, ''));
   check('S4 streak is 1 after today’s lessons', streak === '1', streak);
   const states = await page.$$eval('.node', (els) => els.slice(0, 5).map((el) => el.className));
-  check('S4 path state survives reload', states.slice(0, 4).every((s) => s.includes('done')) && states[4].includes('next'), JSON.stringify(states));
+  check(
+    'S4 path state survives reload',
+    states.slice(0, 4).every((s) => s.includes('done')) && states[4].includes('next'),
+    JSON.stringify(states),
+  );
   await shot('05-persisted-path');
 }
 
@@ -312,7 +459,11 @@ await page.waitForSelector('.path');
   await page.waitForSelector('.prompt:not(.teach)');
   await driveSession({});
   const complete = await readComplete();
-  check('S5 practice round completes per-answer only', complete.rows.length === 2 && complete.xpTotal === complete.sum, JSON.stringify(complete.rows));
+  check(
+    'S5 practice round completes per-answer only',
+    complete.rows.length === 2 && complete.xpTotal === complete.sum,
+    JSON.stringify(complete.rows),
+  );
   await page.click('.hero .btn-gold'); // 再来一轮 starts a fresh round
   await page.waitForSelector('.prompt:not(.teach)');
   check('S5 practice again starts a new round', (await page.$('.kicker2')) !== null);
@@ -329,7 +480,11 @@ await page.waitForSelector('.path');
   await shot('06-glossary-empty');
   await page.click('.nav button:nth-child(1)');
   await page.waitForSelector('.path');
-  check('S5 header XP grew by the practice round', (await readXp()) === xpBefore + complete.xpTotal, String(await readXp()));
+  check(
+    'S5 header XP grew by the practice round',
+    (await readXp()) === xpBefore + complete.xpTotal,
+    String(await readXp()),
+  );
 }
 
 /* ---- S6: keyboard-only u2l1 ---- */
@@ -368,11 +523,15 @@ await page.waitForSelector('.path');
       const story = await page.$eval('.story', (el) => el.textContent.trim());
       const published = findPublished('fill', { story });
       // bank chips contain an art span (empty text) before the word span — drop the empties
-      const chips = (await page.$$eval('.bank .bank-chip span', (els) => els.map((e) => e.textContent.trim()))).filter((t) => t);
+      const chips = (
+        await page.$$eval('.bank .bank-chip span', (els) => els.map((e) => e.textContent.trim()))
+      ).filter((t) => t);
       key = String(chips.indexOf(published.answer) + 1);
     } else {
       const stem = await page.$eval('.stem', (el) => el.textContent.trim());
-      const story = await page.$('.story') ? await page.$eval('.story', (el) => el.textContent.trim()) : undefined;
+      const story = (await page.$('.story'))
+        ? await page.$eval('.story', (el) => el.textContent.trim())
+        : undefined;
       const published = findPublished(type, { stem, sig: await visibleOptions(), story });
       const correct = published.options[published.answer].text;
       const caps = await page.$$eval('.opts .opt.tile .cap', (els) => els.map((e) => e.textContent.trim()));
@@ -386,8 +545,16 @@ await page.waitForSelector('.path');
     await page.waitForSelector('.sheet');
   }
   const complete = await readComplete();
-  check('S6 keyboard-only lesson reached the complete screen', complete.h1 === '完美。' || complete.h1 === '课程完成。', complete.h1);
-  check('S6 every prompt got a verdict sheet (Enter-driven)', verdicts === complete.answers, `${verdicts}/${complete.answers}`);
+  check(
+    'S6 keyboard-only lesson reached the complete screen',
+    complete.h1 === '完美。' || complete.h1 === '课程完成。',
+    complete.h1,
+  );
+  check(
+    'S6 every prompt got a verdict sheet (Enter-driven)',
+    verdicts === complete.answers,
+    `${verdicts}/${complete.answers}`,
+  );
   await page.keyboard.press('Enter'); // presses the primary hero button
   await sleep(300);
   check('S6 Enter fired the next-lesson chain', (await page.$('.lesson')) !== null);
@@ -404,18 +571,33 @@ await page.waitForSelector('.path');
   const [download] = await Promise.all([page.waitForEvent('download'), page.click('.btn-green')]);
   const exported = JSON.parse(fs.readFileSync(await download.path(), 'utf8'));
   check('S7 export envelope carries schemaVersion 1', exported.schemaVersion === 1);
-  check('S7 export carries the live learner state', exported.learnerState.xp === xpBefore, String(exported.learnerState?.xp));
-  check('S7 export logs every attempt', Array.isArray(exported.learnerState.attempts) && exported.learnerState.attempts.length > 50, String(exported.learnerState?.attempts?.length));
+  check(
+    'S7 export carries the live learner state',
+    exported.learnerState.xp === xpBefore,
+    String(exported.learnerState?.xp),
+  );
+  check(
+    'S7 export logs every attempt',
+    Array.isArray(exported.learnerState.attempts) && exported.learnerState.attempts.length > 50,
+    String(exported.learnerState?.attempts?.length),
+  );
 
   const tampered = { ...exported, learnerState: { ...exported.learnerState, xp: 999 } };
-  await page.setInputFiles('.file-button input', { name: 'kachi-import.json', mimeType: 'application/json', buffer: Buffer.from(JSON.stringify(tampered)) });
+  await page.setInputFiles('.file-button input', {
+    name: 'kachi-import.json',
+    mimeType: 'application/json',
+    buffer: Buffer.from(JSON.stringify(tampered)),
+  });
   await sleep(400);
   await page.reload();
   await page.waitForSelector('.path');
-  check('S7 import replaces the live state and persists across reload', (await readXp()) === 999, String(await readXp()));
+  check(
+    'S7 import replaces the live state and persists across reload',
+    (await readXp()) === 999,
+    String(await readXp()),
+  );
   await shot('08-imported');
 }
-
 
 /* ---- S10: abandon mid-lesson leaves the lesson uncompleted ---- */
 {
@@ -438,7 +620,11 @@ await page.waitForSelector('.path');
   const states = await page.$$eval('.node', (els) => els.map((el) => el.className));
   check('S10 abandoned lesson is not marked done', !states[5].includes('done'), states[5]);
   check('S10 abandoned lesson stays unlocked', !states[5].includes('locked'), states[5]);
-  check('S10 partial XP from correct answers is kept (incremental engine)', (await readXp()) === xpBefore + 20, `${await readXp()} vs ${xpBefore + 20}`);
+  check(
+    'S10 partial XP from correct answers is kept (incremental engine)',
+    (await readXp()) === xpBefore + 20,
+    `${await readXp()} vs ${xpBefore + 20}`,
+  );
 }
 
 /* ---- S11: drain hearts in a lesson -> fail -> retry refills -> complete ---- */
@@ -451,15 +637,26 @@ await page.waitForSelector('.path');
   const verdicts = await driveSession({ wrongIds });
   const failH1 = await page.$eval('.hero h1', (el) => el.textContent.trim());
   check('S11 five wrongs end the lesson on the fail screen', failH1 === '爱心用完了。', failH1);
-  check('S11 exactly five verdicts before the fail screen', verdicts.filter((v) => !v).length === 5 && verdicts.length === 5, JSON.stringify(verdicts));
+  check(
+    'S11 exactly five verdicts before the fail screen',
+    verdicts.filter((v) => !v).length === 5 && verdicts.length === 5,
+    JSON.stringify(verdicts),
+  );
   await shot('10-fail');
   await page.click('.hero .btn'); // 重试本课
   await page.waitForSelector('.lesson');
   await exitTeach(); // hearts live in the quiz header, not the teach header
-  check('S11 retry refills hearts immediately', await page.$$eval('.hearts .ht.full', (els) => els.length) === 5);
+  check(
+    'S11 retry refills hearts immediately',
+    (await page.$$eval('.hearts .ht.full', (els) => els.length)) === 5,
+  );
   await driveSession({});
   const complete = await readComplete();
-  check('S11 retried lesson completes', complete.h1 === '课程完成。' || complete.h1 === '完美。', complete.h1);
+  check(
+    'S11 retried lesson completes',
+    complete.h1 === '课程完成。' || complete.h1 === '完美。',
+    complete.h1,
+  );
   await page.click('.hero .btn-ghost');
   await page.waitForSelector('.path');
   const states = await page.$$eval('.node', (els) => els.map((el) => el.className));
@@ -475,11 +672,18 @@ await page.waitForSelector('.path');
   await sleep(250);
   // chrome switched
   const navLabels = await page.$$eval('.nav button', (els) => els.map((el) => el.textContent.trim()));
-  check('S9 nav labels switch to English', JSON.stringify(navLabels) === JSON.stringify(['Learn', 'Practice', 'Glossary', 'Settings']), JSON.stringify(navLabels));
+  check(
+    'S9 nav labels switch to English',
+    JSON.stringify(navLabels) === JSON.stringify(['Learn', 'Practice', 'Glossary', 'Settings']),
+    JSON.stringify(navLabels),
+  );
   // course content switched: open the next lesson and read the teach card
   await page.click('.nav button:nth-child(1)');
   await page.waitForSelector('.path');
-  const nodeLabel = await page.evaluate(() => document.querySelector('.node.next')?.closest('.node-wrap')?.querySelector('.node-label')?.textContent);
+  const nodeLabel = await page.evaluate(
+    () =>
+      document.querySelector('.node.next')?.closest('.node-wrap')?.querySelector('.node-label')?.textContent,
+  );
   check('S9 the up-next label is English', /Up next · /.test(nodeLabel ?? ''), nodeLabel ?? 'none');
   await jsClick('button.node.next');
   await page.waitForSelector('.prompt.teach');
@@ -487,7 +691,11 @@ await page.waitForSelector('.path');
   const term = await page.$eval('.teach-term', (el) => el.textContent.trim());
   const def = await page.$eval('.teach-def', (el) => el.textContent.trim());
   check('S9 teach card kicker is English', kicker === 'New word', kicker);
-  check('S9 teach content comes from the en pack (no Chinese in the definition)', /[a-z]/i.test(def) && !/[\u4e00-\u9fff]/.test(def), `${term}: ${def.slice(0, 40)}`);
+  check(
+    'S9 teach content comes from the en pack (no Chinese in the definition)',
+    /[a-z]/i.test(def) && !/[\u4e00-\u9fff]/.test(def),
+    `${term}: ${def.slice(0, 40)}`,
+  );
   await shot('11-english-teach');
   await page.click('.xbtn');
   await page.waitForSelector('.path');
@@ -514,9 +722,13 @@ await page.waitForSelector('.path');
   const focused = await page.evaluate(() => ({
     tag: document.activeElement?.tagName,
     aria: document.activeElement?.getAttribute('aria-label'),
-    visible: document.activeElement?.matches(':focus-visible')
+    visible: document.activeElement?.matches(':focus-visible'),
   }));
-  check('S13 first Tab lands on a labelled button', focused.tag === 'BUTTON' && Boolean(focused.aria), JSON.stringify(focused));
+  check(
+    'S13 first Tab lands on a labelled button',
+    focused.tag === 'BUTTON' && Boolean(focused.aria),
+    JSON.stringify(focused),
+  );
   check('S13 focused button shows the focus ring', focused.visible === true);
 }
 
@@ -535,7 +747,11 @@ await context.close();
   });
   check('S12 phone frame is 420px wide on desktop', Math.round(box.width) === 420, String(box.width));
   check('S12 phone frame is horizontally centered', Math.abs(box.x - (1280 - 420) / 2) < 2, String(box.x));
-  check('S12 frame fills the viewport height minus padding', Math.abs(box.height - (800 - 48)) < 2, String(box.height));
+  check(
+    'S12 frame fills the viewport height minus padding',
+    Math.abs(box.height - (800 - 48)) < 2,
+    String(box.height),
+  );
   await p.screenshot({ path: path.join(SHOTS, '12-desktop.png') });
   await desktop.close();
 }
@@ -568,7 +784,11 @@ await context.close();
   page = savedPage;
 }
 
-check('E2E zero console errors across all scenarios', consoleProblems.length === 0, JSON.stringify(consoleProblems.slice(0, 4)));
+check(
+  'E2E zero console errors across all scenarios',
+  consoleProblems.length === 0,
+  JSON.stringify(consoleProblems.slice(0, 4)),
+);
 await browser.close();
 
 const failed = results.filter((r) => !r.pass);

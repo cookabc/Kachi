@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
+import { artIdForLabel, TERM_ART } from "./art";
 import { course } from "./course";
-import { TERM_ART, artIdForLabel } from "./art";
 
 describe("artIdForLabel", () => {
   it("resolves exact term ids, case, articles, and trailing periods", () => {
@@ -39,26 +39,26 @@ describe("term art coverage", () => {
 
   it("resolves every option art reference in the course", () => {
     const broken: string[] = [];
-    course.lessons.forEach((lesson) =>
-      lesson.prompts.forEach((prompt) =>
+    course.lessons.forEach((lesson) => {
+      lesson.prompts.forEach((prompt) => {
         (prompt.options ?? []).forEach((option) => {
           const id = option.art ?? artIdForLabel(option.text);
           if (!TERM_ART[id]) broken.push(`${lesson.id}/${prompt.id}: ${option.art ?? option.text}`);
-        })
-      )
-    );
+        });
+      });
+    });
     expect(broken).toEqual([]);
   });
 
   it("resolves every fill-bank word to real art, never the joke fallback", () => {
     const jokes: string[] = [];
-    course.lessons.forEach((lesson) =>
-      lesson.prompts.forEach((prompt) =>
+    course.lessons.forEach((lesson) => {
+      lesson.prompts.forEach((prompt) => {
         (prompt.bank ?? []).forEach((word) => {
           if (artIdForLabel(word) === "joke") jokes.push(`${lesson.id}/${prompt.id}: ${word}`);
-        })
-      )
-    );
+        });
+      });
+    });
     expect(jokes).toEqual([]);
   });
 });

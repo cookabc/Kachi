@@ -28,12 +28,14 @@ const course = {
     sourceIds: [],
     risk: legacyRisk.has(term.id) ? "jurisdictional" : "evergreen",
     jurisdiction: legacyRisk.has(term.id) ? "US context in legacy content" : undefined,
-    reviewStatus: "legacy"
+    reviewStatus: "legacy",
   })),
   lessons: LESSONS,
-  sources: []
+  sources: [],
 };
 
 fs.mkdirSync(path.dirname(outputPath), { recursive: true });
 fs.writeFileSync(outputPath, `${JSON.stringify(course, null, 2)}\n`);
-console.log(`Migrated ${course.lessons.length} lessons and ${course.concepts.length} concepts to ${outputPath}`);
+console.log(
+  `Migrated ${course.lessons.length} lessons and ${course.concepts.length} concepts to ${outputPath}`,
+);
