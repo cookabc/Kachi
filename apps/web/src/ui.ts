@@ -29,6 +29,7 @@ export interface UiText {
     upNext: string;
     missedNote: (n: number) => string;
     unitNote: string;
+    lockedLesson: (title: string) => string;
   };
   practice: {
     brand: string;
@@ -102,6 +103,8 @@ export interface UiText {
   };
   updateBanner: string;
   loading: string;
+  /** Document shell metadata — synced onto <html> whenever the language changes. */
+  doc: { title: string; description: string };
 }
 
 export const UI: Record<Lang, UiText> = {
@@ -111,21 +114,22 @@ export const UI: Record<Lang, UiText> = {
       learn: { label: "学习", aria: "学习路径" },
       practice: { label: "复习", aria: "复习练习" },
       glossary: { label: "词汇", aria: "词汇表" },
-      settings: { label: "设置", aria: "设置" }
+      settings: { label: "设置", aria: "设置" },
     },
     home: {
       tagline: "分清易混的财经英语。五分钟，没有投资建议。",
       unit: (id) => `单元 ${id}`,
       upNext: "接下来 · ",
       missedNote: (n) => `有 ${n} 个术语等着复习——它们在「复习」页。`,
-      unitNote: "第 1–2 单元是正在进行的对话；3–5 单元在路径上等你。"
+      unitNote: "第 1–2 单元是正在进行的对话；3–5 单元在路径上等你。",
+      lockedLesson: (title) => `${title}（未解锁）`,
     },
     practice: {
       brand: "今日复习",
       title: "练掉混淆。",
       missCopy: (n) => `有 ${n} 个术语等着复习。复习不会解锁路径。`,
       noMissCopy: "还没有错题。先练第 1 单元。",
-      start: (n) => `开始 ${n} 题复习`
+      start: (n) => `开始 ${n} 题复习`,
     },
     glossary: {
       brand: "词汇表",
@@ -136,7 +140,7 @@ export const UI: Record<Lang, UiText> = {
       mix: "混淆：",
       empty: (q) => `没有匹配「${q}」的术语。`,
       emptyHint: "试试 hedge、put、swap、margin call。",
-      footer: "不构成投资建议。只讲词语，不作推荐。"
+      footer: "不构成投资建议。只讲词语，不作推荐。",
     },
     settings: {
       brand: "设置",
@@ -148,12 +152,18 @@ export const UI: Record<Lang, UiText> = {
       langLabel: "界面与课程语言",
       langNames: { "zh-CN": "中文", "en-US": "English" },
       imported: "学习数据已导入。",
-      importFailed: "导入失败。"
+      importFailed: "导入失败。",
     },
     lesson: {
       close: "退出课程",
       learnTag: "学习",
-      kickers: { meaning: "词义辨析", truefalse: "判断正误", fill: "补全句子", scenario: "真实情境", match: "配对练习" },
+      kickers: {
+        meaning: "词义辨析",
+        truefalse: "判断正误",
+        fill: "补全句子",
+        scenario: "真实情境",
+        match: "配对练习",
+      },
       matchHint: "先点术语，再点解释。",
       check: "检查",
       continue: "继续",
@@ -165,11 +175,11 @@ export const UI: Record<Lang, UiText> = {
       recapGo: "该你了",
       teachContinue: "继续",
       teachStart: "开始练习",
-      practiceTitle: "今日复习"
+      practiceTitle: "今日复习",
     },
     verdicts: {
       nice: ["不错。", "正是。", "答对了。", "漂亮。"],
-      nope: ["还差一点。", "混淆了。", "又是这一对。", "岔路走反了。"]
+      nope: ["还差一点。", "混淆了。", "又是这一对。", "岔路走反了。"],
     },
     complete: {
       flawless: "完美。",
@@ -184,17 +194,21 @@ export const UI: Record<Lang, UiText> = {
       nextLesson: (title) => `下一课：${title}`,
       practiceThose: "练一练这些",
       backToPath: "回到路径",
-      practiceAgain: "再来一轮"
+      practiceAgain: "再来一轮",
     },
     fail: {
       title: "爱心用完了。",
       copy: "这一课的混淆坑了你。重试，爱心立刻补满。",
       retryLesson: "重试本课",
       retryPractice: "再来一轮",
-      backToPath: "回到路径"
+      backToPath: "回到路径",
     },
     updateBanner: "新版本已准备好，完成当前学习后点击更新",
-    loading: "正在准备离线学习空间…"
+    loading: "正在准备离线学习空间…",
+    doc: {
+      title: "Kachi — 财经英语学习",
+      description: "Kachi：面向中文用户的财经英语学习。",
+    },
   },
   "en-US": {
     navAria: "Main navigation",
@@ -202,21 +216,22 @@ export const UI: Record<Lang, UiText> = {
       learn: { label: "Learn", aria: "Learning path" },
       practice: { label: "Practice", aria: "Practice rounds" },
       glossary: { label: "Glossary", aria: "Glossary" },
-      settings: { label: "Settings", aria: "Settings" }
+      settings: { label: "Settings", aria: "Settings" },
     },
     home: {
       tagline: "Tell the mix-ups apart. Five minutes. No advice.",
       unit: (id) => `Unit ${id}`,
       upNext: "Up next · ",
       missedNote: (n) => `${n} term${n === 1 ? "" : "s"} waiting to be reviewed — they live in Practice.`,
-      unitNote: "Units 1–2 are the conversation. 3–5 wait on the path."
+      unitNote: "Units 1–2 are the conversation. 3–5 wait on the path.",
+      lockedLesson: (title) => `${title} (locked)`,
     },
     practice: {
       brand: "Practice",
       title: "Drill the mix-up.",
       missCopy: (n) => `${n} term${n === 1 ? "" : "s"} to review. Practice never unlocks the path.`,
       noMissCopy: "No misses yet — we'll drill Unit 1.",
-      start: (n) => `Start a ${n}-prompt round`
+      start: (n) => `Start a ${n}-prompt round`,
     },
     glossary: {
       brand: "Glossary",
@@ -227,7 +242,7 @@ export const UI: Record<Lang, UiText> = {
       mix: "Mix-up: ",
       empty: (q) => `No terms match "${q}".`,
       emptyHint: "Try hedge, put, swap, margin call.",
-      footer: "Not investment advice. Words, not recommendations."
+      footer: "Not investment advice. Words, not recommendations.",
     },
     settings: {
       brand: "Settings",
@@ -235,32 +250,39 @@ export const UI: Record<Lang, UiText> = {
       copy: "Your record lives in this browser. No account, no ads, no analytics. Export or import any time.",
       exportBtn: "Export learning data",
       importBtn: "Import learning data",
-      contentNote: "Courses ship as Git content packs; entries touching tax, regulation, and instruments carry scope and review status.",
+      contentNote:
+        "Courses ship as Git content packs; entries touching tax, regulation, and instruments carry scope and review status.",
       langLabel: "Interface & course language",
       langNames: { "zh-CN": "中文", "en-US": "English" },
       imported: "Learning data imported.",
-      importFailed: "Import failed."
+      importFailed: "Import failed.",
     },
     lesson: {
       close: "Close lesson",
       learnTag: "Learn",
-      kickers: { meaning: "Meaning", truefalse: "True or false", fill: "Fill the blank", scenario: "Scenario", match: "Match the pairs" },
+      kickers: {
+        meaning: "Meaning",
+        truefalse: "True or false",
+        fill: "Fill the blank",
+        scenario: "Scenario",
+        match: "Match the pairs",
+      },
       matchHint: "Tap a term, then its match.",
       check: "Check",
       continue: "Continue",
       heartsAria: (n, max) => `Hearts ${n}/${max}`,
-      teachKicker: (termZh) => "New word",
+      teachKicker: (_termZh) => "New word",
       recapKicker: "Unit recap",
       recapTitle: "These words again.",
       recapSub: "A short practice of this unit. No new words.",
       recapGo: "Your turn",
       teachContinue: "Continue",
       teachStart: "Let's practice",
-      practiceTitle: "Practice"
+      practiceTitle: "Practice",
     },
     verdicts: {
       nice: ["Nice.", "Exactly.", "You got it.", "Clean."],
-      nope: ["Not quite.", "Mix-up.", "That pair again.", "Close, wrong fork."]
+      nope: ["Not quite.", "Mix-up.", "That pair again.", "Close, wrong fork."],
     },
     complete: {
       flawless: "Flawless.",
@@ -275,16 +297,20 @@ export const UI: Record<Lang, UiText> = {
       nextLesson: (title) => `Next: ${title}`,
       practiceThose: "Practice those",
       backToPath: "Back to the path",
-      practiceAgain: "Practice again"
+      practiceAgain: "Practice again",
     },
     fail: {
       title: "Out of hearts.",
       copy: "That mix-up got you. Retry — hearts refill now.",
       retryLesson: "Retry lesson",
       retryPractice: "Retry practice",
-      backToPath: "Back to the path"
+      backToPath: "Back to the path",
     },
     updateBanner: "A new version is ready — update after this session",
-    loading: "Preparing your offline study space…"
-  }
+    loading: "Preparing your offline study space…",
+    doc: {
+      title: "Kachi — Finance English, without the mix-ups",
+      description: "Tell confusable finance-English terms apart. Five minutes a day, no investment advice.",
+    },
+  },
 };

@@ -1,10 +1,5 @@
 import type { Concept, Course, Exercise, LearnerState, SessionState } from "@kachi/domain";
-import {
-  duePairIds,
-  isLessonUnlocked,
-  pairIdForConcept,
-  recentMissTermIds
-} from "@kachi/learning-engine";
+import { duePairIds, isLessonUnlocked, recentMissTermIds } from "@kachi/learning-engine";
 
 export const PRACTICE_ROUND = 10;
 
@@ -64,7 +59,8 @@ export function present(prompt: Exercise): PresentedExercise {
 function primaryTermIds(course: Course, lesson: Course["lessons"][number]): string[] {
   const ids: string[] = [];
   lesson.prompts.forEach((prompt) => {
-    if (prompt.termId && conceptOf(course, prompt.termId) && ids.indexOf(prompt.termId) === -1) ids.push(prompt.termId);
+    if (prompt.termId && conceptOf(course, prompt.termId) && ids.indexOf(prompt.termId) === -1)
+      ids.push(prompt.termId);
   });
   return ids;
 }
@@ -82,14 +78,19 @@ function taughtInEarlierLessons(course: Course, lesson: Course["lessons"][number
   const here = course.lessons.findIndex((item) => item.id === lesson.id);
   course.lessons.forEach((item, index) => {
     if (item.unit !== lesson.unit || item.review || index >= here) return;
-    primaryTermIds(course, item).forEach((id) => seen.add(id));
+    primaryTermIds(course, item).forEach((id) => {
+      seen.add(id);
+    });
   });
   return seen;
 }
 
 // A review recaps every unit term; a normal lesson teaches the terms that are
 // not already taught by earlier lessons of the same unit.
-export function teachPlan(lesson: Course["lessons"][number], course: Course): { mode: TeachMode; terms: string[] } {
+export function teachPlan(
+  lesson: Course["lessons"][number],
+  course: Course,
+): { mode: TeachMode; terms: string[] } {
   if (lesson.review) return { mode: "recap", terms: unitTermIds(course, lesson.unit) };
   const seen = taughtInEarlierLessons(course, lesson);
   return { mode: "first", terms: primaryTermIds(course, lesson).filter((id) => !seen.has(id)) };
@@ -98,30 +99,46 @@ export function teachPlan(lesson: Course["lessons"][number], course: Course): { 
 // Practice pool: focus (explicit, then due confusion pairs, then recent misses)
 // sorts weak prompts first; the pool is capped at unlocked lessons, with u1l2
 // kept open as the fresh-player seed. `now` is injectable for deterministic tests.
-export function practicePool(state: LearnerState, course: Course, focusIds?: string[], roundSize = PRACTICE_ROUND, now: Date = new Date()): string[] {
+export function practicePool(
+  state: LearnerState,
+  course: Course,
+  focusIds?: string[],
+  roundSize = PRACTICE_ROUND,
+  now: Date = new Date(),
+): string[] {
   const due = new Set(duePairIds(state, now));
   const focus = new Set<string>(focusIds ?? []);
   if (!focus.size) {
-    course.concepts.forEach((concept) => {
-      const pairId = pairIdForConcept(concept);
-      if (pairId && due.has(pairId)) {
-        focus.add(concept.id);
-        focus.add(concept.mixUp);
-      }
+    // Pair ids are "a::b" concept-id keys. An observed match mispair may not
+    // be any published concept's canonical mixUp pair, so focus both halves
+    // directly instead of only mapping canonical pairs back to concepts.
+    due.forEach((pairId) => {
+      pairId.split("::").forEach((id) => {
+        if (conceptOf(course, id)) focus.add(id);
+      });
     });
   }
-  if (!focus.size) recentMissTermIds(state).forEach((id) => focus.add(id));
+  if (!focus.size)
+    recentMissTermIds(state).forEach((id) => {
+      focus.add(id);
+    });
 
   const available = course.lessons
     .filter((lesson) => isLessonUnlocked(state, course, lesson.id) || lesson.id === "u1l2")
     .flatMap((lesson) => lesson.prompts);
   let pool: Exercise[];
   if (focus.size) {
-    const weak = shuffle(available.filter((prompt) => realTermIds(prompt, course).some((id) => focus.has(id))));
+    const weak = shuffle(
+      available.filter((prompt) => realTermIds(prompt, course).some((id) => focus.has(id))),
+    );
     const rest = shuffle(available.filter((prompt) => weak.indexOf(prompt) === -1));
     pool = weak.concat(rest);
   } else {
-    pool = shuffle(course.lessons.filter((lesson) => lesson.id === "u1l1" || lesson.id === "u1l2").flatMap((lesson) => lesson.prompts));
+    pool = shuffle(
+      course.lessons
+        .filter((lesson) => lesson.id === "u1l1" || lesson.id === "u1l2")
+        .flatMap((lesson) => lesson.prompts),
+    );
   }
   const picked: string[] = [];
   const seenIds = new Set<string>();
@@ -140,7 +157,7 @@ export function resolveMatch(
   locked: string[],
   pairs: NonNullable<Exercise["pairs"]>,
   leftId: string,
-  rightId: string
+  rightId: string,
 ): { locked: string[]; judged: "matched" | false | null } {
   if (leftId !== rightId) return { locked, judged: false };
   const nextLocked = [...locked, leftId];
@@ -165,5 +182,13 @@ export function sessionSummary(session: SessionState): Summary {
       });
     }
   });
-  return { gained: xpHit + xpDone + xpPerfect, xpHit, xpDone, xpPerfect, correct, total, mix: mix.slice(0, 3) };
+  return {
+    gained: xpHit + xpDone + xpPerfect,
+    xpHit,
+    xpDone,
+    xpPerfect,
+    correct,
+    total,
+    mix: mix.slice(0, 3),
+  };
 }

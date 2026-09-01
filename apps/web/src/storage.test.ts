@@ -1,6 +1,6 @@
-import { beforeEach, describe, expect, it } from "vitest";
 import type { LearnerState } from "@kachi/domain";
 import { emptyLearnerState } from "@kachi/learning-engine";
+import { beforeEach, describe, expect, it } from "vitest";
 import { exportLearnerData, importLearnerData, loadLearnerState, saveLearnerState } from "./storage";
 
 /* A minimal in-memory IndexedDB that satisfies exactly what storage.ts uses:
@@ -24,11 +24,17 @@ function installFakeIndexedDB() {
     }
     settle() {
       this.pending -= 1;
-      if (this.pending === 0) setTimeout(() => this.oncomplete?.(), 0);
+      if (this.pending === 0)
+        setTimeout(() => {
+          if (this.pending === 0) this.oncomplete?.();
+        }, 0);
     }
   }
   class FakeStore {
-    constructor(private name: string, private transaction: FakeTransaction) {}
+    constructor(
+      private name: string,
+      private transaction: FakeTransaction,
+    ) {}
     private map() {
       if (!stores.has(this.name)) stores.set(this.name, new Map());
       return stores.get(this.name)!;
@@ -81,15 +87,26 @@ function installFakeIndexedDB() {
         request.onsuccess?.();
       }, 0);
       return request;
-    }
+    },
+  };
+  return {
+    seed(store: string, key: string, value: unknown) {
+      if (!stores.has(store)) stores.set(store, new Map());
+      stores.get(store)!.set(key, value);
+    },
+    read(store: string, key: string) {
+      return stores.get(store)?.get(key);
+    },
   };
 }
 
 const LEGACY_KEY = "hedge-or-pledge-v1";
 
+let fakeDatabase: ReturnType<typeof installFakeIndexedDB>;
+
 beforeEach(() => {
   localStorage.clear();
-  installFakeIndexedDB();
+  fakeDatabase = installFakeIndexedDB();
 });
 
 function fileOf(payload: unknown): File {
@@ -107,6 +124,20 @@ function blobText(blob: Blob): Promise<string> {
   });
 }
 
+function sampleMastery() {
+  return {
+    confusionPairId: "hedge::pledge",
+    consecutiveCorrect: 2,
+    lapses: 1,
+    evidenceTypes: ["meaning", "fill"] as Array<"meaning" | "fill">,
+    unseenScenarioCorrect: false,
+    firstSeenAt: "2026-08-28T08:00:00.000Z",
+    lastReviewedAt: "2026-08-29T08:00:00.000Z",
+    dueAt: "2026-09-01T08:00:00.000Z",
+    schedulerVersion: "0.1.0",
+  };
+}
+
 function sampleState(): LearnerState {
   return {
     ...emptyLearnerState(),
@@ -115,20 +146,22 @@ function sampleState(): LearnerState {
     lastLessonDate: "2026-08-29",
     completedLessonIds: ["u1l1"],
     seenConceptIds: ["hedge", "pledge"],
-    attempts: [{
-      eventId: "event-1",
-      deviceId: "device",
-      contentVersion: "1",
-      engineVersion: "0.1.0",
-      exerciseId: "u1l1a",
-      conceptIds: ["hedge"],
-      exerciseType: "meaning",
-      answer: "Insurance on a bet you already have.",
-      correct: true,
-      hintUsed: false,
-      latencyMs: 0,
-      occurredAt: "2026-08-29T08:00:00.000Z"
-    }]
+    attempts: [
+      {
+        eventId: "event-1",
+        deviceId: "device",
+        contentVersion: "1",
+        engineVersion: "0.1.0",
+        exerciseId: "u1l1a",
+        conceptIds: ["hedge"],
+        exerciseType: "meaning",
+        answer: "Insurance on a bet you already have.",
+        correct: true,
+        hintUsed: false,
+        latencyMs: 0,
+        occurredAt: "2026-08-29T08:00:00.000Z",
+      },
+    ],
   };
 }
 
@@ -141,13 +174,16 @@ describe("learner storage", () => {
   });
 
   it("migrates legacy localStorage progress on first load", async () => {
-    localStorage.setItem(LEGACY_KEY, JSON.stringify({
-      xp: 40,
-      streak: 2,
-      lastPlayedDate: "2026-08-01",
-      completedLessonIds: ["u1l1", "u1l2"],
-      seenTermIds: ["hedge"]
-    }));
+    localStorage.setItem(
+      LEGACY_KEY,
+      JSON.stringify({
+        xp: 40,
+        streak: 2,
+        lastPlayedDate: "2026-08-01",
+        completedLessonIds: ["u1l1", "u1l2"],
+        seenTermIds: ["hedge"],
+      }),
+    );
     const loaded = await loadLearnerState();
     expect(loaded.xp).toBe(40);
     expect(loaded.streak).toBe(2);
@@ -180,7 +216,9 @@ describe("learner storage", () => {
 
   it("rejects envelopes that are not Kachi learning data", async () => {
     await expect(importLearnerData(fileOf({ hello: "world" }))).rejects.toThrow(/不是兼容/);
-    await expect(importLearnerData(fileOf({ schemaVersion: 2, learnerState: sampleState() }))).rejects.toThrow(/不是兼容/);
+    await expect(
+      importLearnerData(fileOf({ schemaVersion: 2, learnerState: sampleState() })),
+    ).rejects.toThrow(/不是兼容/);
   });
 
   it("rejects learner states whose required collections are missing or malformed", async () => {
@@ -189,5 +227,142 @@ describe("learner storage", () => {
 
     const noAttempts = { schemaVersion: 1, learnerState: { ...emptyLearnerState(), attempts: "log" } };
     await expect(importLearnerData(fileOf(noAttempts))).rejects.toThrow(/不是兼容/);
+  });
+
+  it("rejects attempt collections containing malformed events", async () => {
+    const partialEvent = {
+      schemaVersion: 1,
+      learnerState: { ...emptyLearnerState(), attempts: [{ eventId: "x" }] },
+    };
+    await expect(importLearnerData(fileOf(partialEvent))).rejects.toThrow(/不是兼容/);
+
+    const unknownType = {
+      schemaVersion: 1,
+      learnerState: {
+        ...emptyLearnerState(),
+        attempts: [{ ...sampleState().attempts[0], exerciseType: "spelling" }],
+      },
+    };
+    await expect(importLearnerData(fileOf(unknownType))).rejects.toThrow(/不是兼容/);
+
+    const badDate = {
+      schemaVersion: 1,
+      learnerState: {
+        ...emptyLearnerState(),
+        attempts: [{ ...sampleState().attempts[0], occurredAt: "yesterday" }],
+      },
+    };
+    await expect(importLearnerData(fileOf(badDate))).rejects.toThrow(/不是兼容/);
+  });
+
+  it("rejects mastery maps whose entries are not mastery states", async () => {
+    const nullEntry = {
+      schemaVersion: 1,
+      learnerState: { ...emptyLearnerState(), mastery: { "hedge::pledge": null } },
+    };
+    await expect(importLearnerData(fileOf(nullEntry))).rejects.toThrow(/不是兼容/);
+
+    const partialEntry = {
+      schemaVersion: 1,
+      learnerState: {
+        ...emptyLearnerState(),
+        mastery: { "hedge::pledge": { confusionPairId: "hedge::pledge" } },
+      },
+    };
+    await expect(importLearnerData(fileOf(partialEntry))).rejects.toThrow(/不是兼容/);
+  });
+
+  it("rejects invalid collection members and negative or fractional counters", async () => {
+    const invalidStates = [
+      { ...emptyLearnerState(), completedLessonIds: ["u1l1", 42] },
+      { ...emptyLearnerState(), seenConceptIds: [null] },
+      { ...emptyLearnerState(), xp: -1 },
+      { ...emptyLearnerState(), streak: 1.5 },
+      { ...emptyLearnerState(), attempts: [{ ...sampleState().attempts[0], conceptIds: ["hedge", {}] }] },
+      { ...emptyLearnerState(), attempts: [{ ...sampleState().attempts[0], latencyMs: -1 }] },
+    ];
+    for (const learnerState of invalidStates) {
+      await expect(importLearnerData(fileOf({ schemaVersion: 1, learnerState }))).rejects.toThrow(/不是兼容/);
+    }
+  });
+
+  it("rejects invalid mastery counters, evidence types, and pair identities", async () => {
+    const mastery = sampleMastery();
+    const invalidEntries = [
+      { key: "hedge::pledge", value: { ...mastery, consecutiveCorrect: 0.5 } },
+      { key: "hedge::pledge", value: { ...mastery, consecutiveCorrect: 999 } },
+      { key: "hedge::pledge", value: { ...mastery, lapses: -1 } },
+      { key: "hedge::pledge", value: { ...mastery, evidenceTypes: ["meaning", "spelling"] } },
+      { key: "hedge::pledge", value: { ...mastery, evidenceTypes: ["meaning", "meaning"] } },
+      { key: "hedge::pledge", value: { ...mastery, confusionPairId: "call::put" } },
+      { key: "pledge::hedge", value: { ...mastery, confusionPairId: "pledge::hedge" } },
+      { key: "hedge::hedge", value: { ...mastery, confusionPairId: "hedge::hedge" } },
+    ];
+    for (const entry of invalidEntries) {
+      const learnerState = { ...emptyLearnerState(), mastery: { [entry.key]: entry.value } };
+      await expect(importLearnerData(fileOf({ schemaVersion: 1, learnerState }))).rejects.toThrow(/不是兼容/);
+    }
+    const invalidAttempt = {
+      ...emptyLearnerState(),
+      attempts: [{ ...sampleState().attempts[0], confusionPairId: "pledge::hedge" }],
+    };
+    await expect(
+      importLearnerData(fileOf({ schemaVersion: 1, learnerState: invalidAttempt })),
+    ).rejects.toThrow(/不是兼容/);
+  });
+
+  it("accepts a complete canonical mastery entry", async () => {
+    const mastery = sampleMastery();
+    const learnerState = {
+      ...emptyLearnerState(),
+      mastery: { [mastery.confusionPairId]: mastery },
+    } as LearnerState;
+    await expect(importLearnerData(fileOf({ schemaVersion: 1, learnerState }))).resolves.toEqual(
+      learnerState,
+    );
+  });
+
+  it("replaces an invalid persisted snapshot with a durable empty state", async () => {
+    fakeDatabase.seed("snapshots", "local-profile", { ...emptyLearnerState(), attempts: "broken" });
+
+    expect(await loadLearnerState()).toEqual(emptyLearnerState());
+    expect(fakeDatabase.read("snapshots", "local-profile")).toEqual(emptyLearnerState());
+    expect(fakeDatabase.read("meta", "recovery")).toMatchObject({
+      reason: "invalid-snapshot",
+      source: "fresh",
+    });
+    expect(await loadLearnerState()).toEqual(emptyLearnerState());
+  });
+
+  it("recovers an invalid persisted snapshot from valid legacy progress", async () => {
+    fakeDatabase.seed("snapshots", "local-profile", { ...emptyLearnerState(), mastery: { broken: null } });
+    localStorage.setItem(
+      LEGACY_KEY,
+      JSON.stringify({
+        xp: 40,
+        streak: 2,
+        completedLessonIds: ["u1l1"],
+        seenTermIds: ["hedge"],
+      }),
+    );
+
+    const recovered = await loadLearnerState();
+    expect(recovered).toMatchObject({
+      xp: 40,
+      streak: 2,
+      completedLessonIds: ["u1l1"],
+      seenConceptIds: ["hedge"],
+    });
+    localStorage.clear();
+    expect(await loadLearnerState()).toEqual(recovered);
+  });
+
+  it("keeps a valid snapshot even when legacy progress also exists", async () => {
+    const snapshot = sampleState();
+    fakeDatabase.seed("snapshots", "local-profile", snapshot);
+    localStorage.setItem(LEGACY_KEY, JSON.stringify({ xp: 999, streak: 99 }));
+
+    expect(await loadLearnerState()).toEqual(snapshot);
+    expect(fakeDatabase.read("snapshots", "local-profile")).toEqual(snapshot);
   });
 });

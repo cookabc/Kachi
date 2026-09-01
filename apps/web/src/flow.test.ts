@@ -1,6 +1,6 @@
-import { describe, expect, it } from "vitest";
-import type { Course, Exercise, LearnerState, SessionState } from "@kachi/domain";
+import type { Exercise, LearnerState, SessionState } from "@kachi/domain";
 import { emptyLearnerState } from "@kachi/learning-engine";
+import { describe, expect, it } from "vitest";
 import { course } from "./course";
 import { PRACTICE_ROUND, practicePool, present, resolveMatch, sessionSummary, teachPlan } from "./flow";
 
@@ -31,7 +31,7 @@ function attempt(correct: boolean, termIds: string[]) {
     correct,
     hintUsed: false,
     latencyMs: 0,
-    occurredAt: environmentNow.toISOString()
+    occurredAt: environmentNow.toISOString(),
   };
 }
 
@@ -43,8 +43,9 @@ describe("present", () => {
 
     expect(shown).not.toBe(published);
     expect(shown.options).toHaveLength(published.options!.length);
-    expect([...shown.options!].sort((a, b) => a.text.localeCompare(b.text)))
-      .toEqual([...published.options!].sort((a, b) => a.text.localeCompare(b.text)));
+    expect([...shown.options!].sort((a, b) => a.text.localeCompare(b.text))).toEqual(
+      [...published.options!].sort((a, b) => a.text.localeCompare(b.text)),
+    );
     expect(shown.correctText).toBe(published.options![published.answer as number].text);
     expect(JSON.stringify(published)).toBe(before); // published content is never mutated
   });
@@ -103,13 +104,15 @@ describe("practicePool", () => {
     expect(ids.length).toBeLessThanOrEqual(10);
     expect(new Set(ids).size).toBe(ids.length);
     const poolLessons = new Set(ids.map((id) => id.slice(0, 4)));
-    expect([...poolLessons].every((prefix) => prefix.startsWith("u1l1") || prefix.startsWith("u1l2"))).toBe(true);
+    expect([...poolLessons].every((prefix) => prefix.startsWith("u1l1") || prefix.startsWith("u1l2"))).toBe(
+      true,
+    );
   });
 
   it("puts prompts tagged with the focus terms first", () => {
     const state: LearnerState = {
       ...emptyLearnerState(),
-      attempts: [attempt(false, ["hedge"]), attempt(false, ["pledge"])]
+      attempts: [attempt(false, ["hedge"]), attempt(false, ["pledge"])],
     };
     const ids = practicePool(state, course);
     const weakCount = ids.filter((id) => {
@@ -134,14 +137,43 @@ describe("practicePool", () => {
           evidenceTypes: ["meaning"],
           unseenScenarioCorrect: false,
           dueAt: new Date(environmentNow.getTime() - 1000).toISOString(),
-          schedulerVersion: "0.1.0"
-        }
-      }
+          schedulerVersion: "0.1.0",
+        },
+      },
     };
     const ids = practicePool(state, course, undefined, PRACTICE_ROUND, environmentNow);
     expect(ids.length).toBeGreaterThan(0);
     const first = publishedPrompt(ids[0]);
     expect((first.termIds ?? []).some((term) => term === "hedge" || term === "pledge")).toBe(true);
+  });
+
+  it("focuses an observed mispair even when it is no published mix-up", () => {
+    // a live match mispair ("collateral::hedge") is not any concept's canonical
+    // pair — both halves must still reach the practice pool when it comes due
+    const state: LearnerState = {
+      ...emptyLearnerState(),
+      mastery: {
+        "collateral::hedge": {
+          confusionPairId: "collateral::hedge",
+          consecutiveCorrect: 0,
+          lapses: 1,
+          evidenceTypes: [],
+          unseenScenarioCorrect: false,
+          dueAt: new Date(environmentNow.getTime() - 1000).toISOString(),
+          schedulerVersion: "0.1.0",
+        },
+      },
+    };
+    const ids = practicePool(state, course, undefined, PRACTICE_ROUND, environmentNow);
+    const weakCount = ids.filter((id) => {
+      const prompt = publishedPrompt(id);
+      return (prompt.termIds ?? []).some((term) => term === "hedge" || term === "collateral");
+    }).length;
+    expect(weakCount).toBeGreaterThan(0);
+    ids.slice(0, weakCount).forEach((id) => {
+      const prompt = publishedPrompt(id);
+      expect((prompt.termIds ?? []).some((term) => term === "hedge" || term === "collateral")).toBe(true);
+    });
   });
 
   it("honors an explicit focus (Practice those)", () => {
@@ -162,7 +194,7 @@ describe("practicePool", () => {
 describe("resolveMatch", () => {
   const pairs = [
     { id: "hedge", left: "hedge", right: "Insurance on a position you own" },
-    { id: "pledge", left: "pledge", right: "Put the asset up for a loan" }
+    { id: "pledge", left: "pledge", right: "Put the asset up for a loan" },
   ];
 
   it("locks a correct pair and keeps judging", () => {
@@ -189,19 +221,33 @@ describe("sessionSummary", () => {
       promptIds: results.map((_, index) => `p${index}`),
       index: results.length,
       results,
-      startedAt: environmentNow.toISOString()
+      startedAt: environmentNow.toISOString(),
     };
   }
 
   it("mirrors the engine payout for a lesson", () => {
     const results = [
-      attempt(true, ["hedge"]), attempt(true, ["hedge"]), attempt(true, ["pledge"]),
-      attempt(false, ["hedge"]), attempt(false, ["margin call"]),
-      attempt(true, ["hedge"]), attempt(true, ["hedge"]), attempt(true, ["hedge"]),
-      attempt(false, ["hedge"]), attempt(true, ["hedge"])
+      attempt(true, ["hedge"]),
+      attempt(true, ["hedge"]),
+      attempt(true, ["pledge"]),
+      attempt(false, ["hedge"]),
+      attempt(false, ["margin call"]),
+      attempt(true, ["hedge"]),
+      attempt(true, ["hedge"]),
+      attempt(true, ["hedge"]),
+      attempt(false, ["hedge"]),
+      attempt(true, ["hedge"]),
     ];
     const summary = sessionSummary(sessionOf("lesson", results));
-    expect(summary).toEqual({ gained: 90, xpHit: 70, xpDone: 20, xpPerfect: 0, correct: 7, total: 10, mix: ["hedge", "margin call"] });
+    expect(summary).toEqual({
+      gained: 90,
+      xpHit: 70,
+      xpDone: 20,
+      xpPerfect: 0,
+      correct: 7,
+      total: 10,
+      mix: ["hedge", "margin call"],
+    });
   });
 
   it("pays practice rounds per correct answer only", () => {

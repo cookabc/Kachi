@@ -1,6 +1,7 @@
-import { describe, expect, it } from "vitest";
 import type { Course, Environment, Exercise, LearnerState, SessionState } from "@kachi/domain";
+import { describe, expect, it } from "vitest";
 import {
+  type ApplyOptions,
   applyAnswer,
   currentExercise,
   duePairIds,
@@ -8,10 +9,10 @@ import {
   isCorrect,
   isLessonUnlocked,
   isVerifiedMastery,
-  requeuePrompt,
   recentMissTermIds,
+  requeuePrompt,
   startPracticeSession,
-  startSession
+  startSession,
 } from "./index";
 
 const course: Course = {
@@ -21,27 +22,71 @@ const course: Course = {
   locale: "zh-CN",
   generatedAt: "2026-08-28T00:00:00.000Z",
   units: [{ id: 1, title: "Test", blurb: "Test" }],
-  concepts: [{ id: "hedge", unit: 1, term: "hedge", caption: "", definition: "", example: "", mixUp: "pledge", mixUpWhy: "", sourceIds: [], risk: "evergreen", reviewStatus: "legacy" }],
-  lessons: [{ id: "lesson", unit: 1, title: "Test", icon: "", review: false, prompts: [{ id: "one", type: "meaning", termId: "hedge", termIds: ["hedge"], stem: "", options: [{ text: "right" }, { text: "wrong" }], answer: 0, why: "" }] }],
-  sources: []
+  concepts: [
+    {
+      id: "hedge",
+      unit: 1,
+      term: "hedge",
+      caption: "",
+      definition: "",
+      example: "",
+      mixUp: "pledge",
+      mixUpWhy: "",
+      sourceIds: [],
+      risk: "evergreen",
+      reviewStatus: "legacy",
+    },
+  ],
+  lessons: [
+    {
+      id: "lesson",
+      unit: 1,
+      title: "Test",
+      icon: "",
+      review: false,
+      prompts: [
+        {
+          id: "one",
+          type: "meaning",
+          termId: "hedge",
+          termIds: ["hedge"],
+          stem: "",
+          options: [{ text: "right" }, { text: "wrong" }],
+          answer: 0,
+          why: "",
+        },
+      ],
+    },
+  ],
+  sources: [],
 };
 
 const twoPromptCourse: Course = {
   ...course,
-  lessons: [{
-    ...course.lessons[0],
-    prompts: [
-      course.lessons[0].prompts[0],
-      { id: "two", type: "truefalse", termId: "hedge", termIds: ["hedge"], stem: "", answer: true, why: "" }
-    ]
-  }]
+  lessons: [
+    {
+      ...course.lessons[0],
+      prompts: [
+        course.lessons[0].prompts[0],
+        {
+          id: "two",
+          type: "truefalse",
+          termId: "hedge",
+          termIds: ["hedge"],
+          stem: "",
+          answer: true,
+          why: "",
+        },
+      ],
+    },
+  ],
 };
 
 const environment: Environment = {
   now: () => new Date("2026-08-28T12:00:00.000Z"),
   random: () => 0.5,
   deviceId: "test-device",
-  eventId: () => "event-1"
+  eventId: () => "event-1",
 };
 
 describe("learning engine", () => {
@@ -64,7 +109,9 @@ describe("learning engine", () => {
 
   it("does not complete the lesson when the last wrong answer spends the final heart", () => {
     const session = startSession(course, "lesson", environment);
-    const result = applyAnswer(course, emptyLearnerState(), session, "wrong", environment, { heartsAfter: 0 });
+    const result = applyAnswer(course, emptyLearnerState(), session, "wrong", environment, {
+      heartsAfter: 0,
+    });
     expect(result.finished).toBe(true);
     expect(result.state.completedLessonIds).toEqual([]);
     expect(result.state.streak).toBe(0);
@@ -74,7 +121,9 @@ describe("learning engine", () => {
 
   it("still completes a lesson finished with hearts left but a wrong last answer", () => {
     const session = startSession(course, "lesson", environment);
-    const result = applyAnswer(course, emptyLearnerState(), session, "wrong", environment, { heartsAfter: 2 });
+    const result = applyAnswer(course, emptyLearnerState(), session, "wrong", environment, {
+      heartsAfter: 2,
+    });
     expect(result.state.completedLessonIds).toEqual(["lesson"]);
     expect(result.state.xp).toBe(20);
   });
@@ -159,7 +208,9 @@ describe("mastery scheduling", () => {
       session = next.session;
       const mastery = state.mastery[pairId];
       expect(mastery.consecutiveCorrect).toBe(Math.min(index + 2, 6));
-      expect(mastery.dueAt).toBe(new Date(Date.parse("2026-08-28T12:00:00.000Z") + days * 86_400_000).toISOString());
+      expect(mastery.dueAt).toBe(
+        new Date(Date.parse("2026-08-28T12:00:00.000Z") + days * 86_400_000).toISOString(),
+      );
     });
     expect(state.mastery[pairId].lapses).toBe(0);
   });
@@ -180,7 +231,7 @@ describe("mastery scheduling", () => {
   });
 
   it("treats a hint-assisted correct as a lapse", () => {
-    let state = emptyLearnerState();
+    const state = emptyLearnerState();
     const session = startSession(course, "lesson", environment);
     const result = applyAnswer(course, state, session, "right", environment, { hintUsed: true });
 
@@ -194,14 +245,45 @@ describe("mastery scheduling", () => {
     const scenarioCourse: Course = {
       ...course,
       concepts: [...course.concepts],
-      lessons: [{
-        ...course.lessons[0],
-        prompts: [
-          { id: "meaning-one", type: "meaning", termId: "hedge", termIds: ["hedge"], stem: "", options: [{ text: "right" }], answer: 0, why: "" },
-          { id: "fill-one", type: "fill", termId: "hedge", termIds: ["hedge"], story: "", bank: ["hedge"], answer: "hedge", why: "" },
-          { id: "scene-one", type: "scenario", termId: "hedge", termIds: ["hedge"], story: "", stem: "", options: [{ text: "right" }], answer: 0, why: "", assessmentOnly: true }
-        ]
-      }]
+      lessons: [
+        {
+          ...course.lessons[0],
+          prompts: [
+            {
+              id: "meaning-one",
+              type: "meaning",
+              termId: "hedge",
+              termIds: ["hedge"],
+              stem: "",
+              options: [{ text: "right" }],
+              answer: 0,
+              why: "",
+            },
+            {
+              id: "fill-one",
+              type: "fill",
+              termId: "hedge",
+              termIds: ["hedge"],
+              story: "",
+              bank: ["hedge"],
+              answer: "hedge",
+              why: "",
+            },
+            {
+              id: "scene-one",
+              type: "scenario",
+              termId: "hedge",
+              termIds: ["hedge"],
+              story: "",
+              stem: "",
+              options: [{ text: "right" }],
+              answer: 0,
+              why: "",
+              assessmentOnly: true,
+            },
+          ],
+        },
+      ],
     };
     let state = emptyLearnerState();
     let session = startSession(scenarioCourse, "lesson", environment);
@@ -227,10 +309,23 @@ describe("mastery scheduling", () => {
     const noMixCourse: Course = {
       ...course,
       concepts: [{ ...course.concepts[0], mixUp: "" }],
-      lessons: [{
-        ...course.lessons[0],
-        prompts: [{ id: "one", type: "meaning", termId: "hedge", termIds: ["hedge"], stem: "", options: [{ text: "right" }], answer: 0, why: "" }]
-      }]
+      lessons: [
+        {
+          ...course.lessons[0],
+          prompts: [
+            {
+              id: "one",
+              type: "meaning",
+              termId: "hedge",
+              termIds: ["hedge"],
+              stem: "",
+              options: [{ text: "right" }],
+              answer: 0,
+              why: "",
+            },
+          ],
+        },
+      ],
     };
     const session = startSession(noMixCourse, "lesson", environment);
     const result = applyAnswer(noMixCourse, emptyLearnerState(), session, "right", environment);
@@ -242,10 +337,34 @@ describe("mastery scheduling", () => {
     const state: LearnerState = {
       ...emptyLearnerState(),
       mastery: {
-        "b::c": { confusionPairId: "b::c", consecutiveCorrect: 1, lapses: 0, evidenceTypes: ["meaning"], unseenScenarioCorrect: false, dueAt: new Date(base - 7_200_000).toISOString(), schedulerVersion: "0.1.0" },
-        "a::b": { confusionPairId: "a::b", consecutiveCorrect: 1, lapses: 0, evidenceTypes: ["meaning"], unseenScenarioCorrect: false, dueAt: new Date(base - 3_600_000).toISOString(), schedulerVersion: "0.1.0" },
-        "x::y": { confusionPairId: "x::y", consecutiveCorrect: 1, lapses: 0, evidenceTypes: ["meaning"], unseenScenarioCorrect: false, dueAt: new Date(base + 7 * 86_400_000).toISOString(), schedulerVersion: "0.1.0" }
-      }
+        "b::c": {
+          confusionPairId: "b::c",
+          consecutiveCorrect: 1,
+          lapses: 0,
+          evidenceTypes: ["meaning"],
+          unseenScenarioCorrect: false,
+          dueAt: new Date(base - 7_200_000).toISOString(),
+          schedulerVersion: "0.1.0",
+        },
+        "a::b": {
+          confusionPairId: "a::b",
+          consecutiveCorrect: 1,
+          lapses: 0,
+          evidenceTypes: ["meaning"],
+          unseenScenarioCorrect: false,
+          dueAt: new Date(base - 3_600_000).toISOString(),
+          schedulerVersion: "0.1.0",
+        },
+        "x::y": {
+          confusionPairId: "x::y",
+          consecutiveCorrect: 1,
+          lapses: 0,
+          evidenceTypes: ["meaning"],
+          unseenScenarioCorrect: false,
+          dueAt: new Date(base + 7 * 86_400_000).toISOString(),
+          schedulerVersion: "0.1.0",
+        },
+      },
     };
     expect(duePairIds(state, new Date(base))).toEqual(["b::c", "a::b"]);
   });
@@ -255,7 +374,9 @@ describe("engine guards and grading", () => {
   it("refuses to grade a finished session", () => {
     const session = startSession(course, "lesson", environment);
     const finished = applyAnswer(course, emptyLearnerState(), session, "right", environment);
-    expect(() => applyAnswer(course, finished.state, finished.session, "right", environment)).toThrow(/finished session/);
+    expect(() => applyAnswer(course, finished.state, finished.session, "right", environment)).toThrow(
+      /finished session/,
+    );
   });
 
   it("refuses to start an empty practice session", () => {
@@ -266,10 +387,23 @@ describe("engine guards and grading", () => {
     const lesson = course.lessons[0];
     const mixed: Course = {
       ...course,
-      lessons: [{
-        ...lesson,
-        prompts: [{ id: "match-one", type: "match", termIds: ["hedge", "sell", "put_u1intro"], why: "", pairs: [{ id: "hedge", left: "hedge", right: "H" }, { id: "sell", left: "sell", right: "S" }] }]
-      }]
+      lessons: [
+        {
+          ...lesson,
+          prompts: [
+            {
+              id: "match-one",
+              type: "match",
+              termIds: ["hedge", "sell", "put_u1intro"],
+              why: "",
+              pairs: [
+                { id: "hedge", left: "hedge", right: "H" },
+                { id: "sell", left: "sell", right: "S" },
+              ],
+            },
+          ],
+        },
+      ],
     };
     const session = startSession(mixed, "lesson", environment);
     const result = applyAnswer(mixed, emptyLearnerState(), session, "matched", environment);
@@ -278,10 +412,31 @@ describe("engine guards and grading", () => {
   });
 
   it("grades every exercise type against published answers", () => {
-    const meaning: Exercise = { id: "m", type: "meaning", termIds: ["hedge"], options: [{ text: "right" }, { text: "wrong" }], answer: 0, why: "" };
+    const meaning: Exercise = {
+      id: "m",
+      type: "meaning",
+      termIds: ["hedge"],
+      options: [{ text: "right" }, { text: "wrong" }],
+      answer: 0,
+      why: "",
+    };
     const tf: Exercise = { id: "t", type: "truefalse", termIds: ["hedge"], stem: "", answer: false, why: "" };
-    const fill: Exercise = { id: "f", type: "fill", termIds: ["hedge"], story: "", bank: ["hedge"], answer: "hedge", why: "" };
-    const match: Exercise = { id: "k", type: "match", termIds: ["hedge"], why: "", pairs: [{ id: "hedge", left: "hedge", right: "H" }] };
+    const fill: Exercise = {
+      id: "f",
+      type: "fill",
+      termIds: ["hedge"],
+      story: "",
+      bank: ["hedge"],
+      answer: "hedge",
+      why: "",
+    };
+    const match: Exercise = {
+      id: "k",
+      type: "match",
+      termIds: ["hedge"],
+      why: "",
+      pairs: [{ id: "hedge", left: "hedge", right: "H" }],
+    };
 
     expect(isCorrect(meaning, "right")).toBe(true);
     expect(isCorrect(meaning, "wrong")).toBe(false);
@@ -297,7 +452,11 @@ describe("engine guards and grading", () => {
   it("unlocks lessons strictly in order", () => {
     const two: Course = {
       ...course,
-      lessons: [course.lessons[0], { ...course.lessons[0], id: "second" }, { ...course.lessons[0], id: "third" }]
+      lessons: [
+        course.lessons[0],
+        { ...course.lessons[0], id: "second" },
+        { ...course.lessons[0], id: "third" },
+      ],
     };
     let state = emptyLearnerState();
     expect(isLessonUnlocked(state, two, "lesson")).toBe(true);
@@ -307,5 +466,143 @@ describe("engine guards and grading", () => {
     state = { ...state, completedLessonIds: ["lesson"] };
     expect(isLessonUnlocked(state, two, "second")).toBe(true);
     expect(isLessonUnlocked(state, two, "third")).toBe(false);
+  });
+});
+
+describe("match mispairs", () => {
+  const matchCourse: Course = {
+    ...course,
+    concepts: [
+      ...course.concepts,
+      {
+        id: "pledge",
+        unit: 1,
+        term: "pledge",
+        caption: "",
+        definition: "",
+        example: "",
+        mixUp: "hedge",
+        mixUpWhy: "",
+        sourceIds: [],
+        risk: "evergreen",
+        reviewStatus: "legacy",
+      },
+    ],
+    lessons: [
+      {
+        ...course.lessons[0],
+        prompts: [
+          {
+            id: "match-one",
+            type: "match",
+            termIds: ["hedge", "pledge", "put_u1intro"],
+            why: "",
+            pairs: [
+              { id: "hedge", left: "hedge", right: "H" },
+              { id: "pledge", left: "pledge", right: "P" },
+              { id: "put_u1intro", left: "a put", right: "U" },
+            ],
+          },
+        ],
+      },
+    ],
+  };
+
+  const mispairOptions: ApplyOptions = { heartsAfter: 4, confusionPair: ["hedge", "pledge"] };
+
+  it("records the selected chips as the confusion pair instead of grading the whole prompt", () => {
+    const session = startSession(matchCourse, "lesson", environment);
+    const result = applyAnswer(matchCourse, emptyLearnerState(), session, false, environment, mispairOptions);
+
+    expect(result.attempt.correct).toBe(false);
+    expect(result.attempt.answer).toBe("match:hedge:pledge");
+    expect(result.attempt.confusionPairId).toBe("hedge::pledge");
+    // put_u1intro is a pseudo-term: only published concepts reach the attempt
+    expect(result.attempt.conceptIds).toEqual(["hedge", "pledge"]);
+  });
+
+  it("keeps the mispair lapse on record through the corrective rerun", () => {
+    const first = applyAnswer(
+      matchCourse,
+      emptyLearnerState(),
+      startSession(matchCourse, "lesson", environment),
+      false,
+      environment,
+      mispairOptions,
+    );
+    const rerun = applyAnswer(
+      matchCourse,
+      first.state,
+      requeuePrompt(first.session, "match-one"),
+      "matched",
+      environment,
+    );
+
+    expect(rerun.attempt.correct).toBe(true);
+    const mastery = rerun.state.mastery["hedge::pledge"];
+    expect(mastery.lapses).toBe(1);
+    expect(mastery.consecutiveCorrect).toBe(0);
+    // the pair stays due, so practice keeps the real error after the rerun
+    expect(
+      duePairIds(rerun.state, new Date(Date.parse("2026-08-28T12:00:00.000Z") + 2 * 86_400_000)),
+    ).toContain("hedge::pledge");
+  });
+
+  it("keeps a real-to-pseudo mispair as a recent miss without creating mastery", () => {
+    const session = startSession(matchCourse, "lesson", environment);
+    const result = applyAnswer(matchCourse, emptyLearnerState(), session, false, environment, {
+      confusionPair: ["hedge", "put_u1intro"],
+    });
+
+    expect(result.attempt.answer).toBe("match:hedge:put_u1intro");
+    expect(result.attempt.conceptIds).toEqual(["hedge"]);
+    expect(result.attempt.confusionPairId).toBeUndefined();
+    expect(result.state.mastery).toEqual({});
+    expect(result.state.seenConceptIds).toEqual(["hedge"]);
+    expect(recentMissTermIds(result.state)).toEqual(["hedge"]);
+  });
+
+  it("records a pseudo-to-pseudo mispair without creating unschedulable mastery", () => {
+    const session = startSession(matchCourse, "lesson", environment);
+    const result = applyAnswer(matchCourse, emptyLearnerState(), session, false, environment, {
+      confusionPair: ["put_u1intro", "sell"],
+    });
+
+    expect(result.attempt.answer).toBe("match:put_u1intro:sell");
+    expect(result.attempt.conceptIds).toEqual([]);
+    expect(result.attempt.confusionPairId).toBeUndefined();
+    expect(result.state.mastery).toEqual({});
+    expect(result.state.seenConceptIds).toEqual([]);
+    expect(recentMissTermIds(result.state)).toEqual([]);
+    expect(duePairIds(result.state, new Date("2100-01-01T00:00:00.000Z"))).toEqual([]);
+  });
+
+  it("still schedules an observed pair of two real noncanonical concepts", () => {
+    const noncanonical: Course = {
+      ...matchCourse,
+      concepts: [
+        ...matchCourse.concepts,
+        {
+          id: "collateral",
+          unit: 1,
+          term: "collateral",
+          caption: "",
+          definition: "",
+          example: "",
+          mixUp: "pledge",
+          mixUpWhy: "",
+          sourceIds: [],
+          risk: "evergreen",
+          reviewStatus: "legacy",
+        },
+      ],
+    };
+    const session = startSession(noncanonical, "lesson", environment);
+    const result = applyAnswer(noncanonical, emptyLearnerState(), session, false, environment, {
+      confusionPair: ["collateral", "hedge"],
+    });
+
+    expect(result.attempt.confusionPairId).toBe("collateral::hedge");
+    expect(result.state.mastery["collateral::hedge"].lapses).toBe(1);
   });
 });

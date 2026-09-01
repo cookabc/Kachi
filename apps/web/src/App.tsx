@@ -1,5 +1,4 @@
-import { ChangeEvent, CSSProperties, useEffect, useMemo, useState } from "react";
-import type { Exercise, LearnerState, SessionState } from "@kachi/domain";
+import type { Concept, Course, Exercise, LearnerState, SessionState } from "@kachi/domain";
 import {
   applyAnswer,
   currentExercise,
@@ -8,27 +7,28 @@ import {
   recentMissTermIds,
   requeuePrompt,
   startPracticeSession,
-  startSession
+  startSession,
 } from "@kachi/learning-engine";
-import { courseFor } from "./course";
-import { localizedTerm } from "./localization";
-import { exportLearnerData, importLearnerData, loadLearnerState, saveLearnerState } from "./storage";
+import { type ChangeEvent, type CSSProperties, useEffect, useMemo, useState } from "react";
 import { artIdForLabel, Hedgehog, NAV_ICONS, TermArt } from "./art";
+import { courseFor } from "./course";
 import {
-  PRACTICE_ROUND,
   conceptOf,
+  PRACTICE_ROUND,
+  type PresentedExercise,
   practicePool,
   present,
   realTermIds as publishedTermIds,
   resolveMatch,
-  sessionSummary,
-  teachPlan,
-  type PresentedExercise,
   type Summary,
-  type TeachMode
+  sessionSummary,
+  type TeachMode,
+  teachPlan,
 } from "./flow";
-import { loadLang, saveLang, UI, type Lang, type UiText } from "./ui";
-import type { Course, Concept } from "@kachi/domain";
+import { localizedTerm } from "./localization";
+import { activateUpdate } from "./pwa";
+import { exportLearnerData, importLearnerData, loadLearnerState, saveLearnerState } from "./storage";
+import { type Lang, loadLang, saveLang, UI, type UiText } from "./ui";
 
 type Tab = "learn" | "practice" | "glossary" | "settings";
 type Phase = "teach" | "question" | "feedback" | "complete" | "fail";
@@ -42,7 +42,7 @@ const environment = {
   now: () => new Date(),
   random: () => Math.random(),
   deviceId,
-  eventId: () => `${deviceId}-${Date.now()}-${++eventCounter}`
+  eventId: () => `${deviceId}-${Date.now()}-${++eventCounter}`,
 };
 
 function pick<T>(arr: T[]): T {
@@ -53,18 +53,27 @@ const realTermIds = (prompt: Exercise, course: Course) => publishedTermIds(promp
 
 function StatsBar({ state }: { state: LearnerState }) {
   return (
-    <div className="stats" aria-label={`XP ${state.xp} · ${state.streak}`}>
-      <div className="stat xp"><span className="ic">◆</span>{state.xp}</div>
-      <div className="stat streak"><span className="ic">🔥</span>{state.streak}</div>
+    <div className="stats" role="img" aria-label={`XP ${state.xp} · ${state.streak}`}>
+      <div className="stat xp">
+        <span className="ic">◆</span>
+        {state.xp}
+      </div>
+      <div className="stat streak">
+        <span className="ic">🔥</span>
+        {state.streak}
+      </div>
     </div>
   );
 }
 
 function HeartRow({ n, popped, t }: { n: number; popped: boolean; t: UiText }) {
   return (
-    <div className="hearts" aria-label={t.lesson.heartsAria(n, MAX_HEARTS)}>
+    <div className="hearts" role="img" aria-label={t.lesson.heartsAria(n, MAX_HEARTS)}>
+      {/* fixed-length indicator: the hearts never reorder, so the index is the identity */}
       {Array.from({ length: MAX_HEARTS }, (_, i) => (
-        <span key={i} className={"ht " + (i < n ? "full" : popped && i === n ? "empty pop" : "empty")}>♥</span>
+        <span key={i} className={`ht ${i < n ? "full" : popped && i === n ? "empty pop" : "empty"}`}>
+          ♥
+        </span>
       ))}
     </div>
   );
@@ -75,12 +84,19 @@ function Nav({ tab, onTab, t }: { tab: Tab; onTab: (tab: Tab) => void; t: UiText
     { id: "learn", text: t.nav.learn },
     { id: "practice", text: t.nav.practice },
     { id: "glossary", text: t.nav.glossary },
-    { id: "settings", text: t.nav.settings }
+    { id: "settings", text: t.nav.settings },
   ];
   return (
     <nav className="nav" aria-label={t.navAria}>
       {items.map((item) => (
-        <button key={item.id} className={tab === item.id ? "on" : ""} aria-label={item.text.aria} onClick={() => onTab(item.id)}>
+        <button
+          type="button"
+          key={item.id}
+          className={tab === item.id ? "on" : ""}
+          aria-label={item.text.aria}
+          onClick={() => onTab(item.id)}
+        >
+          {/* biome-ignore lint/security/noDangerouslySetInnerHtml: static, code-owned SVG icon markup from art.tsx */}
           <span dangerouslySetInnerHTML={{ __html: NAV_ICONS[item.id] }} />
           {item.text.label}
         </button>
@@ -93,19 +109,32 @@ function Confetti() {
   const [bits, setBits] = useState<CSSProperties[]>([]);
   useEffect(() => {
     const colors = ["#58CC02", "#FFC800", "#1CB0F6", "#FF4B4B", "#89E219", "#7DD3FC"];
-    setBits(Array.from({ length: 40 }, (_, i) => ({
-      background: colors[i % colors.length],
-      width: `${8 + Math.random() * 10}px`,
-      height: `${10 + Math.random() * 14}px`,
-      left: `${36 + Math.random() * 28}%`,
-      top: "26%",
-      "--x": `${Math.random() * 260 - 130}px`,
-      "--r": `${Math.random() * 420}deg`
-    }) as CSSProperties));
+    setBits(
+      Array.from(
+        { length: 40 },
+        (_, i) =>
+          ({
+            background: colors[i % colors.length],
+            width: `${8 + Math.random() * 10}px`,
+            height: `${10 + Math.random() * 14}px`,
+            left: `${36 + Math.random() * 28}%`,
+            top: "26%",
+            "--x": `${Math.random() * 260 - 130}px`,
+            "--r": `${Math.random() * 420}deg`,
+          }) as CSSProperties,
+      ),
+    );
     const timer = setTimeout(() => setBits([]), 1200);
     return () => clearTimeout(timer);
   }, []);
-  return <div className="confetti-layer">{bits.map((style, i) => <i key={i} className="bit" style={style} />)}</div>;
+  return (
+    <div className="confetti-layer">
+      {/* one-shot random burst: the bits have no stable identity beyond position */}
+      {bits.map((style, i) => (
+        <i key={i} className="bit" style={style} />
+      ))}
+    </div>
+  );
 }
 
 function App() {
@@ -131,6 +160,14 @@ function App() {
 
   const course = useMemo(() => courseFor(lang), [lang]);
   const t = UI[lang];
+
+  // The document shell belongs to the UI language: screen readers pronounce it
+  // and search engines index it — React state alone never reaches them.
+  useEffect(() => {
+    document.documentElement.lang = lang;
+    document.title = t.doc.title;
+    document.querySelector('meta[name="description"]')?.setAttribute("content", t.doc.description);
+  }, [lang, t]);
 
   useEffect(() => {
     loadLearnerState().then((loaded) => {
@@ -213,9 +250,12 @@ function App() {
     beginQuiz(fresh);
   };
 
-  const submit = (value: string | boolean) => {
+  const submit = (value: string | boolean, confusionPair?: [string, string]) => {
     if (!session || phase !== "question") return;
-    const result = applyAnswer(course, state, session, value, environment, { heartsAfter: hearts - 1 });
+    const result = applyAnswer(course, state, session, value, environment, {
+      heartsAfter: hearts - 1,
+      confusionPair,
+    });
     if (!result.attempt.correct) setHearts((current) => current - 1);
     persist(result.state);
     setSession(result.session);
@@ -296,7 +336,9 @@ function App() {
     setSelL(null);
     setSelR(null);
     if (outcome.judged === "matched") submit("matched");
-    else if (outcome.judged === false) submit(false); // first wrong pairing judges the whole prompt
+    // A mispair judges the whole prompt wrong; the two selected chips are the
+    // actual confusion pair and must reach the engine as evidence.
+    else if (outcome.judged === false) submit(false, [leftId, rightId]);
   };
 
   // keyboard: Enter drives the lesson; 1-4 pick options; Enter presses the hero CTA on complete/fail
@@ -359,16 +401,36 @@ function App() {
   if (!ready) return <main className="loading">{t.loading}</main>;
 
   if (session && phase === "complete" && summary) {
-    return <CompleteScreen summary={summary} isPractice={session.mode === "practice"} lessonId={session.lessonId} course={course} t={t} onStart={beginLesson} onPractice={beginPractice} onPath={closeLesson} />;
+    return (
+      <CompleteScreen
+        summary={summary}
+        isPractice={session.mode === "practice"}
+        lessonId={session.lessonId}
+        course={course}
+        t={t}
+        onStart={beginLesson}
+        onPractice={beginPractice}
+        onPath={closeLesson}
+      />
+    );
   }
   if (session && phase === "fail") {
-    return <FailScreen isPractice={session.mode === "practice"} lessonId={session.lessonId} t={t} onRetryLesson={beginLesson} onRetryPractice={() => beginPractice()} onPath={closeLesson} />;
+    return (
+      <FailScreen
+        isPractice={session.mode === "practice"}
+        lessonId={session.lessonId}
+        t={t}
+        onRetryLesson={beginLesson}
+        onRetryPractice={() => beginPractice()}
+        onPath={closeLesson}
+      />
+    );
   }
   if (session && (phase === "teach" || phase === "question" || phase === "feedback")) {
     const activeLesson = course.lessons.find((item) => item.id === session.lessonId);
     return (
       <LessonScreen
-        lessonTitle={session.mode === "practice" ? t.lesson.practiceTitle : activeLesson?.title ?? ""}
+        lessonTitle={session.mode === "practice" ? t.lesson.practiceTitle : (activeLesson?.title ?? "")}
         phase={phase}
         t={t}
         lang={lang}
@@ -397,20 +459,51 @@ function App() {
 
   return (
     <main className="shell">
-      {updateReady && <button className="update" onClick={() => window.location.reload()}>{t.updateBanner}</button>}
+      {updateReady && (
+        <button type="button" className="update" onClick={activateUpdate}>
+          {t.updateBanner}
+        </button>
+      )}
 
-      {tab === "learn" && <LearnHome state={state} course={course} t={t} missedCount={missedCount} onStart={beginLesson} />}
+      {tab === "learn" && (
+        <LearnHome state={state} course={course} t={t} missedCount={missedCount} onStart={beginLesson} />
+      )}
       {tab === "practice" && <PracticeHome t={t} missedCount={missedCount} onStart={() => beginPractice()} />}
-      {tab === "glossary" && <Glossary state={state} course={course} t={t} lang={lang} query={glossaryQuery} onQuery={setGlossaryQuery} />}
-      {tab === "settings" && <Settings t={t} lang={lang} onLang={setLang} onExport={downloadExport} onImport={onImport} />}
+      {tab === "glossary" && (
+        <Glossary
+          state={state}
+          course={course}
+          t={t}
+          lang={lang}
+          query={glossaryQuery}
+          onQuery={setGlossaryQuery}
+        />
+      )}
+      {tab === "settings" && (
+        <Settings t={t} lang={lang} onLang={setLang} onExport={downloadExport} onImport={onImport} />
+      )}
 
       <Nav tab={tab} onTab={setTab} t={t} />
     </main>
   );
 }
 
-function LearnHome({ state, course, t, missedCount, onStart }: { state: LearnerState; course: Course; t: UiText; missedCount: number; onStart: (id: string) => void }) {
-  const upNext = course.lessons.find((lesson) => !state.completedLessonIds.includes(lesson.id) && isLessonUnlocked(state, course, lesson.id));
+function LearnHome({
+  state,
+  course,
+  t,
+  missedCount,
+  onStart,
+}: {
+  state: LearnerState;
+  course: Course;
+  t: UiText;
+  missedCount: number;
+  onStart: (id: string) => void;
+}) {
+  const upNext = course.lessons.find(
+    (lesson) => !state.completedLessonIds.includes(lesson.id) && isLessonUnlocked(state, course, lesson.id),
+  );
   return (
     <>
       <header className="top">
@@ -427,20 +520,46 @@ function LearnHome({ state, course, t, missedCount, onStart }: { state: LearnerS
               <p>{unit.blurb}</p>
             </div>
             <div className="path">
-              {course.lessons.filter((lesson) => lesson.unit === unit.id).map((lesson, index) => {
-                const done = state.completedLessonIds.includes(lesson.id);
-                const unlocked = isLessonUnlocked(state, course, lesson.id);
-                const isNext = upNext?.id === lesson.id;
-                const cls = "node" + (lesson.review ? " review" : "") + (done ? " done" : isNext ? " next" : unlocked ? "" : " locked");
-                return (
-                  <div className="node-wrap" key={lesson.id} style={{ transform: `translateX(${SNAKE[index % SNAKE.length]}px)` }}>
-                    <button className={cls} aria-label={lesson.title} onClick={() => unlocked && onStart(lesson.id)}>
-                      {!unlocked ? <span className="lock">🔒</span> : done ? "✓" : lesson.review ? "★" : lesson.icon || index + 1}
-                    </button>
-                    <div className="node-label">{isNext ? t.home.upNext : ""}{lesson.title}</div>
-                  </div>
-                );
-              })}
+              {course.lessons
+                .filter((lesson) => lesson.unit === unit.id)
+                .map((lesson, index) => {
+                  const done = state.completedLessonIds.includes(lesson.id);
+                  const unlocked = isLessonUnlocked(state, course, lesson.id);
+                  const isNext = upNext?.id === lesson.id;
+                  const cls =
+                    "node" +
+                    (lesson.review ? " review" : "") +
+                    (done ? " done" : isNext ? " next" : unlocked ? "" : " locked");
+                  return (
+                    <div
+                      className="node-wrap"
+                      key={lesson.id}
+                      style={{ transform: `translateX(${SNAKE[index % SNAKE.length]}px)` }}
+                    >
+                      <button
+                        type="button"
+                        className={cls}
+                        aria-label={unlocked ? lesson.title : t.home.lockedLesson(lesson.title)}
+                        disabled={!unlocked}
+                        onClick={() => onStart(lesson.id)}
+                      >
+                        {!unlocked ? (
+                          <span className="lock">🔒</span>
+                        ) : done ? (
+                          "✓"
+                        ) : lesson.review ? (
+                          "★"
+                        ) : (
+                          lesson.icon || index + 1
+                        )}
+                      </button>
+                      <div className="node-label">
+                        {isNext ? t.home.upNext : ""}
+                        {lesson.title}
+                      </div>
+                    </div>
+                  );
+                })}
             </div>
           </section>
         ))}
@@ -460,19 +579,40 @@ function PracticeHome({ t, missedCount, onStart }: { t: UiText; missedCount: num
       <div className="prac-hero">
         <Hedgehog />
         <h1>{t.practice.title}</h1>
-        {missedCount > 0
-          ? <p className="sub">{t.practice.missCopy(missedCount)}</p>
-          : <p className="sub">{t.practice.noMissCopy}</p>}
-        <button className="btn btn-gold" onClick={onStart}>{t.practice.start(PRACTICE_ROUND)}</button>
+        {missedCount > 0 ? (
+          <p className="sub">{t.practice.missCopy(missedCount)}</p>
+        ) : (
+          <p className="sub">{t.practice.noMissCopy}</p>
+        )}
+        <button type="button" className="btn btn-gold" onClick={onStart}>
+          {t.practice.start(PRACTICE_ROUND)}
+        </button>
       </div>
     </>
   );
 }
 
-function Glossary({ state, course, t, lang, query, onQuery }: { state: LearnerState; course: Course; t: UiText; lang: Lang; query: string; onQuery: (value: string) => void }) {
+function Glossary({
+  state,
+  course,
+  t,
+  lang,
+  query,
+  onQuery,
+}: {
+  state: LearnerState;
+  course: Course;
+  t: UiText;
+  lang: Lang;
+  query: string;
+  onQuery: (value: string) => void;
+}) {
   const q = query.trim().toLowerCase();
   const matches = (concept: Concept) =>
-    !q || `${concept.term} ${concept.definition} ${concept.mixUp} ${localizedTerm(concept.id).termZh}`.toLowerCase().includes(q);
+    !q ||
+    `${concept.term} ${concept.definition} ${concept.mixUp} ${localizedTerm(concept.id).termZh}`
+      .toLowerCase()
+      .includes(q);
   let total = 0;
   return (
     <>
@@ -480,7 +620,14 @@ function Glossary({ state, course, t, lang, query, onQuery }: { state: LearnerSt
         <div className="brand">{t.glossary.brand}</div>
       </header>
       <div className="g-search">
-        <input type="search" placeholder={t.glossary.placeholder} value={query} onChange={(event) => onQuery(event.target.value)} autoComplete="off" aria-label={t.glossary.searchAria} />
+        <input
+          type="search"
+          placeholder={t.glossary.placeholder}
+          value={query}
+          onChange={(event) => onQuery(event.target.value)}
+          autoComplete="off"
+          aria-label={t.glossary.searchAria}
+        />
       </div>
       <div className="g-list">
         {course.units.map((unit) => {
@@ -500,25 +647,53 @@ function Glossary({ state, course, t, lang, query, onQuery }: { state: LearnerSt
                     <h3>
                       {concept.term}
                       {lang === "zh-CN" && <span className="zh">{localizedTerm(concept.id).termZh}</span>}
-                      {seen && <span className="seen" title={t.glossary.seenTitle}>✓</span>}
+                      {seen && (
+                        <span className="seen" title={t.glossary.seenTitle}>
+                          ✓
+                        </span>
+                      )}
                     </h3>
                     <p className="def">{concept.definition}</p>
-                    <p className="ex">{t.glossary.forExample}{concept.example}</p>
-                    <p className="mu">{t.glossary.mix}<strong>{concept.mixUp}</strong> — {concept.mixUpWhy}</p>
+                    <p className="ex">
+                      {t.glossary.forExample}
+                      {concept.example}
+                    </p>
+                    <p className="mu">
+                      {t.glossary.mix}
+                      <strong>{concept.mixUp}</strong> — {concept.mixUpWhy}
+                    </p>
                   </article>
                 );
               })}
             </section>
           );
         })}
-        {total === 0 && <div className="g-empty">{t.glossary.empty(query.trim())}<br />{t.glossary.emptyHint}</div>}
+        {total === 0 && (
+          <div className="g-empty">
+            {t.glossary.empty(query.trim())}
+            <br />
+            {t.glossary.emptyHint}
+          </div>
+        )}
       </div>
       <p className="fine">{t.glossary.footer}</p>
     </>
   );
 }
 
-function Settings({ t, lang, onLang, onExport, onImport }: { t: UiText; lang: Lang; onLang: (lang: Lang) => void; onExport: () => void; onImport: (event: ChangeEvent<HTMLInputElement>) => void }) {
+function Settings({
+  t,
+  lang,
+  onLang,
+  onExport,
+  onImport,
+}: {
+  t: UiText;
+  lang: Lang;
+  onLang: (lang: Lang) => void;
+  onExport: () => void;
+  onImport: (event: ChangeEvent<HTMLInputElement>) => void;
+}) {
   return (
     <>
       <header className="top">
@@ -527,13 +702,26 @@ function Settings({ t, lang, onLang, onExport, onImport }: { t: UiText; lang: La
       <div className="prac-hero">
         <h1>{t.settings.title}</h1>
         <p className="sub">{t.settings.copy}</p>
-        <div className="lang-switch" role="group" aria-label={t.settings.langLabel}>
+        <fieldset className="lang-switch" aria-label={t.settings.langLabel}>
           {(Object.entries(t.settings.langNames) as Array<[Lang, string]>).map(([value, name]) => (
-            <button key={value} className={lang === value ? "on" : ""} aria-pressed={lang === value} onClick={() => onLang(value)}>{name}</button>
+            <button
+              type="button"
+              key={value}
+              className={lang === value ? "on" : ""}
+              aria-pressed={lang === value}
+              onClick={() => onLang(value)}
+            >
+              {name}
+            </button>
           ))}
-        </div>
-        <button className="btn btn-green" onClick={onExport}>{t.settings.exportBtn}</button>
-        <label className="file-button">{t.settings.importBtn}<input type="file" accept="application/json" onChange={onImport} /></label>
+        </fieldset>
+        <button type="button" className="btn btn-green" onClick={onExport}>
+          {t.settings.exportBtn}
+        </button>
+        <label className="file-button">
+          {t.settings.importBtn}
+          <input type="file" accept="application/json" onChange={onImport} />
+        </label>
         <p className="fine">{t.settings.contentNote}</p>
       </div>
     </>
@@ -573,21 +761,32 @@ function LessonScreen(props: {
     return (
       <main className="lesson">
         <div className="l-top">
-          <button className="xbtn" aria-label={t.lesson.close} onClick={props.onClose}>×</button>
+          <button type="button" className="xbtn" aria-label={t.lesson.close} onClick={props.onClose}>
+            ×
+          </button>
           <div className="learn-tag">{t.lesson.learnTag}</div>
           {!recap && (
             <div className="pips dim">
-              {props.teachTerms.map((_, index) => (
-                <div key={index} className={"pip" + (index < props.teachIndex ? " on" : index === props.teachIndex ? " now" : "")} />
+              {props.teachTerms.map((term, index) => (
+                <div
+                  key={term}
+                  className={`pip${index < props.teachIndex ? " on" : index === props.teachIndex ? " now" : ""}`}
+                />
               ))}
             </div>
           )}
         </div>
         <div className="prompt teach">
-          {recap ? <RecapCard terms={props.teachTerms} course={props.course} t={t} /> : termId && <TeachCard termId={termId} course={props.course} t={t} lang={props.lang} />}
+          {recap ? (
+            <RecapCard terms={props.teachTerms} course={props.course} t={t} />
+          ) : (
+            termId && <TeachCard termId={termId} course={props.course} t={t} lang={props.lang} />
+          )}
         </div>
         <div className="foot">
-          <button className="btn btn-gold" onClick={props.onTeachContinue}>{recap ? t.lesson.recapGo : last ? t.lesson.teachStart : t.lesson.teachContinue}</button>
+          <button type="button" className="btn btn-gold" onClick={props.onTeachContinue}>
+            {recap ? t.lesson.recapGo : last ? t.lesson.teachStart : t.lesson.teachContinue}
+          </button>
         </div>
       </main>
     );
@@ -596,25 +795,58 @@ function LessonScreen(props: {
   return (
     <main className="lesson">
       <div className="l-top">
-        <button className="xbtn" aria-label={t.lesson.close} onClick={props.onClose}>×</button>
+        <button type="button" className="xbtn" aria-label={t.lesson.close} onClick={props.onClose}>
+          ×
+        </button>
         <div className="pips">
+          {/* positional progress pips: index is the meaning, order is fixed */}
           {Array.from({ length: props.total }, (_, index) => (
-            <div key={index} className={"pip" + (index < props.questionIndex ? " on" : index === props.questionIndex ? " now" : "")} />
+            <div
+              key={index}
+              className={`pip${index < props.questionIndex ? " on" : index === props.questionIndex ? " now" : ""}`}
+            />
           ))}
         </div>
         <HeartRow n={props.hearts} popped={phase === "feedback" && !props.lastCorrect} t={t} />
       </div>
-      <div className="prompt">{presented && <PromptBody presented={presented} t={t} selection={props.selection} locked={phase === "feedback"} selL={props.selL} selR={props.selR} lockedIds={props.locked} onPick={props.onPick} onMatch={props.onMatch} />}</div>
+      <div className="prompt">
+        {presented && (
+          <PromptBody
+            presented={presented}
+            t={t}
+            selection={props.selection}
+            locked={phase === "feedback"}
+            selL={props.selL}
+            selR={props.selR}
+            lockedIds={props.locked}
+            onPick={props.onPick}
+            onMatch={props.onMatch}
+          />
+        )}
+      </div>
       {phase === "question" && presented?.type !== "match" && (
         <div className="foot">
-          <button className="btn btn-gold" disabled={props.selection === null} onClick={props.onSubmit}>{t.lesson.check}</button>
+          <button
+            type="button"
+            className="btn btn-gold"
+            disabled={props.selection === null}
+            onClick={props.onSubmit}
+          >
+            {t.lesson.check}
+          </button>
         </div>
       )}
       {phase === "feedback" && presented && (
-        <div className={"sheet " + (props.lastCorrect ? "ok" : "no")} role="status">
+        <div className={`sheet ${props.lastCorrect ? "ok" : "no"}`} role="status">
           <h3>{pick(props.lastCorrect ? t.verdicts.nice : t.verdicts.nope)}</h3>
           <p>{presented.why}</p>
-          <button className={"btn " + (props.lastCorrect ? "btn-green" : "btn-red")} onClick={props.onContinue}>{t.lesson.continue}</button>
+          <button
+            type="button"
+            className={`btn ${props.lastCorrect ? "btn-green" : "btn-red"}`}
+            onClick={props.onContinue}
+          >
+            {t.lesson.continue}
+          </button>
         </div>
       )}
     </main>
@@ -629,7 +861,9 @@ function TeachCard({ termId, course, t, lang }: { termId: string; course: Course
   return (
     <>
       <div className="kicker2">{t.lesson.teachKicker(termZh)}</div>
-      <div className="teach-art"><TermArt id={concept.id} size="hero" /></div>
+      <div className="teach-art">
+        <TermArt id={concept.id} size="hero" />
+      </div>
       {concept.caption && <p className="teach-cap">{concept.caption}</p>}
       <div className="teach-term">{concept.term}</div>
       <p className="teach-def">{concept.definition}</p>
@@ -638,7 +872,8 @@ function TeachCard({ termId, course, t, lang }: { termId: string; course: Course
         <TermArt id={sibling ? sibling.id : concept.mixUp} size="xs" />
         <div>
           <strong>{lang === "zh-CN" ? "别混淆" : "Don't mix up"}</strong>
-          {lang === "zh-CN" ? "：" : ": "}{concept.mixUp}。{concept.mixUpWhy}
+          {lang === "zh-CN" ? "：" : ": "}
+          {concept.mixUp}。{concept.mixUpWhy}
         </div>
       </div>
     </>
@@ -649,15 +884,24 @@ function RecapCard({ terms, course, t }: { terms: string[]; course: Course; t: U
   return (
     <>
       <div className="kicker2">{t.lesson.recapKicker}</div>
-      <div className="stem" style={{ textAlign: "center", marginBottom: 12 }}>{t.lesson.recapTitle}</div>
+      <div className="stem" style={{ textAlign: "center", marginBottom: 12 }}>
+        {t.lesson.recapTitle}
+      </div>
       <div className="recap-strip">
         {terms.map((id) => {
           const concept = conceptOf(course, id);
           if (!concept) return null;
-          return <div className="recap-item" key={id}><TermArt id={id} size="sm" /><span>{concept.term}</span></div>;
+          return (
+            <div className="recap-item" key={id}>
+              <TermArt id={id} size="sm" />
+              <span>{concept.term}</span>
+            </div>
+          );
         })}
       </div>
-      <p className="teach-def" style={{ marginTop: 16 }}>{t.lesson.recapSub}</p>
+      <p className="teach-def" style={{ marginTop: 16 }}>
+        {t.lesson.recapSub}
+      </p>
     </>
   );
 }
@@ -678,7 +922,11 @@ function PromptBody(props: {
     <>
       <div className="kicker2">{t.lesson.kickers[presented.type]}</div>
       {presented.type === "scenario" && presented.story && <div className="story">{presented.story}</div>}
-      {presented.type === "fill" && presented.story ? <FillStory presented={presented} selection={selection} /> : presented.stem && <div className="stem">{presented.stem}</div>}
+      {presented.type === "fill" && presented.story ? (
+        <FillStory presented={presented} selection={selection} />
+      ) : (
+        presented.stem && <div className="stem">{presented.stem}</div>
+      )}
 
       {(presented.type === "meaning" || presented.type === "scenario") && (
         <div className="opts">
@@ -691,7 +939,13 @@ function PromptBody(props: {
               else if (selection === option.text) cls += " bad";
             }
             return (
-              <button key={option.text} className={cls} disabled={locked} onClick={() => props.onPick(option.text)}>
+              <button
+                type="button"
+                key={option.text}
+                className={cls}
+                disabled={locked}
+                onClick={() => props.onPick(option.text)}
+              >
                 <TermArt id={option.art || artIdForLabel(option.text)} size="lg" />
                 <span className="cap">{option.text}</span>
               </button>
@@ -710,7 +964,13 @@ function PromptBody(props: {
               else if (selection === value) cls += " bad";
             }
             return (
-              <button key={String(value)} className={cls} disabled={locked} onClick={() => props.onPick(value)}>
+              <button
+                type="button"
+                key={String(value)}
+                className={cls}
+                disabled={locked}
+                onClick={() => props.onPick(value)}
+              >
                 <TermArt id={value ? "true" : "false"} size="lg" />
                 <span className="cap">{value ? "True" : "False"}</span>
               </button>
@@ -729,7 +989,13 @@ function PromptBody(props: {
               else if (selection === word) cls += " bad";
             }
             return (
-              <button key={word} className={cls} disabled={locked} onClick={() => props.onPick(word)}>
+              <button
+                type="button"
+                key={word}
+                className={cls}
+                disabled={locked}
+                onClick={() => props.onPick(word)}
+              >
                 <TermArt id={artIdForLabel(word)} size="sm" />
                 <span>{word}</span>
               </button>
@@ -744,12 +1010,28 @@ function PromptBody(props: {
           <div className="match">
             <div>
               {presented.left.map((chip) => (
-                <MatchChip key={chip.id} chip={chip} side="left" lockedIds={props.lockedIds} selected={props.selL === chip.id} disabled={locked} onMatch={props.onMatch} />
+                <MatchChip
+                  key={chip.id}
+                  chip={chip}
+                  side="left"
+                  lockedIds={props.lockedIds}
+                  selected={props.selL === chip.id}
+                  disabled={locked}
+                  onMatch={props.onMatch}
+                />
               ))}
             </div>
             <div>
               {presented.right.map((chip) => (
-                <MatchChip key={chip.id} chip={chip} side="right" lockedIds={props.lockedIds} selected={props.selR === chip.id} disabled={locked} onMatch={props.onMatch} />
+                <MatchChip
+                  key={chip.id}
+                  chip={chip}
+                  side="right"
+                  lockedIds={props.lockedIds}
+                  selected={props.selR === chip.id}
+                  disabled={locked}
+                  onMatch={props.onMatch}
+                />
               ))}
             </div>
           </div>
@@ -759,16 +1041,30 @@ function PromptBody(props: {
   );
 }
 
-function FillStory({ presented, selection }: { presented: PresentedExercise; selection: string | boolean | null }) {
+function FillStory({
+  presented,
+  selection,
+}: {
+  presented: PresentedExercise;
+  selection: string | boolean | null;
+}) {
   const filled = typeof selection === "string" ? selection : "";
   const story = presented.story ?? "";
   const blank = <span className="blank">{filled || " "}</span>;
   const parts = story.split("____");
   return (
     <div className="story">
-      {parts.length > 1
-        ? <>{parts[0]}{blank}{parts.slice(1).join("____")}</>
-        : <>{story} {blank}</>}
+      {parts.length > 1 ? (
+        <>
+          {parts[0]}
+          {blank}
+          {parts.slice(1).join("____")}
+        </>
+      ) : (
+        <>
+          {story} {blank}
+        </>
+      )}
     </div>
   );
 }
@@ -782,9 +1078,10 @@ function MatchChip(props: {
   onMatch: (side: "left" | "right", id: string) => void;
 }) {
   const isLocked = props.lockedIds.includes(props.chip.id);
-  const cls = "mchip" + (isLocked ? " good" : props.selected ? " sel" : "");
+  const cls = `mchip${isLocked ? " good" : props.selected ? " sel" : ""}`;
   return (
     <button
+      type="button"
       className={cls}
       disabled={props.disabled || isLocked}
       onClick={() => props.onMatch(props.side, props.chip.id)}
@@ -812,48 +1109,97 @@ function CompleteScreen(props: {
   return (
     <main className="hero">
       <Confetti />
-      <div className="mascot"><Hedgehog /></div>
-      <h1>{summary.xpPerfect ? t.complete.flawless : props.isPractice ? t.complete.practiceDone : t.complete.done}</h1>
+      <div className="mascot">
+        <Hedgehog />
+      </div>
+      <h1>
+        {summary.xpPerfect
+          ? t.complete.flawless
+          : props.isPractice
+            ? t.complete.practiceDone
+            : t.complete.done}
+      </h1>
       <p className="sub">{t.complete.accuracy(acc, summary.correct, summary.total)}</p>
       <div className="xp-card">
         {props.isPractice ? (
-          <div className="xp-row"><span>{t.complete.xpCorrect}</span><span>+{summary.xpHit} XP</span></div>
+          <div className="xp-row">
+            <span>{t.complete.xpCorrect}</span>
+            <span>+{summary.xpHit} XP</span>
+          </div>
         ) : (
           <>
-            <div className="xp-row"><span>{t.complete.xpCorrect}</span><span>+{summary.xpHit} XP</span></div>
-            <div className="xp-row"><span>{t.complete.xpLesson}</span><span>+{summary.xpDone} XP</span></div>
-            {summary.xpPerfect > 0 && <div className="xp-row"><span>{t.complete.xpPerfect}</span><span>+{summary.xpPerfect} XP</span></div>}
+            <div className="xp-row">
+              <span>{t.complete.xpCorrect}</span>
+              <span>+{summary.xpHit} XP</span>
+            </div>
+            <div className="xp-row">
+              <span>{t.complete.xpLesson}</span>
+              <span>+{summary.xpDone} XP</span>
+            </div>
+            {summary.xpPerfect > 0 && (
+              <div className="xp-row">
+                <span>{t.complete.xpPerfect}</span>
+                <span>+{summary.xpPerfect} XP</span>
+              </div>
+            )}
           </>
         )}
-        <div className="xp-row total"><span>{t.complete.xpTotal}</span><span>+{summary.gained} XP</span></div>
+        <div className="xp-row total">
+          <span>{t.complete.xpTotal}</span>
+          <span>+{summary.gained} XP</span>
+        </div>
       </div>
       {summary.mix.length > 0 && (
         <>
-          <p className="sub" style={{ marginBottom: 8 }}>{t.complete.mixTitle}</p>
+          <p className="sub" style={{ marginBottom: 8 }}>
+            {t.complete.mixTitle}
+          </p>
           <div className="chips">
             {summary.mix.map((id) => {
               const concept = conceptOf(props.course, id);
               if (!concept) return null;
-              return <span className="chip" key={id}>{concept.term} vs {concept.mixUp}</span>;
+              return (
+                <span className="chip" key={id}>
+                  {concept.term} vs {concept.mixUp}
+                </span>
+              );
             })}
           </div>
         </>
       )}
       {props.isPractice ? (
         <>
-          <button className="btn btn-gold" onClick={() => props.onPractice()}>{t.complete.practiceAgain}</button>
-          <button className="btn btn-ghost" onClick={props.onPath}>{t.complete.backToPath}</button>
+          <button type="button" className="btn btn-gold" onClick={() => props.onPractice()}>
+            {t.complete.practiceAgain}
+          </button>
+          <button type="button" className="btn btn-ghost" onClick={props.onPath}>
+            {t.complete.backToPath}
+          </button>
         </>
       ) : next ? (
         <>
-          <button className="btn btn-gold" onClick={() => props.onStart(next.id)}>{t.complete.nextLesson(next.title)}</button>
-          {summary.mix.length > 0 && <button className="btn btn-green" onClick={() => props.onPractice(summary.mix)}>{t.complete.practiceThose}</button>}
-          <button className="btn btn-ghost" onClick={props.onPath}>{t.complete.backToPath}</button>
+          <button type="button" className="btn btn-gold" onClick={() => props.onStart(next.id)}>
+            {t.complete.nextLesson(next.title)}
+          </button>
+          {summary.mix.length > 0 && (
+            <button type="button" className="btn btn-green" onClick={() => props.onPractice(summary.mix)}>
+              {t.complete.practiceThose}
+            </button>
+          )}
+          <button type="button" className="btn btn-ghost" onClick={props.onPath}>
+            {t.complete.backToPath}
+          </button>
         </>
       ) : (
         <>
-          {summary.mix.length > 0 && <button className="btn btn-green" onClick={() => props.onPractice(summary.mix)}>{t.complete.practiceThose}</button>}
-          <button className="btn btn-ghost" onClick={props.onPath}>{t.complete.backToPath}</button>
+          {summary.mix.length > 0 && (
+            <button type="button" className="btn btn-green" onClick={() => props.onPractice(summary.mix)}>
+              {t.complete.practiceThose}
+            </button>
+          )}
+          <button type="button" className="btn btn-ghost" onClick={props.onPath}>
+            {t.complete.backToPath}
+          </button>
         </>
       )}
     </main>
@@ -874,10 +1220,18 @@ function FailScreen(props: {
       <div className="mascot">💔</div>
       <h1>{t.fail.title}</h1>
       <p className="sub">{t.fail.copy}</p>
-      {props.isPractice
-        ? <button className="btn btn-gold" onClick={props.onRetryPractice}>{t.fail.retryPractice}</button>
-        : <button className="btn btn-gold" onClick={() => props.onRetryLesson(props.lessonId)}>{t.fail.retryLesson}</button>}
-      <button className="btn btn-ghost" onClick={props.onPath}>{t.fail.backToPath}</button>
+      {props.isPractice ? (
+        <button type="button" className="btn btn-gold" onClick={props.onRetryPractice}>
+          {t.fail.retryPractice}
+        </button>
+      ) : (
+        <button type="button" className="btn btn-gold" onClick={() => props.onRetryLesson(props.lessonId)}>
+          {t.fail.retryLesson}
+        </button>
+      )}
+      <button type="button" className="btn btn-ghost" onClick={props.onPath}>
+        {t.fail.backToPath}
+      </button>
     </main>
   );
 }

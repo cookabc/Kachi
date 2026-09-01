@@ -4,10 +4,9 @@ import type {
   Course,
   Environment,
   Exercise,
-  ExerciseType,
   LearnerState,
   MasteryState,
-  SessionState
+  SessionState,
 } from "@kachi/domain";
 
 export const ENGINE_VERSION = "0.1.0";
@@ -21,13 +20,18 @@ export function emptyLearnerState(): LearnerState {
     completedLessonIds: [],
     seenConceptIds: [],
     mastery: {},
-    attempts: []
+    attempts: [],
   };
+}
+
+/** Canonical mastery-map key for a confusion pair: the two ids, sorted, joined. */
+export function pairIdForConcepts(leftId: string, rightId: string): string {
+  return [leftId, rightId].sort().join("::");
 }
 
 export function pairIdForConcept(concept: Concept | undefined): string | undefined {
   if (!concept?.mixUp) return undefined;
-  return [concept.id, concept.mixUp].sort().join("::");
+  return pairIdForConcepts(concept.id, concept.mixUp);
 }
 
 export function getExercise(course: Course, exerciseId: string): Exercise {
@@ -49,7 +53,7 @@ export function startSession(course: Course, lessonId: string, environment: Envi
     promptIds: lesson.prompts.map((prompt) => prompt.id),
     index: 0,
     results: [],
-    startedAt: environment.now().toISOString()
+    startedAt: environment.now().toISOString(),
   };
 }
 
@@ -61,7 +65,7 @@ export function startPracticeSession(promptIds: string[], environment: Environme
     promptIds: [...promptIds],
     index: 0,
     results: [],
-    startedAt: environment.now().toISOString()
+    startedAt: environment.now().toISOString(),
   };
 }
 
@@ -98,7 +102,11 @@ function addDays(date: Date, days: number): string {
   return next.toISOString();
 }
 
-function nextMastery(previous: MasteryState | undefined, attempt: AttemptEvent, isUnseenScenario: boolean): MasteryState | undefined {
+function nextMastery(
+  previous: MasteryState | undefined,
+  attempt: AttemptEvent,
+  isUnseenScenario: boolean,
+): MasteryState | undefined {
   if (!attempt.confusionPairId) return undefined;
   const base: MasteryState = previous ?? {
     confusionPairId: attempt.confusionPairId,
@@ -106,7 +114,7 @@ function nextMastery(previous: MasteryState | undefined, attempt: AttemptEvent, 
     lapses: 0,
     evidenceTypes: [],
     unseenScenarioCorrect: false,
-    schedulerVersion: ENGINE_VERSION
+    schedulerVersion: ENGINE_VERSION,
   };
 
   if (!attempt.correct || attempt.hintUsed) {
@@ -116,7 +124,7 @@ function nextMastery(previous: MasteryState | undefined, attempt: AttemptEvent, 
       lapses: base.lapses + 1,
       lastReviewedAt: attempt.occurredAt,
       dueAt: addDays(new Date(attempt.occurredAt), 1),
-      firstSeenAt: base.firstSeenAt ?? attempt.occurredAt
+      firstSeenAt: base.firstSeenAt ?? attempt.occurredAt,
     };
   }
 
@@ -132,7 +140,7 @@ function nextMastery(previous: MasteryState | undefined, attempt: AttemptEvent, 
     firstSeenAt: base.firstSeenAt ?? attempt.occurredAt,
     lastReviewedAt: attempt.occurredAt,
     dueAt: addDays(new Date(attempt.occurredAt), interval),
-    schedulerVersion: ENGINE_VERSION
+    schedulerVersion: ENGINE_VERSION,
   };
 }
 
@@ -144,6 +152,13 @@ export interface ApplyOptions {
    * pay the completion/perfect bonuses, or touch the streak.
    */
   heartsAfter?: number;
+  /**
+   * Match mispair: the two chip ids the player actually paired (left, right).
+   * A match prompt carries no termId, so without this the engine cannot tell
+   * which confusion pair lapsed — and the forced corrective rerun, which
+   * succeeds, would be the only record of the mistake.
+   */
+  confusionPair?: [string, string];
 }
 
 export function applyAnswer(
@@ -152,40 +167,55 @@ export function applyAnswer(
   session: SessionState,
   answer: string | boolean,
   environment: Environment,
-  options: ApplyOptions = {}
+  options: ApplyOptions = {},
 ): { state: LearnerState; session: SessionState; attempt: AttemptEvent; finished: boolean } {
   const exercise = currentExercise(course, session);
   if (!exercise) throw new Error("Cannot answer a finished session");
   const concept = course.concepts.find((item) => item.id === exercise.termId);
   const now = environment.now();
+  // A match mispair names the two chips the player actually confused. Raw chip
+  // IDs always stay in the answer, but only published concepts can contribute
+  // recent-miss focus or form a schedulable mastery pair.
+  const mispair = options.confusionPair;
+  const mispairConceptIds = mispair?.filter((id) => course.concepts.some((item) => item.id === id));
   const attempt: AttemptEvent = {
     eventId: environment.eventId(),
     deviceId: environment.deviceId,
     contentVersion: course.contentVersion,
     engineVersion: ENGINE_VERSION,
     exerciseId: exercise.id,
-    conceptIds: exercise.termIds.filter((id) => course.concepts.some((conceptItem) => conceptItem.id === id)),
-    confusionPairId: pairIdForConcept(concept),
+    conceptIds: mispair
+      ? (mispairConceptIds ?? [])
+      : exercise.termIds.filter((id) => course.concepts.some((item) => item.id === id)),
+    confusionPairId:
+      mispairConceptIds?.length === 2
+        ? pairIdForConcepts(mispairConceptIds[0], mispairConceptIds[1])
+        : pairIdForConcept(concept),
     exerciseType: exercise.type,
-    answer: String(answer),
+    answer: mispair ? `match:${mispair[0]}:${mispair[1]}` : String(answer),
     correct: isCorrect(exercise, answer),
     hintUsed: options.hintUsed ?? false,
     latencyMs: 0,
-    occurredAt: now.toISOString()
+    occurredAt: now.toISOString(),
   };
   const prior = attempt.confusionPairId ? state.mastery[attempt.confusionPairId] : undefined;
-  const mastery = nextMastery(prior, attempt, Boolean(exercise.assessmentOnly && exercise.type === "scenario"));
+  const mastery = nextMastery(
+    prior,
+    attempt,
+    Boolean(exercise.assessmentOnly && exercise.type === "scenario"),
+  );
   const nextMasteryMap = mastery ? { ...state.mastery, [mastery.confusionPairId]: mastery } : state.mastery;
   const seenConceptIds = Array.from(new Set([...state.seenConceptIds, ...attempt.conceptIds]));
   const nextSession: SessionState = {
     ...session,
     index: session.index + 1,
-    results: [...session.results, attempt]
+    results: [...session.results, attempt],
   };
   const finished = nextSession.index >= nextSession.promptIds.length;
   // A wrong final answer that also spends the last heart is a failed finish (PRD §9):
   // retry refills hearts, so the lesson is not completed by the failing run.
-  const failedFinish = finished && !attempt.correct && options.heartsAfter !== undefined && options.heartsAfter <= 0;
+  const failedFinish =
+    finished && !attempt.correct && options.heartsAfter !== undefined && options.heartsAfter <= 0;
   const completesLesson = finished && session.mode === "lesson" && !failedFinish;
   const flawless = completesLesson && attempt.correct && session.results.every((result) => result.correct);
   const completedLessonIds = completesLesson
@@ -201,21 +231,17 @@ export function applyAnswer(
   return {
     state: {
       ...state,
-      xp:
-        state.xp +
-        (attempt.correct ? 10 : 0) +
-        (completesLesson ? 20 : 0) +
-        (flawless ? 20 : 0),
+      xp: state.xp + (attempt.correct ? 10 : 0) + (completesLesson ? 20 : 0) + (flawless ? 20 : 0),
       streak,
       lastLessonDate: completedToday ? localDate(now) : state.lastLessonDate,
       completedLessonIds,
       seenConceptIds,
       mastery: nextMasteryMap,
-      attempts: [...state.attempts, attempt]
+      attempts: [...state.attempts, attempt],
     },
     session: nextSession,
     attempt,
-    finished
+    finished,
   };
 }
 
@@ -228,10 +254,7 @@ export function duePairIds(state: LearnerState, now: Date): string[] {
 
 export function isVerifiedMastery(item: MasteryState | undefined): boolean {
   return Boolean(
-    item &&
-      item.consecutiveCorrect >= 3 &&
-      item.evidenceTypes.length >= 2 &&
-      item.unseenScenarioCorrect
+    item && item.consecutiveCorrect >= 3 && item.evidenceTypes.length >= 2 && item.unseenScenarioCorrect,
   );
 }
 
