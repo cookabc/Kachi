@@ -1,0 +1,8 @@
+# Pre-commit: lint + format the staged files, then re-stage any fixes.
+# biome.json keeps content packs, dist, and the legacy HTML prototype out of scope.
+pre-commit:
+  commands:
+    biome:
+      glob: "*.{js,jsx,ts,tsx,mjs,cjs,json,jsonc,css}"
+      run: pnpm exec biome check --write --no-errors-on-unmatched {staged_files}
+      stage_fixed: true
