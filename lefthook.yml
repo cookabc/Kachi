@@ -1,5 +1,5 @@
 # Pre-commit: lint + format the staged files, then re-stage any fixes.
-# biome.json keeps content packs, dist, and the legacy HTML prototype out of scope.
+# biome.json keeps content packs and dist out of scope.
 pre-commit:
   commands:
     biome:

@@ -1,7 +1,7 @@
 {
   "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
   "files": {
-    "includes": ["**", "!**/node_modules", "!**/dist", "!content", "!Hedge-or-Pledge.html"]
+    "includes": ["**", "!**/node_modules", "!**/dist", "!content"]
   },
   "formatter": {
     "enabled": true,
@@ -36,36 +36,5 @@
       "trailingCommas": "all",
       "semicolons": "always"
     }
-  },
-  "overrides": [
-    {
-      "includes": [".playtest/**"],
-      "javascript": {
-        "formatter": {
-          "quoteStyle": "single"
-        }
-      },
-      "linter": {
-        "rules": {
-          "correctness": {
-            "noUnusedVariables": "off"
-          },
-          "style": {
-            "useTemplate": "off"
-          },
-          "complexity": {
-            "useOptionalChain": "off",
-            "noCommaOperator": "off"
-          },
-          "suspicious": {
-            "useIterableCallbackReturn": "off",
-            "noAssignInExpressions": "off"
-          },
-          "security": {
-            "noGlobalEval": "off"
-          }
-        }
-      }
-    }
-  ]
+  }
 }
