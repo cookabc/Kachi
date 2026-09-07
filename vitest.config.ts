@@ -1,3 +1,8 @@
-import config from "./vite.config";
+import { defineConfig } from "vitest/config";
 
-export default config;
+export default defineConfig({
+  test: {
+    environment: "jsdom",
+    include: ["src/**/*.test.ts", "src/**/*.test.tsx"],
+  },
+});
