@@ -1,9 +1,9 @@
-# Hedge or Pledge — Design System
+# Kachi — Design System
 
-**Status:** matches the shipped single-file prototype (`Hedge-or-Pledge.html`) as of 27 Aug 2026.
+**Status:** matches the React implementation (`src/`) as of 7 Sep 2026; baseline carried over from the retired single-file prototype (27 Aug 2026).
 This document describes what is actually built, so future changes have a baseline to push against.
 
-The product thesis lives in the [PRD](Hedge-or-Pledge-PRD.md). This document covers the visual and interaction layer only.
+The product thesis lives in the [PRD](PRD.md). This document covers the visual and interaction layer only.
 
 ---
 
@@ -113,18 +113,17 @@ Press feedback is physical: buttons translate down 2px and lose bottom-border th
 - Hearts, XP, streak, and path lock follow the PRD's v1 table, with two deliberate tightenings: practice rounds pay per correct answer only (no +20 completion/perfect bonus, no streak — the PRD only banned path unlocking, this keeps XP meaningful), and match prompts are judged live on a first wrong pairing (hearts −1 applies to every exercise type, closing the "match is always 100%" loophole).
 - Practice is 10-prompt rounds, not literally "infinite until they quit" (PRD §10). Same engine, bounded rounds; a round of drills felt better than an endless mode.
 - Banana distractors are banned: three joke answers that slipped into Unit 1–2 were replaced with real sibling terms (PRD §4.2). The `joke` art remains only as a fallback for art lookups, never as a distractor.
-- Build shape remains a single typed HTML file (PRD §12 allowed Vite+React+TS as a recommendation, not a requirement). Content is still data (`TERMS` / `UNITS` / `LESSONS`), so a later port stays mechanical.
+- The prototype stayed a single typed HTML file (PRD §12 allowed Vite+React+TS as a recommendation, not a requirement). Content remained data (`TERMS` / `UNITS` / `LESSONS`), which kept the port to Vite + React + TS mechanical — see §11.
 
-## 11. The workspace app (`apps/web`) port
+## 11. The React app (`src/`)
 
-The pnpm-workspace app implements this system on Vite + React + TS, rendering from
-`content/packs/hedge-or-pledge/zh-CN/course.json` through `@kachi/learning-engine`.
-The prototype HTML stays as the visual/behavioral reference. Port notes and deltas:
+The React app implements this system on Vite + TS, rendering from
+`content/packs/hedge-or-pledge/zh-CN/course.json` through `src/engine`.
+Port notes and deltas:
 
-- CSS tokens, components, and motion are ported near-verbatim (`apps/web/src/styles.css`); the DOM keeps the prototype's class names. Term art, aliases, and the mascot live in `apps/web/src/art.tsx`, extracted from the prototype unchanged.
+- CSS tokens, components, and motion are ported near-verbatim (`src/styles.css`); the DOM keeps the prototype's class names. Term art, aliases, and the mascot live in `src/art.tsx`, extracted from the prototype unchanged.
 - UI chrome is Chinese (the rewrite's shipped direction): verdicts 「不错。/ 正是。/ 答对了。/ 漂亮。」 and 「还差一点。/ 混淆了。/ 又是这一对。/ 岔路走反了。」 replace the English §9 pools; kickers, buttons, and screen copy are translated. Course content (stems, options, whys, captions, examples) stays English — 中文界面、英文术语教学. Teach cards and feedback sheets add the term's Chinese definition / 辨析 line from `localization.ts` under the English copy.
 - A fourth nav tab, 设置 (export/import learner data, privacy copy), exists beyond the prototype's three tabs.
 - No remote font loading: the `Nunito` stack resolves only if installed locally (README's 本地优先 rule).
-- Engine deltas that back the ported behavior: the +20 no-mistake bonus and the hearts-gated finish live in `@kachi/learning-engine` (`applyAnswer` with `heartsAfter`; a failed finish never completes the lesson), and a failed match re-queues itself via `requeuePrompt`. The practice focus set (recent misses ∪ due confusion pairs) derives from the attempt log via `recentMissTermIds`.
+- Engine deltas that back the ported behavior: the +20 no-mistake bonus and the hearts-gated finish live in `src/engine` (`applyAnswer` with `heartsAfter`; a failed finish never completes the lesson), and a failed match re-queues itself via `requeuePrompt`. The practice focus set (recent misses ∪ due confusion pairs) derives from the attempt log via `recentMissTermIds`.
 - Single display language (29 Aug 2026): the zh-CN course pack is native Chinese — stems, stories, options, whys, captions, examples, lesson titles, and unit blurbs are translated; the English terms themselves stay English (hedge, put, margin call) because the terms ARE the learning target, with 中文译名 as subtitles on teach cards and in the glossary. `localization.ts` carries only the term-name map, and the old bilingual helper lines are gone.
-- Smoke coverage: `.playtest/verify-new.mjs` drives the full lesson → practice → glossary → fail loop against a dev server and captures `shots-new/`.

@@ -1,7 +1,7 @@
-# Hedge or Pledge
+# Kachi
 ## Product Requirements Document — v0.1
 **Status:** accepted — 27 Aug 2026, defaults approved as written
-**Product:** a Duolingo-style game that teaches financial vocabulary
+**Product:** a Duolingo-style game that teaches financial vocabulary (first course pack: Hedge or Pledge)
 **Date:** 26 Aug 2026 (accepted 27 Aug 2026)
 
 ---
@@ -14,7 +14,7 @@ People do not fail finance because the ideas are that hard. They fail because th
 
 Duolingo already solved the loop: tiny sessions, retrieval under a little pressure, mix-ups as the curriculum, a reason to come back tomorrow. It has not been aimed at this vocabulary. Textbooks have the vocabulary and none of the loop.
 
-Hedge or Pledge is that loop, pointed at the words that make markets readable.
+Kachi is that loop, pointed at the words that make markets readable.
 
 ---
 
@@ -170,7 +170,7 @@ Sounds like the teacher in this chat: warm, short, slightly dry. Not a fintech b
 
 Numbers when they make the mechanism visible. No ticker symbols, no "not financial advice" wallpaper on every screen. One quiet line in Glossary footer is enough.
 
-**Visual system (updated 27 Aug 2026):** the prototype shipped with a light, Duolingo-style system — white cards on a sky/mint gradient, green = correct/go, yellow = reward, coral = wrong-but-safe, a hedgehog mascot, and a teach-card caption that explains what each piece of term art shows. The original sketch ("deep green + gold, dark-mode-first") is superseded. Full tokens, components, motion, and accessibility rules live in [DESIGN.md](DESIGN.md); change the look there, not ad hoc in the HTML.
+**Visual system (updated 27 Aug 2026):** the prototype shipped with a light, Duolingo-style system — white cards on a sky/mint gradient, green = correct/go, yellow = reward, coral = wrong-but-safe, a hedgehog mascot, and a teach-card caption that explains what each piece of term art shows. The original sketch ("deep green + gold, dark-mode-first") is superseded. Full tokens, components, motion, and accessibility rules live in [DESIGN.md](DESIGN.md); change the look there, not ad hoc in the app code.
 
 ---
 
