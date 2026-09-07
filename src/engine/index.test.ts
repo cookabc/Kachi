@@ -1,5 +1,5 @@
-import type { Course, Environment, Exercise, LearnerState, SessionState } from "@kachi/domain";
 import { describe, expect, it } from "vitest";
+import type { Course, Environment, Exercise, LearnerState, SessionState } from "../domain";
 import {
   type ApplyOptions,
   applyAnswer,

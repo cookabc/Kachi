@@ -14,7 +14,6 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "validate:content": "node scripts/validate-content.mjs",
-    "migrate:legacy-content": "node scripts/migrate-legacy-content.mjs",
     "check": "biome check . && node scripts/validate-content.mjs && tsc --noEmit && vitest run && vite build",
     "lint": "biome check .",
     "format": "biome check --write .",
@@ -34,9 +33,6 @@
     "vitest": "^3.2.7"
   },
   "dependencies": {
-    "@kachi/content-schema": "workspace:*",
-    "@kachi/domain": "workspace:*",
-    "@kachi/learning-engine": "workspace:*",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
     "workbox-window": "^7.4.1"

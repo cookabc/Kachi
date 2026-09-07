@@ -1,5 +1,5 @@
-// Term art, aliases, and mascot ported verbatim from the Hedge-or-Pledge prototype
-// (Hedge-or-Pledge.html) so the workspace app renders the same palette SVGs.
+// Term art, aliases, and mascot ported verbatim from the original single-file
+// prototype so the React app renders the same palette SVGs.
 function termSvg(inner: string) {
   return `<svg viewBox="0 0 64 64" class="term-svg" aria-hidden="true">${inner}</svg>`;
 }

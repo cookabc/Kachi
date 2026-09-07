@@ -1,7 +1,7 @@
-import type { Exercise, LearnerState, SessionState } from "@kachi/domain";
-import { emptyLearnerState } from "@kachi/learning-engine";
 import { describe, expect, it } from "vitest";
 import { course } from "./course";
+import type { Exercise, LearnerState, SessionState } from "./domain";
+import { emptyLearnerState } from "./engine";
 import { PRACTICE_ROUND, practicePool, present, resolveMatch, sessionSummary, teachPlan } from "./flow";
 
 const environmentNow = new Date("2026-08-29T08:00:00.000Z");

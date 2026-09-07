@@ -1,4 +1,7 @@
-import type { Concept, Course, Exercise, LearnerState, SessionState } from "@kachi/domain";
+import { type ChangeEvent, type CSSProperties, useEffect, useMemo, useState } from "react";
+import { artIdForLabel, Hedgehog, NAV_ICONS, TermArt } from "./art";
+import { courseFor } from "./course";
+import type { Concept, Course, Exercise, LearnerState, SessionState } from "./domain";
 import {
   applyAnswer,
   currentExercise,
@@ -8,10 +11,7 @@ import {
   requeuePrompt,
   startPracticeSession,
   startSession,
-} from "@kachi/learning-engine";
-import { type ChangeEvent, type CSSProperties, useEffect, useMemo, useState } from "react";
-import { artIdForLabel, Hedgehog, NAV_ICONS, TermArt } from "./art";
-import { courseFor } from "./course";
+} from "./engine";
 import {
   conceptOf,
   PRACTICE_ROUND,

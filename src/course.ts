@@ -1,6 +1,6 @@
-import type { Course } from "@kachi/domain";
-import enCourse from "../../../content/packs/hedge-or-pledge/en-US/course.json";
-import zhCourse from "../../../content/packs/hedge-or-pledge/zh-CN/course.json";
+import enCourse from "../content/packs/hedge-or-pledge/en-US/course.json";
+import zhCourse from "../content/packs/hedge-or-pledge/zh-CN/course.json";
+import type { Course } from "./domain";
 
 export type Lang = "zh-CN" | "en-US";
 

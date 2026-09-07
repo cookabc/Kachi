@@ -1,10 +1,8 @@
-import { fileURLToPath, URL } from "node:url";
 import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
 import { VitePWA } from "vite-plugin-pwa";
 
 export default defineConfig({
-  root: "apps/web",
   plugins: [
     react(),
     VitePWA({
@@ -30,23 +28,12 @@ export default defineConfig({
       },
     }),
   ],
-  resolve: {
-    alias: {
-      "@kachi/domain": fileURLToPath(new URL("./packages/domain/src/index.ts", import.meta.url)),
-      "@kachi/learning-engine": fileURLToPath(
-        new URL("./packages/learning-engine/src/index.ts", import.meta.url),
-      ),
-      "@kachi/content-schema": fileURLToPath(
-        new URL("./packages/content-schema/src/index.ts", import.meta.url),
-      ),
-    },
-  },
   build: {
-    outDir: "../../dist",
+    outDir: "dist",
     emptyOutDir: true,
   },
   test: {
     environment: "jsdom",
-    include: ["../../packages/**/*.test.ts", "src/**/*.test.ts", "src/**/*.test.tsx"],
+    include: ["src/**/*.test.ts", "src/**/*.test.tsx"],
   },
 });

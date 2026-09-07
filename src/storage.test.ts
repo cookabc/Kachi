@@ -1,6 +1,6 @@
-import type { LearnerState } from "@kachi/domain";
-import { emptyLearnerState } from "@kachi/learning-engine";
 import { beforeEach, describe, expect, it } from "vitest";
+import type { LearnerState } from "./domain";
+import { emptyLearnerState } from "./engine";
 import { exportLearnerData, importLearnerData, loadLearnerState, saveLearnerState } from "./storage";
 
 /* A minimal in-memory IndexedDB that satisfies exactly what storage.ts uses:
@@ -100,12 +100,9 @@ function installFakeIndexedDB() {
   };
 }
 
-const LEGACY_KEY = "hedge-or-pledge-v1";
-
 let fakeDatabase: ReturnType<typeof installFakeIndexedDB>;
 
 beforeEach(() => {
-  localStorage.clear();
   fakeDatabase = installFakeIndexedDB();
 });
 
@@ -173,26 +170,7 @@ describe("learner storage", () => {
     expect(loaded).toEqual(state);
   });
 
-  it("migrates legacy localStorage progress on first load", async () => {
-    localStorage.setItem(
-      LEGACY_KEY,
-      JSON.stringify({
-        xp: 40,
-        streak: 2,
-        lastPlayedDate: "2026-08-01",
-        completedLessonIds: ["u1l1", "u1l2"],
-        seenTermIds: ["hedge"],
-      }),
-    );
-    const loaded = await loadLearnerState();
-    expect(loaded.xp).toBe(40);
-    expect(loaded.streak).toBe(2);
-    expect(loaded.lastLessonDate).toBe("2026-08-01");
-    expect(loaded.completedLessonIds).toEqual(["u1l1", "u1l2"]);
-    expect(loaded.seenConceptIds).toEqual(["hedge"]);
-  });
-
-  it("starts from an empty state without legacy data", async () => {
+  it("starts from an empty state", async () => {
     const loaded = await loadLearnerState();
     expect(loaded).toEqual(emptyLearnerState());
   });
@@ -332,37 +310,5 @@ describe("learner storage", () => {
       source: "fresh",
     });
     expect(await loadLearnerState()).toEqual(emptyLearnerState());
-  });
-
-  it("recovers an invalid persisted snapshot from valid legacy progress", async () => {
-    fakeDatabase.seed("snapshots", "local-profile", { ...emptyLearnerState(), mastery: { broken: null } });
-    localStorage.setItem(
-      LEGACY_KEY,
-      JSON.stringify({
-        xp: 40,
-        streak: 2,
-        completedLessonIds: ["u1l1"],
-        seenTermIds: ["hedge"],
-      }),
-    );
-
-    const recovered = await loadLearnerState();
-    expect(recovered).toMatchObject({
-      xp: 40,
-      streak: 2,
-      completedLessonIds: ["u1l1"],
-      seenConceptIds: ["hedge"],
-    });
-    localStorage.clear();
-    expect(await loadLearnerState()).toEqual(recovered);
-  });
-
-  it("keeps a valid snapshot even when legacy progress also exists", async () => {
-    const snapshot = sampleState();
-    fakeDatabase.seed("snapshots", "local-profile", snapshot);
-    localStorage.setItem(LEGACY_KEY, JSON.stringify({ xp: 999, streak: 99 }));
-
-    expect(await loadLearnerState()).toEqual(snapshot);
-    expect(fakeDatabase.read("snapshots", "local-profile")).toEqual(snapshot);
   });
 });

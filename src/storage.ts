@@ -1,5 +1,5 @@
-import type { AttemptEvent, ExerciseType, LearnerState, MasteryState } from "@kachi/domain";
-import { emptyLearnerState, REVIEW_INTERVAL_DAYS } from "@kachi/learning-engine";
+import type { AttemptEvent, ExerciseType, LearnerState, MasteryState } from "./domain";
+import { emptyLearnerState, REVIEW_INTERVAL_DAYS } from "./engine";
 
 const DATABASE_NAME = "kachi-learning";
 const DATABASE_VERSION = 1;
@@ -7,7 +7,6 @@ const SNAPSHOT_STORE = "snapshots";
 const EVENT_STORE = "events";
 const META_STORE = "meta";
 const PROFILE_KEY = "local-profile";
-const LEGACY_KEY = "hedge-or-pledge-v1";
 
 function request<T>(value: IDBRequest<T>): Promise<T> {
   return new Promise((resolve, reject) => {
@@ -36,30 +35,6 @@ async function openDatabase(): Promise<IDBDatabase> {
   return request(open);
 }
 
-function legacyState(): LearnerState | undefined {
-  try {
-    const raw = localStorage.getItem(LEGACY_KEY);
-    if (!raw) return undefined;
-    const legacy = JSON.parse(raw) as {
-      xp?: number;
-      streak?: number;
-      lastPlayedDate?: string;
-      completedLessonIds?: string[];
-      seenTermIds?: string[];
-    };
-    return {
-      ...emptyLearnerState(),
-      xp: isNonNegativeInteger(legacy.xp) ? legacy.xp : 0,
-      streak: isNonNegativeInteger(legacy.streak) ? legacy.streak : 0,
-      lastLessonDate: typeof legacy.lastPlayedDate === "string" ? legacy.lastPlayedDate : undefined,
-      completedLessonIds: isStringArray(legacy.completedLessonIds) ? legacy.completedLessonIds : [],
-      seenConceptIds: isStringArray(legacy.seenTermIds) ? legacy.seenTermIds : [],
-    };
-  } catch {
-    return undefined;
-  }
-}
-
 export async function loadLearnerState(): Promise<LearnerState> {
   const database = await openDatabase();
   const transaction = database.transaction([SNAPSHOT_STORE, META_STORE], "readwrite");
@@ -70,15 +45,14 @@ export async function loadLearnerState(): Promise<LearnerState> {
     return snapshot;
   }
 
-  const legacy = legacyState();
-  const recovered = legacy ?? emptyLearnerState();
+  const recovered = emptyLearnerState();
   transaction.objectStore(SNAPSHOT_STORE).put(recovered, PROFILE_KEY);
   transaction.objectStore(META_STORE).put(
     snapshot === undefined
-      ? { migratedAt: new Date().toISOString(), source: legacy ? LEGACY_KEY : "fresh" }
+      ? { migratedAt: new Date().toISOString(), source: "fresh" }
       : {
           recoveredAt: new Date().toISOString(),
-          source: legacy ? LEGACY_KEY : "fresh",
+          source: "fresh",
           reason: "invalid-snapshot",
         },
     snapshot === undefined ? "migration" : "recovery",

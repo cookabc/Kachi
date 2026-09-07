@@ -1,4 +1,4 @@
-import type { ExerciseType } from "@kachi/domain";
+import type { ExerciseType } from "./domain";
 
 export type Lang = "zh-CN" | "en-US";
 

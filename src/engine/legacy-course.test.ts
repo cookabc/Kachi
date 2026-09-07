@@ -1,7 +1,7 @@
-import { validateCourse } from "@kachi/content-schema";
-import type { Course, Environment, Exercise } from "@kachi/domain";
 import { describe, expect, it } from "vitest";
-import rawCourse from "../../../content/packs/hedge-or-pledge/zh-CN/course.json";
+import rawCourse from "../../content/packs/hedge-or-pledge/zh-CN/course.json";
+import type { Course, Environment, Exercise } from "../domain";
+import { validateCourse } from "../schema";
 import { applyAnswer, currentExercise, emptyLearnerState, startSession } from "./index";
 
 const course = rawCourse as Course;

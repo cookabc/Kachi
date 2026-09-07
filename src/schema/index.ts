@@ -1,4 +1,4 @@
-import type { Course, Exercise, Lesson } from "@kachi/domain";
+import type { Course, Exercise, Lesson } from "../domain";
 
 export interface ValidationIssue {
   path: string;

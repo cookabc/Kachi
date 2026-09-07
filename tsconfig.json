@@ -14,13 +14,7 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx",
-    "baseUrl": ".",
-    "paths": {
-      "@kachi/domain": ["packages/domain/src/index.ts"],
-      "@kachi/learning-engine": ["packages/learning-engine/src/index.ts"],
-      "@kachi/content-schema": ["packages/content-schema/src/index.ts"]
-    }
+    "jsx": "react-jsx"
   },
-  "include": ["apps", "packages", "scripts", "vite.config.ts", "vitest.config.ts"]
+  "include": ["src", "vite.config.ts", "vitest.config.ts"]
 }

@@ -1,5 +1,5 @@
-import type { Concept, Course, Exercise, LearnerState, SessionState } from "@kachi/domain";
-import { duePairIds, isLessonUnlocked, recentMissTermIds } from "@kachi/learning-engine";
+import type { Concept, Course, Exercise, LearnerState, SessionState } from "./domain";
+import { duePairIds, isLessonUnlocked, recentMissTermIds } from "./engine";
 
 export const PRACTICE_ROUND = 10;
 

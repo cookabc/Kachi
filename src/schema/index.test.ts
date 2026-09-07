@@ -1,5 +1,5 @@
-import type { Course } from "@kachi/domain";
 import { describe, expect, it } from "vitest";
+import type { Course } from "../domain";
 import { validateCourse } from "./index";
 
 // A minimal course that satisfies every PRD §7/§8 shape rule: three exercise

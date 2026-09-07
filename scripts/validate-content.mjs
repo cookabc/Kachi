@@ -1,11 +1,11 @@
 // Build-time content gate. Every locale pack must pass the shared
-// validateCourse rules from @kachi/content-schema — a hand-rolled subset used
+// validateCourse rules from ../src/schema — a hand-rolled subset used
 // to live here, so an English pack could violate course rules while CI stayed
 // green — and the packs must stay structurally identical (ids, exercise types,
 // answers, pairings) so one locale cannot drift from the other.
 import fs from "node:fs";
 import path from "node:path";
-import { validateCourse } from "@kachi/content-schema";
+import { validateCourse } from "../src/schema/index.ts";
 
 const root = process.cwd();
 const packsDir = path.join(root, "content/packs/hedge-or-pledge");
@@ -16,9 +16,7 @@ const packFiles = fs
   .filter((file) => fs.existsSync(file));
 
 if (packFiles.length === 0) {
-  console.error(
-    "No course packs found under content/packs/hedge-or-pledge. Run pnpm migrate:legacy-content first.",
-  );
+  console.error("No course packs found under content/packs/hedge-or-pledge.");
   process.exit(1);
 }
 

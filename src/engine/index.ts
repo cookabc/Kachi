@@ -7,7 +7,7 @@ import type {
   LearnerState,
   MasteryState,
   SessionState,
-} from "@kachi/domain";
+} from "../domain";
 
 export const ENGINE_VERSION = "0.1.0";
 export const REVIEW_INTERVAL_DAYS = [1, 3, 7, 14, 30, 60] as const;
