@@ -27,6 +27,7 @@ import {
 } from "./flow";
 import { localizedTerm } from "./localization";
 import { activateUpdate } from "./pwa";
+import { buildPairCardSvg, CARD_HEIGHT, CARD_WIDTH, type PairCardInput } from "./share-card";
 import { exportLearnerData, importLearnerData, loadLearnerState, saveLearnerState } from "./storage";
 import { type Lang, loadLang, saveLang, UI, type UiText } from "./ui";
 
@@ -47,6 +48,51 @@ const environment = {
 
 function pick<T>(arr: T[]): T {
   return arr[Math.floor(Math.random() * arr.length)];
+}
+
+function pairCardInput(course: Course, concept: Concept, t: UiText): PairCardInput {
+  const sibling = conceptOf(course, concept.mixUp);
+  const unit = course.units.find((item) => item.id === concept.unit);
+  return {
+    kicker: `Kachi · ${t.home.unit(concept.unit)} · ${unit?.title ?? ""}`,
+    termA: concept.term,
+    forkA: concept.definition,
+    termB: sibling?.term ?? concept.mixUp,
+    forkB: sibling?.definition ?? "",
+    example: concept.example,
+  };
+}
+
+function cardFileName(card: PairCardInput): string {
+  const slug = (text: string) =>
+    text
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-|-$/g, "");
+  return `kachi-${slug(card.termA)}-vs-${slug(card.termB)}.png`;
+}
+
+async function svgToPngBlob(svg: string): Promise<Blob> {
+  const url = URL.createObjectURL(new Blob([svg], { type: "image/svg+xml;charset=utf-8" }));
+  try {
+    const img = new Image();
+    await new Promise<void>((resolve, reject) => {
+      img.onload = () => resolve();
+      img.onerror = () => reject(new Error("svg decode failed"));
+      img.src = url;
+    });
+    const canvas = document.createElement("canvas");
+    canvas.width = CARD_WIDTH;
+    canvas.height = CARD_HEIGHT;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) throw new Error("no 2d context");
+    ctx.drawImage(img, 0, 0, CARD_WIDTH, CARD_HEIGHT);
+    return await new Promise<Blob>((resolve, reject) =>
+      canvas.toBlob((blob) => (blob ? resolve(blob) : reject(new Error("png encode failed"))), "image/png"),
+    );
+  } finally {
+    URL.revokeObjectURL(url);
+  }
 }
 
 const realTermIds = (prompt: Exercise, course: Course) => publishedTermIds(prompt, course);
@@ -157,6 +203,7 @@ function App() {
   const [summary, setSummary] = useState<Summary | null>(null);
   const [glossaryQuery, setGlossaryQuery] = useState("");
   const [updateReady, setUpdateReady] = useState(false);
+  const [shareCards, setShareCards] = useState<PairCardInput[] | null>(null);
 
   const course = useMemo(() => courseFor(lang), [lang]);
   const t = UI[lang];
@@ -180,6 +227,36 @@ function App() {
   }, []);
 
   const missedCount = useMemo(() => recentMissTermIds(state).length, [state]);
+
+  const openShare = (conceptIds: string[]) => {
+    const seenPairs = new Set<string>();
+    const cards: PairCardInput[] = [];
+    for (const id of conceptIds) {
+      const concept = conceptOf(course, id);
+      if (!concept) continue;
+      const key = [concept.id, concept.mixUp].sort().join("|");
+      if (seenPairs.has(key)) continue;
+      seenPairs.add(key);
+      cards.push(pairCardInput(course, concept, t));
+    }
+    if (cards.length) setShareCards(cards);
+  };
+
+  const shareConceptIds = (sess: SessionState): string[] => {
+    if (sess.mode !== "practice") {
+      const lesson = course.lessons.find((item) => item.id === sess.lessonId);
+      return lesson ? [...new Set(lesson.prompts.flatMap((prompt) => prompt.termIds ?? []))] : [];
+    }
+    const wanted = new Set(sess.promptIds);
+    return [
+      ...new Set(
+        course.lessons
+          .flatMap((lesson) => lesson.prompts)
+          .filter((prompt) => wanted.has(prompt.id))
+          .flatMap((prompt) => prompt.termIds ?? []),
+      ),
+    ];
+  };
 
   const persist = (next: LearnerState) => {
     setState(next);
@@ -402,16 +479,20 @@ function App() {
 
   if (session && phase === "complete" && summary) {
     return (
-      <CompleteScreen
-        summary={summary}
-        isPractice={session.mode === "practice"}
-        lessonId={session.lessonId}
-        course={course}
-        t={t}
-        onStart={beginLesson}
-        onPractice={beginPractice}
-        onPath={closeLesson}
-      />
+      <>
+        <CompleteScreen
+          summary={summary}
+          isPractice={session.mode === "practice"}
+          lessonId={session.lessonId}
+          course={course}
+          t={t}
+          onStart={beginLesson}
+          onPractice={beginPractice}
+          onPath={closeLesson}
+          onShare={() => openShare(shareConceptIds(session))}
+        />
+        {shareCards && <ShareSheet cards={shareCards} t={t} onClose={() => setShareCards(null)} />}
+      </>
     );
   }
   if (session && phase === "fail") {
@@ -477,11 +558,14 @@ function App() {
           lang={lang}
           query={glossaryQuery}
           onQuery={setGlossaryQuery}
+          onShare={(conceptIds) => openShare(conceptIds)}
         />
       )}
       {tab === "settings" && (
         <Settings t={t} lang={lang} onLang={setLang} onExport={downloadExport} onImport={onImport} />
       )}
+
+      {shareCards && <ShareSheet cards={shareCards} t={t} onClose={() => setShareCards(null)} />}
 
       <Nav tab={tab} onTab={setTab} t={t} />
     </main>
@@ -599,6 +683,7 @@ function Glossary({
   lang,
   query,
   onQuery,
+  onShare,
 }: {
   state: LearnerState;
   course: Course;
@@ -606,6 +691,7 @@ function Glossary({
   lang: Lang;
   query: string;
   onQuery: (value: string) => void;
+  onShare: (conceptIds: string[]) => void;
 }) {
   const q = query.trim().toLowerCase();
   const matches = (concept: Concept) =>
@@ -651,6 +737,17 @@ function Glossary({
                         <span className="seen" title={t.glossary.seenTitle}>
                           ✓
                         </span>
+                      )}
+                      {seen && (
+                        <button
+                          type="button"
+                          className="g-share"
+                          aria-label={t.share.open}
+                          title={t.share.open}
+                          onClick={() => onShare([concept.id])}
+                        >
+                          <ShareIcon />
+                        </button>
                       )}
                     </h3>
                     <p className="def">{concept.definition}</p>
@@ -1101,6 +1198,7 @@ function CompleteScreen(props: {
   onStart: (id: string) => void;
   onPractice: (focus?: string[]) => void;
   onPath: () => void;
+  onShare: () => void;
 }) {
   const { summary, t } = props;
   const acc = summary.total ? Math.round((summary.correct / summary.total) * 100) : 0;
@@ -1202,7 +1300,121 @@ function CompleteScreen(props: {
           </button>
         </>
       )}
+      <button type="button" className="btn btn-ghost share-open" onClick={props.onShare}>
+        {t.share.open}
+      </button>
     </main>
+  );
+}
+
+function ShareIcon() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      width="18"
+      height="18"
+      aria-hidden="true"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M12 15V4m0 0L8 8m4-4 4 4" />
+      <path d="M5 12v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6" />
+    </svg>
+  );
+}
+
+function ShareSheet({ cards, t, onClose }: { cards: PairCardInput[]; t: UiText; onClose: () => void }) {
+  const [index, setIndex] = useState(0);
+  const [png, setPng] = useState<{ url: string; blob: Blob } | null>(null);
+  const card = cards[index];
+  const fileName = cardFileName(card);
+
+  useEffect(() => {
+    let alive = true;
+    let url: string | null = null;
+    setPng(null);
+    void svgToPngBlob(buildPairCardSvg(card)).then((blob) => {
+      if (!alive) return;
+      url = URL.createObjectURL(blob);
+      setPng({ url, blob });
+    });
+    return () => {
+      alive = false;
+      if (url) URL.revokeObjectURL(url);
+    };
+  }, [card]);
+
+  useEffect(() => {
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") onClose();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [onClose]);
+
+  const save = () => {
+    if (!png) return;
+    const anchor = document.createElement("a");
+    anchor.href = png.url;
+    anchor.download = fileName;
+    anchor.click();
+  };
+
+  const shareOut = async () => {
+    if (!png) return;
+    const file = new File([png.blob], fileName, { type: "image/png" });
+    try {
+      if (navigator.canShare?.({ files: [file] })) await navigator.share({ files: [file] });
+      else save();
+    } catch {
+      /* user cancelled the share sheet: nothing to do */
+    }
+  };
+
+  return (
+    <div className="share-backdrop">
+      <div className="share-sheet" role="dialog" aria-modal="true" aria-label={t.share.open}>
+        <div className="share-preview">
+          {png ? <img src={png.url} alt={t.share.cardAlt(card.termA, card.termB)} /> : null}
+        </div>
+        {cards.length > 1 && (
+          <div className="share-pager">
+            <button
+              type="button"
+              aria-label={t.share.prevCard}
+              disabled={index === 0}
+              onClick={() => setIndex(index - 1)}
+            >
+              ‹
+            </button>
+            <span>{t.share.position(index + 1, cards.length)}</span>
+            <button
+              type="button"
+              aria-label={t.share.nextCard}
+              disabled={index === cards.length - 1}
+              onClick={() => setIndex(index + 1)}
+            >
+              ›
+            </button>
+          </div>
+        )}
+        <button type="button" className="btn btn-gold" disabled={!png} onClick={save}>
+          {t.share.saveImage}
+        </button>
+        {"share" in navigator && (
+          <button type="button" className="btn btn-green" disabled={!png} onClick={() => void shareOut()}>
+            {t.share.shareBtn}
+          </button>
+        )}
+        <p className="share-hint">{t.share.saveHint}</p>
+        <button type="button" className="btn btn-ghost" onClick={onClose}>
+          {t.share.close}
+        </button>
+      </div>
+    </div>
   );
 }
 

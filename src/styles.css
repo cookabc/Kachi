@@ -1319,3 +1319,84 @@ svg.icon {
 .g-list::-webkit-scrollbar {
   display: none;
 }
+
+/* shareable pair card sheet (v1.1) */
+.share-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(27, 46, 36, 0.5);
+  display: grid;
+  place-items: center;
+  z-index: 60;
+  padding: 16px;
+}
+.share-sheet {
+  background: #fff;
+  border-radius: 24px;
+  padding: 16px;
+  width: 100%;
+  max-width: 380px;
+  max-height: calc(100dvh - 32px);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  box-shadow: 0 18px 48px rgba(27, 46, 36, 0.25);
+}
+.share-preview {
+  border-radius: 18px;
+  overflow: hidden;
+  aspect-ratio: 3 / 4;
+  background: linear-gradient(180deg, var(--sky), var(--mint-hint));
+}
+.share-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+.share-pager {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  font-weight: 800;
+  color: var(--ink-soft);
+}
+.share-pager button {
+  width: 40px;
+  height: 40px;
+  border-radius: 14px;
+  border: 2px solid var(--line);
+  background: #fff;
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--ink);
+  cursor: pointer;
+}
+.share-pager button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+.share-hint {
+  font-size: 12.5px;
+  color: var(--muted);
+  text-align: center;
+  font-weight: 700;
+}
+.share-open {
+  color: var(--muted);
+}
+.g-share {
+  margin-left: auto;
+  flex-shrink: 0;
+  width: 34px;
+  height: 34px;
+  border-radius: 12px;
+  border: 2px solid var(--line);
+  background: #fff;
+  color: var(--muted);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+}

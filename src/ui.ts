@@ -101,6 +101,17 @@ export interface UiText {
     retryPractice: string;
     backToPath: string;
   };
+  share: {
+    open: string;
+    saveImage: string;
+    saveHint: string;
+    shareBtn: string;
+    close: string;
+    cardAlt: (termA: string, termB: string) => string;
+    prevCard: string;
+    nextCard: string;
+    position: (index: number, total: number) => string;
+  };
   updateBanner: string;
   loading: string;
   /** Document shell metadata — synced onto <html> whenever the language changes. */
@@ -202,6 +213,17 @@ export const UI: Record<Lang, UiText> = {
       retryLesson: "重试本课",
       retryPractice: "再来一轮",
       backToPath: "回到路径",
+    },
+    share: {
+      open: "保存词对卡",
+      saveImage: "保存图片",
+      saveHint: "如果没有自动保存，长按图片存到相册。",
+      shareBtn: "分享…",
+      close: "关闭",
+      cardAlt: (termA, termB) => `词对卡：${termA} 和 ${termB} 的区别`,
+      prevCard: "上一张",
+      nextCard: "下一张",
+      position: (index, total) => `${index} / ${total}`,
     },
     updateBanner: "新版本已准备好，完成当前学习后点击更新",
     loading: "正在准备离线学习空间…",
@@ -305,6 +327,17 @@ export const UI: Record<Lang, UiText> = {
       retryLesson: "Retry lesson",
       retryPractice: "Retry practice",
       backToPath: "Back to the path",
+    },
+    share: {
+      open: "Save pair card",
+      saveImage: "Save image",
+      saveHint: "If nothing downloads, long-press the image to save it.",
+      shareBtn: "Share…",
+      close: "Close",
+      cardAlt: (termA, termB) => `Pair card: ${termA} vs ${termB}`,
+      prevCard: "Previous card",
+      nextCard: "Next card",
+      position: (index, total) => `${index} of ${total}`,
     },
     updateBanner: "A new version is ready — update after this session",
     loading: "Preparing your offline study space…",
