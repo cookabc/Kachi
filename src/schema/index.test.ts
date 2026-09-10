@@ -256,6 +256,79 @@ describe("content validation", () => {
     ).toBe(true);
   });
 
+  it.each(["draft", "reviewed"] as const)(
+    "flags a governed %s time-sensitive term missing asOf and reviewDue",
+    (status) => {
+      const course = validCourse();
+      const term = course.concepts[0];
+      term.risk = "time-sensitive";
+      term.reviewStatus = status;
+      const issues = validateCourse(course);
+      expect(issues.some((issue) => issue.path === "a" && /requires asOf/.test(issue.message))).toBe(true);
+      expect(
+        issues.some((issue) => issue.path === "a" && /requires a reviewDue date/.test(issue.message)),
+      ).toBe(true);
+    },
+  );
+
+  it("flags a draft jurisdictional term missing jurisdiction and source, but not its present dates", () => {
+    const course = validCourse();
+    const term = course.concepts[0];
+    term.risk = "jurisdictional";
+    term.reviewStatus = "draft";
+    term.asOf = "2026-09-01";
+    term.reviewDue = "2027-09-01";
+    const issues = validateCourse(course);
+    expect(issues.some((issue) => issue.path === "a" && /named jurisdiction/.test(issue.message))).toBe(true);
+    expect(issues.some((issue) => issue.path === "a" && /at least one source/.test(issue.message))).toBe(
+      true,
+    );
+    expect(issues.some((issue) => /requires asOf|requires a reviewDue date/.test(issue.message))).toBe(false);
+  });
+
+  it("treats whitespace-only provenance fields as missing", () => {
+    const course = validCourse();
+    const term = course.concepts[0];
+    term.risk = "time-sensitive";
+    term.reviewStatus = "reviewed";
+    term.asOf = "   ";
+    const issues = validateCourse(course);
+    expect(issues.some((issue) => issue.path === "a" && /requires asOf/.test(issue.message))).toBe(true);
+  });
+
+  it("accepts a reviewed jurisdictional term with jurisdiction, dates, and a real source", () => {
+    const course = validCourse();
+    course.sources.push({
+      id: "s1",
+      title: "A real source",
+      kind: "news",
+      rightsBasis: "facts-only",
+    });
+    const term = course.concepts[0];
+    term.risk = "jurisdictional";
+    term.reviewStatus = "reviewed";
+    term.asOf = "2026-09-01";
+    term.reviewDue = "2027-09-01";
+    term.jurisdiction = "US";
+    term.sourceIds = ["s1"];
+    expect(validateCourse(course)).toEqual([]);
+  });
+
+  it("grandfathers a legacy jurisdictional term without provenance fields", () => {
+    const course = validCourse();
+    const term = course.concepts[0];
+    term.risk = "jurisdictional";
+    term.reviewStatus = "legacy";
+    // Mirrors the shipped Unit 5 remediation debt: flagged risk, no fields yet.
+    expect(validateCourse(course)).toEqual([]);
+  });
+
+  it("does not require provenance fields for evergreen drafts", () => {
+    const course = validCourse();
+    course.concepts[0].reviewStatus = "draft";
+    expect(validateCourse(course)).toEqual([]);
+  });
+
   it("allows only the explicit match pseudo-term IDs", () => {
     const allowed = validCourse();
     const match = allowed.lessons[1].prompts[2];

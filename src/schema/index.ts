@@ -1,4 +1,4 @@
-import type { Course, Exercise, Lesson } from "../domain";
+import type { Concept, Course, Exercise, Lesson } from "../domain";
 
 export interface ValidationIssue {
   path: string;
@@ -124,6 +124,7 @@ export function validateCourse(course: Course): ValidationIssue[] {
     concept.sourceIds.forEach((id) => {
       if (!sourceIds.has(id)) issues.push({ path: concept.id, message: `Unknown source: ${id}` });
     });
+    issues.push(...conceptProvenanceIssues(concept));
   });
   allExercises.forEach((exercise) => {
     issues.push(...validateExercise(exercise, conceptIds));
@@ -188,4 +189,38 @@ function conceptCoverageIssues(concept: Course["concepts"][number], course: Cour
       message: `Term appears in ${prompts.length} prompt(s) across ${types.size} exercise type(s); PRD §7 requires at least two prompts in two types`,
     },
   ];
+}
+
+// PRD §7 "Provenance and freshness" (amended 10 Sep 2026): governed content —
+// new drafts and anything promoted to reviewed — must carry the fields its
+// risk level relies on. Legacy content predates the rule and is grandfathered
+// (its remediation debt is named in the PRD), so no id allowlist is needed.
+const GOVERNED_REVIEW_STATUSES: ReadonlySet<Concept["reviewStatus"]> = new Set(["draft", "reviewed"]);
+
+function conceptProvenanceIssues(concept: Concept): ValidationIssue[] {
+  if (concept.risk === "evergreen" || !GOVERNED_REVIEW_STATUSES.has(concept.reviewStatus)) return [];
+  const issues: ValidationIssue[] = [];
+  const requiresDate = concept.risk === "time-sensitive" || concept.risk === "jurisdictional";
+  if (requiresDate) {
+    if (!concept.asOf?.trim())
+      issues.push({ path: concept.id, message: `${concept.risk} concept requires asOf (PRD §7 provenance)` });
+    if (!concept.reviewDue?.trim())
+      issues.push({
+        path: concept.id,
+        message: `${concept.risk} concept requires a reviewDue date (PRD §7 provenance)`,
+      });
+  }
+  if (concept.risk === "jurisdictional") {
+    if (!concept.jurisdiction?.trim())
+      issues.push({
+        path: concept.id,
+        message: "jurisdictional concept requires a named jurisdiction (PRD §7 provenance)",
+      });
+    if (concept.sourceIds.length === 0)
+      issues.push({
+        path: concept.id,
+        message: "jurisdictional concept requires at least one source (PRD §7 provenance)",
+      });
+  }
+  return issues;
 }
