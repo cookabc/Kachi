@@ -1,5 +1,7 @@
 // Term art, aliases, and mascot ported verbatim from the original single-file
 // prototype so the React app renders the same palette SVGs.
+import { HEDGEHOG_PATHS } from "./share-card";
+
 function termSvg(inner: string) {
   return `<svg viewBox="0 0 64 64" class="term-svg" aria-hidden="true">${inner}</svg>`;
 }
@@ -145,14 +147,8 @@ export function TermArt({ id, size }: { id: string; size: ArtSize }) {
 export function Hedgehog() {
   return (
     <svg viewBox="0 0 72 64" width="88" height="78" aria-hidden="true">
-      <path d="M18 34l-8-12 10 8-2-16 10 14 4-18 6 18 8-16 4 16 12-10-8 14 12-4-10 12" fill="#58CC02" />
-      <ellipse cx="38" cy="40" rx="20" ry="14" fill="#46A302" />
-      <ellipse cx="42" cy="44" rx="15" ry="11" fill="#FFE08A" />
-      <ellipse cx="54" cy="44" rx="5" ry="3.4" fill="#FFD56A" />
-      <circle cx="48" cy="42" r="1.8" fill="#1B2E24" />
-      <circle cx="56" cy="44" r="1.2" fill="#1B2E24" />
-      <path d="M50 47q4 3 8 0" stroke="#FF4B4B" strokeWidth="1.4" fill="none" />
-      <circle cx="18" cy="42" r="3.2" fill="#FFE08A" />
+      {/* biome-ignore lint/security/noDangerouslySetInnerHtml: static, code-owned SVG art markup */}
+      <g dangerouslySetInnerHTML={{ __html: HEDGEHOG_PATHS }} />
     </svg>
   );
 }
