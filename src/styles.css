@@ -102,7 +102,7 @@ input {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 16px 16px 8px;
+  padding: calc(16px + env(safe-area-inset-top, 0px)) 16px 8px;
   gap: 8px;
 }
 .brand {
@@ -413,7 +413,7 @@ input {
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 12px 12px 8px;
+  padding: calc(12px + env(safe-area-inset-top, 0px)) 12px 8px;
 }
 .xbtn {
   width: 42px;
@@ -824,7 +824,7 @@ input {
   position: relative;
   display: flex;
   flex-direction: column;
-  padding: 28px 22px calc(20px + env(safe-area-inset-bottom, 0px));
+  padding: calc(28px + env(safe-area-inset-top, 0px)) 22px calc(20px + env(safe-area-inset-bottom, 0px));
   text-align: center;
 }
 .hero h1 {
@@ -928,8 +928,10 @@ input {
 .g-card h3 {
   font-size: 18px;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  gap: 8px;
+  column-gap: 8px;
+  row-gap: 2px;
   font-weight: 800;
 }
 .seen {
@@ -1168,6 +1170,32 @@ svg.icon {
   .story {
     padding: 11px 13px;
     font-size: 15px;
+  }
+  .hero {
+    padding-top: calc(20px + env(safe-area-inset-top, 0px));
+  }
+  .mascot {
+    font-size: 56px;
+  }
+  .hero h1 {
+    font-size: 28px;
+    margin: 6px 0 4px;
+  }
+  .hero .sub {
+    margin-bottom: 12px;
+  }
+  .xp-card {
+    padding: 10px 16px;
+    margin-bottom: 12px;
+  }
+  .xp-row {
+    padding: 5px 0;
+  }
+  .chips {
+    margin: 4px 0 12px;
+  }
+  .hero .btn + .btn {
+    margin-top: 8px;
   }
 }
 @media (prefers-reduced-motion: reduce) {
