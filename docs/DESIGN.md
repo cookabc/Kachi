@@ -73,15 +73,15 @@ Rule: green owns "go/correct," yellow owns "reward/attention," coral owns "wrong
 - Fill: story with underlined blank that live-fills with the tapped bank chip.
 - Match: two columns of chips; correct pairs lock green, and locking the **last pair judges the prompt immediately** as correct. A **wrong pairing judges the prompt immediately** — the sheet docks a heart and names the mix-up, and the re-shuffled match re-queues right after feedback so the player can still finish the pairs. No Check button; the prompt cannot be silently retried to 100%.
 
-**Complete.** Confetti burst, hedgehog mascot, "Flawless." (perfect) or "Lesson done.", accuracy line, yellow XP breakdown card, up to 3 "you mix these up" chips (term vs its mix-up). Buttons always offer the path: Next lesson (primary), "Practice those" (green, only when there were misses), "Back to the path" (ghost). Practice rounds show a per-answer XP line instead of the lesson breakdown. (v1.1 — planned: a ghost "Save pair card" action lives on this screen; see Shareable pair card below.)
+**Complete.** Confetti burst, hedgehog mascot, "Flawless." (perfect) or "Lesson done.", accuracy line, yellow XP breakdown card, up to 3 "you mix these up" chips (term vs its mix-up). Buttons always offer the path: Next lesson (primary), "Practice those" (green, only when there were misses), "Back to the path" (ghost). Practice rounds show a per-answer XP line instead of the lesson breakdown. (v1.1 — built 10 Sep 2026: a ghost "Save pair card" action lives on this screen; see Shareable pair card below.)
 
 **Fail (0 hearts).** 💔, "Out of hearts.", retry refills immediately — no wait gate, no guilt copy.
 
 **Practice.** Hedgehog hero, miss-count line, one button. Rounds of 10 prompts ending in the complete screen; "Practice again" starts a fresh round. Hearts still apply. Practice pays +10 XP per correct answer only — no completion/perfect bonus, and it never touches the streak — so XP and streak keep measuring lessons on the path. The pool is capped at unlocked lessons; a brand-new player (no misses) drills Unit 1 Lessons 1–2 only, never content a lesson ahead.
 
-**Glossary.** Search box (no auto-focus, so mobile keyboards don't pop up uninvited), compact unit banners, term cards (definition, example, mix-up, green ✓ once seen). Search updates **only the list** (IME-safe); empty state suggests starting terms. Footer: "Not investment advice. Words, not recommendations." — the only disclaimer in the app. (v1.1 — planned: the term detail gains a ghost share icon that opens its declared pair; locked terms show nothing.)
+**Glossary.** Search box (no auto-focus, so mobile keyboards don't pop up uninvited), compact unit banners, term cards (definition, example, mix-up, green ✓ once seen). Search updates **only the list** (IME-safe); empty state suggests starting terms. Footer: "Not investment advice. Words, not recommendations." — the only disclaimer in the app. (v1.1 — built 10 Sep 2026: the term card gains a ghost share icon that opens its declared pair; locked terms show nothing.)
 
-**Shareable pair card (v1.1 — planned, not yet built; amended 10 Sep 2026).**
+**Shareable pair card (v1.1 — built 10 Sep 2026; spec amended same day).**
 
 *Canvas.* 1080×1440 (3:4), 72px safe margin. Generated as one SVG string → Blob → `Image` → `canvas.toBlob("image/png")`. No html2canvas, no added dependency, no remote assets — it must export with the network offline.
 
@@ -91,11 +91,13 @@ Rule: green owns "go/correct," yellow owns "reward/attention," coral owns "wrong
 
 *Wrapping and fitting are layout math, not guesswork.* Term, fork, and example sizes step **together** through three sizes (88/42/38 → 80/39/36 → 72/36/34); the renderer picks the smallest size that satisfies both the per-block line caps and the 1440px vertical budget. A pure wrapping function breaks strings into `<tspan>` lines at the fixed measures above and is unit-tested against **every concept pair in both locale packs**, extremes included (22-character term, 136-character EN definition, 62-character ZH example). A pair that does not fit at the floor size fails the test — content is shortened in the data file instead of truncating silently or clipping.
 
-*Entry and save UX.* Both entries open a preview sheet: the card scaled to fit, a primary "Save image" button, a small long-press hint beneath it (WeChat and in-app browsers may swallow programmatic download), and a secondary "Share…" button rendered only when `navigator.share` exists. From Complete, pairs of that lesson can be paged through; Glossary opens its own declared pair directly. Triggers are real buttons with `aria-label`; the preview image carries alt text naming the pair; preview entrance respects `prefers-reduced-motion`.
+*CJK typography rules (added 10 Sep 2026 after browser QA).* Original spaces between CJK and Latin are preserved ("单元 1", "一张 put"); spaces between two CJK characters are dropped. Kinsoku (避头尾): closing punctuation ，。；：？！、…」』）》〉 never starts a line — it overhangs the previous line by one character instead; opening punctuation 「『（《〈 never ends a line — it carries to the next. Block spacing is computed from explicit ascent (0.8em) / descent (0.25em) so glyph boxes never overlap, and the whole flow is vertically centered within the budget with the footer pinned. All four rules are pinned by unit tests across every pair in both packs.
 
-*Chrome strings* (kicker already derives from data; "Save image", long-press hint, "Share…") are added to both locale packs; no other new copy fields.
+*Entry and save UX.* Both entries open a preview sheet: the **exported PNG itself** shown as an `<img>` (not inline SVG — long-press save must work on the preview, which is the WeChat fallback path), a primary "Save image" button, a small long-press hint beneath it, and a secondary "Share…" button rendered only when `navigator.share` exists (falling back to download when `canShare` rejects files). From Complete, pairs of that lesson (or practice round) can be paged through, deduplicated by unordered pair key; Glossary opens its own declared pair directly. Triggers are real buttons with `aria-label`; the preview image carries alt text naming the pair; Escape closes the sheet.
 
-*Manual QA gate:* newest term and longest example in each locale, checked on iOS Safari, Android Chrome, and WeChat's in-app browser; thumbnail legibility at ~240px wide; export verified offline.
+*Chrome strings* (kicker already derives from data; "Save image", long-press hint, "Share…", pager labels, alt text) are added to both locale packs; no other new copy fields.
+
+*Manual QA gate:* desktop-browser QA done 10 Sep 2026 (zh-CN + en-US cards visually inspected at full export size; pager boundaries; zero network requests during export — offline by construction). Still open: iOS Safari, Android Chrome, and WeChat's in-app browser on real devices; thumbnail legibility at ~240px wide.
 
 ## 6. Term art
 

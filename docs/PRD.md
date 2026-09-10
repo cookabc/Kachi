@@ -173,7 +173,7 @@ A lesson must use at least three of these. Scenario is mandatory after Unit 1 Le
 - Content: the pair's two English terms (never translated away, per §2), one fork sentence per term, and the pair's existing reviewed `example`. No second copy of copy: every card is generated from content data. Zero learner data by default — no XP, no accuracy, no streak, no name. The footer is the Kachi wordmark plus hedgehog only; no URL until a production domain is locked.
 - Entry points: the lesson Complete screen (pairs taught or reviewed that lesson) and the Glossary term view, unlocked terms only. A quiet ghost action — never offered mid-lesson, never pushed by a modal, never gated behind or paid out in XP or streak. Locked terms are never card-able; no spoilers.
 - Output: a PNG generated entirely on-device (SVG → canvas; system font stack only, the no-remote-font rule holds). Primary action is Save image with a long-press hint, because that is the reliable path inside WeChat and in-app browsers; the OS share sheet is a secondary button where `navigator.share` exists. No server, no analytics, no share tracking, no new runtime dependency.
-- Scheduling: implementation is v1.1, after the §13 quality bar is met. Allowed now as v1 polish (no new feature): making Complete and Glossary naturally frameable for plain screenshots — one-screen completeness, no clipped blocks, correct safe-area spacing.
+- Scheduling: implemented 10 Sep 2026, ahead of the §13 quality bar by explicit product decision (the card is itself the cheapest shareability test of the loop). Stage-0 framing polish shipped the same day.
 - The card is pack content under the same CC-BY-SA license (LICENSE-CONTENT); the wordmark is its attribution.
 
 Bottom nav: Learn · Practice · Glossary.
