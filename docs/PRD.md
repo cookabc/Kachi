@@ -28,6 +28,8 @@ Kachi is that loop, pointed at the words that make markets readable.
 
 The first real user is Chuangcius, already mid-conversation on hedge vs pledge. The product should feel like that conversation continued, not a pivot into "Intro to Finance 101."
 
+(Amended 10 Sep 2026: the shipped default learner is Chinese-speaking. They read English-language finance coverage — a headline, an earnings note, a work email — and the word they freeze on is the English term itself. UI chrome, explanations, stems, and feedback therefore ship in the learner's language; the English terms are never translated away. *hedge*, *pledge*, and *margin call* stay in English everywhere because the English string is the learning target, with the Chinese name shown only as a teach-card and glossary subtitle. zh-CN is the default pack; en-US is a full peer pack, not a translation afterthought. Both packs are translations of one course — same ids, exercise types, answers, and pairings — and content CI fails if they drift. Language is switched in Settings and the choice stays on-device. The voice in §11 is a requirement on every locale, not just the English copy.)
+
 ---
 
 ## 3. Product thesis
@@ -114,6 +116,15 @@ The name of the game, and the first fork in the road.
 
 Lessons unlock in order. A unit review sits at the end of each unit and reuses that unit's terms plus a mix-up-driven callback from earlier units — usually one, but a confusion pair can reach further back (basis risk's pair is *hedge* from Unit 1; securities-backed loan's is *pledge*). A review never tests a term from a later unit. (Amended 29 Aug 2026: the old "one callback from the previous unit" rule fought the confusion-pair thesis in §3 — the shipped reviews follow the pairs. The enforceable part — no untaught terms in reviews, ≥3 exercise types per lesson, scenario mandatory after u1l1, two prompts in two types per term — is now enforced by the content validator.)
 
+**Provenance and freshness (amended 10 Sep 2026).** The content schema already carries source, risk, and review fields; from this amendment they are governed, not decorative.
+
+- Our own vignettes (the $1M-stock stories) need no source and stay fictional — no real names or tickers, per §11.
+- A `time-sensitive` term requires `asOf` and a `reviewDue`; a `jurisdictional` term additionally requires a named `jurisdiction` and at least one source.
+- Any real third-party excerpt or figure requires a `SourceReference` (title, publisher, date) with a defensible rights basis. It is never re-licensed with the pack (see LICENSE-CONTENT): facts-only or quotation-exception, or it does not ship.
+- Content may leave review as `legacy`, but it can only be promoted to `reviewed` once its fields meet these rules. The content validator will reject any new non-evergreen concept missing its required fields.
+
+Resolved 10 Sep 2026: the three Unit 5 terms — securities-backed loan, capital gains, buy-borrow-die — now carry `jurisdiction: "US"`, `asOf`, an annual `reviewDue`, and facts-only source references (FINRA/SEC investor alert; IRS Topic 409; IRS Publication 551 plus McCaffery's *Fair Not Flat*, 2002, for the buy-borrow-die coinage), identical in both locale packs, and are promoted from `legacy` to `reviewed`. The descriptive-only constraint still holds: the vignettes teach no live rates or thresholds and make no "this is allowed" claims — the same tone decision as §14. Sources are recorded as metadata and links, never re-licensed quotations (see LICENSE-CONTENT).
+
 ---
 
 ## 8. Exercise types
@@ -157,6 +168,14 @@ A lesson must use at least three of these. Scenario is mandatory after Unit 1 Le
 
 **Glossary.** Search + list. Term, one-sentence definition, example, mix-up. Not a Wikipedia dump.
 
+**Shareable pair card (v1.1 — amended 10 Sep 2026).** One artifact, one job: turn a confusion pair into something worth handing a friend. The product's atomic unit is also the share unit. A card must make sense to someone who has never seen Kachi — its subject is the knowledge, never the learner.
+
+- Content: the pair's two English terms (never translated away, per §2), one fork sentence per term, and the pair's existing reviewed `example`. No second copy of copy: every card is generated from content data. Zero learner data by default — no XP, no accuracy, no streak, no name. The footer is the Kachi wordmark plus hedgehog only; no URL until a production domain is locked.
+- Entry points: the lesson Complete screen (pairs taught or reviewed that lesson) and the Glossary term view, unlocked terms only. A quiet ghost action — never offered mid-lesson, never pushed by a modal, never gated behind or paid out in XP or streak. Locked terms are never card-able; no spoilers.
+- Output: a PNG generated entirely on-device (SVG → canvas; system font stack only, the no-remote-font rule holds). Primary action is Save image with a long-press hint, because that is the reliable path inside WeChat and in-app browsers; the OS share sheet is a secondary button where `navigator.share` exists. No server, no analytics, no share tracking, no new runtime dependency.
+- Scheduling: implementation is v1.1, after the §13 quality bar is met. Allowed now as v1 polish (no new feature): making Complete and Glossary naturally frameable for plain screenshots — one-screen completeness, no clipped blocks, correct safe-area spacing.
+- The card is pack content under the same CC-BY-SA license (LICENSE-CONTENT); the wordmark is its attribution.
+
 Bottom nav: Learn · Practice · Glossary.
 
 ---
@@ -188,7 +207,10 @@ Numbers when they make the mechanism visible. No ticker symbols, no "not financi
 **Must not ship**
 - Auth, backend, payments
 - Advice, portfolio tracking, live prices
-- Social, leagues, sharing cards (nice later)
+- Social, leagues — no feeds, follows, invites, or leaderboards
+  (Amended 10 Sep 2026: the confusion-pair share card moves out of this ban
+  into v1.1 — see §10. Social systems stay banned; the card is an exported
+  artifact, not a network.)
 - Sound as a required path (optional later)
 - CMS / admin. Content lives in a typed file a human can edit
 

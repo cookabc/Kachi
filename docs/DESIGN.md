@@ -73,13 +73,29 @@ Rule: green owns "go/correct," yellow owns "reward/attention," coral owns "wrong
 - Fill: story with underlined blank that live-fills with the tapped bank chip.
 - Match: two columns of chips; correct pairs lock green, and locking the **last pair judges the prompt immediately** as correct. A **wrong pairing judges the prompt immediately** — the sheet docks a heart and names the mix-up, and the re-shuffled match re-queues right after feedback so the player can still finish the pairs. No Check button; the prompt cannot be silently retried to 100%.
 
-**Complete.** Confetti burst, hedgehog mascot, "Flawless." (perfect) or "Lesson done.", accuracy line, yellow XP breakdown card, up to 3 "you mix these up" chips (term vs its mix-up). Buttons always offer the path: Next lesson (primary), "Practice those" (green, only when there were misses), "Back to the path" (ghost). Practice rounds show a per-answer XP line instead of the lesson breakdown.
+**Complete.** Confetti burst, hedgehog mascot, "Flawless." (perfect) or "Lesson done.", accuracy line, yellow XP breakdown card, up to 3 "you mix these up" chips (term vs its mix-up). Buttons always offer the path: Next lesson (primary), "Practice those" (green, only when there were misses), "Back to the path" (ghost). Practice rounds show a per-answer XP line instead of the lesson breakdown. (v1.1 — planned: a ghost "Save pair card" action lives on this screen; see Shareable pair card below.)
 
 **Fail (0 hearts).** 💔, "Out of hearts.", retry refills immediately — no wait gate, no guilt copy.
 
 **Practice.** Hedgehog hero, miss-count line, one button. Rounds of 10 prompts ending in the complete screen; "Practice again" starts a fresh round. Hearts still apply. Practice pays +10 XP per correct answer only — no completion/perfect bonus, and it never touches the streak — so XP and streak keep measuring lessons on the path. The pool is capped at unlocked lessons; a brand-new player (no misses) drills Unit 1 Lessons 1–2 only, never content a lesson ahead.
 
-**Glossary.** Search box (no auto-focus, so mobile keyboards don't pop up uninvited), compact unit banners, term cards (definition, example, mix-up, green ✓ once seen). Search updates **only the list** (IME-safe); empty state suggests starting terms. Footer: "Not investment advice. Words, not recommendations." — the only disclaimer in the app.
+**Glossary.** Search box (no auto-focus, so mobile keyboards don't pop up uninvited), compact unit banners, term cards (definition, example, mix-up, green ✓ once seen). Search updates **only the list** (IME-safe); empty state suggests starting terms. Footer: "Not investment advice. Words, not recommendations." — the only disclaimer in the app. (v1.1 — planned: the term detail gains a ghost share icon that opens its declared pair; locked terms show nothing.)
+
+**Shareable pair card (v1.1 — planned, not yet built; amended 10 Sep 2026).**
+
+*Canvas.* 1080×1440 (3:4), 72px safe margin. Generated as one SVG string → Blob → `Image` → `canvas.toBlob("image/png")`. No html2canvas, no added dependency, no remote assets — it must export with the network offline.
+
+*Composition, top to bottom.* Sky-to-mint field with one centered white card (32px radius, 56px inner padding, soft neutral shadow; text measure 824px). Kicker 30px/800 in the sky-blue uppercase style: pack name · unit. Two terms at 88px/900 `--ink` (max two lines, broken only at spaces or hyphens), each followed by its one-sentence fork at 42px/700 `--ink-soft`, line-height 1.45 (CJK breaks per character, Latin per word); a hairline between them carries a yellow ≠ chip. A `--green-soft` panel (40px padding, 744px measure) holds the existing `example` at 38px/700. Footer: hedgehog mark + Kachi wordmark at 34px/800 `--muted`, nothing else.
+
+*Export legibility.* The scale is built for the post-tap full-screen view on a 390px-class phone (~0.36× scale), not the chat thumbnail — no card text can ever win at thumbnail size. Floors after adaptive shrink: term 72px, fork 36px, example 34px; nothing on the card ever renders below 30px. All text is 700–900 weight so recompression (WeChat and in-app browsers) cannot thin strokes into mush.
+
+*Wrapping and fitting are layout math, not guesswork.* Term, fork, and example sizes step **together** through three sizes (88/42/38 → 80/39/36 → 72/36/34); the renderer picks the smallest size that satisfies both the per-block line caps and the 1440px vertical budget. A pure wrapping function breaks strings into `<tspan>` lines at the fixed measures above and is unit-tested against **every concept pair in both locale packs**, extremes included (22-character term, 136-character EN definition, 62-character ZH example). A pair that does not fit at the floor size fails the test — content is shortened in the data file instead of truncating silently or clipping.
+
+*Entry and save UX.* Both entries open a preview sheet: the card scaled to fit, a primary "Save image" button, a small long-press hint beneath it (WeChat and in-app browsers may swallow programmatic download), and a secondary "Share…" button rendered only when `navigator.share` exists. From Complete, pairs of that lesson can be paged through; Glossary opens its own declared pair directly. Triggers are real buttons with `aria-label`; the preview image carries alt text naming the pair; preview entrance respects `prefers-reduced-motion`.
+
+*Chrome strings* (kicker already derives from data; "Save image", long-press hint, "Share…") are added to both locale packs; no other new copy fields.
+
+*Manual QA gate:* newest term and longest example in each locale, checked on iOS Safari, Android Chrome, and WeChat's in-app browser; thumbnail legibility at ~240px wide; export verified offline.
 
 ## 6. Term art
 
@@ -112,7 +128,7 @@ Press feedback is physical: buttons translate down 2px and lose bottom-border th
 - PRD §11 sketched "deep green + gold, dark-mode-first." Shipped: the light Duolingo-style system above. PRD §11 is updated to point here.
 - Hearts, XP, streak, and path lock follow the PRD's v1 table, with two deliberate tightenings: practice rounds pay per correct answer only (no +20 completion/perfect bonus, no streak — the PRD only banned path unlocking, this keeps XP meaningful), and match prompts are judged live on a first wrong pairing (hearts −1 applies to every exercise type, closing the "match is always 100%" loophole).
 - Practice is 10-prompt rounds, not literally "infinite until they quit" (PRD §10). Same engine, bounded rounds; a round of drills felt better than an endless mode.
-- Banana distractors are banned: three joke answers that slipped into Unit 1–2 were replaced with real sibling terms (PRD §4.2). The `joke` art remains only as a fallback for art lookups, never as a distractor.
+- Banana distractors are banned: three joke answers that slipped into Unit 1–2 were replaced with real sibling terms (PRD §4.2). A later sweep (10 Sep 2026) caught five more in Units 4–5 across both locales (u4rd, u4rg, u5l1c ×2, u5rb) and replaced each with its concept's declared confusion pair — e.g. buy-borrow-die's joke options now point at securities-backed loan / capital gains. The `joke` art remains only as a fallback for art lookups, never as a distractor.
 - The prototype stayed a single typed HTML file (PRD §12 allowed Vite+React+TS as a recommendation, not a requirement). Content remained data (`TERMS` / `UNITS` / `LESSONS`), which kept the port to Vite + React + TS mechanical — see §11.
 
 ## 11. The React app (`src/`)
