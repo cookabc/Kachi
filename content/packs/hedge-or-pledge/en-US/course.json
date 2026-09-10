@@ -353,10 +353,12 @@
       "example": "$10M stock, 30% haircut, $7M loan. You didn't sell, so you didn't trigger capital gains — yet.",
       "mixUp": "pledge",
       "mixUpWhy": "It's a pledge of securities for a loan. Pledge is the move; this is the product with a nicer name.",
-      "sourceIds": [],
+      "sourceIds": ["finra-sec-sbloc-2015"],
       "risk": "jurisdictional",
-      "jurisdiction": "US context in legacy content",
-      "reviewStatus": "legacy"
+      "jurisdiction": "US",
+      "asOf": "2026-09-10",
+      "reviewDue": "2027-09-10",
+      "reviewStatus": "reviewed"
     },
     {
       "id": "capital gains",
@@ -367,10 +369,12 @@
       "example": "Bought at $1M, sell at $4M. $3M is a capital gain. A loan is not a sale.",
       "mixUp": "buy-borrow-die",
       "mixUpWhy": "Capital gains hit when you sell. Buy-borrow-die is the pattern of never selling so the tax doesn't trigger.",
-      "sourceIds": [],
+      "sourceIds": ["irs-topic-409"],
       "risk": "jurisdictional",
-      "jurisdiction": "US context in legacy content",
-      "reviewStatus": "legacy"
+      "jurisdiction": "US",
+      "asOf": "2026-09-10",
+      "reviewDue": "2027-09-10",
+      "reviewStatus": "reviewed"
     },
     {
       "id": "buy-borrow-die",
@@ -381,10 +385,12 @@
       "example": "Owns $2B of stock, borrows $20M a year against it, never sells. A crash can still force a sale.",
       "mixUp": "securities-backed loan",
       "mixUpWhy": "A securities-backed loan is the borrowing tool. Buy-borrow-die is the whole life-cycle pattern that uses that tool.",
-      "sourceIds": [],
+      "sourceIds": ["irs-pub-551", "mccaffery-fair-not-flat-2002"],
       "risk": "jurisdictional",
-      "jurisdiction": "US context in legacy content",
-      "reviewStatus": "legacy"
+      "jurisdiction": "US",
+      "asOf": "2026-09-10",
+      "reviewDue": "2027-09-10",
+      "reviewStatus": "reviewed"
     },
     {
       "id": "futures",
@@ -3536,8 +3542,8 @@
               "art": "diversification"
             },
             {
-              "text": "30 names is a margin call.",
-              "art": "joke"
+              "text": "The put is diversification; the 30 names are the hedge.",
+              "art": "hedge"
             }
           ],
           "answer": 0,
@@ -3620,8 +3626,8 @@
               "art": "default"
             },
             {
-              "text": "They are synonyms on loan desks.",
-              "art": "joke"
+              "text": "Once you are marked to market, you are automatically in default.",
+              "art": "mark-to-market"
             },
             {
               "text": "Default is a type of put.",
@@ -3764,16 +3770,16 @@
               "art": "buy-borrow-die"
             },
             {
-              "text": "A strategy this app is telling you to use.",
-              "art": "joke"
+              "text": "Another name for a securities-backed loan.",
+              "art": "securities-backed loan"
             },
             {
               "text": "Selling every year to lock in gains.",
               "art": "capital gains"
             },
             {
-              "text": "Shorting your heirs' inheritance.",
-              "art": "joke"
+              "text": "Selling assets every year, paying capital gains tax, and leaving heirs the rest.",
+              "art": "capital gains"
             }
           ],
           "answer": 0,
@@ -4180,8 +4186,8 @@
               "art": "buy-borrow-die"
             },
             {
-              "text": "A free lunch this app endorses.",
-              "art": "joke"
+              "text": "Just a securities-backed loan itself — same thing, two names.",
+              "art": "securities-backed loan"
             },
             {
               "text": "The same thing as diversification.",
@@ -4335,5 +4341,46 @@
       ]
     }
   ],
-  "sources": []
+  "sources": [
+    {
+      "id": "finra-sec-sbloc-2015",
+      "title": "Securities-Backed Lines of Credit – It May Pay to See Beyond the Pitch",
+      "publisher": "FINRA and SEC Office of Investor Education and Advocacy",
+      "url": "https://www.finra.org/investors/alerts/securities-backed-lines-credit",
+      "publishedAt": "2015-12-21",
+      "accessedAt": "2026-09-10",
+      "kind": "primary",
+      "rightsBasis": "facts-only"
+    },
+    {
+      "id": "irs-topic-409",
+      "title": "IRS Topic No. 409, Capital Gains and Losses",
+      "publisher": "Internal Revenue Service",
+      "url": "https://www.irs.gov/taxtopics/tc409",
+      "publishedAt": "2026-02-25",
+      "accessedAt": "2026-09-10",
+      "kind": "primary",
+      "rightsBasis": "facts-only"
+    },
+    {
+      "id": "irs-pub-551",
+      "title": "Publication 551, Basis of Assets",
+      "publisher": "Internal Revenue Service",
+      "url": "https://www.irs.gov/publications/p551",
+      "publishedAt": "2026-04-02",
+      "accessedAt": "2026-09-10",
+      "kind": "primary",
+      "rightsBasis": "facts-only"
+    },
+    {
+      "id": "mccaffery-fair-not-flat-2002",
+      "title": "Fair Not Flat: How to Make the Tax System Better and Simpler",
+      "publisher": "University of Chicago Press",
+      "url": "https://press.uchicago.edu/ucp/books/book/chicago/F/bo3621094.html",
+      "publishedAt": "2002",
+      "accessedAt": "2026-09-10",
+      "kind": "academic",
+      "rightsBasis": "facts-only"
+    }
+  ]
 }

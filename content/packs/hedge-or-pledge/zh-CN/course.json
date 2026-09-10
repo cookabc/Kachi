@@ -353,10 +353,12 @@
       "example": "$10M 的股票，30% 的 haircut，贷 $7M。你没卖，所以还没触发资本利得——目前。",
       "mixUp": "pledge",
       "mixUpWhy": "它就是把证券 pledge 出去的贷款。pledge 是动作，这个是给动作起了个更好听名字的产品。",
-      "sourceIds": [],
+      "sourceIds": ["finra-sec-sbloc-2015"],
       "risk": "jurisdictional",
-      "jurisdiction": "US context in legacy content",
-      "reviewStatus": "legacy"
+      "jurisdiction": "US",
+      "asOf": "2026-09-10",
+      "reviewDue": "2027-09-10",
+      "reviewStatus": "reviewed"
     },
     {
       "id": "capital gains",
@@ -367,10 +369,12 @@
       "example": "$1M 买的，$4M 卖的。$3M 是 capital gain。贷款不是卖出。",
       "mixUp": "buy-borrow-die",
       "mixUpWhy": "capital gains 在卖出时触发。buy-borrow-die 描述的正是『永不卖出』来避开它的模式。",
-      "sourceIds": [],
+      "sourceIds": ["irs-topic-409"],
       "risk": "jurisdictional",
-      "jurisdiction": "US context in legacy content",
-      "reviewStatus": "legacy"
+      "jurisdiction": "US",
+      "asOf": "2026-09-10",
+      "reviewDue": "2027-09-10",
+      "reviewStatus": "reviewed"
     },
     {
       "id": "buy-borrow-die",
@@ -381,10 +385,12 @@
       "example": "某人持有几十亿的集中持仓，每年押着借 $20M 过日子，永不卖出。一次崩盘仍然可能强制卖出。",
       "mixUp": "securities-backed loan",
       "mixUpWhy": "securities-backed loan 是借钱工具；buy-borrow-die 是使用这套工具的整个人生周期模式。",
-      "sourceIds": [],
+      "sourceIds": ["irs-pub-551", "mccaffery-fair-not-flat-2002"],
       "risk": "jurisdictional",
-      "jurisdiction": "US context in legacy content",
-      "reviewStatus": "legacy"
+      "jurisdiction": "US",
+      "asOf": "2026-09-10",
+      "reviewDue": "2027-09-10",
+      "reviewStatus": "reviewed"
     },
     {
       "id": "futures",
@@ -3536,8 +3542,8 @@
               "art": "diversification"
             },
             {
-              "text": "30 只票会招来 margin call。",
-              "art": "joke"
+              "text": "put 是 diversification,30 只票是 hedge。",
+              "art": "hedge"
             }
           ],
           "answer": 0,
@@ -3620,8 +3626,8 @@
               "art": "default"
             },
             {
-              "text": "在贷款台上它们是同义词。",
-              "art": "joke"
+              "text": "mark-to-market 之后你就自动 default 了。",
+              "art": "mark-to-market"
             },
             {
               "text": "default 是一种 put。",
@@ -3764,16 +3770,16 @@
               "art": "buy-borrow-die"
             },
             {
-              "text": "本应用建议你使用的策略。",
-              "art": "joke"
+              "text": "securities-backed loan 的另一个名字。",
+              "art": "securities-backed loan"
             },
             {
               "text": "每年卖出锁定收益。",
               "art": "capital gains"
             },
             {
-              "text": "做空你继承人的遗产。",
-              "art": "joke"
+              "text": "每年卖出资产、缴 capital gains 税、把剩下的留给继承人。",
+              "art": "capital gains"
             }
           ],
           "answer": 0,
@@ -4180,8 +4186,8 @@
               "art": "buy-borrow-die"
             },
             {
-              "text": "本应用背书的免费午餐。",
-              "art": "joke"
+              "text": "就是 securities-backed loan 本身——同一个东西,两个名字。",
+              "art": "securities-backed loan"
             },
             {
               "text": "和 diversification 是一回事。",
@@ -4335,5 +4341,46 @@
       ]
     }
   ],
-  "sources": []
+  "sources": [
+    {
+      "id": "finra-sec-sbloc-2015",
+      "title": "Securities-Backed Lines of Credit – It May Pay to See Beyond the Pitch",
+      "publisher": "FINRA and SEC Office of Investor Education and Advocacy",
+      "url": "https://www.finra.org/investors/alerts/securities-backed-lines-credit",
+      "publishedAt": "2015-12-21",
+      "accessedAt": "2026-09-10",
+      "kind": "primary",
+      "rightsBasis": "facts-only"
+    },
+    {
+      "id": "irs-topic-409",
+      "title": "IRS Topic No. 409, Capital Gains and Losses",
+      "publisher": "Internal Revenue Service",
+      "url": "https://www.irs.gov/taxtopics/tc409",
+      "publishedAt": "2026-02-25",
+      "accessedAt": "2026-09-10",
+      "kind": "primary",
+      "rightsBasis": "facts-only"
+    },
+    {
+      "id": "irs-pub-551",
+      "title": "Publication 551, Basis of Assets",
+      "publisher": "Internal Revenue Service",
+      "url": "https://www.irs.gov/publications/p551",
+      "publishedAt": "2026-04-02",
+      "accessedAt": "2026-09-10",
+      "kind": "primary",
+      "rightsBasis": "facts-only"
+    },
+    {
+      "id": "mccaffery-fair-not-flat-2002",
+      "title": "Fair Not Flat: How to Make the Tax System Better and Simpler",
+      "publisher": "University of Chicago Press",
+      "url": "https://press.uchicago.edu/ucp/books/book/chicago/F/bo3621094.html",
+      "publishedAt": "2002",
+      "accessedAt": "2026-09-10",
+      "kind": "academic",
+      "rightsBasis": "facts-only"
+    }
+  ]
 }
