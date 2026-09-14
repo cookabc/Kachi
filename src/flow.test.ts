@@ -2,7 +2,15 @@ import { describe, expect, it } from "vitest";
 import { course } from "./course";
 import type { Exercise, LearnerState, SessionState } from "./domain";
 import { emptyLearnerState } from "./engine";
-import { PRACTICE_ROUND, practicePool, present, resolveMatch, sessionSummary, teachPlan } from "./flow";
+import {
+  lessonPair,
+  PRACTICE_ROUND,
+  practicePool,
+  present,
+  resolveMatch,
+  sessionSummary,
+  teachPlan,
+} from "./flow";
 
 const environmentNow = new Date("2026-08-29T08:00:00.000Z");
 
@@ -95,6 +103,31 @@ describe("teachPlan", () => {
     const plan = teachPlan(lessonById("u1r"), course);
     expect(plan.mode).toBe("recap");
     expect(plan.terms).toEqual(["hedge", "pledge", "collateral", "haircut", "margin", "margin call"]);
+  });
+});
+
+describe("lessonPair", () => {
+  it("names the pair a lesson teaches, from the first resolvable mix-up", () => {
+    expect(lessonPair(course, "u1l1")).toEqual({ a: "hedge", b: "pledge" });
+  });
+
+  it("skips freshly taught terms whose mix-up is not a published concept", () => {
+    const pair = lessonPair(course, "u1l2");
+    expect(pair).not.toBeNull();
+    expect(pair!.a).not.toBe(pair!.b);
+  });
+
+  it("resolves a pair for every lesson, including long terms and reviews", () => {
+    course.lessons.forEach((lesson) => {
+      const pair = lessonPair(course, lesson.id);
+      expect(pair, lesson.id).not.toBeNull();
+      expect(pair!.a.length).toBeGreaterThan(0);
+      expect(pair!.b.length).toBeGreaterThan(0);
+    });
+  });
+
+  it("returns null for an unknown lesson id", () => {
+    expect(lessonPair(course, "nope")).toBeNull();
   });
 });
 

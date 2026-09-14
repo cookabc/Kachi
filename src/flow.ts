@@ -96,6 +96,21 @@ export function teachPlan(
   return { mode: "first", terms: primaryTermIds(course, lesson).filter((id) => !seen.has(id)) };
 }
 
+// The pair a lesson is "about": the first newly taught concept whose declared
+// mix-up resolves to a published concept. Drives the complete-screen stamp;
+// review lessons fall back to the unit's first resolvable pair.
+export function lessonPair(course: Course, lessonId: string): { a: string; b: string } | null {
+  const lesson = course.lessons.find((item) => item.id === lessonId);
+  if (!lesson) return null;
+  for (const id of teachPlan(lesson, course).terms) {
+    const concept = conceptOf(course, id);
+    if (!concept) continue;
+    const sibling = conceptOf(course, concept.mixUp);
+    if (sibling) return { a: concept.term, b: sibling.term };
+  }
+  return null;
+}
+
 // Practice pool: focus (explicit, then due confusion pairs, then recent misses)
 // sorts weak prompts first; the pool is capped at unlocked lessons, with u1l2
 // kept open as the fresh-player seed. `now` is injectable for deterministic tests.

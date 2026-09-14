@@ -14,6 +14,7 @@ import {
 } from "./engine";
 import {
   conceptOf,
+  lessonPair,
   PRACTICE_ROUND,
   type PresentedExercise,
   practicePool,
@@ -1204,12 +1205,31 @@ function CompleteScreen(props: {
   const acc = summary.total ? Math.round((summary.correct / summary.total) * 100) : 0;
   const lessonIndex = props.course.lessons.findIndex((lesson) => lesson.id === props.lessonId);
   const next = props.isPractice ? undefined : props.course.lessons[lessonIndex + 1];
+  const pair = props.isPractice ? null : lessonPair(props.course, props.lessonId);
+  const flawless = summary.xpPerfect > 0;
   return (
     <main className="hero">
       <Confetti />
-      <div className="mascot">
-        <Hedgehog />
-      </div>
+      {props.isPractice ? (
+        <div className="mascot">
+          <Hedgehog />
+        </div>
+      ) : (
+        <div className={`hero-stage${flawless ? " flawless" : ""}`}>
+          <div className="mascot">
+            <Hedgehog />
+          </div>
+          {pair && (
+            <div className="pair-hero">
+              <div className="ph-term">{pair.a}</div>
+              <div className="stamp" aria-hidden="true">
+                ≠
+              </div>
+              <div className="ph-term">{pair.b}</div>
+            </div>
+          )}
+        </div>
+      )}
       <h1>
         {summary.xpPerfect
           ? t.complete.flawless
