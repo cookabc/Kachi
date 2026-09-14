@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { artIdForLabel, TERM_ART } from "./art";
+import { artForSize, artIdForLabel, HERO_ART, TERM_ART } from "./art";
 import { course } from "./course";
 
 describe("artIdForLabel", () => {
@@ -28,6 +28,36 @@ describe("artIdForLabel", () => {
     expect(artIdForLabel("banana")).toBe("joke");
     expect(artIdForLabel(null)).toBe("joke");
     expect(artIdForLabel("")).toBe("joke");
+  });
+});
+
+describe("hero scenes", () => {
+  it("only carries scenes for published concept ids", () => {
+    const published = new Set(course.concepts.map((concept) => concept.id));
+    const stray = Object.keys(HERO_ART).filter((id) => !published.has(id));
+    expect(stray).toEqual([]);
+  });
+
+  it("covers every published concept across all five units", () => {
+    const missing = course.concepts.filter((concept) => !HERO_ART[concept.id]).map((concept) => concept.id);
+    expect(missing).toEqual([]);
+  });
+
+  it("serves the scene at hero size and the icon at chip sizes", () => {
+    expect(artForSize("hedge", "hero")).toBe(HERO_ART.hedge);
+    expect(artForSize("hedge", "lg")).toBe(TERM_ART.hedge);
+    expect(artForSize("hedge", "xs")).toBe(TERM_ART.hedge);
+  });
+
+  it("falls back to TERM_ART for hero ids that never get a scene", () => {
+    // "true"/"false" are answer art, not concepts — posterization never reaches them
+    expect(artForSize("true", "hero")).toBe(TERM_ART.true);
+    expect(artForSize("false", "hero")).toBe(TERM_ART.false);
+  });
+
+  it("strips the _u1intro suffix before scene lookup", () => {
+    expect(artForSize("hedge_u1intro", "hero")).toBe(HERO_ART.hedge);
+    expect(artForSize("nope_u1intro", "hero")).toBe(TERM_ART.joke);
   });
 });
 
