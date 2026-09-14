@@ -172,6 +172,38 @@ describe("wrapText", () => {
   it("returns null when a single atom exceeds the measure", () => {
     expect(wrapText("supercalifragilisticexpialidocious", 88, 100)).toBeNull();
   });
+
+  it("rebalances an orphan last line in CJK text without changing content", () => {
+    const lines = wrapText("为已经持有的仓位买保险，而不是把它卖掉。", 42, 824);
+    expect(lines).not.toBeNull();
+    expect(lines).toHaveLength(2);
+    expect(measureText(lines![1], 42)).toBeGreaterThanOrEqual(824 * 0.3);
+    expect(lines!.join("")).toBe("为已经持有的仓位买保险，而不是把它卖掉。");
+  });
+
+  it.each(packs)("keeps every block's last line off orphan width in %s", (locale, course) => {
+    const unitLabel = locale === "zh-CN" ? "单元" : "Unit";
+    const floor = { fork: 36, example: 34 };
+    for (const concept of course.concepts) {
+      const input = pairInput(course, concept, unitLabel);
+      const blocks: Array<[string, string[] | null, number, number]> = [
+        ["forkA", wrapText(input.forkA, floor.fork, 824), floor.fork, 824],
+        ["forkB", wrapText(input.forkB, floor.fork, 824), floor.fork, 824],
+        ["example", wrapText(input.example, floor.example, 756), floor.example, 756],
+      ];
+      for (const [name, lines, size, measure] of blocks) {
+        if (!lines || lines.length < 2) continue;
+        const last = lines[lines.length - 1];
+        const prev = lines[lines.length - 2];
+        // when the previous line had plenty to give, the last line must not be an orphan
+        if (measureText(prev, size) < measure * 0.5) continue;
+        expect(
+          measureText(last, size),
+          `${locale}/${concept.id}/${name}: ${lines.join("|")}`,
+        ).toBeGreaterThanOrEqual(measure * 0.3);
+      }
+    }
+  });
 });
 
 describe("buildPairCardSvg", () => {

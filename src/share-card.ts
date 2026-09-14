@@ -158,37 +158,72 @@ const NO_LINE_END = /[「『（《〈“‘]$/;
 export function wrapText(text: string, fontSize: number, measure: number): string[] | null {
   const maxEm = measure / fontSize;
   const atoms = tokenize(text.trim());
-  const lines: string[] = [];
-  let line = "";
+  const lines: Atom[][] = [];
+  let line: Atom[] = [];
   let lineEm = 0;
   for (const atom of atoms) {
     if (atom.em > maxEm) return null;
-    const withSpace =
-      line.length > 0 && atom.spaceBefore && (!CJK.test(atom.text[0]) || !CJK.test(line[line.length - 1]));
-    const sepEm = withSpace ? charEm(" ") : 0;
-    if (line && lineEm + sepEm + atom.em > maxEm) {
+    const sepEm =
+      line.length > 0 && atom.spaceBefore && needsSpace(line[line.length - 1], atom) ? charEm(" ") : 0;
+    if (line.length && lineEm + sepEm + atom.em > maxEm) {
       if (NO_LINE_START.test(atom.text)) {
-        line += (withSpace ? " " : "") + atom.text;
+        line.push(atom);
         lineEm += sepEm + atom.em;
         continue;
       }
-      let carry = "";
+      let carry: Atom[] = [];
       let carryEm = 0;
-      if (line.length > 1 && NO_LINE_END.test(line)) {
-        carry = line[line.length - 1];
-        carryEm = charEm(carry);
-        line = line.slice(0, -1);
+      const tail = line[line.length - 1];
+      if (line.length > 1 && NO_LINE_END.test(tail.text)) {
+        carry = [line.pop() as Atom];
+        carryEm = tail.em;
       }
       lines.push(line);
-      line = carry + atom.text;
+      line = [...carry, atom];
       lineEm = carryEm + atom.em;
     } else {
-      line += (withSpace ? " " : "") + atom.text;
+      line.push(atom);
       lineEm += sepEm + atom.em;
     }
   }
-  if (line) lines.push(line);
-  return lines.length ? lines : null;
+  if (line.length) lines.push(line);
+  if (!lines.length) return null;
+  rebalanceLastLine(lines, maxEm);
+  return lines.map(joinAtoms);
+}
+
+function needsSpace(prev: Atom, next: Atom): boolean {
+  return !CJK.test(next.text[0]) || !CJK.test(prev.text[prev.text.length - 1]);
+}
+
+function joinAtoms(atoms: Atom[]): string {
+  let out = "";
+  for (const atom of atoms) {
+    if (out.length > 0 && atom.spaceBefore && needsSpace({ text: out, em: 0, spaceBefore: false }, atom))
+      out += " ";
+    out += atom.text;
+  }
+  return out;
+}
+
+// A last line shorter than 30% of the measure reads as an orphan ("掉。").
+// Pull atoms back from the previous line until it clears the threshold —
+// never creating a line that starts with closing punctuation, and never
+// exceeding the measure on the last line.
+function rebalanceLastLine(lines: Atom[][], maxEm: number): void {
+  if (lines.length < 2) return;
+  const last = lines[lines.length - 1];
+  const prev = lines[lines.length - 2];
+  let lastEm = 0;
+  for (const atom of last) lastEm += atom.em;
+  while (lastEm < maxEm * 0.3 && prev.length > 1) {
+    const atom = prev[prev.length - 1];
+    if (NO_LINE_START.test(atom.text)) break;
+    if (lastEm + atom.em > maxEm) break;
+    prev.pop();
+    last.unshift(atom);
+    lastEm += atom.em;
+  }
 }
 
 function latinUpper(text: string): string {
