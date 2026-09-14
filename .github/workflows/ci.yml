@@ -18,3 +18,37 @@ jobs:
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - run: pnpm run check
+
+  dco:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          # the sign-off check walks the pushed range, so it needs full history
+          fetch-depth: 0
+      - name: Require a DCO sign-off matching each commit's author
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          BEFORE: ${{ github.event.before }}
+          AFTER: ${{ github.event.after }}
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          set -euo pipefail
+          if [ "$EVENT_NAME" = "pull_request" ]; then
+            range="$BASE_SHA..$HEAD_SHA"
+          elif [ -n "$BEFORE" ] && git cat-file -e "${BEFORE}^{commit}" 2>/dev/null; then
+            range="$BEFORE..$AFTER"
+          else
+            # new branch or force push: the previous tip is gone, check the tip
+            range="-n 1 $AFTER"
+          fi
+          status=0
+          for sha in $(git rev-list $range); do
+            author_email="$(git log -1 --format=%ae "$sha")"
+            if ! git log -1 --format=%B "$sha" | grep -qiE "^Signed-off-by: .+<${author_email}>[[:space:]]*$"; then
+              echo "::error::$sha is missing a DCO sign-off matching <${author_email}>; commit with 'git commit -s'"
+              status=1
+            fi
+          done
+          exit $status
