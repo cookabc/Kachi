@@ -29,6 +29,8 @@ function pairInput(course: Course, concept: Concept, unitLabel: string): PairCar
     termB: sibling.term,
     forkB: sibling.definition,
     example: concept.example,
+    artA: concept.id,
+    artB: sibling.id,
   };
 }
 
@@ -49,7 +51,7 @@ describe("pair card layout", () => {
     const ASCENT = 0.8;
     const DESCENT = 0.25;
     const CONTENT_TOP = 72 + 56;
-    const BUDGET_BOTTOM = CARD_HEIGHT - 72 - 56 - 88;
+    const BUDGET_BOTTOM = CARD_HEIGHT - 72 - 56 - 72;
     for (const concept of course.concepts) {
       const layout = layoutPairCard(pairInput(course, concept, unitLabel));
       if (!layout) throw new Error(`${locale}/${concept.id} does not fit`);
@@ -59,12 +61,12 @@ describe("pair card layout", () => {
       const gaps = [
         layout.termA.firstBaseline - layout.kicker.firstBaseline - (30 * DESCENT + s.term * ASCENT),
         layout.forkA.firstBaseline - lastBase(layout.termA) - (s.term * DESCENT + s.fork * ASCENT),
-        layout.termB.firstBaseline - layout.hairlineY - s.term * ASCENT,
+        layout.termB.firstBaseline - layout.duelY - s.term * ASCENT,
         layout.forkB.firstBaseline - lastBase(layout.termB) - (s.term * DESCENT + s.fork * ASCENT),
         layout.panel.y - lastBase(layout.forkB) - s.fork * DESCENT,
       ];
       for (const gap of gaps) expect(gap, `${locale}/${concept.id}`).toBeGreaterThanOrEqual(0);
-      expect(layout.hairlineY - lastBase(layout.forkA)).toBeGreaterThanOrEqual(s.fork * DESCENT);
+      expect(layout.duelY - lastBase(layout.forkA)).toBeGreaterThanOrEqual(s.fork * DESCENT);
       const panelBottom = layout.panel.y + layout.panel.height;
       expect(panelBottom).toBeLessThanOrEqual(BUDGET_BOTTOM + 1);
       const slackTop = layout.topY - CONTENT_TOP;
@@ -212,5 +214,32 @@ describe("buildPairCardSvg", () => {
   it("contains no learner data fields beyond the given copy", () => {
     const svg = buildPairCardSvg(sample);
     expect(svg).not.toMatch(/XP|streak|accuracy|正确率/i);
+  });
+
+  it("embeds both duel scenes when art ids resolve", () => {
+    const svg = buildPairCardSvg({ ...sample, artA: "hedge", artB: "pledge" });
+    expect(svg.match(/class="duel-art"/g)).toHaveLength(2);
+    expect(svg).toContain("<circle");
+    expect(svg).not.toContain('stroke="#dceee4"');
+  });
+
+  it("falls back to hairline flanks when no scene resolves", () => {
+    const svg = buildPairCardSvg(sample);
+    expect(svg).not.toContain("duel-art");
+    expect(svg).toContain('stroke="#dceee4"');
+    const parsed = new DOMParser().parseFromString(svg, "image/svg+xml");
+    expect(parsed.querySelector("parsererror")).toBeNull();
+  });
+
+  it("embeds every published pair's scenes without breaking well-formedness", () => {
+    for (const [locale, course] of packs) {
+      const unitLabel = locale === "zh-CN" ? "单元" : "Unit";
+      for (const concept of course.concepts) {
+        const svg = buildPairCardSvg(pairInput(course, concept, unitLabel));
+        const parsed = new DOMParser().parseFromString(svg, "image/svg+xml");
+        expect(parsed.querySelector("parsererror"), `${locale}/${concept.id}`).toBeNull();
+        expect(svg.match(/class="duel-art"/g), `${locale}/${concept.id}`).toHaveLength(2);
+      }
+    }
   });
 });

@@ -1,16 +1,19 @@
+import { HEDGEHOG_PATHS, heroSceneInner } from "./art";
+
 export const CARD_WIDTH = 1080;
 export const CARD_HEIGHT = 1440;
-
 const SAFE = 72;
 const CARD_PAD = 56;
 const TEXT_MEASURE = CARD_WIDTH - SAFE * 2 - CARD_PAD * 2;
-const EXAMPLE_PAD = 40;
+const EXAMPLE_PAD = 34;
 const EXAMPLE_MEASURE = TEXT_MEASURE - EXAMPLE_PAD * 2;
 const CONTENT_TOP = SAFE + CARD_PAD;
 const CONTENT_BOTTOM = CARD_HEIGHT - SAFE - CARD_PAD;
-const FOOTER_RESERVE = 88;
+const FOOTER_RESERVE = 72;
 const TERM_LINE_CAP = 2;
-const HAIRLINE_ZONE = 48;
+const DUEL_ZONE = 130;
+const DUEL_ART = 108;
+const STAMP_R = 44;
 
 const TIERS = [
   { term: 88, fork: 42, example: 38 },
@@ -20,7 +23,7 @@ const TIERS = [
 
 const KICKER_SIZE = 30;
 const TERM_LH = 1.15;
-const TEXT_LH = 1.45;
+const TEXT_LH = 1.4;
 
 const FONT_STACK =
   "ui-rounded, 'Nunito', 'Trebuchet MS', 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif";
@@ -35,18 +38,10 @@ const COLOR = {
   line: "#dceee4",
   yellow: "#ffc800",
   greenSoft: "#e7ffd4",
+  green: "#58cc02",
+  greenDeep: "#46a302",
   skyBlue: "#1cb0f6",
 } as const;
-
-export const HEDGEHOG_PATHS =
-  '<path d="M18 34l-8-12 10 8-2-16 10 14 4-18 6 18 8-16 4 16 12-10-8 14 12-4-10 12" fill="#58CC02" />' +
-  '<ellipse cx="38" cy="40" rx="20" ry="14" fill="#46A302" />' +
-  '<ellipse cx="42" cy="44" rx="15" ry="11" fill="#FFE08A" />' +
-  '<ellipse cx="54" cy="44" rx="5" ry="3.4" fill="#FFD56A" />' +
-  '<circle cx="48" cy="42" r="1.8" fill="#1B2E24" />' +
-  '<circle cx="56" cy="44" r="1.2" fill="#1B2E24" />' +
-  '<path d="M50 47q4 3 8 0" stroke="#FF4B4B" stroke-width="1.4" fill="none" />' +
-  '<circle cx="18" cy="42" r="3.2" fill="#FFE08A" />';
 
 export interface PairCardInput {
   kicker: string;
@@ -55,6 +50,8 @@ export interface PairCardInput {
   termB: string;
   forkB: string;
   example: string;
+  artA?: string;
+  artB?: string;
 }
 
 export interface CardBlock {
@@ -73,7 +70,7 @@ export interface PairCardLayout {
   termB: CardBlock;
   forkB: CardBlock;
   example: CardBlock;
-  hairlineY: number;
+  duelY: number;
   panel: { y: number; height: number };
   flowHeight: number;
   topY: number;
@@ -218,14 +215,14 @@ export function layoutPairCard(input: PairCardInput): PairCardLayout | null {
     const forkLh = sizes.fork * TEXT_LH;
     const exampleLh = sizes.example * TEXT_LH;
     const kickerBase = KICKER_SIZE * ASCENT;
-    const termABase = kickerBase + KICKER_SIZE * DESCENT + 28 + sizes.term * ASCENT;
+    const termABase = kickerBase + KICKER_SIZE * DESCENT + 22 + sizes.term * ASCENT;
     const forkABase =
-      termABase + (termA.length - 1) * termLh + sizes.term * DESCENT + 12 + sizes.fork * ASCENT;
-    const hairlineY = forkABase + (forkA.length - 1) * forkLh + sizes.fork * DESCENT + 24 + HAIRLINE_ZONE / 2;
-    const termBBase = hairlineY + HAIRLINE_ZONE / 2 + 24 + sizes.term * ASCENT;
+      termABase + (termA.length - 1) * termLh + sizes.term * DESCENT + 10 + sizes.fork * ASCENT;
+    const duelY = forkABase + (forkA.length - 1) * forkLh + sizes.fork * DESCENT + 18 + DUEL_ZONE / 2;
+    const termBBase = duelY + DUEL_ZONE / 2 + 18 + sizes.term * ASCENT;
     const forkBBase =
-      termBBase + (termB.length - 1) * termLh + sizes.term * DESCENT + 12 + sizes.fork * ASCENT;
-    const panelY = forkBBase + (forkB.length - 1) * forkLh + sizes.fork * DESCENT + 24;
+      termBBase + (termB.length - 1) * termLh + sizes.term * DESCENT + 10 + sizes.fork * ASCENT;
+    const panelY = forkBBase + (forkB.length - 1) * forkLh + sizes.fork * DESCENT + 18;
     const panelHeight =
       EXAMPLE_PAD * 2 + (example.length - 1) * exampleLh + sizes.example * (ASCENT + DESCENT);
     const flowHeight = panelY + panelHeight;
@@ -251,7 +248,7 @@ export function layoutPairCard(input: PairCardInput): PairCardLayout | null {
       termB: block(termB, sizes.term, termLh, termBBase),
       forkB: block(forkB, sizes.fork, forkLh, forkBBase),
       example: block(example, sizes.example, exampleLh, panelY + EXAMPLE_PAD + sizes.example * ASCENT),
-      hairlineY: hairlineY + topY,
+      duelY: duelY + topY,
       panel: { y: panelY + topY, height: panelHeight },
       flowHeight,
       topY,
@@ -294,10 +291,10 @@ export function buildPairCardSvg(input: PairCardInput): string {
   const innerRight = CARD_WIDTH - SAFE - CARD_PAD;
   const midX = CARD_WIDTH / 2;
   const parts: string[] = [];
-  const emit = (block: CardBlock, weight: number, fill: string, extra = "") =>
+  const emit = (block: CardBlock, weight: number, fill: string, extra = "", x = innerX) =>
     textBlock(
       block.lines,
-      innerX,
+      x,
       block.firstBaseline,
       block.fontSize,
       block.lineHeight / block.fontSize,
@@ -306,22 +303,37 @@ export function buildPairCardSvg(input: PairCardInput): string {
       extra,
     );
 
-  parts.push(emit(layout.kicker, 800, COLOR.skyBlue, ' letter-spacing="2"'));
-  parts.push(emit(layout.termA, 900, COLOR.ink));
-  parts.push(emit(layout.forkA, 700, COLOR.inkSoft));
+  parts.push(emit(layout.kicker, 800, COLOR.skyBlue, ' letter-spacing="2" text-anchor="middle"', midX));
+  parts.push(emit(layout.termA, 900, COLOR.ink, ' text-anchor="middle"', midX));
+  parts.push(emit(layout.forkA, 700, COLOR.inkSoft, ' text-anchor="middle"', midX));
 
-  const chipW = 64;
-  const chipH = 44;
-  const hy = layout.hairlineY;
+  const dy = layout.duelY;
+  const sceneA = input.artA ? heroSceneInner(input.artA) : null;
+  const sceneB = input.artB ? heroSceneInner(input.artB) : null;
+  if (sceneA || sceneB) {
+    const scale = DUEL_ART / 64;
+    if (sceneA)
+      parts.push(
+        `<g class="duel-art" transform="translate(${midX - STAMP_R - 28 - DUEL_ART} ${dy - DUEL_ART / 2}) scale(${scale})">${sceneA}</g>`,
+      );
+    if (sceneB)
+      parts.push(
+        `<g class="duel-art" transform="translate(${midX + STAMP_R + 28} ${dy - DUEL_ART / 2}) scale(${scale})">${sceneB}</g>`,
+      );
+  } else {
+    parts.push(
+      `<line x1="${innerX}" y1="${dy}" x2="${midX - STAMP_R - 12}" y2="${dy}" stroke="${COLOR.line}" stroke-width="3"/>`,
+      `<line x1="${midX + STAMP_R + 12}" y1="${dy}" x2="${innerRight}" y2="${dy}" stroke="${COLOR.line}" stroke-width="3"/>`,
+    );
+  }
   parts.push(
-    `<line x1="${innerX}" y1="${hy}" x2="${midX - chipW / 2 - 12}" y2="${hy}" stroke="${COLOR.line}" stroke-width="3"/>`,
-    `<line x1="${midX + chipW / 2 + 12}" y1="${hy}" x2="${innerRight}" y2="${hy}" stroke="${COLOR.line}" stroke-width="3"/>`,
-    `<rect x="${midX - chipW / 2}" y="${hy - chipH / 2}" width="${chipW}" height="${chipH}" rx="22" fill="${COLOR.yellow}"/>`,
-    `<text x="${midX}" y="${hy + 11}" text-anchor="middle" font-family="${FONT_STACK}" font-size="32" font-weight="900" fill="${COLOR.ink}">≠</text>`,
+    `<circle cx="${midX}" cy="${dy + 5}" r="${STAMP_R}" fill="${COLOR.greenDeep}"/>`,
+    `<circle cx="${midX}" cy="${dy}" r="${STAMP_R}" fill="#fff" stroke="${COLOR.green}" stroke-width="7"/>`,
+    `<text x="${midX}" y="${dy + 17}" text-anchor="middle" font-family="${FONT_STACK}" font-size="52" font-weight="900" fill="${COLOR.greenDeep}">≠</text>`,
   );
 
-  parts.push(emit(layout.termB, 900, COLOR.ink));
-  parts.push(emit(layout.forkB, 700, COLOR.inkSoft));
+  parts.push(emit(layout.termB, 900, COLOR.ink, ' text-anchor="middle"', midX));
+  parts.push(emit(layout.forkB, 700, COLOR.inkSoft, ' text-anchor="middle"', midX));
 
   parts.push(
     `<rect x="${innerX}" y="${layout.panel.y}" width="${TEXT_MEASURE}" height="${layout.panel.height}" rx="24" fill="${COLOR.greenSoft}"/>`,

@@ -61,6 +61,8 @@ function pairCardInput(course: Course, concept: Concept, t: UiText): PairCardInp
     termB: sibling?.term ?? concept.mixUp,
     forkB: sibling?.definition ?? "",
     example: concept.example,
+    artA: concept.id,
+    artB: sibling?.id,
   };
 }
 
