@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import { course as publishedCourse } from "../course";
 import type { Course, Environment, Exercise, LearnerState, SessionState } from "../domain";
 import {
   type ApplyOptions,
@@ -604,5 +605,52 @@ describe("match mispairs", () => {
 
     expect(result.attempt.confusionPairId).toBe("collateral::hedge");
     expect(result.state.mastery["collateral::hedge"].lapses).toBe(1);
+  });
+});
+
+describe("real-course playthrough", () => {
+  function correctAnswerFor(prompt: Exercise): string | boolean {
+    if (prompt.type === "match") return "matched";
+    if (prompt.type === "truefalse" || prompt.type === "fill") return prompt.answer as string | boolean;
+    return prompt.options![prompt.answer as number].text;
+  }
+
+  it("completes a full all-correct lesson with flawless payout and streak", () => {
+    // Guards the lesson-completion path end to end: every prompt of a real
+    // lesson answered correctly must finish, persist completion, and pay out.
+    const lesson = publishedCourse.lessons.find((item) => item.id === "u1l1")!;
+    let state = emptyLearnerState();
+    let session = startSession(publishedCourse, "u1l1", environment);
+    for (const prompt of lesson.prompts) {
+      const result = applyAnswer(publishedCourse, state, session, correctAnswerFor(prompt), environment, {
+        heartsAfter: 4,
+      });
+      expect(result.attempt.correct, prompt.id).toBe(true);
+      state = result.state;
+      session = result.session;
+    }
+    expect(session.index).toBe(lesson.prompts.length);
+    expect(state.completedLessonIds).toEqual(["u1l1"]);
+    expect(state.xp).toBe(lesson.prompts.length * 10 + 20 + 20);
+    expect(state.streak).toBe(1);
+    expect(state.lastLessonDate).toBeDefined();
+    expect(state.attempts).toHaveLength(lesson.prompts.length);
+  });
+
+  it("never marks a practice round as a completed lesson", () => {
+    const lesson = publishedCourse.lessons.find((item) => item.id === "u1l1")!;
+    const promptIds = lesson.prompts.map((prompt) => prompt.id);
+    let state = emptyLearnerState();
+    let session = startPracticeSession(promptIds, environment);
+    for (const prompt of lesson.prompts) {
+      const result = applyAnswer(publishedCourse, state, session, correctAnswerFor(prompt), environment, {
+        heartsAfter: 4,
+      });
+      state = result.state;
+      session = result.session;
+    }
+    expect(state.completedLessonIds).toEqual([]);
+    expect(state.xp).toBe(lesson.prompts.length * 10);
+    expect(state.streak).toBe(0);
   });
 });
