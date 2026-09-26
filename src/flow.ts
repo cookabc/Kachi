@@ -143,11 +143,10 @@ export function practicePool(
     .flatMap((lesson) => lesson.prompts);
   let pool: Exercise[];
   if (focus.size) {
-    const weak = shuffle(
-      available.filter((prompt) => realTermIds(prompt, course).some((id) => focus.has(id))),
-    );
-    const rest = shuffle(available.filter((prompt) => weak.indexOf(prompt) === -1));
-    pool = weak.concat(rest);
+    const weak = available.filter((prompt) => realTermIds(prompt, course).some((id) => focus.has(id)));
+    const weakIds = new Set(weak.map((prompt) => prompt.id));
+    const rest = available.filter((prompt) => !weakIds.has(prompt.id));
+    pool = shuffle(weak).concat(shuffle(rest));
   } else {
     pool = shuffle(
       course.lessons

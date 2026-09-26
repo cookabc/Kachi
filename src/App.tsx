@@ -1,7 +1,7 @@
-import { type ChangeEvent, type CSSProperties, useEffect, useMemo, useState } from "react";
-import { artIdForLabel, Hedgehog, NAV_ICONS, TermArt } from "./art";
-import { courseFor } from "./course";
-import type { Concept, Course, Exercise, LearnerState, SessionState } from "./domain";
+import { type ChangeEvent, useEffect, useMemo, useState } from "react";
+import { MAX_HEARTS, Nav, type Tab } from "./chrome";
+import { courseFor, course as defaultCourse, loadCourse } from "./course";
+import type { Concept, Course, LearnerState, SessionState } from "./domain";
 import {
   applyAnswer,
   currentExercise,
@@ -14,8 +14,6 @@ import {
 } from "./engine";
 import {
   conceptOf,
-  lessonPair,
-  PRACTICE_ROUND,
   type PresentedExercise,
   practicePool,
   present,
@@ -26,17 +24,18 @@ import {
   type TeachMode,
   teachPlan,
 } from "./flow";
-import { localizedTerm } from "./localization";
 import { activateUpdate } from "./pwa";
-import { buildPairCardSvg, CARD_HEIGHT, CARD_WIDTH, type PairCardInput } from "./share-card";
+import { CompleteScreen } from "./screens/CompleteScreen";
+import { FailScreen } from "./screens/FailScreen";
+import { Glossary } from "./screens/Glossary";
+import { LearnHome } from "./screens/LearnHome";
+import { LessonScreen, type Phase } from "./screens/LessonScreen";
+import { PracticeHome } from "./screens/PracticeHome";
+import { Settings } from "./screens/Settings";
+import { ShareSheet } from "./screens/ShareSheet";
+import type { PairCardInput } from "./share-card";
 import { exportLearnerData, importLearnerData, loadLearnerState, saveLearnerState } from "./storage";
 import { type Lang, loadLang, saveLang, UI, type UiText } from "./ui";
-
-type Tab = "learn" | "practice" | "glossary" | "settings";
-type Phase = "teach" | "question" | "feedback" | "complete" | "fail";
-
-const MAX_HEARTS = 5;
-const SNAKE = [0, 56, 8, -56];
 
 const deviceId = crypto.randomUUID();
 let eventCounter = 0;
@@ -46,10 +45,6 @@ const environment = {
   deviceId,
   eventId: () => `${deviceId}-${Date.now()}-${++eventCounter}`,
 };
-
-function pick<T>(arr: T[]): T {
-  return arr[Math.floor(Math.random() * arr.length)];
-}
 
 function pairCardInput(course: Course, concept: Concept, t: UiText): PairCardInput {
   const sibling = conceptOf(course, concept.mixUp);
@@ -66,131 +61,14 @@ function pairCardInput(course: Course, concept: Concept, t: UiText): PairCardInp
   };
 }
 
-function cardFileName(card: PairCardInput): string {
-  const slug = (text: string) =>
-    text
-      .toLowerCase()
-      .replace(/[^a-z0-9]+/g, "-")
-      .replace(/^-|-$/g, "");
-  return `kachi-${slug(card.termA)}-vs-${slug(card.termB)}.png`;
-}
-
-async function svgToPngBlob(svg: string): Promise<Blob> {
-  const url = URL.createObjectURL(new Blob([svg], { type: "image/svg+xml;charset=utf-8" }));
-  try {
-    const img = new Image();
-    await new Promise<void>((resolve, reject) => {
-      img.onload = () => resolve();
-      img.onerror = () => reject(new Error("svg decode failed"));
-      img.src = url;
-    });
-    const canvas = document.createElement("canvas");
-    canvas.width = CARD_WIDTH;
-    canvas.height = CARD_HEIGHT;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) throw new Error("no 2d context");
-    ctx.drawImage(img, 0, 0, CARD_WIDTH, CARD_HEIGHT);
-    return await new Promise<Blob>((resolve, reject) =>
-      canvas.toBlob((blob) => (blob ? resolve(blob) : reject(new Error("png encode failed"))), "image/png"),
-    );
-  } finally {
-    URL.revokeObjectURL(url);
-  }
-}
-
-const realTermIds = (prompt: Exercise, course: Course) => publishedTermIds(prompt, course);
-
-function StatsBar({ state }: { state: LearnerState }) {
-  return (
-    <div className="stats" role="img" aria-label={`XP ${state.xp} · ${state.streak}`}>
-      <div className="stat xp">
-        <span className="ic">◆</span>
-        {state.xp}
-      </div>
-      <div className="stat streak">
-        <span className="ic">🔥</span>
-        {state.streak}
-      </div>
-    </div>
-  );
-}
-
-function HeartRow({ n, popped, t }: { n: number; popped: boolean; t: UiText }) {
-  return (
-    <div className="hearts" role="img" aria-label={t.lesson.heartsAria(n, MAX_HEARTS)}>
-      {/* fixed-length indicator: the hearts never reorder, so the index is the identity */}
-      {Array.from({ length: MAX_HEARTS }, (_, i) => (
-        <span key={i} className={`ht ${i < n ? "full" : popped && i === n ? "empty pop" : "empty"}`}>
-          ♥
-        </span>
-      ))}
-    </div>
-  );
-}
-
-function Nav({ tab, onTab, t }: { tab: Tab; onTab: (tab: Tab) => void; t: UiText }) {
-  const items: Array<{ id: Tab; text: UiText["nav"]["learn"] }> = [
-    { id: "learn", text: t.nav.learn },
-    { id: "practice", text: t.nav.practice },
-    { id: "glossary", text: t.nav.glossary },
-    { id: "settings", text: t.nav.settings },
-  ];
-  return (
-    <nav className="nav" aria-label={t.navAria}>
-      {items.map((item) => (
-        <button
-          type="button"
-          key={item.id}
-          className={tab === item.id ? "on" : ""}
-          aria-label={item.text.aria}
-          onClick={() => onTab(item.id)}
-        >
-          {/* biome-ignore lint/security/noDangerouslySetInnerHtml: static, code-owned SVG icon markup from art.tsx */}
-          <span dangerouslySetInnerHTML={{ __html: NAV_ICONS[item.id] }} />
-          {item.text.label}
-        </button>
-      ))}
-    </nav>
-  );
-}
-
-function Confetti() {
-  const [bits, setBits] = useState<CSSProperties[]>([]);
-  useEffect(() => {
-    const colors = ["#58CC02", "#FFC800", "#1CB0F6", "#FF4B4B", "#89E219", "#7DD3FC"];
-    setBits(
-      Array.from(
-        { length: 40 },
-        (_, i) =>
-          ({
-            background: colors[i % colors.length],
-            width: `${8 + Math.random() * 10}px`,
-            height: `${10 + Math.random() * 14}px`,
-            left: `${36 + Math.random() * 28}%`,
-            top: "26%",
-            "--x": `${Math.random() * 260 - 130}px`,
-            "--r": `${Math.random() * 420}deg`,
-          }) as CSSProperties,
-      ),
-    );
-    const timer = setTimeout(() => setBits([]), 1200);
-    return () => clearTimeout(timer);
-  }, []);
-  return (
-    <div className="confetti-layer">
-      {/* one-shot random burst: the bits have no stable identity beyond position */}
-      {bits.map((style, i) => (
-        <i key={i} className="bit" style={style} />
-      ))}
-    </div>
-  );
-}
-
 function App() {
   const [state, setState] = useState<LearnerState>(emptyLearnerState());
   const [ready, setReady] = useState(false);
   const [tab, setTab] = useState<Tab>("learn");
   const [lang, setLangState] = useState<Lang>(() => loadLang());
+  // The zh pack is bundled and always renderable; a stored en-US preference
+  // swaps in the lazy en pack before the loading screen lifts.
+  const [course, setCourse] = useState<Course>(defaultCourse);
   const [session, setSession] = useState<SessionState | null>(null);
   const [phase, setPhase] = useState<Phase>("teach");
   const [presented, setPresented] = useState<PresentedExercise | null>(null);
@@ -208,7 +86,6 @@ function App() {
   const [updateReady, setUpdateReady] = useState(false);
   const [shareCards, setShareCards] = useState<PairCardInput[] | null>(null);
 
-  const course = useMemo(() => courseFor(lang), [lang]);
   const t = UI[lang];
 
   // The document shell belongs to the UI language: screen readers pronounce it
@@ -220,14 +97,29 @@ function App() {
   }, [lang, t]);
 
   useEffect(() => {
-    loadLearnerState().then((loaded) => {
+    let alive = true;
+    // Re-read the stored language here: this effect is mount-only, and a
+    // state variable would drag a later language change back into it.
+    const initialLang = loadLang();
+    void Promise.all([loadLearnerState(), loadCourse(initialLang)]).then(([loaded, loadedCourse]) => {
+      if (!alive) return;
       setState(loaded);
+      setCourse(loadedCourse);
       setReady(true);
     });
     const listener = () => setUpdateReady(true);
     window.addEventListener("kachi-update-ready", listener);
-    return () => window.removeEventListener("kachi-update-ready", listener);
+    return () => {
+      alive = false;
+      window.removeEventListener("kachi-update-ready", listener);
+    };
   }, []);
+
+  // Every committed state change is durable: one save path for answers, seen
+  // terms, and imports alike — updaters stay pure.
+  useEffect(() => {
+    if (ready) void saveLearnerState(state);
+  }, [state, ready]);
 
   const missedCount = useMemo(() => recentMissTermIds(state).length, [state]);
 
@@ -261,23 +153,37 @@ function App() {
     ];
   };
 
-  const persist = (next: LearnerState) => {
-    setState(next);
-    void saveLearnerState(next);
-  };
-
   const setLang = (next: Lang) => {
     setLangState(next);
     saveLang(next);
+    const cached = courseFor(next);
+    if (cached) {
+      setCourse(cached);
+      return;
+    }
+    setReady(false);
+    void loadCourse(next)
+      .then((loaded) => {
+        setCourse(loaded);
+        setReady(true);
+      })
+      .catch(() => {
+        // The lazy pack could not be fetched (offline before the service
+        // worker cached it): fall back to the zh pack so the interface
+        // strings and the course never disagree.
+        setCourse(defaultCourse);
+        setLangState("zh-CN");
+        saveLang("zh-CN");
+        setReady(true);
+      });
   };
 
   const markSeen = (ids: string[]) => {
     if (!ids.length) return;
-    setState((prev) => {
-      const next = { ...prev, seenConceptIds: Array.from(new Set([...prev.seenConceptIds, ...ids])) };
-      void saveLearnerState(next);
-      return next;
-    });
+    setState((prev) => ({
+      ...prev,
+      seenConceptIds: Array.from(new Set([...prev.seenConceptIds, ...ids])),
+    }));
   };
 
   const beginQuiz = (fresh: SessionState) => {
@@ -290,7 +196,7 @@ function App() {
     const first = currentExercise(course, fresh);
     if (first) {
       setPresented(present(first));
-      markSeen(realTermIds(first, course));
+      markSeen(publishedTermIds(first, course));
     }
   };
 
@@ -337,7 +243,7 @@ function App() {
       confusionPair,
     });
     if (!result.attempt.correct) setHearts((current) => current - 1);
-    persist(result.state);
+    setState(result.state);
     setSession(result.session);
     setLastCorrect(result.attempt.correct);
     setPhase("feedback");
@@ -370,7 +276,7 @@ function App() {
     const next = currentExercise(course, working);
     if (next) {
       setPresented(present(next));
-      markSeen(realTermIds(next, course));
+      markSeen(publishedTermIds(next, course));
     }
   };
 
@@ -469,7 +375,7 @@ function App() {
     const file = event.target.files?.[0];
     if (!file) return;
     try {
-      persist(await importLearnerData(file));
+      setState(await importLearnerData(file));
       alert(t.settings.imported);
     } catch (error) {
       alert(error instanceof Error ? error.message : t.settings.importFailed);
@@ -542,930 +448,114 @@ function App() {
   }
 
   return (
-    <main className="shell">
-      {updateReady && (
-        <button type="button" className="update" onClick={activateUpdate}>
-          {t.updateBanner}
-        </button>
-      )}
-
-      {tab === "learn" && (
-        <LearnHome state={state} course={course} t={t} missedCount={missedCount} onStart={beginLesson} />
-      )}
-      {tab === "practice" && <PracticeHome t={t} missedCount={missedCount} onStart={() => beginPractice()} />}
-      {tab === "glossary" && (
-        <Glossary
-          state={state}
-          course={course}
-          t={t}
-          lang={lang}
-          query={glossaryQuery}
-          onQuery={setGlossaryQuery}
-          onShare={(conceptIds) => openShare(conceptIds)}
-        />
-      )}
-      {tab === "settings" && (
-        <Settings t={t} lang={lang} onLang={setLang} onExport={downloadExport} onImport={onImport} />
-      )}
-
-      {shareCards && <ShareSheet cards={shareCards} t={t} onClose={() => setShareCards(null)} />}
-
-      <Nav tab={tab} onTab={setTab} t={t} />
-    </main>
-  );
-}
-
-function LearnHome({
-  state,
-  course,
-  t,
-  missedCount,
-  onStart,
-}: {
-  state: LearnerState;
-  course: Course;
-  t: UiText;
-  missedCount: number;
-  onStart: (id: string) => void;
-}) {
-  const upNext = course.lessons.find(
-    (lesson) => !state.completedLessonIds.includes(lesson.id) && isLessonUnlocked(state, course, lesson.id),
-  );
-  return (
-    <>
-      <header className="top">
-        <div className="brand">Kachi</div>
-        <StatsBar state={state} />
-      </header>
-      <p className="tagline">{t.home.tagline}</p>
-      <div className="scroll">
-        {course.units.map((unit) => (
-          <section key={unit.id}>
-            <div className={`unit-banner u${unit.id}`}>
-              <div className="kicker">{t.home.unit(unit.id)}</div>
-              <h2>{unit.title}</h2>
-              <p>{unit.blurb}</p>
+    <main className="shell home-shell">
+      <aside className="desktop-story" aria-labelledby="desktop-story-title">
+        <div className="desktop-story-top">
+          <span className="desktop-wordmark">
+            Kachi<span aria-hidden="true">✳</span>
+          </span>
+          <span className="desktop-edition">
+            {lang === "zh-CN" ? "财经英语实验室 / 001" : "FINANCIAL ENGLISH LAB / 001"}
+          </span>
+        </div>
+        <div className="desktop-story-main">
+          <p className="desktop-eyebrow">
+            {lang === "zh-CN" ? "学会看清词语背后的动作" : "SEE THE ACTION BEHIND THE WORD"}
+          </p>
+          <p id="desktop-story-title" className="desktop-story-title">
+            {lang === "zh-CN" ? (
+              <>
+                别背单词。
+                <br />
+                学会<span>分辨。</span>
+              </>
+            ) : (
+              <>
+                Less memorizing.
+                <br />
+                <span>More meaning.</span>
+              </>
+            )}
+          </p>
+          <p className="desktop-story-copy">
+            {lang === "zh-CN"
+              ? "Hedge 是保护风险，Pledge 是拿资产作抵押。一个词的差别，可能让整段财经新闻的意思反过来。"
+              : "Hedge protects against risk. Pledge puts an asset up as collateral. One word can change the meaning of a financial story."}
+          </p>
+          <div className="concept-pair">
+            <div>
+              <span>01 / HEDGE</span>
+              <strong>{lang === "zh-CN" ? "对冲风险" : "Protect"}</strong>
             </div>
-            <div className="path">
-              {course.lessons
-                .filter((lesson) => lesson.unit === unit.id)
-                .map((lesson, index) => {
-                  const done = state.completedLessonIds.includes(lesson.id);
-                  const unlocked = isLessonUnlocked(state, course, lesson.id);
-                  const isNext = upNext?.id === lesson.id;
-                  const cls =
-                    "node" +
-                    (lesson.review ? " review" : "") +
-                    (done ? " done" : isNext ? " next" : unlocked ? "" : " locked");
-                  return (
-                    <div
-                      className="node-wrap"
-                      key={lesson.id}
-                      style={{ transform: `translateX(${SNAKE[index % SNAKE.length]}px)` }}
-                    >
-                      <button
-                        type="button"
-                        className={cls}
-                        aria-label={unlocked ? lesson.title : t.home.lockedLesson(lesson.title)}
-                        disabled={!unlocked}
-                        onClick={() => onStart(lesson.id)}
-                      >
-                        {!unlocked ? (
-                          <span className="lock">🔒</span>
-                        ) : done ? (
-                          "✓"
-                        ) : lesson.review ? (
-                          "★"
-                        ) : (
-                          lesson.icon || index + 1
-                        )}
-                      </button>
-                      <div className="node-label">
-                        {isNext ? t.home.upNext : ""}
-                        {lesson.title}
-                      </div>
-                    </div>
-                  );
-                })}
+            <span className="concept-pair-divider" aria-hidden="true">
+              ≠
+            </span>
+            <div>
+              <span>02 / PLEDGE</span>
+              <strong>{lang === "zh-CN" ? "抵押资产" : "Collateral"}</strong>
             </div>
-          </section>
-        ))}
-        {missedCount > 0 && <p className="unit-note">{t.home.missedNote(missedCount)}</p>}
-        <p className="unit-note">{t.home.unitNote}</p>
-      </div>
-    </>
-  );
-}
-
-function PracticeHome({ t, missedCount, onStart }: { t: UiText; missedCount: number; onStart: () => void }) {
-  return (
-    <>
-      <header className="top">
-        <div className="brand">{t.practice.brand}</div>
-      </header>
-      <div className="prac-hero">
-        <Hedgehog />
-        <h1>{t.practice.title}</h1>
-        {missedCount > 0 ? (
-          <p className="sub">{t.practice.missCopy(missedCount)}</p>
-        ) : (
-          <p className="sub">{t.practice.noMissCopy}</p>
-        )}
-        <button type="button" className="btn btn-gold" onClick={onStart}>
-          {t.practice.start(PRACTICE_ROUND)}
-        </button>
-      </div>
-    </>
-  );
-}
-
-function Glossary({
-  state,
-  course,
-  t,
-  lang,
-  query,
-  onQuery,
-  onShare,
-}: {
-  state: LearnerState;
-  course: Course;
-  t: UiText;
-  lang: Lang;
-  query: string;
-  onQuery: (value: string) => void;
-  onShare: (conceptIds: string[]) => void;
-}) {
-  const q = query.trim().toLowerCase();
-  const matches = (concept: Concept) =>
-    !q ||
-    `${concept.term} ${concept.definition} ${concept.mixUp} ${localizedTerm(concept.id).termZh}`
-      .toLowerCase()
-      .includes(q);
-  let total = 0;
-  return (
-    <>
-      <header className="top">
-        <div className="brand">{t.glossary.brand}</div>
-      </header>
-      <div className="g-search">
-        <input
-          type="search"
-          placeholder={t.glossary.placeholder}
-          value={query}
-          onChange={(event) => onQuery(event.target.value)}
-          autoComplete="off"
-          aria-label={t.glossary.searchAria}
-        />
-      </div>
-      <div className="g-list">
-        {course.units.map((unit) => {
-          const terms = course.concepts.filter((concept) => concept.unit === unit.id && matches(concept));
-          if (!terms.length) return null;
-          total += terms.length;
-          return (
-            <section key={unit.id}>
-              <div className={`unit-banner mini u${unit.id}`}>
-                <div className="kicker">{t.home.unit(unit.id)}</div>
-                <h2>{unit.title}</h2>
-              </div>
-              {terms.map((concept) => {
-                const seen = state.seenConceptIds.includes(concept.id);
-                return (
-                  <article className="g-card" key={concept.id}>
-                    <h3>
-                      {concept.term}
-                      {lang === "zh-CN" && <span className="zh">{localizedTerm(concept.id).termZh}</span>}
-                      {seen && (
-                        <span className="seen" title={t.glossary.seenTitle}>
-                          ✓
-                        </span>
-                      )}
-                      {seen && (
-                        <button
-                          type="button"
-                          className="g-share"
-                          aria-label={t.share.open}
-                          title={t.share.open}
-                          onClick={() => onShare([concept.id])}
-                        >
-                          <ShareIcon />
-                        </button>
-                      )}
-                    </h3>
-                    <p className="def">{concept.definition}</p>
-                    <p className="ex">
-                      {t.glossary.forExample}
-                      {concept.example}
-                    </p>
-                    <p className="mu">
-                      {t.glossary.mix}
-                      <strong>{concept.mixUp}</strong> — {concept.mixUpWhy}
-                    </p>
-                  </article>
-                );
-              })}
-            </section>
-          );
-        })}
-        {total === 0 && (
-          <div className="g-empty">
-            {t.glossary.empty(query.trim())}
-            <br />
-            {t.glossary.emptyHint}
           </div>
+          <button
+            type="button"
+            className="desktop-start"
+            onClick={() =>
+              beginLesson(
+                course.lessons.find(
+                  (lesson) =>
+                    isLessonUnlocked(state, course, lesson.id) &&
+                    !state.completedLessonIds.includes(lesson.id),
+                )?.id ?? course.lessons[0].id,
+              )
+            }
+          >
+            {lang === "zh-CN" ? "开始下一课" : "Start the next lesson"}
+            <span aria-hidden="true">↗</span>
+          </button>
+        </div>
+        <div className="desktop-story-bottom">
+          <span>
+            {lang === "zh-CN"
+              ? "本地保存 · 无账户 · 无投资建议"
+              : "LOCAL FIRST · NO ACCOUNT · NO INVESTMENT ADVICE"}
+          </span>
+          <span>
+            {state.completedLessonIds.length.toString().padStart(2, "0")} /{" "}
+            {course.lessons.length.toString().padStart(2, "0")}
+          </span>
+        </div>
+      </aside>
+      <div className="app-window">
+        {updateReady && (
+          <button type="button" className="update" onClick={activateUpdate}>
+            {t.updateBanner}
+          </button>
         )}
-      </div>
-      <p className="fine">{t.glossary.footer}</p>
-    </>
-  );
-}
 
-function Settings({
-  t,
-  lang,
-  onLang,
-  onExport,
-  onImport,
-}: {
-  t: UiText;
-  lang: Lang;
-  onLang: (lang: Lang) => void;
-  onExport: () => void;
-  onImport: (event: ChangeEvent<HTMLInputElement>) => void;
-}) {
-  return (
-    <>
-      <header className="top">
-        <div className="brand">{t.settings.brand}</div>
-      </header>
-      <div className="prac-hero">
-        <h1>{t.settings.title}</h1>
-        <p className="sub">{t.settings.copy}</p>
-        <fieldset className="lang-switch" aria-label={t.settings.langLabel}>
-          {(Object.entries(t.settings.langNames) as Array<[Lang, string]>).map(([value, name]) => (
-            <button
-              type="button"
-              key={value}
-              className={lang === value ? "on" : ""}
-              aria-pressed={lang === value}
-              onClick={() => onLang(value)}
-            >
-              {name}
-            </button>
-          ))}
-        </fieldset>
-        <button type="button" className="btn btn-green" onClick={onExport}>
-          {t.settings.exportBtn}
-        </button>
-        <label className="file-button">
-          {t.settings.importBtn}
-          <input type="file" accept="application/json" onChange={onImport} />
-        </label>
-        <p className="fine">{t.settings.contentNote}</p>
-      </div>
-    </>
-  );
-}
-
-function LessonScreen(props: {
-  lessonTitle: string;
-  phase: Phase;
-  t: UiText;
-  lang: Lang;
-  course: Course;
-  teachMode: TeachMode;
-  teachTerms: string[];
-  teachIndex: number;
-  presented: PresentedExercise | null;
-  selection: string | boolean | null;
-  hearts: number;
-  lastCorrect: boolean;
-  total: number;
-  questionIndex: number;
-  selL: string | null;
-  selR: string | null;
-  locked: string[];
-  onPick: (value: string | boolean) => void;
-  onSubmit: () => void;
-  onMatch: (side: "left" | "right", id: string) => void;
-  onTeachContinue: () => void;
-  onContinue: () => void;
-  onClose: () => void;
-}) {
-  const { phase, presented, t } = props;
-  if (phase === "teach") {
-    const recap = props.teachMode === "recap";
-    const termId = props.teachTerms[props.teachIndex];
-    const last = recap || props.teachIndex >= props.teachTerms.length - 1;
-    return (
-      <main className="lesson">
-        <div className="l-top">
-          <button type="button" className="xbtn" aria-label={t.lesson.close} onClick={props.onClose}>
-            ×
-          </button>
-          <div className="learn-tag">{t.lesson.learnTag}</div>
-          {!recap && (
-            <div className="pips dim">
-              {props.teachTerms.map((term, index) => (
-                <div
-                  key={term}
-                  className={`pip${index < props.teachIndex ? " on" : index === props.teachIndex ? " now" : ""}`}
-                />
-              ))}
-            </div>
-          )}
-        </div>
-        <div className="prompt teach">
-          {recap ? (
-            <RecapCard terms={props.teachTerms} course={props.course} t={t} />
-          ) : (
-            termId && <TeachCard termId={termId} course={props.course} t={t} lang={props.lang} />
-          )}
-        </div>
-        <div className="foot">
-          <button type="button" className="btn btn-gold" onClick={props.onTeachContinue}>
-            {recap ? t.lesson.recapGo : last ? t.lesson.teachStart : t.lesson.teachContinue}
-          </button>
-        </div>
-      </main>
-    );
-  }
-
-  return (
-    <main className="lesson">
-      <div className="l-top">
-        <button type="button" className="xbtn" aria-label={t.lesson.close} onClick={props.onClose}>
-          ×
-        </button>
-        <div className="pips">
-          {/* positional progress pips: index is the meaning, order is fixed */}
-          {Array.from({ length: props.total }, (_, index) => (
-            <div
-              key={index}
-              className={`pip${index < props.questionIndex ? " on" : index === props.questionIndex ? " now" : ""}`}
-            />
-          ))}
-        </div>
-        <HeartRow n={props.hearts} popped={phase === "feedback" && !props.lastCorrect} t={t} />
-      </div>
-      <div className="prompt">
-        {presented && (
-          <PromptBody
-            presented={presented}
+        {tab === "learn" && (
+          <LearnHome state={state} course={course} t={t} missedCount={missedCount} onStart={beginLesson} />
+        )}
+        {tab === "practice" && (
+          <PracticeHome t={t} missedCount={missedCount} onStart={() => beginPractice()} />
+        )}
+        {tab === "glossary" && (
+          <Glossary
+            state={state}
+            course={course}
             t={t}
-            selection={props.selection}
-            locked={phase === "feedback"}
-            selL={props.selL}
-            selR={props.selR}
-            lockedIds={props.locked}
-            onPick={props.onPick}
-            onMatch={props.onMatch}
+            lang={lang}
+            query={glossaryQuery}
+            onQuery={setGlossaryQuery}
+            onShare={(conceptIds) => openShare(conceptIds)}
           />
         )}
-      </div>
-      {phase === "question" && presented?.type !== "match" && (
-        <div className="foot">
-          <button
-            type="button"
-            className="btn btn-gold"
-            disabled={props.selection === null}
-            onClick={props.onSubmit}
-          >
-            {t.lesson.check}
-          </button>
-        </div>
-      )}
-      {phase === "feedback" && presented && (
-        <div className={`sheet ${props.lastCorrect ? "ok" : "no"}`} role="status">
-          <h3>{pick(props.lastCorrect ? t.verdicts.nice : t.verdicts.nope)}</h3>
-          <p>{presented.why}</p>
-          <button
-            type="button"
-            className={`btn ${props.lastCorrect ? "btn-green" : "btn-red"}`}
-            onClick={props.onContinue}
-          >
-            {t.lesson.continue}
-          </button>
-        </div>
-      )}
-    </main>
-  );
-}
-
-function TeachCard({ termId, course, t, lang }: { termId: string; course: Course; t: UiText; lang: Lang }) {
-  const concept = conceptOf(course, termId);
-  if (!concept) return null;
-  const sibling = conceptOf(course, concept.mixUp);
-  const termZh = lang === "zh-CN" ? localizedTerm(termId).termZh : null;
-  return (
-    <>
-      <div className="kicker2">{t.lesson.teachKicker(termZh)}</div>
-      <div className="teach-art">
-        <TermArt id={concept.id} size="hero" />
-      </div>
-      {concept.caption && <p className="teach-cap">{concept.caption}</p>}
-      <div className="teach-term">{concept.term}</div>
-      <p className="teach-def">{concept.definition}</p>
-      <div className="teach-ex">{concept.example}</div>
-      <div className="teach-mix">
-        <TermArt id={sibling ? sibling.id : concept.mixUp} size="xs" />
-        <div>
-          <strong>{lang === "zh-CN" ? "别混淆" : "Don't mix up"}</strong>
-          {lang === "zh-CN" ? "：" : ": "}
-          {concept.mixUp}。{concept.mixUpWhy}
-        </div>
-      </div>
-    </>
-  );
-}
-
-function RecapCard({ terms, course, t }: { terms: string[]; course: Course; t: UiText }) {
-  return (
-    <>
-      <div className="kicker2">{t.lesson.recapKicker}</div>
-      <div className="stem" style={{ textAlign: "center", marginBottom: 12 }}>
-        {t.lesson.recapTitle}
-      </div>
-      <div className="recap-strip">
-        {terms.map((id) => {
-          const concept = conceptOf(course, id);
-          if (!concept) return null;
-          return (
-            <div className="recap-item" key={id}>
-              <TermArt id={id} size="sm" />
-              <span>{concept.term}</span>
-            </div>
-          );
-        })}
-      </div>
-      <p className="teach-def" style={{ marginTop: 16 }}>
-        {t.lesson.recapSub}
-      </p>
-    </>
-  );
-}
-
-function PromptBody(props: {
-  presented: PresentedExercise;
-  t: UiText;
-  selection: string | boolean | null;
-  locked: boolean;
-  selL: string | null;
-  selR: string | null;
-  lockedIds: string[];
-  onPick: (value: string | boolean) => void;
-  onMatch: (side: "left" | "right", id: string) => void;
-}) {
-  const { presented, selection, locked, t } = props;
-  return (
-    <>
-      <div className="kicker2">{t.lesson.kickers[presented.type]}</div>
-      {presented.type === "scenario" && presented.story && <div className="story">{presented.story}</div>}
-      {presented.type === "fill" && presented.story ? (
-        <FillStory presented={presented} selection={selection} />
-      ) : (
-        presented.stem && <div className="stem">{presented.stem}</div>
-      )}
-
-      {(presented.type === "meaning" || presented.type === "scenario") && (
-        <div className="opts">
-          {presented.options?.map((option) => {
-            let cls = "opt tile";
-            if (option.text.length > 42) cls += " longcap";
-            if (selection === option.text) cls += " sel";
-            if (locked) {
-              if (option.text === presented.correctText) cls += " good";
-              else if (selection === option.text) cls += " bad";
-            }
-            return (
-              <button
-                type="button"
-                key={option.text}
-                className={cls}
-                disabled={locked}
-                onClick={() => props.onPick(option.text)}
-              >
-                <TermArt id={option.art || artIdForLabel(option.text)} size="lg" />
-                <span className="cap">{option.text}</span>
-              </button>
-            );
-          })}
-        </div>
-      )}
-
-      {presented.type === "truefalse" && (
-        <div className="tf">
-          {[true, false].map((value) => {
-            let cls = "opt tile";
-            if (selection === value) cls += " sel";
-            if (locked) {
-              if (value === presented.answer) cls += " good";
-              else if (selection === value) cls += " bad";
-            }
-            return (
-              <button
-                type="button"
-                key={String(value)}
-                className={cls}
-                disabled={locked}
-                onClick={() => props.onPick(value)}
-              >
-                <TermArt id={value ? "true" : "false"} size="lg" />
-                <span className="cap">{value ? "True" : "False"}</span>
-              </button>
-            );
-          })}
-        </div>
-      )}
-
-      {presented.type === "fill" && (
-        <div className="bank">
-          {presented.bank?.map((word) => {
-            let cls = "bank-chip";
-            if (selection === word) cls += " sel";
-            if (locked) {
-              if (word === presented.answer) cls += " good";
-              else if (selection === word) cls += " bad";
-            }
-            return (
-              <button
-                type="button"
-                key={word}
-                className={cls}
-                disabled={locked}
-                onClick={() => props.onPick(word)}
-              >
-                <TermArt id={artIdForLabel(word)} size="sm" />
-                <span>{word}</span>
-              </button>
-            );
-          })}
-        </div>
-      )}
-
-      {presented.type === "match" && (
-        <>
-          <div className="stem">{t.lesson.matchHint}</div>
-          <div className="match">
-            <div>
-              {presented.left.map((chip) => (
-                <MatchChip
-                  key={chip.id}
-                  chip={chip}
-                  side="left"
-                  lockedIds={props.lockedIds}
-                  selected={props.selL === chip.id}
-                  disabled={locked}
-                  onMatch={props.onMatch}
-                />
-              ))}
-            </div>
-            <div>
-              {presented.right.map((chip) => (
-                <MatchChip
-                  key={chip.id}
-                  chip={chip}
-                  side="right"
-                  lockedIds={props.lockedIds}
-                  selected={props.selR === chip.id}
-                  disabled={locked}
-                  onMatch={props.onMatch}
-                />
-              ))}
-            </div>
-          </div>
-        </>
-      )}
-    </>
-  );
-}
-
-function FillStory({
-  presented,
-  selection,
-}: {
-  presented: PresentedExercise;
-  selection: string | boolean | null;
-}) {
-  const filled = typeof selection === "string" ? selection : "";
-  const story = presented.story ?? "";
-  const blank = <span className="blank">{filled || " "}</span>;
-  const parts = story.split("____");
-  return (
-    <div className="story">
-      {parts.length > 1 ? (
-        <>
-          {parts[0]}
-          {blank}
-          {parts.slice(1).join("____")}
-        </>
-      ) : (
-        <>
-          {story} {blank}
-        </>
-      )}
-    </div>
-  );
-}
-
-function MatchChip(props: {
-  chip: { id: string; text: string };
-  side: "left" | "right";
-  lockedIds: string[];
-  selected: boolean;
-  disabled: boolean;
-  onMatch: (side: "left" | "right", id: string) => void;
-}) {
-  const isLocked = props.lockedIds.includes(props.chip.id);
-  const cls = `mchip${isLocked ? " good" : props.selected ? " sel" : ""}`;
-  return (
-    <button
-      type="button"
-      className={cls}
-      disabled={props.disabled || isLocked}
-      onClick={() => props.onMatch(props.side, props.chip.id)}
-    >
-      {props.side === "left" && <TermArt id={props.chip.id} size="xs" />}
-      {props.chip.text}
-    </button>
-  );
-}
-
-function CompleteScreen(props: {
-  summary: Summary;
-  isPractice: boolean;
-  lessonId: string;
-  course: Course;
-  t: UiText;
-  onStart: (id: string) => void;
-  onPractice: (focus?: string[]) => void;
-  onPath: () => void;
-  onShare: () => void;
-}) {
-  const { summary, t } = props;
-  const acc = summary.total ? Math.round((summary.correct / summary.total) * 100) : 0;
-  const lessonIndex = props.course.lessons.findIndex((lesson) => lesson.id === props.lessonId);
-  const next = props.isPractice ? undefined : props.course.lessons[lessonIndex + 1];
-  const pair = props.isPractice ? null : lessonPair(props.course, props.lessonId);
-  const flawless = summary.xpPerfect > 0;
-  return (
-    <main className="hero">
-      <Confetti />
-      {props.isPractice ? (
-        <div className="mascot">
-          <Hedgehog />
-        </div>
-      ) : (
-        <div className={`hero-stage${flawless ? " flawless" : ""}`}>
-          <div className="mascot">
-            <Hedgehog />
-          </div>
-          {pair && (
-            <div className="pair-hero">
-              <div className="ph-term">{pair.a}</div>
-              <div className="stamp" aria-hidden="true">
-                ≠
-              </div>
-              <div className="ph-term">{pair.b}</div>
-            </div>
-          )}
-        </div>
-      )}
-      <h1>
-        {summary.xpPerfect
-          ? t.complete.flawless
-          : props.isPractice
-            ? t.complete.practiceDone
-            : t.complete.done}
-      </h1>
-      <p className="sub">{t.complete.accuracy(acc, summary.correct, summary.total)}</p>
-      <div className="xp-card">
-        {props.isPractice ? (
-          <div className="xp-row">
-            <span>{t.complete.xpCorrect}</span>
-            <span>+{summary.xpHit} XP</span>
-          </div>
-        ) : (
-          <>
-            <div className="xp-row">
-              <span>{t.complete.xpCorrect}</span>
-              <span>+{summary.xpHit} XP</span>
-            </div>
-            <div className="xp-row">
-              <span>{t.complete.xpLesson}</span>
-              <span>+{summary.xpDone} XP</span>
-            </div>
-            {summary.xpPerfect > 0 && (
-              <div className="xp-row">
-                <span>{t.complete.xpPerfect}</span>
-                <span>+{summary.xpPerfect} XP</span>
-              </div>
-            )}
-          </>
+        {tab === "settings" && (
+          <Settings t={t} lang={lang} onLang={setLang} onExport={downloadExport} onImport={onImport} />
         )}
-        <div className="xp-row total">
-          <span>{t.complete.xpTotal}</span>
-          <span>+{summary.gained} XP</span>
-        </div>
+
+        {shareCards && <ShareSheet cards={shareCards} t={t} onClose={() => setShareCards(null)} />}
+
+        <Nav tab={tab} onTab={setTab} t={t} />
       </div>
-      {summary.mix.length > 0 && (
-        <>
-          <p className="sub" style={{ marginBottom: 8 }}>
-            {t.complete.mixTitle}
-          </p>
-          <div className="chips">
-            {summary.mix.map((id) => {
-              const concept = conceptOf(props.course, id);
-              if (!concept) return null;
-              return (
-                <span className="chip" key={id}>
-                  {concept.term} vs {concept.mixUp}
-                </span>
-              );
-            })}
-          </div>
-        </>
-      )}
-      {props.isPractice ? (
-        <>
-          <button type="button" className="btn btn-gold" onClick={() => props.onPractice()}>
-            {t.complete.practiceAgain}
-          </button>
-          <button type="button" className="btn btn-ghost" onClick={props.onPath}>
-            {t.complete.backToPath}
-          </button>
-        </>
-      ) : next ? (
-        <>
-          <button type="button" className="btn btn-gold" onClick={() => props.onStart(next.id)}>
-            {t.complete.nextLesson(next.title)}
-          </button>
-          {summary.mix.length > 0 && (
-            <button type="button" className="btn btn-green" onClick={() => props.onPractice(summary.mix)}>
-              {t.complete.practiceThose}
-            </button>
-          )}
-          <button type="button" className="btn btn-ghost" onClick={props.onPath}>
-            {t.complete.backToPath}
-          </button>
-        </>
-      ) : (
-        <>
-          {summary.mix.length > 0 && (
-            <button type="button" className="btn btn-green" onClick={() => props.onPractice(summary.mix)}>
-              {t.complete.practiceThose}
-            </button>
-          )}
-          <button type="button" className="btn btn-ghost" onClick={props.onPath}>
-            {t.complete.backToPath}
-          </button>
-        </>
-      )}
-      <button type="button" className="btn btn-ghost share-open" onClick={props.onShare}>
-        {t.share.open}
-      </button>
-    </main>
-  );
-}
-
-function ShareIcon() {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      width="18"
-      height="18"
-      aria-hidden="true"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M12 15V4m0 0L8 8m4-4 4 4" />
-      <path d="M5 12v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6" />
-    </svg>
-  );
-}
-
-function ShareSheet({ cards, t, onClose }: { cards: PairCardInput[]; t: UiText; onClose: () => void }) {
-  const [index, setIndex] = useState(0);
-  const [png, setPng] = useState<{ url: string; blob: Blob } | null>(null);
-  const card = cards[index];
-  const fileName = cardFileName(card);
-
-  useEffect(() => {
-    let alive = true;
-    let url: string | null = null;
-    setPng(null);
-    void svgToPngBlob(buildPairCardSvg(card)).then((blob) => {
-      if (!alive) return;
-      url = URL.createObjectURL(blob);
-      setPng({ url, blob });
-    });
-    return () => {
-      alive = false;
-      if (url) URL.revokeObjectURL(url);
-    };
-  }, [card]);
-
-  useEffect(() => {
-    const onKey = (event: KeyboardEvent) => {
-      if (event.key === "Escape") onClose();
-    };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [onClose]);
-
-  const save = () => {
-    if (!png) return;
-    const anchor = document.createElement("a");
-    anchor.href = png.url;
-    anchor.download = fileName;
-    anchor.click();
-  };
-
-  const shareOut = async () => {
-    if (!png) return;
-    const file = new File([png.blob], fileName, { type: "image/png" });
-    try {
-      if (navigator.canShare?.({ files: [file] })) await navigator.share({ files: [file] });
-      else save();
-    } catch {
-      /* user cancelled the share sheet: nothing to do */
-    }
-  };
-
-  return (
-    <div className="share-backdrop">
-      <div className="share-sheet" role="dialog" aria-modal="true" aria-label={t.share.open}>
-        <div className="share-preview">
-          {png ? <img src={png.url} alt={t.share.cardAlt(card.termA, card.termB)} /> : null}
-        </div>
-        {cards.length > 1 && (
-          <div className="share-pager">
-            <button
-              type="button"
-              aria-label={t.share.prevCard}
-              disabled={index === 0}
-              onClick={() => setIndex(index - 1)}
-            >
-              ‹
-            </button>
-            <span>{t.share.position(index + 1, cards.length)}</span>
-            <button
-              type="button"
-              aria-label={t.share.nextCard}
-              disabled={index === cards.length - 1}
-              onClick={() => setIndex(index + 1)}
-            >
-              ›
-            </button>
-          </div>
-        )}
-        <button type="button" className="btn btn-gold" disabled={!png} onClick={save}>
-          {t.share.saveImage}
-        </button>
-        {"share" in navigator && (
-          <button type="button" className="btn btn-green" disabled={!png} onClick={() => void shareOut()}>
-            {t.share.shareBtn}
-          </button>
-        )}
-        <p className="share-hint">{t.share.saveHint}</p>
-        <button type="button" className="btn btn-ghost" onClick={onClose}>
-          {t.share.close}
-        </button>
-      </div>
-    </div>
-  );
-}
-
-function FailScreen(props: {
-  isPractice: boolean;
-  lessonId: string;
-  t: UiText;
-  onRetryLesson: (id: string) => void;
-  onRetryPractice: () => void;
-  onPath: () => void;
-}) {
-  const { t } = props;
-  return (
-    <main className="hero">
-      <div className="mascot">💔</div>
-      <h1>{t.fail.title}</h1>
-      <p className="sub">{t.fail.copy}</p>
-      {props.isPractice ? (
-        <button type="button" className="btn btn-gold" onClick={props.onRetryPractice}>
-          {t.fail.retryPractice}
-        </button>
-      ) : (
-        <button type="button" className="btn btn-gold" onClick={() => props.onRetryLesson(props.lessonId)}>
-          {t.fail.retryLesson}
-        </button>
-      )}
-      <button type="button" className="btn btn-ghost" onClick={props.onPath}>
-        {t.fail.backToPath}
-      </button>
     </main>
   );
 }

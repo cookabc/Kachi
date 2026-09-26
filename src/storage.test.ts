@@ -197,6 +197,11 @@ describe("learner storage", () => {
     await expect(
       importLearnerData(fileOf({ schemaVersion: 2, learnerState: sampleState() })),
     ).rejects.toThrow(/不是兼容/);
+    // A file that is not JSON at all fails with the same localized message,
+    // not a raw English SyntaxError.
+    await expect(
+      importLearnerData({ text: async () => "not json at all" } as unknown as File),
+    ).rejects.toThrow(/不是兼容/);
   });
 
   it("rejects learner states whose required collections are missing or malformed", async () => {

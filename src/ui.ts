@@ -1,6 +1,8 @@
+import type { Lang } from "./course";
 import type { ExerciseType } from "./domain";
 
-export type Lang = "zh-CN" | "en-US";
+// The UI language is the course language — one definition lives in course.ts.
+export type { Lang };
 
 const LANG_KEY = "kachi-lang";
 
@@ -111,6 +113,8 @@ export interface UiText {
     prevCard: string;
     nextCard: string;
     position: (index: number, total: number) => string;
+    /** Shown in the sheet when the PNG export itself failed. */
+    exportFailed: string;
   };
   updateBanner: string;
   loading: string;
@@ -224,6 +228,7 @@ export const UI: Record<Lang, UiText> = {
       prevCard: "上一张",
       nextCard: "下一张",
       position: (index, total) => `${index} / ${total}`,
+      exportFailed: "卡片生成失败，请关闭后重试。",
     },
     updateBanner: "新版本已准备好，完成当前学习后点击更新",
     loading: "正在准备离线学习空间…",
@@ -338,6 +343,7 @@ export const UI: Record<Lang, UiText> = {
       prevCard: "Previous card",
       nextCard: "Next card",
       position: (index, total) => `${index} of ${total}`,
+      exportFailed: "Couldn't build the card — close this and try again.",
     },
     updateBanner: "A new version is ready — update after this session",
     loading: "Preparing your offline study space…",

@@ -25,22 +25,21 @@ const KICKER_SIZE = 30;
 const TERM_LH = 1.15;
 const TEXT_LH = 1.4;
 
-const FONT_STACK =
-  "ui-rounded, 'Nunito', 'Trebuchet MS', 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif";
+const FONT_STACK = "'Avenir Next', 'PingFang SC', 'Segoe UI', 'Microsoft YaHei', sans-serif";
 
 const COLOR = {
-  sky: "#e8f7ff",
-  mint: "#d8f8ec",
-  card: "#ffffff",
-  ink: "#1b2e24",
-  inkSoft: "#4a6b58",
-  muted: "#5f7d6e",
-  line: "#dceee4",
-  yellow: "#ffc800",
-  greenSoft: "#e7ffd4",
-  green: "#58cc02",
-  greenDeep: "#46a302",
-  skyBlue: "#1cb0f6",
+  sky: "#e9e4d9",
+  mint: "#f5f1e9",
+  card: "#fffdf8",
+  ink: "#152a38",
+  inkSoft: "#4b5e66",
+  muted: "#687a7e",
+  line: "#dcd6ca",
+  yellow: "#ff8e68",
+  greenSoft: "#e0f6ed",
+  green: "#e87955",
+  greenDeep: "#a95038",
+  skyBlue: "#a95038",
 } as const;
 
 export interface PairCardInput {

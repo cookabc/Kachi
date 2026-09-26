@@ -258,7 +258,7 @@ describe("buildPairCardSvg", () => {
   it("falls back to hairline flanks when no scene resolves", () => {
     const svg = buildPairCardSvg(sample);
     expect(svg).not.toContain("duel-art");
-    expect(svg).toContain('stroke="#dceee4"');
+    expect(svg).toContain('stroke="#dcd6ca"');
     const parsed = new DOMParser().parseFromString(svg, "image/svg+xml");
     expect(parsed.querySelector("parsererror")).toBeNull();
   });

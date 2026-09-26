@@ -23,8 +23,17 @@ function transactionDone(transaction: IDBTransaction): Promise<void> {
   });
 }
 
-async function openDatabase(): Promise<IDBDatabase> {
-  const open = indexedDB.open(DATABASE_NAME, DATABASE_VERSION);
+// One connection per IndexedDB factory, reused across loads and saves — a
+// fresh open per answer made every write pay connection setup. Keyed on the
+// factory so test fakes (which replace indexedDB wholesale) get their own
+// connection, and dropped on versionchange so a future upgrade never blocks
+// behind a cached handle.
+let cachedConnection: { factory: IDBFactory; database: Promise<IDBDatabase> } | undefined;
+
+function openDatabase(): Promise<IDBDatabase> {
+  const factory = indexedDB;
+  if (cachedConnection?.factory === factory) return cachedConnection.database;
+  const open = factory.open(DATABASE_NAME, DATABASE_VERSION);
   open.onupgradeneeded = () => {
     const database = open.result;
     if (!database.objectStoreNames.contains(SNAPSHOT_STORE)) database.createObjectStore(SNAPSHOT_STORE);
@@ -32,7 +41,18 @@ async function openDatabase(): Promise<IDBDatabase> {
       database.createObjectStore(EVENT_STORE, { keyPath: "eventId" });
     if (!database.objectStoreNames.contains(META_STORE)) database.createObjectStore(META_STORE);
   };
-  return request(open);
+  const database = request(open).then((db) => {
+    db.onversionchange = () => {
+      db.close();
+      if (cachedConnection?.factory === factory) cachedConnection = undefined;
+    };
+    return db;
+  });
+  cachedConnection = { factory, database };
+  void database.catch(() => {
+    if (cachedConnection?.factory === factory) cachedConnection = undefined;
+  });
+  return database;
 }
 
 export async function loadLearnerState(): Promise<LearnerState> {
@@ -41,7 +61,6 @@ export async function loadLearnerState(): Promise<LearnerState> {
   const snapshot = (await request(transaction.objectStore(SNAPSHOT_STORE).get(PROFILE_KEY))) as unknown;
   if (isLearnerState(snapshot)) {
     await transactionDone(transaction);
-    database.close();
     return snapshot;
   }
 
@@ -58,19 +77,24 @@ export async function loadLearnerState(): Promise<LearnerState> {
     snapshot === undefined ? "migration" : "recovery",
   );
   await transactionDone(transaction);
-  database.close();
   return recovered;
 }
+
+// Attempt events are immutable once recorded, so the event store only ever
+// needs the ones not yet written: one put per answer instead of one per
+// attempt ever made, which used to grow with the whole learning history.
+const writtenEventIds = new Set<string>();
 
 export async function saveLearnerState(state: LearnerState): Promise<void> {
   const database = await openDatabase();
   const transaction = database.transaction([SNAPSHOT_STORE, EVENT_STORE], "readwrite");
   transaction.objectStore(SNAPSHOT_STORE).put(state, PROFILE_KEY);
-  state.attempts.forEach((event) => {
+  const fresh = state.attempts.filter((event) => !writtenEventIds.has(event.eventId));
+  fresh.forEach((event) => {
     transaction.objectStore(EVENT_STORE).put(event);
   });
   await transactionDone(transaction);
-  database.close();
+  for (const event of fresh) writtenEventIds.add(event.eventId);
 }
 
 export async function exportLearnerData(): Promise<Blob> {
@@ -178,10 +202,18 @@ function isLearnerState(value: unknown): value is LearnerState {
 }
 
 export async function importLearnerData(file: File): Promise<LearnerState> {
-  const parsed = JSON.parse(await file.text()) as { schemaVersion?: number; learnerState?: LearnerState };
-  if (parsed.schemaVersion !== 1 || !isLearnerState(parsed.learnerState)) {
+  // JSON.parse failures used to surface as raw English SyntaxErrors; a broken
+  // file is the same problem as a wrong envelope, so both get one message.
+  let parsed: unknown;
+  try {
+    parsed = JSON.parse(await file.text());
+  } catch {
     throw new Error("这不是兼容的 Kachi 学习数据文件。");
   }
-  await saveLearnerState(parsed.learnerState);
-  return parsed.learnerState;
+  const envelope = parsed as { schemaVersion?: unknown; learnerState?: unknown };
+  if (envelope.schemaVersion !== 1 || !isLearnerState(envelope.learnerState)) {
+    throw new Error("这不是兼容的 Kachi 学习数据文件。");
+  }
+  await saveLearnerState(envelope.learnerState);
+  return envelope.learnerState;
 }
