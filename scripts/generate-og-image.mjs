@@ -1,82 +1,32 @@
-// Generates the Open Graph image (1200x630) shown when the app URL is posted
-// to X/Twitter etc. Run: pnpm generate:og
-// The script composes the duel-poster SVG from the same art assets as the app
-// (hero scenes + hedgehog, extracted from src/art.tsx), then rasterizes it with
-// macOS qlmanage — the PNG is a committed asset (public/og-image.png), so CI
-// never needs to run this.
+// Deterministic social preview for the Contrast Lab. No remote assets or fonts.
 import { execFileSync } from "node:child_process";
-import { readFileSync, rmSync, writeFileSync } from "node:fs";
+import { rmSync, writeFileSync } from "node:fs";
 
-const source = readFileSync(new URL("../src/art.tsx", import.meta.url), "utf8");
-function extract(pattern) {
-  const match = source.match(pattern);
-  if (!match) throw new Error("art.tsx structure changed — update the extractor");
-  return match[0];
-}
-const groundLiteral = source.match(/const GROUND = ('[^']*');/)?.[1];
-if (!groundLiteral) throw new Error("art.tsx structure changed — GROUND not found");
-const haloFn = extract(/function halo\(color: string\) \{[\s\S]*?\n\}/).replace(
-  "function halo(color: string)",
-  "function (color)",
-);
-// biome-ignore lint/security/noGlobalEval: build-time asset extraction from our own source file
-const HEDGEHOG_PATHS = eval(
-  `(${extract(/export const HEDGEHOG_PATHS =[\s\S]*?;/)
-    .replace("export const HEDGEHOG_PATHS =", "")
-    .replace(/;$/, "")})`,
-);
-const heroBlock = extract(/export const HERO_ART[\s\S]*?\n\};/)
-  .replace("export const", "const")
-  .replace(": Record<string, string>", "");
-// biome-ignore lint/security/noGlobalEval: same as above
-const HERO_ART = eval(`(() => {
-  const termSvg = (inner) => \`<svg viewBox="0 0 64 64">\${inner}</svg>\`;
-  const GROUND = ${groundLiteral};
-  const halo = ${haloFn};
-  ${heroBlock};
-  return HERO_ART;
-})()`);
-
-function scene(id, x, y, size) {
-  const inner = HERO_ART[id].replace(/^<svg[^>]*>/, "").replace(/<\/svg>$/, "");
-  return `<g transform="translate(${x} ${y}) scale(${size / 64})">${inner}</g>`;
-}
-
-const W = 1200;
-const H = 630;
-const FONT_STACK =
-  "ui-rounded, 'Nunito', 'Trebuchet MS', 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif";
-const INK = "#1b2e24";
-const INK_SOFT = "#4a6b58";
-const MUTED = "#5f7d6e";
-const GREEN = "#58cc02";
-const GREEN_DEEP = "#46a302";
-const ART = 200;
-const STAMP_R = 52;
-const DUEL_CX = 890;
-const DUEL_CY = 300;
-
-const stamp = [
-  `<circle cx="${DUEL_CX}" cy="${DUEL_CY + 6}" r="${STAMP_R}" fill="${GREEN_DEEP}"/>`,
-  `<circle cx="${DUEL_CX}" cy="${DUEL_CY}" r="${STAMP_R}" fill="#fff" stroke="${GREEN}" stroke-width="8"/>`,
-  `<text x="${DUEL_CX}" y="${DUEL_CY + 22}" text-anchor="middle" font-family="${FONT_STACK}" font-size="64" font-weight="900" fill="${GREEN_DEEP}">≠</text>`,
-].join("");
+const WIDTH = 1200;
+const HEIGHT = 630;
+const INK = "#142e3e";
+const PAPER = "#f5f1e9";
+const CORAL = "#ff9d78";
+const MUTED = "#b7cbca";
 
 const svg = [
-  `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">`,
-  `<defs><linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e8f7ff"/><stop offset="1" stop-color="#d8f8ec"/></linearGradient>`,
-  `<radialGradient id="glow" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#ffc800" stop-opacity="0.28"/><stop offset="0.7" stop-color="#ffc800" stop-opacity="0"/></radialGradient></defs>`,
-  `<rect width="${W}" height="${H}" fill="url(#bg)"/>`,
-  `<circle cx="${DUEL_CX}" cy="${DUEL_CY}" r="230" fill="url(#glow)"/>`,
-  `<g transform="translate(84 96) scale(1.5)">${HEDGEHOG_PATHS}</g>`,
-  `<text x="84" y="300" font-family="${FONT_STACK}" font-size="96" font-weight="900" fill="${INK}" letter-spacing="-2">Kachi</text>`,
-  `<text x="84" y="376" font-family="${FONT_STACK}" font-size="44" font-weight="800" fill="${INK_SOFT}">分清易混的财经英语。</text>`,
-  `<text x="84" y="436" font-family="${FONT_STACK}" font-size="34" font-weight="700" fill="${MUTED}">五分钟，没有投资建议。</text>`,
-  scene("hedge", DUEL_CX - STAMP_R - 32 - ART, DUEL_CY - ART / 2, ART),
-  scene("pledge", DUEL_CX + STAMP_R + 32, DUEL_CY - ART / 2, ART),
-  stamp,
-  `<text x="${DUEL_CX - STAMP_R - 32 - ART / 2}" y="${DUEL_CY + ART / 2 + 52}" text-anchor="middle" font-family="${FONT_STACK}" font-size="34" font-weight="800" fill="${INK}">hedge</text>`,
-  `<text x="${DUEL_CX + STAMP_R + 32 + ART / 2}" y="${DUEL_CY + ART / 2 + 52}" text-anchor="middle" font-family="${FONT_STACK}" font-size="34" font-weight="800" fill="${INK}">pledge</text>`,
+  `<svg xmlns="http://www.w3.org/2000/svg" width="${WIDTH}" height="${HEIGHT}" viewBox="0 0 ${WIDTH} ${HEIGHT}">`,
+  `<defs><pattern id="grid" width="52" height="52" patternUnits="userSpaceOnUse"><path d="M 52 0 L 0 0 0 52" fill="none" stroke="${PAPER}" stroke-opacity=".07" stroke-width="1"/></pattern></defs>`,
+  `<rect width="${WIDTH}" height="${HEIGHT}" fill="${INK}"/>`,
+  `<rect width="${WIDTH}" height="${HEIGHT}" fill="url(#grid)"/>`,
+  `<circle cx="1090" cy="120" r="285" fill="none" stroke="${PAPER}" stroke-opacity=".14"/>`,
+  `<circle cx="1090" cy="120" r="205" fill="none" stroke="${PAPER}" stroke-opacity=".12"/>`,
+  `<circle cx="88" cy="79" r="7" fill="${CORAL}"/>`,
+  `<text x="112" y="86" fill="${MUTED}" font-family="Menlo,monospace" font-size="19" letter-spacing="3">THE CONTRAST LAB / 01</text>`,
+  `<text x="1020" y="86" fill="${MUTED}" font-family="Menlo,monospace" font-size="19" text-anchor="end" letter-spacing="2">KACHI*</text>`,
+  `<text x="84" y="295" fill="${PAPER}" font-family="Georgia,serif" font-size="142" letter-spacing="-7">HEDGE</text>`,
+  `<path d="M 610 147 L 568 325" stroke="${CORAL}" stroke-width="12" stroke-linecap="round"/>`,
+  `<text x="84" y="463" fill="${PAPER}" font-family="Georgia,serif" font-size="142" letter-spacing="-7">PLEDGE<tspan fill="${CORAL}">.</tspan></text>`,
+  `<line x1="84" y1="509" x2="1116" y2="509" stroke="${PAPER}" stroke-opacity=".25"/>`,
+  `<text x="84" y="562" fill="${CORAL}" font-family="Menlo,monospace" font-size="20" letter-spacing="2">01 / 对冲风险</text>`,
+  `<text x="414" y="562" fill="${MUTED}" font-family="Menlo,monospace" font-size="20" letter-spacing="2">≠</text>`,
+  `<text x="484" y="562" fill="${CORAL}" font-family="Menlo,monospace" font-size="20" letter-spacing="2">02 / 抵押资产</text>`,
+  `<text x="1116" y="562" fill="${MUTED}" font-family="Menlo,monospace" font-size="18" text-anchor="end" letter-spacing="1">财经英语 · 不靠背，靠分辨</text>`,
   `</svg>`,
 ].join("");
 
@@ -84,9 +34,9 @@ const svgPath = "public/og-image.svg";
 const pngPath = "public/og-image.png";
 writeFileSync(svgPath, svg);
 try {
-  execFileSync("rsvg-convert", ["-w", "1200", "-o", pngPath, svgPath], { stdio: "ignore" });
+  execFileSync("rsvg-convert", ["-w", String(WIDTH), "-o", pngPath, svgPath], { stdio: "ignore" });
   rmSync(svgPath);
   console.log(`wrote ${pngPath}`);
 } catch {
-  console.log(`rsvg-convert unavailable — rasterize ${svgPath} to ${pngPath} manually (1200x630)`);
+  console.log(`rsvg-convert unavailable — rasterize ${svgPath} to ${pngPath} manually`);
 }
