@@ -30,6 +30,17 @@ export const termLocalization: Record<string, { termZh: string }> = {
   "buy-borrow-die": { termZh: "买入—借款—持有至死亡" },
   futures: { termZh: "期货" },
   swap: { termZh: "互换" },
+  "interest rate": { termZh: "利率" },
+  inflation: { termZh: "通胀" },
+  "real rate": { termZh: "实际利率" },
+  bond: { termZh: "债券" },
+  "yield curve": { termZh: "收益率曲线" },
+  "quantitative easing": { termZh: "量化宽松" },
+  spot: { termZh: "现货" },
+  basis: { termZh: "基差" },
+  contango: { termZh: "期货升水" },
+  backwardation: { termZh: "期货贴水" },
+  "cost of carry": { termZh: "持仓成本" },
 };
 
 export function localizedTerm(id: string) {

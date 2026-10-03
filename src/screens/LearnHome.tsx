@@ -79,7 +79,7 @@ export function LearnHome({
         <section className="lab-curriculum" aria-labelledby="lab-curriculum-title">
           <div className="lab-section-head">
             <div>
-              <span>FIELD NOTES / 01—05</span>
+              <span>FIELD NOTES / 01—{String(course.units.length).padStart(2, "0")}</span>
               <h2 id="lab-curriculum-title">{isZh ? "学习路径" : "Learning path"}</h2>
             </div>
             <span>

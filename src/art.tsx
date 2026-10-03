@@ -101,6 +101,39 @@ export const TERM_ART: Record<string, string> = {
   swap: termSvg(
     '<circle cx="16" cy="20" r="10" fill="#FFC800"/><circle cx="48" cy="44" r="10" fill="#1CB0F6"/><path d="M28 18 H50" stroke="#58CC02" stroke-width="5" stroke-linecap="round"/><path d="M44 10 L54 18 L44 26" fill="#58CC02"/><path d="M36 46 H14" stroke="#FF8A65" stroke-width="5" stroke-linecap="round"/><path d="M20 38 L10 46 L20 54" fill="#FF8A65"/>',
   ),
+  "interest rate": termSvg(
+    '<polygon points="32,6 56,20 8,20" fill="#FFC800"/><rect x="10" y="22" width="44" height="4" fill="#E6A100"/><rect x="14" y="30" width="6" height="18" fill="#1CB0F6"/><rect x="29" y="30" width="6" height="18" fill="#1CB0F6"/><rect x="44" y="30" width="6" height="18" fill="#1CB0F6"/><rect x="8" y="50" width="48" height="6" rx="2" fill="#46A302"/><circle cx="50" cy="14" r="8" fill="#FF8A65"/><circle cx="47" cy="11.5" r="2" fill="#fff"/><circle cx="53" cy="16.5" r="2" fill="#fff"/><path d="M46.5 19.5 L53.5 8.5" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/>',
+  ),
+  inflation: termSvg(
+    '<ellipse cx="28" cy="24" rx="13" ry="16" fill="#FF8A65"/><ellipse cx="24" cy="19" rx="4" ry="6" fill="#FCA08A"/><path d="M28 40 l-3 6 h6 Z" fill="#E56A48"/><path d="M28 46 q6 4 12 2" fill="none" stroke="#8AA396" stroke-width="2.6" stroke-linecap="round"/><path d="M48 46 L48 22" stroke="#46A302" stroke-width="4.5" stroke-linecap="round"/><polygon points="48,14 41.5,23 54.5,23" fill="#46A302"/>',
+  ),
+  "real rate": termSvg(
+    '<circle cx="15" cy="32" r="9" fill="#FFC800"/><circle cx="15" cy="32" r="5" fill="#FFE08A"/><path d="M27 32 h9" stroke="#8AA396" stroke-width="3.6" stroke-linecap="round"/><path d="M46 44 q-7 -3 -6 -11 q1 -6 6 -11 q-1 6 4 7 q4 -2 4 -7 q5 6 4 12 q-2 10 -12 10 Z" fill="#FF8A65"/>',
+  ),
+  bond: termSvg(
+    '<rect x="8" y="18" width="34" height="28" rx="3" fill="#E8F7FF" stroke="#1CB0F6" stroke-width="3"/><path d="M14 26 h14 M14 32 h20 M14 38 h10" stroke="#1899D6" stroke-width="2.6" stroke-linecap="round"/><rect x="44" y="18" width="12" height="28" rx="3" fill="#FFC800"/><path d="M44 26 h12 M44 34 h12" stroke="#E6A100" stroke-width="2" stroke-dasharray="2.5 2.5"/><circle cx="50" cy="50" r="5" fill="#FF8A65"/>',
+  ),
+  "yield curve": termSvg(
+    '<path d="M12 52 h40 M12 52 V10" stroke="#8AA396" stroke-width="3" stroke-linecap="round"/><path d="M14 46 Q40 44 52 16" fill="none" stroke="#58CC02" stroke-width="4.5" stroke-linecap="round"/><path d="M14 20 Q36 26 52 46" fill="none" stroke="#FF8A65" stroke-width="3.4" stroke-linecap="round" stroke-dasharray="4 4"/>',
+  ),
+  "quantitative easing": termSvg(
+    '<rect x="8" y="24" width="30" height="20" rx="4" fill="#1CB0F6"/><rect x="12" y="18" width="22" height="6" rx="2" fill="#1899D6"/><rect x="14" y="30" width="18" height="8" rx="1.5" fill="#E8F7FF"/><rect x="40" y="30" width="16" height="10" rx="2" fill="#fff" stroke="#8AA396" stroke-width="2"/><circle cx="48" cy="16" r="5" fill="#FFC800"/><circle cx="57" cy="22" r="4" fill="#FFD966"/>',
+  ),
+  spot: termSvg(
+    '<circle cx="16" cy="16" r="9" fill="#FFC800"/><circle cx="16" cy="16" r="5" fill="#FFE08A"/><path d="M24 24 L38 36" stroke="#58CC02" stroke-width="5.5" stroke-linecap="round"/><polygon points="33,36 44,42 39,31" fill="#58CC02"/><rect x="36" y="40" width="20" height="16" rx="3" fill="#1CB0F6"/>',
+  ),
+  basis: termSvg(
+    '<path d="M10 22 h44" stroke="#FFC800" stroke-width="5" stroke-linecap="round"/><path d="M10 44 h44" stroke="#1CB0F6" stroke-width="5" stroke-linecap="round"/><path d="M32 26 v14" stroke="#FF8A65" stroke-width="3"/><polygon points="32,20 28.5,26 35.5,26" fill="#FF8A65"/><polygon points="32,50 28.5,44 35.5,44" fill="#FF8A65"/>',
+  ),
+  contango: termSvg(
+    '<path d="M10 50 L54 16" stroke="#58CC02" stroke-width="5" stroke-linecap="round"/><circle cx="14" cy="46" r="3.6" fill="#FFC800"/><circle cx="32" cy="31.5" r="3.6" fill="#FFD966"/><circle cx="50" cy="17" r="3.6" fill="#FF8A65"/>',
+  ),
+  backwardation: termSvg(
+    '<path d="M10 16 L54 48" stroke="#1CB0F6" stroke-width="5" stroke-linecap="round"/><circle cx="14" cy="17" r="3.6" fill="#FFC800"/><circle cx="32" cy="32" r="3.6" fill="#FFD966"/><circle cx="50" cy="47" r="3.6" fill="#58CC02"/>',
+  ),
+  "cost of carry": termSvg(
+    '<circle cx="20" cy="12" r="6" fill="#FFC800"/><rect x="13" y="20" width="13" height="17" rx="5" fill="#1CB0F6"/><rect x="27" y="18" width="21" height="16" rx="3" fill="#FFC800"/><circle cx="35" cy="26" r="3" fill="#FFE08A"/><circle cx="43" cy="26" r="3" fill="#FFE08A"/><path d="M17 37 v10 M25 37 v10" stroke="#1CB0F6" stroke-width="4" stroke-linecap="round"/><path d="M52 10 l-2 4 M56 15 l-3 3" stroke="#70ABC8" stroke-width="2.4" stroke-linecap="round"/>',
+  ),
   sell: termSvg(
     '<rect x="8" y="16" width="28" height="36" rx="4" fill="#fff" stroke="#1CB0F6" stroke-width="3"/><rect x="12" y="24" width="20" height="4" rx="2" fill="#1CB0F6"/><rect x="12" y="32" width="14" height="4" rx="2" fill="#58CC02"/><path d="M36 20 L56 32 L36 44 Z" fill="#FF8A65"/>',
   ),
@@ -296,7 +329,62 @@ export const HERO_ART: Record<string, string> = {
   swap: termSvg(
     halo("#E8F7FF") +
       GROUND +
-      '<path d="M10 30 H46" stroke="#58CC02" stroke-width="5" stroke-linecap="round"/><polygon points="44,25 56,30 44,35" fill="#58CC02"/><path d="M18 25 v10 M30 25 v10 M40 25 v10" stroke="#46A302" stroke-width="2.6" stroke-linecap="round"/><path d="M10 44 C24 26 40 50 50 34" fill="none" stroke="#1CB0F6" stroke-width="5" stroke-linecap="round"/><polygon points="46,28 58,33 47,40" fill="#1CB0F6"/><path d="M22 38 v6 M34 40 v10 M46 34 v7" stroke="#1899D6" stroke-width="2.6" stroke-linecap="round"/>',
+      '<path d="M10 30 H46" stroke="#58CC02" stroke-width="5" stroke-linecap="round"/><polygon points="44,25 56,30 44,35" fill="#58CC02"/><path d="M18 25 v10 M30 25 v10 M40 25 v10" stroke="#46A302" stroke-width="2.6" stroke-linecap="round"/><path d="M10 44 C24 26 40 50 50 34" fill="none" stroke="#1CB0F6" stroke-width="5" stroke-linecap="round"/><polygon points="46,28 58,33 47,40" fill="#1CB0F6"/><path d="M22 38 v6 M34 40 v6 M46 34 v7" stroke="#1899D6" stroke-width="2.6" stroke-linecap="round"/>',
+  ),
+  "interest rate": termSvg(
+    halo("#FFF6D0") +
+      GROUND +
+      '<polygon points="32,6 56,20 8,20" fill="#FFC800"/><rect x="10" y="22" width="44" height="4" fill="#E6A100"/><rect x="14" y="30" width="6" height="18" fill="#1CB0F6"/><rect x="29" y="30" width="6" height="18" fill="#1CB0F6"/><rect x="44" y="30" width="6" height="18" fill="#1CB0F6"/><rect x="8" y="50" width="48" height="6" rx="2" fill="#46A302"/><circle cx="51" cy="13" r="8" fill="#FF8A65"/><circle cx="48" cy="10.5" r="2" fill="#fff"/><circle cx="54" cy="15.5" r="2" fill="#fff"/><path d="M47.5 18.5 L54.5 7.5" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/><circle cx="24" cy="10" r="4" fill="#FFD966"/>',
+  ),
+  inflation: termSvg(
+    halo("#FFE8D6") +
+      GROUND +
+      '<ellipse cx="26" cy="22" rx="14" ry="17" fill="#FF8A65"/><ellipse cx="21.5" cy="16.5" rx="4.2" ry="6.4" fill="#FCA08A"/><path d="M26 39 l-3.4 6.6 h6.8 Z" fill="#E56A48"/><path d="M26 46 q7 4 13 2" fill="none" stroke="#8AA396" stroke-width="2.6" stroke-linecap="round"/><path d="M48 46 L48 20" stroke="#46A302" stroke-width="4.5" stroke-linecap="round"/><polygon points="48,12 41.5,21 54.5,21" fill="#46A302"/><circle cx="15" cy="52" r="4" fill="#FFC800"/>',
+  ),
+  "real rate": termSvg(
+    halo("#FFF6D0") +
+      GROUND +
+      '<circle cx="14" cy="30" r="9" fill="#FFC800"/><circle cx="14" cy="30" r="5" fill="#FFE08A"/><path d="M26 30 h9" stroke="#8AA396" stroke-width="3.6" stroke-linecap="round"/><path d="M45 42 q-7 -3 -6 -11 q1 -6 6 -11 q-1 6 4 7 q4 -2 4 -7 q5 6 4 12 q-2 10 -12 10 Z" fill="#FF8A65"/><circle cx="49" cy="52" r="5" fill="#FFC800"/><circle cx="49" cy="52" r="2.6" fill="#FFE08A"/>',
+  ),
+  bond: termSvg(
+    halo("#E8F7FF") +
+      GROUND +
+      '<rect x="8" y="16" width="34" height="28" rx="3" fill="#E8F7FF" stroke="#1CB0F6" stroke-width="3"/><path d="M14 24 h14 M14 30 h20 M14 36 h10" stroke="#1899D6" stroke-width="2.6" stroke-linecap="round"/><rect x="44" y="16" width="12" height="28" rx="3" fill="#FFC800"/><path d="M44 24 h12 M44 32 h12" stroke="#E6A100" stroke-width="2" stroke-dasharray="2.5 2.5"/><circle cx="18" cy="52" r="4.5" fill="#FFC800"/><circle cx="28" cy="54" r="3.6" fill="#FFD966"/><circle cx="50" cy="52" r="4.5" fill="#FF8A65"/>',
+  ),
+  "yield curve": termSvg(
+    halo("#E7FFD4") +
+      GROUND +
+      '<path d="M12 52 h40 M12 52 V10" stroke="#8AA396" stroke-width="3" stroke-linecap="round"/><path d="M14 46 Q40 44 52 16" fill="none" stroke="#58CC02" stroke-width="4.5" stroke-linecap="round"/><circle cx="20" cy="45" r="3.2" fill="#FFC800"/><circle cx="52" cy="16" r="3.2" fill="#FF8A65"/><path d="M16 18 Q36 24 50 42" fill="none" stroke="#FF8A65" stroke-width="3.2" stroke-linecap="round" stroke-dasharray="4 4"/>',
+  ),
+  "quantitative easing": termSvg(
+    halo("#E8F7FF") +
+      GROUND +
+      '<rect x="8" y="22" width="30" height="20" rx="4" fill="#1CB0F6"/><rect x="12" y="16" width="22" height="6" rx="2" fill="#1899D6"/><rect x="14" y="28" width="18" height="8" rx="1.5" fill="#E8F7FF"/><rect x="40" y="28" width="16" height="10" rx="2" fill="#fff" stroke="#8AA396" stroke-width="2"/><circle cx="46" cy="14" r="5" fill="#FFC800"/><circle cx="56" cy="20" r="4" fill="#FFD966"/><circle cx="34" cy="50" r="4.5" fill="#FFC800"/><circle cx="44" cy="52" r="3.6" fill="#FFD966"/>',
+  ),
+  spot: termSvg(
+    halo("#FFF6D0") +
+      GROUND +
+      '<circle cx="16" cy="14" r="9" fill="#FFC800"/><circle cx="16" cy="14" r="5" fill="#FFE08A"/><path d="M24 22 L38 34" stroke="#58CC02" stroke-width="5.5" stroke-linecap="round"/><polygon points="33,34 44,40 39,29" fill="#58CC02"/><rect x="36" y="38" width="20" height="16" rx="3" fill="#1CB0F6"/><path d="M10 46 h14 M8 52 h18" stroke="#8AA396" stroke-width="2.4" stroke-dasharray="4 3" stroke-linecap="round"/>',
+  ),
+  basis: termSvg(
+    halo("#E8F7FF") +
+      GROUND +
+      '<path d="M10 20 h44" stroke="#FFC800" stroke-width="5" stroke-linecap="round"/><path d="M10 42 h44" stroke="#1CB0F6" stroke-width="5" stroke-linecap="round"/><path d="M32 24 v12" stroke="#FF8A65" stroke-width="3"/><polygon points="32,18 28.5,24 35.5,24" fill="#FF8A65"/><polygon points="32,48 28.5,42 35.5,42" fill="#FF8A65"/><circle cx="16" cy="50" r="4" fill="#FFC800"/><circle cx="46" cy="50" r="4" fill="#1CB0F6"/>',
+  ),
+  contango: termSvg(
+    halo("#E7FFD4") +
+      GROUND +
+      '<path d="M10 48 L54 14" stroke="#58CC02" stroke-width="5" stroke-linecap="round"/><circle cx="14" cy="44" r="3.6" fill="#FFC800"/><circle cx="32" cy="30" r="3.6" fill="#FFD966"/><circle cx="50" cy="15" r="3.6" fill="#FF8A65"/><rect x="44" y="44" width="12" height="9" rx="2" fill="#1CB0F6"/><circle cx="10" cy="54" r="3.4" fill="#FFC800"/>',
+  ),
+  backwardation: termSvg(
+    halo("#FFE8D6") +
+      GROUND +
+      '<path d="M10 14 L54 46" stroke="#1CB0F6" stroke-width="5" stroke-linecap="round"/><circle cx="14" cy="15" r="3.6" fill="#FFC800"/><circle cx="32" cy="29.5" r="3.6" fill="#FFD966"/><circle cx="50" cy="45" r="3.6" fill="#58CC02"/><path d="M6 24 l3 4 M12 22 l2 4" stroke="#70ABC8" stroke-width="2.4" stroke-linecap="round"/><circle cx="54" cy="53" r="3.4" fill="#58CC02"/>',
+  ),
+  "cost of carry": termSvg(
+    halo("#FFF6D0") +
+      GROUND +
+      '<circle cx="18" cy="11" r="6" fill="#FFC800"/><rect x="11" y="19" width="13" height="17" rx="5" fill="#1CB0F6"/><rect x="25" y="16" width="21" height="16" rx="3" fill="#FFC800"/><circle cx="33" cy="24" r="3" fill="#FFE08A"/><circle cx="41" cy="24" r="3" fill="#FFE08A"/><path d="M15 36 v12 M23 36 v12" stroke="#1CB0F6" stroke-width="4" stroke-linecap="round"/><path d="M50 8 l-2 4 M55 13 l-3 3" stroke="#70ABC8" stroke-width="2.4" stroke-linecap="round"/><path d="M8 52 h46" stroke="#8AA396" stroke-width="2.4" stroke-linecap="round"/>',
   ),
 };
 

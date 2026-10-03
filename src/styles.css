@@ -194,6 +194,18 @@ input {
     0 6px 0 #46a302,
     0 10px 22px rgba(255, 200, 0, 0.22);
 }
+.unit-banner.u6 {
+  background: linear-gradient(135deg, #ffc800, #ff8e68);
+  box-shadow:
+    0 6px 0 #c3593d,
+    0 10px 22px rgba(255, 142, 104, 0.22);
+}
+.unit-banner.u7 {
+  background: linear-gradient(135deg, #ff8e68, #1cb0f6);
+  box-shadow:
+    0 6px 0 #b05f47,
+    0 10px 22px rgba(28, 176, 246, 0.22);
+}
 .unit-banner .kicker {
   font-size: 11px;
   letter-spacing: 0.14em;

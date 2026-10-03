@@ -29,6 +29,16 @@
       "id": 5,
       "title": "富人实际怎么做",
       "blurb": "是模式，不是推销。税务、贷款，以及难看的部分。"
+    },
+    {
+      "id": 6,
+      "title": "钱的价格",
+      "blurb": "利率、通胀，以及新闻里那些百分比到底在说什么。"
+    },
+    {
+      "id": 7,
+      "title": "现货与期货之间",
+      "blurb": "现货、基差，以及曲线的两种弯法。"
     }
   ],
   "concepts": [
@@ -494,6 +504,231 @@
       "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "legacy"
+    },
+    {
+      "id": "interest rate",
+      "unit": 6,
+      "term": "interest rate",
+      "caption": "钱的租金。央行定底线，其他人都付得更高。",
+      "definition": "借钱的价格，按每年百分之几计。",
+      "example": "按 5% 的利率借 $10,000，一年光利息就欠 $500——这还没算你拿这笔钱去做什么。",
+      "mixUp": "yield",
+      "mixUpWhy": "interest rate 是你借钱要付的价；yield 是一笔投资按价格算付给你的回报。",
+      "relations": [
+        {
+          "type": "confusable",
+          "with": "real rate"
+        },
+        {
+          "type": "sibling",
+          "with": "bond"
+        }
+      ],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "reviewed"
+    },
+    {
+      "id": "inflation",
+      "unit": 6,
+      "term": "inflation",
+      "caption": "物价整体上涨，同样的钱买到的东西变少。",
+      "definition": "物价随时间整体上涨——同一笔钱能买的东西比以前少。",
+      "example": "通胀 6% 时，$100 的菜钱一年后要 $106。工资没动，站着不动也算变穷。",
+      "mixUp": "interest rate",
+      "mixUpWhy": "inflation 是问题本身——物价在涨；interest rate 是央行踩下的刹车。",
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "reviewed"
+    },
+    {
+      "id": "real rate",
+      "unit": 6,
+      "term": "real rate",
+      "caption": "利率减去通胀——你的钱实际赚到的。",
+      "definition": "利率扣除通胀后的部分：购买力真实的变化。",
+      "example": "存款利率 5%，通胀 6%。实际利率约 −1%：钱'变多'了，能买的东西却更少。",
+      "mixUp": "interest rate",
+      "mixUpWhy": "挂牌的那个数字是名义利率；real rate 是通胀咬过一口之后剩下的。",
+      "relations": [
+        {
+          "type": "prereq",
+          "with": "interest rate"
+        },
+        {
+          "type": "prereq",
+          "with": "inflation"
+        }
+      ],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "reviewed"
+    },
+    {
+      "id": "bond",
+      "unit": 6,
+      "term": "bond",
+      "caption": "一张能转手的借据：政府和企业向你借钱，付利息。",
+      "definition": "可交易的借据：你出借钱，发行方付利息，到期归还本金。",
+      "example": "买一张 $1,000、票息 4% 的债券，每年收 $40，到期拿回 $1,000——前提是发行方还在。",
+      "mixUp": "yield",
+      "mixUpWhy": "bond 是那张借据本身；yield 是这张借据按你买入的价格算的回报——两者反向而动。",
+      "relations": [
+        {
+          "type": "prereq",
+          "with": "interest rate"
+        },
+        {
+          "type": "sibling",
+          "with": "yield curve"
+        }
+      ],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "reviewed"
+    },
+    {
+      "id": "yield curve",
+      "unit": 6,
+      "term": "yield curve",
+      "caption": "同一发行方各期限的收益率连成一条线，正常向上倾斜。",
+      "definition": "把同一发行方从短期到长期的收益率画成的一条线。",
+      "example": "短期债付 3%，长期债付 4.5%——曲线向上。当短期反而付得更多，曲线倒挂，衰退常常跟在后面。",
+      "mixUp": "yield",
+      "mixUpWhy": "yield 是一个点：这张债付多少；yield curve 把所有期限的点连成一条能读的线。",
+      "relations": [
+        {
+          "type": "prereq",
+          "with": "yield"
+        },
+        {
+          "type": "sibling",
+          "with": "duration"
+        }
+      ],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "reviewed"
+    },
+    {
+      "id": "quantitative easing",
+      "unit": 6,
+      "term": "quantitative easing",
+      "caption": "央行凭空造钱买长债，在常规弹药打完后继续压低利率。",
+      "definition": "央行的工具：创造货币购买长期债券，在常规利率工具用尽时压低长期利率。",
+      "example": "利率已经贴着零，央行造钱买下万亿级债券。卖方拿到现金转买更险的东西——一切都被买贵。",
+      "mixUp": "liquidity",
+      "mixUpWhy": "QE 创造流动性；liquidity 是一种状态——资产换成现金有多容易、多不掉价。",
+      "relations": [
+        {
+          "type": "prereq",
+          "with": "interest rate"
+        },
+        {
+          "type": "sibling",
+          "with": "liquidity"
+        }
+      ],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "reviewed"
+    },
+    {
+      "id": "spot",
+      "unit": 7,
+      "term": "spot",
+      "caption": "现在就买，按当下的价格。",
+      "definition": "即期交割的市场——东西本身此刻的价格。",
+      "example": "下周就要真的铜，那就按现货买下、拿货。没有合约、没有远期日期——就是那批金属。",
+      "mixUp": "futures",
+      "mixUpWhy": "spot 是当下交货的价格；futures 把价格锁在未来某一天——两者的缺口就是曲线所在。",
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "reviewed"
+    },
+    {
+      "id": "basis",
+      "unit": 7,
+      "term": "basis",
+      "caption": "现货减期货——那条曲线要解释的缺口。",
+      "definition": "同一样东西的现货价与期货价之差。",
+      "example": "铜现货 $9,500，三个月期货 $9,620，基差是 −$120。越临近交割，两个价被强行拉近。",
+      "mixUp": "basis risk",
+      "mixUpWhy": "basis 是缺口本身；basis risk 是这个缺口对你的伤害——对冲与被保护对象不再同步。",
+      "relations": [
+        {
+          "type": "prereq",
+          "with": "spot"
+        },
+        {
+          "type": "confusable",
+          "with": "basis risk"
+        }
+      ],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "reviewed"
+    },
+    {
+      "id": "contango",
+      "unit": 7,
+      "term": "contango",
+      "caption": "期货比现货贵——正常的、向上弯的曲线。",
+      "definition": "期货价格高于现货、随期限递增的市场形态——最常见的形状。",
+      "example": "石油现货 $70，一年后期货 $76。在升水里，曲线给仓库发工资：囤油、卖出远期、吃下价差。",
+      "mixUp": "backwardation",
+      "mixUpWhy": "contango 向上弯：明天更贵；backwardation 向下弯：今天更金贵。同一条曲线的两种相反姿态。",
+      "relations": [
+        {
+          "type": "prereq",
+          "with": "basis"
+        },
+        {
+          "type": "sibling",
+          "with": "cost of carry"
+        }
+      ],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "reviewed"
+    },
+    {
+      "id": "backwardation",
+      "unit": 7,
+      "term": "backwardation",
+      "caption": "期货比现货便宜——今天稀缺，曲线倒过来。",
+      "definition": "期货价格低于现货的市场——市场正在为「现在就要」付溢价。",
+      "example": "天然气现货 $4.00，下月期货 $3.80。贴水说明有人今天就要货、愿意加价——常跟在供给冲击后面。",
+      "mixUp": "contango",
+      "mixUpWhy": "backwardation 向下弯：眼前的稀缺；contango 向上弯：仓库被付钱代持的充裕。",
+      "relations": [
+        {
+          "type": "prereq",
+          "with": "contango"
+        }
+      ],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "reviewed"
+    },
+    {
+      "id": "cost of carry",
+      "unit": 7,
+      "term": "cost of carry",
+      "caption": "拿住东西的代价：融资加仓储，减去它付你的。",
+      "definition": "持有仓位的净成本：融资加仓储保险，减去持有期间的收益。",
+      "example": "拿一年 $1M 的铜：融资 $50k、仓储 $20k，借出去能收 $30k——carry 是 $40k。期货比现货贵的部分至少得付得起它。",
+      "mixUp": "yield",
+      "mixUpWhy": "yield 是仓位付给你的钱；carry 是扣除这些收入后你净付的账单。",
+      "relations": [
+        {
+          "type": "prereq",
+          "with": "interest rate"
+        }
+      ],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "reviewed"
     }
   ],
   "lessons": [
@@ -4414,6 +4649,1269 @@
           ],
           "answer": "capital gains",
           "why": "税跟着卖出走。追缴能制造出你一直躲着的那个卖出。"
+        }
+      ]
+    },
+    {
+      "id": "u6l1",
+      "unit": 6,
+      "title": "钱有多贵",
+      "icon": "💵",
+      "review": false,
+      "prompts": [
+        {
+          "id": "u6l1a",
+          "type": "match",
+          "termIds": [
+            "interest rate",
+            "inflation",
+            "real rate"
+          ],
+          "pairs": [
+            {
+              "id": "interest rate",
+              "left": "interest rate",
+              "right": "钱的租金"
+            },
+            {
+              "id": "inflation",
+              "left": "inflation",
+              "right": "物价整体上涨"
+            },
+            {
+              "id": "real rate",
+              "left": "real rate",
+              "right": "利率减通胀"
+            }
+          ],
+          "why": "钱有租金（利率），物价会爬升（通胀），剩下的是 real rate。"
+        },
+        {
+          "id": "u6l1b",
+          "type": "meaning",
+          "termId": "interest rate",
+          "termIds": [
+            "interest rate"
+          ],
+          "stem": "interest rate（利率）是：",
+          "options": [
+            {
+              "text": "借钱的价格，按年计",
+              "art": "interest rate"
+            },
+            {
+              "text": "债券按价格算付你的回报",
+              "art": "yield"
+            },
+            {
+              "text": "物价的整体上涨",
+              "art": "inflation"
+            },
+            {
+              "text": "贷方第一天就打的折扣",
+              "art": "haircut"
+            }
+          ],
+          "answer": 0,
+          "why": "interest rate 是钱的租金。yield 是投资付你的回报，inflation 是物价上涨。"
+        },
+        {
+          "id": "u6l1c",
+          "type": "truefalse",
+          "termId": "inflation",
+          "termIds": [
+            "inflation"
+          ],
+          "stem": "通胀意味着同样的钱能买的比以前少。",
+          "answer": true,
+          "why": "这就是通胀的全部把戏：物价涨了，每一块钱能做的事就变少了。"
+        },
+        {
+          "id": "u6l1d",
+          "type": "fill",
+          "termId": "real rate",
+          "termIds": [
+            "real rate"
+          ],
+          "story": "存款利率 5%，通胀 6%。____ 大约是 −1%。",
+          "bank": [
+            "real rate",
+            "interest rate",
+            "yield",
+            "notional"
+          ],
+          "answer": "real rate",
+          "why": "5% 减 6%，real rate 约 −1%：名义上赚了，实际上亏了。"
+        },
+        {
+          "id": "u6l1e",
+          "type": "scenario",
+          "termId": "interest rate",
+          "termIds": [
+            "interest rate"
+          ],
+          "story": "银行给你房贷。报价单写着：借多少，每年 6.2%。",
+          "stem": "这个 6.2% 是什么？",
+          "options": [
+            {
+              "text": "利率",
+              "art": "interest rate"
+            },
+            {
+              "text": "通胀",
+              "art": "inflation"
+            },
+            {
+              "text": "收益率曲线",
+              "art": "yield curve"
+            },
+            {
+              "text": "折扣率",
+              "art": "haircut"
+            }
+          ],
+          "answer": 0,
+          "why": "按年计的借钱价格就是 interest rate——钱的租金。"
+        },
+        {
+          "id": "u6l1f",
+          "type": "meaning",
+          "termId": "inflation",
+          "termIds": [
+            "inflation"
+          ],
+          "stem": "inflation（通胀）是：",
+          "options": [
+            {
+              "text": "物价整体上涨，钱变毛了",
+              "art": "inflation"
+            },
+            {
+              "text": "央行踩下的刹车",
+              "art": "interest rate"
+            },
+            {
+              "text": "债券价格的敏感度",
+              "art": "duration"
+            },
+            {
+              "text": "你为期权付的钱",
+              "art": "premium"
+            }
+          ],
+          "answer": 0,
+          "why": "inflation 是上涨本身。踩下去的刹车是 interest rate——别把踏板和坡混为一谈。"
+        },
+        {
+          "id": "u6l1g",
+          "type": "scenario",
+          "termId": "real rate",
+          "termIds": [
+            "real rate"
+          ],
+          "story": "你的存款利率 5%。这一年物价涨了 6%。年底余额变多了，买菜车却变瘪了。",
+          "stem": "你的 real rate 是多少？",
+          "options": [
+            {
+              "text": "约 −1%——购买力缩水了",
+              "art": "real rate"
+            },
+            {
+              "text": "+5%——银行付了钱",
+              "art": "interest rate"
+            },
+            {
+              "text": "+6%——物价涨了",
+              "art": "inflation"
+            },
+            {
+              "text": "+11%——两个相加",
+              "art": "interest rate"
+            }
+          ],
+          "answer": 0,
+          "why": "5% 减 6% 约 −1%：决定购买力的是 real rate，不是挂牌利率。"
+        },
+        {
+          "id": "u6l1h",
+          "type": "truefalse",
+          "termId": "interest rate",
+          "termIds": [
+            "interest rate"
+          ],
+          "stem": "央行上调 interest rate 是为了给通胀降温。",
+          "answer": true,
+          "why": "加息让借钱更贵、消费降温——对着坡踩刹车。"
+        },
+        {
+          "id": "u6l1i",
+          "type": "fill",
+          "termId": "inflation",
+          "termIds": [
+            "inflation"
+          ],
+          "story": "____ 为 6% 时，$100 的菜钱明年要 $106。",
+          "bank": [
+            "inflation",
+            "interest rate",
+            "basis",
+            "liquidity"
+          ],
+          "answer": "inflation",
+          "why": "物价整体上涨就是 inflation——一个悄悄缩水每一块钱的数字。"
+        }
+      ]
+    },
+    {
+      "id": "u6l2",
+      "unit": 6,
+      "title": "央行的大招",
+      "icon": "🖨️",
+      "review": false,
+      "prompts": [
+        {
+          "id": "u6l2a",
+          "type": "match",
+          "termIds": [
+            "bond",
+            "yield curve",
+            "quantitative easing"
+          ],
+          "pairs": [
+            {
+              "id": "bond",
+              "left": "bond",
+              "right": "能转手的付息借据"
+            },
+            {
+              "id": "yield curve",
+              "left": "yield curve",
+              "right": "各期限收益率连成的线"
+            },
+            {
+              "id": "quantitative easing",
+              "left": "QE",
+              "right": "央行造钱买债"
+            }
+          ],
+          "why": "bond 是那张借据，curve 是收益率的地图，QE 是央行下场买借据。"
+        },
+        {
+          "id": "u6l2b",
+          "type": "meaning",
+          "termId": "bond",
+          "termIds": [
+            "bond"
+          ],
+          "stem": "bond（债券）是：",
+          "options": [
+            {
+              "text": "一张能持有、能转手的借据",
+              "art": "bond"
+            },
+            {
+              "text": "公司的一份股权",
+              "art": "capital gains"
+            },
+            {
+              "text": "一份保险合约",
+              "art": "hedge"
+            },
+            {
+              "text": "央行的办公楼",
+              "art": "quantitative easing"
+            }
+          ],
+          "answer": 0,
+          "why": "bond 是可交易的借据：你出借钱，发行方付息，到期还本。"
+        },
+        {
+          "id": "u6l2c",
+          "type": "fill",
+          "termId": "yield curve",
+          "termIds": [
+            "yield curve"
+          ],
+          "story": "把每个期限的 yield 画在一条线上，就得到____。",
+          "bank": [
+            "yield curve",
+            "basis",
+            "duration",
+            "haircut"
+          ],
+          "answer": "yield curve",
+          "why": "一个点是 yield；把所有点连起来就是 yield curve。"
+        },
+        {
+          "id": "u6l2d",
+          "type": "scenario",
+          "termId": "bond",
+          "termIds": [
+            "bond"
+          ],
+          "story": "一家公司要筹十年的钱。它印了年付 4%、2036 年按 $1,000 赎回的借据。你买了一张。",
+          "stem": "你手里拿的是什么？",
+          "options": [
+            {
+              "text": "一张债券",
+              "art": "bond"
+            },
+            {
+              "text": "一张看跌期权",
+              "art": "put"
+            },
+            {
+              "text": "一笔保证金贷款",
+              "art": "margin"
+            },
+            {
+              "text": "一笔互换",
+              "art": "swap"
+            }
+          ],
+          "answer": 0,
+          "why": "票息、到期日、面值：这张借据就是 bond。现在你是债主。"
+        },
+        {
+          "id": "u6l2e",
+          "type": "truefalse",
+          "termId": "quantitative easing",
+          "termIds": [
+            "quantitative easing"
+          ],
+          "stem": "QE 的意思是央行造钱去买债券。",
+          "answer": true,
+          "why": "就是这个动作：造钱、买长债，在常规弹药用尽后压低长期利率。"
+        },
+        {
+          "id": "u6l2f",
+          "type": "meaning",
+          "termId": "yield curve",
+          "termIds": [
+            "yield curve"
+          ],
+          "stem": "yield curve 倒挂意味着：",
+          "options": [
+            {
+              "text": "短期收益率比长期高",
+              "art": "yield curve"
+            },
+            {
+              "text": "债券停止交易了",
+              "art": "liquidity"
+            },
+            {
+              "text": "央行退场了",
+              "art": "quantitative easing"
+            },
+            {
+              "text": "物价全线下跌",
+              "art": "inflation"
+            }
+          ],
+          "answer": 0,
+          "why": "倒挂 = 线向下斜：短期高于长期。历史上，衰退常常跟在后面。"
+        },
+        {
+          "id": "u6l2g",
+          "type": "fill",
+          "termId": "bond",
+          "termIds": [
+            "bond"
+          ],
+          "story": "你通过____把钱借出去：每年 4%，到期拿回面值。",
+          "bank": [
+            "bond",
+            "swap",
+            "margin call",
+            "diversification"
+          ],
+          "answer": "bond",
+          "why": "固定票息加到期日，这就是 bond——一张会流通的借据。"
+        },
+        {
+          "id": "u6l2h",
+          "type": "scenario",
+          "termId": "quantitative easing",
+          "termIds": [
+            "quantitative easing"
+          ],
+          "story": "利率已经贴着零。央行还是造出新的钱，从市场买进万亿级长期债券。",
+          "stem": "这叫什么？",
+          "options": [
+            {
+              "text": "量化宽松",
+              "art": "quantitative easing"
+            },
+            {
+              "text": "追缴保证金",
+              "art": "margin call"
+            },
+            {
+              "text": "折扣率",
+              "art": "haircut"
+            },
+            {
+              "text": "卖空",
+              "art": "short selling"
+            }
+          ],
+          "answer": 0,
+          "why": "在零利率下造钱买长债就是 QE——那个大招。"
+        },
+        {
+          "id": "u6l2i",
+          "type": "meaning",
+          "termId": "quantitative easing",
+          "termIds": [
+            "quantitative easing"
+          ],
+          "stem": "QE 主要通过什么起作用？",
+          "options": [
+            {
+              "text": "靠央行买入压低长期利率",
+              "art": "quantitative easing"
+            },
+            {
+              "text": "快速加息",
+              "art": "interest rate"
+            },
+            {
+              "text": "给所有公司减税",
+              "art": "capital gains"
+            },
+            {
+              "text": "强迫银行放贷给你",
+              "art": "liquidity"
+            }
+          ],
+          "answer": 0,
+          "why": "QE 用新钱买长债：债券价格上升、长期收益率下降，现金漫向更险的资产。"
+        }
+      ]
+    },
+    {
+      "id": "u6r",
+      "unit": 6,
+      "title": "第六单元回顾",
+      "icon": "🏆",
+      "review": true,
+      "prompts": [
+        {
+          "id": "u6ra",
+          "type": "match",
+          "termIds": [
+            "interest rate",
+            "inflation",
+            "real rate",
+            "bond"
+          ],
+          "pairs": [
+            {
+              "id": "interest rate",
+              "left": "interest rate",
+              "right": "钱的租金"
+            },
+            {
+              "id": "inflation",
+              "left": "inflation",
+              "right": "物价爬的那个坡"
+            },
+            {
+              "id": "real rate",
+              "left": "real rate",
+              "right": "通胀咬过后剩下的"
+            },
+            {
+              "id": "bond",
+              "left": "bond",
+              "right": "付票息的借据"
+            }
+          ],
+          "why": "租金、坡、剩下的、借据——每条利率新闻默认你懂的四个词。"
+        },
+        {
+          "id": "u6rb",
+          "type": "fill",
+          "termId": "yield curve",
+          "termIds": [
+            "yield curve"
+          ],
+          "story": "短期债比长期债付得多：____ 倒挂了。",
+          "bank": [
+            "yield curve",
+            "basis",
+            "duration",
+            "margin"
+          ],
+          "answer": "yield curve",
+          "why": "各期限连成一条线：它一倒挂，地图就在喊话。"
+        },
+        {
+          "id": "u6rc",
+          "type": "scenario",
+          "termId": "yield",
+          "termIds": [
+            "yield"
+          ],
+          "story": "一张债券的价格从 $100 跌到 $50，票息还是 $5。新买家按百分比算赚到的翻倍了。",
+          "stem": "什么上升了？",
+          "options": [
+            {
+              "text": "收益率",
+              "art": "yield"
+            },
+            {
+              "text": "央行设定的利率",
+              "art": "interest rate"
+            },
+            {
+              "text": "债券的久期",
+              "art": "duration"
+            },
+            {
+              "text": "通胀",
+              "art": "inflation"
+            }
+          ],
+          "answer": 0,
+          "why": "票息除以价格：价格跌，yield 升。yield 是你付的价格能赚回的百分比。"
+        },
+        {
+          "id": "u6rd",
+          "type": "truefalse",
+          "termId": "real rate",
+          "termIds": [
+            "real rate"
+          ],
+          "stem": "只要通胀高于你的利率，real rate 就是正的。",
+          "answer": false,
+          "why": "反了：real rate = 利率 − 通胀。5% 利率对 6% 通胀约 −1%——是负的。"
+        },
+        {
+          "id": "u6re",
+          "type": "fill",
+          "termId": "quantitative easing",
+          "termIds": [
+            "quantitative easing"
+          ],
+          "story": "零利率下央行造钱买长债：____。",
+          "bank": [
+            "quantitative easing",
+            "short selling",
+            "mark-to-market",
+            "diversification"
+          ],
+          "answer": "quantitative easing",
+          "why": "零利率下往长债里灌新钱——这个操作就是 QE。"
+        },
+        {
+          "id": "u6rf",
+          "type": "scenario",
+          "termId": "yield curve",
+          "termIds": [
+            "yield curve"
+          ],
+          "story": "今年，三个月期债收益率 5%，十年期只有 3.8%。策略师把两个点贴在墙上，皱起眉。",
+          "stem": "他在看什么？",
+          "options": [
+            {
+              "text": "收益率曲线，倒挂了",
+              "art": "yield curve"
+            },
+            {
+              "text": "公司的资产负债表",
+              "art": "mark-to-market"
+            },
+            {
+              "text": "落空的对冲",
+              "art": "basis risk"
+            },
+            {
+              "text": "他自己的追缴通知",
+              "art": "margin call"
+            }
+          ],
+          "answer": 0,
+          "why": "两个期限连成一条线：短期高于长期，就是倒挂的 yield curve。"
+        },
+        {
+          "id": "u6rg",
+          "type": "truefalse",
+          "termId": "inflation",
+          "termIds": [
+            "inflation"
+          ],
+          "stem": "inflation 是央行用来给经济降温的工具。",
+          "answer": false,
+          "why": "inflation 是那个坡，不是刹车。工具是 interest rate。"
+        },
+        {
+          "id": "u6rh",
+          "type": "scenario",
+          "termId": "interest rate",
+          "termIds": [
+            "interest rate"
+          ],
+          "story": "一次会后，全经济的贷款重新定价：房贷、车贷、公司债都跟着同一个报价动。",
+          "stem": "是哪个数字？",
+          "options": [
+            {
+              "text": "利率",
+              "art": "interest rate"
+            },
+            {
+              "text": "权利金",
+              "art": "premium"
+            },
+            {
+              "text": "名义金额",
+              "art": "notional"
+            },
+            {
+              "text": "折扣率",
+              "art": "haircut"
+            }
+          ],
+          "answer": 0,
+          "why": "一个报价让所有贷款重新定价：这就是 interest rate 在定租金。"
+        },
+        {
+          "id": "u6ri",
+          "type": "meaning",
+          "termId": "quantitative easing",
+          "termIds": [
+            "quantitative easing"
+          ],
+          "stem": "QE 最准确的描述是：",
+          "options": [
+            {
+              "text": "央行用新造的钱买债券",
+              "art": "quantitative easing"
+            },
+            {
+              "text": "投资者恐慌抛售债券",
+              "art": "default"
+            },
+            {
+              "text": "银行自愿下调放贷利率",
+              "art": "interest rate"
+            },
+            {
+              "text": "政府给家庭寄支票",
+              "art": "liquidity"
+            }
+          ],
+          "answer": 0,
+          "why": "买家是央行、钱是新造的、标的是债券——三条都对上才是 QE。"
+        }
+      ]
+    },
+    {
+      "id": "u7l1",
+      "unit": 7,
+      "title": "现在就要",
+      "icon": "⚡",
+      "review": false,
+      "prompts": [
+        {
+          "id": "u7l1a",
+          "type": "match",
+          "termIds": [
+            "spot",
+            "futures",
+            "basis"
+          ],
+          "pairs": [
+            {
+              "id": "spot",
+              "left": "spot",
+              "right": "现在就交货"
+            },
+            {
+              "id": "futures",
+              "left": "futures",
+              "right": "锁定未来某日的价格"
+            },
+            {
+              "id": "basis",
+              "left": "basis",
+              "right": "现货减期货"
+            }
+          ],
+          "why": "现在、未来、两者的缺口——任何商品报价的三个坐标。"
+        },
+        {
+          "id": "u7l1b",
+          "type": "meaning",
+          "termId": "spot",
+          "termIds": [
+            "spot"
+          ],
+          "stem": "spot（现货）市场是：",
+          "options": [
+            {
+              "text": "东西本身，按即期交割定价",
+              "art": "spot"
+            },
+            {
+              "text": "下季度到期的合约",
+              "art": "futures"
+            },
+            {
+              "text": "两个价的缺口",
+              "art": "basis"
+            },
+            {
+              "text": "仓库收的费",
+              "art": "cost of carry"
+            }
+          ],
+          "answer": 0,
+          "why": "spot = 此时此地：真实交割的当下价格。"
+        },
+        {
+          "id": "u7l1c",
+          "type": "fill",
+          "termId": "basis",
+          "termIds": [
+            "basis"
+          ],
+          "story": "铜现货 $9,500，三个月期货 $9,620——____ 是 −$120。",
+          "bank": [
+            "basis",
+            "duration",
+            "premium",
+            "haircut"
+          ],
+          "answer": "basis",
+          "why": "现货减期货：这个缺口就是 basis，交割会把它强行拉近。"
+        },
+        {
+          "id": "u7l1d",
+          "type": "scenario",
+          "termId": "spot",
+          "termIds": [
+            "spot"
+          ],
+          "story": "一家电缆厂下周就要真铜上产线。它给交易员打电话，按今天的市场价买下实物。",
+          "stem": "它用的是哪个市场？",
+          "options": [
+            {
+              "text": "现货",
+              "art": "spot"
+            },
+            {
+              "text": "期货",
+              "art": "futures"
+            },
+            {
+              "text": "期权台",
+              "art": "option"
+            },
+            {
+              "text": "互换额度",
+              "art": "swap"
+            }
+          ],
+          "answer": 0,
+          "why": "真金属、当前价、即期交割：这就是 spot。"
+        },
+        {
+          "id": "u7l1e",
+          "type": "truefalse",
+          "termId": "basis",
+          "termIds": [
+            "basis"
+          ],
+          "stem": "basis 是同一样东西现货价与期货价的差。",
+          "answer": true,
+          "why": "就这么简单：现货减期货。曲线不过是这个缺口按日期铺开。"
+        },
+        {
+          "id": "u7l1f",
+          "type": "meaning",
+          "termId": "basis",
+          "termIds": [
+            "basis"
+          ],
+          "stem": "期货合约临近交割时，basis 倾向于：",
+          "options": [
+            {
+              "text": "收敛到零——两个价被强行拉近",
+              "art": "basis"
+            },
+            {
+              "text": "无限扩大",
+              "art": "volatility"
+            },
+            {
+              "text": "永远不变",
+              "art": "duration"
+            },
+            {
+              "text": "变成权利金",
+              "art": "premium"
+            }
+          ],
+          "answer": 0,
+          "why": "到了交割，期货必须对着实物结算——basis 无处可躲。"
+        },
+        {
+          "id": "u7l1g",
+          "type": "scenario",
+          "termId": "basis",
+          "termIds": [
+            "basis"
+          ],
+          "story": "粮商用期货做了对冲。到了交割，本地玉米跌了，期货盘面几乎没动。它的对冲和它的玉米没对上。",
+          "stem": "它刚经历了什么？",
+          "options": [
+            {
+              "text": "基差风险",
+              "art": "basis risk"
+            },
+            {
+              "text": "追缴保证金",
+              "art": "margin call"
+            },
+            {
+              "text": "量化宽松",
+              "art": "quantitative easing"
+            },
+            {
+              "text": "分散化",
+              "art": "diversification"
+            }
+          ],
+          "answer": 0,
+          "why": "对冲与被保护对象不再同步——这就是 basis risk，缺口反咬一口。"
+        },
+        {
+          "id": "u7l1h",
+          "type": "fill",
+          "termId": "spot",
+          "termIds": [
+            "spot"
+          ],
+          "story": "没有合约、没有远期日期——今天就是这批金属：你买的是____。",
+          "bank": [
+            "spot",
+            "futures",
+            "swap",
+            "notional"
+          ],
+          "answer": "spot",
+          "why": "按当前价即期交割：这就是 spot 市场。"
+        }
+      ]
+    },
+    {
+      "id": "u7l2",
+      "unit": 7,
+      "title": "曲线的两种弯法",
+      "icon": "🎢",
+      "review": false,
+      "prompts": [
+        {
+          "id": "u7l2a",
+          "type": "match",
+          "termIds": [
+            "contango",
+            "backwardation",
+            "cost of carry"
+          ],
+          "pairs": [
+            {
+              "id": "contango",
+              "left": "contango",
+              "right": "期货高于现货，曲线向上"
+            },
+            {
+              "id": "backwardation",
+              "left": "backwardation",
+              "right": "期货低于现货，曲线向下"
+            },
+            {
+              "id": "cost of carry",
+              "left": "cost of carry",
+              "right": "拿住东西的净账单"
+            }
+          ],
+          "why": "向上、向下，以及解释两种弯法的账单。"
+        },
+        {
+          "id": "u7l2b",
+          "type": "meaning",
+          "termId": "contango",
+          "termIds": [
+            "contango"
+          ],
+          "stem": "contango（升水）是当：",
+          "options": [
+            {
+              "text": "期货价高于现货，随期限递增",
+              "art": "contango"
+            },
+            {
+              "text": "期货价低于现货",
+              "art": "backwardation"
+            },
+            {
+              "text": "现货期货相等",
+              "art": "basis"
+            },
+            {
+              "text": "交易所停止交易",
+              "art": "default"
+            }
+          ],
+          "answer": 0,
+          "why": "contango 是正常形状：明天更贵，仓库靠弥合缺口赚钱。"
+        },
+        {
+          "id": "u7l2c",
+          "type": "truefalse",
+          "termId": "backwardation",
+          "termIds": [
+            "backwardation"
+          ],
+          "stem": "backwardation（贴水）意味着市场为「现在就要」付溢价。",
+          "answer": true,
+          "why": "现货高于期货就是紧迫感：有人今天就要货，愿意加价。"
+        },
+        {
+          "id": "u7l2d",
+          "type": "fill",
+          "termId": "cost of carry",
+          "termIds": [
+            "cost of carry"
+          ],
+          "story": "融资加仓储，减去资产付你的收益：____。",
+          "bank": [
+            "cost of carry",
+            "yield",
+            "basis",
+            "notional"
+          ],
+          "answer": "cost of carry",
+          "why": "拿着就要付账：融资 + 仓储 − 收益 = cost of carry。"
+        },
+        {
+          "id": "u7l2e",
+          "type": "scenario",
+          "termId": "contango",
+          "termIds": [
+            "contango"
+          ],
+          "story": "石油现货 $70，一年后期货 $76。交易员买油、入库存、卖出远期，锁定价差。",
+          "stem": "这个市场是什么形态？",
+          "options": [
+            {
+              "text": "升水",
+              "art": "contango"
+            },
+            {
+              "text": "贴水",
+              "art": "backwardation"
+            },
+            {
+              "text": "违约",
+              "art": "default"
+            },
+            {
+              "text": "追缴保证金",
+              "art": "margin call"
+            }
+          ],
+          "answer": 0,
+          "why": "期货高于现货、付得起仓储：向上弯的就是 contango——曲线给仓库发工资。"
+        },
+        {
+          "id": "u7l2f",
+          "type": "meaning",
+          "termId": "backwardation",
+          "termIds": [
+            "backwardation"
+          ],
+          "stem": "backwardation 通常出现在什么时候？",
+          "options": [
+            {
+              "text": "眼下有东西稀缺——常在供给冲击后",
+              "art": "backwardation"
+            },
+            {
+              "text": "仓库爆满",
+              "art": "contango"
+            },
+            {
+              "text": "央行宽松",
+              "art": "quantitative easing"
+            },
+            {
+              "text": "所有人同时分散",
+              "art": "diversification"
+            }
+          ],
+          "answer": 0,
+          "why": "眼前的稀缺让今天比明天贵：冲击、罢工、战争、霜冻之后的 backwardation。"
+        },
+        {
+          "id": "u7l2g",
+          "type": "scenario",
+          "termId": "cost of carry",
+          "termIds": [
+            "cost of carry"
+          ],
+          "story": "你拿了一年 $1M 的铜：融资花 $50k，仓储 $20k，隔夜拆借赚回 $30k。",
+          "stem": "$40k 的净支出叫什么？",
+          "options": [
+            {
+              "text": "持仓成本",
+              "art": "cost of carry"
+            },
+            {
+              "text": "收益率",
+              "art": "yield"
+            },
+            {
+              "text": "折扣率",
+              "art": "haircut"
+            },
+            {
+              "text": "基差",
+              "art": "basis"
+            }
+          ],
+          "answer": 0,
+          "why": "50 + 20 − 30 = $40k：持有的净账单就是 cost of carry。"
+        },
+        {
+          "id": "u7l2h",
+          "type": "truefalse",
+          "termId": "contango",
+          "termIds": [
+            "contango"
+          ],
+          "stem": "在升水里，期货价格必须在交割前下跌。",
+          "answer": false,
+          "why": "不一定是期货跌——临近交割现货与期货会收敛。收敛的是 basis，两边谁动都有可能。"
+        },
+        {
+          "id": "u7l2i",
+          "type": "meaning",
+          "termId": "cost of carry",
+          "termIds": [
+            "cost of carry"
+          ],
+          "stem": "cost of carry 解释了升水市场里：",
+          "options": [
+            {
+              "text": "期货高于现货——总得有人为持有付钱",
+              "art": "cost of carry"
+            },
+            {
+              "text": "期货低于现货",
+              "art": "backwardation"
+            },
+            {
+              "text": "期权变便宜",
+              "art": "premium"
+            },
+            {
+              "text": "债券大涨",
+              "art": "bond"
+            }
+          ],
+          "answer": 0,
+          "why": "仓储、融资、保险：持有有成本，所以明天的价格背着今天的加账单。"
+        }
+      ]
+    },
+    {
+      "id": "u7r",
+      "unit": 7,
+      "title": "第七单元回顾",
+      "icon": "🏆",
+      "review": true,
+      "prompts": [
+        {
+          "id": "u7ra",
+          "type": "match",
+          "termIds": [
+            "spot",
+            "basis",
+            "contango",
+            "backwardation"
+          ],
+          "pairs": [
+            {
+              "id": "spot",
+              "left": "spot",
+              "right": "按当下定价"
+            },
+            {
+              "id": "basis",
+              "left": "basis",
+              "right": "现货减期货"
+            },
+            {
+              "id": "contango",
+              "left": "contango",
+              "right": "曲线向上弯"
+            },
+            {
+              "id": "backwardation",
+              "left": "backwardation",
+              "right": "曲线向下弯"
+            }
+          ],
+          "why": "现在、缺口、两种弯法——拿这四个词去读任何商品版面。"
+        },
+        {
+          "id": "u7rb",
+          "type": "meaning",
+          "termId": "basis",
+          "termIds": [
+            "basis"
+          ],
+          "stem": "basis（基差）是：",
+          "options": [
+            {
+              "text": "同一样东西的现货减期货",
+              "art": "basis"
+            },
+            {
+              "text": "保证金的利息",
+              "art": "margin"
+            },
+            {
+              "text": "期权的费用",
+              "art": "premium"
+            },
+            {
+              "text": "债券的票息",
+              "art": "bond"
+            }
+          ],
+          "answer": 0,
+          "why": "一道减法：现货 − 期货 = basis。交割会把它拖到零。"
+        },
+        {
+          "id": "u7rc",
+          "type": "truefalse",
+          "termId": "cost of carry",
+          "termIds": [
+            "cost of carry"
+          ],
+          "stem": "cost of carry 是资产因为你持有它而付给你的钱。",
+          "answer": false,
+          "why": "反了：carry 是你净付的账单——融资加仓储，减去资产付你的部分。"
+        },
+        {
+          "id": "u7rd",
+          "type": "fill",
+          "termId": "backwardation",
+          "termIds": [
+            "backwardation"
+          ],
+          "story": "现货 $4.00，下月 $3.80——市场处于____。",
+          "bank": [
+            "backwardation",
+            "contango",
+            "diversification",
+            "default"
+          ],
+          "answer": "backwardation",
+          "why": "期货低于现货：今天的紧迫感。倒挂的形态就是 backwardation。"
+        },
+        {
+          "id": "u7re",
+          "type": "scenario",
+          "termId": "contango",
+          "termIds": [
+            "contango"
+          ],
+          "story": "一张商品台反复以 $70 买桶、以 $76 卖一年后远期，中间租着仓库。",
+          "stem": "这张台在收割什么？",
+          "options": [
+            {
+              "text": "升水展期收益",
+              "art": "contango"
+            },
+            {
+              "text": "资本利得",
+              "art": "capital gains"
+            },
+            {
+              "text": "保证金贷款",
+              "art": "margin"
+            },
+            {
+              "text": "基差风险",
+              "art": "basis risk"
+            }
+          ],
+          "answer": 0,
+          "why": "买现货、卖更贵的远期、中间入库存：contango 的展期收益在给仓库发工资。"
+        },
+        {
+          "id": "u7rf",
+          "type": "truefalse",
+          "termId": "basis",
+          "termIds": [
+            "basis"
+          ],
+          "stem": "basis risk 指你的对冲与被保护对象不再同步。",
+          "answer": true,
+          "why": "缺口朝你不利方向动了：这就是 basis risk——对冲是真的，只是没贴上。"
+        },
+        {
+          "id": "u7rg",
+          "type": "scenario",
+          "termId": "basis risk",
+          "termIds": [
+            "basis risk"
+          ],
+          "story": "一家航空公司用原油期货对冲航油。整季原油都没动，炼厂故障却让航油飙了。对冲纹丝不动地待在原地。",
+          "stem": "这叫什么？",
+          "options": [
+            {
+              "text": "基差风险",
+              "art": "basis risk"
+            },
+            {
+              "text": "追缴保证金",
+              "art": "margin call"
+            },
+            {
+              "text": "盯市",
+              "art": "mark-to-market"
+            },
+            {
+              "text": "买入—借款—持有至死亡",
+              "art": "buy-borrow-die"
+            }
+          ],
+          "answer": 0,
+          "why": "对冲跟的是原油，不是航油：两者岔开了——basis risk，第三单元的老朋友。"
+        },
+        {
+          "id": "u7rh",
+          "type": "fill",
+          "termId": "spot",
+          "termIds": [
+            "spot"
+          ],
+          "story": "盘面写着今天的金属 $9,500。这个数字是____价。",
+          "bank": [
+            "spot",
+            "futures",
+            "notional",
+            "premium"
+          ],
+          "answer": "spot",
+          "why": "今天按即期交割的价格就是 spot 价。"
         }
       ]
     }

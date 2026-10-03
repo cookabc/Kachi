@@ -150,7 +150,7 @@ export const UI: Record<Lang, UiText> = {
       unit: (id) => `单元 ${id}`,
       upNext: "接下来 · ",
       missedNote: (n) => `有 ${n} 个术语等着复习——它们在「复习」页。`,
-      unitNote: "第 1–2 单元是正在进行的对话；3–5 单元在路径上等你。",
+      unitNote: "第 1–2 单元是正在进行的对话；3–7 单元在路径上等你。",
       lockedLesson: (title) => `${title}（未解锁）`,
     },
     practice: {
@@ -278,7 +278,7 @@ export const UI: Record<Lang, UiText> = {
       unit: (id) => `Unit ${id}`,
       upNext: "Up next · ",
       missedNote: (n) => `${n} term${n === 1 ? "" : "s"} waiting to be reviewed — they live in Practice.`,
-      unitNote: "Units 1–2 are the conversation. 3–5 wait on the path.",
+      unitNote: "Units 1–2 are the conversation. 3–7 wait on the path.",
       lockedLesson: (title) => `${title} (locked)`,
     },
     practice: {

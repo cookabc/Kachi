@@ -24,10 +24,11 @@ function correctAnswer(prompt: Exercise): string | boolean {
 
 describe("migrated Hedge or Pledge course", () => {
   it("has the expected legacy coverage and passes structural validation", () => {
-    expect(course.lessons).toHaveLength(17);
-    expect(course.concepts).toHaveLength(29);
+    // Units 1-5 are the original course; 6-7 (rates, commodities) extend it.
+    expect(course.lessons).toHaveLength(23);
+    expect(course.concepts).toHaveLength(40);
     expect(new Set(course.lessons.flatMap((lesson) => lesson.prompts.map((prompt) => prompt.id))).size).toBe(
-      156,
+      208,
     );
     expect(validateCourse(course)).toEqual([]);
   });

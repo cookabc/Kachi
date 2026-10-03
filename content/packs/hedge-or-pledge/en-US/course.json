@@ -29,6 +29,16 @@
       "id": 5,
       "title": "How the rich actually do it",
       "blurb": "The pattern, not a pitch. Tax, loans, and the ugly part."
+    },
+    {
+      "id": 6,
+      "title": "The price of money",
+      "blurb": "Rates, inflation, and what the percentages in the news actually say."
+    },
+    {
+      "id": 7,
+      "title": "Spot vs. someday",
+      "blurb": "Spot, basis, and the two ways a curve bends."
     }
   ],
   "concepts": [
@@ -494,6 +504,231 @@
       "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "legacy"
+    },
+    {
+      "id": "interest rate",
+      "unit": 6,
+      "term": "interest rate",
+      "caption": "The rent on money. Central banks set the floor; everyone else pays above it.",
+      "definition": "The price of borrowing money, quoted as a percent per year.",
+      "example": "Borrow $10,000 at a 5% interest rate and you owe $500 a year for the loan itself — before you do anything with the money.",
+      "mixUp": "yield",
+      "mixUpWhy": "An interest rate is what you pay to borrow. A yield is what an investment pays you back relative to its price.",
+      "relations": [
+        {
+          "type": "confusable",
+          "with": "real rate"
+        },
+        {
+          "type": "sibling",
+          "with": "bond"
+        }
+      ],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "reviewed"
+    },
+    {
+      "id": "inflation",
+      "unit": 6,
+      "term": "inflation",
+      "caption": "Prices rising across the board, so each unit of money buys less.",
+      "definition": "The general rise in prices over time — the same money buys less than it did.",
+      "example": "At 6% inflation, a $100 grocery run costs $106 a year later. Your salary didn't move — you got poorer standing still.",
+      "mixUp": "interest rate",
+      "mixUpWhy": "Inflation is the problem — prices climbing. The interest rate is the central bank's brake pedal against it.",
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "reviewed"
+    },
+    {
+      "id": "real rate",
+      "unit": 6,
+      "term": "real rate",
+      "caption": "The interest rate minus inflation — what your money actually earns.",
+      "definition": "The interest rate after subtracting inflation: the real change in what your money can buy.",
+      "example": "Savings pay 5%, inflation is 6%. Your real rate is about −1%: you 'earned' money and can still buy less.",
+      "mixUp": "interest rate",
+      "mixUpWhy": "The posted number is the nominal rate. The real rate is what's left after inflation eats its share.",
+      "relations": [
+        {
+          "type": "prereq",
+          "with": "interest rate"
+        },
+        {
+          "type": "prereq",
+          "with": "inflation"
+        }
+      ],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "reviewed"
+    },
+    {
+      "id": "bond",
+      "unit": 6,
+      "term": "bond",
+      "caption": "A loan you can hold: governments and companies borrow from you, with coupons.",
+      "definition": "A tradable IOU: you lend money, the issuer pays interest and returns the face value at maturity.",
+      "example": "Buy a $1,000 bond paying 4% and you collect $40 a year until it matures, then get your $1,000 back — if the issuer is still standing.",
+      "mixUp": "yield",
+      "mixUpWhy": "The bond is the loan itself. The yield is what that loan pays relative to the price you paid — they move opposite ways.",
+      "relations": [
+        {
+          "type": "prereq",
+          "with": "interest rate"
+        },
+        {
+          "type": "sibling",
+          "with": "yield curve"
+        }
+      ],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "reviewed"
+    },
+    {
+      "id": "yield curve",
+      "unit": 6,
+      "term": "yield curve",
+      "caption": "Yields across maturities, drawn as one line. Normally it slopes up.",
+      "definition": "A line plotting yields of the same issuer across maturities, from short to long.",
+      "example": "Short bonds pay 3%, long bonds pay 4.5% — the curve slopes up. When short yields pay more, the curve has inverted, and recessions often follow.",
+      "mixUp": "yield",
+      "mixUpWhy": "Yield is one point: what this bond pays. The curve connects every maturity's points into one line you can read.",
+      "relations": [
+        {
+          "type": "prereq",
+          "with": "yield"
+        },
+        {
+          "type": "sibling",
+          "with": "duration"
+        }
+      ],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "reviewed"
+    },
+    {
+      "id": "quantitative easing",
+      "unit": 6,
+      "term": "quantitative easing",
+      "caption": "The central bank buys bonds with newly created money to keep pushing rates down.",
+      "definition": "A central-bank tool: creating money to buy long bonds, lowering long-term rates when the usual lever is spent.",
+      "example": "Rates are already near zero, so the central bank creates money and buys trillions of bonds. Sellers take the cash and buy riskier things — and everything bids up.",
+      "mixUp": "liquidity",
+      "mixUpWhy": "QE creates liquidity; liquidity is the condition — how easily things turn into cash without moving the price.",
+      "relations": [
+        {
+          "type": "prereq",
+          "with": "interest rate"
+        },
+        {
+          "type": "sibling",
+          "with": "liquidity"
+        }
+      ],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "reviewed"
+    },
+    {
+      "id": "spot",
+      "unit": 7,
+      "term": "spot",
+      "caption": "Buy it now, at the price for right now.",
+      "definition": "The market for immediate delivery — the current price of the thing itself.",
+      "example": "You need actual copper next week, so you buy it spot and take delivery. No contract, no future date — just the metal.",
+      "mixUp": "futures",
+      "mixUpWhy": "Spot is the price for here-and-now delivery. Futures lock a price for a date later — the gap between them is where the curve lives.",
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "reviewed"
+    },
+    {
+      "id": "basis",
+      "unit": 7,
+      "term": "basis",
+      "caption": "Spot minus futures — the gap the curve has to explain.",
+      "definition": "The difference between the spot price and the futures price of the same thing.",
+      "example": "Copper spot is $9,500; the three-month futures price is $9,620. The basis is −$120. As delivery nears, the two prices are forced together.",
+      "mixUp": "basis risk",
+      "mixUpWhy": "Basis is the gap itself. Basis risk is what the gap does to you: your hedge and your exposure no longer move together.",
+      "relations": [
+        {
+          "type": "prereq",
+          "with": "spot"
+        },
+        {
+          "type": "confusable",
+          "with": "basis risk"
+        }
+      ],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "reviewed"
+    },
+    {
+      "id": "contango",
+      "unit": 7,
+      "term": "contango",
+      "caption": "Futures cost more than spot — the normal, upward-bending curve.",
+      "definition": "A market where futures prices sit above spot, rising with maturity — the usual shape.",
+      "example": "Oil spot is $70; next-year futures are $76. In contango, the curve pays warehouses: store the oil, sell forward, pocket the gap.",
+      "mixUp": "backwardation",
+      "mixUpWhy": "Contango bends up: tomorrow costs more. Backwardation bends down: today is dear. One curve, two opposite postures.",
+      "relations": [
+        {
+          "type": "prereq",
+          "with": "basis"
+        },
+        {
+          "type": "sibling",
+          "with": "cost of carry"
+        }
+      ],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "reviewed"
+    },
+    {
+      "id": "backwardation",
+      "unit": 7,
+      "term": "backwardation",
+      "caption": "Futures cost less than spot — scarcity today, the inverted curve.",
+      "definition": "A market where futures prices sit below spot — the market pays a premium for the thing right now.",
+      "example": "Spot gas $4.00, next-month futures $3.80. Backwardation means someone needs the stuff today and pays up — often right after a supply shock.",
+      "mixUp": "contango",
+      "mixUpWhy": "Backwardation bends down: immediate scarcity. Contango bends up: abundance that warehouses get paid to hold.",
+      "relations": [
+        {
+          "type": "prereq",
+          "with": "contango"
+        }
+      ],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "reviewed"
+    },
+    {
+      "id": "cost of carry",
+      "unit": 7,
+      "term": "cost of carry",
+      "caption": "What holding costs: financing plus storage, minus what the asset pays you back.",
+      "definition": "The net cost of holding a position: financing plus storage and insurance, minus income the asset pays meanwhile.",
+      "example": "Hold $1M of copper for a year: $50k financing, $20k storage, minus $30k earned by lending it out — carry is $40k. Futures above spot must at least pay for it.",
+      "mixUp": "yield",
+      "mixUpWhy": "Yield is money the position pays you. Carry is the net bill after subtracting that income from what holding costs you.",
+      "relations": [
+        {
+          "type": "prereq",
+          "with": "interest rate"
+        }
+      ],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "reviewed"
     }
   ],
   "lessons": [
@@ -4414,6 +4649,1269 @@
           ],
           "answer": "capital gains",
           "why": "Tax follows the sale. The call can create the sale you were avoiding."
+        }
+      ]
+    },
+    {
+      "id": "u6l1",
+      "unit": 6,
+      "title": "How money is priced",
+      "icon": "💵",
+      "review": false,
+      "prompts": [
+        {
+          "id": "u6l1a",
+          "type": "match",
+          "termIds": [
+            "interest rate",
+            "inflation",
+            "real rate"
+          ],
+          "pairs": [
+            {
+              "id": "interest rate",
+              "left": "interest rate",
+              "right": "The rent on money"
+            },
+            {
+              "id": "inflation",
+              "left": "inflation",
+              "right": "Prices climbing overall"
+            },
+            {
+              "id": "real rate",
+              "left": "real rate",
+              "right": "Rate minus inflation"
+            }
+          ],
+          "why": "Money has a rent (rate). Prices can climb (inflation). What's left after that is the real rate."
+        },
+        {
+          "id": "u6l1b",
+          "type": "meaning",
+          "termId": "interest rate",
+          "termIds": [
+            "interest rate"
+          ],
+          "stem": "interest rate is:",
+          "options": [
+            {
+              "text": "What borrowing money costs per year",
+              "art": "interest rate"
+            },
+            {
+              "text": "What a bond pays relative to its price",
+              "art": "yield"
+            },
+            {
+              "text": "The general rise in prices",
+              "art": "inflation"
+            },
+            {
+              "text": "The discount lenders take day one",
+              "art": "haircut"
+            }
+          ],
+          "answer": 0,
+          "why": "Interest rate = the rent on money. Yield is what an investment pays you; inflation is prices rising."
+        },
+        {
+          "id": "u6l1c",
+          "type": "truefalse",
+          "termId": "inflation",
+          "termIds": [
+            "inflation"
+          ],
+          "stem": "Inflation means the same money buys less than it did.",
+          "answer": true,
+          "why": "That's the whole trick: prices rise, so each unit of money shrinks in what it can do."
+        },
+        {
+          "id": "u6l1d",
+          "type": "fill",
+          "termId": "real rate",
+          "termIds": [
+            "real rate"
+          ],
+          "story": "Savings pay 5% and inflation is 6%. The ____ is about −1%.",
+          "bank": [
+            "real rate",
+            "interest rate",
+            "yield",
+            "notional"
+          ],
+          "answer": "real rate",
+          "why": "5% minus 6% leaves a real rate near −1%: nominal gains, real losses."
+        },
+        {
+          "id": "u6l1e",
+          "type": "scenario",
+          "termId": "interest rate",
+          "termIds": [
+            "interest rate"
+          ],
+          "story": "Your bank offers a mortgage. The quote sheet says 6.2% per year on everything you borrow.",
+          "stem": "What is that 6.2%?",
+          "options": [
+            {
+              "text": "The interest rate",
+              "art": "interest rate"
+            },
+            {
+              "text": "Inflation",
+              "art": "inflation"
+            },
+            {
+              "text": "The yield curve",
+              "art": "yield curve"
+            },
+            {
+              "text": "A haircut",
+              "art": "haircut"
+            }
+          ],
+          "answer": 0,
+          "why": "A percent-per-year price for borrowing is the interest rate — the rent on money."
+        },
+        {
+          "id": "u6l1f",
+          "type": "meaning",
+          "termId": "inflation",
+          "termIds": [
+            "inflation"
+          ],
+          "stem": "Inflation is:",
+          "options": [
+            {
+              "text": "Prices rising overall, so money buys less",
+              "art": "inflation"
+            },
+            {
+              "text": "The central bank's brake pedal",
+              "art": "interest rate"
+            },
+            {
+              "text": "A bond's price sensitivity",
+              "art": "duration"
+            },
+            {
+              "text": "What you pay for an option",
+              "art": "premium"
+            }
+          ],
+          "answer": 0,
+          "why": "Inflation is the rise itself. The brake pedal against it is the interest rate — don't mix the pedal with the hill."
+        },
+        {
+          "id": "u6l1g",
+          "type": "scenario",
+          "termId": "real rate",
+          "termIds": [
+            "real rate"
+          ],
+          "story": "Your deposit pays 5%. Prices rise 6% over the year. At the end, your balance is bigger but your grocery cart is smaller.",
+          "stem": "What was your real rate?",
+          "options": [
+            {
+              "text": "About −1% — you lost purchasing power",
+              "art": "real rate"
+            },
+            {
+              "text": "+5% — the bank paid you",
+              "art": "interest rate"
+            },
+            {
+              "text": "+6% — prices rose",
+              "art": "inflation"
+            },
+            {
+              "text": "+11% — you add them",
+              "art": "interest rate"
+            }
+          ],
+          "answer": 0,
+          "why": "5% minus 6% is about −1%: the real rate, not the posted one, is what your money actually did."
+        },
+        {
+          "id": "u6l1h",
+          "type": "truefalse",
+          "termId": "interest rate",
+          "termIds": [
+            "interest rate"
+          ],
+          "stem": "A central bank raising its interest rate is trying to cool inflation down.",
+          "answer": true,
+          "why": "Higher rates make borrowing dearer, which cools spending — the brake pedal pressed against the hill."
+        },
+        {
+          "id": "u6l1i",
+          "type": "fill",
+          "termId": "inflation",
+          "termIds": [
+            "inflation"
+          ],
+          "story": "At 6% ____, your $100 groceries cost $106 next year.",
+          "bank": [
+            "inflation",
+            "interest rate",
+            "basis",
+            "liquidity"
+          ],
+          "answer": "inflation",
+          "why": "Prices rising overall is inflation — one number that quietly shrinks every dollar."
+        }
+      ]
+    },
+    {
+      "id": "u6l2",
+      "unit": 6,
+      "title": "The central bank's big lever",
+      "icon": "🖨️",
+      "review": false,
+      "prompts": [
+        {
+          "id": "u6l2a",
+          "type": "match",
+          "termIds": [
+            "bond",
+            "yield curve",
+            "quantitative easing"
+          ],
+          "pairs": [
+            {
+              "id": "bond",
+              "left": "bond",
+              "right": "A tradable IOU with coupons"
+            },
+            {
+              "id": "yield curve",
+              "left": "yield curve",
+              "right": "Yields drawn across maturities"
+            },
+            {
+              "id": "quantitative easing",
+              "left": "QE",
+              "right": "Central bank buys bonds with new money"
+            }
+          ],
+          "why": "The bond is the loan, the curve is the map of its yields, and QE is the central bank buying those loans."
+        },
+        {
+          "id": "u6l2b",
+          "type": "meaning",
+          "termId": "bond",
+          "termIds": [
+            "bond"
+          ],
+          "stem": "A bond is:",
+          "options": [
+            {
+              "text": "A loan you can hold and trade",
+              "art": "bond"
+            },
+            {
+              "text": "A share of the company",
+              "art": "capital gains"
+            },
+            {
+              "text": "An insurance contract",
+              "art": "hedge"
+            },
+            {
+              "text": "The central bank's building",
+              "art": "quantitative easing"
+            }
+          ],
+          "answer": 0,
+          "why": "A bond is an IOU that trades: you lend, the issuer pays interest, maturity returns the face value."
+        },
+        {
+          "id": "u6l2c",
+          "type": "fill",
+          "termId": "yield curve",
+          "termIds": [
+            "yield curve"
+          ],
+          "story": "Plot every maturity's yield on one line and you get the ____.",
+          "bank": [
+            "yield curve",
+            "basis",
+            "duration",
+            "haircut"
+          ],
+          "answer": "yield curve",
+          "why": "One point is a yield; all the points joined are the yield curve."
+        },
+        {
+          "id": "u6l2d",
+          "type": "scenario",
+          "termId": "bond",
+          "termIds": [
+            "bond"
+          ],
+          "story": "A company needs cash for ten years. It prints IOUs paying 4% a year, redeemable at $1,000 in 2036. You buy one.",
+          "stem": "What do you hold?",
+          "options": [
+            {
+              "text": "A bond",
+              "art": "bond"
+            },
+            {
+              "text": "A put option",
+              "art": "put"
+            },
+            {
+              "text": "A margin loan",
+              "art": "margin"
+            },
+            {
+              "text": "A swap",
+              "art": "swap"
+            }
+          ],
+          "answer": 0,
+          "why": "Coupon, maturity, face value: that IOU is a bond. You are the lender now."
+        },
+        {
+          "id": "u6l2e",
+          "type": "truefalse",
+          "termId": "quantitative easing",
+          "termIds": [
+            "quantitative easing"
+          ],
+          "stem": "QE means the central bank prints money to buy bonds.",
+          "answer": true,
+          "why": "That's the move: create money, buy long bonds, push long-term rates down when the usual lever is spent."
+        },
+        {
+          "id": "u6l2f",
+          "type": "meaning",
+          "termId": "yield curve",
+          "termIds": [
+            "yield curve"
+          ],
+          "stem": "An inverted yield curve means:",
+          "options": [
+            {
+              "text": "Short yields pay more than long yields",
+              "art": "yield curve"
+            },
+            {
+              "text": "Bonds stopped trading",
+              "art": "liquidity"
+            },
+            {
+              "text": "The central bank quit",
+              "art": "quantitative easing"
+            },
+            {
+              "text": "Prices are falling everywhere",
+              "art": "inflation"
+            }
+          ],
+          "answer": 0,
+          "why": "Inverted = the line slopes down: short yields above long. Historically, recessions often follow."
+        },
+        {
+          "id": "u6l2g",
+          "type": "fill",
+          "termId": "bond",
+          "termIds": [
+            "bond"
+          ],
+          "story": "You lend via a ____: 4% a year, face value back at maturity.",
+          "bank": [
+            "bond",
+            "swap",
+            "margin call",
+            "diversification"
+          ],
+          "answer": "bond",
+          "why": "Fixed coupons plus a maturity date make it a bond — a loan that trades."
+        },
+        {
+          "id": "u6l2h",
+          "type": "scenario",
+          "termId": "quantitative easing",
+          "termIds": [
+            "quantitative easing"
+          ],
+          "story": "Rates are already at zero. The central bank creates fresh money anyway and buys trillions of long-dated bonds from the market.",
+          "stem": "What is this called?",
+          "options": [
+            {
+              "text": "Quantitative easing",
+              "art": "quantitative easing"
+            },
+            {
+              "text": "A margin call",
+              "art": "margin call"
+            },
+            {
+              "text": "A haircut",
+              "art": "haircut"
+            },
+            {
+              "text": "Short selling",
+              "art": "short selling"
+            }
+          ],
+          "answer": 0,
+          "why": "Creating money to buy long bonds at the zero bound is QE — the big lever."
+        },
+        {
+          "id": "u6l2i",
+          "type": "meaning",
+          "termId": "quantitative easing",
+          "termIds": [
+            "quantitative easing"
+          ],
+          "stem": "QE mainly works by:",
+          "options": [
+            {
+              "text": "Pushing long-term rates down with central-bank buying",
+              "art": "quantitative easing"
+            },
+            {
+              "text": "Raising the interest rate quickly",
+              "art": "interest rate"
+            },
+            {
+              "text": "Cutting every company's taxes",
+              "art": "capital gains"
+            },
+            {
+              "text": "Forcing banks to lend to you",
+              "art": "liquidity"
+            }
+          ],
+          "answer": 0,
+          "why": "QE buys long bonds with new money: prices up, long yields down, cash spreads into riskier assets."
+        }
+      ]
+    },
+    {
+      "id": "u6r",
+      "unit": 6,
+      "title": "Unit 6 review",
+      "icon": "🏆",
+      "review": true,
+      "prompts": [
+        {
+          "id": "u6ra",
+          "type": "match",
+          "termIds": [
+            "interest rate",
+            "inflation",
+            "real rate",
+            "bond"
+          ],
+          "pairs": [
+            {
+              "id": "interest rate",
+              "left": "interest rate",
+              "right": "The rent on money"
+            },
+            {
+              "id": "inflation",
+              "left": "inflation",
+              "right": "The hill prices climb"
+            },
+            {
+              "id": "real rate",
+              "left": "real rate",
+              "right": "What's left of the rate after inflation"
+            },
+            {
+              "id": "bond",
+              "left": "bond",
+              "right": "A coupon-paying IOU"
+            }
+          ],
+          "why": "Rent, hill, what's left, and the IOU — the four words every rates headline assumes."
+        },
+        {
+          "id": "u6rb",
+          "type": "fill",
+          "termId": "yield curve",
+          "termIds": [
+            "yield curve"
+          ],
+          "story": "Short bonds pay more than long ones: the ____ has inverted.",
+          "bank": [
+            "yield curve",
+            "basis",
+            "duration",
+            "margin"
+          ],
+          "answer": "yield curve",
+          "why": "Maturities joined into one line: when it inverts, the map is shouting."
+        },
+        {
+          "id": "u6rc",
+          "type": "scenario",
+          "termId": "yield",
+          "termIds": [
+            "yield"
+          ],
+          "story": "A bond's price falls from $100 to $50 while its coupon stays $5. New buyers now earn twice the percentage the old ones did.",
+          "stem": "What went up?",
+          "options": [
+            {
+              "text": "The yield",
+              "art": "yield"
+            },
+            {
+              "text": "The interest rate the central bank sets",
+              "art": "interest rate"
+            },
+            {
+              "text": "The bond's duration",
+              "art": "duration"
+            },
+            {
+              "text": "Inflation",
+              "art": "inflation"
+            }
+          ],
+          "answer": 0,
+          "why": "Coupon over price: price down, yield up. Yield is what the price you pay earns you."
+        },
+        {
+          "id": "u6rd",
+          "type": "truefalse",
+          "termId": "real rate",
+          "termIds": [
+            "real rate"
+          ],
+          "stem": "If inflation is higher than your interest rate, your real rate is positive.",
+          "answer": false,
+          "why": "Backwards: rate minus inflation. 5% against 6% inflation is about −1% — negative."
+        },
+        {
+          "id": "u6re",
+          "type": "fill",
+          "termId": "quantitative easing",
+          "termIds": [
+            "quantitative easing"
+          ],
+          "story": "At zero rates the central bank creates money and buys long bonds: ____.",
+          "bank": [
+            "quantitative easing",
+            "short selling",
+            "mark-to-market",
+            "diversification"
+          ],
+          "answer": "quantitative easing",
+          "why": "New money into long bonds at the zero bound — that program is QE."
+        },
+        {
+          "id": "u6rf",
+          "type": "scenario",
+          "termId": "yield curve",
+          "termIds": [
+            "yield curve"
+          ],
+          "story": "This year, three-month bonds yield 5% while ten-year bonds yield 3.8%. A strategist tapes the two points to the wall and frowns.",
+          "stem": "What is he reading?",
+          "options": [
+            {
+              "text": "The yield curve, inverted",
+              "art": "yield curve"
+            },
+            {
+              "text": "The company's balance sheet",
+              "art": "mark-to-market"
+            },
+            {
+              "text": "A hedge that missed",
+              "art": "basis risk"
+            },
+            {
+              "text": "His own margin call",
+              "art": "margin call"
+            }
+          ],
+          "answer": 0,
+          "why": "Two maturities, one line: short above long is an inverted yield curve."
+        },
+        {
+          "id": "u6rg",
+          "type": "truefalse",
+          "termId": "inflation",
+          "termIds": [
+            "inflation"
+          ],
+          "stem": "Inflation is the tool the central bank uses to cool the economy.",
+          "answer": false,
+          "why": "Inflation is the hill, not the brake. The tool is the interest rate."
+        },
+        {
+          "id": "u6rh",
+          "type": "scenario",
+          "termId": "interest rate",
+          "termIds": [
+            "interest rate"
+          ],
+          "story": "Every loan in the economy reprices after one meeting: mortgages, car loans, corporate debt all shift off one quoted number.",
+          "stem": "Which number?",
+          "options": [
+            {
+              "text": "The interest rate",
+              "art": "interest rate"
+            },
+            {
+              "text": "The premium",
+              "art": "premium"
+            },
+            {
+              "text": "The notional",
+              "art": "notional"
+            },
+            {
+              "text": "The haircut",
+              "art": "haircut"
+            }
+          ],
+          "answer": 0,
+          "why": "One quoted percent that reprices every loan: that's the interest rate doing its rent-setter job."
+        },
+        {
+          "id": "u6ri",
+          "type": "meaning",
+          "termId": "quantitative easing",
+          "termIds": [
+            "quantitative easing"
+          ],
+          "stem": "QE is best described as:",
+          "options": [
+            {
+              "text": "The central bank buying bonds with newly created money",
+              "art": "quantitative easing"
+            },
+            {
+              "text": "Investors dumping bonds in a panic",
+              "art": "default"
+            },
+            {
+              "text": "Banks cutting their lending rates voluntarily",
+              "art": "interest rate"
+            },
+            {
+              "text": "The government mailing cash to households",
+              "art": "liquidity"
+            }
+          ],
+          "answer": 0,
+          "why": "The buyer is the central bank, the money is newly created, the target is bonds. That triple is QE."
+        }
+      ]
+    },
+    {
+      "id": "u7l1",
+      "unit": 7,
+      "title": "Right now",
+      "icon": "⚡",
+      "review": false,
+      "prompts": [
+        {
+          "id": "u7l1a",
+          "type": "match",
+          "termIds": [
+            "spot",
+            "futures",
+            "basis"
+          ],
+          "pairs": [
+            {
+              "id": "spot",
+              "left": "spot",
+              "right": "Delivery right now"
+            },
+            {
+              "id": "futures",
+              "left": "futures",
+              "right": "A price locked for a later date"
+            },
+            {
+              "id": "basis",
+              "left": "basis",
+              "right": "Spot minus futures"
+            }
+          ],
+          "why": "Now, later, and the gap between them — the three coordinates of any commodity quote."
+        },
+        {
+          "id": "u7l1b",
+          "type": "meaning",
+          "termId": "spot",
+          "termIds": [
+            "spot"
+          ],
+          "stem": "The spot market is:",
+          "options": [
+            {
+              "text": "The thing itself, priced for immediate delivery",
+              "art": "spot"
+            },
+            {
+              "text": "Contracts expiring next quarter",
+              "art": "futures"
+            },
+            {
+              "text": "The gap between two prices",
+              "art": "basis"
+            },
+            {
+              "text": "What warehouses charge",
+              "art": "cost of carry"
+            }
+          ],
+          "answer": 0,
+          "why": "Spot = here and now: the current price of the actual thing changing hands."
+        },
+        {
+          "id": "u7l1c",
+          "type": "fill",
+          "termId": "basis",
+          "termIds": [
+            "basis"
+          ],
+          "story": "Copper spot $9,500, three-month futures $9,620 — the ____ is −$120.",
+          "bank": [
+            "basis",
+            "duration",
+            "premium",
+            "haircut"
+          ],
+          "answer": "basis",
+          "why": "Spot minus futures: that gap is the basis, and it gets forced closed by delivery."
+        },
+        {
+          "id": "u7l1d",
+          "type": "scenario",
+          "termId": "spot",
+          "termIds": [
+            "spot"
+          ],
+          "story": "A cable maker needs real copper on its dock next week. It calls a trader and pays today's market price for actual metal.",
+          "stem": "Which market did it just use?",
+          "options": [
+            {
+              "text": "Spot",
+              "art": "spot"
+            },
+            {
+              "text": "Futures",
+              "art": "futures"
+            },
+            {
+              "text": "An option desk",
+              "art": "option"
+            },
+            {
+              "text": "A swap line",
+              "art": "swap"
+            }
+          ],
+          "answer": 0,
+          "why": "Actual metal, current price, immediate delivery: spot."
+        },
+        {
+          "id": "u7l1e",
+          "type": "truefalse",
+          "termId": "basis",
+          "termIds": [
+            "basis"
+          ],
+          "stem": "Basis is the gap between spot and futures of the same thing.",
+          "answer": true,
+          "why": "That's all it is: spot minus futures. The curve is just that gap drawn across dates."
+        },
+        {
+          "id": "u7l1f",
+          "type": "meaning",
+          "termId": "basis",
+          "termIds": [
+            "basis"
+          ],
+          "stem": "As a futures contract approaches delivery, basis tends to:",
+          "options": [
+            {
+              "text": "Shrink to nothing — the two prices are forced together",
+              "art": "basis"
+            },
+            {
+              "text": "Widen without limit",
+              "art": "volatility"
+            },
+            {
+              "text": "Stay exactly the same forever",
+              "art": "duration"
+            },
+            {
+              "text": "Turn into a premium",
+              "art": "premium"
+            }
+          ],
+          "answer": 0,
+          "why": "At delivery, futures must settle against the real thing — the basis has nowhere to hide."
+        },
+        {
+          "id": "u7l1g",
+          "type": "scenario",
+          "termId": "basis",
+          "termIds": [
+            "basis"
+          ],
+          "story": "A grain merchant hedged with futures. At delivery, local corn fell while the futures board barely moved. Its hedge didn't match its corn.",
+          "stem": "What did it just experience?",
+          "options": [
+            {
+              "text": "Basis risk",
+              "art": "basis risk"
+            },
+            {
+              "text": "A margin call",
+              "art": "margin call"
+            },
+            {
+              "text": "QE",
+              "art": "quantitative easing"
+            },
+            {
+              "text": "Diversification",
+              "art": "diversification"
+            }
+          ],
+          "answer": 0,
+          "why": "The hedge and the exposure stopped moving together — that's basis risk, the gap biting back."
+        },
+        {
+          "id": "u7l1h",
+          "type": "fill",
+          "termId": "spot",
+          "termIds": [
+            "spot"
+          ],
+          "story": "No contracts, no future date — just the metal today: you bought ____.",
+          "bank": [
+            "spot",
+            "futures",
+            "swap",
+            "notional"
+          ],
+          "answer": "spot",
+          "why": "Immediate delivery at the current price: the spot market."
+        }
+      ]
+    },
+    {
+      "id": "u7l2",
+      "unit": 7,
+      "title": "Two bends in the curve",
+      "icon": "🎢",
+      "review": false,
+      "prompts": [
+        {
+          "id": "u7l2a",
+          "type": "match",
+          "termIds": [
+            "contango",
+            "backwardation",
+            "cost of carry"
+          ],
+          "pairs": [
+            {
+              "id": "contango",
+              "left": "contango",
+              "right": "Futures above spot, curve bends up"
+            },
+            {
+              "id": "backwardation",
+              "left": "backwardation",
+              "right": "Futures below spot, curve bends down"
+            },
+            {
+              "id": "cost of carry",
+              "left": "cost of carry",
+              "right": "The net bill for holding"
+            }
+          ],
+          "why": "Up, down, and the bill that explains both bends."
+        },
+        {
+          "id": "u7l2b",
+          "type": "meaning",
+          "termId": "contango",
+          "termIds": [
+            "contango"
+          ],
+          "stem": "Contango is when:",
+          "options": [
+            {
+              "text": "Futures prices sit above spot and rise with maturity",
+              "art": "contango"
+            },
+            {
+              "text": "Futures prices sit below spot",
+              "art": "backwardation"
+            },
+            {
+              "text": "Spot and futures are equal",
+              "art": "basis"
+            },
+            {
+              "text": "The exchange halts trading",
+              "art": "default"
+            }
+          ],
+          "answer": 0,
+          "why": "Contango is the normal shape: tomorrow costs more, and warehouses get paid to bridge the gap."
+        },
+        {
+          "id": "u7l2c",
+          "type": "truefalse",
+          "termId": "backwardation",
+          "termIds": [
+            "backwardation"
+          ],
+          "stem": "Backwardation means the market pays a premium for delivery right now.",
+          "answer": true,
+          "why": "Spot above futures is urgency: someone needs the thing today and pays up."
+        },
+        {
+          "id": "u7l2d",
+          "type": "fill",
+          "termId": "cost of carry",
+          "termIds": [
+            "cost of carry"
+          ],
+          "story": "Financing plus storage minus the income the asset pays: the ____.",
+          "bank": [
+            "cost of carry",
+            "yield",
+            "basis",
+            "notional"
+          ],
+          "answer": "cost of carry",
+          "why": "Hold it, pay the bill: financing + storage − income = cost of carry."
+        },
+        {
+          "id": "u7l2e",
+          "type": "scenario",
+          "termId": "contango",
+          "termIds": [
+            "contango"
+          ],
+          "story": "Oil sits at $70 spot while next-year futures trade at $76. Traders buy barrels, store them, sell forward, and lock the difference.",
+          "stem": "What shape is this market in?",
+          "options": [
+            {
+              "text": "Contango",
+              "art": "contango"
+            },
+            {
+              "text": "Backwardation",
+              "art": "backwardation"
+            },
+            {
+              "text": "Default",
+              "art": "default"
+            },
+            {
+              "text": "A margin call",
+              "art": "margin call"
+            }
+          ],
+          "answer": 0,
+          "why": "Futures above spot paying for storage: that upward bend is contango — the curve pays warehouses."
+        },
+        {
+          "id": "u7l2f",
+          "type": "meaning",
+          "termId": "backwardation",
+          "termIds": [
+            "backwardation"
+          ],
+          "stem": "Backwardation usually shows up when:",
+          "options": [
+            {
+              "text": "Something is scarce right now — often after a supply shock",
+              "art": "backwardation"
+            },
+            {
+              "text": "Warehouses are overflowing",
+              "art": "contango"
+            },
+            {
+              "text": "The central bank eases",
+              "art": "quantitative easing"
+            },
+            {
+              "text": "Everyone diversifies at once",
+              "art": "diversification"
+            }
+          ],
+          "answer": 0,
+          "why": "Immediate scarcity prices today above tomorrow: backwardation after shocks, strikes, wars, and freezes."
+        },
+        {
+          "id": "u7l2g",
+          "type": "scenario",
+          "termId": "cost of carry",
+          "termIds": [
+            "cost of carry"
+          ],
+          "story": "You hold $1M of copper for a year: $50k to finance it, $20k to store it, and you earn $30k lending it out overnight.",
+          "stem": "What is the $40k net called?",
+          "options": [
+            {
+              "text": "The cost of carry",
+              "art": "cost of carry"
+            },
+            {
+              "text": "The yield",
+              "art": "yield"
+            },
+            {
+              "text": "The haircut",
+              "art": "haircut"
+            },
+            {
+              "text": "The basis",
+              "art": "basis"
+            }
+          ],
+          "answer": 0,
+          "why": "50 + 20 − 30 = $40k: the net bill for holding is the cost of carry."
+        },
+        {
+          "id": "u7l2h",
+          "type": "truefalse",
+          "termId": "contango",
+          "termIds": [
+            "contango"
+          ],
+          "stem": "In contango, the futures price must fall before delivery.",
+          "answer": false,
+          "why": "Not the futures that must fall — spot and futures converge as delivery nears. The basis closes; either price can move."
+        },
+        {
+          "id": "u7l2i",
+          "type": "meaning",
+          "termId": "cost of carry",
+          "termIds": [
+            "cost of carry"
+          ],
+          "stem": "The cost of carry explains why, in contango:",
+          "options": [
+            {
+              "text": "Futures trade above spot — someone must pay to hold",
+              "art": "cost of carry"
+            },
+            {
+              "text": "Futures trade below spot",
+              "art": "backwardation"
+            },
+            {
+              "text": "Options get cheaper",
+              "art": "premium"
+            },
+            {
+              "text": "Bonds rally",
+              "art": "bond"
+            }
+          ],
+          "answer": 0,
+          "why": "Storage, financing, insurance: holding costs money, so tomorrow's price carries today's plus the bill."
+        }
+      ]
+    },
+    {
+      "id": "u7r",
+      "unit": 7,
+      "title": "Unit 7 review",
+      "icon": "🏆",
+      "review": true,
+      "prompts": [
+        {
+          "id": "u7ra",
+          "type": "match",
+          "termIds": [
+            "spot",
+            "basis",
+            "contango",
+            "backwardation"
+          ],
+          "pairs": [
+            {
+              "id": "spot",
+              "left": "spot",
+              "right": "Priced for right now"
+            },
+            {
+              "id": "basis",
+              "left": "basis",
+              "right": "Spot minus futures"
+            },
+            {
+              "id": "contango",
+              "left": "contango",
+              "right": "Curve bends up"
+            },
+            {
+              "id": "backwardation",
+              "left": "backwardation",
+              "right": "Curve bends down"
+            }
+          ],
+          "why": "Now, the gap, and the two bends — read any commodity page with these four."
+        },
+        {
+          "id": "u7rb",
+          "type": "meaning",
+          "termId": "basis",
+          "termIds": [
+            "basis"
+          ],
+          "stem": "Basis is:",
+          "options": [
+            {
+              "text": "Spot minus futures for the same thing",
+              "art": "basis"
+            },
+            {
+              "text": "The interest charged on margin",
+              "art": "margin"
+            },
+            {
+              "text": "The fee for an option",
+              "art": "premium"
+            },
+            {
+              "text": "A bond's coupon",
+              "art": "bond"
+            }
+          ],
+          "answer": 0,
+          "why": "One subtraction: spot − futures = basis. Delivery drags it to zero."
+        },
+        {
+          "id": "u7rc",
+          "type": "truefalse",
+          "termId": "cost of carry",
+          "termIds": [
+            "cost of carry"
+          ],
+          "stem": "The cost of carry is money the asset pays you for holding it.",
+          "answer": false,
+          "why": "Backwards: carry is the net bill you pay — financing plus storage minus what the asset pays you."
+        },
+        {
+          "id": "u7rd",
+          "type": "fill",
+          "termId": "backwardation",
+          "termIds": [
+            "backwardation"
+          ],
+          "story": "Spot $4.00, next month $3.80 — the market is in ____.",
+          "bank": [
+            "backwardation",
+            "contango",
+            "diversification",
+            "default"
+          ],
+          "answer": "backwardation",
+          "why": "Futures below spot: urgency today. That inverted shape is backwardation."
+        },
+        {
+          "id": "u7re",
+          "type": "scenario",
+          "termId": "contango",
+          "termIds": [
+            "contango"
+          ],
+          "story": "A commodity desk keeps buying barrels at $70 spot and selling next-year futures at $76, renting warehouses in between.",
+          "stem": "What is the desk harvesting?",
+          "options": [
+            {
+              "text": "The contango roll",
+              "art": "contango"
+            },
+            {
+              "text": "Capital gains",
+              "art": "capital gains"
+            },
+            {
+              "text": "A margin loan",
+              "art": "margin"
+            },
+            {
+              "text": "Basis risk",
+              "art": "basis risk"
+            }
+          ],
+          "answer": 0,
+          "why": "Buy spot, sell forward above it, store in between: the contango roll pays the warehouse."
+        },
+        {
+          "id": "u7rf",
+          "type": "truefalse",
+          "termId": "basis",
+          "termIds": [
+            "basis"
+          ],
+          "stem": "Basis risk means your hedge and your exposure stopped moving together.",
+          "answer": true,
+          "why": "The gap moved against you: that's basis risk — the hedge was real, but it didn't track."
+        },
+        {
+          "id": "u7rg",
+          "type": "scenario",
+          "termId": "basis risk",
+          "termIds": [
+            "basis risk"
+          ],
+          "story": "An airline hedges jet fuel with crude futures. Crude is flat all quarter, but jet fuel spikes on a refinery outage. The hedge sits there, unmoved.",
+          "stem": "What is this called?",
+          "options": [
+            {
+              "text": "Basis risk",
+              "art": "basis risk"
+            },
+            {
+              "text": "A margin call",
+              "art": "margin call"
+            },
+            {
+              "text": "Mark-to-market",
+              "art": "mark-to-market"
+            },
+            {
+              "text": "Buy-borrow-die",
+              "art": "buy-borrow-die"
+            }
+          ],
+          "answer": 0,
+          "why": "The hedge tracked crude, not jet fuel: the two drifted apart — basis risk, straight from Unit 3."
+        },
+        {
+          "id": "u7rh",
+          "type": "fill",
+          "termId": "spot",
+          "termIds": [
+            "spot"
+          ],
+          "story": "The board shows $9,500 for metal today. That number is the ____ price.",
+          "bank": [
+            "spot",
+            "futures",
+            "notional",
+            "premium"
+          ],
+          "answer": "spot",
+          "why": "Today's price for immediate delivery is the spot price."
         }
       ]
     }
