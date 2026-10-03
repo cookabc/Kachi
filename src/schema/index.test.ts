@@ -346,4 +346,39 @@ describe("content validation", () => {
       issues.some((issue) => issue.path === "p2" && /Unknown term reference: sell/.test(issue.message)),
     ).toBe(true);
   });
+
+  it("accepts concept relations that reference published concepts", () => {
+    const course = validCourse();
+    course.concepts[0].relations = [
+      { type: "confusable", with: "b" },
+      { type: "prereq", with: "c" },
+      { type: "sibling", with: "b" },
+    ];
+    // The same pair may carry two edges of different types (confusable + sibling).
+    expect(validateCourse(course)).toEqual([]);
+  });
+
+  it("rejects relations with unknown targets, self targets, duplicates, and bad types", () => {
+    const course = validCourse();
+    course.concepts[0].relations = [
+      { type: "confusable", with: "nonexistent" },
+      { type: "sibling", with: "a" },
+    ];
+    let issues = validateCourse(course);
+    expect(issues.some((issue) => /Unknown relation target: nonexistent/.test(issue.message))).toBe(true);
+    expect(issues.some((issue) => /Relation targets itself: a/.test(issue.message))).toBe(true);
+
+    const duplicated = validCourse();
+    duplicated.concepts[0].relations = [
+      { type: "sibling", with: "b" },
+      { type: "sibling", with: "b" },
+    ];
+    issues = validateCourse(duplicated);
+    expect(issues.some((issue) => /Duplicate relation: sibling::b/.test(issue.message))).toBe(true);
+
+    const badType = validCourse();
+    badType.concepts[0].relations = [{ type: "enemy" as never, with: "b" }];
+    issues = validateCourse(badType);
+    expect(issues.some((issue) => /Unknown relation type: enemy/.test(issue.message))).toBe(true);
+  });
 });

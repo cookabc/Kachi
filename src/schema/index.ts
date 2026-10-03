@@ -17,6 +17,43 @@ function uniqueIssues(ids: string[], label: string): ValidationIssue[] {
 
 const MATCH_PSEUDO_TERM_IDS = new Set(["sell", "put_u1intro"]);
 
+const RELATION_TYPES = new Set(["confusable", "prereq", "sibling"]);
+
+function validateRelations(concept: Concept, conceptIds: Set<string>): ValidationIssue[] {
+  if (concept.relations === undefined) return [];
+  const issues: ValidationIssue[] = [];
+  if (!Array.isArray(concept.relations)) {
+    return [{ path: concept.id, message: "relations must be an array when present" }];
+  }
+  const seen = new Set<string>();
+  concept.relations.forEach((relation, index) => {
+    const at = `${concept.id}.relations[${index}]`;
+    if (!relation || !RELATION_TYPES.has(relation.type)) {
+      issues.push({ path: at, message: `Unknown relation type: ${String(relation?.type)}` });
+      return;
+    }
+    if (!relation.with) {
+      issues.push({ path: at, message: "Relation needs a target concept id" });
+      return;
+    }
+    if (relation.with === concept.id) {
+      issues.push({ path: at, message: `Relation targets itself: ${relation.with}` });
+      return;
+    }
+    if (!conceptIds.has(relation.with)) {
+      issues.push({ path: at, message: `Unknown relation target: ${relation.with}` });
+      return;
+    }
+    const key = `${relation.type}::${relation.with}`;
+    if (seen.has(key)) {
+      issues.push({ path: at, message: `Duplicate relation: ${key}` });
+      return;
+    }
+    seen.add(key);
+  });
+  return issues;
+}
+
 function isKnownTermId(exercise: Exercise, id: string, conceptIds: Set<string>): boolean {
   return conceptIds.has(id) || (exercise.type === "match" && MATCH_PSEUDO_TERM_IDS.has(id));
 }
@@ -125,6 +162,7 @@ export function validateCourse(course: Course): ValidationIssue[] {
       if (!sourceIds.has(id)) issues.push({ path: concept.id, message: `Unknown source: ${id}` });
     });
     issues.push(...conceptProvenanceIssues(concept));
+    issues.push(...validateRelations(concept, conceptIds));
   });
   allExercises.forEach((exercise) => {
     issues.push(...validateExercise(exercise, conceptIds));

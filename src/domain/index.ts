@@ -19,6 +19,21 @@ export interface LocalizedTerm {
   mixUpWhyZh: string;
 }
 
+/**
+ * An edge in the concept graph beyond the canonical mixUp pair. Semantics:
+ * - "confusable": learners really mix these two up (the mixUp edge is the
+ *   curriculum's headline pair; extra confusable edges are secondary traps).
+ * - "prereq": the target term should be learned first — this concept leans on it.
+ * - "sibling": same family (put/call/option, futures/swap) without being a trap.
+ * Edges are undirected in the graph view even when declared on one side only.
+ */
+export type RelationType = "confusable" | "prereq" | "sibling";
+
+export interface ConceptRelation {
+  type: RelationType;
+  with: string;
+}
+
 export interface Concept {
   id: string;
   unit: number;
@@ -28,6 +43,7 @@ export interface Concept {
   example: string;
   mixUp: string;
   mixUpWhy: string;
+  relations?: ConceptRelation[];
   sourceIds: string[];
   risk: RiskLevel;
   jurisdiction?: string;

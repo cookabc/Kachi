@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
   "packId": "hedge-or-pledge",
-  "contentVersion": "2026.08.29-zh-full",
+  "contentVersion": "2026.10.03-zh-full",
   "locale": "zh-CN",
-  "generatedAt": "2026-08-29T13:00:00.000Z",
+  "generatedAt": "2026-10-03T09:00:00.000Z",
   "units": [
     {
       "id": 1,
@@ -41,6 +41,16 @@
       "example": "你持有 $100,000 的股票，买入一张 put，崩盘时就不那么疼。",
       "mixUp": "pledge",
       "mixUpWhy": "hedge 保护你已有的仓位；pledge 把这个仓位押出去做担保。",
+      "relations": [
+        {
+          "type": "confusable",
+          "with": "diversification"
+        },
+        {
+          "type": "sibling",
+          "with": "put"
+        }
+      ],
       "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "legacy"
@@ -54,6 +64,12 @@
       "example": "你把 $1M 的股票 pledge 出去借 $700k。股票还是你的——直到你还不上。",
       "mixUp": "hedge",
       "mixUpWhy": "股票还是你的。pledge = 押出担保；sell = 卖了就没了。",
+      "relations": [
+        {
+          "type": "confusable",
+          "with": "collateral"
+        }
+      ],
       "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "legacy"
@@ -93,6 +109,12 @@
       "example": "券商允许你用 $5k 现金买 $10k 的股票。这 $5k 就是 margin。",
       "mixUp": "leverage",
       "mixUpWhy": "margin 是缓冲；leverage 是缓冲支撑的仓位大小。",
+      "relations": [
+        {
+          "type": "sibling",
+          "with": "margin call"
+        }
+      ],
       "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "legacy"
@@ -106,6 +128,16 @@
       "example": "股票跌 40%。抵押品只剩 $600k，贷款却是 $700k。银行的电话来了。",
       "mixUp": "haircut",
       "mixUpWhy": "haircut 通常在开始时设定；margin call 发生在价格变动之后。",
+      "relations": [
+        {
+          "type": "prereq",
+          "with": "margin"
+        },
+        {
+          "type": "sibling",
+          "with": "mark-to-market"
+        }
+      ],
       "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "legacy"
@@ -132,6 +164,16 @@
       "example": "苹果股票的 put 是衍生品。put 不是苹果股票，它只是押注苹果的股价。",
       "mixUp": "option",
       "mixUpWhy": "option 只是衍生品的一种；futures 和 swap 也是。股票本身不是。",
+      "relations": [
+        {
+          "type": "sibling",
+          "with": "futures"
+        },
+        {
+          "type": "sibling",
+          "with": "swap"
+        }
+      ],
       "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "legacy"
@@ -145,6 +187,16 @@
       "example": "花 $3 买下以 $90 卖出 $100 股票的权利。这就是 option，你可以反悔。",
       "mixUp": "futures",
       "mixUpWhy": "option 可以放弃；futures 通常必须结算。",
+      "relations": [
+        {
+          "type": "sibling",
+          "with": "put"
+        },
+        {
+          "type": "sibling",
+          "with": "call"
+        }
+      ],
       "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "legacy"
@@ -210,6 +262,12 @@
       "example": "一份关于 $100,000 股票的期权可能只花 $2,000。notional 是 $100k，premium 是 $2k。",
       "mixUp": "premium",
       "mixUpWhy": "notional 是标的规模；premium 是你为合约付出的价格。",
+      "relations": [
+        {
+          "type": "sibling",
+          "with": "swap"
+        }
+      ],
       "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "legacy"
@@ -223,6 +281,12 @@
       "example": "那张 put 每股 $3。这 $3 就是 premium。",
       "mixUp": "yield",
       "mixUpWhy": "premium 是合约的价格；yield 是投资随时间付给你的收益率。",
+      "relations": [
+        {
+          "type": "sibling",
+          "with": "option"
+        }
+      ],
       "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "legacy"
@@ -327,6 +391,12 @@
       "example": "公司错过了一次债券付息。这就是 default。债券持有人可能接管资产。",
       "mixUp": "mark-to-market",
       "mixUpWhy": "default 是没履约；mark-to-market 只是给还活着的仓位重新定价。",
+      "relations": [
+        {
+          "type": "confusable",
+          "with": "margin call"
+        }
+      ],
       "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "legacy"
@@ -353,7 +423,9 @@
       "example": "$10M 的股票，30% 的 haircut，贷 $7M。你没卖，所以还没触发资本利得——目前。",
       "mixUp": "pledge",
       "mixUpWhy": "它就是把证券 pledge 出去的贷款。pledge 是动作，这个是给动作起了个更好听名字的产品。",
-      "sourceIds": ["finra-sec-sbloc-2015"],
+      "sourceIds": [
+        "finra-sec-sbloc-2015"
+      ],
       "risk": "jurisdictional",
       "jurisdiction": "US",
       "asOf": "2026-09-10",
@@ -369,7 +441,9 @@
       "example": "$1M 买的，$4M 卖的。$3M 是 capital gain。贷款不是卖出。",
       "mixUp": "buy-borrow-die",
       "mixUpWhy": "capital gains 在卖出时触发。buy-borrow-die 描述的正是『永不卖出』来避开它的模式。",
-      "sourceIds": ["irs-topic-409"],
+      "sourceIds": [
+        "irs-topic-409"
+      ],
       "risk": "jurisdictional",
       "jurisdiction": "US",
       "asOf": "2026-09-10",
@@ -385,7 +459,10 @@
       "example": "某人持有几十亿的集中持仓，每年押着借 $20M 过日子，永不卖出。一次崩盘仍然可能强制卖出。",
       "mixUp": "securities-backed loan",
       "mixUpWhy": "securities-backed loan 是借钱工具；buy-borrow-die 是使用这套工具的整个人生周期模式。",
-      "sourceIds": ["irs-pub-551", "mccaffery-fair-not-flat-2002"],
+      "sourceIds": [
+        "irs-pub-551",
+        "mccaffery-fair-not-flat-2002"
+      ],
       "risk": "jurisdictional",
       "jurisdiction": "US",
       "asOf": "2026-09-10",

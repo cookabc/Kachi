@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
   "packId": "hedge-or-pledge",
-  "contentVersion": "2026.08.29-en",
+  "contentVersion": "2026.10.03-en",
   "locale": "en-US",
-  "generatedAt": "2026-08-29T14:00:00.000Z",
+  "generatedAt": "2026-10-03T10:00:00.000Z",
   "units": [
     {
       "id": 1,
@@ -41,6 +41,16 @@
       "example": "You own $100,000 of stock and buy a put so a crash hurts less.",
       "mixUp": "pledge",
       "mixUpWhy": "A hedge protects what you own. A pledge puts it up as collateral.",
+      "relations": [
+        {
+          "type": "confusable",
+          "with": "diversification"
+        },
+        {
+          "type": "sibling",
+          "with": "put"
+        }
+      ],
       "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "legacy"
@@ -54,6 +64,12 @@
       "example": "You pledge $1M of stock for a $700k loan. You still own the stock — until you don't pay.",
       "mixUp": "hedge",
       "mixUpWhy": "You still own it. Pledge = collateral. Sell = it's gone.",
+      "relations": [
+        {
+          "type": "confusable",
+          "with": "collateral"
+        }
+      ],
       "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "legacy"
@@ -93,6 +109,12 @@
       "example": "Broker lets you buy $10k of stock with $5k cash. That $5k is margin.",
       "mixUp": "leverage",
       "mixUpWhy": "Margin is the cushion. Leverage is the size of the bet that cushion supports.",
+      "relations": [
+        {
+          "type": "sibling",
+          "with": "margin call"
+        }
+      ],
       "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "legacy"
@@ -106,6 +128,16 @@
       "example": "Stock drops 40%. Collateral is now $600k against a $700k loan. The bank calls.",
       "mixUp": "haircut",
       "mixUpWhy": "The haircut was set at the start. A margin call happens later, when prices move against you.",
+      "relations": [
+        {
+          "type": "prereq",
+          "with": "margin"
+        },
+        {
+          "type": "sibling",
+          "with": "mark-to-market"
+        }
+      ],
       "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "legacy"
@@ -132,6 +164,16 @@
       "example": "A put on Apple is a derivative. The put is not Apple stock; it just bets on Apple's price.",
       "mixUp": "option",
       "mixUpWhy": "An option is one kind of derivative. Futures and swaps are derivatives too.",
+      "relations": [
+        {
+          "type": "sibling",
+          "with": "futures"
+        },
+        {
+          "type": "sibling",
+          "with": "swap"
+        }
+      ],
       "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "legacy"
@@ -145,6 +187,16 @@
       "example": "Pay $3 for the right to sell a $100 stock at $90. That's an option. You can walk away.",
       "mixUp": "futures",
       "mixUpWhy": "An option you can abandon. A futures contract you must settle.",
+      "relations": [
+        {
+          "type": "sibling",
+          "with": "put"
+        },
+        {
+          "type": "sibling",
+          "with": "call"
+        }
+      ],
       "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "legacy"
@@ -210,6 +262,12 @@
       "example": "An option on $100,000 of stock might cost $2,000. Notional is $100k. Premium is $2k.",
       "mixUp": "premium",
       "mixUpWhy": "Notional is the size of the underlying. Premium is what you paid for the contract.",
+      "relations": [
+        {
+          "type": "sibling",
+          "with": "swap"
+        }
+      ],
       "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "legacy"
@@ -223,6 +281,12 @@
       "example": "That put costs $3 a share. The $3 is the premium.",
       "mixUp": "yield",
       "mixUpWhy": "Premium is the price of the contract. Yield is what an investment pays you over time.",
+      "relations": [
+        {
+          "type": "sibling",
+          "with": "option"
+        }
+      ],
       "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "legacy"
@@ -327,6 +391,12 @@
       "example": "The company misses a bond payment. That's default. Bondholders may seize assets.",
       "mixUp": "mark-to-market",
       "mixUpWhy": "Default is a missed payment. Mark-to-market is just re-pricing the position while it's still alive.",
+      "relations": [
+        {
+          "type": "confusable",
+          "with": "margin call"
+        }
+      ],
       "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "legacy"
@@ -353,7 +423,9 @@
       "example": "$10M stock, 30% haircut, $7M loan. You didn't sell, so you didn't trigger capital gains — yet.",
       "mixUp": "pledge",
       "mixUpWhy": "It's a pledge of securities for a loan. Pledge is the move; this is the product with a nicer name.",
-      "sourceIds": ["finra-sec-sbloc-2015"],
+      "sourceIds": [
+        "finra-sec-sbloc-2015"
+      ],
       "risk": "jurisdictional",
       "jurisdiction": "US",
       "asOf": "2026-09-10",
@@ -369,7 +441,9 @@
       "example": "Bought at $1M, sell at $4M. $3M is a capital gain. A loan is not a sale.",
       "mixUp": "buy-borrow-die",
       "mixUpWhy": "Capital gains hit when you sell. Buy-borrow-die is the pattern of never selling so the tax doesn't trigger.",
-      "sourceIds": ["irs-topic-409"],
+      "sourceIds": [
+        "irs-topic-409"
+      ],
       "risk": "jurisdictional",
       "jurisdiction": "US",
       "asOf": "2026-09-10",
@@ -385,7 +459,10 @@
       "example": "Owns $2B of stock, borrows $20M a year against it, never sells. A crash can still force a sale.",
       "mixUp": "securities-backed loan",
       "mixUpWhy": "A securities-backed loan is the borrowing tool. Buy-borrow-die is the whole life-cycle pattern that uses that tool.",
-      "sourceIds": ["irs-pub-551", "mccaffery-fair-not-flat-2002"],
+      "sourceIds": [
+        "irs-pub-551",
+        "mccaffery-fair-not-flat-2002"
+      ],
       "risk": "jurisdictional",
       "jurisdiction": "US",
       "asOf": "2026-09-10",

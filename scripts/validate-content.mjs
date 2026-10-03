@@ -68,7 +68,18 @@ function comparePacks(a, b) {
 
   for (const concept of a.course.concepts) {
     const other = b.course.concepts.find((item) => item.id === concept.id);
-    for (const field of ["unit", "mixUp", "risk", "reviewStatus", "jurisdiction", "asOf", "reviewDue"]) {
+    // relations are concept-graph edges (ids only) — structural, so they must be
+    // identical across locales just like mixUp pairings.
+    for (const field of [
+      "unit",
+      "mixUp",
+      "relations",
+      "risk",
+      "reviewStatus",
+      "jurisdiction",
+      "asOf",
+      "reviewDue",
+    ]) {
       if (JSON.stringify(concept[field]) !== JSON.stringify(other?.[field])) {
         fail(`${tag} concept ${concept.id} ${field} differs`);
       }
