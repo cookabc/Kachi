@@ -28,6 +28,7 @@ import { activateUpdate } from "./pwa";
 import { CompleteScreen } from "./screens/CompleteScreen";
 import { FailScreen } from "./screens/FailScreen";
 import { Glossary } from "./screens/Glossary";
+import { GraphScreen } from "./screens/GraphScreen";
 import { LearnHome } from "./screens/LearnHome";
 import { LessonScreen, type Phase } from "./screens/LessonScreen";
 import { PracticeHome } from "./screens/PracticeHome";
@@ -546,6 +547,17 @@ function App() {
             query={glossaryQuery}
             onQuery={setGlossaryQuery}
             onShare={(conceptIds) => openShare(conceptIds)}
+          />
+        )}
+        {tab === "graph" && (
+          <GraphScreen
+            state={state}
+            course={course}
+            t={t}
+            onOpenGlossary={(term) => {
+              setGlossaryQuery(term);
+              setTab("glossary");
+            }}
           />
         )}
         {tab === "settings" && (

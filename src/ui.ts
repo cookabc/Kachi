@@ -24,7 +24,7 @@ export function saveLang(lang: Lang) {
 
 export interface UiText {
   navAria: string;
-  nav: Record<"learn" | "practice" | "glossary" | "settings", { label: string; aria: string }>;
+  nav: Record<"learn" | "practice" | "glossary" | "graph" | "settings", { label: string; aria: string }>;
   home: {
     tagline: string;
     unit: (id: number) => string;
@@ -50,6 +50,19 @@ export interface UiText {
     empty: (q: string) => string;
     emptyHint: string;
     footer: string;
+  };
+  graph: {
+    brand: string;
+    hint: string;
+    stats: (terms: number, links: number) => string;
+    mapAria: string;
+    legendSeen: string;
+    legendUnseen: string;
+    legendMix: string;
+    legendPrereq: string;
+    legendSibling: string;
+    relLabels: Record<"confusable" | "prereq" | "sibling", string>;
+    openGlossary: string;
   };
   settings: {
     brand: string;
@@ -129,6 +142,7 @@ export const UI: Record<Lang, UiText> = {
       learn: { label: "学习", aria: "学习路径" },
       practice: { label: "复习", aria: "复习练习" },
       glossary: { label: "词汇", aria: "词汇表" },
+      graph: { label: "图谱", aria: "知识图谱" },
       settings: { label: "设置", aria: "设置" },
     },
     home: {
@@ -156,6 +170,19 @@ export const UI: Record<Lang, UiText> = {
       empty: (q) => `没有匹配「${q}」的术语。`,
       emptyHint: "试试 hedge、put、swap、margin call。",
       footer: "不构成投资建议。只讲词语，不作推荐。",
+    },
+    graph: {
+      brand: "知识图谱",
+      hint: "点一个词，看它连着谁。",
+      stats: (terms, links) => `${terms} 个术语 · ${links} 条关系`,
+      mapAria: "术语关系图：每个点是术语，每条线是关系",
+      legendSeen: "已学",
+      legendUnseen: "未学",
+      legendMix: "易混",
+      legendPrereq: "先学",
+      legendSibling: "同族",
+      relLabels: { confusable: "易混", prereq: "先学", sibling: "同族" },
+      openGlossary: "在词汇表中查看",
     },
     settings: {
       brand: "设置",
@@ -243,6 +270,7 @@ export const UI: Record<Lang, UiText> = {
       learn: { label: "Learn", aria: "Learning path" },
       practice: { label: "Practice", aria: "Practice rounds" },
       glossary: { label: "Glossary", aria: "Glossary" },
+      graph: { label: "Map", aria: "Knowledge map" },
       settings: { label: "Settings", aria: "Settings" },
     },
     home: {
@@ -270,6 +298,19 @@ export const UI: Record<Lang, UiText> = {
       empty: (q) => `No terms match "${q}".`,
       emptyHint: "Try hedge, put, swap, margin call.",
       footer: "Not investment advice. Words, not recommendations.",
+    },
+    graph: {
+      brand: "The map",
+      hint: "Tap a word to see what it connects to.",
+      stats: (terms, links) => `${terms} terms · ${links} links`,
+      mapAria: "Concept map: each dot is a term, each line a relationship",
+      legendSeen: "seen",
+      legendUnseen: "new",
+      legendMix: "mix-up",
+      legendPrereq: "prereq",
+      legendSibling: "family",
+      relLabels: { confusable: "mix-up", prereq: "prereq", sibling: "family" },
+      openGlossary: "Open in the glossary",
     },
     settings: {
       brand: "Settings",

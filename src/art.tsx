@@ -339,6 +339,8 @@ export const NAV_ICONS = {
     '<svg class="icon" viewBox="0 0 24 24"><path d="M6 7h3v10H6zm9 0h3v10h-3M3 10h3m12 0h3M3 14h3m12 0h3"/></svg>',
   glossary:
     '<svg class="icon" viewBox="0 0 24 24"><path d="M6 4h11a3 3 0 013 3v13H8a2 2 0 01-2-2V4zm0 0v14"/><path d="M10 8h7M10 12h7"/></svg>',
+  graph:
+    '<svg class="icon" viewBox="0 0 24 24"><circle cx="6" cy="6" r="2.4"/><circle cx="18" cy="9" r="2.4"/><circle cx="10" cy="18" r="2.4"/><path d="M8.4 6.8l7.2 1.5M7.2 8.2l2 7.6M16.6 11l-5 5.4"/></svg>',
   settings:
     '<svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.4"/><path d="M12 2.5v3.2m0 12.6v3.2M2.5 12h3.2m12.6 0h3.2M5.3 5.3l2.2 2.2m9 9l2.2 2.2M18.7 5.3l-2.2 2.2m-9 9l-2.2 2.2"/></svg>',
 } as const;

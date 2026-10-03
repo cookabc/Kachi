@@ -5,7 +5,7 @@ import type { UiText } from "./ui";
 
 export const MAX_HEARTS = 5;
 
-export type Tab = "learn" | "practice" | "glossary" | "settings";
+export type Tab = "learn" | "practice" | "glossary" | "graph" | "settings";
 
 export function StatsBar({ state }: { state: LearnerState }) {
   return (
@@ -40,6 +40,7 @@ export function Nav({ tab, onTab, t }: { tab: Tab; onTab: (tab: Tab) => void; t:
     { id: "learn", text: t.nav.learn },
     { id: "practice", text: t.nav.practice },
     { id: "glossary", text: t.nav.glossary },
+    { id: "graph", text: t.nav.graph },
     { id: "settings", text: t.nav.settings },
   ];
   return (
