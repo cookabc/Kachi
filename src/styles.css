@@ -1326,15 +1326,15 @@ svg.icon {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+}
 
-  /* [data-motion="off"] mirrors the media query for the in-app 0% slider. */
-  [data-motion="off"] *,
-  [data-motion="off"] *::before,
-  [data-motion="off"] *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
+/* [data-motion="off"] mirrors the media query for the in-app 0% slider. */
+[data-motion="off"] *,
+[data-motion="off"] *::before,
+[data-motion="off"] *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
 }
 
 /* ---- workspace app additions (settings tab, PWA update bar, stacked hero buttons, zh feedback why) ---- */
@@ -2495,4 +2495,174 @@ svg.icon {
 .motion-slider:focus-visible {
   outline: 2px solid var(--sky-deep);
   outline-offset: 4px;
+}
+
+/* ---- candy motion layer (Dopa-style micro-motion) ----
+   Every rule here runs only when motion is on: [data-motion="off"] and
+   prefers-reduced-motion flatten all animation/transition durations globally. */
+
+/* entrance: hero card and complete screen rise */
+.lab-hero,
+.xp-card {
+  animation: rise-in 0.45s var(--ease-out) both;
+}
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+}
+
+/* sheen sweep across the primary CTA */
+.lab-hero-cta {
+  position: relative;
+  overflow: hidden;
+}
+.lab-hero-cta::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(115deg, transparent 32%, rgba(255, 255, 255, 0.42) 50%, transparent 68%);
+  transform: translateX(-130%);
+  animation: sheen 3.8s var(--ease-out) 1.2s infinite;
+  pointer-events: none;
+}
+@keyframes sheen {
+  0% {
+    transform: translateX(-130%);
+  }
+  45%,
+  100% {
+    transform: translateX(130%);
+  }
+}
+
+/* question tiles pop in with a small stagger */
+.prompt .opt,
+.prompt .bank-chip,
+.prompt .mchip {
+  animation: tile-in 0.3s var(--ease-out) both;
+}
+.prompt .opt:nth-child(2),
+.prompt .bank-chip:nth-child(2),
+.prompt .mchip:nth-child(2) {
+  animation-delay: 0.05s;
+}
+.prompt .opt:nth-child(3),
+.prompt .bank-chip:nth-child(3),
+.prompt .mchip:nth-child(3) {
+  animation-delay: 0.1s;
+}
+.prompt .opt:nth-child(4),
+.prompt .bank-chip:nth-child(4),
+.prompt .mchip:nth-child(4) {
+  animation-delay: 0.15s;
+}
+@keyframes tile-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.97);
+  }
+}
+
+/* verdict micro-feedback: good pops, wrong shakes */
+.opt.good {
+  animation: good-pop 0.35s var(--ease-out);
+}
+@keyframes good-pop {
+  40% {
+    transform: scale(1.05);
+  }
+}
+.opt.bad {
+  animation: bad-shake 0.4s var(--ease-out);
+}
+@keyframes bad-shake {
+  20%,
+  60% {
+    transform: translateX(-5px);
+  }
+  40%,
+  80% {
+    transform: translateX(5px);
+  }
+}
+
+/* feedback sheet verdict pop */
+.sheet h3 {
+  animation: verdict-pop 0.3s var(--ease-out);
+}
+@keyframes verdict-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+}
+
+/* teach card art pop */
+.teach-art {
+  animation: art-pop 0.4s var(--ease-out) both;
+}
+@keyframes art-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.85);
+  }
+}
+
+/* complete screen: mascot float + pair stamp slams in */
+.hero .mascot {
+  animation: mascot-float 2.6s ease-in-out infinite;
+}
+@keyframes mascot-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-7px);
+  }
+}
+.pair-hero {
+  animation: stamp-in 0.45s var(--ease-out) 0.15s both;
+}
+@keyframes stamp-in {
+  0% {
+    opacity: 0;
+    transform: scale(1.7) rotate(-8deg);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(0.95) rotate(2deg);
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+/* knowledge map: nodes and labels pop on mount */
+.g-dot,
+.g-label {
+  animation: tile-in 0.3s var(--ease-out) both;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+.g-dot {
+  animation-name: node-pop;
+}
+@keyframes node-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.4);
+  }
+}
+
+/* nav: active icon bounces when the tab changes */
+.nav button.on .icon {
+  animation: nav-pop 0.3s var(--ease-out);
+}
+@keyframes nav-pop {
+  40% {
+    transform: translateY(-3px);
+  }
 }
