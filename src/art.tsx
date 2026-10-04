@@ -1,5 +1,10 @@
 // Term art, aliases, and mascot ported verbatim from the original single-file
 // prototype so the React app renders the same palette SVGs.
+//
+// Two-palette rule: this bright 18-color sticker palette lives ONLY inside
+// term-art/hero scenes; app chrome recolors via the ink-on-paper tokens in
+// styles.css. Never share hex values across the two — recolor scenes here,
+// recolor chrome there.
 export const HEDGEHOG_PATHS =
   '<path d="M18 34l-8-12 10 8-2-16 10 14 4-18 6 18 8-16 4 16 12-10-8 14 12-4-10 12" fill="#58CC02" />' +
   '<ellipse cx="38" cy="40" rx="20" ry="14" fill="#46A302" />' +
