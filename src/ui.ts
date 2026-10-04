@@ -81,6 +81,7 @@ export interface UiText {
     learnTag: string;
     kickers: Record<ExerciseType, string>;
     matchHint: string;
+    tfLabels: { true: string; false: string };
     check: string;
     continue: string;
     heartsAria: (n: number, max: number) => string;
@@ -207,6 +208,7 @@ export const UI: Record<Lang, UiText> = {
         match: "配对练习",
       },
       matchHint: "先点术语，再点解释。",
+      tfLabels: { true: "正确", false: "错误" },
       check: "检查",
       continue: "继续",
       heartsAria: (n, max) => `剩余爱心 ${n}/${max}`,
@@ -336,6 +338,7 @@ export const UI: Record<Lang, UiText> = {
         match: "Match the pairs",
       },
       matchHint: "Tap a term, then its match.",
+      tfLabels: { true: "True", false: "False" },
       check: "Check",
       continue: "Continue",
       heartsAria: (n, max) => `Hearts ${n}/${max}`,

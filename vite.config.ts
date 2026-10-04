@@ -11,8 +11,8 @@ export default defineConfig({
         name: "Kachi — 财经英语学习",
         short_name: "Kachi",
         description: "面向中文用户的财经英语学习应用。",
-        theme_color: "#58CC02",
-        background_color: "#E8F7FF",
+        theme_color: "#f5f1e9",
+        background_color: "#f5f1e9",
         display: "standalone",
         icons: [
           {

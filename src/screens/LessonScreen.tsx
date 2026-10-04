@@ -257,7 +257,7 @@ function PromptBody(props: {
                 onClick={() => props.onPick(value)}
               >
                 <TermArt id={value ? "true" : "false"} size="lg" />
-                <span className="cap">{value ? "True" : "False"}</span>
+                <span className="cap">{value ? t.lesson.tfLabels.true : t.lesson.tfLabels.false}</span>
               </button>
             );
           })}

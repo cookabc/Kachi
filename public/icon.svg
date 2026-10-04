@@ -1,8 +1,9 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
   <title>Kachi</title>
-  <rect width="512" height="512" rx="128" fill="#58cc02"/>
-  <path d="M111 311c0-97 73-176 164-176 61 0 114 35 142 87l48 4-27 35 33 27-43 15c-3 6-7 12-12 18-31 39-80 64-136 64H170c-33 0-59-26-59-59v-15Z" fill="#fff"/>
-  <path d="M139 272c35-70 92-107 169-111-58 31-98 77-120 139" fill="none" stroke="#278b00" stroke-linecap="round" stroke-width="28"/>
-  <circle cx="338" cy="238" r="13" fill="#18251f"/>
-  <path d="M363 292c15 5 29 2 39-9" fill="none" stroke="#18251f" stroke-linecap="round" stroke-width="10"/>
+  <!-- Contrast Lab brand: ink paper ground, paper hedgehog, coral spike swoosh (matches og-image) -->
+  <rect width="512" height="512" rx="128" fill="#152a38"/>
+  <path d="M111 311c0-97 73-176 164-176 61 0 114 35 142 87l48 4-27 35 33 27-43 15c-3 6-7 12-12 18-31 39-80 64-136 64H170c-33 0-59-26-59-59v-15Z" fill="#f5f1e9"/>
+  <path d="M139 272c35-70 92-107 169-111-58 31-98 77-120 139" fill="none" stroke="#e87151" stroke-linecap="round" stroke-width="28"/>
+  <circle cx="338" cy="238" r="13" fill="#152a38"/>
+  <path d="M363 292c15 5 29 2 39-9" fill="none" stroke="#152a38" stroke-linecap="round" stroke-width="10"/>
 </svg>
