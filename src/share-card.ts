@@ -28,18 +28,18 @@ const TEXT_LH = 1.4;
 const FONT_STACK = "'Avenir Next', 'PingFang SC', 'Segoe UI', 'Microsoft YaHei', sans-serif";
 
 const COLOR = {
-  sky: "#e9e4d9",
-  mint: "#f5f1e9",
-  card: "#fffdf8",
-  ink: "#152a38",
-  inkSoft: "#4b5e66",
-  muted: "#687a7e",
-  line: "#dcd6ca",
-  yellow: "#ff8e68",
-  greenSoft: "#e0f6ed",
-  green: "#e87955",
-  greenDeep: "#a95038",
-  skyBlue: "#a95038",
+  sky: "#ffd0e4",
+  mint: "#fff8ec",
+  card: "#ffffff",
+  ink: "#1b1d4d",
+  inkSoft: "#565a85",
+  muted: "#6b6f99",
+  line: "#e3dff0",
+  yellow: "#ffd23f",
+  greenSoft: "#dcfaef",
+  green: "#ff4f6d",
+  greenDeep: "#c73a52",
+  skyBlue: "#3b6bff",
 } as const;
 
 export interface PairCardInput {

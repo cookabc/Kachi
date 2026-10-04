@@ -1,44 +1,69 @@
 /* Ink-on-paper chrome tokens. Term-art SVGs (art.tsx) keep their own bright
    sticker palette on purpose — scenes recolor in art.tsx, chrome recolors here.
-   Border ladder ascends with emphasis: 1px inputs/cards, 1.5px marks, 2px
-   frames/tiles, 3px emphasis. Press depth: CTA 5px (--press-lg), chips 3px
-   (--press), pressed travel 2px (--press-sm); 1/4/6/7px one-offs are
-   hover/done variants, not part of the ladder. */
+   Candy border ladder ascends with emphasis: 2px small marks, 2.5px buttons
+   and tiles, 3px cards — always var(--ink). Press depth: CTA 5px
+   (--press-lg), chips 3px (--press), pressed travel 2px (--press-sm);
+   1/4/6/7px one-offs are hover/done variants, not part of the ladder. */
+@font-face {
+  font-family: "Dela Gothic One";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/dela-gothic-one-latin.woff2") format("woff2");
+  unicode-range:
+    U+0000-00FF, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Zen Maru Gothic";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/fonts/zen-maru-gothic-700-latin.woff2") format("woff2");
+  unicode-range:
+    U+0000-00FF, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
 :root {
-  --sky: #f5f1e9;
-  --mint-hint: #eee9df;
-  --card: #fffdf8;
-  --ink: #152a38;
-  --ink-soft: #4b5e66;
+  --sky: #fff8ec;
+  --mint-hint: #efe6ff;
+  --card: #ffffff;
+  --ink: #1b1d4d;
+  --ink-soft: #565a85;
   --muted: #57696d;
-  --line: #dcd6ca;
-  --green: #2cae9b;
-  --green-2: #65d4b7;
-  --green-deep: #168573;
-  --green-dark: #0e6159;
-  --green-soft: #e0f6ed;
-  --coral: #ff8e68;
-  --coral-deep: #c3593d;
-  --sky-blue: #70abc8;
-  --sky-deep: #3b7c9f;
-  --heart: #ec695f;
-  --heart-empty: #d9d9d4;
+  --line: #e3dff0;
+  --green: #3fdcb0;
+  --green-2: #7ee7cd;
+  --green-deep: #149d86;
+  --green-dark: #0c7a6a;
+  --green-soft: #dcfaef;
+  --coral: #ff4f6d;
+  --coral-deep: #c73a52;
+  --sky-blue: #9fd0ff;
+  --sky-deep: #3b6bff;
+  --heart: #ff4f6d;
+  --heart-empty: #e3e0ef;
   --right: var(--green);
   --right-bg: var(--green-soft);
-  --wrong: #df755e;
+  --wrong: #ff4f6d;
   --wrong-bg: var(--peach);
-  --peach: #fce8db;
-  --locked: #f0eee9;
-  --shadow: 0 18px 46px rgba(21, 42, 56, 0.11);
+  --peach: #ffe3ef;
+  --locked: #efeaf6;
+  --shadow: 0 18px 46px rgba(27, 29, 77, 0.12);
   --nav-h: 68px;
-  --font: "Avenir Next", "PingFang SC", "Segoe UI", sans-serif;
-  --display: "Avenir Next", "PingFang SC", "Segoe UI", sans-serif;
+  --font: "Zen Maru Gothic", "Avenir Next", "PingFang SC", "Segoe UI", sans-serif;
+  --display: "Dela Gothic One", "Zen Maru Gothic", "PingFang SC", sans-serif;
   --t-fast: 150ms;
   --t-med: 300ms;
   --ease-out: cubic-bezier(0.22, 0.61, 0.36, 1);
   --press-lg: 5px;
   --press: 3px;
   --press-sm: 2px;
+  --blue: #3b6bff;
+  --pink: #ff7ab6;
+  --pink-soft: #ffd0e4;
+  --blue-soft: #d9e4ff;
+  --yellow: #ffd23f;
+  --yellow-deep: #d99400;
+  --violet: #a77bff;
   --radius: 24px;
 }
 * {
@@ -54,8 +79,10 @@ body {
   font-family: var(--font);
   color: var(--ink);
   background:
-    radial-gradient(circle at 10% 8%, rgba(112, 171, 200, 0.15), transparent 38%),
-    radial-gradient(circle at 92% 86%, rgba(255, 142, 104, 0.14), transparent 42%), var(--sky);
+    radial-gradient(circle at 8% 6%, rgba(255, 122, 182, 0.14), transparent 36%),
+    radial-gradient(circle at 94% 88%, rgba(112, 171, 200, 0.18), transparent 40%),
+    radial-gradient(circle, rgba(27, 29, 77, 0.07) 1.2px, transparent 1.2px) 0 0 / 26px 26px,
+    var(--paper, var(--sky));
   min-height: 100dvh;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
@@ -738,10 +765,10 @@ input {
 .btn-red {
   background: #ff8a65;
   color: #fff;
-  border-bottom-color: #e56a48;
+  border-bottom-color: var(--coral);
 }
 .btn-red:active {
-  border-bottom-color: #e56a48;
+  border-bottom-color: var(--coral);
 }
 .btn-ghost {
   background: #fff;
@@ -775,7 +802,7 @@ input {
   color: var(--green-dark);
 }
 .sheet.no h3 {
-  color: #e56a48;
+  color: var(--coral);
 }
 .sheet p {
   font-size: 15px;
@@ -1719,11 +1746,10 @@ svg.icon {
   overflow: hidden;
   border-radius: 24px;
   padding: 22px 22px 24px;
-  background: radial-gradient(circle at 85% 15%, rgba(112, 171, 200, 0.22), transparent 35%), #142e3e;
-  color: #f9f4e9;
-  box-shadow:
-    0 13px 0 #dcd5c8,
-    0 21px 28px rgba(21, 42, 56, 0.15);
+  background: var(--card);
+  border: 3px solid var(--ink);
+  color: var(--ink);
+  box-shadow: 0 7px 0 rgba(27, 29, 77, 0.16);
 }
 .lab-hero::after {
   position: absolute;
@@ -1731,7 +1757,7 @@ svg.icon {
   top: 30px;
   width: 265px;
   height: 265px;
-  border: 1px solid rgba(235, 243, 230, 0.16);
+  border: 1.5px solid rgba(27, 29, 77, 0.12);
   border-radius: 50%;
   content: "";
   pointer-events: none;
@@ -1753,17 +1779,17 @@ svg.icon {
   display: flex;
   justify-content: space-between;
   gap: 8px;
-  color: #a7c4c7;
+  color: var(--muted);
 }
 .lab-overline {
   margin-top: 35px;
-  color: #ffae8b;
+  color: var(--coral);
 }
 .lab-hero-title {
   position: relative;
   z-index: 1;
   margin-top: 12px;
-  font-family: Georgia, "Songti SC", serif;
+  font-family: var(--display);
   font-size: clamp(46px, 13vw, 61px);
   font-weight: 400;
   letter-spacing: -0.075em;
@@ -1771,7 +1797,7 @@ svg.icon {
 }
 .lab-hero-title > span:first-child,
 .lab-period {
-  color: #ff9d78;
+  color: var(--pink);
 }
 .lab-hero-title > span:first-child {
   font-style: italic;
@@ -1779,7 +1805,7 @@ svg.icon {
 .lab-hero-copy {
   max-width: 28ch;
   margin-top: 24px;
-  color: #bcd0cd;
+  color: var(--ink-soft);
   font-size: 13px;
   line-height: 1.65;
 }
@@ -1789,7 +1815,7 @@ svg.icon {
   gap: 18px;
   margin-top: 24px;
   padding-top: 18px;
-  border-top: 1px solid rgba(235, 243, 230, 0.2);
+  border-top: 1.5px solid var(--line);
 }
 .lab-hero-progress > div:first-child {
   display: flex;
@@ -1797,7 +1823,7 @@ svg.icon {
   gap: 4px;
 }
 .lab-hero-progress > div:first-child > span {
-  color: #9bb7b6;
+  color: var(--muted);
   white-space: nowrap;
 }
 .lab-hero-progress strong {
@@ -1805,7 +1831,7 @@ svg.icon {
   letter-spacing: -0.04em;
 }
 .lab-hero-progress i {
-  color: #7d9b9e;
+  color: var(--muted);
   font-size: 15px;
   font-style: normal;
 }
@@ -1815,13 +1841,13 @@ svg.icon {
   overflow: hidden;
   margin-bottom: 7px;
   border-radius: 999px;
-  background: rgba(245, 241, 233, 0.2);
+  background: var(--line);
 }
 .lab-progress-track span {
   display: block;
   height: 100%;
   border-radius: inherit;
-  background: #f8906c;
+  background: var(--green);
 }
 .lab-hero-cta {
   display: flex;
@@ -1831,9 +1857,11 @@ svg.icon {
   justify-content: space-between;
   margin-top: 22px;
   padding: 0 17px;
-  border-radius: 12px;
-  background: #c6efb5;
-  color: #17343e;
+  border: 2.5px solid var(--ink);
+  border-radius: 999px;
+  background: var(--blue);
+  color: #ffffff;
+  box-shadow: 0 var(--press-lg) 0 var(--ink);
   font-size: 15px;
   font-weight: 800;
   transition:
@@ -1842,7 +1870,11 @@ svg.icon {
 }
 .lab-hero-cta:hover {
   transform: translateY(-2px);
-  background: #dfffce;
+  background: #2f5ae0;
+}
+.lab-hero-cta:active {
+  transform: translateY(var(--press-sm));
+  box-shadow: 0 var(--press-sm) 0 var(--ink);
 }
 .lab-hero-cta > span:last-child {
   font-size: 24px;
@@ -1857,15 +1889,15 @@ svg.icon {
   justify-content: space-between;
   gap: 12px;
   padding-bottom: 16px;
-  border-bottom: 1px solid #c5bfb3;
+  border-bottom: 1.5px solid var(--line);
 }
 .lab-section-head > div > span,
 .lab-section-head > span {
-  color: #a3503a;
+  color: var(--coral-deep);
 }
 .lab-section-head h2 {
   margin-top: 5px;
-  font-family: Georgia, "Songti SC", serif;
+  font-family: var(--display);
   font-size: 30px;
   font-weight: 500;
   letter-spacing: -0.045em;
@@ -1873,14 +1905,14 @@ svg.icon {
 .lab-unit {
   overflow: hidden;
   margin-top: 16px;
-  border: 1px solid #d7d0c3;
+  border: 2.5px solid var(--ink);
   border-radius: 16px;
   background: var(--card);
   box-shadow: 0 8px 20px rgba(21, 42, 56, 0.035);
 }
 .lab-unit-current {
-  border-color: #e18b6d;
-  box-shadow: 0 10px 25px rgba(189, 100, 71, 0.11);
+  border-color: var(--pink);
+  box-shadow: 0 10px 25px rgba(255, 122, 182, 0.2);
 }
 .lab-unit-head {
   display: flex;
@@ -1889,8 +1921,8 @@ svg.icon {
 }
 .lab-unit-number {
   min-width: 45px;
-  color: #d97150;
-  font-family: Georgia, serif;
+  color: var(--coral-deep);
+  font-family: var(--display);
   font-size: 34px;
   line-height: 1;
 }
@@ -1898,28 +1930,28 @@ svg.icon {
   min-width: 0;
 }
 .lab-unit-heading > span {
-  color: #9d6b5a;
+  color: var(--muted);
 }
 .lab-unit-heading h3 {
   margin-top: 5px;
   color: var(--ink);
-  font-family: Georgia, "Songti SC", serif;
+  font-family: var(--display);
   font-size: 20px;
   font-weight: 500;
   line-height: 1.2;
 }
 .lab-unit-heading p {
   margin-top: 7px;
-  color: #6b7578;
+  color: var(--ink-soft);
   font-size: 13px;
   line-height: 1.5;
 }
 .lab-lessons {
   list-style: none;
-  border-top: 1px solid #e8e2d7;
+  border-top: 1.5px solid var(--line);
 }
 .lab-lessons li + li {
-  border-top: 1px solid #eee9df;
+  border-top: 1.5px solid var(--line);
 }
 .lab-lesson {
   display: flex;
@@ -1932,20 +1964,20 @@ svg.icon {
   transition: background var(--t-fast) var(--ease-out);
 }
 .lab-lesson:hover:not(:disabled) {
-  background: #eff7ed;
+  background: var(--blue-soft);
 }
 .lab-lesson.is-next {
-  background: #f9eee7;
+  background: var(--pink-soft);
 }
 .lab-lesson.is-next:hover {
-  background: #fbe2d5;
+  background: #ffc9e0;
 }
 .lab-lesson:disabled {
   cursor: default;
-  color: #96a0a0;
+  color: var(--muted);
 }
 .lab-lesson-index {
-  color: #a8573e;
+  color: var(--coral-deep);
 }
 .lab-lesson-name {
   flex: 1;
@@ -1972,7 +2004,7 @@ svg.icon {
 }
 .lab-note {
   margin: 18px 5px;
-  color: #6b7578;
+  color: var(--ink-soft);
   font-size: 13px;
   line-height: 1.5;
 }
@@ -1988,7 +2020,7 @@ svg.icon {
   color: #99acb2;
 }
 .nav button.on {
-  color: #dcf4bd;
+  color: var(--yellow);
 }
 .nav button.on::after {
   width: 5px;
@@ -2004,7 +2036,7 @@ svg.icon {
   padding: calc(14px + env(safe-area-inset-top, 0px)) 16px 10px;
 }
 .xbtn {
-  border: 1px solid var(--line);
+  border: 2.5px solid var(--ink);
   border-radius: 12px;
   box-shadow: none;
 }
@@ -2030,7 +2062,7 @@ svg.icon {
   font-size: 11px;
 }
 .stem {
-  font-family: Georgia, "Songti SC", serif;
+  font-family: var(--display);
   font-size: 24px;
   font-weight: 600;
 }
@@ -2088,7 +2120,7 @@ svg.icon {
 }
 .teach-term {
   color: var(--ink);
-  font-family: Georgia, serif;
+  font-family: var(--display);
   font-weight: 500;
 }
 .teach-mix {
@@ -2100,15 +2132,15 @@ svg.icon {
   box-shadow: none;
 }
 .g-card {
-  border-color: #e0d9ce;
+  border-color: var(--ink);
   border-radius: 16px;
   background: var(--card);
-  box-shadow: 0 7px 20px rgba(21, 42, 56, 0.045);
+  box-shadow: 0 5px 0 rgba(27, 29, 77, 0.14);
 }
 .g-card h3,
 .prac-hero h1,
 .hero h1 {
-  font-family: Georgia, "Songti SC", serif;
+  font-family: var(--display);
 }
 .g-search input {
   border-color: var(--line);
@@ -2328,7 +2360,7 @@ svg.icon {
 }
 .g-card {
   background: var(--card);
-  border: 1px solid var(--line);
+  border: 2.5px solid var(--ink);
   border-radius: 16px;
   padding: 16px 16px 14px;
   margin-top: 6px;
