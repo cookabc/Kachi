@@ -1,5 +1,9 @@
 /* Ink-on-paper chrome tokens. Term-art SVGs (art.tsx) keep their own bright
-   sticker palette on purpose — scenes recolor in art.tsx, chrome recolors here. */
+   sticker palette on purpose — scenes recolor in art.tsx, chrome recolors here.
+   Border ladder ascends with emphasis: 1px inputs/cards, 1.5px marks, 2px
+   frames/tiles, 3px emphasis. Press depth: CTA 5px (--press-lg), chips 3px
+   (--press), pressed travel 2px (--press-sm); 1/4/6/7px one-offs are
+   hover/done variants, not part of the ladder. */
 :root {
   --sky: #f5f1e9;
   --mint-hint: #eee9df;
@@ -32,6 +36,9 @@
   --t-fast: 150ms;
   --t-med: 300ms;
   --ease-out: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --press-lg: 5px;
+  --press: 3px;
+  --press-sm: 2px;
   --radius: 24px;
 }
 * {
@@ -251,7 +258,7 @@ input {
     box-shadow var(--t-fast) var(--ease-out);
 }
 .node:active {
-  transform: translateY(2px);
+  transform: translateY(var(--press-sm));
   box-shadow:
     0 4px 0 #d3ddd8,
     0 4px 10px rgba(88, 204, 2, 0.08);
@@ -291,7 +298,7 @@ input {
 }
 .node.next:active {
   animation: none;
-  transform: translateY(2px);
+  transform: translateY(var(--press-sm));
   box-shadow:
     0 6px 0 var(--green-dark),
     0 0 0 6px rgba(88, 204, 2, 0.16);
@@ -405,10 +412,10 @@ input {
   color: var(--muted);
   font-weight: 700;
   background: #fff;
-  box-shadow: 0 3px 0 #e0e8e4;
+  box-shadow: 0 var(--press) 0 #e0e8e4;
 }
 .xbtn:active {
-  transform: translateY(2px);
+  transform: translateY(var(--press-sm));
   box-shadow: 0 1px 0 #e0e8e4;
 }
 .pips {
@@ -553,7 +560,7 @@ input {
 .opt:active,
 .bank-chip:active,
 .mchip:active {
-  transform: translateY(2px);
+  transform: translateY(var(--press-sm));
   border-bottom-width: 3px;
 }
 .opt.sel,
@@ -701,7 +708,7 @@ input {
   padding: 14px 18px;
 }
 .btn:active {
-  transform: translateY(2px);
+  transform: translateY(var(--press-sm));
   border-bottom-width: 2px;
 }
 .btn:disabled {
@@ -1292,6 +1299,15 @@ svg.icon {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+
+  /* [data-motion="off"] mirrors the media query for the in-app 0% slider. */
+  [data-motion="off"] *,
+  [data-motion="off"] *::before,
+  [data-motion="off"] *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
 
 /* ---- workspace app additions (settings tab, PWA update bar, stacked hero buttons, zh feedback why) ---- */
@@ -1315,7 +1331,7 @@ svg.icon {
   text-align: left;
 }
 .update:active {
-  transform: translateY(2px);
+  transform: translateY(var(--press-sm));
   border-bottom-width: 2px;
 }
 .file-button {
@@ -1336,7 +1352,7 @@ svg.icon {
   cursor: pointer;
 }
 .file-button:active {
-  transform: translateY(2px);
+  transform: translateY(var(--press-sm));
   border-bottom-width: 3px;
 }
 .file-button input {
@@ -1513,7 +1529,7 @@ svg.icon {
     border-radius: 16px;
     background: var(--lime);
     color: #173d2e;
-    box-shadow: 0 5px 0 var(--lime-deep);
+    box-shadow: 0 var(--press-lg) 0 var(--lime-deep);
     font-size: 17px;
     font-weight: 850;
     transition:
@@ -1527,7 +1543,7 @@ svg.icon {
   }
   .desktop-start:active {
     transform: translateY(3px);
-    box-shadow: 0 2px 0 var(--lime-deep);
+    box-shadow: 0 var(--press-sm) 0 var(--lime-deep);
   }
   .desktop-start span {
     font-size: 24px;
@@ -2030,14 +2046,14 @@ svg.icon {
   border-color: var(--line);
   border-radius: 16px;
   background: var(--card);
-  box-shadow: 0 3px 0 #e3ded4;
+  box-shadow: 0 var(--press) 0 #e3ded4;
 }
 .opt.sel,
 .bank-chip.sel,
 .mchip.sel {
   border-color: #e97b58;
   background: #fff0e9;
-  box-shadow: 0 3px 0 #ddae99;
+  box-shadow: 0 var(--press) 0 #ddae99;
 }
 .opt.good,
 .bank-chip.good,
@@ -2054,15 +2070,15 @@ svg.icon {
 .btn-green {
   background: var(--ink);
   color: #f9f4e9;
-  box-shadow: 0 5px 0 #0b1b27;
+  box-shadow: 0 var(--press-lg) 0 #0b1b27;
 }
 .btn-gold:active,
 .btn-green:active {
-  box-shadow: 0 2px 0 #0b1b27;
+  box-shadow: 0 var(--press-sm) 0 #0b1b27;
 }
 .btn-red {
   background: #db7058;
-  box-shadow: 0 5px 0 #a94534;
+  box-shadow: 0 var(--press-lg) 0 #a94534;
 }
 .sheet.ok {
   background: #e8f5e7;
@@ -2157,14 +2173,14 @@ svg.icon {
   .desktop-start {
     background: var(--ink);
     color: #fff8e9;
-    box-shadow: 0 5px 0 var(--ink-edge);
+    box-shadow: 0 var(--press-lg) 0 var(--ink-edge);
   }
   .desktop-start:hover,
   .desktop-start:focus-visible {
     box-shadow: 0 7px 0 var(--ink-edge);
   }
   .desktop-start:active {
-    box-shadow: 0 2px 0 var(--ink-edge);
+    box-shadow: 0 var(--press-sm) 0 var(--ink-edge);
   }
   .app-window {
     background: var(--sky);
@@ -2394,4 +2410,57 @@ svg.icon {
   font-size: 13px;
   font-weight: 800;
   color: var(--green-deep);
+}
+
+/* motion intensity slider (settings) */
+.motion-row {
+  margin: 16px 0 2px;
+}
+.motion-row label {
+  display: block;
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--ink-soft);
+  margin-bottom: 8px;
+}
+.motion-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 22px;
+  background: transparent;
+  cursor: pointer;
+}
+.motion-slider::-webkit-slider-runnable-track {
+  height: 4px;
+  border-radius: 999px;
+  background: var(--line);
+}
+.motion-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 22px;
+  height: 22px;
+  margin-top: -9px;
+  border-radius: 50%;
+  background: var(--card);
+  border: 2px solid var(--ink);
+  box-shadow: 0 var(--press-sm) 0 var(--line);
+}
+.motion-slider::-moz-range-track {
+  height: 4px;
+  border-radius: 999px;
+  background: var(--line);
+}
+.motion-slider::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--card);
+  border: 2px solid var(--ink);
+  box-shadow: 0 var(--press-sm) 0 var(--line);
+}
+.motion-slider:focus-visible {
+  outline: 2px solid var(--sky-deep);
+  outline-offset: 4px;
 }

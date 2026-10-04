@@ -1,6 +1,7 @@
 import { type CSSProperties, useEffect, useState } from "react";
 import { NAV_ICONS } from "./art";
 import type { LearnerState } from "./domain";
+import { confettiBits } from "./motion";
 import type { UiText } from "./ui";
 
 export const MAX_HEARTS = 5;
@@ -62,13 +63,16 @@ export function Nav({ tab, onTab, t }: { tab: Tab; onTab: (tab: Tab) => void; t:
   );
 }
 
-export function Confetti() {
+export function Confetti({ level = 100 }: { level?: number }) {
   const [bits, setBits] = useState<CSSProperties[]>([]);
   useEffect(() => {
+    const count = confettiBits(level);
+    // 0% motion: no burst at all — the slider owns the paper rain
+    if (!count) return;
     const colors = ["#58CC02", "#FFC800", "#1CB0F6", "#FF4B4B", "#89E219", "#7DD3FC"];
     setBits(
       Array.from(
-        { length: 40 },
+        { length: count },
         (_, i) =>
           ({
             background: colors[i % colors.length],
@@ -83,7 +87,7 @@ export function Confetti() {
     );
     const timer = setTimeout(() => setBits([]), 1200);
     return () => clearTimeout(timer);
-  }, []);
+  }, [level]);
   return (
     <div className="confetti-layer">
       {/* one-shot random burst: the bits have no stable identity beyond position */}

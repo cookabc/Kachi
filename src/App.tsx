@@ -24,6 +24,7 @@ import {
   type TeachMode,
   teachPlan,
 } from "./flow";
+import { applyMotion, clampLevel, effectiveLevel, loadMotionLevel, saveMotionLevel } from "./motion";
 import { activateUpdate } from "./pwa";
 import { CompleteScreen } from "./screens/CompleteScreen";
 import { FailScreen } from "./screens/FailScreen";
@@ -86,6 +87,8 @@ function App() {
   const [glossaryQuery, setGlossaryQuery] = useState("");
   const [updateReady, setUpdateReady] = useState(false);
   const [shareCards, setShareCards] = useState<PairCardInput[] | null>(null);
+  // null stored = untouched slider = follow the OS reduced-motion preference
+  const [motion, setMotionState] = useState<number>(() => effectiveLevel(loadMotionLevel()));
 
   const t = UI[lang];
 
@@ -121,6 +124,17 @@ function App() {
   useEffect(() => {
     if (ready) void saveLearnerState(state);
   }, [state, ready]);
+
+  // Mirror the motion level onto <html data-motion> whenever it changes.
+  useEffect(() => {
+    applyMotion(motion);
+  }, [motion]);
+
+  const setMotion = (value: number) => {
+    const level = clampLevel(value);
+    setMotionState(level);
+    saveMotionLevel(level);
+  };
 
   const missedCount = useMemo(() => recentMissTermIds(state).length, [state]);
 
@@ -396,6 +410,7 @@ function App() {
           lessonId={session.lessonId}
           course={course}
           t={t}
+          motion={motion}
           onStart={beginLesson}
           onPractice={beginPractice}
           onPath={closeLesson}
@@ -561,7 +576,15 @@ function App() {
           />
         )}
         {tab === "settings" && (
-          <Settings t={t} lang={lang} onLang={setLang} onExport={downloadExport} onImport={onImport} />
+          <Settings
+            t={t}
+            lang={lang}
+            motion={motion}
+            onLang={setLang}
+            onMotion={setMotion}
+            onExport={downloadExport}
+            onImport={onImport}
+          />
         )}
 
         {shareCards && <ShareSheet cards={shareCards} t={t} onClose={() => setShareCards(null)} />}

@@ -10,6 +10,7 @@ export function CompleteScreen(props: {
   lessonId: string;
   course: Course;
   t: UiText;
+  motion?: number;
   onStart: (id: string) => void;
   onPractice: (focus?: string[]) => void;
   onPath: () => void;
@@ -23,7 +24,7 @@ export function CompleteScreen(props: {
   const flawless = summary.xpPerfect > 0;
   return (
     <main className="hero">
-      <Confetti />
+      <Confetti level={props.motion} />
       {props.isPractice ? (
         <div className="mascot">
           <Hedgehog />

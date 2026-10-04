@@ -73,6 +73,8 @@ export interface UiText {
     contentNote: string;
     langLabel: string;
     langNames: Record<Lang, string>;
+    motionLabel: string;
+    motionHint: (pct: number) => string;
     imported: string;
     importFailed: string;
   };
@@ -194,6 +196,8 @@ export const UI: Record<Lang, UiText> = {
       contentNote: "课程以 Git 内容包发布；涉及税务、法规与金融工具的条目会标注适用范围与复核状态。",
       langLabel: "界面与课程语言",
       langNames: { "zh-CN": "中文", "en-US": "English" },
+      motionLabel: "动效强度",
+      motionHint: (pct) => (pct === 0 ? "彩纸与动画已关闭。" : `彩纸密度 ${pct}%；0% 关闭彩纸与动画。`),
       imported: "学习数据已导入。",
       importFailed: "导入失败。",
     },
@@ -324,6 +328,9 @@ export const UI: Record<Lang, UiText> = {
         "Courses ship as Git content packs; entries touching tax, regulation, and instruments carry scope and review status.",
       langLabel: "Interface & course language",
       langNames: { "zh-CN": "中文", "en-US": "English" },
+      motionLabel: "Motion",
+      motionHint: (pct) =>
+        pct === 0 ? "Confetti and animation are off." : `Confetti density ${pct}%; 0% turns it all off.`,
       imported: "Learning data imported.",
       importFailed: "Import failed.",
     },
