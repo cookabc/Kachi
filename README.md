@@ -19,6 +19,9 @@ pnpm run check    # biome + content validation + tsc + vitest + vite build (PWA)
   lazily — keep behavior changes reflected in the build output, not just source.
 - CI (`.github/workflows/ci.yml`) runs `pnpm run check` on every push/PR.
 - Pre-commit hook (lefthook) runs biome on staged files.
+- `public/icon.svg` is the source of truth for app icons. `pnpm run generate:icons`
+  (needs `rsvg-convert`) regenerates the PNG variants the manifest and iOS
+  apple-touch-icon consume — commit them, like og-image.png.
 - Dark mode is deliberately not implemented: the ink-on-paper "notebook" look
   is the brand (decided 2026-10-04). Revisit only with a real night-reading
   use case, not "because it's missing".
