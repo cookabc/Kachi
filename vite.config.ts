@@ -8,9 +8,11 @@ export default defineConfig({
     VitePWA({
       registerType: "prompt",
       manifest: {
+        id: "/",
         name: "Kachi — 财经英语学习",
         short_name: "Kachi",
         description: "面向中文用户的财经英语学习应用。",
+        lang: "zh-CN",
         theme_color: "#fff8ec",
         background_color: "#fff8ec",
         display: "standalone",
