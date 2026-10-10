@@ -1,8 +1,24 @@
 {
   "name": "kachi",
   "version": "0.1.0",
+  "description": "Finance-English learning PWA: offline vocabulary, quizzes, and shareable progress cards",
+  "license": "MIT",
   "private": true,
   "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cookabc/Kachi.git"
+  },
+  "keywords": [
+    "pwa",
+    "vite",
+    "react",
+    "vocabulary",
+    "english-learning",
+    "finance",
+    "quiz",
+    "gamification"
+  ],
   "packageManager": "pnpm@12.9.1+sha512.06b055fff5cd20dc12781de173ced3310ce0951bf2ec620211a16045d5444d5c93a663210764ef29a653a610459ba0368f0e74f84d80c54723cf95aae7bc0d6d",
   "engines": {
     "node": ">=24"
