@@ -34,4 +34,7 @@ pnpm run check    # biome + content validation + tsc + vitest + vite build (PWA)
 
 ## License
 
-MIT — see [LICENSE](LICENSE).
+- Code: [AGPL-3.0-only](LICENSE).
+- Original course and teaching content (`content/`): CC-BY-SA-4.0.
+- Third-party news quotations, links and brands keep their own rights and are
+  not relicensed with the course pack.
