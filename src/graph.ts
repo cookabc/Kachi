@@ -105,20 +105,94 @@ export function graphLayout(course: Course, size: number, pad: number): GraphLay
   };
 }
 
-/** Radial chord-diagram label: text runs outward on the right half, flipped on the left. */
-export function labelTransform(node: { angle: number }, center: number, radius: number) {
-  const x = center + radius * Math.cos(node.angle);
-  const y = center + radius * Math.sin(node.angle);
-  const degrees = (node.angle * 180) / Math.PI;
-  const flip = Math.cos(node.angle) < 0;
-  const rotation = flip ? degrees + 180 : degrees;
-  return {
-    x,
-    y,
-    rotation,
-    flip,
-    anchor: (flip ? "end" : "start") as "end" | "start",
-  };
+/** Horizontal label placement on radial lanes.
+ *
+ *  Rotated labels were unreadable at this scale (11px type at ±80°), so every
+ *  label sits horizontally. Crowding is resolved with exact box collision:
+ *  nodes are visited in angular order and each label takes the first lane
+ *  whose box clears every placed box; lanes that would push a label outside
+ *  the viewBox are avoided. When every lane collides (the densest arc
+ *  physically cannot fit), the least-overlapping lane wins — the labels carry
+ *  a card-coloured halo in CSS so a residual touch stays readable. Pure and
+ *  deterministic — the same course always draws the same map. */
+export interface LabelPlacement {
+  x: number;
+  y: number;
+  anchor: "start" | "end";
+  lane: number;
+}
+
+interface Box {
+  x1: number;
+  y1: number;
+  x2: number;
+  y2: number;
+}
+
+export function labelPlacements(
+  layout: GraphLayout,
+  labelWidth: (id: string) => number,
+  {
+    firstOffset = 12,
+    laneGap = 16,
+    maxLanes = 4,
+    lineHeight = 15.5,
+    edgeMargin = 2,
+  }: {
+    firstOffset?: number;
+    laneGap?: number;
+    maxLanes?: number;
+    lineHeight?: number;
+    edgeMargin?: number;
+  } = {},
+): Map<string, LabelPlacement> {
+  const boxes: Box[] = [];
+  const out = new Map<string, LabelPlacement>();
+  const order = [...layout.nodes].sort((a, b) => a.angle - b.angle);
+  const right = layout.center * 2;
+
+  for (const node of order) {
+    const w = labelWidth(node.id);
+    const flip = Math.cos(node.angle) < 0;
+    const place = (lane: number) => {
+      const r = layout.radius + firstOffset + lane * laneGap;
+      const px = layout.center + r * Math.cos(node.angle);
+      const py = layout.center + r * Math.sin(node.angle);
+      const x1 = flip ? px - w : px;
+      return { px, py, box: { x1, y1: py - lineHeight / 2, x2: x1 + w, y2: py + lineHeight / 2 } as Box };
+    };
+    const overlapArea = (box: Box) => {
+      let area = 0;
+      for (const b of boxes) {
+        const ox = Math.min(box.x2, b.x2) - Math.max(box.x1, b.x1);
+        const oy = Math.min(box.y2, b.y2) - Math.max(box.y1, b.y1);
+        if (ox > 0 && oy > 0) area += ox * oy;
+      }
+      return area;
+    };
+    const outside = (box: Box) => box.x1 < edgeMargin || box.x2 > right - edgeMargin;
+
+    let bestLane = 0;
+    let bestOverlap = Number.POSITIVE_INFINITY;
+    for (let lane = 0; lane < maxLanes; lane++) {
+      const { box } = place(lane);
+      if (outside(box)) continue;
+      const overlap = overlapArea(box);
+      if (overlap === 0) {
+        bestLane = lane;
+        bestOverlap = 0;
+        break;
+      }
+      if (overlap < bestOverlap) {
+        bestOverlap = overlap;
+        bestLane = lane;
+      }
+    }
+    const { px, py, box } = place(bestLane);
+    boxes.push(box);
+    out.set(node.id, { x: px, y: py, anchor: flip ? "end" : "start", lane: bestLane });
+  }
+  return out;
 }
 
 export function arcPath(center: number, radius: number, start: number, end: number): string {

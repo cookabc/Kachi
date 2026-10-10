@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { course as zhCourse } from "./course";
 import type { Course } from "./domain";
-import { arcPath, edgePath, graphEdges, graphLayout, labelTransform } from "./graph";
+import { arcPath, edgePath, graphEdges, graphLayout, labelPlacements } from "./graph";
 
 function courseWithExtraRelations(): Course {
   const course: Course = JSON.parse(JSON.stringify(zhCourse));
@@ -114,14 +114,43 @@ describe("geometry helpers", () => {
     expect(edgePath(layout, { a: "ghost", b: "hedge", type: "sibling", fromMixUp: false })).toBeNull();
   });
 
-  it("arcPath sweeps clockwise and labelTransform flips the left half", () => {
+  it("arcPath sweeps clockwise and labelPlacements keeps labels horizontal", () => {
     const d = arcPath(240, 100, 0, Math.PI / 2);
     expect(d).toContain("A 100 100 0 0 1");
-    const right = labelTransform({ angle: 0 }, 240, 150);
-    expect(right.anchor).toBe("start");
-    expect(right.flip).toBe(false);
-    const left = labelTransform({ angle: Math.PI }, 240, 150);
-    expect(left.anchor).toBe("end");
-    expect(left.flip).toBe(true);
+    const layout = graphLayout(zhCourse, 480, 131);
+    const placements = labelPlacements(layout, () => 60);
+    // every concept gets a placement, anchored outward per half
+    expect(placements.size).toBe(zhCourse.concepts.length);
+    for (const node of layout.nodes) {
+      const placement = placements.get(node.id);
+      expect(placement).toBeDefined();
+      const flip = Math.cos(node.angle) < 0;
+      expect(placement!.anchor).toBe(flip ? "end" : "start");
+    }
+  });
+
+  it("labelPlacements separates crowded arcs onto lanes and stays in the viewBox", () => {
+    const layout = graphLayout(zhCourse, 480, 131);
+    // realistic widths: 0.6em per char at 12px monospace
+    const placements = labelPlacements(layout, (id) => {
+      const concept = zhCourse.concepts.find((item) => item.id === id);
+      return (concept?.term.length ?? 4) * 7.2;
+    });
+    const lanes = [...placements.values()].map((placement) => placement.lane);
+    expect(Math.max(...lanes)).toBeGreaterThan(0);
+    expect(Math.max(...lanes)).toBeLessThanOrEqual(3);
+    for (const placement of placements.values()) {
+      expect(placement.x).toBeGreaterThanOrEqual(0);
+      expect(placement.x).toBeLessThanOrEqual(480);
+      expect(placement.y).toBeGreaterThanOrEqual(0);
+      expect(placement.y).toBeLessThanOrEqual(480);
+    }
+  });
+
+  it("labelPlacements is deterministic", () => {
+    const layout = graphLayout(zhCourse, 480, 131);
+    const a = labelPlacements(layout, () => 60);
+    const b = labelPlacements(layout, () => 60);
+    expect([...a.entries()]).toEqual([...b.entries()]);
   });
 });

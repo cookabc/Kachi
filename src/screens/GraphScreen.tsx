@@ -2,13 +2,22 @@ import { useMemo, useState } from "react";
 import type { Course, LearnerState } from "../domain";
 import { recentMissTermIds } from "../engine";
 import { conceptOf } from "../flow";
-import { arcPath, edgePath, graphEdges, graphLayout, labelTransform } from "../graph";
+import { arcPath, edgePath, graphEdges, graphLayout, labelPlacements } from "../graph";
 import { localizedTerm } from "../localization";
 import type { UiText } from "../ui";
 
 const VIEW = 480;
-const PAD = 118;
-const LABEL_RADIUS_PAD = 14;
+const PAD = 131;
+// Truncation keeps every label inside the viewBox: at 12px monospace the
+// advance is 0.6em, so fourteen characters ≈ 101px and the outermost lane
+// (radius + 12 + 3×16) still clears the three-o'clock edge. Lanes are packed
+// by exact box collision in labelPlacements().
+const LABEL_CHARS = 14;
+const CHAR_WIDTH = 7.2;
+
+function labelText(term: string): string {
+  return term.length > LABEL_CHARS ? `${term.slice(0, LABEL_CHARS - 1)}…` : term;
+}
 
 export function GraphScreen({
   state,
@@ -25,6 +34,14 @@ export function GraphScreen({
 
   const edges = useMemo(() => graphEdges(course), [course]);
   const layout = useMemo(() => graphLayout(course, VIEW, PAD), [course]);
+  const labels = useMemo(
+    () =>
+      labelPlacements(layout, (id) => {
+        const concept = conceptOf(course, id);
+        return concept ? labelText(concept.term).length * CHAR_WIDTH : 40;
+      }),
+    [layout, course],
+  );
   const seen = useMemo(() => new Set(state.seenConceptIds), [state.seenConceptIds]);
   const missed = useMemo(() => new Set(recentMissTermIds(state)), [state]);
 
@@ -101,11 +118,12 @@ export function GraphScreen({
               );
             })}
 
-            {/* dots + radial labels (presentation only) */}
+            {/* dots + horizontal lane labels (presentation only) */}
             {layout.nodes.map((node) => {
               const concept = conceptOf(course, node.id);
               if (!concept) return null;
-              const label = labelTransform(node, layout.center, layout.radius + LABEL_RADIUS_PAD);
+              const label = labels.get(node.id);
+              if (!label) return null;
               const status = missed.has(node.id) ? "missed" : seen.has(node.id) ? "seen" : "unseen";
               return (
                 <g key={node.id}>
@@ -116,9 +134,8 @@ export function GraphScreen({
                     y={label.y}
                     textAnchor={label.anchor}
                     dominantBaseline="central"
-                    transform={`rotate(${label.rotation} ${label.x} ${label.y})`}
                   >
-                    {concept.term.length > 15 ? `${concept.term.slice(0, 14)}…` : concept.term}
+                    {labelText(concept.term)}
                   </text>
                 </g>
               );

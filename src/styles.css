@@ -2305,37 +2305,37 @@ svg.icon {
 }
 .g-edge {
   fill: none;
-  stroke-width: 1.4;
+  stroke-width: 2.2;
   transition:
     opacity var(--t-fast) var(--ease-out),
     stroke-width var(--t-fast) var(--ease-out);
 }
 .e-confusable {
   stroke: var(--wrong);
-  opacity: 0.3;
+  opacity: 0.5;
 }
 .e-prereq {
   stroke: var(--green-deep);
-  opacity: 0.42;
-  stroke-dasharray: 1.5 3.5;
+  opacity: 0.65;
+  stroke-dasharray: 2 4;
   stroke-linecap: round;
 }
 .e-sibling {
   stroke: var(--ink-soft);
-  opacity: 0.22;
-  stroke-dasharray: 5 4;
+  opacity: 0.4;
+  stroke-dasharray: 6 4;
 }
 .g-map.has-sel .g-edge {
   opacity: 0.06;
 }
 .g-map.has-sel .g-edge.lit {
   opacity: 1;
-  stroke-width: 2.2;
+  stroke-width: 2.8;
 }
 .g-dot {
   fill: var(--card);
   stroke: var(--ink);
-  stroke-width: 1.6;
+  stroke-width: 1.8;
   transition:
     fill var(--t-fast) var(--ease-out),
     stroke var(--t-fast) var(--ease-out);
@@ -2348,14 +2348,22 @@ svg.icon {
   fill: var(--wrong);
   stroke: var(--coral-deep);
 }
+/* Horizontal lane labels: monospace reads at small sizes, the sky-coloured
+   halo (the map sits on the page paper) keeps a residual lane touch legible
+   instead of overlapping glyphs. */
 .g-label {
-  font-size: 11px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 12px;
   font-weight: 700;
-  fill: var(--ink-soft);
+  fill: var(--ink);
   pointer-events: none;
+  paint-order: stroke;
+  stroke: var(--sky);
+  stroke-width: 3px;
+  stroke-linejoin: round;
 }
 .g-label.sel {
-  fill: var(--ink);
+  fill: var(--coral-deep);
   font-weight: 800;
 }
 .g-card {
