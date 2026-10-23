@@ -52,7 +52,7 @@ function pairCardInput(course: Course, concept: Concept, t: UiText): PairCardInp
   const sibling = conceptOf(course, concept.mixUp);
   const unit = course.units.find((item) => item.id === concept.unit);
   return {
-    kicker: `Kachi · ${t.home.unit(concept.unit)} · ${unit?.title ?? ""}`,
+    kicker: `Kachi, ${t.home.unit(concept.unit)}, ${unit?.title ?? ""}`,
     termA: concept.term,
     forkA: concept.definition,
     termB: sibling?.term ?? concept.mixUp,
@@ -531,8 +531,8 @@ function App() {
         <div className="desktop-story-bottom">
           <span>
             {lang === "zh-CN"
-              ? "本地保存 · 无账户 · 无投资建议"
-              : "LOCAL FIRST · NO ACCOUNT · NO INVESTMENT ADVICE"}
+              ? "本地保存，无账户，无投资建议"
+              : "LOCAL FIRST, NO ACCOUNT, NO INVESTMENT ADVICE"}
           </span>
           <span>
             {state.completedLessonIds.length.toString().padStart(2, "0")} /{" "}

@@ -10,7 +10,7 @@ export type Tab = "learn" | "practice" | "glossary" | "graph" | "settings";
 
 export function StatsBar({ state }: { state: LearnerState }) {
   return (
-    <div className="stats" role="img" aria-label={`XP ${state.xp} · ${state.streak}`}>
+    <div className="stats" role="img" aria-label={`XP ${state.xp}, ${state.streak}`}>
       <div className="stat xp">
         <span className="ic">◆</span>
         {state.xp}

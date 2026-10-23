@@ -213,7 +213,7 @@ export function GraphScreen({
             </h3>
             {unit && (
               <p className="g-kicker">
-                {t.home.unit(selectedConcept.unit)} · {unit.title}
+                {t.home.unit(selectedConcept.unit)}，{unit.title}
               </p>
             )}
             <p className="def">{selectedConcept.definition}</p>
