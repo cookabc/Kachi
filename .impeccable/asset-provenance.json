@@ -1,0 +1,43 @@
+{
+  "version": 1,
+  "policy": "Original repository raster content preserved. No AI-generated raster assets added. This record documents source identity, not independent rights clearance.",
+  "rasterAssets": [
+    {
+      "path": "docs/images/home.png",
+      "origin": "git:b2f4b7e45ffd4c28a20465ff73e2dc35e5dc3a4f:docs/images/home.png",
+      "sha256": "c4c5d68eeee86aef6fed49a3fc297815e5f734ff1394d5198caff209c0c529a6",
+      "unchangedFromOrigin": true
+    },
+    {
+      "path": "public/apple-touch-icon.png",
+      "origin": "git:b2f4b7e45ffd4c28a20465ff73e2dc35e5dc3a4f:public/apple-touch-icon.png",
+      "sha256": "7ef1cdf0147ea42d0abde3b4b1005e511d44e9e918710a01dbb4cf49ea812648",
+      "unchangedFromOrigin": true
+    },
+    {
+      "path": "public/icon-192.png",
+      "origin": "git:b2f4b7e45ffd4c28a20465ff73e2dc35e5dc3a4f:public/icon-192.png",
+      "sha256": "bb8bd00544d480fd3fee3c92b17c4e4b2ef821724837fe86beb05fffe79b7e5d",
+      "unchangedFromOrigin": true
+    },
+    {
+      "path": "public/icon-512.png",
+      "origin": "git:b2f4b7e45ffd4c28a20465ff73e2dc35e5dc3a4f:public/icon-512.png",
+      "sha256": "1b334a8c73606fd730ba7f11d4a8da7a1470a1d8110569ffce689293ab7c3439",
+      "unchangedFromOrigin": true
+    },
+    {
+      "path": "public/icon-maskable-512.png",
+      "origin": "git:b2f4b7e45ffd4c28a20465ff73e2dc35e5dc3a4f:public/icon-maskable-512.png",
+      "sha256": "982b209561d05cabd88ce21dd40488f9015c00b3fa3757547d9db675b1910e56",
+      "unchangedFromOrigin": true
+    },
+    {
+      "path": "public/og-image.png",
+      "origin": "git:b2f4b7e45ffd4c28a20465ff73e2dc35e5dc3a4f:public/og-image.png",
+      "sha256": "6113e91849838dda6b383a2696ffa526a913acd9e2ce8cc99f02d7f859cb85c8",
+      "unchangedFromOrigin": true
+    }
+  ],
+  "remoteImages": []
+}
