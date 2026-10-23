@@ -4,9 +4,7 @@ import type { Lang, UiText } from "../ui";
 export function Settings({
   t,
   lang,
-  motion,
   onLang,
-  onMotion,
   onExport,
   onImport,
 }: {
@@ -39,21 +37,6 @@ export function Settings({
             </button>
           ))}
         </fieldset>
-        <div className="motion-row">
-          <label htmlFor="motion-range">{t.settings.motionLabel}</label>
-          <input
-            id="motion-range"
-            className="motion-slider"
-            type="range"
-            min={0}
-            max={100}
-            step={5}
-            value={motion}
-            onChange={(event) => onMotion(Number(event.target.value))}
-            aria-valuetext={t.settings.motionHint(motion)}
-          />
-          <p className="fine">{t.settings.motionHint(motion)}</p>
-        </div>
         <button type="button" className="btn btn-green" onClick={onExport}>
           {t.settings.exportBtn}
         </button>

@@ -124,86 +124,89 @@ export function GraphScreen({
         {/* The SVG draws the picture; native buttons positioned over the nodes
             carry the interaction so a11y comes from real semantics, not ARIA
             bolted onto SVG elements. */}
-        <div className="g-mapwrap">
-          <svg
-            className={`g-map${selected ? " has-sel" : ""}`}
-            viewBox={`0 0 ${VIEW} ${VIEW}`}
-            aria-hidden="true"
-          >
-            {/* unit grouping arcs, drawn inside the ring */}
-            {layout.unitSpans.map((span) => (
-              <g key={span.unit}>
-                <path
-                  className="g-arc"
-                  d={arcPath(layout.center, layout.radius - 12, span.start + 0.02, span.end - 0.02)}
-                />
-                <text
-                  className="g-unit-label"
-                  x={layout.center + (layout.radius - 26) * Math.cos(span.mid)}
-                  y={layout.center + (layout.radius - 26) * Math.sin(span.mid)}
-                  textAnchor="middle"
-                  dominantBaseline="central"
-                >
-                  {String(span.unit).padStart(2, "0")}
-                </text>
-              </g>
-            ))}
+        {/* biome-ignore lint/a11y/noNoninteractiveTabindex: the scroll region must be keyboard pannable. */}
+        <section className="g-map-scroll" aria-label={t.graph.brand} tabIndex={0}>
+          <div className="g-mapwrap">
+            <svg
+              className={`g-map${selected ? " has-sel" : ""}`}
+              viewBox={`0 0 ${VIEW} ${VIEW}`}
+              aria-hidden="true"
+            >
+              {/* unit grouping arcs, drawn inside the ring */}
+              {layout.unitSpans.map((span) => (
+                <g key={span.unit}>
+                  <path
+                    className="g-arc"
+                    d={arcPath(layout.center, layout.radius - 12, span.start + 0.02, span.end - 0.02)}
+                  />
+                  <text
+                    className="g-unit-label"
+                    x={layout.center + (layout.radius - 26) * Math.cos(span.mid)}
+                    y={layout.center + (layout.radius - 26) * Math.sin(span.mid)}
+                    textAnchor="middle"
+                    dominantBaseline="central"
+                  >
+                    {String(span.unit).padStart(2, "0")}
+                  </text>
+                </g>
+              ))}
 
-            {/* edges: quadratic curves bowed through the center */}
-            {edges.map((edge) => {
-              const d = edgePath(layout, edge);
-              if (!d) return null;
-              const lit = selected !== null && (edge.a === selected || edge.b === selected);
-              return (
-                <path
-                  key={`${edge.a}::${edge.b}::${edge.type}`}
-                  className={`g-edge e-${edge.type}${lit ? " lit" : ""}`}
-                  d={d}
-                />
-              );
-            })}
+              {/* edges: quadratic curves bowed through the center */}
+              {edges.map((edge) => {
+                const d = edgePath(layout, edge);
+                if (!d) return null;
+                const lit = selected !== null && (edge.a === selected || edge.b === selected);
+                return (
+                  <path
+                    key={`${edge.a}::${edge.b}::${edge.type}`}
+                    className={`g-edge e-${edge.type}${lit ? " lit" : ""}`}
+                    d={d}
+                  />
+                );
+              })}
 
-            {/* dots + horizontal lane labels (presentation only) */}
+              {/* dots + horizontal lane labels (presentation only) */}
+              {layout.nodes.map((node) => {
+                const concept = conceptOf(course, node.id);
+                if (!concept) return null;
+                const label = labels.get(node.id);
+                if (!label) return null;
+                const status = missed.has(node.id) ? "missed" : seen.has(node.id) ? "seen" : "unseen";
+                return (
+                  <g key={node.id}>
+                    <circle className={`g-dot d-${status}`} cx={node.x} cy={node.y} r={6} />
+                    <text
+                      className={`g-label${node.id === selected ? " sel" : ""}`}
+                      x={label.x}
+                      y={label.y}
+                      textAnchor={label.anchor}
+                      dominantBaseline="central"
+                    >
+                      {labelText(concept.term)}
+                    </text>
+                  </g>
+                );
+              })}
+            </svg>
+
             {layout.nodes.map((node) => {
               const concept = conceptOf(course, node.id);
               if (!concept) return null;
-              const label = labels.get(node.id);
-              if (!label) return null;
-              const status = missed.has(node.id) ? "missed" : seen.has(node.id) ? "seen" : "unseen";
+              const isSelected = node.id === selected;
               return (
-                <g key={node.id}>
-                  <circle className={`g-dot d-${status}`} cx={node.x} cy={node.y} r={6} />
-                  <text
-                    className={`g-label${node.id === selected ? " sel" : ""}`}
-                    x={label.x}
-                    y={label.y}
-                    textAnchor={label.anchor}
-                    dominantBaseline="central"
-                  >
-                    {labelText(concept.term)}
-                  </text>
-                </g>
+                <button
+                  type="button"
+                  key={node.id}
+                  className={`g-hit${isSelected ? " sel" : ""}`}
+                  style={{ left: `${(node.x / VIEW) * 100}%`, top: `${(node.y / VIEW) * 100}%` }}
+                  aria-label={concept.term}
+                  aria-pressed={isSelected}
+                  onClick={() => setSelected(isSelected ? null : node.id)}
+                />
               );
             })}
-          </svg>
-
-          {layout.nodes.map((node) => {
-            const concept = conceptOf(course, node.id);
-            if (!concept) return null;
-            const isSelected = node.id === selected;
-            return (
-              <button
-                type="button"
-                key={node.id}
-                className={`g-hit${isSelected ? " sel" : ""}`}
-                style={{ left: `${(node.x / VIEW) * 100}%`, top: `${(node.y / VIEW) * 100}%` }}
-                aria-label={concept.term}
-                aria-pressed={isSelected}
-                onClick={() => setSelected(isSelected ? null : node.id)}
-              />
-            );
-          })}
-        </div>
+          </div>
+        </section>
 
         {selectedConcept && (
           <article className="g-card" aria-live="polite">

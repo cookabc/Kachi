@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { StatsBar } from "../chrome";
 import type { Course, LearnerState } from "../domain";
 import { isLessonUnlocked } from "../engine";
@@ -20,143 +21,159 @@ export function LearnHome({
   const upNext = course.lessons.find(
     (lesson) => !state.completedLessonIds.includes(lesson.id) && isLessonUnlocked(state, course, lesson.id),
   );
-  const firstLesson = course.lessons[0];
-  const activeLesson = upNext ?? firstLesson;
+  const activeLesson = upNext ?? course.lessons[0];
   const completed = state.completedLessonIds.length;
   const total = course.lessons.length;
-
+  const [answer, setAnswer] = useState<string | null>(null);
+  const hedge = course.concepts.find((concept) => concept.id === "hedge");
+  const pledge = course.concepts.find((concept) => concept.id === "pledge");
   return (
     <>
-      <header className="top lab-top">
-        <div className="brand">
-          Kachi<span aria-hidden="true">✳</span>
-        </div>
+      <header className="top learning-top">
+        <div className="brand">Kachi</div>
+        <span className="learning-topic">{isZh ? "财经英语" : "Finance English"}</span>
         <StatsBar state={state} />
       </header>
-      <div className="scroll lab-scroll">
-        <section className="lab-hero" aria-labelledby="lab-course-title">
-          <div className="lab-hero-meta">
-            <span>{isZh ? "概念对照实验室" : "THE CONTRAST LAB"}</span>
-            <span>COURSE / 01</span>
-          </div>
-          <p className="lab-overline">
-            {isZh ? "第一组：两个完全不同的动作" : "PAIR 01 / TWO DIFFERENT ACTIONS"}
-          </p>
-          <h1 id="lab-course-title" className="lab-hero-title">
-            HEDGE <span aria-hidden="true">/</span>
-            <br />
-            PLEDGE<span className="lab-period">.</span>
-          </h1>
-          <p className="lab-hero-copy">{t.home.tagline}</p>
-          <div className="lab-hero-progress">
-            <div>
-              <span>{isZh ? "课程进度" : "YOUR PROGRESS"}</span>
-              <strong>
-                {String(completed).padStart(2, "0")} <i>/</i> {String(total).padStart(2, "0")}
-              </strong>
-            </div>
-            <div
-              className="lab-progress-track"
-              role="progressbar"
-              aria-valuenow={completed}
-              aria-valuemin={0}
-              aria-valuemax={total}
-              aria-label={isZh ? "课程进度" : "Course progress"}
-            >
-              <span style={{ width: `${total ? (completed / total) * 100 : 0}%` }} />
-            </div>
-          </div>
-          {activeLesson && (
-            <button type="button" className="lab-hero-cta" onClick={() => onStart(activeLesson.id)}>
-              <span>
-                {isZh ? (upNext ? "继续学习" : "重新学习") : upNext ? "Continue learning" : "Study again"}
-              </span>
-              <span aria-hidden="true">↗</span>
-            </button>
-          )}
-        </section>
-
-        <section className="lab-curriculum" aria-labelledby="lab-curriculum-title">
-          <div className="lab-section-head">
-            <div>
-              <span>FIELD NOTES / 01—{String(course.units.length).padStart(2, "0")}</span>
-              <h2 id="lab-curriculum-title">{isZh ? "学习路径" : "Learning path"}</h2>
-            </div>
-            <span>
-              {course.concepts.length} {isZh ? "个概念" : "concepts"}
-            </span>
-          </div>
-
-          {course.units.map((unit) => {
-            const lessons = course.lessons.filter((lesson) => lesson.unit === unit.id);
-            const doneCount = lessons.filter((lesson) => state.completedLessonIds.includes(lesson.id)).length;
-            const currentUnit = lessons.some((lesson) => lesson.id === upNext?.id);
-            return (
-              <section key={unit.id} className={`lab-unit${currentUnit ? " lab-unit-current" : ""}`}>
-                <div className="lab-unit-head">
-                  <div className="lab-unit-number">{String(unit.id).padStart(2, "0")}</div>
-                  <div className="lab-unit-heading">
-                    <span>
-                      {t.home.unit(unit.id)} / {doneCount}—{lessons.length}
-                    </span>
-                    <h3>{unit.title}</h3>
-                    <p>{unit.blurb}</p>
-                  </div>
+      <div className="scroll learning-scroll">
+        <div className="learning-layout">
+          <section className="learning-start" aria-labelledby="learning-title">
+            <h1 id="learning-title">{isZh ? "相近的词，不同的意思。" : "Similar words. Different moves."}</h1>
+            {hedge && pledge && (
+              <div className="learning-question">
+                <h2>{isZh ? "这属于哪一种？" : "Which word fits?"}</h2>
+                <p className="learning-example">
+                  {isZh
+                    ? "持有股票并买入看跌期权，以降低价格下跌带来的损失。"
+                    : "Buying a put option to limit the downside on shares you already own."}
+                </p>
+                <fieldset className="learning-choices" aria-label={isZh ? "选择概念" : "Choose a concept"}>
+                  {[hedge, pledge].map((concept) => (
+                    <button
+                      key={concept.id}
+                      type="button"
+                      aria-pressed={answer === concept.id}
+                      className={
+                        answer === concept.id ? (concept.id === hedge.id ? "is-correct" : "is-wrong") : ""
+                      }
+                      onClick={() => setAnswer(concept.id)}
+                    >
+                      {concept.term}
+                      <span aria-hidden="true">
+                        {answer === concept.id ? (concept.id === hedge.id ? "✓" : "×") : "→"}
+                      </span>
+                    </button>
+                  ))}
+                </fieldset>
+                <div className="learning-feedback" role="status">
+                  {answer && (
+                    <>
+                      <strong>
+                        {answer === hedge.id
+                          ? isZh
+                            ? "正确"
+                            : "Correct"
+                          : isZh
+                            ? "这里应选 Hedge"
+                            : "This is a hedge"}
+                      </strong>
+                      <p>{hedge.mixUpWhy}</p>
+                    </>
+                  )}
                 </div>
-                <ol className="lab-lessons">
-                  {lessons.map((lesson, index) => {
-                    const done = state.completedLessonIds.includes(lesson.id);
-                    const unlocked = isLessonUnlocked(state, course, lesson.id);
-                    const isNext = upNext?.id === lesson.id;
-                    return (
-                      <li key={lesson.id}>
-                        <button
-                          type="button"
-                          className={`lab-lesson${done ? " is-done" : ""}${isNext ? " is-next" : ""}`}
-                          aria-label={unlocked ? lesson.title : t.home.lockedLesson(lesson.title)}
-                          disabled={!unlocked}
-                          onClick={() => onStart(lesson.id)}
-                        >
-                          <span className="lab-lesson-index">{String(index + 1).padStart(2, "0")}</span>
-                          <span className="lab-lesson-name">{lesson.title}</span>
-                          <span className="lab-lesson-status" aria-hidden="true">
-                            {done ? (
-                              "✓"
-                            ) : isNext ? (
-                              "↗"
-                            ) : unlocked ? (
-                              "→"
-                            ) : (
-                              /* 未解锁的课用一个锁，不是中间点 —— 中间点读起来像半个标点，
-                                 而且这一行已经有 aria-label 说了"未解锁"。
-                                 锁形本身在 26px 的圆里比一个字更清楚。 */
-                              <svg
-                                className="lab-lock"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                strokeWidth="2.4"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                aria-hidden="true"
-                                focusable="false"
-                              >
-                                <rect x="5" y="11" width="14" height="9" rx="2" />
-                                <path d="M8 11V8a4 4 0 0 1 8 0v3" />
-                              </svg>
-                            )}
-                          </span>
-                        </button>
-                      </li>
-                    );
-                  })}
-                </ol>
-              </section>
-            );
-          })}
-          {missedCount > 0 && <p className="lab-note">{t.home.missedNote(missedCount)}</p>}
-          <p className="lab-note">{t.home.unitNote}</p>
-        </section>
+              </div>
+            )}
+            <div className="learning-continue">
+              <div className="learning-progress-label">
+                <span>{isZh ? "课程进度" : "Course progress"}</span>
+                <span>
+                  {completed} / {total}
+                </span>
+              </div>
+              <progress max={total} value={completed} aria-label={isZh ? "课程进度" : "Course progress"} />
+              {activeLesson && (
+                <button
+                  type="button"
+                  className="learning-start-button"
+                  onClick={() => onStart(activeLesson.id)}
+                >
+                  <span>
+                    {upNext
+                      ? completed
+                        ? isZh
+                          ? "继续学习"
+                          : "Continue learning"
+                        : isZh
+                          ? "开始第一课"
+                          : "Start the first lesson"
+                      : isZh
+                        ? "重新学习"
+                        : "Study again"}
+                  </span>
+                  <span aria-hidden="true">→</span>
+                </button>
+              )}
+              {activeLesson && <p>{activeLesson.title}</p>}
+            </div>
+          </section>
+          <section className="learning-path" aria-labelledby="learning-path-title">
+            <div className="learning-path-heading">
+              <h2 id="learning-path-title">{isZh ? "学习路径" : "Learning path"}</h2>
+              <span>
+                {course.concepts.length} {isZh ? "个概念" : "concepts"}
+              </span>
+            </div>
+            {course.units.map((unit) => {
+              const lessons = course.lessons.filter((lesson) => lesson.unit === unit.id);
+              const doneCount = lessons.filter((lesson) =>
+                state.completedLessonIds.includes(lesson.id),
+              ).length;
+              const current = lessons.some((lesson) => lesson.id === activeLesson?.id);
+              return (
+                <details key={unit.id} className="learning-unit" open={current}>
+                  <summary>
+                    <span className="learning-unit-number">{String(unit.id).padStart(2, "0")}</span>
+                    <h3>{unit.title}</h3>
+                    <span>
+                      {doneCount}/{lessons.length}
+                    </span>
+                  </summary>
+                  <ol>
+                    {lessons.map((lesson, index) => {
+                      const done = state.completedLessonIds.includes(lesson.id);
+                      const unlocked = isLessonUnlocked(state, course, lesson.id);
+                      return (
+                        <li key={lesson.id}>
+                          <button
+                            type="button"
+                            className={lesson.id === upNext?.id ? "is-next" : ""}
+                            disabled={!unlocked}
+                            aria-label={unlocked ? lesson.title : t.home.lockedLesson(lesson.title)}
+                            onClick={() => onStart(lesson.id)}
+                          >
+                            <span className="learning-lesson-number">{index + 1}</span>
+                            <span>{lesson.title}</span>
+                            <span className="learning-lesson-state">
+                              {done
+                                ? isZh
+                                  ? "已完成"
+                                  : "Done"
+                                : !unlocked
+                                  ? isZh
+                                    ? "未解锁"
+                                    : "Locked"
+                                  : "→"}
+                            </span>
+                          </button>
+                        </li>
+                      );
+                    })}
+                  </ol>
+                </details>
+              );
+            })}
+            {missedCount > 0 && <p className="learning-missed">{t.home.missedNote(missedCount)}</p>}
+          </section>
+        </div>
       </div>
     </>
   );

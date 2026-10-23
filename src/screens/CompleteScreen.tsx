@@ -1,5 +1,4 @@
 import { Hedgehog } from "../art";
-import { Confetti } from "../chrome";
 import type { Course } from "../domain";
 import { conceptOf, lessonPair, type Summary } from "../flow";
 import type { UiText } from "../ui";
@@ -24,7 +23,6 @@ export function CompleteScreen(props: {
   const flawless = summary.xpPerfect > 0;
   return (
     <main className="hero">
-      <Confetti level={props.motion} />
       {props.isPractice ? (
         <div className="mascot">
           <Hedgehog />
