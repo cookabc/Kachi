@@ -842,6 +842,9 @@ input {
   position: relative;
   display: flex;
   flex-direction: column;
+  /* 结课/失败这类内容不足一屏的收尾页：整体在剩余空间里居中，
+     内容多到放不下时回落到顶部对齐滚动 */
+  justify-content: safe center;
   padding: calc(28px + env(safe-area-inset-top, 0px)) 22px calc(20px + env(safe-area-inset-bottom, 0px));
   text-align: center;
 }
@@ -890,7 +893,8 @@ input {
   border-top: 0.5px solid #ffee9c;
   margin-top: 8px;
   padding-top: 12px;
-  color: var(--coral-deep);
+  /* 合计是庆祝行：ruby 在这套界面里专说「答错」，不能借来做强调 */
+  color: var(--ink);
   font-size: 24px;
   font-weight: 800;
 }
@@ -2968,4 +2972,9 @@ svg.icon {
   font-size: 13px;
   font-weight: 700;
   color: var(--coral-deep);
+}
+
+/* 混淆提示那行与 chip 组的间距，收进样式表（原来是内联样式） */
+.mix-title {
+  margin-bottom: 8px;
 }
