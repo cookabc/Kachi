@@ -120,7 +120,7 @@ input {
   #root {
     height: calc(100dvh - 48px);
     border-radius: 24px;
-    borderundefined: 0.5px solid #e9e8e6;
+    border: 0.5px solid #e9e8e6;
     box-shadow:
       0 24px 58px rgba(21, 42, 56, 0.13),
       0 7px 22px rgba(21, 42, 56, 0.08);
@@ -525,7 +525,7 @@ input {
 }
 .story {
   background: var(--green-soft);
-  borderundefined: 0.5px solid var(--lime-soft);
+  border: 0.5px solid var(--lime-soft);
   border-radius: 24px;
   padding: 14px 16px;
   font-size: 13px;
@@ -868,7 +868,7 @@ input {
 }
 .xp-card {
   background: #fff;
-  borderundefined: 0.5px solid #fff1b8;
+  border: 0.5px solid #fff1b8;
   border-radius: 24px;
   padding: 16px 18px;
   text-align: left;
@@ -901,7 +901,7 @@ input {
 }
 .chip {
   background: #fff6d0;
-  borderundefined: 0.5px solid var(--coral);
+  border: 0.5px solid var(--coral);
   color: var(--ink);
   border-radius: 999px;
   padding: 7px 14px;
@@ -971,7 +971,7 @@ input {
   display: grid;
   place-items: center;
   background: #fff;
-  borderundefined: 0.5px solid var(--green);
+  border: 0.5px solid var(--green);
   color: var(--green-deep);
   font-size: 24px;
   font-weight: 900;
@@ -1173,7 +1173,7 @@ svg.icon {
 }
 .teach-ex {
   background: var(--green-soft);
-  borderundefined: 0.5px solid var(--lime-soft);
+  border: 0.5px solid var(--lime-soft);
   border-radius: 16px;
   padding: 12px 14px;
   font-size: 13px;
@@ -1189,7 +1189,7 @@ svg.icon {
   line-height: 1.4;
   color: var(--ink-soft);
   background: #fff8e6;
-  borderundefined: 0.5px solid #ffe08a;
+  border: 0.5px solid #ffe08a;
   border-radius: 16px;
   padding: 10px 12px;
 }
@@ -1208,7 +1208,7 @@ svg.icon {
   align-items: center;
   gap: 8px;
   background: #fff;
-  borderundefined: 0.5px solid var(--line);
+  border: 0.5px solid var(--line);
   border-radius: 999px;
   padding: 6px 12px 6px 6px;
   font-size: 13px;
@@ -1348,7 +1348,7 @@ svg.icon {
   right: 12px;
   z-index: 30;
   background: #fff6d0;
-  borderundefined: 0.5px solid var(--coral);
+  border: 0.5px solid var(--coral);
   border-bottom-width: 4px;
   color: var(--ink);
   border-radius: 16px;
@@ -1373,7 +1373,7 @@ svg.icon {
   letter-spacing: 0.06em;
   background: #fff;
   color: var(--ink-soft);
-  borderundefined: 0.5px solid var(--line);
+  border: 0.5px solid var(--line);
   border-bottom-width: 5px;
   margin-top: 10px;
   cursor: pointer;
@@ -1437,7 +1437,7 @@ svg.icon {
     max-width: none;
     height: calc(100dvh - 56px);
     min-height: 660px;
-    borderundefined: 0.5px solid #bad8ca;
+    border: 0.5px solid #bad8ca;
     border-radius: 24px;
     background: #f7faf3;
     box-shadow: 0 30px 90px rgba(23, 68, 50, 0.16);
@@ -1540,7 +1540,7 @@ svg.icon {
     place-items: center;
     width: 34px;
     height: 34px;
-    borderundefined: 0.5px solid #84b699;
+    border: 0.5px solid #84b699;
     border-radius: 50%;
     color: var(--lime);
     font-size: 13px;
@@ -1598,7 +1598,7 @@ svg.icon {
 .lang-switch button {
   padding: 8px 18px;
   border-radius: 999px;
-  borderundefined: 0.5px solid var(--line);
+  border: 0.5px solid var(--line);
   background: #fff;
   font-weight: 800;
   font-size: 13px;
@@ -1672,7 +1672,7 @@ svg.icon {
   width: 40px;
   height: 40px;
   border-radius: 16px;
-  borderundefined: 0.5px solid var(--line);
+  border: 0.5px solid var(--line);
   background: #fff;
   font-size: 13px;
   font-weight: 800;
@@ -1698,7 +1698,7 @@ svg.icon {
   width: 34px;
   height: 34px;
   border-radius: 12px;
-  borderundefined: 0.5px solid var(--line);
+  border: 0.5px solid var(--line);
   background: #fff;
   color: var(--muted);
   display: grid;
@@ -1747,7 +1747,7 @@ svg.icon {
   border-radius: 24px;
   padding: 22px 22px 24px;
   background: var(--card);
-  borderundefined: 0.5px solid var(--ink);
+  border: 0.5px solid var(--ink);
   color: var(--ink);
   box-shadow: 0 7px 0 rgba(27, 29, 77, 0.16);
 }
@@ -1757,7 +1757,7 @@ svg.icon {
   top: 30px;
   width: 265px;
   height: 265px;
-  borderundefined: 0.5px solid rgba(27, 29, 77, 0.12);
+  border: 0.5px solid rgba(27, 29, 77, 0.12);
   border-radius: 50%;
   content: "";
   pointer-events: none;
@@ -1857,7 +1857,7 @@ svg.icon {
   justify-content: space-between;
   margin-top: 22px;
   padding: 0 17px;
-  borderundefined: 0.5px solid var(--ink);
+  border: 0.5px solid var(--ink);
   border-radius: 999px;
   background: var(--blue);
   color: #ffffff;
@@ -1905,7 +1905,7 @@ svg.icon {
 .lab-unit {
   overflow: hidden;
   margin-top: 16px;
-  borderundefined: 0.5px solid var(--ink);
+  border: 0.5px solid var(--ink);
   border-radius: 16px;
   background: var(--card);
   box-shadow: 0 8px 20px rgba(21, 42, 56, 0.035);
@@ -1994,6 +1994,11 @@ svg.icon {
   color: #8b9593;
   font-size: 13px;
 }
+/* 锁形：26px 的圆里放一个字太小，锁要能一眼认出"这课还没开"。 */
+.lab-lesson-status .lab-lock {
+  width: 13px;
+  height: 13px;
+}
 .lab-lesson.is-next .lab-lesson-status {
   background: #e66d4e;
   color: #fff;
@@ -2051,7 +2056,7 @@ svg.icon {
   background: #f38361;
 }
 .prompt {
-  borderundefined: 0.5px solid #e2dbd0;
+  border: 0.5px solid #e2dbd0;
   border-radius: 24px;
   background: var(--card);
   box-shadow: 0 14px 35px rgba(21, 42, 56, 0.07);
@@ -2252,7 +2257,7 @@ svg.icon {
   height: 9px;
   border-radius: 50%;
   background: var(--card);
-  borderundefined: 0.5px solid var(--ink);
+  border: 0.5px solid var(--ink);
 }
 .g-leg .dot.seen {
   background: var(--green);
@@ -2484,7 +2489,7 @@ svg.icon {
   margin-top: -9px;
   border-radius: 50%;
   background: var(--card);
-  borderundefined: 0.5px solid var(--ink);
+  border: 0.5px solid var(--ink);
   box-shadow: 0 var(--press-sm) 0 var(--line);
 }
 .motion-slider::-moz-range-track {
@@ -2497,7 +2502,7 @@ svg.icon {
   height: 18px;
   border-radius: 50%;
   background: var(--card);
-  borderundefined: 0.5px solid var(--ink);
+  border: 0.5px solid var(--ink);
   box-shadow: 0 var(--press-sm) 0 var(--line);
 }
 .motion-slider:focus-visible {
@@ -2707,7 +2712,7 @@ svg.icon {
   display: flex;
   height: 210px;
   overflow: hidden;
-  borderundefined: 0.5px solid var(--ink);
+  border: 0.5px solid var(--ink);
   border-radius: 16px;
   background: var(--card);
   box-shadow: 0 var(--press) 0 #e3ded4;
@@ -2799,7 +2804,7 @@ svg.icon {
   align-items: center;
   justify-content: center;
   gap: 1px;
-  borderundefined: 0.5px solid var(--ink);
+  border: 0.5px solid var(--ink);
   border-radius: 50%;
   background: var(--card);
   color: var(--ink);
@@ -2833,7 +2838,7 @@ svg.icon {
 .g-weak {
   margin: 14px 0 4px;
   padding: 12px 13px;
-  borderundefined: 0.5px solid var(--ink);
+  border: 0.5px solid var(--ink);
   border-radius: 16px;
   background: var(--card);
   box-shadow: 0 5px 0 rgba(27, 29, 77, 0.12);
@@ -2852,7 +2857,7 @@ svg.icon {
   gap: 3px;
   padding: 10px 0;
   text-align: left;
-  transition: opacity 160ms ease;
+  transition: opacity 250ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 .g-weak-item:hover {
   opacity: 0.72;

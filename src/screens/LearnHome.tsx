@@ -120,7 +120,31 @@ export function LearnHome({
                           <span className="lab-lesson-index">{String(index + 1).padStart(2, "0")}</span>
                           <span className="lab-lesson-name">{lesson.title}</span>
                           <span className="lab-lesson-status" aria-hidden="true">
-                            {done ? "✓" : isNext ? "↗" : unlocked ? "→" : "·"}
+                            {done ? (
+                              "✓"
+                            ) : isNext ? (
+                              "↗"
+                            ) : unlocked ? (
+                              "→"
+                            ) : (
+                              /* 未解锁的课用一个锁，不是中间点 —— 中间点读起来像半个标点，
+                                 而且这一行已经有 aria-label 说了"未解锁"。
+                                 锁形本身在 26px 的圆里比一个字更清楚。 */
+                              <svg
+                                className="lab-lock"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="2.4"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                aria-hidden="true"
+                                focusable="false"
+                              >
+                                <rect x="5" y="11" width="14" height="9" rx="2" />
+                                <path d="M8 11V8a4 4 0 0 1 8 0v3" />
+                              </svg>
+                            )}
                           </span>
                         </button>
                       </li>
