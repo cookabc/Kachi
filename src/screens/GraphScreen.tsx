@@ -3,6 +3,7 @@ import type { Course, LearnerState } from "../domain";
 import { recentMissTermIds } from "../engine";
 import { conceptOf } from "../flow";
 import { arcPath, edgePath, graphEdges, graphLayout, labelPlacements } from "../graph";
+import { weakLinks } from "../graph/weak-link";
 import { localizedTerm } from "../localization";
 import type { UiText } from "../ui";
 
@@ -44,6 +45,8 @@ export function GraphScreen({
   );
   const seen = useMemo(() => new Set(state.seenConceptIds), [state.seenConceptIds]);
   const missed = useMemo(() => new Set(recentMissTermIds(state)), [state]);
+  // The learner's weak links: the unseen terms closest to what they know.
+  const weak = useMemo(() => weakLinks(course, state.seenConceptIds, 3), [course, state.seenConceptIds]);
 
   const selectedConcept = selected ? conceptOf(course, selected) : undefined;
   const unit = selectedConcept ? course.units.find((item) => item.id === selectedConcept.unit) : undefined;
@@ -57,6 +60,48 @@ export function GraphScreen({
       <div className="scroll g-scroll">
         <p className="g-hint">{t.graph.hint}</p>
         <p className="g-stats">{t.graph.stats(course.concepts.length, edges.length)}</p>
+
+        {/* Why the learner is stuck. The map is a picture of every relation;
+            this answers the question the picture raises — which unseen term
+            is holding the rest back, and what it would unlock. */}
+        {weak.length > 0 && (
+          <section className="g-weak" aria-labelledby="gWeakTitle">
+            <h3 id="gWeakTitle" className="g-kicker">
+              {t.graph.weakTitle}
+            </h3>
+            <ul className="g-weak-list">
+              {weak.map((link) => (
+                <li key={link.id}>
+                  <button
+                    type="button"
+                    className="g-weak-item"
+                    onClick={() => setSelected(link.id)}
+                    aria-label={`${link.term}${link.unlocks ? ` — unlocks ${link.unlocks}` : ""}`}
+                  >
+                    <span className="g-weak-term">{link.term}</span>
+                    {link.chain.length > 0 ? (
+                      <span className="g-weak-chain">
+                        {link.chain.map((id) => {
+                          const concept = conceptOf(course, id);
+                          return concept ? (
+                            <span key={id} className="g-weak-step">
+                              {concept.term}
+                            </span>
+                          ) : null;
+                        })}
+                      </span>
+                    ) : (
+                      <span className="g-weak-chain g-weak-chain--none">{t.graph.weakExplore}</span>
+                    )}
+                    {link.unlocks > 0 && (
+                      <span className="g-weak-unlocks">{t.graph.weakUnlocks(link.unlocks)}</span>
+                    )}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
 
         <div className="g-legend" aria-hidden="true">
           <span className="g-leg">

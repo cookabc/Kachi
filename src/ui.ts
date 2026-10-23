@@ -51,6 +51,12 @@ export interface UiText {
     emptyHint: string;
     footer: string;
   };
+  bench: {
+    ariaLabel: string;
+    kicker: string;
+    sliderLabel: string;
+    hint: string;
+  };
   graph: {
     brand: string;
     hint: string;
@@ -63,6 +69,9 @@ export interface UiText {
     legendSibling: string;
     relLabels: Record<"confusable" | "prereq" | "sibling", string>;
     openGlossary: string;
+    weakTitle: string;
+    weakExplore: string;
+    weakUnlocks: (n: number) => string;
   };
   settings: {
     brand: string;
@@ -174,6 +183,12 @@ export const UI: Record<Lang, UiText> = {
       emptyHint: "试试 hedge、put、swap、margin call。",
       footer: "不构成投资建议。只讲词语，不作推荐。",
     },
+    bench: {
+      ariaLabel: "两个易混词的对照",
+      kicker: "对照台",
+      sliderLabel: "拖动分隔线，比较两个词",
+      hint: "拖动分隔线，或者用方向键移动。",
+    },
     graph: {
       brand: "知识图谱",
       hint: "点一个词，看它连着谁。",
@@ -186,6 +201,9 @@ export const UI: Record<Lang, UiText> = {
       legendSibling: "同族",
       relLabels: { confusable: "易混", prereq: "先学", sibling: "同族" },
       openGlossary: "在词汇表中查看",
+      weakTitle: "卡住你的是这些",
+      weakExplore: "还没有先修关系——按课程顺序学就好",
+      weakUnlocks: (n) => `会解锁 ${n} 个词`,
     },
     settings: {
       brand: "设置",
@@ -305,6 +323,12 @@ export const UI: Record<Lang, UiText> = {
       emptyHint: "Try hedge, put, swap, margin call.",
       footer: "Not investment advice. Words, not recommendations.",
     },
+    bench: {
+      ariaLabel: "Two confusable words, side by side",
+      kicker: "Contrast bench",
+      sliderLabel: "Drag the divider to compare the two words",
+      hint: "Drag the divider, or move it with the arrow keys.",
+    },
     graph: {
       brand: "The map",
       hint: "Tap a word to see what it connects to.",
@@ -317,6 +341,9 @@ export const UI: Record<Lang, UiText> = {
       legendSibling: "family",
       relLabels: { confusable: "mix-up", prereq: "prereq", sibling: "family" },
       openGlossary: "Open in the glossary",
+      weakTitle: "What's holding you up",
+      weakExplore: "No prereq chain yet — just follow the course order",
+      weakUnlocks: (n) => `unlocks ${n} term${n === 1 ? "" : "s"}`,
     },
     settings: {
       brand: "Settings",

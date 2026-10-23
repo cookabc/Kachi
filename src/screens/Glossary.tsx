@@ -2,6 +2,7 @@ import { ShareIcon } from "../chrome";
 import type { Concept, Course, LearnerState } from "../domain";
 import { localizedTerm } from "../localization";
 import type { Lang, UiText } from "../ui";
+import { ContrastBench } from "./ContrastBench";
 
 export function Glossary({
   state,
@@ -77,15 +78,11 @@ export function Glossary({
                         </button>
                       )}
                     </h3>
-                    <p className="def">{concept.definition}</p>
-                    <p className="ex">
-                      {t.glossary.forExample}
-                      {concept.example}
-                    </p>
-                    <p className="mu">
-                      {t.glossary.mix}
-                      <strong>{concept.mixUp}</strong> — {concept.mixUpWhy}
-                    </p>
+                    {/* The contrast bench replaces the flat mix-up line: the
+                        two words sit either side of a divider the reader
+                        drags, so the difference is something they move
+                        through rather than something they read twice. */}
+                    <ContrastBench concept={concept} course={course} lang={lang} t={t} />
                   </article>
                 );
               })}
