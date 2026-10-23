@@ -1,5 +1,7 @@
+import { type CSSProperties, useEffect, useState } from "react";
 import { NAV_ICONS } from "./art";
 import type { LearnerState } from "./domain";
+import { confettiBits } from "./motion";
 import type { UiText } from "./ui";
 
 export const MAX_HEARTS = 5;
@@ -9,20 +11,13 @@ export type Tab = "learn" | "practice" | "glossary" | "graph" | "settings";
 export function StatsBar({ state }: { state: LearnerState }) {
   return (
     <div className="stats" role="img" aria-label={`XP ${state.xp}, ${state.streak}`}>
-      <div className="stat xp">{state.xp} XP</div>
+      <div className="stat xp">
+        <span className="ic">◆</span>
+        {state.xp}
+      </div>
       <div className="stat streak">
-        {state.streak}{" "}
-        <svg
-          width="14"
-          height="14"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1.5"
-          aria-hidden="true"
-        >
-          <path d="M12 3c2 5-1 6-1 9 2-1 3-3 3-5 4 4 5 6 5 9a7 7 0 0 1-14 0c0-4 4-7 7-13Z" />
-        </svg>
+        <span className="ic">🔥</span>
+        {state.streak}
       </div>
     </div>
   );
@@ -65,6 +60,41 @@ export function Nav({ tab, onTab, t }: { tab: Tab; onTab: (tab: Tab) => void; t:
         </button>
       ))}
     </nav>
+  );
+}
+
+export function Confetti({ level = 100 }: { level?: number }) {
+  const [bits, setBits] = useState<CSSProperties[]>([]);
+  useEffect(() => {
+    const count = confettiBits(level);
+    // 0% motion: no burst at all — the slider owns the paper rain
+    if (!count) return;
+    const colors = ["#58CC02", "#FFC800", "#1CB0F6", "#FF4B4B", "#89E219", "#7DD3FC"];
+    setBits(
+      Array.from(
+        { length: count },
+        (_, i) =>
+          ({
+            background: colors[i % colors.length],
+            width: `${8 + Math.random() * 10}px`,
+            height: `${10 + Math.random() * 14}px`,
+            left: `${36 + Math.random() * 28}%`,
+            top: "26%",
+            "--x": `${Math.random() * 260 - 130}px`,
+            "--r": `${Math.random() * 420}deg`,
+          }) as CSSProperties,
+      ),
+    );
+    const timer = setTimeout(() => setBits([]), 1200);
+    return () => clearTimeout(timer);
+  }, [level]);
+  return (
+    <div className="confetti-layer">
+      {/* one-shot random burst: the bits have no stable identity beyond position */}
+      {bits.map((style, i) => (
+        <i key={i} className="bit" style={style} />
+      ))}
+    </div>
   );
 }
 

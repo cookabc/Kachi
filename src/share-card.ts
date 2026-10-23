@@ -28,18 +28,18 @@ const TEXT_LH = 1.4;
 const FONT_STACK = "'Avenir Next', 'PingFang SC', 'Segoe UI', 'Microsoft YaHei', sans-serif";
 
 const COLOR = {
-  sky: "#fed2e1",
-  mint: "#fff7ed",
-  card: "#fdfdff",
-  ink: "#182449",
-  inkSoft: "#56468b",
-  muted: "#777b84",
-  line: "#e3dfe6",
-  yellow: "#ffc53d",
-  greenSoft: "#ddf9f2",
-  green: "#ec5a72",
-  greenDeep: "#ca244d",
-  skyBlue: "#3e63dd",
+  sky: "#ffd0e4",
+  mint: "#fff8ec",
+  card: "#ffffff",
+  ink: "#1b1d4d",
+  inkSoft: "#565a85",
+  muted: "#6b6f99",
+  line: "#e3dff0",
+  yellow: "#ffd23f",
+  greenSoft: "#dcfaef",
+  green: "#ff4f6d",
+  greenDeep: "#c73a52",
+  skyBlue: "#3b6bff",
 } as const;
 
 export interface PairCardInput {
@@ -362,7 +362,7 @@ export function buildPairCardSvg(input: PairCardInput): string {
   }
   parts.push(
     `<circle cx="${midX}" cy="${dy + 5}" r="${STAMP_R}" fill="${COLOR.greenDeep}"/>`,
-    `<circle cx="${midX}" cy="${dy}" r="${STAMP_R}" fill="#fdfdff" stroke="${COLOR.green}" stroke-width="7"/>`,
+    `<circle cx="${midX}" cy="${dy}" r="${STAMP_R}" fill="#fff" stroke="${COLOR.green}" stroke-width="7"/>`,
     `<text x="${midX}" y="${dy + 17}" text-anchor="middle" font-family="${FONT_STACK}" font-size="52" font-weight="900" fill="${COLOR.greenDeep}">≠</text>`,
   );
 

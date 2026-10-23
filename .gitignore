@@ -5,7 +5,3 @@ dist/
 coverage/
 .DS_Store
 *.local
-
-.impeccable/review/
-.impeccable/questions/
-.impeccable/direction-seed.txt

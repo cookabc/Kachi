@@ -23,7 +23,7 @@ function pairInput(course: Course, concept: Concept, unitLabel: string): PairCar
   if (!sibling) throw new Error(`${concept.id} has no mix-up sibling`);
   const unit = course.units.find((u) => u.id === concept.unit);
   return {
-    kicker: `Kachi / ${unitLabel} ${concept.unit} / ${unit?.title ?? ""}`,
+    kicker: `Kachi · ${unitLabel} ${concept.unit} · ${unit?.title ?? ""}`,
     termA: concept.term,
     forkA: concept.definition,
     termB: sibling.term,
@@ -89,7 +89,7 @@ describe("pair card layout", () => {
 
   it("steps down tiers together for long content", () => {
     const longPair: PairCardInput = {
-      kicker: "Kachi / Unit 5 / What the Rich Actually Do",
+      kicker: "Kachi · Unit 5 · What the Rich Actually Do",
       termA: "securities-backed loan",
       forkA:
         "Borrowing against a portfolio you keep, so the bank can sell your securities if the value drops and you cannot top up the collateral in time.",
@@ -145,7 +145,7 @@ describe("wrapText", () => {
   });
 
   it("preserves original spaces between CJK and latin, drops CJK-CJK spaces", () => {
-    expect(wrapText("单元 1 / Hedge or Pledge", 30, 824)?.join("")).toBe("单元 1 / Hedge or Pledge");
+    expect(wrapText("单元 1 · Hedge or Pledge", 30, 824)?.join("")).toBe("单元 1 · Hedge or Pledge");
     expect(wrapText("买入一张 put，崩盘时就不那么疼。", 38, 744)?.join("")).toBe(
       "买入一张 put，崩盘时就不那么疼。",
     );
@@ -208,7 +208,7 @@ describe("wrapText", () => {
 
 describe("buildPairCardSvg", () => {
   const sample: PairCardInput = {
-    kicker: "Kachi / 单元 1 / Hedge or Pledge",
+    kicker: "Kachi · 单元 1 · Hedge or Pledge",
     termA: "hedge",
     forkA: "为已经持有的仓位买保险，而不是把它卖掉。",
     termB: "pledge",
@@ -258,7 +258,7 @@ describe("buildPairCardSvg", () => {
   it("falls back to hairline flanks when no scene resolves", () => {
     const svg = buildPairCardSvg(sample);
     expect(svg).not.toContain("duel-art");
-    expect(svg).toContain('stroke="#e3dfe6"');
+    expect(svg).toContain('stroke="#e3dff0"');
     const parsed = new DOMParser().parseFromString(svg, "image/svg+xml");
     expect(parsed.querySelector("parsererror")).toBeNull();
   });

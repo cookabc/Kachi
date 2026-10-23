@@ -465,6 +465,81 @@ function App() {
 
   return (
     <main className="shell home-shell">
+      <aside className="desktop-story" aria-labelledby="desktop-story-title">
+        <div className="desktop-story-top">
+          <span className="desktop-wordmark">
+            Kachi<span aria-hidden="true">✳</span>
+          </span>
+          <span className="desktop-edition">
+            {lang === "zh-CN" ? "财经英语实验室 / 001" : "FINANCIAL ENGLISH LAB / 001"}
+          </span>
+        </div>
+        <div className="desktop-story-main">
+          <p className="desktop-eyebrow">
+            {lang === "zh-CN" ? "学会看清词语背后的动作" : "SEE THE ACTION BEHIND THE WORD"}
+          </p>
+          <p id="desktop-story-title" className="desktop-story-title">
+            {lang === "zh-CN" ? (
+              <>
+                别背单词。
+                <br />
+                学会<span>分辨。</span>
+              </>
+            ) : (
+              <>
+                Less memorizing.
+                <br />
+                <span>More meaning.</span>
+              </>
+            )}
+          </p>
+          <p className="desktop-story-copy">
+            {lang === "zh-CN"
+              ? "Hedge 是保护风险，Pledge 是拿资产作抵押。一个词的差别，可能让整段财经新闻的意思反过来。"
+              : "Hedge protects against risk. Pledge puts an asset up as collateral. One word can change the meaning of a financial story."}
+          </p>
+          <div className="concept-pair">
+            <div>
+              <span>01 / HEDGE</span>
+              <strong>{lang === "zh-CN" ? "对冲风险" : "Protect"}</strong>
+            </div>
+            <span className="concept-pair-divider" aria-hidden="true">
+              ≠
+            </span>
+            <div>
+              <span>02 / PLEDGE</span>
+              <strong>{lang === "zh-CN" ? "抵押资产" : "Collateral"}</strong>
+            </div>
+          </div>
+          <button
+            type="button"
+            className="desktop-start"
+            onClick={() =>
+              beginLesson(
+                course.lessons.find(
+                  (lesson) =>
+                    isLessonUnlocked(state, course, lesson.id) &&
+                    !state.completedLessonIds.includes(lesson.id),
+                )?.id ?? course.lessons[0].id,
+              )
+            }
+          >
+            {lang === "zh-CN" ? "开始下一课" : "Start the next lesson"}
+            <span aria-hidden="true">↗</span>
+          </button>
+        </div>
+        <div className="desktop-story-bottom">
+          <span>
+            {lang === "zh-CN"
+              ? "本地保存，无账户，无投资建议"
+              : "LOCAL FIRST, NO ACCOUNT, NO INVESTMENT ADVICE"}
+          </span>
+          <span>
+            {state.completedLessonIds.length.toString().padStart(2, "0")} /{" "}
+            {course.lessons.length.toString().padStart(2, "0")}
+          </span>
+        </div>
+      </aside>
       <div className="app-window">
         {updateReady && (
           <button type="button" className="update" onClick={activateUpdate}>
