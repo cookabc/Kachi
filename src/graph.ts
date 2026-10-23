@@ -109,12 +109,14 @@ export function graphLayout(course: Course, size: number, pad: number): GraphLay
  *
  *  Rotated labels were unreadable at this scale (11px type at ±80°), so every
  *  label sits horizontally. Crowding is resolved with exact box collision:
- *  nodes are visited in angular order and each label takes the first lane
- *  whose box clears every placed box; lanes that would push a label outside
- *  the viewBox are avoided. When every lane collides (the densest arc
- *  physically cannot fit), the least-overlapping lane wins — the labels carry
- *  a card-coloured halo in CSS so a residual touch stays readable. Pure and
- *  deterministic — the same course always draws the same map. */
+ *  nodes are visited in priority order (the caller decides what matters —
+ *  misses first, then seen terms, then unseen), and each label takes the
+ *  first lane whose box clears every placed box. When every lane collides the
+ *  label is dropped instead of printed on top of another one: the dot stays
+ *  on the ring and tapping the node still opens the card, so a hidden label
+ *  costs a glance, not the information. Lanes that would push a label outside
+ *  the viewBox are avoided. Pure and deterministic — the same course always
+ *  draws the same map. */
 export interface LabelPlacement {
   x: number;
   y: number;
@@ -134,21 +136,29 @@ export function labelPlacements(
   labelWidth: (id: string) => number,
   {
     firstOffset = 12,
-    laneGap = 16,
-    maxLanes = 4,
+    laneGap = 15,
+    maxLanes = 5,
     lineHeight = 15.5,
     edgeMargin = 2,
+    priority,
   }: {
     firstOffset?: number;
     laneGap?: number;
     maxLanes?: number;
     lineHeight?: number;
     edgeMargin?: number;
+    /** Higher wins the inner lanes first; unset means angular order. */
+    priority?: (id: string) => number;
   } = {},
 ): Map<string, LabelPlacement> {
   const boxes: Box[] = [];
   const out = new Map<string, LabelPlacement>();
-  const order = [...layout.nodes].sort((a, b) => a.angle - b.angle);
+  const order = [...layout.nodes].sort((a, b) => {
+    const pa = priority ? priority(a.id) : 0;
+    const pb = priority ? priority(b.id) : 0;
+    if (pa !== pb) return pb - pa;
+    return a.angle - b.angle;
+  });
   const right = layout.center * 2;
 
   for (const node of order) {
@@ -172,7 +182,7 @@ export function labelPlacements(
     };
     const outside = (box: Box) => box.x1 < edgeMargin || box.x2 > right - edgeMargin;
 
-    let bestLane = 0;
+    let bestLane: number | null = null;
     let bestOverlap = Number.POSITIVE_INFINITY;
     for (let lane = 0; lane < maxLanes; lane++) {
       const { box } = place(lane);
@@ -188,6 +198,8 @@ export function labelPlacements(
         bestLane = lane;
       }
     }
+    // Nothing clear anywhere: hiding the label beats printing two on one spot.
+    if (bestLane === null || bestOverlap > 0) continue;
     const { px, py, box } = place(bestLane);
     boxes.push(box);
     out.set(node.id, { x: px, y: py, anchor: flip ? "end" : "start", lane: bestLane });

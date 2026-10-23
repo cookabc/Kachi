@@ -11,13 +11,19 @@ const VIEW = 480;
 const PAD = 131;
 // Truncation keeps every label inside the viewBox: at 12px monospace the
 // advance is 0.6em, so fourteen characters ≈ 101px and the outermost lane
-// (radius + 12 + 3×16) still clears the three-o'clock edge. Lanes are packed
-// by exact box collision in labelPlacements().
+// still clears the three-o'clock edge. Lanes are packed by exact box
+// collision in labelPlacements(); a label that cannot fit any lane is
+// dropped there and the dot stays on the ring.
 const LABEL_CHARS = 14;
 const CHAR_WIDTH = 7.2;
 
 function labelText(term: string): string {
-  return term.length > LABEL_CHARS ? `${term.slice(0, LABEL_CHARS - 1)}…` : term;
+  if (term.length <= LABEL_CHARS) return term;
+  // Cut at a separator when one is nearby: "securities-ba…" reads like a
+  // bug, "securities-…" reads like an abbreviation.
+  const slice = term.slice(0, LABEL_CHARS - 1);
+  const cut = Math.max(slice.lastIndexOf("-"), slice.lastIndexOf(" "));
+  return `${term.slice(0, cut > LABEL_CHARS / 2 ? cut : LABEL_CHARS - 1)}…`;
 }
 
 export function GraphScreen({
@@ -35,16 +41,24 @@ export function GraphScreen({
 
   const edges = useMemo(() => graphEdges(course), [course]);
   const layout = useMemo(() => graphLayout(course, VIEW, PAD), [course]);
-  const labels = useMemo(
-    () =>
-      labelPlacements(layout, (id) => {
-        const concept = conceptOf(course, id);
-        return concept ? labelText(concept.term).length * CHAR_WIDTH : 40;
-      }),
-    [layout, course],
-  );
   const seen = useMemo(() => new Set(state.seenConceptIds), [state.seenConceptIds]);
   const missed = useMemo(() => new Set(recentMissTermIds(state)), [state]);
+  const labels = useMemo(
+    () =>
+      labelPlacements(
+        layout,
+        (id) => {
+          const concept = conceptOf(course, id);
+          return concept ? labelText(concept.term).length * CHAR_WIDTH : 40;
+        },
+        {
+          // 放不下的标签会被丢弃，所以先让最要紧的词占位：
+          // 错过的词是复习的线索，学过的词是你的领地。
+          priority: (id) => (missed.has(id) ? 2 : seen.has(id) ? 1 : 0),
+        },
+      ),
+    [layout, course, missed, seen],
+  );
   // The learner's weak links: the unseen terms closest to what they know.
   const weak = useMemo(() => weakLinks(course, state.seenConceptIds, 3), [course, state.seenConceptIds]);
 
@@ -163,25 +177,26 @@ export function GraphScreen({
               );
             })}
 
-            {/* dots + horizontal lane labels (presentation only) */}
+            {/* dots always; a label only when a lane fit (see labelPlacements) */}
             {layout.nodes.map((node) => {
               const concept = conceptOf(course, node.id);
               if (!concept) return null;
               const label = labels.get(node.id);
-              if (!label) return null;
               const status = missed.has(node.id) ? "missed" : seen.has(node.id) ? "seen" : "unseen";
               return (
                 <g key={node.id}>
                   <circle className={`g-dot d-${status}`} cx={node.x} cy={node.y} r={6} />
-                  <text
-                    className={`g-label${node.id === selected ? " sel" : ""}`}
-                    x={label.x}
-                    y={label.y}
-                    textAnchor={label.anchor}
-                    dominantBaseline="central"
-                  >
-                    {labelText(concept.term)}
-                  </text>
+                  {label && (
+                    <text
+                      className={`g-label${node.id === selected ? " sel" : ""}`}
+                      x={label.x}
+                      y={label.y}
+                      textAnchor={label.anchor}
+                      dominantBaseline="central"
+                    >
+                      {labelText(concept.term)}
+                    </text>
+                  )}
                 </g>
               );
             })}

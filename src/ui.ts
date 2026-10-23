@@ -39,6 +39,9 @@ export interface UiText {
     missCopy: (n: number) => string;
     noMissCopy: string;
     start: (n: number) => string;
+    targetsTitle: string;
+    unitLabel: (n: number) => string;
+    moreCount: (n: number) => string;
   };
   glossary: {
     brand: string;
@@ -80,6 +83,9 @@ export interface UiText {
     exportBtn: string;
     importBtn: string;
     contentNote: string;
+    colophonVersion: string;
+    colophonLicense: string;
+    colophonSource: string;
     langLabel: string;
     langNames: Record<Lang, string>;
     motionLabel: string;
@@ -171,6 +177,9 @@ export const UI: Record<Lang, UiText> = {
       missCopy: (n) => `有 ${n} 个术语等着复习。复习不会解锁路径。`,
       noMissCopy: "还没有错题。先练第 1 单元。",
       start: (n) => `开始 ${n} 题复习`,
+      targetsTitle: "今天轮到这些",
+      unitLabel: (n) => `第 ${n} 单元`,
+      moreCount: (n) => `另有 ${n} 个`,
     },
     glossary: {
       brand: "词汇表",
@@ -212,6 +221,9 @@ export const UI: Record<Lang, UiText> = {
       exportBtn: "导出学习数据",
       importBtn: "导入学习数据",
       contentNote: "课程以 Git 内容包发布；涉及税务、法规与金融工具的条目会标注适用范围与复核状态。",
+      colophonVersion: "版本",
+      colophonLicense: "许可",
+      colophonSource: "源码",
       langLabel: "界面与课程语言",
       langNames: { "zh-CN": "中文", "en-US": "English" },
       motionLabel: "动效强度",
@@ -311,6 +323,9 @@ export const UI: Record<Lang, UiText> = {
       missCopy: (n) => `${n} term${n === 1 ? "" : "s"} to review. Practice never unlocks the path.`,
       noMissCopy: "No misses yet — we'll drill Unit 1.",
       start: (n) => `Start a ${n}-prompt round`,
+      targetsTitle: "Up today",
+      unitLabel: (n) => `Unit ${n}`,
+      moreCount: (n) => `${n} more`,
     },
     glossary: {
       brand: "Glossary",
@@ -353,6 +368,9 @@ export const UI: Record<Lang, UiText> = {
       importBtn: "Import learning data",
       contentNote:
         "Courses ship as Git content packs; entries touching tax, regulation, and instruments carry scope and review status.",
+      colophonVersion: "Version",
+      colophonLicense: "License",
+      colophonSource: "Source",
       langLabel: "Interface & course language",
       langNames: { "zh-CN": "中文", "en-US": "English" },
       motionLabel: "Motion",

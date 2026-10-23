@@ -551,7 +551,13 @@ function App() {
           <LearnHome state={state} course={course} t={t} missedCount={missedCount} onStart={beginLesson} />
         )}
         {tab === "practice" && (
-          <PracticeHome t={t} missedCount={missedCount} onStart={() => beginPractice()} />
+          <PracticeHome
+            state={state}
+            course={course}
+            t={t}
+            missedCount={missedCount}
+            onStart={() => beginPractice()}
+          />
         )}
         {tab === "glossary" && (
           <Glossary
