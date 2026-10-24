@@ -1794,7 +1794,8 @@ svg.icon {
 }
 .lab-top .brand span {
   margin-left: 2px;
-  color: #ec8e7b;
+  /* salmon 当 13px 文字只有 2.35:1，改用 ruby-11（--coral-deep）5.29:1。 */
+  color: var(--coral-deep);
   font-size: 13px;
   vertical-align: top;
 }
@@ -1857,7 +1858,8 @@ svg.icon {
 }
 .lab-overline {
   margin-top: 35px;
-  color: var(--coral);
+  /* ruby-9 当 13px 文字只有 3.79:1；文字档用 ruby-11（--coral-deep）5.29:1。 */
+  color: var(--coral-deep);
 }
 .lab-hero-title {
   position: relative;
@@ -2228,7 +2230,8 @@ svg.icon {
 .lang-switch button.on {
   border-color: #ec9455;
   background: #feebe7;
-  color: #ec8e7b;
+  /* salmon 在 tomato-3 底上只有 2.09:1，改用 ruby-11 4.72:1。 */
+  color: var(--coral-deep);
 }
 .share-backdrop {
   background: color-mix(in srgb, var(--ink) 64%, transparent);
@@ -2275,7 +2278,7 @@ svg.icon {
   .desktop-wordmark span,
   .desktop-eyebrow,
   .desktop-story-title span {
-    color: #cc4e00; /* orange-11 */
+    color: #b34300; /* orange-11 加深：官方 #cc4e00 在 sand-3 上只有 3.96:1，此处为 13px 文字，取 4.96:1 */
   }
   .desktop-edition,
   .desktop-story-copy,
@@ -2297,7 +2300,7 @@ svg.icon {
   }
   .concept-pair-divider {
     border-color: #bcbbb5;
-    color: #cc4e00; /* orange-11 */
+    color: #b34300; /* orange-11 加深：官方 #cc4e00 在 sand-3 上只有 3.96:1，此处为 13px 文字，取 4.96:1 */
   }
   .desktop-start {
     background: var(--ink);
