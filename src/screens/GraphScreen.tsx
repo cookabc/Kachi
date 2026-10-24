@@ -3,6 +3,7 @@ import type { Course, LearnerState } from "../domain";
 import { recentMissTermIds } from "../engine";
 import { conceptOf } from "../flow";
 import { arcPath, edgePath, graphEdges, graphLayout, labelPlacements } from "../graph";
+import { weakLinks } from "../graph/weak-link";
 import { localizedTerm } from "../localization";
 import type { UiText } from "../ui";
 
@@ -10,13 +11,19 @@ const VIEW = 480;
 const PAD = 131;
 // Truncation keeps every label inside the viewBox: at 12px monospace the
 // advance is 0.6em, so fourteen characters ≈ 101px and the outermost lane
-// (radius + 12 + 3×16) still clears the three-o'clock edge. Lanes are packed
-// by exact box collision in labelPlacements().
+// still clears the three-o'clock edge. Lanes are packed by exact box
+// collision in labelPlacements(); a label that cannot fit any lane is
+// dropped there and the dot stays on the ring.
 const LABEL_CHARS = 14;
 const CHAR_WIDTH = 7.2;
 
 function labelText(term: string): string {
-  return term.length > LABEL_CHARS ? `${term.slice(0, LABEL_CHARS - 1)}…` : term;
+  if (term.length <= LABEL_CHARS) return term;
+  // Cut at a separator when one is nearby: "securities-ba…" reads like a
+  // bug, "securities-…" reads like an abbreviation.
+  const slice = term.slice(0, LABEL_CHARS - 1);
+  const cut = Math.max(slice.lastIndexOf("-"), slice.lastIndexOf(" "));
+  return `${term.slice(0, cut > LABEL_CHARS / 2 ? cut : LABEL_CHARS - 1)}…`;
 }
 
 export function GraphScreen({
@@ -34,16 +41,26 @@ export function GraphScreen({
 
   const edges = useMemo(() => graphEdges(course), [course]);
   const layout = useMemo(() => graphLayout(course, VIEW, PAD), [course]);
-  const labels = useMemo(
-    () =>
-      labelPlacements(layout, (id) => {
-        const concept = conceptOf(course, id);
-        return concept ? labelText(concept.term).length * CHAR_WIDTH : 40;
-      }),
-    [layout, course],
-  );
   const seen = useMemo(() => new Set(state.seenConceptIds), [state.seenConceptIds]);
   const missed = useMemo(() => new Set(recentMissTermIds(state)), [state]);
+  const labels = useMemo(
+    () =>
+      labelPlacements(
+        layout,
+        (id) => {
+          const concept = conceptOf(course, id);
+          return concept ? labelText(concept.term).length * CHAR_WIDTH : 40;
+        },
+        {
+          // 放不下的标签会被丢弃，所以先让最要紧的词占位：
+          // 错过的词是复习的线索，学过的词是你的领地。
+          priority: (id) => (missed.has(id) ? 2 : seen.has(id) ? 1 : 0),
+        },
+      ),
+    [layout, course, missed, seen],
+  );
+  // The learner's weak links: the unseen terms closest to what they know.
+  const weak = useMemo(() => weakLinks(course, state.seenConceptIds, 3), [course, state.seenConceptIds]);
 
   const selectedConcept = selected ? conceptOf(course, selected) : undefined;
   const unit = selectedConcept ? course.units.find((item) => item.id === selectedConcept.unit) : undefined;
@@ -57,6 +74,48 @@ export function GraphScreen({
       <div className="scroll g-scroll">
         <p className="g-hint">{t.graph.hint}</p>
         <p className="g-stats">{t.graph.stats(course.concepts.length, edges.length)}</p>
+
+        {/* Why the learner is stuck. The map is a picture of every relation;
+            this answers the question the picture raises — which unseen term
+            is holding the rest back, and what it would unlock. */}
+        {weak.length > 0 && (
+          <section className="g-weak" aria-labelledby="gWeakTitle">
+            <h3 id="gWeakTitle" className="g-kicker">
+              {t.graph.weakTitle}
+            </h3>
+            <ul className="g-weak-list">
+              {weak.map((link) => (
+                <li key={link.id}>
+                  <button
+                    type="button"
+                    className="g-weak-item"
+                    onClick={() => setSelected(link.id)}
+                    aria-label={`${link.term}${link.unlocks ? ` — unlocks ${link.unlocks}` : ""}`}
+                  >
+                    <span className="g-weak-term">{link.term}</span>
+                    {link.chain.length > 0 ? (
+                      <span className="g-weak-chain">
+                        {link.chain.map((id) => {
+                          const concept = conceptOf(course, id);
+                          return concept ? (
+                            <span key={id} className="g-weak-step">
+                              {concept.term}
+                            </span>
+                          ) : null;
+                        })}
+                      </span>
+                    ) : (
+                      <span className="g-weak-chain g-weak-chain--none">{t.graph.weakExplore}</span>
+                    )}
+                    {link.unlocks > 0 && (
+                      <span className="g-weak-unlocks">{t.graph.weakUnlocks(link.unlocks)}</span>
+                    )}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
 
         <div className="g-legend" aria-hidden="true">
           <span className="g-leg">
@@ -118,25 +177,26 @@ export function GraphScreen({
               );
             })}
 
-            {/* dots + horizontal lane labels (presentation only) */}
+            {/* dots always; a label only when a lane fit (see labelPlacements) */}
             {layout.nodes.map((node) => {
               const concept = conceptOf(course, node.id);
               if (!concept) return null;
               const label = labels.get(node.id);
-              if (!label) return null;
               const status = missed.has(node.id) ? "missed" : seen.has(node.id) ? "seen" : "unseen";
               return (
                 <g key={node.id}>
                   <circle className={`g-dot d-${status}`} cx={node.x} cy={node.y} r={6} />
-                  <text
-                    className={`g-label${node.id === selected ? " sel" : ""}`}
-                    x={label.x}
-                    y={label.y}
-                    textAnchor={label.anchor}
-                    dominantBaseline="central"
-                  >
-                    {labelText(concept.term)}
-                  </text>
+                  {label && (
+                    <text
+                      className={`g-label${node.id === selected ? " sel" : ""}`}
+                      x={label.x}
+                      y={label.y}
+                      textAnchor={label.anchor}
+                      dominantBaseline="central"
+                    >
+                      {labelText(concept.term)}
+                    </text>
+                  )}
                 </g>
               );
             })}
@@ -168,7 +228,7 @@ export function GraphScreen({
             </h3>
             {unit && (
               <p className="g-kicker">
-                {t.home.unit(selectedConcept.unit)} · {unit.title}
+                {t.home.unit(selectedConcept.unit)}，{unit.title}
               </p>
             )}
             <p className="def">{selectedConcept.definition}</p>

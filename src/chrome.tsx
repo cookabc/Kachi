@@ -10,7 +10,7 @@ export type Tab = "learn" | "practice" | "glossary" | "graph" | "settings";
 
 export function StatsBar({ state }: { state: LearnerState }) {
   return (
-    <div className="stats" role="img" aria-label={`XP ${state.xp} · ${state.streak}`}>
+    <div className="stats" role="img" aria-label={`XP ${state.xp}, ${state.streak}`}>
       <div className="stat xp">
         <span className="ic">◆</span>
         {state.xp}
@@ -69,7 +69,7 @@ export function Confetti({ level = 100 }: { level?: number }) {
     const count = confettiBits(level);
     // 0% motion: no burst at all — the slider owns the paper rain
     if (!count) return;
-    const colors = ["#58CC02", "#FFC800", "#1CB0F6", "#FF4B4B", "#89E219", "#7DD3FC"];
+    const colors = ["#86ead4", "#ffc53d", "#7ce2fe", "#e54666", "#bdee63", "#dd93c2"];
     setBits(
       Array.from(
         { length: count },

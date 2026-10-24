@@ -39,6 +39,9 @@ export interface UiText {
     missCopy: (n: number) => string;
     noMissCopy: string;
     start: (n: number) => string;
+    targetsTitle: string;
+    unitLabel: (n: number) => string;
+    moreCount: (n: number) => string;
   };
   glossary: {
     brand: string;
@@ -50,6 +53,12 @@ export interface UiText {
     empty: (q: string) => string;
     emptyHint: string;
     footer: string;
+  };
+  bench: {
+    ariaLabel: string;
+    kicker: string;
+    sliderLabel: string;
+    hint: string;
   };
   graph: {
     brand: string;
@@ -63,6 +72,9 @@ export interface UiText {
     legendSibling: string;
     relLabels: Record<"confusable" | "prereq" | "sibling", string>;
     openGlossary: string;
+    weakTitle: string;
+    weakExplore: string;
+    weakUnlocks: (n: number) => string;
   };
   settings: {
     brand: string;
@@ -71,6 +83,9 @@ export interface UiText {
     exportBtn: string;
     importBtn: string;
     contentNote: string;
+    colophonVersion: string;
+    colophonLicense: string;
+    colophonSource: string;
     langLabel: string;
     langNames: Record<Lang, string>;
     motionLabel: string;
@@ -151,9 +166,9 @@ export const UI: Record<Lang, UiText> = {
     home: {
       tagline: "分清易混的财经英语。五分钟，没有投资建议。",
       unit: (id) => `单元 ${id}`,
-      upNext: "接下来 · ",
-      missedNote: (n) => `有 ${n} 个术语等着复习——它们在「复习」页。`,
-      unitNote: "第 1–2 单元是正在进行的对话；3–7 单元在路径上等你。",
+      upNext: "接下来，",
+      missedNote: (n) => `${n} 个术语需要复习。`,
+      unitNote: "单元 1 和 2 已解锁，其余单元完成前面的课程后开放。",
       lockedLesson: (title) => `${title}（未解锁）`,
     },
     practice: {
@@ -162,6 +177,9 @@ export const UI: Record<Lang, UiText> = {
       missCopy: (n) => `有 ${n} 个术语等着复习。复习不会解锁路径。`,
       noMissCopy: "还没有错题。先练第 1 单元。",
       start: (n) => `开始 ${n} 题复习`,
+      targetsTitle: "今天轮到这些",
+      unitLabel: (n) => `第 ${n} 单元`,
+      moreCount: (n) => `另有 ${n} 个`,
     },
     glossary: {
       brand: "词汇表",
@@ -174,10 +192,16 @@ export const UI: Record<Lang, UiText> = {
       emptyHint: "试试 hedge、put、swap、margin call。",
       footer: "不构成投资建议。只讲词语，不作推荐。",
     },
+    bench: {
+      ariaLabel: "两个易混词的对照",
+      kicker: "对照台",
+      sliderLabel: "拖动分隔线，比较两个词",
+      hint: "拖动分隔线，或者用方向键移动。",
+    },
     graph: {
       brand: "知识图谱",
       hint: "点一个词，看它连着谁。",
-      stats: (terms, links) => `${terms} 个术语 · ${links} 条关系`,
+      stats: (terms, links) => `${terms} 个术语，${links} 条关系`,
       mapAria: "术语关系图：每个点是术语，每条线是关系",
       legendSeen: "已学",
       legendUnseen: "未学",
@@ -186,6 +210,9 @@ export const UI: Record<Lang, UiText> = {
       legendSibling: "同族",
       relLabels: { confusable: "易混", prereq: "先学", sibling: "同族" },
       openGlossary: "在词汇表中查看",
+      weakTitle: "卡住你的是这些",
+      weakExplore: "还没有先修关系——按课程顺序学就好",
+      weakUnlocks: (n) => `会解锁 ${n} 个词`,
     },
     settings: {
       brand: "设置",
@@ -194,6 +221,9 @@ export const UI: Record<Lang, UiText> = {
       exportBtn: "导出学习数据",
       importBtn: "导入学习数据",
       contentNote: "课程以 Git 内容包发布；涉及税务、法规与金融工具的条目会标注适用范围与复核状态。",
+      colophonVersion: "版本",
+      colophonLicense: "许可",
+      colophonSource: "源码",
       langLabel: "界面与课程语言",
       langNames: { "zh-CN": "中文", "en-US": "English" },
       motionLabel: "动效强度",
@@ -216,7 +246,7 @@ export const UI: Record<Lang, UiText> = {
       check: "检查",
       continue: "继续",
       heartsAria: (n, max) => `剩余爱心 ${n}/${max}`,
-      teachKicker: (termZh) => (termZh ? `新术语 · ${termZh}` : "新术语"),
+      teachKicker: (termZh) => (termZh ? `新术语，${termZh}` : "新术语"),
       recapKicker: "单元回顾",
       recapTitle: "这些词又见面了。",
       recapSub: "本单元的简短练习，没有新词。",
@@ -233,7 +263,7 @@ export const UI: Record<Lang, UiText> = {
       flawless: "完美。",
       done: "课程完成。",
       practiceDone: "这轮复习完成。",
-      accuracy: (pct, correct, total) => `${pct}% 正确率 · ${correct}/${total}`,
+      accuracy: (pct, correct, total) => `${pct}% 正确率，${correct}/${total}`,
       xpCorrect: "答对的题",
       xpLesson: "完成课程",
       xpPerfect: "全对奖励",
@@ -282,9 +312,9 @@ export const UI: Record<Lang, UiText> = {
     home: {
       tagline: "Tell the mix-ups apart. Five minutes. No advice.",
       unit: (id) => `Unit ${id}`,
-      upNext: "Up next · ",
-      missedNote: (n) => `${n} term${n === 1 ? "" : "s"} waiting to be reviewed — they live in Practice.`,
-      unitNote: "Units 1–2 are the conversation. 3–7 wait on the path.",
+      upNext: "Up next, ",
+      missedNote: (n) => `${n} term${n === 1 ? "" : "s"} to review.`,
+      unitNote: "Units 1 and 2 are open. The rest unlock as you finish the ones before them.",
       lockedLesson: (title) => `${title} (locked)`,
     },
     practice: {
@@ -293,6 +323,9 @@ export const UI: Record<Lang, UiText> = {
       missCopy: (n) => `${n} term${n === 1 ? "" : "s"} to review. Practice never unlocks the path.`,
       noMissCopy: "No misses yet — we'll drill Unit 1.",
       start: (n) => `Start a ${n}-prompt round`,
+      targetsTitle: "Up today",
+      unitLabel: (n) => `Unit ${n}`,
+      moreCount: (n) => `${n} more`,
     },
     glossary: {
       brand: "Glossary",
@@ -305,10 +338,16 @@ export const UI: Record<Lang, UiText> = {
       emptyHint: "Try hedge, put, swap, margin call.",
       footer: "Not investment advice. Words, not recommendations.",
     },
+    bench: {
+      ariaLabel: "Two confusable words, side by side",
+      kicker: "Contrast bench",
+      sliderLabel: "Drag the divider to compare the two words",
+      hint: "Drag the divider, or move it with the arrow keys.",
+    },
     graph: {
       brand: "The map",
       hint: "Tap a word to see what it connects to.",
-      stats: (terms, links) => `${terms} terms · ${links} links`,
+      stats: (terms, links) => `${terms} terms, ${links} links`,
       mapAria: "Concept map: each dot is a term, each line a relationship",
       legendSeen: "seen",
       legendUnseen: "new",
@@ -317,6 +356,9 @@ export const UI: Record<Lang, UiText> = {
       legendSibling: "family",
       relLabels: { confusable: "mix-up", prereq: "prereq", sibling: "family" },
       openGlossary: "Open in the glossary",
+      weakTitle: "What's holding you up",
+      weakExplore: "No prereq chain yet — just follow the course order",
+      weakUnlocks: (n) => `unlocks ${n} term${n === 1 ? "" : "s"}`,
     },
     settings: {
       brand: "Settings",
@@ -326,6 +368,9 @@ export const UI: Record<Lang, UiText> = {
       importBtn: "Import learning data",
       contentNote:
         "Courses ship as Git content packs; entries touching tax, regulation, and instruments carry scope and review status.",
+      colophonVersion: "Version",
+      colophonLicense: "License",
+      colophonSource: "Source",
       langLabel: "Interface & course language",
       langNames: { "zh-CN": "中文", "en-US": "English" },
       motionLabel: "Motion",
@@ -366,7 +411,7 @@ export const UI: Record<Lang, UiText> = {
       flawless: "Flawless.",
       done: "Lesson done.",
       practiceDone: "Practice done.",
-      accuracy: (pct, correct, total) => `${pct}% accuracy · ${correct}/${total}`,
+      accuracy: (pct, correct, total) => `${pct}% accuracy, ${correct}/${total}`,
       xpCorrect: "Correct answers",
       xpLesson: "Lesson complete",
       xpPerfect: "No-mistake bonus",

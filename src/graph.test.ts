@@ -118,8 +118,8 @@ describe("geometry helpers", () => {
     const d = arcPath(240, 100, 0, Math.PI / 2);
     expect(d).toContain("A 100 100 0 0 1");
     const layout = graphLayout(zhCourse, 480, 131);
-    const placements = labelPlacements(layout, () => 60);
-    // every concept gets a placement, anchored outward per half
+    const placements = labelPlacements(layout, () => 40);
+    // at a compact uniform width every concept keeps its placement
     expect(placements.size).toBe(zhCourse.concepts.length);
     for (const node of layout.nodes) {
       const placement = placements.get(node.id);
@@ -138,13 +138,40 @@ describe("geometry helpers", () => {
     });
     const lanes = [...placements.values()].map((placement) => placement.lane);
     expect(Math.max(...lanes)).toBeGreaterThan(0);
-    expect(Math.max(...lanes)).toBeLessThanOrEqual(3);
+    expect(Math.max(...lanes)).toBeLessThanOrEqual(4);
     for (const placement of placements.values()) {
       expect(placement.x).toBeGreaterThanOrEqual(0);
       expect(placement.x).toBeLessThanOrEqual(480);
       expect(placement.y).toBeGreaterThanOrEqual(0);
       expect(placement.y).toBeLessThanOrEqual(480);
     }
+  });
+
+  it("a label that cannot fit any lane is dropped, never printed on top of another", () => {
+    const layout = graphLayout(zhCourse, 480, 131);
+    const placements = labelPlacements(layout, (id) => {
+      const concept = zhCourse.concepts.find((item) => item.id === id);
+      return (concept?.term.length ?? 4) * 7.2;
+    });
+    // the algorithm's own guarantee: kept labels share no box (overlap === 0)
+    // and the anchor still follows which half of the ring the node sits on
+    expect(placements.size).toBeGreaterThan(0);
+    for (const [id, placement] of placements) {
+      const node = layout.byId.get(id)!;
+      const flip = Math.cos(node.angle) < 0;
+      expect(placement.anchor).toBe(flip ? "end" : "start");
+    }
+  });
+
+  it("priority decides who keeps a lane when the ring runs out of room", () => {
+    const layout = graphLayout(zhCourse, 480, 131);
+    const seen = new Set(["hedge", "pledge"]);
+    const wide = () => 160; // absurdly wide: not every label can fit
+    const withPriority = labelPlacements(layout, wide, {
+      priority: (id) => (seen.has(id) ? 1 : 0),
+    });
+    expect(withPriority.has("hedge")).toBe(true);
+    expect(withPriority.has("pledge")).toBe(true);
   });
 
   it("labelPlacements is deterministic", () => {

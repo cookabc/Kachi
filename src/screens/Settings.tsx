@@ -1,4 +1,5 @@
 import type { ChangeEvent } from "react";
+import { version } from "../../package.json";
 import type { Lang, UiText } from "../ui";
 
 export function Settings({
@@ -62,6 +63,24 @@ export function Settings({
           <input type="file" accept="application/json" onChange={onImport} />
         </label>
         <p className="fine">{t.settings.contentNote}</p>
+        <dl className="colophon">
+          <div>
+            <dt>{t.settings.colophonVersion}</dt>
+            <dd>{version}</dd>
+          </div>
+          <div>
+            <dt>{t.settings.colophonLicense}</dt>
+            <dd>AGPL-3.0 / CC BY-SA 4.0</dd>
+          </div>
+          <div>
+            <dt>{t.settings.colophonSource}</dt>
+            <dd>
+              <a href="https://github.com/cookabc/Kachi" target="_blank" rel="noreferrer">
+                github.com/cookabc/Kachi
+              </a>
+            </dd>
+          </div>
+        </dl>
       </div>
     </>
   );

@@ -84,9 +84,7 @@ export function CompleteScreen(props: {
       </div>
       {summary.mix.length > 0 && (
         <>
-          <p className="sub" style={{ marginBottom: 8 }}>
-            {t.complete.mixTitle}
-          </p>
+          <p className="sub mix-title">{t.complete.mixTitle}</p>
           <div className="chips">
             {summary.mix.map((id) => {
               const concept = conceptOf(props.course, id);
