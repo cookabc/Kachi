@@ -2,20 +2,37 @@ import type { ChangeEvent } from "react";
 import { version } from "../../package.json";
 import type { Lang, UiText } from "../ui";
 
+export interface PackChoice {
+  id: string;
+  level: number;
+  title: string;
+  goal: string;
+  conceptCount: number;
+  /** False when the pack is registered but its content is not written yet. */
+  ready: boolean;
+  legacy?: boolean;
+}
+
 export function Settings({
   t,
   lang,
   motion,
+  packs,
+  packId,
   onLang,
   onMotion,
+  onPack,
   onExport,
   onImport,
 }: {
   t: UiText;
   lang: Lang;
   motion: number;
+  packs: PackChoice[];
+  packId: string;
   onLang: (lang: Lang) => void;
   onMotion: (level: number) => void;
+  onPack: (id: string) => void;
   onExport: () => void;
   onImport: (event: ChangeEvent<HTMLInputElement>) => void;
 }) {
@@ -27,6 +44,29 @@ export function Settings({
       <div className="prac-hero">
         <h1>{t.settings.title}</h1>
         <p className="sub">{t.settings.copy}</p>
+        <fieldset className="pack-switch" aria-label={lang === "zh-CN" ? "课程包" : "Course packs"}>
+          {packs.map((pack) => (
+            <button
+              type="button"
+              key={pack.id}
+              className={`pack-choice${packId === pack.id ? " on" : ""}${pack.ready ? "" : " is-pending"}`}
+              aria-pressed={packId === pack.id}
+              disabled={!pack.ready}
+              title={pack.goal}
+              onClick={() => onPack(pack.id)}
+            >
+              <span className="pack-level">T{pack.level}</span>
+              <span className="pack-title">{pack.title}</span>
+              <span className="pack-count">
+                {pack.ready
+                  ? `${pack.conceptCount} ${lang === "zh-CN" ? "个词" : "terms"}`
+                  : lang === "zh-CN"
+                    ? "准备中"
+                    : "in progress"}
+              </span>
+            </button>
+          ))}
+        </fieldset>
         <fieldset className="lang-switch" aria-label={t.settings.langLabel}>
           {(Object.entries(t.settings.langNames) as Array<[Lang, string]>).map(([value, name]) => (
             <button

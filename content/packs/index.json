@@ -4,7 +4,7 @@
     {
       "id": "t1-finance-news",
       "level": 1,
-      "title": "T1 读财经首页",
+      "title": "读财经首页",
       "goal": "打开任何财经 App 首屏，标题全看得懂",
       "conceptCount": 42,
       "status": "building"
@@ -12,7 +12,7 @@
     {
       "id": "t2-company-earnings",
       "level": 2,
-      "title": "T2 读公司财报",
+      "title": "读公司财报",
       "goal": "读一份季报快讯，知道在说好还是坏",
       "conceptCount": 44,
       "status": "planned"
@@ -20,7 +20,7 @@
     {
       "id": "t3-bonds-rates",
       "level": 3,
-      "title": "T3 读债券与利率",
+      "title": "读债券与利率",
       "goal": "读懂收益率、拍卖、期限这类债市新闻",
       "conceptCount": 37,
       "status": "planned"
@@ -28,7 +28,7 @@
     {
       "id": "t4-forex-macro",
       "level": 4,
-      "title": "T4 读外汇与宏观",
+      "title": "读外汇与宏观",
       "goal": "看懂汇率、央行、政策这类新闻",
       "conceptCount": 36,
       "status": "planned"
@@ -36,7 +36,7 @@
     {
       "id": "t5-quant-research",
       "level": 5,
-      "title": "T5 读研报与量化",
+      "title": "读研报与量化",
       "goal": "判断一份回测结论哪里站不住",
       "conceptCount": 32,
       "status": "planned"
@@ -44,7 +44,7 @@
     {
       "id": "hedge-or-pledge",
       "level": 6,
-      "title": "T6 借款与对冲",
+      "title": "借款与对冲",
       "goal": "读私人银行、结构性产品这类专业材料",
       "conceptCount": 40,
       "status": "ready",

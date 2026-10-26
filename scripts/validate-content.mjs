@@ -8,15 +8,25 @@ import path from "node:path";
 import { validateCourse } from "../src/schema/index.ts";
 
 const root = process.cwd();
-const packsDir = path.join(root, "content/packs/hedge-or-pledge");
-const packFiles = fs
-  .readdirSync(packsDir, { withFileTypes: true })
-  .filter((entry) => entry.isDirectory())
-  .map((entry) => path.join(packsDir, entry.name, "course.json"))
-  .filter((file) => fs.existsSync(file));
+const registryPath = path.join(root, "content/packs/index.json");
+const registry = fs.existsSync(registryPath) ? JSON.parse(fs.readFileSync(registryPath, "utf8")) : null;
+// With a registry, validate every registered pack; otherwise fall back to the
+// single legacy pack so an unregistered checkout still builds.
+const packRoots = registry
+  ? registry.packs.map((pack) => path.join(root, "content/packs", pack.id))
+  : [path.join(root, "content/packs/hedge-or-pledge")];
+const packFiles = [];
+for (const packRoot of packRoots) {
+  if (!fs.existsSync(packRoot)) continue;
+  for (const entry of fs.readdirSync(packRoot, { withFileTypes: true })) {
+    if (!entry.isDirectory()) continue;
+    const file = path.join(packRoot, entry.name, "course.json");
+    if (fs.existsSync(file)) packFiles.push(file);
+  }
+}
 
 if (packFiles.length === 0) {
-  console.error("No course packs found under content/packs/hedge-or-pledge.");
+  console.error("No course packs found under content/packs.");
   process.exit(1);
 }
 
@@ -27,10 +37,15 @@ const fail = (message) => {
 };
 
 const packs = packFiles.map((file) => {
-  const name = path.relative(packsDir, path.dirname(file));
+  const localeDir = path.basename(path.dirname(file));
+  const packId = path.basename(path.dirname(path.dirname(file)));
+  const name = `${packId}/${localeDir}`;
   const course = JSON.parse(fs.readFileSync(file, "utf8"));
-  if (!course.locale || course.locale !== name) {
-    fail(`[${name}] locale "${course.locale}" does not match the pack directory "${name}"`);
+  if (!course.locale || course.locale !== localeDir) {
+    fail(`[${name}] locale "${course.locale}" does not match the locale directory "${localeDir}"`);
+  }
+  if (!course.packId || course.packId !== packId) {
+    fail(`[${name}] packId "${course.packId}" does not match the pack directory "${packId}"`);
   }
   for (const issue of validateCourse(course)) {
     fail(`[${name}] ${issue.path}: ${issue.message}`);
@@ -39,11 +54,23 @@ const packs = packFiles.map((file) => {
   console.log(
     `[${name}] Valid: ${course.lessons.length} lessons, ${course.concepts.length} concepts, ${prompts.length} prompts`,
   );
-  return { name, course };
+  return { name, course, packId };
 });
 
-for (let i = 1; i < packs.length; i += 1) {
-  comparePacks(packs[0], packs[i]);
+// Locale parity is a within-pack property: an en-US pack must mirror its own
+// zh-CN sibling, not some other pack's. Comparing across packs was the bug that
+// greeted the first multi-pack checkout.
+const byPack = new Map();
+for (const entry of packs) {
+  const list = byPack.get(entry.packId) ?? [];
+  list.push(entry);
+  byPack.set(entry.packId, list);
+}
+for (const [packId, list] of byPack) {
+  for (let i = 1; i < list.length; i += 1) {
+    comparePacks(list[0], list[i]);
+  }
+  if (list.length === 1) console.log(`[parity] ${packId}: single locale, nothing to compare`);
 }
 
 // Vocabulary evidence gate (docs/vocabulary-system.md §6).

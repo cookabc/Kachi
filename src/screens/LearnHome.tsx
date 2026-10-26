@@ -24,6 +24,15 @@ export function LearnHome({
   const activeLesson = upNext ?? firstLesson;
   const completed = state.completedLessonIds.length;
   const total = course.lessons.length;
+  // The hero names the course's first confusion pair. Hardcoding HEDGE/PLEDGE
+  // meant every pack advertised the legacy course's opening pair.
+  const openingPair = (() => {
+    const first = course.concepts[0];
+    if (!first) return null;
+    const twin = course.concepts.find((concept) => concept.id === first.mixUp);
+    return { left: first.term.toUpperCase(), right: (twin?.term ?? first.mixUp).toUpperCase() };
+  })();
+  const heroUnit = course.units[0];
 
   return (
     <>
@@ -40,12 +49,13 @@ export function LearnHome({
             <span>COURSE / 01</span>
           </div>
           <p className="lab-overline">
-            {isZh ? "第一组：两个完全不同的动作" : "PAIR 01 / TWO DIFFERENT ACTIONS"}
+            {isZh ? `第一组：${heroUnit?.blurb ?? ""}` : `PAIR 01 / ${(heroUnit?.blurb ?? "").toUpperCase()}`}
           </p>
           <h1 id="lab-course-title" className="lab-hero-title">
-            HEDGE <span aria-hidden="true">/</span>
+            {openingPair?.left} <span aria-hidden="true">/</span>
             <br />
-            PLEDGE<span className="lab-period">.</span>
+            {openingPair?.right}
+            <span className="lab-period">.</span>
           </h1>
           <p className="lab-hero-copy">{t.home.tagline}</p>
           <div className="lab-hero-progress">

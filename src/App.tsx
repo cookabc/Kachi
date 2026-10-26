@@ -1,6 +1,6 @@
 import { type ChangeEvent, useEffect, useMemo, useState } from "react";
 import { MAX_HEARTS, Nav, type Tab } from "./chrome";
-import { courseFor, course as defaultCourse, loadCourse } from "./course";
+import { ALL_PACKS, courseFor, DEFAULT_PACK, course as defaultCourse, loadCourse } from "./course";
 import type { Concept, Course, LearnerState, SessionState } from "./domain";
 import {
   applyAnswer,
@@ -68,6 +68,9 @@ function App() {
   const [ready, setReady] = useState(false);
   const [tab, setTab] = useState<Tab>("learn");
   const [lang, setLangState] = useState<Lang>(() => loadLang());
+  // Which course the learner is working through. Separate from language: the
+  // same pack exists in both locales, and switching pack must not switch locale.
+  const [packId, setPackIdState] = useState<string>(DEFAULT_PACK);
   // The zh pack is bundled and always renderable; a stored en-US preference
   // swaps in the lazy en pack before the loading screen lifts.
   const [course, setCourse] = useState<Course>(defaultCourse);
@@ -105,12 +108,14 @@ function App() {
     // Re-read the stored language here: this effect is mount-only, and a
     // state variable would drag a later language change back into it.
     const initialLang = loadLang();
-    void Promise.all([loadLearnerState(), loadCourse(initialLang)]).then(([loaded, loadedCourse]) => {
-      if (!alive) return;
-      setState(loaded);
-      setCourse(loadedCourse);
-      setReady(true);
-    });
+    void Promise.all([loadLearnerState(), loadCourse(DEFAULT_PACK, initialLang)]).then(
+      ([loaded, loadedCourse]) => {
+        if (!alive) return;
+        setState(loaded);
+        setCourse(loadedCourse);
+        setReady(true);
+      },
+    );
     const listener = () => setUpdateReady(true);
     window.addEventListener("kachi-update-ready", listener);
     return () => {
@@ -137,6 +142,22 @@ function App() {
   };
 
   const missedCount = useMemo(() => recentMissTermIds(state).length, [state]);
+
+  // Registry entries that have content versus ones still being written. A pack
+  // shows as selectable only when there is a chunk to load for this locale.
+  const packChoices = useMemo(
+    () =>
+      ALL_PACKS.map((pack) => ({
+        id: pack.id,
+        level: pack.level,
+        title: pack.title,
+        goal: pack.goal,
+        conceptCount: pack.conceptCount,
+        ready: Boolean(courseFor(pack.id, lang)) || pack.status === "ready" || pack.status === "building",
+        legacy: pack.legacy,
+      })),
+    [lang],
+  );
 
   const openShare = (conceptIds: string[]) => {
     const seenPairs = new Set<string>();
@@ -171,13 +192,13 @@ function App() {
   const setLang = (next: Lang) => {
     setLangState(next);
     saveLang(next);
-    const cached = courseFor(next);
+    const cached = courseFor(packId, next);
     if (cached) {
       setCourse(cached);
       return;
     }
     setReady(false);
-    void loadCourse(next)
+    void loadCourse(packId, next)
       .then((loaded) => {
         setCourse(loaded);
         setReady(true);
@@ -189,6 +210,27 @@ function App() {
         setCourse(defaultCourse);
         setLangState("zh-CN");
         saveLang("zh-CN");
+        setReady(true);
+      });
+  };
+
+  const setPack = (next: string) => {
+    if (next === packId) return;
+    setPackIdState(next);
+    const cached = courseFor(next, lang);
+    if (cached) {
+      setCourse(cached);
+      return;
+    }
+    setReady(false);
+    void loadCourse(next, lang)
+      .then((loaded) => {
+        setCourse(loaded);
+        setReady(true);
+      })
+      .catch(() => {
+        // A pack with no chunk (planned but unwritten) keeps the current one.
+        setPackIdState(packId);
         setReady(true);
       });
   };
@@ -586,8 +628,11 @@ function App() {
             t={t}
             lang={lang}
             motion={motion}
+            packs={packChoices}
+            packId={packId}
             onLang={setLang}
             onMotion={setMotion}
+            onPack={setPack}
             onExport={downloadExport}
             onImport={onImport}
           />
