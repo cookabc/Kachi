@@ -2995,75 +2995,54 @@ svg.icon {
 
 /* Generated concept art (public/art/*.webp). Same slot sizes as the inline SVG
    system it fills gaps in, so layout does not shift when a concept resolves to
-   a generated image instead of hand-drawn art. */
+   a generated image instead of hand-drawn art.
+
+   The images are opaque with a white field, which would read as a pasted white
+   square on the cream notebook paper. multiply drops the white out against the
+   paper and keeps the ink outlines crisp; it is exact for this art because the
+   background really is pure white and the subjects are drawn darker. */
 .term-art-img {
   display: block;
   object-fit: contain;
   user-select: none;
   -webkit-user-drag: none;
 }
+.term-art-img.hero {
+  width: min(220px, 72vw);
+  height: auto;
+  mix-blend-mode: multiply;
+}
 .term-art-img.xs {
   width: 28px;
   height: 28px;
+  mix-blend-mode: multiply;
 }
 .term-art-img.sm {
   width: 40px;
   height: 40px;
+  mix-blend-mode: multiply;
 }
 .term-art-img.lg {
   width: 72px;
   height: 72px;
-}
-.term-art-img.hero {
-  width: min(168px, 60vw);
-  height: auto;
+  mix-blend-mode: multiply;
 }
 
-/* Course pack picker (settings). A pack is a course, not a setting — but this
-   is the only surface with room to list them, so it lives here for now. */
-.pack-switch {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  width: 100%;
-  max-width: 420px;
-  margin: 0 auto 20px;
+/* The teach card draws a tinted stage behind the art. Once the art is a raster
+   image with baked-in white, that stage has to go — otherwise the white field
+   gets framed inside a coloured box. */
+.teach-art:has(.term-art-img) {
+  background: none;
+}
+
+/* The tinted stage behind .term-art is a backdrop for inline SVG, which has no
+   background of its own. A generated raster already carries a white field, so
+   the stage only frames the white square. Drop it where the art is an image. */
+.term-art:has(.term-art-img) {
+  background: none;
   border: 0;
-  padding: 0;
 }
-.pack-choice {
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  align-items: center;
-  gap: 10px;
-  padding: 12px 14px;
-  border: 0.5px solid #dad9d6;
-  border-radius: 14px;
-  background: var(--card);
-  font-family: inherit;
-  text-align: left;
-  cursor: pointer;
-  color: var(--ink);
-}
-.pack-choice.on {
-  border-color: var(--ink);
-  box-shadow: 0 0 0 1.5px var(--ink);
-}
-.pack-choice.is-pending {
-  opacity: 0.55;
-  cursor: not-allowed;
-}
-.pack-level {
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-  font-size: 12px;
-  font-weight: 700;
-  color: #d13415;
-}
-.pack-title {
-  font-weight: 700;
-  font-size: 14px;
-}
-.pack-count {
-  font-size: 12px;
-  color: var(--muted);
+.term-art.hero:has(.term-art-img) {
+  width: min(220px, 72vw);
+  height: auto;
 }

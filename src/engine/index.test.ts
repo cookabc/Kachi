@@ -125,7 +125,7 @@ describe("learning engine", () => {
     const result = applyAnswer(course, emptyLearnerState(), session, "wrong", environment, {
       heartsAfter: 2,
     });
-    expect(result.state.completedLessonIds).toEqual(["lesson"]);
+    expect(result.state.completedLessonIds).toEqual(["test/lesson"]);
     expect(result.state.xp).toBe(20);
   });
 
@@ -464,7 +464,7 @@ describe("engine guards and grading", () => {
     expect(isLessonUnlocked(state, two, "second")).toBe(false);
     expect(isLessonUnlocked(state, two, "unknown")).toBe(false);
 
-    state = { ...state, completedLessonIds: ["lesson"] };
+    state = { ...state, completedLessonIds: ["test/lesson"] };
     expect(isLessonUnlocked(state, two, "second")).toBe(true);
     expect(isLessonUnlocked(state, two, "third")).toBe(false);
   });
@@ -630,7 +630,7 @@ describe("real-course playthrough", () => {
       session = result.session;
     }
     expect(session.index).toBe(lesson.prompts.length);
-    expect(state.completedLessonIds).toEqual(["u1l1"]);
+    expect(state.completedLessonIds).toEqual(["hedge-or-pledge/u1l1"]);
     expect(state.xp).toBe(lesson.prompts.length * 10 + 20 + 20);
     expect(state.streak).toBe(1);
     expect(state.lastLessonDate).toBeDefined();

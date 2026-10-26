@@ -46,7 +46,8 @@ describe("migrated Hedge or Pledge course", () => {
       }
     }
     expect(JSON.stringify(course.lessons)).toBe(source);
-    expect(state.completedLessonIds).toContain("u1l1");
+    // Completed lessons are namespaced by pack so two courses cannot collide.
+    expect(state.completedLessonIds).toContain("hedge-or-pledge/u1l1");
     expect(state.attempts).toHaveLength(5000);
   });
 

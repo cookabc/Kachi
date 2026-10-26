@@ -19,10 +19,11 @@
  * Writes: public/art/<id>.webp, public/art/<id>@128.webp, content/art-manifest.json
  * Skips work already on disk (resumable), like the word-atlas forge pattern.
  */
-import { execFile } from "node:child_process";
-import { existsSync, mkdirSync, readdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
+import { execFile, spawn } from "node:child_process";
+import { existsSync, mkdirSync, readdirSync, readFileSync, rmSync, statSync, writeFileSync } from "node:fs";
 import { homedir } from "node:os";
 import path from "node:path";
+import { pathToFileURL } from "node:url";
 import { promisify } from "node:util";
 
 const run = promisify(execFile);
@@ -53,12 +54,12 @@ function parseArgs(argv) {
 }
 
 /** Concepts that still need art: every concept in the pack without a manifest entry. */
-function pendingConcepts(options) {
+async function pendingConcepts(options) {
   const manifest = JSON.parse(readFileSync(MANIFEST, "utf8"));
   const packs = readPackIds();
   const wanted = options.only.length
-    ? packs.flatMap((id) => conceptsOf(id)).filter((c) => options.only.includes(c.id))
-    : packs.filter((id) => !options.pack || id === options.pack).flatMap(conceptsOf);
+    ? (await Promise.all(packs.map(conceptsOf))).flat().filter((c) => options.only.includes(c.id))
+    : (await Promise.all(packs.filter((id) => !options.pack || id === options.pack).map(conceptsOf))).flat();
   return wanted.filter((c) => options.force || !manifest.concepts[c.id]);
 }
 
@@ -68,15 +69,42 @@ function readPackIds() {
   return JSON.parse(readFileSync(indexPath, "utf8")).packs.map((pack) => pack.id);
 }
 
-function conceptsOf(packId) {
+async function conceptsOf(packId) {
   const file = path.join(ROOT, "content/packs", packId, "zh-CN/course.json");
   if (!existsSync(file)) return [];
-  return JSON.parse(readFileSync(file, "utf8")).concepts.map((concept) => ({
+  const course = JSON.parse(readFileSync(file, "utf8"));
+  // scene lives in the pack's source.mjs (it is art direction, not course
+  // content, so it is not published in course.json). Read it when available.
+  const scenes = await readScenes(packId);
+  return course.concepts.map((concept) => ({
     id: concept.id,
     term: concept.term,
-    scene: concept.scene ?? concept.caption ?? concept.definition ?? concept.term,
+    scene: scenes[concept.id] ?? concept.caption ?? concept.definition ?? concept.term,
     packId,
   }));
+}
+
+/**
+ * Import a pack's source.mjs and pull the per-concept scene description.
+ * The pack source is the only place the art direction is written down; without
+ * it every prompt would fall back to the caption, which describes meaning
+ * rather than what to draw.
+ */
+async function readScenes(packId) {
+  const sourceFile = path.join(ROOT, "content/packs", packId, "source.mjs");
+  if (!existsSync(sourceFile)) return {};
+  try {
+    // The source is plain ESM with no side effects beyond building consts.
+    const module = await import(pathToFileURL(sourceFile).href);
+    const out = {};
+    for (const concept of module.CONCEPTS ?? []) {
+      if (concept.scene) out[concept.id] = concept.scene;
+    }
+    return out;
+  } catch (error) {
+    console.warn(`  [warn] could not read scenes from ${packId}: ${error.message}`);
+    return {};
+  }
 }
 
 /** Newest file under ~/.codex/generated_images, since codex ignores --out. */
@@ -97,8 +125,22 @@ function newestGenerated(sinceMs) {
   return best?.full ?? null;
 }
 
+/**
+ * Filesystem/URL-safe name for a concept id. Ids contain spaces ("interest
+ * rate") and slashes ("p/e"), which either break a path or need escaping in a
+ * URL — neither is worth carrying.
+ */
+function slug(id) {
+  return id
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
+}
+
 async function generateOne(concept, options) {
-  const prompt = `Generate one image at 512x512, PNG, saved to ${ART_DIR}/${concept.id}.png.
+  const base = slug(concept.id);
+  const pngTarget = path.join(ART_DIR, `${base}.png`);
+  const prompt = `Generate one image at 512x512, PNG, saved to ${pngTarget}.
 
 Art direction (must follow exactly):
 ${STYLE}
@@ -111,33 +153,57 @@ Subject: ${concept.scene}`;
   }
 
   const started = Date.now();
-  await run("codex", ["exec", "--skip-git-repo-check", "--sandbox", "workspace-write", prompt], {
-    cwd: ROOT,
-    maxBuffer: 32 * 1024 * 1024,
-    timeout: 300_000,
+  // stdin MUST be closed. codex reads stdin whenever it is not a TTY and then
+  // exits without generating ("Reading additional input from stdin...").
+  await new Promise((resolve, reject) => {
+    const child = spawn("codex", ["exec", "--skip-git-repo-check", "--sandbox", "workspace-write", prompt], {
+      cwd: ROOT,
+      stdio: ["ignore", "pipe", "pipe"],
+    });
+    let err = "";
+    child.stderr.on("data", (chunk) => {
+      err += chunk;
+    });
+    const timer = setTimeout(() => {
+      child.kill();
+      reject(new Error(`${concept.id}: codex timed out after 300s`));
+    }, 300_000);
+    child.on("error", (error) => {
+      clearTimeout(timer);
+      reject(error);
+    });
+    child.on("close", (code) => {
+      clearTimeout(timer);
+      if (code === 0) resolve();
+      else reject(new Error(`${concept.id}: codex exited ${code}: ${err.slice(-300)}`));
+    });
   });
 
-  const produced = newestGenerated(started);
+  // codex usually honors the target path, but has also written into
+  // ~/.codex/generated_images instead — accept either.
+  const produced = existsSync(pngTarget) ? pngTarget : newestGenerated(started);
   if (!produced) throw new Error(`codex reported success but wrote no image for ${concept.id}`);
 
   mkdirSync(ART_DIR, { recursive: true });
-  const hero = path.join(ART_DIR, `${concept.id}.webp`);
-  const chip = path.join(ART_DIR, `${concept.id}@128.webp`);
-  // sips converts and resizes in one step; -z takes HEIGHT then WIDTH.
-  await run("sips", ["-s", "format", "webp", "-z", "512", "512", produced, "--out", hero]);
-  await run("sips", ["-s", "format", "webp", "-z", "128", "128", produced, "--out", chip]);
+  const hero = path.join(ART_DIR, `${base}.webp`);
+  const chip = path.join(ART_DIR, `${base}@128.webp`);
+  // sips reads webp but cannot write it, so cwebp encodes (the word-atlas
+  // pipeline uses the same tool). -resize takes one dimension; 0 keeps ratio.
+  await run("cwebp", ["-quiet", "-q", "82", "-resize", "512", "0", produced, "-o", hero]);
+  await run("cwebp", ["-quiet", "-q", "82", "-resize", "128", "0", produced, "-o", chip]);
+  if (produced === pngTarget) rmSync(pngTarget, { force: true });
   return "ok";
 }
 
 function record(id, packId) {
   const manifest = JSON.parse(readFileSync(MANIFEST, "utf8"));
-  manifest.concepts[id] = { file: `/art/${id}.webp`, bg: "#ffffff", pack: packId };
+  manifest.concepts[id] = { file: `/art/${slug(id)}.webp`, bg: "#ffffff", pack: packId };
   writeFileSync(MANIFEST, `${JSON.stringify(manifest, null, 2)}\n`);
 }
 
 async function main() {
   const options = parseArgs(process.argv.slice(2));
-  const pending = pendingConcepts(options);
+  const pending = await pendingConcepts(options);
   console.log(`Pending: ${pending.length} concept(s)${options.dryRun ? " (dry run)" : ""}`);
   if (!pending.length) return;
 

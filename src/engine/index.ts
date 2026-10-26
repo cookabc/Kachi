@@ -34,6 +34,26 @@ export function pairIdForConcept(concept: Concept | undefined): string | undefin
   return pairIdForConcepts(concept.id, concept.mixUp);
 }
 
+/** The pack that predates multi-pack support: bare lesson ids can only be its. */
+export const LEGACY_PACK_ID = "hedge-or-pledge";
+
+/**
+ * Storage key for a finished lesson. Lesson ids are only unique inside a pack —
+ * both the legacy pack and T1 start at "u1l1" — so the pack id must prefix them
+ * or finishing one course silently unlocks the other.
+ */
+export function lessonKey(course: Course, lessonId: string): string {
+  return `${course.packId ?? LEGACY_PACK_ID}/${lessonId}`;
+}
+
+/** Whether a lesson is finished, accepting pre-namespacing saved state. */
+export function isLessonDone(state: LearnerState, course: Course, lessonId: string): boolean {
+  if (state.completedLessonIds.includes(lessonKey(course, lessonId))) return true;
+  // Saved state written before packs existed has bare ids, which can only have
+  // come from the legacy pack.
+  return course.packId === LEGACY_PACK_ID && state.completedLessonIds.includes(lessonId);
+}
+
 export function getExercise(course: Course, exerciseId: string): Exercise {
   for (const lesson of course.lessons) {
     const found = lesson.prompts.find((prompt) => prompt.id === exerciseId);
@@ -77,7 +97,7 @@ export function currentExercise(course: Course, session: SessionState): Exercise
 export function isLessonUnlocked(state: LearnerState, course: Course, lessonId: string): boolean {
   const index = course.lessons.findIndex((lesson) => lesson.id === lessonId);
   if (index < 0) return false;
-  return index === 0 || state.completedLessonIds.includes(course.lessons[index - 1].id);
+  return index === 0 || isLessonDone(state, course, course.lessons[index - 1].id);
 }
 
 export function isCorrect(exercise: Exercise, answer: string | boolean): boolean {
@@ -219,7 +239,7 @@ export function applyAnswer(
   const completesLesson = finished && session.mode === "lesson" && !failedFinish;
   const flawless = completesLesson && attempt.correct && session.results.every((result) => result.correct);
   const completedLessonIds = completesLesson
-    ? Array.from(new Set([...state.completedLessonIds, session.lessonId]))
+    ? Array.from(new Set([...state.completedLessonIds, lessonKey(course, session.lessonId)]))
     : state.completedLessonIds;
   const completedToday = completesLesson && state.lastLessonDate !== localDate(now);
   const streak = completedToday

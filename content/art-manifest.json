@@ -1,4 +1,215 @@
 {
   "_comment": "Generated art assets: concept id -> { file, bg }. Populated by scripts/generate-art.mjs. Concepts absent here resolve from the legacy hand-drawn SVGs in src/art.tsx.",
-  "concepts": {}
+  "concepts": {
+    "rally": {
+      "file": "/art/rally.webp",
+      "bg": "#ffffff",
+      "pack": "t1-finance-news"
+    },
+    "selloff": {
+      "file": "/art/selloff.webp",
+      "bg": "#ffffff",
+      "pack": "t1-finance-news"
+    },
+    "slump": {
+      "file": "/art/slump.webp",
+      "bg": "#ffffff",
+      "pack": "t1-finance-news"
+    },
+    "rebound": {
+      "file": "/art/rebound.webp",
+      "bg": "#ffffff",
+      "pack": "t1-finance-news"
+    },
+    "rout": {
+      "file": "/art/rout.webp",
+      "bg": "#ffffff",
+      "pack": "t1-finance-news"
+    },
+    "profit-taking": {
+      "file": "/art/profit-taking.webp",
+      "bg": "#ffffff",
+      "pack": "t1-finance-news"
+    },
+    "supply": {
+      "file": "/art/supply.webp",
+      "bg": "#ffffff",
+      "pack": "t1-finance-news"
+    },
+    "demand": {
+      "file": "/art/demand.webp",
+      "bg": "#ffffff",
+      "pack": "t1-finance-news"
+    },
+    "capacity": {
+      "file": "/art/capacity.webp",
+      "bg": "#ffffff",
+      "pack": "t1-finance-news"
+    },
+    "output": {
+      "file": "/art/output.webp",
+      "bg": "#ffffff",
+      "pack": "t1-finance-news"
+    },
+    "inventory": {
+      "file": "/art/inventory.webp",
+      "bg": "#ffffff",
+      "pack": "t1-finance-news"
+    },
+    "surplus": {
+      "file": "/art/surplus.webp",
+      "bg": "#ffffff",
+      "pack": "t1-finance-news"
+    },
+    "deficit": {
+      "file": "/art/deficit.webp",
+      "bg": "#ffffff",
+      "pack": "t1-finance-news"
+    },
+    "earnings": {
+      "file": "/art/earnings.webp",
+      "bg": "#ffffff",
+      "pack": "t1-finance-news"
+    },
+    "revenue": {
+      "file": "/art/revenue.webp",
+      "bg": "#ffffff",
+      "pack": "t1-finance-news"
+    },
+    "profit": {
+      "file": "/art/profit.webp",
+      "bg": "#ffffff",
+      "pack": "t1-finance-news"
+    },
+    "margin": {
+      "file": "/art/margin.webp",
+      "bg": "#ffffff",
+      "pack": "t1-finance-news"
+    },
+    "dividend": {
+      "file": "/art/dividend.webp",
+      "bg": "#ffffff",
+      "pack": "t1-finance-news"
+    },
+    "guidance": {
+      "file": "/art/guidance.webp",
+      "bg": "#ffffff",
+      "pack": "t1-finance-news"
+    },
+    "forecast": {
+      "file": "/art/forecast.webp",
+      "bg": "#ffffff",
+      "pack": "t1-finance-news"
+    },
+    "consensus": {
+      "file": "/art/consensus.webp",
+      "bg": "#ffffff",
+      "pack": "t1-finance-news"
+    },
+    "estimate": {
+      "file": "/art/estimate.webp",
+      "bg": "#ffffff",
+      "pack": "t1-finance-news"
+    },
+    "bond": {
+      "file": "/art/bond.webp",
+      "bg": "#ffffff",
+      "pack": "t1-finance-news"
+    },
+    "yield": {
+      "file": "/art/yield.webp",
+      "bg": "#ffffff",
+      "pack": "t1-finance-news"
+    },
+    "inflation": {
+      "file": "/art/inflation.webp",
+      "bg": "#ffffff",
+      "pack": "t1-finance-news"
+    },
+    "interest rate": {
+      "file": "/art/interest-rate.webp",
+      "bg": "#ffffff",
+      "pack": "t1-finance-news"
+    },
+    "rate hike": {
+      "file": "/art/rate-hike.webp",
+      "bg": "#ffffff",
+      "pack": "t1-finance-news"
+    },
+    "rate cut": {
+      "file": "/art/rate-cut.webp",
+      "bg": "#ffffff",
+      "pack": "t1-finance-news"
+    },
+    "central bank": {
+      "file": "/art/central-bank.webp",
+      "bg": "#ffffff",
+      "pack": "t1-finance-news"
+    },
+    "currency": {
+      "file": "/art/currency.webp",
+      "bg": "#ffffff",
+      "pack": "t1-finance-news"
+    },
+    "exchange rate": {
+      "file": "/art/exchange-rate.webp",
+      "bg": "#ffffff",
+      "pack": "t1-finance-news"
+    },
+    "depreciate": {
+      "file": "/art/depreciate.webp",
+      "bg": "#ffffff",
+      "pack": "t1-finance-news"
+    },
+    "appreciate": {
+      "file": "/art/appreciate.webp",
+      "bg": "#ffffff",
+      "pack": "t1-finance-news"
+    },
+    "market cap": {
+      "file": "/art/market-cap.webp",
+      "bg": "#ffffff",
+      "pack": "t1-finance-news"
+    },
+    "valuation": {
+      "file": "/art/valuation.webp",
+      "bg": "#ffffff",
+      "pack": "t1-finance-news"
+    },
+    "index": {
+      "file": "/art/index.webp",
+      "bg": "#ffffff",
+      "pack": "t1-finance-news"
+    },
+    "blue chip": {
+      "file": "/art/blue-chip.webp",
+      "bg": "#ffffff",
+      "pack": "t1-finance-news"
+    },
+    "auction": {
+      "file": "/art/auction.webp",
+      "bg": "#ffffff",
+      "pack": "t1-finance-news"
+    },
+    "issuance": {
+      "file": "/art/issuance.webp",
+      "bg": "#ffffff",
+      "pack": "t1-finance-news"
+    },
+    "tariff": {
+      "file": "/art/tariff.webp",
+      "bg": "#ffffff",
+      "pack": "t1-finance-news"
+    },
+    "volatility": {
+      "file": "/art/volatility.webp",
+      "bg": "#ffffff",
+      "pack": "t1-finance-news"
+    },
+    "p/e": {
+      "file": "/art/p-e.webp",
+      "bg": "#ffffff",
+      "pack": "t1-finance-news"
+    }
+  }
 }

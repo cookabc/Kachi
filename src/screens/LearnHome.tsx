@@ -1,6 +1,6 @@
 import { StatsBar } from "../chrome";
 import type { Course, LearnerState } from "../domain";
-import { isLessonUnlocked } from "../engine";
+import { isLessonDone, isLessonUnlocked } from "../engine";
 import type { UiText } from "../ui";
 
 export function LearnHome({
@@ -18,11 +18,12 @@ export function LearnHome({
 }) {
   const isZh = course.locale.startsWith("zh");
   const upNext = course.lessons.find(
-    (lesson) => !state.completedLessonIds.includes(lesson.id) && isLessonUnlocked(state, course, lesson.id),
+    (lesson) => !isLessonDone(state, course, lesson.id) && isLessonUnlocked(state, course, lesson.id),
   );
   const firstLesson = course.lessons[0];
   const activeLesson = upNext ?? firstLesson;
-  const completed = state.completedLessonIds.length;
+  // Count only this pack's lessons: completedLessonIds also holds other packs'.
+  const completed = course.lessons.filter((lesson) => isLessonDone(state, course, lesson.id)).length;
   const total = course.lessons.length;
   // The hero names the course's first confusion pair. Hardcoding HEDGE/PLEDGE
   // meant every pack advertised the legacy course's opening pair.
@@ -99,7 +100,7 @@ export function LearnHome({
 
           {course.units.map((unit) => {
             const lessons = course.lessons.filter((lesson) => lesson.unit === unit.id);
-            const doneCount = lessons.filter((lesson) => state.completedLessonIds.includes(lesson.id)).length;
+            const doneCount = lessons.filter((lesson) => isLessonDone(state, course, lesson.id)).length;
             const currentUnit = lessons.some((lesson) => lesson.id === upNext?.id);
             return (
               <section key={unit.id} className={`lab-unit${currentUnit ? " lab-unit-current" : ""}`}>
@@ -115,7 +116,7 @@ export function LearnHome({
                 </div>
                 <ol className="lab-lessons">
                   {lessons.map((lesson, index) => {
-                    const done = state.completedLessonIds.includes(lesson.id);
+                    const done = isLessonDone(state, course, lesson.id);
                     const unlocked = isLessonUnlocked(state, course, lesson.id);
                     const isNext = upNext?.id === lesson.id;
                     return (

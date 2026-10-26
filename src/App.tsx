@@ -6,6 +6,7 @@ import {
   applyAnswer,
   currentExercise,
   emptyLearnerState,
+  isLessonDone,
   isLessonUnlocked,
   recentMissTermIds,
   requeuePrompt,
@@ -560,8 +561,7 @@ function App() {
               beginLesson(
                 course.lessons.find(
                   (lesson) =>
-                    isLessonUnlocked(state, course, lesson.id) &&
-                    !state.completedLessonIds.includes(lesson.id),
+                    isLessonUnlocked(state, course, lesson.id) && !isLessonDone(state, course, lesson.id),
                 )?.id ?? course.lessons[0].id,
               )
             }
@@ -577,8 +577,11 @@ function App() {
               : "LOCAL FIRST, NO ACCOUNT, NO INVESTMENT ADVICE"}
           </span>
           <span>
-            {state.completedLessonIds.length.toString().padStart(2, "0")} /{" "}
-            {course.lessons.length.toString().padStart(2, "0")}
+            {course.lessons
+              .filter((lesson) => isLessonDone(state, course, lesson.id))
+              .length.toString()
+              .padStart(2, "0")}{" "}
+            / {course.lessons.length.toString().padStart(2, "0")}
           </span>
         </div>
       </aside>

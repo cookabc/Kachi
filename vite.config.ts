@@ -44,7 +44,10 @@ export default defineConfig({
         ],
       },
       workbox: {
-        globPatterns: ["**/*.{js,css,html,svg,json,woff2}"],
+        // Art is 42+ generated images per pack; without webp here they would be
+        // fetched on every cold start instead of living in the offline bundle.
+        globPatterns: ["**/*.{js,css,html,svg,json,woff2,webp,png}"],
+        maximumFileSizeToCacheInBytes: 3 * 1024 * 1024,
       },
     }),
   ],
