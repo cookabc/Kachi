@@ -1073,6 +1073,17 @@ input {
   padding: 28px 22px 20px;
   text-align: center;
   flex: 1;
+  /* 空态（还没有错题）内容不足一屏：跟着 .hero 的做法在剩余空间里居中，
+     内容多时回落到顶部对齐，避免下半屏三大片空白。 */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: safe center;
+}
+/* 满宽元素在居中列里仍然要占满整行。 */
+.prac-hero > .btn,
+.prac-hero > .prac-targets {
+  align-self: stretch;
 }
 .prac-targets {
   margin-top: 22px;
