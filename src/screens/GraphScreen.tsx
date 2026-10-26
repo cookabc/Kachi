@@ -1,11 +1,13 @@
 import { useMemo, useState } from "react";
 import type { Course, LearnerState } from "../domain";
-import { recentMissTermIds } from "../engine";
+import { isVerifiedMastery, pairIdForConcept, recentMissTermIds } from "../engine";
 import { conceptOf } from "../flow";
 import { arcPath, edgePath, graphEdges, graphLayout, labelPlacements } from "../graph";
 import { weakLinks } from "../graph/weak-link";
 import { localizedTerm } from "../localization";
 import type { UiText } from "../ui";
+
+type GraphStatus = "unseen" | "seen" | "learning" | "mastered" | "missed";
 
 const VIEW = 480;
 const PAD = 131;
@@ -43,6 +45,26 @@ export function GraphScreen({
   const layout = useMemo(() => graphLayout(course, VIEW, PAD), [course]);
   const seen = useMemo(() => new Set(state.seenConceptIds), [state.seenConceptIds]);
   const missed = useMemo(() => new Set(recentMissTermIds(state)), [state]);
+
+  // Four learning states, derived from data the engine already records. The map
+  // used to show only seen/unseen, so a learner at "two correct in a row" looked
+  // identical to one who had merely opened the word.
+  const progress = useMemo(() => {
+    const map = new Map<string, { status: GraphStatus; streak: number }>();
+    for (const concept of course.concepts) {
+      const pairId = pairIdForConcept(concept);
+      const entry = pairId ? state.mastery[pairId] : undefined;
+      const streak = entry?.consecutiveCorrect ?? 0;
+      let status: GraphStatus;
+      if (isVerifiedMastery(entry)) status = "mastered";
+      else if (streak > 0) status = "learning";
+      else if (missed.has(concept.id)) status = "missed";
+      else if (seen.has(concept.id)) status = "seen";
+      else status = "unseen";
+      map.set(concept.id, { status, streak });
+    }
+    return map;
+  }, [course, state, seen, missed]);
   const labels = useMemo(
     () =>
       labelPlacements(
@@ -63,6 +85,7 @@ export function GraphScreen({
   const weak = useMemo(() => weakLinks(course, state.seenConceptIds, 3), [course, state.seenConceptIds]);
 
   const selectedConcept = selected ? conceptOf(course, selected) : undefined;
+  const selectedProgress = selected ? progress.get(selected) : undefined;
   const unit = selectedConcept ? course.units.find((item) => item.id === selectedConcept.unit) : undefined;
 
   return (
@@ -120,6 +143,12 @@ export function GraphScreen({
         <div className="g-legend" aria-hidden="true">
           <span className="g-leg">
             <i className="dot seen" /> {t.graph.legendSeen}
+          </span>
+          <span className="g-leg">
+            <i className="dot learning" /> {t.graph.legendLearning}
+          </span>
+          <span className="g-leg">
+            <i className="dot mastered" /> {t.graph.legendMastered}
           </span>
           <span className="g-leg">
             <i className="dot" /> {t.graph.legendUnseen}
@@ -182,9 +211,10 @@ export function GraphScreen({
               const concept = conceptOf(course, node.id);
               if (!concept) return null;
               const label = labels.get(node.id);
-              const status = missed.has(node.id) ? "missed" : seen.has(node.id) ? "seen" : "unseen";
+              const status = progress.get(node.id)?.status ?? "unseen";
               return (
                 <g key={node.id}>
+                  {status === "mastered" && <circle className="g-dot-halo" cx={node.x} cy={node.y} r={6} />}
                   <circle className={`g-dot d-${status}`} cx={node.x} cy={node.y} r={6} />
                   {label && (
                     <text
@@ -232,6 +262,13 @@ export function GraphScreen({
               </p>
             )}
             <p className="def">{selectedConcept.definition}</p>
+            {selectedProgress && selectedProgress.streak > 0 && (
+              <p className={`g-mastery${selectedProgress.status === "mastered" ? " done" : ""}`}>
+                {selectedProgress.status === "mastered"
+                  ? t.graph.legendMastered
+                  : t.graph.masteryTitle(selectedProgress.streak)}
+              </p>
+            )}
             <p className="mu">
               {t.glossary.mix}
               <strong>{conceptOf(course, selectedConcept.mixUp)?.term ?? selectedConcept.mixUp}</strong> —{" "}

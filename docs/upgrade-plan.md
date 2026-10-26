@@ -7,8 +7,8 @@
 
 | #   | 问题                     | 实测证据                                                                                                     | 影响                         | 优先级 |
 | --- | ------------------------ | ------------------------------------------------------------------------------------------------------------ | ---------------------------- | ------ |
-| 1   | 「验证掌握」判定永不成立 | `assessmentOnly` 题 0/51 → `unseenScenarioCorrect` 恒 false → `isVerifiedMastery()` 对真实内容永远返回 false | 引擎里最精密的一段逻辑是死路 | **P0** |
-| 2   | 掌握状态界面零展示       | `isVerifiedMastery` 无任何 UI 引用；图谱只有「已学/未学」两态                                                | 学习者看不到自己学到哪一步   | **P0** |
+| 1   | 「验证掌握」判定永不成立 | `assessmentOnly` 题 0/51 → `unseenScenarioCorrect` 恒 false → `isVerifiedMastery()` 对真实内容永远返回 false | 引擎里最精密的一段逻辑是死路 | **P0** ✅ |
+| 2   | 掌握状态界面零展示       | `isVerifiedMastery` 无任何 UI 引用；图谱只有「已学/未学」两态                                                | 学习者看不到自己学到哪一步   | **P0** ✅ |
 | 3   | 37/40 概念没有出处       | `sourceIds` 只填了 3 个                                                                                      | 违背「不编造」的产品承诺     | **P1** |
 | 4   | 题目卡大面积空白         | fill 题空白 68%、meaning 题 46%                                                                              | 每道题都在浪费半屏           | **P1** |
 | 5   | 词汇表 21.6 屏           | 40 张对照台 × 361px = 15,307px                                                                               | 无法浏览，只能搜索           | **P1** |
@@ -22,9 +22,14 @@
 
 ## 阶段 P0 · 修死路与达标（半天，不动设计）
 
-### P0-1 让「验证掌握」真正可达
+### P0-1 让「验证掌握」真正可达 ✅ 已完成（2026-10-27）
 
-现状链条：
+**修法**：新增 `isFirstEncounter()`，用 attempts 日志里该 exerciseId 的首现判断，
+取代从未被赋值的 `assessmentOnly`。只对 lesson 模式生效——练习课是有意重复已学内容，
+把它算成「首次遇到未见场景」会让判据自欺。新增 4 条测试（src/mastery.test.ts），
+其中一条真的把 unit 1 三课全打对，断言 verified mastery 确实成立。
+
+原链条：
 
 ```
 applyAnswer → isUnseenScenario = exercise.assessmentOnly && type === 'scenario'
@@ -39,7 +44,7 @@ isVerifiedMastery = consecutiveCorrect >= 3 && evidenceTypes >= 2 && unseenScena
 
 配套：`docs/` 里写清「掌握」的定义（连续 3 次正确 + 至少 2 种题型 + 通过一次未见场景），因为这是产品承诺，必须可核对。
 
-### P0-2 掌握状态要能看见
+### P0-2 掌握状态要能看见 ✅ 已完成（2026-10-27）
 
 引擎已经在算 `consecutiveCorrect` / `lapses` / `evidenceTypes` / `unseenScenarioCorrect`，UI 一个都没用。图谱目前只有 `seen | unseen | missed` 三态。
 
@@ -53,6 +58,12 @@ isVerifiedMastery = consecutiveCorrect >= 3 && evidenceTypes >= 2 && unseenScena
 | 掌握 | `isVerifiedMastery()`    | 满环 + 勾 |
 
 这条同时是差异化：词光用「点亮一颗星」把进度做成可炫耀的，Kachi 的弦图比星图信息密度高得多，只是没把掌握度画上去。
+
+**实施时改了一处设计**：原计划靠填充色区分四态，实测 CIELAB ΔE 发现
+「已学」与「已掌握」的填充色完全相同（ΔE=0），「未学」与「在练」只差 11.1。
+单纯换颜色解决不了，因为两者本来就该是同一族绿色。所以改成**几何区分**：
+未学=细边空心、已学=实心、在练=粗边空心、已掌握=实心+外环光晕。
+形状在任何色板与任何色觉下都成立。
 
 ### P0-3 清数据与达标
 
@@ -70,6 +81,19 @@ isVerifiedMastery = consecutiveCorrect >= 3 && evidenceTypes >= 2 && unseenScena
 建议采用与词光一致的规则：**一轮里只有首次作答更新记忆，重试只作练习不评分、不进分母**。改动集中在 `applyAnswer` 加一个 `isRetry` 标记。
 
 ---
+
+### 「掌握」的判定标准（产品承诺，可核对）
+
+一个混淆对被判定为「已掌握」，需要同时满足三条：
+
+| 条件 | 字段 | 为什么 |
+|---|---|---|
+| 连续答对 3 次 | `consecutiveCorrect >= 3` | 单次答对可能是蒙的 |
+| 至少用过 2 种题型 | `evidenceTypes.length >= 2` | 只会做选择题不等于会用这个词 |
+| 在真实场景里答对过 | `unseenScenarioCorrect` | 见过定义的词，第一次在句子里遇到仍可能认不出 |
+
+「未见场景」= 该题在作答前从未出现在你的 attempt 日志里，且是课程模式下的首次作答。
+这个定义写在引擎里（`isFirstEncounter`），由 4 条测试守着，不是文档约定。
 
 ## 阶段 P1 · 内容可信度（2–3 天，这是立身之本）
 

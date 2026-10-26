@@ -122,6 +122,23 @@ function addDays(date: Date, days: number): string {
   return next.toISOString();
 }
 
+/**
+ * Whether this scenario is one the learner has never answered before.
+ *
+ * The previous test was `exercise.assessmentOnly`, a field no pack ever set —
+ * 0 of 481 prompts across both packs — so `unseenScenarioCorrect` was pinned to
+ * false and isVerifiedMastery() could never return true. "Unseen" is better
+ * defined by the attempt log anyway: the first time you meet a prompt in a real
+ * situation is exactly what the flag was trying to name.
+ */
+export function isFirstEncounter(state: LearnerState, exercise: Exercise, session: SessionState): boolean {
+  if (exercise.type !== "scenario") return false;
+  // Practice deliberately re-drills known prompts; only a lesson presents a
+  // prompt in its intended place in the curriculum.
+  if (session.mode !== "lesson") return false;
+  return !state.attempts.some((attempt) => attempt.exerciseId === exercise.id);
+}
+
 function nextMastery(
   previous: MasteryState | undefined,
   attempt: AttemptEvent,
@@ -219,11 +236,7 @@ export function applyAnswer(
     occurredAt: now.toISOString(),
   };
   const prior = attempt.confusionPairId ? state.mastery[attempt.confusionPairId] : undefined;
-  const mastery = nextMastery(
-    prior,
-    attempt,
-    Boolean(exercise.assessmentOnly && exercise.type === "scenario"),
-  );
+  const mastery = nextMastery(prior, attempt, isFirstEncounter(state, exercise, session));
   const nextMasteryMap = mastery ? { ...state.mastery, [mastery.confusionPairId]: mastery } : state.mastery;
   const seenConceptIds = Array.from(new Set([...state.seenConceptIds, ...attempt.conceptIds]));
   const nextSession: SessionState = {

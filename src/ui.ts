@@ -66,7 +66,10 @@ export interface UiText {
     stats: (terms: number, links: number) => string;
     mapAria: string;
     legendSeen: string;
+    legendLearning: string;
+    legendMastered: string;
     legendUnseen: string;
+    masteryTitle: (streak: number) => string;
     legendMix: string;
     legendPrereq: string;
     legendSibling: string;
@@ -204,7 +207,10 @@ export const UI: Record<Lang, UiText> = {
       stats: (terms, links) => `${terms} 个术语，${links} 条关系`,
       mapAria: "术语关系图：每个点是术语，每条线是关系",
       legendSeen: "已学",
+      legendLearning: "在练",
+      legendMastered: "已掌握",
       legendUnseen: "未学",
+      masteryTitle: (streak) => `已连对 ${streak} 次`,
       legendMix: "易混",
       legendPrereq: "先学",
       legendSibling: "同族",
@@ -350,7 +356,10 @@ export const UI: Record<Lang, UiText> = {
       stats: (terms, links) => `${terms} terms, ${links} links`,
       mapAria: "Concept map: each dot is a term, each line a relationship",
       legendSeen: "seen",
+      legendLearning: "learning",
+      legendMastered: "mastered",
       legendUnseen: "new",
+      masteryTitle: (streak) => `${streak} correct in a row`,
       legendMix: "mix-up",
       legendPrereq: "prereq",
       legendSibling: "family",

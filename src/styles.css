@@ -3046,3 +3046,50 @@ svg.icon {
   width: min(220px, 72vw);
   height: auto;
 }
+
+/* Learning progress on the concept map: four states.
+   Colour alone cannot carry this. Measured CIELAB ΔE between fills:
+   seen vs mastered = 0.0 (identical green), unseen vs learning = 11.1.
+   So the states differ in GEOMETRY, which survives any palette and any
+   colour-vision deficiency:
+     unseen    hollow, thin stroke          (nothing there yet)
+     seen      filled, no ring              (met it in a lesson)
+     learning  hollow, thick stroke         (working on it, not there yet)
+     mastered  filled + outer halo          (verified)  */
+.g-dot.d-learning {
+  fill: none;
+  stroke: var(--green-deep);
+  stroke-width: 2.6;
+}
+.g-dot.d-mastered {
+  fill: var(--green);
+  stroke: var(--green-dark);
+  stroke-width: 2.2;
+}
+
+/* The halo is a second ring drawn as a wide, low-opacity stroke. */
+.g-dot-halo {
+  fill: none;
+  stroke: var(--green);
+  stroke-width: 5;
+  opacity: 0.28;
+}
+
+.g-leg .dot.learning {
+  background: transparent;
+  border: 2px solid var(--green-deep);
+}
+.g-leg .dot.mastered {
+  background: var(--green);
+  border: 1px solid var(--green-dark);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--green) 30%, transparent);
+}
+.g-mastery {
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--green-deep);
+  margin-top: 6px;
+}
+.g-mastery.done {
+  color: var(--green-dark);
+}
