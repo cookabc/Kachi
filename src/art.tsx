@@ -5,6 +5,8 @@
 // term-art/hero scenes; app chrome recolors via the ink-on-paper tokens in
 // styles.css. Never share hex values across the two — recolor scenes here,
 // recolor chrome there.
+import { artAssetElement } from "./art-assets";
+
 export const HEDGEHOG_PATHS =
   '<path d="M18 34l-8-12 10 8-2-16 10 14 4-18 6 18 8-16 4 16 12-10-8 14 12-4-10 12" fill="#58CC02" />' +
   '<ellipse cx="38" cy="40" rx="20" ry="14" fill="#46A302" />' +
@@ -395,6 +397,11 @@ export const HERO_ART: Record<string, string> = {
 
 export function artForSize(id: string, size: ArtSize): string {
   const base = id.replace(/_u1intro$/, "");
+  // Generated assets (content/art-manifest.json) take priority: the rebuild
+  // ships 231 concepts, past the hand-drawing scale. Concepts still covered by
+  // the legacy inline SVGs keep those, so the current pack's look is unchanged.
+  const asset = artAssetElement(id, size) ?? artAssetElement(base, size);
+  if (asset) return asset;
   if (size === "hero") {
     const scene = HERO_ART[id] ?? HERO_ART[base];
     if (scene) return scene;
