@@ -46,6 +46,119 @@ for (let i = 1; i < packs.length; i += 1) {
   comparePacks(packs[0], packs[i]);
 }
 
+// Vocabulary evidence gate (docs/vocabulary-system.md §6).
+//
+// A term earns its place in a pack by appearing in the material that pack
+// teaches you to read. Without this check the word list drifts toward
+// whatever the author happened to know — the 2026-10 audit found 30 of 40
+// concepts never appear in 172 real headlines.
+//
+// The corpus is optional per pack: a pack with no corpus file is skipped
+// rather than failed, so adding a pack does not require inventing evidence
+// before the content exists. Once the file exists, every term must hit.
+const corpusDir = path.join(root, "content/corpus");
+const corpusText = () => {
+  if (!fs.existsSync(corpusDir)) return null;
+  const parts = [];
+  for (const entry of fs.readdirSync(corpusDir, { withFileTypes: true })) {
+    if (entry.isDirectory()) continue;
+    const file = path.join(corpusDir, entry.name);
+    if (entry.name.endsWith(".json")) {
+      // headline batches: flatten every array of strings
+      const walk = (value) => {
+        if (typeof value === "string") parts.push(value);
+        else if (Array.isArray(value)) value.forEach(walk);
+        else if (value && typeof value === "object") Object.values(value).forEach(walk);
+      };
+      try {
+        walk(JSON.parse(fs.readFileSync(file, "utf8")));
+      } catch (error) {
+        fail(`[corpus] ${entry.name} is not valid JSON: ${error.message}`);
+      }
+    } else if (entry.name.endsWith(".txt")) {
+      parts.push(fs.readFileSync(file, "utf8"));
+    }
+  }
+  return parts.length ? parts.join("\n").toLowerCase() : null;
+};
+
+const corpus = corpusText();
+// Terms the author has explicitly justified without corpus evidence. Empty by
+// default: an entry here is a promise that docs/vocabulary-system.md says why
+// the term is taught even though the target material never uses it.
+//
+// The current pack predates the gate. Its 25 unlisted terms are the exact
+// finding the 2026-10 audit produced, so they are carried as a known debt
+// rather than silently exempted — the list is printed on every build and must
+// shrink to zero as the packs are rebuilt. New packs start with no allowance.
+const KNOWN_UNGATED = new Set(
+  [
+    // pledge collateral haircut margin call leverage derivative option put call
+    // short selling notional basis risk diversification counterparty default
+    // mark-to-market securities-backed loan capital gains buy-borrow-die real rate
+    // quantitative easing spot contango backwardation cost of carry
+    "pledge",
+    "collateral",
+    "haircut",
+    "margin call",
+    "leverage",
+    "derivative",
+    "option",
+    "put",
+    "call",
+    "short selling",
+    "notional",
+    "basis risk",
+    "diversification",
+    "counterparty",
+    "default",
+    "mark-to-market",
+    "securities-backed loan",
+    "capital gains",
+    "buy-borrow-die",
+    "real rate",
+    "quantitative easing",
+    "spot",
+    "contango",
+    "backwardation",
+    "cost of carry",
+  ].map((term) => term.toLowerCase()),
+);
+
+if (!corpus) {
+  console.log("[corpus] no corpus files — vocabulary evidence gate skipped");
+} else {
+  for (const { name, course } of packs) {
+    const missing = [];
+    let excused = 0;
+    for (const concept of course.concepts) {
+      const term = String(concept.term).toLowerCase();
+      // Match the term as a phrase, allowing inflection on the final word:
+      // "yield" hits "yields", "rate hike" hits "rate hikes".
+      const escaped = term.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+      const pattern = new RegExp(`\\b${escaped}(s|es|ed|ing)?\\b`);
+      if (pattern.test(corpus)) continue;
+      if (KNOWN_UNGATED.has(term)) {
+        excused += 1;
+        continue;
+      }
+      missing.push(concept.term);
+    }
+    if (missing.length) {
+      fail(
+        `[corpus] ${name}: ${missing.length}/${course.concepts.length} concepts never appear in content/corpus — ` +
+          `add corpus evidence or justify the term in docs/vocabulary-system.md: ${missing.join(", ")}`,
+      );
+    } else if (excused) {
+      console.log(
+        `[corpus] ${name}: every concept appears in the corpus (${excused} carried as known debt — see KNOWN_UNGATED)`,
+      );
+    } else {
+      console.log(`[corpus] ${name}: every concept appears in the corpus`);
+    }
+  }
+}
+
 if (failed) process.exit(1);
 
 // Locale packs are translations of one course: ids, exercise types, answers,
