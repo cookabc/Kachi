@@ -15,6 +15,8 @@ export function CompleteScreen(props: {
   onPractice: (focus?: string[]) => void;
   onPath: () => void;
   onShare: () => void;
+  /** Share sheet is open: keep this screen out of tab order and activation. */
+  blocked?: boolean;
 }) {
   const { summary, t } = props;
   const acc = summary.total ? Math.round((summary.correct / summary.total) * 100) : 0;
@@ -23,7 +25,7 @@ export function CompleteScreen(props: {
   const pair = props.isPractice ? null : lessonPair(props.course, props.lessonId);
   const flawless = summary.xpPerfect > 0;
   return (
-    <main className="hero">
+    <main className="hero" inert={props.blocked ? true : undefined}>
       <Confetti level={props.motion} />
       {props.isPractice ? (
         <div className="mascot">

@@ -1,7 +1,13 @@
 import { beforeEach, describe, expect, it } from "vitest";
 import type { LearnerState } from "./domain";
 import { emptyLearnerState } from "./engine";
-import { exportLearnerData, importLearnerData, loadLearnerState, saveLearnerState } from "./storage";
+import {
+  exportLearnerData,
+  importLearnerData,
+  loadLearnerState,
+  REJECTED_PROFILE_KEY,
+  saveLearnerState,
+} from "./storage";
 
 /* A minimal in-memory IndexedDB that satisfies exactly what storage.ts uses:
    open+upgrade with three stores, get/put requests, and a transaction that
@@ -173,6 +179,7 @@ describe("learner storage", () => {
   it("starts from an empty state", async () => {
     const loaded = await loadLearnerState();
     expect(loaded).toEqual(emptyLearnerState());
+    expect(fakeDatabase.read("snapshots", REJECTED_PROFILE_KEY)).toBeUndefined();
   });
 
   it("exports a portable envelope around the learner state", async () => {
@@ -333,15 +340,38 @@ describe("learner storage", () => {
     );
   });
 
-  it("replaces an invalid persisted snapshot with a durable empty state", async () => {
-    fakeDatabase.seed("snapshots", "local-profile", { ...emptyLearnerState(), attempts: "broken" });
+  it("keeps the original snapshot when an invalid profile is replaced with an empty state", async () => {
+    const broken = { ...emptyLearnerState(), attempts: "broken", xp: 77 };
+    fakeDatabase.seed("snapshots", "local-profile", broken);
 
     expect(await loadLearnerState()).toEqual(emptyLearnerState());
     expect(fakeDatabase.read("snapshots", "local-profile")).toEqual(emptyLearnerState());
+    expect(fakeDatabase.read("snapshots", REJECTED_PROFILE_KEY)).toEqual(broken);
     expect(fakeDatabase.read("meta", "recovery")).toMatchObject({
       reason: "invalid-snapshot",
-      source: "fresh",
+      preservedKey: REJECTED_PROFILE_KEY,
     });
+
     expect(await loadLearnerState()).toEqual(emptyLearnerState());
+    expect(fakeDatabase.read("snapshots", REJECTED_PROFILE_KEY)).toEqual(broken);
+    expect(fakeDatabase.read("meta", "upgrade")).toBeUndefined();
+  });
+
+  it("upgrades a readable v1 snapshot in place and does not park it as rejected", async () => {
+    const legacy = { ...sampleState(), version: 1 as const, completedLessonIds: ["u1l1"] };
+    fakeDatabase.seed("snapshots", "local-profile", legacy);
+
+    const loaded = await loadLearnerState();
+    expect(loaded.version).toBe(2);
+    expect(loaded.completedLessonIds).toEqual(["hedge-or-pledge/u1l1"]);
+    expect(loaded.xp).toBe(legacy.xp);
+    expect(loaded.attempts).toEqual(legacy.attempts);
+    expect(fakeDatabase.read("snapshots", "local-profile")).toEqual(loaded);
+    expect(fakeDatabase.read("snapshots", REJECTED_PROFILE_KEY)).toBeUndefined();
+    expect(fakeDatabase.read("meta", "upgrade")).toMatchObject({ fromVersion: 1, qualifiedLessons: 1 });
+    expect(fakeDatabase.read("meta", "recovery")).toBeUndefined();
+
+    expect(await loadLearnerState()).toEqual(loaded);
+    expect(fakeDatabase.read("snapshots", REJECTED_PROFILE_KEY)).toBeUndefined();
   });
 });
