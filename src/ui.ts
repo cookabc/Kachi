@@ -1,5 +1,5 @@
 import type { Lang } from "./course";
-import type { ExerciseType } from "./domain";
+import type { ExerciseType, MixUpType } from "./domain";
 
 // The UI language is the course language — one definition lives in course.ts.
 export type { Lang };
@@ -102,8 +102,15 @@ export interface UiText {
     kickers: Record<ExerciseType, string>;
     matchHint: string;
     tfLabels: { true: string; false: string };
+    /** Why the pair confuses, per the pack's mixUpType taxonomy. */
+    mixTypes: Record<MixUpType, string>;
     check: string;
     continue: string;
+    /** Ask for a hint. Costs mastery credit, so it is always offered plainly. */
+    hint: string;
+    /** Shown after asking: names the confusable partner without revealing the answer. */
+    hintBody: (term: string, mixUp: string) => string;
+    hintCost: string;
     heartsAria: (n: number, max: number) => string;
     teachKicker: (termZh: string | null) => string;
     recapKicker: string;
@@ -246,11 +253,16 @@ export const UI: Record<Lang, UiText> = {
         fill: "补全句子",
         scenario: "真实情境",
         match: "配对练习",
+        headline: "读真标题",
       },
       matchHint: "先点术语，再点解释。",
       tfLabels: { true: "正确", false: "错误" },
+      mixTypes: { opposite: "义反", coexist: "同场", hierarchy: "层级", form: "形近", timing: "时序" },
       check: "检查",
       continue: "继续",
+      hint: "要提示吗？",
+      hintBody: (term, mixUp) => `这道题考的是 ${term}，别和 ${mixUp} 混了。`,
+      hintCost: "用了提示，这个词本轮不算掌握。",
       heartsAria: (n, max) => `剩余爱心 ${n}/${max}`,
       teachKicker: (termZh) => (termZh ? `新术语，${termZh}` : "新术语"),
       recapKicker: "单元回顾",
@@ -397,11 +409,22 @@ export const UI: Record<Lang, UiText> = {
         fill: "Fill the blank",
         scenario: "Scenario",
         match: "Match the pairs",
+        headline: "Read the headline",
       },
       matchHint: "Tap a term, then its match.",
       tfLabels: { true: "True", false: "False" },
+      mixTypes: {
+        opposite: "Opposites",
+        coexist: "Same context",
+        hierarchy: "Subset",
+        form: "Look-alike",
+        timing: "Timing",
+      },
       check: "Check",
       continue: "Continue",
+      hint: "Need a hint?",
+      hintBody: (term, mixUp) => `This one is about ${term} — don't confuse it with ${mixUp}.`,
+      hintCost: "A hinted answer doesn't count toward mastery.",
       heartsAria: (n, max) => `Hearts ${n}/${max}`,
       teachKicker: (_termZh) => "New word",
       recapKicker: "Unit recap",

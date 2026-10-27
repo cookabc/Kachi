@@ -29,9 +29,11 @@ export function LessonScreen(props: {
   selL: string | null;
   selR: string | null;
   locked: string[];
+  hintShown: boolean;
   onPick: (value: string | boolean) => void;
   onSubmit: () => void;
   onMatch: (side: "left" | "right", id: string) => void;
+  onHint: () => void;
   onTeachContinue: () => void;
   onContinue: () => void;
   onClose: () => void;
@@ -106,9 +108,21 @@ export function LessonScreen(props: {
             onMatch={props.onMatch}
           />
         )}
+        {/* The hint names the confusable partner, never the answer. It is the
+            honest way to unstick someone without turning the drill into a
+            multiple-guess loop — and it costs mastery credit, which is why the
+            cost is stated up front rather than discovered afterwards. */}
+        {phase === "question" && props.hintShown && presented && (
+          <HintCard presented={presented} course={props.course} t={t} />
+        )}
       </div>
       {phase === "question" && presented?.type !== "match" && (
         <div className="foot">
+          {!props.hintShown && (
+            <button type="button" className="btn btn-ghost" onClick={props.onHint}>
+              {t.lesson.hint}
+            </button>
+          )}
           <button
             type="button"
             className="btn btn-gold"
@@ -140,7 +154,10 @@ function TeachCard({ termId, course, t, lang }: { termId: string; course: Course
   const concept = conceptOf(course, termId);
   if (!concept) return null;
   const sibling = conceptOf(course, concept.mixUp);
-  const termZh = lang === "zh-CN" ? localizedTerm(termId).termZh : null;
+  // Generated packs carry the Chinese name natively; the legacy pack falls
+  // back to its gloss map. The en UI never shows it.
+  const termZh = lang === "zh-CN" ? (concept.termZh ?? localizedTerm(termId).termZh) : null;
+  const mixLabel = concept.mixUpType ? t.lesson.mixTypes[concept.mixUpType] : null;
   return (
     <>
       <div className="kicker2">{t.lesson.teachKicker(termZh)}</div>
@@ -154,9 +171,12 @@ function TeachCard({ termId, course, t, lang }: { termId: string; course: Course
       <div className="teach-mix">
         <TermArt id={sibling ? sibling.id : concept.mixUp} size="xs" />
         <div>
-          <strong>{lang === "zh-CN" ? "别混淆" : "Don't mix up"}</strong>
+          <strong>
+            {lang === "zh-CN" ? "别混淆" : "Don't mix up"}
+            {mixLabel ? ` · ${mixLabel}` : ""}
+          </strong>
           {lang === "zh-CN" ? "：" : ": "}
-          {concept.mixUp}
+          {sibling ? sibling.term : concept.mixUp}
           {lang === "zh-CN" ? "。" : ". "}
           {concept.mixUpWhy}
         </div>
@@ -188,6 +208,21 @@ function RecapCard({ terms, course, t }: { terms: string[]; course: Course; t: U
         {t.lesson.recapSub}
       </p>
     </>
+  );
+}
+
+function HintCard({ presented, course, t }: { presented: PresentedExercise; course: Course; t: UiText }) {
+  // Which concept this prompt is testing: the explicit termId, or the first
+  // published term reference. A match prompt has neither, so it falls back to
+  // the pair list rather than inventing a term.
+  const conceptId = presented.termId ?? presented.termIds?.find((id) => conceptOf(course, id));
+  const concept = conceptId ? conceptOf(course, conceptId) : undefined;
+  const mixUpTerm = concept ? (conceptOf(course, concept.mixUp)?.term ?? concept.mixUp) : undefined;
+  return (
+    <div className="hint-card" role="note">
+      {concept && mixUpTerm ? <p>{t.lesson.hintBody(concept.term, mixUpTerm)}</p> : <p>{t.lesson.hint}</p>}
+      <span className="hint-cost">{t.lesson.hintCost}</span>
+    </div>
   );
 }
 
@@ -264,6 +299,10 @@ function PromptBody(props: {
         </div>
       )}
 
+      {presented.type === "headline" && (
+        <HeadlineBody presented={presented} selection={selection} locked={locked} onPick={props.onPick} />
+      )}
+
       {presented.type === "fill" && (
         <div className="bank">
           {presented.bank?.map((word) => {
@@ -322,6 +361,72 @@ function PromptBody(props: {
           </div>
         </>
       )}
+    </>
+  );
+}
+
+/**
+ * The headline drill: one real-syntax sentence with a blank, and the two terms
+ * of the pair as the only options.
+ *
+ * Selecting a word drops it into the sentence in place, so the learner reads
+ * the whole line rather than judging a word in isolation — which is exactly the
+ * skill the product claims to teach. After checking, the sentence keeps the
+ * chosen word and colours it, so a wrong choice leaves a visibly wrong headline
+ * on screen instead of a bare "incorrect".
+ */
+function HeadlineBody({
+  presented,
+  selection,
+  locked,
+  onPick,
+}: {
+  presented: PresentedExercise;
+  selection: string | boolean | null;
+  locked: boolean;
+  onPick: (value: string | boolean) => void;
+}) {
+  const picked = typeof selection === "string" ? selection : null;
+  const parts = (presented.story ?? "").split("____");
+  const correctText = presented.correctText;
+  return (
+    <>
+      <div className="headline">
+        {parts.length > 1 ? (
+          <>
+            {parts[0]}
+            <span
+              className={`hl-blank${picked ? " filled" : ""}${locked && picked ? (picked === correctText ? " good" : " bad") : ""}`}
+            >
+              {picked ?? "\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0"}
+            </span>
+            {parts.slice(1).join("____")}
+          </>
+        ) : (
+          presented.story
+        )}
+      </div>
+      <div className="hl-opts">
+        {presented.options?.map((option) => {
+          let cls = "hl-opt";
+          if (picked === option.text) cls += " sel";
+          if (locked) {
+            if (option.text === correctText) cls += " good";
+            else if (picked === option.text) cls += " bad";
+          }
+          return (
+            <button
+              type="button"
+              key={option.text}
+              className={cls}
+              disabled={locked}
+              onClick={() => onPick(option.text)}
+            >
+              {option.text}
+            </button>
+          );
+        })}
+      </div>
     </>
   );
 }

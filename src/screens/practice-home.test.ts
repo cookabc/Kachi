@@ -8,7 +8,7 @@ const course = zhCourse as unknown as Course;
 function stateWithDuePair(pairId: string, dueAt: string): LearnerState {
   const [a, b] = pairId.split("::");
   return {
-    version: 1,
+    version: 2,
     xp: 0,
     streak: 0,
     completedLessonIds: [],

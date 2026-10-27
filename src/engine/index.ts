@@ -9,12 +9,27 @@ import type {
   SessionState,
 } from "../domain";
 
-export const ENGINE_VERSION = "0.1.0";
+export const ENGINE_VERSION = "0.2.0";
 export const REVIEW_INTERVAL_DAYS = [1, 3, 7, 14, 30, 60] as const;
+
+/**
+ * How slow an answer has to be before it stops counting as mastery evidence.
+ *
+ * Absolute milliseconds cannot work: the same 6-second answer is hesitation
+ * for a two-word prompt and fluent for a scenario paragraph. The bar is
+ * therefore the learner's own median correct latency, times this factor, so a
+ * slow reader is not permanently "weak" and a fast one is not permanently
+ * "strong". With too few samples to trust a median, no answer is weak.
+ */
+export const WEAK_LATENCY_FACTOR = 2;
+/** Below this many measured answers the median is noise; trust nothing. */
+export const WEAK_LATENCY_MIN_SAMPLES = 8;
+/** A prompt answered instantly is not "slow" no matter what the median says. */
+export const WEAK_LATENCY_FLOOR_MS = 12_000;
 
 export function emptyLearnerState(): LearnerState {
   return {
-    version: 1,
+    version: 2,
     xp: 0,
     streak: 0,
     completedLessonIds: [],
@@ -34,7 +49,11 @@ export function pairIdForConcept(concept: Concept | undefined): string | undefin
   return pairIdForConcepts(concept.id, concept.mixUp);
 }
 
-/** The pack that predates multi-pack support: bare lesson ids can only be its. */
+/**
+ * The pack whose saved lesson ids predate pack qualification. Kept as a
+ * constant because upgrade.ts needs it to rewrite those ids; nothing else
+ * branches on it.
+ */
 export const LEGACY_PACK_ID = "hedge-or-pledge";
 
 /**
@@ -43,15 +62,11 @@ export const LEGACY_PACK_ID = "hedge-or-pledge";
  * or finishing one course silently unlocks the other.
  */
 export function lessonKey(course: Course, lessonId: string): string {
-  return `${course.packId ?? LEGACY_PACK_ID}/${lessonId}`;
+  return `${course.packId}/${lessonId}`;
 }
 
-/** Whether a lesson is finished, accepting pre-namespacing saved state. */
 export function isLessonDone(state: LearnerState, course: Course, lessonId: string): boolean {
-  if (state.completedLessonIds.includes(lessonKey(course, lessonId))) return true;
-  // Saved state written before packs existed has bare ids, which can only have
-  // come from the legacy pack.
-  return course.packId === LEGACY_PACK_ID && state.completedLessonIds.includes(lessonId);
+  return state.completedLessonIds.includes(lessonKey(course, lessonId));
 }
 
 export function getExercise(course: Course, exerciseId: string): Exercise {
@@ -125,11 +140,8 @@ function addDays(date: Date, days: number): string {
 /**
  * Whether this scenario is one the learner has never answered before.
  *
- * The previous test was `exercise.assessmentOnly`, a field no pack ever set —
- * 0 of 481 prompts across both packs — so `unseenScenarioCorrect` was pinned to
- * false and isVerifiedMastery() could never return true. "Unseen" is better
- * defined by the attempt log anyway: the first time you meet a prompt in a real
- * situation is exactly what the flag was trying to name.
+ * Defined by the attempt log rather than a content flag: the first time you
+ * meet a prompt in a real situation is exactly what "unseen" means.
  */
 export function isFirstEncounter(state: LearnerState, exercise: Exercise, session: SessionState): boolean {
   if (exercise.type !== "scenario") return false;
@@ -139,12 +151,67 @@ export function isFirstEncounter(state: LearnerState, exercise: Exercise, sessio
   return !state.attempts.some((attempt) => attempt.exerciseId === exercise.id);
 }
 
-function nextMastery(
+/**
+ * The learner's own typical response time on answers they got right. Measured
+ * answers only: retries and hinted answers say nothing about fluency.
+ */
+export function medianCorrectLatencyMs(state: LearnerState): number | undefined {
+  const samples = state.attempts
+    .filter((attempt) => attempt.correct && !attempt.isRetry && !attempt.hintUsed && attempt.latencyMs > 0)
+    .map((attempt) => attempt.latencyMs)
+    .sort((a, b) => a - b);
+  if (samples.length < WEAK_LATENCY_MIN_SAMPLES) return undefined;
+  return samples[Math.floor(samples.length / 2)];
+}
+
+/**
+ * A correct answer that took so long it is recall with effort, not fluency.
+ * It still deserves credit — the learner did get there — but it must not be
+ * counted the same as a quick answer, or the mastery ladder measures patience.
+ */
+export function isSlowAnswer(state: LearnerState, latencyMs: number): boolean {
+  const median = medianCorrectLatencyMs(state);
+  if (median === undefined) return false;
+  return latencyMs > Math.max(median * WEAK_LATENCY_FACTOR, WEAK_LATENCY_FLOOR_MS);
+}
+
+/**
+ * How much an attempt should move the mastery ladder.
+ *
+ * - "lapse": wrong, or answered with a hint — the pair is not known.
+ * - "weak": right, but slowly — known with effort; keep the rung, review soon.
+ * - "strong": right and fluent — advance.
+ * - "rehearsal": a *correct* re-answer of a re-queued prompt. The mistake it
+ *   corrects is already on record; replaying it must not buy back mastery.
+ *
+ * A wrong re-answer is still a lapse: failing the same prompt twice is twice
+ * the evidence that the pair is not known.
+ */
+export type EvidenceQuality = "lapse" | "weak" | "strong" | "rehearsal";
+
+export function evidenceQuality(state: LearnerState, attempt: AttemptEvent): EvidenceQuality {
+  if (!attempt.correct || attempt.hintUsed) return "lapse";
+  if (attempt.isRetry) return "rehearsal";
+  return isSlowAnswer(state, attempt.latencyMs) ? "weak" : "strong";
+}
+
+/**
+ * The mastery transition for one attempt. Exported so upgrade.ts can replay a
+ * saved log through the same rules the live path uses — a second copy of this
+ * logic would drift, and the upgraded record would not match what the learner
+ * would have had.
+ */
+export function nextMasteryFor(
   previous: MasteryState | undefined,
   attempt: AttemptEvent,
-  isUnseenScenario: boolean,
+  quality: EvidenceQuality,
+  isUnseenScenario = false,
 ): MasteryState | undefined {
   if (!attempt.confusionPairId) return undefined;
+  // A rehearsal changes nothing at all — not even the review date. The clock
+  // on this pair was set by the mistake, and re-answering inside the same
+  // session must not push it out.
+  if (quality === "rehearsal" && previous) return previous;
   const base: MasteryState = previous ?? {
     confusionPairId: attempt.confusionPairId,
     consecutiveCorrect: 0,
@@ -154,7 +221,7 @@ function nextMastery(
     schedulerVersion: ENGINE_VERSION,
   };
 
-  if (!attempt.correct || attempt.hintUsed) {
+  if (quality === "lapse") {
     return {
       ...base,
       consecutiveCorrect: 0,
@@ -162,6 +229,18 @@ function nextMastery(
       lastReviewedAt: attempt.occurredAt,
       dueAt: addDays(new Date(attempt.occurredAt), 1),
       firstSeenAt: base.firstSeenAt ?? attempt.occurredAt,
+    };
+  }
+
+  if (quality === "weak") {
+    // Keep the rung: effortful recall is not progress, but it is not a lapse
+    // either. Bring it back tomorrow rather than on the full interval.
+    return {
+      ...base,
+      lastReviewedAt: attempt.occurredAt,
+      dueAt: addDays(new Date(attempt.occurredAt), 1),
+      firstSeenAt: base.firstSeenAt ?? attempt.occurredAt,
+      schedulerVersion: ENGINE_VERSION,
     };
   }
 
@@ -183,6 +262,17 @@ function nextMastery(
 
 export interface ApplyOptions {
   hintUsed?: boolean;
+  /**
+   * This prompt was already answered in this session and is being shown again
+   * (the match exercise re-queues itself after a mispair). See AttemptEvent.
+   */
+  isRetry?: boolean;
+  /**
+   * Milliseconds the prompt was on screen before answering. 0 when the caller
+   * does not track it — the field feeds future adaptive difficulty, so a
+   * measured value beats a constant one.
+   */
+  latencyMs?: number;
   /**
    * Hearts left after this answer, when the caller tracks hearts (0 = lesson failed).
    * A failed finish records the attempt but must not complete the lesson,
@@ -208,6 +298,10 @@ export function applyAnswer(
 ): { state: LearnerState; session: SessionState; attempt: AttemptEvent; finished: boolean } {
   const exercise = currentExercise(course, session);
   if (!exercise) throw new Error("Cannot answer a finished session");
+  // Derived, not trusted from the caller: whether this prompt already has a
+  // result in this session is a property of the session, and a caller that
+  // forgot to pass isRetry would silently inflate mastery and XP.
+  const isRetry = options.isRetry ?? isRequeuedPrompt(session);
   const concept = course.concepts.find((item) => item.id === exercise.termId);
   const now = environment.now();
   // A match mispair names the two chips the player actually confused. Raw chip
@@ -232,11 +326,13 @@ export function applyAnswer(
     answer: mispair ? `match:${mispair[0]}:${mispair[1]}` : String(answer),
     correct: isCorrect(exercise, answer),
     hintUsed: options.hintUsed ?? false,
-    latencyMs: 0,
+    ...(isRetry ? { isRetry: true } : {}),
+    latencyMs: Math.max(0, options.latencyMs ?? 0),
     occurredAt: now.toISOString(),
   };
   const prior = attempt.confusionPairId ? state.mastery[attempt.confusionPairId] : undefined;
-  const mastery = nextMastery(prior, attempt, isFirstEncounter(state, exercise, session));
+  const quality = evidenceQuality(state, attempt);
+  const mastery = nextMasteryFor(prior, attempt, quality, isFirstEncounter(state, exercise, session));
   const nextMasteryMap = mastery ? { ...state.mastery, [mastery.confusionPairId]: mastery } : state.mastery;
   const seenConceptIds = Array.from(new Set([...state.seenConceptIds, ...attempt.conceptIds]));
   const nextSession: SessionState = {
@@ -249,8 +345,17 @@ export function applyAnswer(
   // retry refills hearts, so the lesson is not completed by the failing run.
   const failedFinish =
     finished && !attempt.correct && options.heartsAfter !== undefined && options.heartsAfter <= 0;
-  const completesLesson = finished && session.mode === "lesson" && !failedFinish;
-  const flawless = completesLesson && attempt.correct && session.results.every((result) => result.correct);
+  // A lesson pays its completion bonus once. Re-running a finished lesson (or
+  // re-finishing one inside a session that already completed) must not mint
+  // another +20 — otherwise replaying the same lesson farms XP indefinitely.
+  const alreadyDone = isLessonDone(state, course, session.lessonId);
+  const completesLesson = finished && session.mode === "lesson" && !failedFinish && !alreadyDone;
+  // Flawless means "no mistakes on first contact". A rehearsal is by
+  // definition a prompt that was already missed, so it can never be flawless.
+  const flawless =
+    completesLesson &&
+    attempt.correct &&
+    session.results.every((result) => result.correct && !result.isRetry);
   const completedLessonIds = completesLesson
     ? Array.from(new Set([...state.completedLessonIds, lessonKey(course, session.lessonId)]))
     : state.completedLessonIds;
@@ -260,11 +365,15 @@ export function applyAnswer(
       ? state.streak + 1
       : 1
     : state.streak;
+  // A rehearsal pays nothing: the prompt already paid (or refused) its XP the
+  // first time round, and re-answering a re-queue would let a learner farm
+  // points by failing the same match twice.
+  const paysXp = !attempt.isRetry && attempt.correct;
 
   return {
     state: {
       ...state,
-      xp: state.xp + (attempt.correct ? 10 : 0) + (completesLesson ? 20 : 0) + (flawless ? 20 : 0),
+      xp: state.xp + (paysXp ? 10 : 0) + (completesLesson ? 20 : 0) + (flawless ? 20 : 0),
       streak,
       lastLessonDate: completedToday ? localDate(now) : state.lastLessonDate,
       completedLessonIds,
@@ -292,6 +401,19 @@ export function isVerifiedMastery(item: MasteryState | undefined): boolean {
 }
 
 /**
+ * Whether the prompt at the session's current index has already been answered
+ * in this session. Derived from the attempt log rather than tracked as a flag:
+ * requeuePrompt inserts the id ahead of the cursor, so a repeat is exactly a
+ * prompt id that already has a result. The caller passes this to applyAnswer
+ * as `isRetry`.
+ */
+export function isRequeuedPrompt(session: SessionState): boolean {
+  const current = session.promptIds[session.index];
+  if (!current) return false;
+  return session.results.some((result) => result.exerciseId === current);
+}
+
+/**
  * Put a prompt back at the front of the remaining queue. The match exercise
  * re-queues itself after a wrong pairing so the player can still finish the
  * pairs they know; the failed attempt stays on record.
@@ -304,12 +426,17 @@ export function requeuePrompt(session: SessionState, exerciseId: string): Sessio
 }
 
 /**
- * Terms whose most recent attempt was wrong — the practice focus set.
- * Derived from the attempt log so it needs no extra persisted field.
+ * Terms whose most recent *graded* attempt was wrong — the practice focus set.
+ *
+ * Rehearsals are ignored on purpose: a match mispair re-queues the prompt and
+ * the player usually then gets it right, so counting the replay would drop the
+ * term off the review list — the opposite of what the mistake proved. The
+ * focus set answers "what did you get wrong", not "what did you finish".
  */
 export function recentMissTermIds(state: LearnerState): string[] {
   const latest = new Map<string, boolean>();
   for (const attempt of state.attempts) {
+    if (attempt.isRetry) continue;
     for (const conceptId of attempt.conceptIds) latest.set(conceptId, attempt.correct);
   }
   const missed: string[] = [];

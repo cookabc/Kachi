@@ -431,6 +431,7 @@ input {
   align-items: center;
   gap: 10px;
   padding: calc(12px + env(safe-area-inset-top, 0px)) 12px 8px;
+  flex-shrink: 0;
 }
 .xbtn {
   width: 42px;
@@ -499,7 +500,11 @@ input {
   }
 }
 .prompt {
-  flex: 1;
+  /* Grow to fill when the content needs it, but never stretch a short prompt
+     into a mostly-empty card: a screen that is 60% whitespace reads as broken,
+     and the space is worth more to the feedback sheet below. */
+  flex: 0 1 auto;
+  min-height: 0;
   margin: 4px 12px 12px;
   padding: 18px 16px 16px;
   overflow-y: auto;
@@ -722,6 +727,9 @@ input {
 }
 .foot {
   padding: 12px 18px calc(16px + env(safe-area-inset-bottom, 0px));
+  /* The prompt card no longer stretches, so the action row is what sits on the
+     bottom edge; without this it would ride up under a short prompt. */
+  margin-top: auto;
 }
 .btn {
   width: 100%;
@@ -782,10 +790,116 @@ input {
 .btn-ghost:active {
   border-bottom-color: #dfe2e0;
 }
+/* The hint sits inside the prompt card, above the buttons: it is part of
+   working the question, not a result. */
+.hint-card {
+  margin-top: 14px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: var(--mint-hint);
+  border: 1.5px solid #d9d2f0;
+}
+.hint-card p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.45;
+  color: var(--ink);
+}
+.hint-card .hint-cost {
+  display: block;
+  margin-top: 6px;
+  font-size: 12px;
+  color: var(--ink-soft);
+}
+/* Two buttons in the foot: the hint is secondary, so it takes a smaller share. */
+.foot .btn-ghost {
+  margin-top: 8px;
+}
+/* Read-the-headline: the sentence is set as a headline (display face, tight
+   leading) so the task reads like the thing it teaches, not like a form. The
+   blank fills in place on selection — reading the finished line IS the check. */
+.headline {
+  margin: 4px 0 18px;
+  font-family: var(--display);
+  font-size: 22px;
+  line-height: 1.45;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+  /* Keep the blank on the same line as the word before it: "a sharp" / "____"
+     split across lines reads as two separate sentences. */
+  word-spacing: 0.02em;
+}
+.hl-blank {
+  /* inline, not inline-block: an atomic box would let the line break between
+     "sharp" and "____", which reads as two sentences. Padding gives the word
+     room; the border draws the rule. */
+  display: inline;
+  min-width: 4.5em;
+  padding: 0 6px;
+  /* A visible rule under an empty blank: without it the learner cannot tell
+     where the answer goes, and the sentence reads as if a word is missing by
+     accident. */
+  border-bottom: 2.5px solid var(--ink);
+  text-align: center;
+  font-size: 0.92em;
+  vertical-align: baseline;
+}
+.hl-blank.filled {
+  border-bottom-color: var(--ink-soft);
+}
+.hl-blank.good {
+  color: var(--green-dark);
+  border-bottom-color: var(--green-dark);
+}
+.hl-blank.bad {
+  color: var(--coral);
+  border-bottom-color: var(--coral);
+}
+.hl-opts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.hl-opt {
+  min-height: 60px;
+  padding: 10px 8px;
+  border-radius: 16px;
+  border: 2.5px solid var(--ink);
+  border-bottom-width: 5px;
+  background: #fff;
+  color: var(--ink);
+  font-family: var(--display);
+  font-size: 17px;
+  cursor: pointer;
+  transition:
+    transform var(--t-fast) var(--ease-out),
+    background var(--t-fast) var(--ease-out);
+}
+.hl-opt:active {
+  transform: translateY(2px);
+  border-bottom-width: 3px;
+}
+.hl-opt.sel {
+  background: var(--mint-hint);
+}
+.hl-opt.good {
+  background: var(--right-bg);
+  border-color: var(--green-dark);
+}
+.hl-opt.bad {
+  background: var(--wrong-bg);
+  border-color: var(--coral);
+}
+.hl-opt:disabled {
+  cursor: default;
+}
 .sheet {
   padding: 16px 18px calc(16px + env(safe-area-inset-bottom, 0px));
   border-top: 0.5px solid transparent;
   border-radius: 24px 24px 0 0;
+  /* The sheet is the bottom of the screen during feedback, the same way .foot
+     is during a question; both pin to the same edge. */
+  margin-top: auto;
 }
 .sheet.ok {
   background: var(--right-bg);

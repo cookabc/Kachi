@@ -18,7 +18,9 @@
  */
 import { writeFileSync } from "node:fs";
 import path from "node:path";
+import { HEADLINE_DRILLS } from "../content/packs/t1-finance-news/headlines.mjs";
 import { CONCEPTS, PACK, UNITS } from "../content/packs/t1-finance-news/source.mjs";
+import { blankTerm, fillLeaksAnswer } from "../src/fill.ts";
 
 const ROOT = process.cwd();
 const OUT_DIR = path.join(ROOT, "content/packs", PACK.packId);
@@ -132,16 +134,19 @@ function promptsFor(concept, index, lessonConcepts, lessonId, locale) {
       .slice(0, 3)
       .map((c) => c.term),
   ];
+  // blankTerm matches inflected forms ("rallied" for "rally"), so the whole
+  // word leaves the sentence. When the term is absent entirely the stem keeps
+  // the sentence and points at the blank — the answer is not printed there.
   const example = text(concept, "example", locale);
-  const blanked = example.replace(new RegExp(concept.term, "i"), "____");
+  const { story } = blankTerm(example, concept.term);
+  const fillStory =
+    story === example ? `${example} (${locale === "en-US" ? "the word here is" : "这里的词是"} ____)` : story;
   out.push({
     id: pid("f"),
     type: "fill",
     termId: concept.id,
     termIds: [concept.id],
-    story: blanked.includes("____")
-      ? blanked
-      : `${example} (${locale === "en-US" ? "the word here is" : "这里的词是"} ____)`,
+    story: fillStory,
     bank: [...new Set(bank)],
     answer: concept.term,
     why: text(concept, "mixUpWhy", locale),
@@ -165,7 +170,28 @@ function matchPrompt(lessonConcepts, lessonId, locale) {
   };
 }
 
+/**
+ * A headline drill as an exercise. The two options are the two terms of the
+ * pair, so the question is exactly "which one fits here" — not "what does this
+ * mean". `story` carries the headline with `____`; the displayed stem tells the
+ * learner what to do without hinting at the answer.
+ */
+function headlinePrompt(drill, lessonId, locale) {
+  const [first, second] = locale === "en-US" ? [drill.a, drill.b] : [drill.a, drill.b];
+  return {
+    id: `${lessonId}-${drill.id}`,
+    type: "headline",
+    termIds: [first, second],
+    story: drill.text,
+    stem: locale === "en-US" ? "Which term fits the blank?" : "这句话里的空该填哪个词？",
+    options: [first, second].map((id) => ({ text: id, art: id })),
+    answer: drill.answer === first ? 0 : 1,
+    why: locale === "en-US" ? (drill.whyEn ?? drill.why) : drill.why,
+  };
+}
+
 function buildCourse(locale) {
+  const conceptById = new Map(CONCEPTS.map((c) => [c.id, c]));
   const units = UNITS.map((u) => ({
     id: u.id,
     title: locale === "en-US" ? (u.titleEn ?? u.title) : u.title,
@@ -181,10 +207,16 @@ function buildCourse(locale) {
     mixUp: c.mixUp,
     mixUpWhy: text(c, "mixUpWhy", locale),
     mixUpType: c.mixUpType,
-    relations: [],
+    // The zh pack carries the Chinese term name natively so the teach card
+    // and graph card show 「反弹」 instead of falling back to the English
+    // term; the en pack has no use for it and omits the field.
+    ...(locale === "zh-CN" && c.zh ? { termZh: c.zh } : {}),
+    relations: c.relations ?? [],
     sourceIds: [],
     risk: "evergreen",
-    reviewStatus: "legacy",
+    // Generated content has not been through review. "legacy" is reserved
+    // for the hand-written pack that predates the review process.
+    reviewStatus: "draft",
   }));
 
   const lessons = [];
@@ -198,6 +230,30 @@ function buildCourse(locale) {
         const keep = lesson.review ? new Set(["-s", "-t"]) : null;
         prompts.push(...(keep ? all.filter((prompt) => keep.has(`-${prompt.id.split("-").pop()}`)) : all));
       });
+      // The reading task goes FIRST in a review lesson.
+      //
+      // It used to go last, and that made it unreachable: a review runs ~16-18
+      // prompts against five hearts, so a learner who stumbles a few times ends
+      // the lesson in the "out of hearts" screen without ever seeing the one
+      // exercise that uses the terms the way a headline does. Leading with it
+      // also makes pedagogic sense — read the real thing, then drill the pieces.
+      //
+      // A drill belongs to the LATER of its two units: several pairs straddle a
+      // unit boundary (surplus in u2, deficit in u3), and the earlier review
+      // cannot use a term that has not been taught yet.
+      const reviewPrompts = [];
+      if (lesson.review) {
+        const unitConceptIds = new Set(lesson.concepts.map((c) => c.id));
+        for (const drill of HEADLINE_DRILLS) {
+          const a = conceptById.get(drill.a);
+          const b = conceptById.get(drill.b);
+          if (!a || !b) continue;
+          if (Math.max(a.unit, b.unit) !== unit.id) continue;
+          if (!unitConceptIds.has(drill.a) && !unitConceptIds.has(drill.b)) continue;
+          reviewPrompts.push(headlinePrompt(drill, lesson.id, locale));
+        }
+      }
+      prompts.unshift(...reviewPrompts);
       const match = matchPrompt(lesson.concepts, lesson.id, locale);
       if (match) prompts.push(match);
       lessons.push({
@@ -226,6 +282,15 @@ function buildCourse(locale) {
 
 for (const locale of ["zh-CN", "en-US"]) {
   const course = buildCourse(locale);
+  // Generation-time mirror of the validator's fill gate: fail loudly here so
+  // a leaky stem never reaches course.json in the first place.
+  for (const lesson of course.lessons) {
+    for (const prompt of lesson.prompts) {
+      if (prompt.type === "fill" && fillLeaksAnswer(prompt.story, prompt.answer)) {
+        throw new Error(`Fill ${prompt.id} gives the answer away: ${prompt.story}`);
+      }
+    }
+  }
   const file = path.join(OUT_DIR, locale, "course.json");
   writeFileSync(file, `${JSON.stringify(course, null, 2)}\n`);
   const promptCount = course.lessons.reduce((sum, l) => sum + l.prompts.length, 0);

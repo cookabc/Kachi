@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
   "packId": "t1-finance-news",
-  "contentVersion": "2026.10.27-t1",
+  "contentVersion": "2026.10.27-t1.1",
   "locale": "en-US",
-  "generatedAt": "2026-10-26T10:34:43.690Z",
+  "generatedAt": "2026-10-27T02:34:06.233Z",
   "units": [
     {
       "id": 1,
@@ -52,10 +52,15 @@
       "mixUp": "selloff",
       "mixUpWhy": "A rally is buyers pushing prices up; a selloff is sellers pushing them down.",
       "mixUpType": "opposite",
-      "relations": [],
+      "relations": [
+        {
+          "type": "sibling",
+          "with": "rebound"
+        }
+      ],
       "sourceIds": [],
       "risk": "evergreen",
-      "reviewStatus": "legacy"
+      "reviewStatus": "draft"
     },
     {
       "id": "selloff",
@@ -70,7 +75,7 @@
       "relations": [],
       "sourceIds": [],
       "risk": "evergreen",
-      "reviewStatus": "legacy"
+      "reviewStatus": "draft"
     },
     {
       "id": "slump",
@@ -82,10 +87,15 @@
       "mixUp": "rebound",
       "mixUpWhy": "A slump keeps going down; a rebound bounces back up.",
       "mixUpType": "opposite",
-      "relations": [],
+      "relations": [
+        {
+          "type": "sibling",
+          "with": "rout"
+        }
+      ],
       "sourceIds": [],
       "risk": "evergreen",
-      "reviewStatus": "legacy"
+      "reviewStatus": "draft"
     },
     {
       "id": "rebound",
@@ -100,7 +110,7 @@
       "relations": [],
       "sourceIds": [],
       "risk": "evergreen",
-      "reviewStatus": "legacy"
+      "reviewStatus": "draft"
     },
     {
       "id": "rout",
@@ -115,7 +125,7 @@
       "relations": [],
       "sourceIds": [],
       "risk": "evergreen",
-      "reviewStatus": "legacy"
+      "reviewStatus": "draft"
     },
     {
       "id": "profit-taking",
@@ -130,7 +140,7 @@
       "relations": [],
       "sourceIds": [],
       "risk": "evergreen",
-      "reviewStatus": "legacy"
+      "reviewStatus": "draft"
     },
     {
       "id": "supply",
@@ -142,10 +152,15 @@
       "mixUp": "demand",
       "mixUpWhy": "Supply is what sellers bring; demand is what buyers want. Opposite ends of one axis.",
       "mixUpType": "opposite",
-      "relations": [],
+      "relations": [
+        {
+          "type": "sibling",
+          "with": "inventory"
+        }
+      ],
       "sourceIds": [],
       "risk": "evergreen",
-      "reviewStatus": "legacy"
+      "reviewStatus": "draft"
     },
     {
       "id": "demand",
@@ -160,7 +175,7 @@
       "relations": [],
       "sourceIds": [],
       "risk": "evergreen",
-      "reviewStatus": "legacy"
+      "reviewStatus": "draft"
     },
     {
       "id": "capacity",
@@ -175,7 +190,7 @@
       "relations": [],
       "sourceIds": [],
       "risk": "evergreen",
-      "reviewStatus": "legacy"
+      "reviewStatus": "draft"
     },
     {
       "id": "output",
@@ -190,7 +205,7 @@
       "relations": [],
       "sourceIds": [],
       "risk": "evergreen",
-      "reviewStatus": "legacy"
+      "reviewStatus": "draft"
     },
     {
       "id": "inventory",
@@ -205,7 +220,7 @@
       "relations": [],
       "sourceIds": [],
       "risk": "evergreen",
-      "reviewStatus": "legacy"
+      "reviewStatus": "draft"
     },
     {
       "id": "surplus",
@@ -220,7 +235,7 @@
       "relations": [],
       "sourceIds": [],
       "risk": "evergreen",
-      "reviewStatus": "legacy"
+      "reviewStatus": "draft"
     },
     {
       "id": "deficit",
@@ -235,7 +250,7 @@
       "relations": [],
       "sourceIds": [],
       "risk": "evergreen",
-      "reviewStatus": "legacy"
+      "reviewStatus": "draft"
     },
     {
       "id": "earnings",
@@ -247,10 +262,15 @@
       "mixUp": "revenue",
       "mixUpWhy": "Earnings are what is left after costs; revenue is the top line before costs.",
       "mixUpType": "coexist",
-      "relations": [],
+      "relations": [
+        {
+          "type": "sibling",
+          "with": "profit"
+        }
+      ],
       "sourceIds": [],
       "risk": "evergreen",
-      "reviewStatus": "legacy"
+      "reviewStatus": "draft"
     },
     {
       "id": "revenue",
@@ -265,7 +285,7 @@
       "relations": [],
       "sourceIds": [],
       "risk": "evergreen",
-      "reviewStatus": "legacy"
+      "reviewStatus": "draft"
     },
     {
       "id": "profit",
@@ -277,10 +297,15 @@
       "mixUp": "margin",
       "mixUpWhy": "Profit is an amount; margin is the share of revenue that profit represents.",
       "mixUpType": "coexist",
-      "relations": [],
+      "relations": [
+        {
+          "type": "prereq",
+          "with": "revenue"
+        }
+      ],
       "sourceIds": [],
       "risk": "evergreen",
-      "reviewStatus": "legacy"
+      "reviewStatus": "draft"
     },
     {
       "id": "margin",
@@ -292,10 +317,15 @@
       "mixUp": "profit",
       "mixUpWhy": "Margin is a ratio; profit is an amount. A small company can have a fat margin.",
       "mixUpType": "coexist",
-      "relations": [],
+      "relations": [
+        {
+          "type": "prereq",
+          "with": "revenue"
+        }
+      ],
       "sourceIds": [],
       "risk": "evergreen",
-      "reviewStatus": "legacy"
+      "reviewStatus": "draft"
     },
     {
       "id": "dividend",
@@ -307,10 +337,15 @@
       "mixUp": "earnings",
       "mixUpWhy": "Earnings are what the company made; a dividend is the slice handed to shareholders.",
       "mixUpType": "hierarchy",
-      "relations": [],
+      "relations": [
+        {
+          "type": "prereq",
+          "with": "profit"
+        }
+      ],
       "sourceIds": [],
       "risk": "evergreen",
-      "reviewStatus": "legacy"
+      "reviewStatus": "draft"
     },
     {
       "id": "guidance",
@@ -325,7 +360,7 @@
       "relations": [],
       "sourceIds": [],
       "risk": "evergreen",
-      "reviewStatus": "legacy"
+      "reviewStatus": "draft"
     },
     {
       "id": "forecast",
@@ -340,7 +375,7 @@
       "relations": [],
       "sourceIds": [],
       "risk": "evergreen",
-      "reviewStatus": "legacy"
+      "reviewStatus": "draft"
     },
     {
       "id": "consensus",
@@ -355,7 +390,7 @@
       "relations": [],
       "sourceIds": [],
       "risk": "evergreen",
-      "reviewStatus": "legacy"
+      "reviewStatus": "draft"
     },
     {
       "id": "estimate",
@@ -370,7 +405,7 @@
       "relations": [],
       "sourceIds": [],
       "risk": "evergreen",
-      "reviewStatus": "legacy"
+      "reviewStatus": "draft"
     },
     {
       "id": "bond",
@@ -385,7 +420,7 @@
       "relations": [],
       "sourceIds": [],
       "risk": "evergreen",
-      "reviewStatus": "legacy"
+      "reviewStatus": "draft"
     },
     {
       "id": "yield",
@@ -400,7 +435,7 @@
       "relations": [],
       "sourceIds": [],
       "risk": "evergreen",
-      "reviewStatus": "legacy"
+      "reviewStatus": "draft"
     },
     {
       "id": "inflation",
@@ -415,7 +450,7 @@
       "relations": [],
       "sourceIds": [],
       "risk": "evergreen",
-      "reviewStatus": "legacy"
+      "reviewStatus": "draft"
     },
     {
       "id": "interest rate",
@@ -430,7 +465,7 @@
       "relations": [],
       "sourceIds": [],
       "risk": "evergreen",
-      "reviewStatus": "legacy"
+      "reviewStatus": "draft"
     },
     {
       "id": "rate hike",
@@ -442,10 +477,15 @@
       "mixUp": "rate cut",
       "mixUpWhy": "A hike moves rates up; a cut moves them down.",
       "mixUpType": "opposite",
-      "relations": [],
+      "relations": [
+        {
+          "type": "prereq",
+          "with": "interest rate"
+        }
+      ],
       "sourceIds": [],
       "risk": "evergreen",
-      "reviewStatus": "legacy"
+      "reviewStatus": "draft"
     },
     {
       "id": "rate cut",
@@ -457,10 +497,15 @@
       "mixUp": "rate hike",
       "mixUpWhy": "A cut moves rates down; a hike moves them up.",
       "mixUpType": "opposite",
-      "relations": [],
+      "relations": [
+        {
+          "type": "prereq",
+          "with": "interest rate"
+        }
+      ],
       "sourceIds": [],
       "risk": "evergreen",
-      "reviewStatus": "legacy"
+      "reviewStatus": "draft"
     },
     {
       "id": "central bank",
@@ -475,7 +520,7 @@
       "relations": [],
       "sourceIds": [],
       "risk": "evergreen",
-      "reviewStatus": "legacy"
+      "reviewStatus": "draft"
     },
     {
       "id": "currency",
@@ -490,7 +535,7 @@
       "relations": [],
       "sourceIds": [],
       "risk": "evergreen",
-      "reviewStatus": "legacy"
+      "reviewStatus": "draft"
     },
     {
       "id": "exchange rate",
@@ -505,7 +550,7 @@
       "relations": [],
       "sourceIds": [],
       "risk": "evergreen",
-      "reviewStatus": "legacy"
+      "reviewStatus": "draft"
     },
     {
       "id": "depreciate",
@@ -517,10 +562,15 @@
       "mixUp": "appreciate",
       "mixUpWhy": "Depreciate means cheaper; appreciate means more valuable.",
       "mixUpType": "opposite",
-      "relations": [],
+      "relations": [
+        {
+          "type": "prereq",
+          "with": "exchange rate"
+        }
+      ],
       "sourceIds": [],
       "risk": "evergreen",
-      "reviewStatus": "legacy"
+      "reviewStatus": "draft"
     },
     {
       "id": "appreciate",
@@ -532,10 +582,15 @@
       "mixUp": "depreciate",
       "mixUpWhy": "Appreciate means more valuable; depreciate means cheaper.",
       "mixUpType": "opposite",
-      "relations": [],
+      "relations": [
+        {
+          "type": "prereq",
+          "with": "exchange rate"
+        }
+      ],
       "sourceIds": [],
       "risk": "evergreen",
-      "reviewStatus": "legacy"
+      "reviewStatus": "draft"
     },
     {
       "id": "market cap",
@@ -550,7 +605,7 @@
       "relations": [],
       "sourceIds": [],
       "risk": "evergreen",
-      "reviewStatus": "legacy"
+      "reviewStatus": "draft"
     },
     {
       "id": "valuation",
@@ -565,7 +620,7 @@
       "relations": [],
       "sourceIds": [],
       "risk": "evergreen",
-      "reviewStatus": "legacy"
+      "reviewStatus": "draft"
     },
     {
       "id": "p/e",
@@ -577,10 +632,15 @@
       "mixUp": "market cap",
       "mixUpWhy": "P/E is a multiple tied to profit; market cap is a total tied to share count.",
       "mixUpType": "coexist",
-      "relations": [],
+      "relations": [
+        {
+          "type": "prereq",
+          "with": "earnings"
+        }
+      ],
       "sourceIds": [],
       "risk": "evergreen",
-      "reviewStatus": "legacy"
+      "reviewStatus": "draft"
     },
     {
       "id": "index",
@@ -595,7 +655,7 @@
       "relations": [],
       "sourceIds": [],
       "risk": "evergreen",
-      "reviewStatus": "legacy"
+      "reviewStatus": "draft"
     },
     {
       "id": "blue chip",
@@ -610,7 +670,7 @@
       "relations": [],
       "sourceIds": [],
       "risk": "evergreen",
-      "reviewStatus": "legacy"
+      "reviewStatus": "draft"
     },
     {
       "id": "auction",
@@ -625,7 +685,7 @@
       "relations": [],
       "sourceIds": [],
       "risk": "evergreen",
-      "reviewStatus": "legacy"
+      "reviewStatus": "draft"
     },
     {
       "id": "issuance",
@@ -640,7 +700,7 @@
       "relations": [],
       "sourceIds": [],
       "risk": "evergreen",
-      "reviewStatus": "legacy"
+      "reviewStatus": "draft"
     },
     {
       "id": "tariff",
@@ -655,7 +715,7 @@
       "relations": [],
       "sourceIds": [],
       "risk": "evergreen",
-      "reviewStatus": "legacy"
+      "reviewStatus": "draft"
     },
     {
       "id": "volatility",
@@ -670,7 +730,7 @@
       "relations": [],
       "sourceIds": [],
       "risk": "evergreen",
-      "reviewStatus": "legacy"
+      "reviewStatus": "draft"
     }
   ],
   "lessons": [
@@ -758,7 +818,7 @@
           "termIds": [
             "rally"
           ],
-          "story": "Oil prices rallied 4% after the supply cut was announced. (the word here is ____)",
+          "story": "Oil prices ____ 4% after the supply cut was announced.",
           "bank": [
             "rally",
             "selloff",
@@ -1052,7 +1112,7 @@
           "termIds": [
             "rebound"
           ],
-          "story": "AI stocks ____ed after a bruising selloff.",
+          "story": "AI stocks ____ after a bruising selloff.",
           "bank": [
             "rebound",
             "rout",
@@ -1269,6 +1329,116 @@
       "icon": "🏆",
       "review": true,
       "prompts": [
+        {
+          "id": "u1r-h-rally-selloff",
+          "type": "headline",
+          "termIds": [
+            "rally",
+            "selloff"
+          ],
+          "story": "Oil prices staged a sharp ____ after three days of heavy selling, recovering 4%.",
+          "stem": "Which term fits the blank?",
+          "options": [
+            {
+              "text": "rally",
+              "art": "rally"
+            },
+            {
+              "text": "selloff",
+              "art": "selloff"
+            }
+          ],
+          "answer": 0,
+          "why": "“recovering 4%” is the bounce after a fall: a rally pushes prices up, a selloff slams them down."
+        },
+        {
+          "id": "u1r-h-selloff-rally",
+          "type": "headline",
+          "termIds": [
+            "selloff",
+            "rally"
+          ],
+          "story": "A broad ____ in government bonds pushed yields to their highest level in a decade.",
+          "stem": "Which term fits the blank?",
+          "options": [
+            {
+              "text": "selloff",
+              "art": "selloff"
+            },
+            {
+              "text": "rally",
+              "art": "rally"
+            }
+          ],
+          "answer": 0,
+          "why": "Yields at a decade high mean prices are falling: a selloff pushes prices down, a rally pushes yields down."
+        },
+        {
+          "id": "u1r-h-slump-rebound",
+          "type": "headline",
+          "termIds": [
+            "slump",
+            "rebound"
+          ],
+          "story": "Copper extended its ____ into a fourth week as Chinese demand kept weakening.",
+          "stem": "Which term fits the blank?",
+          "options": [
+            {
+              "text": "slump",
+              "art": "slump"
+            },
+            {
+              "text": "rebound",
+              "art": "rebound"
+            }
+          ],
+          "answer": 0,
+          "why": "“Extended into a fourth week” means the decline continues: a slump keeps going down, a rebound bounces back."
+        },
+        {
+          "id": "u1r-h-rebound-slump",
+          "type": "headline",
+          "termIds": [
+            "rebound",
+            "slump"
+          ],
+          "story": "Shares staged a modest ____ on Tuesday, clawing back part of Monday's losses.",
+          "stem": "Which term fits the blank?",
+          "options": [
+            {
+              "text": "rebound",
+              "art": "rebound"
+            },
+            {
+              "text": "slump",
+              "art": "slump"
+            }
+          ],
+          "answer": 0,
+          "why": "“Clawing back losses” is recovery: a rebound bounces up, a slump deepens the loss."
+        },
+        {
+          "id": "u1r-h-rout-selloff",
+          "type": "headline",
+          "termIds": [
+            "rout",
+            "selloff"
+          ],
+          "story": "Treasuries suffered a disorderly ____, with buyers vanishing and spreads blowing out.",
+          "stem": "Which term fits the blank?",
+          "options": [
+            {
+              "text": "rout",
+              "art": "rout"
+            },
+            {
+              "text": "selloff",
+              "art": "selloff"
+            }
+          ],
+          "answer": 0,
+          "why": "“Disorderly” with “buyers vanishing” is panic: a rout is more violent than an ordinary selloff."
+        },
         {
           "id": "u1r-rally-s",
           "type": "scenario",
@@ -2026,7 +2196,7 @@
           "termIds": [
             "inventory"
           ],
-          "story": "Copper falls as rising inventories ease supply concerns. (the word here is ____)",
+          "story": "Copper falls as rising ____ ease supply concerns.",
           "bank": [
             "inventory",
             "output",
@@ -2157,6 +2327,94 @@
       "icon": "🏆",
       "review": true,
       "prompts": [
+        {
+          "id": "u2r-h-supply-demand",
+          "type": "headline",
+          "termIds": [
+            "supply",
+            "demand"
+          ],
+          "story": "Iron ore slid as rising ____ from Australian miners overwhelmed weak Chinese buying.",
+          "stem": "Which term fits the blank?",
+          "options": [
+            {
+              "text": "supply",
+              "art": "supply"
+            },
+            {
+              "text": "demand",
+              "art": "demand"
+            }
+          ],
+          "answer": 0,
+          "why": "“From miners” and “overwhelmed” mean sellers added volume: supply is what sellers bring, demand is what buyers want."
+        },
+        {
+          "id": "u2r-h-demand-supply",
+          "type": "headline",
+          "termIds": [
+            "demand",
+            "supply"
+          ],
+          "story": "Copper rose as ____ from grid and EV makers outpaced mine additions.",
+          "stem": "Which term fits the blank?",
+          "options": [
+            {
+              "text": "demand",
+              "art": "demand"
+            },
+            {
+              "text": "supply",
+              "art": "supply"
+            }
+          ],
+          "answer": 0,
+          "why": "“From grid and EV makers” is the buy side outpacing new mine output: demand is what buyers want, supply is what sellers bring."
+        },
+        {
+          "id": "u2r-h-capacity-output",
+          "type": "headline",
+          "termIds": [
+            "capacity",
+            "output"
+          ],
+          "story": "The smelter ran at 78% of ____, idling the rest of its lines.",
+          "stem": "Which term fits the blank?",
+          "options": [
+            {
+              "text": "capacity",
+              "art": "capacity"
+            },
+            {
+              "text": "output",
+              "art": "output"
+            }
+          ],
+          "answer": 0,
+          "why": "A percentage describes how much of the ceiling is used: capacity is the ceiling, output is what actually came out."
+        },
+        {
+          "id": "u2r-h-inventory-output",
+          "type": "headline",
+          "termIds": [
+            "inventory",
+            "output"
+          ],
+          "story": "Copper falls as rising ____ ease supply concerns.",
+          "stem": "Which term fits the blank?",
+          "options": [
+            {
+              "text": "inventory",
+              "art": "inventory"
+            },
+            {
+              "text": "output",
+              "art": "output"
+            }
+          ],
+          "answer": 0,
+          "why": "What “rises” is accumulated stock: inventory builds up, output is what a period produced."
+        },
         {
           "id": "u2r-supply-s",
           "type": "scenario",
@@ -2914,7 +3172,7 @@
           "termIds": [
             "margin"
           ],
-          "story": "Higher funding costs are starting to affect ____s.",
+          "story": "Higher funding costs are starting to affect ____.",
           "bank": [
             "margin",
             "profit",
@@ -3045,6 +3303,116 @@
       "icon": "🏆",
       "review": true,
       "prompts": [
+        {
+          "id": "u3r-h-surplus-deficit",
+          "type": "headline",
+          "termIds": [
+            "surplus",
+            "deficit"
+          ],
+          "story": "The country swung to a trade ____, importing far more than it exported.",
+          "stem": "Which term fits the blank?",
+          "options": [
+            {
+              "text": "surplus",
+              "art": "surplus"
+            },
+            {
+              "text": "deficit",
+              "art": "deficit"
+            }
+          ],
+          "answer": 1,
+          "why": "Importing far more than exporting is a shortfall: a deficit is the gap, a surplus is the leftover."
+        },
+        {
+          "id": "u3r-h-earnings-revenue",
+          "type": "headline",
+          "termIds": [
+            "earnings",
+            "revenue"
+          ],
+          "story": "The bank's ____ fell 12% after provisions for bad loans ate into the top line.",
+          "stem": "Which term fits the blank?",
+          "options": [
+            {
+              "text": "earnings",
+              "art": "earnings"
+            },
+            {
+              "text": "revenue",
+              "art": "revenue"
+            }
+          ],
+          "answer": 0,
+          "why": "What survives after provisions is profit: earnings are after costs, revenue is the top line before them."
+        },
+        {
+          "id": "u3r-h-revenue-earnings",
+          "type": "headline",
+          "termIds": [
+            "revenue",
+            "earnings"
+          ],
+          "story": "The retailer's ____ grew 8%, but margins compressed as discounting spread.",
+          "stem": "Which term fits the blank?",
+          "options": [
+            {
+              "text": "revenue",
+              "art": "revenue"
+            },
+            {
+              "text": "earnings",
+              "art": "earnings"
+            }
+          ],
+          "answer": 0,
+          "why": "What grows while margins compress is the top line: revenue is gross, earnings are what survives the costs."
+        },
+        {
+          "id": "u3r-h-margin-profit",
+          "type": "headline",
+          "termIds": [
+            "margin",
+            "profit"
+          ],
+          "story": "The group's gross ____ widened to 42% on better product mix.",
+          "stem": "Which term fits the blank?",
+          "options": [
+            {
+              "text": "margin",
+              "art": "margin"
+            },
+            {
+              "text": "profit",
+              "art": "profit"
+            }
+          ],
+          "answer": 0,
+          "why": "42% is a ratio: margin is profit as a share of revenue, profit is an absolute amount."
+        },
+        {
+          "id": "u3r-h-dividend-earnings",
+          "type": "headline",
+          "termIds": [
+            "dividend",
+            "earnings"
+          ],
+          "story": "The board raised the quarterly ____ by 6%, even as ____ fell year on year.",
+          "stem": "Which term fits the blank?",
+          "options": [
+            {
+              "text": "dividend",
+              "art": "dividend"
+            },
+            {
+              "text": "earnings",
+              "art": "earnings"
+            }
+          ],
+          "answer": 0,
+          "why": "What a board raises is the payout to shareholders: a dividend is carved out of earnings, earnings are what the company made."
+        },
         {
           "id": "u3r-deficit-s",
           "type": "scenario",
@@ -3934,6 +4302,72 @@
       "review": true,
       "prompts": [
         {
+          "id": "u4r-h-guidance-forecast",
+          "type": "headline",
+          "termIds": [
+            "guidance",
+            "forecast"
+          ],
+          "story": "The company cut its full-year ____, warning of softer orders in Asia.",
+          "stem": "Which term fits the blank?",
+          "options": [
+            {
+              "text": "guidance",
+              "art": "guidance"
+            },
+            {
+              "text": "forecast",
+              "art": "forecast"
+            }
+          ],
+          "answer": 0,
+          "why": "The company's own official number is guidance; a forecast can come from anyone about anything."
+        },
+        {
+          "id": "u4r-h-consensus-estimate",
+          "type": "headline",
+          "termIds": [
+            "consensus",
+            "estimate"
+          ],
+          "story": "Results beat the analyst ____ of $1.20 a share, sending the stock higher.",
+          "stem": "Which term fits the blank?",
+          "options": [
+            {
+              "text": "consensus",
+              "art": "consensus"
+            },
+            {
+              "text": "estimate",
+              "art": "estimate"
+            }
+          ],
+          "answer": 0,
+          "why": "“The analyst” plus a beat means the blended average: consensus is everyone combined, an estimate is one person's number."
+        },
+        {
+          "id": "u4r-h-bond-yield",
+          "type": "headline",
+          "termIds": [
+            "yield",
+            "bond"
+          ],
+          "story": "The 10-year ____ climbed to 4.6% as investors demanded more compensation for risk.",
+          "stem": "Which term fits the blank?",
+          "options": [
+            {
+              "text": "yield",
+              "art": "yield"
+            },
+            {
+              "text": "bond",
+              "art": "bond"
+            }
+          ],
+          "answer": 0,
+          "why": "4.6% is a return rate: yield is the return, a bond is the certificate itself."
+        },
+        {
           "id": "u4r-guidance-s",
           "type": "scenario",
           "termId": "guidance",
@@ -4482,7 +4916,7 @@
           "termIds": [
             "rate hike"
           ],
-          "story": "Swap markets are pricing in about 100 basis points of ____s.",
+          "story": "Swap markets are pricing in about 100 basis points of ____.",
           "bank": [
             "rate hike",
             "inflation",
@@ -4776,7 +5210,7 @@
           "termIds": [
             "currency"
           ],
-          "story": "The rupiah fell to a three-month low as Asian currencies struggled. (the word here is ____)",
+          "story": "The rupiah fell to a three-month low as Asian ____ struggled.",
           "bank": [
             "currency",
             "rate cut",
@@ -4821,6 +5255,50 @@
       "icon": "🏆",
       "review": true,
       "prompts": [
+        {
+          "id": "u5r-h-inflation-rate",
+          "type": "headline",
+          "termIds": [
+            "inflation",
+            "interest rate"
+          ],
+          "story": "Consumer ____ eased to 2.1%, giving the central bank room to pause.",
+          "stem": "Which term fits the blank?",
+          "options": [
+            {
+              "text": "inflation",
+              "art": "inflation"
+            },
+            {
+              "text": "interest rate",
+              "art": "interest rate"
+            }
+          ],
+          "answer": 0,
+          "why": "What “eases” and gives the central bank room is price growth: inflation is the problem, the interest rate is the tool."
+        },
+        {
+          "id": "u5r-h-rate-hike-cut",
+          "type": "headline",
+          "termIds": [
+            "rate hike",
+            "rate cut"
+          ],
+          "story": "The central bank delivered a surprise ____, trimming its benchmark by 25 basis points.",
+          "stem": "Which term fits the blank?",
+          "options": [
+            {
+              "text": "rate hike",
+              "art": "rate hike"
+            },
+            {
+              "text": "rate cut",
+              "art": "rate cut"
+            }
+          ],
+          "answer": 1,
+          "why": "“Trimming” moves rates down: a rate cut lowers, a rate hike raises."
+        },
         {
           "id": "u5r-inflation-s",
           "type": "scenario",
@@ -5284,7 +5762,7 @@
           "termIds": [
             "depreciate"
           ],
-          "story": "The Taiwan dollar ____d against the US dollar.",
+          "story": "The Taiwan dollar ____ against the US dollar.",
           "bank": [
             "depreciate",
             "exchange rate",
@@ -5578,7 +6056,7 @@
           "termIds": [
             "valuation"
           ],
-          "story": "Analysts flagged stretched ____s in the energy sector.",
+          "story": "Analysts flagged stretched ____ in the energy sector.",
           "bank": [
             "valuation",
             "market cap",
@@ -5709,6 +6187,72 @@
       "icon": "🏆",
       "review": true,
       "prompts": [
+        {
+          "id": "u6r-h-currency-exchangerate",
+          "type": "headline",
+          "termIds": [
+            "exchange rate",
+            "currency"
+          ],
+          "story": "The ____ slid past 160 per dollar, prompting officials to warn about one-way moves.",
+          "stem": "Which term fits the blank?",
+          "options": [
+            {
+              "text": "exchange rate",
+              "art": "exchange rate"
+            },
+            {
+              "text": "currency",
+              "art": "currency"
+            }
+          ],
+          "answer": 0,
+          "why": "“160 per dollar” is the ratio between two monies: the exchange rate is the ratio, currency is the money itself."
+        },
+        {
+          "id": "u6r-h-appreciate-depreciate",
+          "type": "headline",
+          "termIds": [
+            "appreciate",
+            "depreciate"
+          ],
+          "story": "The yen ____ to its strongest level since 2022 on a weaker dollar.",
+          "stem": "Which term fits the blank?",
+          "options": [
+            {
+              "text": "appreciate",
+              "art": "appreciate"
+            },
+            {
+              "text": "depreciate",
+              "art": "depreciate"
+            }
+          ],
+          "answer": 0,
+          "why": "“Strongest level” means more valuable: appreciate is stronger, depreciate is weaker."
+        },
+        {
+          "id": "u6r-h-valuation-marketcap",
+          "type": "headline",
+          "termIds": [
+            "valuation",
+            "market cap"
+          ],
+          "story": "Analysts flagged stretched ____ in the energy sector after a 40% run.",
+          "stem": "Which term fits the blank?",
+          "options": [
+            {
+              "text": "valuation",
+              "art": "valuation"
+            },
+            {
+              "text": "market cap",
+              "art": "market cap"
+            }
+          ],
+          "answer": 0,
+          "why": "“Stretched” is a judgement of worth: valuation is the estimate, market cap is the total price the market assigns."
+        },
         {
           "id": "u6r-exchange rate-s",
           "type": "scenario",
@@ -6172,7 +6716,7 @@
           "termIds": [
             "blue chip"
           ],
-          "story": "Chinese stocks slid as ____s set for the longest losing streak.",
+          "story": "Chinese stocks slid as ____ set for the longest losing streak.",
           "bank": [
             "blue chip",
             "index",
@@ -6597,6 +7141,50 @@
       "icon": "🏆",
       "review": true,
       "prompts": [
+        {
+          "id": "u7r-h-bluechip-index",
+          "type": "headline",
+          "termIds": [
+            "blue chip",
+            "index"
+          ],
+          "story": "The ____ has added 12% this year, led by a handful of large-cap names.",
+          "stem": "Which term fits the blank?",
+          "options": [
+            {
+              "text": "blue chip",
+              "art": "blue chip"
+            },
+            {
+              "text": "index",
+              "art": "index"
+            }
+          ],
+          "answer": 1,
+          "why": "What “has added 12%” is a computed figure: an index is the number, a blue chip is one of the companies inside it."
+        },
+        {
+          "id": "u7r-h-auction-issuance",
+          "type": "headline",
+          "termIds": [
+            "issuance",
+            "auction"
+          ],
+          "story": "Record ____ of government debt this quarter is straining dealer balance sheets.",
+          "stem": "Which term fits the blank?",
+          "options": [
+            {
+              "text": "issuance",
+              "art": "issuance"
+            },
+            {
+              "text": "auction",
+              "art": "auction"
+            }
+          ],
+          "answer": 0,
+          "why": "“Record … of debt” is the total brought out: issuance is the act, an auction is one way to price it."
+        },
         {
           "id": "u7r-index-s",
           "type": "scenario",

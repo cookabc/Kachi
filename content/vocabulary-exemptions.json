@@ -1,0 +1,136 @@
+{
+  "_comment": "Terms taught without corpus evidence. docs/vocabulary-system.md §2 places these in T6 (private banking / structured products), whose target material is not in content/corpus — so the gate cannot pass them on frequency alone. Every entry must state WHY the term earns its place and WHEN that claim gets re-checked. An entry with no reason is not a justification, it is a silencer; the validator rejects those.",
+  "_rules": [
+    "reason must name what the term is for, not restate the term",
+    "reviewBy is a date, not a promise: on/after it the validator fails the build until the entry is re-justified or removed",
+    "replacing an entry with corpus evidence is always better than renewing it"
+  ],
+  "_reviewBy": "2027-01-31",
+  "terms": {
+    "pledge": {
+      "pack": "hedge-or-pledge",
+      "reason": "The pack's headline pair with hedge. The distinction (protect vs collateralise) is the whole thesis of the course; no headline in the corpus uses the word because journalists say 'securities-backed loan' instead.",
+      "reviewBy": "2027-01-31"
+    },
+    "collateral": {
+      "pack": "hedge-or-pledge",
+      "reason": "The asset side of every secured loan; required to explain haircut and margin call. Corpus headlines name the lender's action, not the asset.",
+      "reviewBy": "2027-01-31"
+    },
+    "haircut": {
+      "pack": "hedge-or-pledge",
+      "reason": "The one number that decides how much can be borrowed against a pledge. Sourced to FINRA/SEC SBLOC investor alert (sources: finra-sec-sbloc-2015).",
+      "reviewBy": "2027-01-31"
+    },
+    "margin call": {
+      "pack": "hedge-or-pledge",
+      "reason": "The failure mode the whole course warns about; paired with haircut and leverage. Sourced to the same FINRA/SEC alert.",
+      "reviewBy": "2027-01-31"
+    },
+    "leverage": {
+      "pack": "hedge-or-pledge",
+      "reason": "Names the position size that a margin buffer supports — without it, margin has no purpose in the sentence.",
+      "reviewBy": "2027-01-31"
+    },
+    "derivative": {
+      "pack": "hedge-or-pledge",
+      "reason": "The category that option/put/call/futures/swap all belong to; the pack teaches the family, so the parent term is needed.",
+      "reviewBy": "2027-01-31"
+    },
+    "option": {
+      "pack": "hedge-or-pledge",
+      "reason": "One of the two instrument families the pack contrasts (with futures/swap).",
+      "reviewBy": "2027-01-31"
+    },
+    "put": {
+      "pack": "hedge-or-pledge",
+      "reason": "The concrete instrument behind the hedge example ('buy a put so a crash hurts less'); the example sentence is meaningless without it.",
+      "reviewBy": "2027-01-31"
+    },
+    "call": {
+      "pack": "hedge-or-pledge",
+      "reason": "The put/call pair is the pack's instrument axis; teaching one without the other breaks the sibling relation.",
+      "reviewBy": "2027-01-31"
+    },
+    "short selling": {
+      "pack": "hedge-or-pledge",
+      "reason": "The opposite-direction strategy the course contrasts with hedging; needed for the 'same bet, different name' unit.",
+      "reviewBy": "2027-01-31"
+    },
+    "notional": {
+      "pack": "hedge-or-pledge",
+      "reason": "The denominator of every leverage and derivative statement; without it the sizes in the examples are unreadable.",
+      "reviewBy": "2027-01-31"
+    },
+    "basis risk": {
+      "pack": "hedge-or-pledge",
+      "reason": "The reason a hedge can fail even when the direction is right — the course's honest-caveat term.",
+      "reviewBy": "2027-01-31"
+    },
+    "diversification": {
+      "pack": "hedge-or-pledge",
+      "reason": "The non-instrument way to reduce risk, declared as a confusable relation with hedge.",
+      "reviewBy": "2027-01-31"
+    },
+    "counterparty": {
+      "pack": "hedge-or-pledge",
+      "reason": "Who is on the other side of the derivative; paired with default in the risk unit.",
+      "reviewBy": "2027-01-31"
+    },
+    "default": {
+      "pack": "hedge-or-pledge",
+      "reason": "The event that makes collateral and counterparty matter; the pack's risk story terminates here.",
+      "reviewBy": "2027-01-31"
+    },
+    "mark-to-market": {
+      "pack": "hedge-or-pledge",
+      "reason": "How a pledged position gets re-priced, which is what triggers a margin call. Sourced to the FINRA/SEC alert.",
+      "reviewBy": "2027-01-31"
+    },
+    "securities-backed loan": {
+      "pack": "hedge-or-pledge",
+      "reason": "The actual name of the product the pack is about; it is the term the corpus uses INSTEAD of pledge, so it anchors the synonymy the learner must recognise.",
+      "reviewBy": "2027-01-31"
+    },
+    "capital gains": {
+      "pack": "hedge-or-pledge",
+      "reason": "The tax reason the buy-borrow-die pattern exists. Sourced to IRS Topic 409 and Publication 551.",
+      "reviewBy": "2027-01-31"
+    },
+    "buy-borrow-die": {
+      "pack": "hedge-or-pledge",
+      "reason": "The named strategy that ties the pack's lending and tax threads together; sourced to the University of Chicago Press monograph.",
+      "reviewBy": "2027-01-31"
+    },
+    "real rate": {
+      "pack": "hedge-or-pledge",
+      "reason": "Nominal minus inflation; the one true confusable pair with interest rate in the legacy pack (same word root, different quantity).",
+      "reviewBy": "2027-01-31"
+    },
+    "quantitative easing": {
+      "pack": "hedge-or-pledge",
+      "reason": "The central-bank tool whose mechanics explain why real rates can go negative; the pack's macro thread.",
+      "reviewBy": "2027-01-31"
+    },
+    "spot": {
+      "pack": "hedge-or-pledge",
+      "reason": "The other end of the futures axis; the pack teaches the curve, so both endpoints are required.",
+      "reviewBy": "2027-01-31"
+    },
+    "contango": {
+      "pack": "hedge-or-pledge",
+      "reason": "One of the two curve shapes; teaching one without the other leaves the shape unnamed.",
+      "reviewBy": "2027-01-31"
+    },
+    "backwardation": {
+      "pack": "hedge-or-pledge",
+      "reason": "The opposite curve shape; declared as the sibling of contango.",
+      "reviewBy": "2027-01-31"
+    },
+    "cost of carry": {
+      "pack": "hedge-or-pledge",
+      "reason": "The mechanism that decides which curve shape you get; the causal term behind contango/backwardation.",
+      "reviewBy": "2027-01-31"
+    }
+  }
+}

@@ -1,5 +1,6 @@
 import type { AttemptEvent, ExerciseType, LearnerState, MasteryState } from "./domain";
 import { emptyLearnerState, REVIEW_INTERVAL_DAYS } from "./engine";
+import { STATE_VERSION, type StoredLearnerState, upgradeLearnerState } from "./upgrade";
 
 const DATABASE_NAME = "kachi-learning";
 const DATABASE_VERSION = 1;
@@ -59,30 +60,45 @@ export async function loadLearnerState(): Promise<LearnerState> {
   const database = await openDatabase();
   const transaction = database.transaction([SNAPSHOT_STORE, META_STORE], "readwrite");
   const snapshot = (await request(transaction.objectStore(SNAPSHOT_STORE).get(PROFILE_KEY))) as unknown;
-  if (isLearnerState(snapshot)) {
+  if (isStoredState(snapshot)) {
+    // One upgrade at the boundary; every reader below sees the current shape.
+    const report = upgradeLearnerState(snapshot);
+    if (report.changed) {
+      transaction.objectStore(SNAPSHOT_STORE).put(report.state, PROFILE_KEY);
+      transaction.objectStore(META_STORE).put(
+        {
+          upgradedAt: new Date().toISOString(),
+          fromVersion: snapshot.version,
+          qualifiedLessons: report.qualifiedLessons,
+          retries: report.retries,
+          loweredPairs: report.loweredPairs,
+        },
+        "upgrade",
+      );
+      await transactionDone(transaction);
+      return report.state;
+    }
     await transactionDone(transaction);
-    return snapshot;
+    return report.state;
   }
 
   const recovered = emptyLearnerState();
   transaction.objectStore(SNAPSHOT_STORE).put(recovered, PROFILE_KEY);
-  transaction.objectStore(META_STORE).put(
-    snapshot === undefined
-      ? { migratedAt: new Date().toISOString(), source: "fresh" }
-      : {
-          recoveredAt: new Date().toISOString(),
-          source: "fresh",
-          reason: "invalid-snapshot",
-        },
-    snapshot === undefined ? "migration" : "recovery",
-  );
+  transaction
+    .objectStore(META_STORE)
+    .put(
+      snapshot === undefined
+        ? { createdAt: new Date().toISOString(), source: "fresh" }
+        : { recoveredAt: new Date().toISOString(), source: "fresh", reason: "invalid-snapshot" },
+      snapshot === undefined ? "migration" : "recovery",
+    );
   await transactionDone(transaction);
   return recovered;
 }
 
 // Attempt events are immutable once recorded, so the event store only ever
-// needs the ones not yet written: one put per answer instead of one per
-// attempt ever made, which used to grow with the whole learning history.
+// needs the ones not yet written: one put per answer rather than one per
+// attempt in the whole learning history.
 const writtenEventIds = new Set<string>();
 
 export async function saveLearnerState(state: LearnerState): Promise<void> {
@@ -111,12 +127,17 @@ export async function exportLearnerData(): Promise<Blob> {
   );
 }
 
-// An imported file is untrusted: it must carry a complete learner state. The
-// top-level check alone used to let malformed nested objects through, which
-// crashed the next save (state.attempts.forEach) or a render that reads
-// attempts/mastery (recentMissTermIds). Every field the engine touches is
-// validated before any IndexedDB transaction starts.
-const EXERCISE_TYPES: ReadonlySet<string> = new Set(["meaning", "truefalse", "fill", "scenario", "match"]);
+// An imported file is untrusted: it must carry a complete learner state.
+// Every field the engine touches is validated before any IndexedDB
+// transaction starts.
+const EXERCISE_TYPES: ReadonlySet<string> = new Set([
+  "meaning",
+  "truefalse",
+  "fill",
+  "scenario",
+  "match",
+  "headline",
+]);
 
 function isStringArray(value: unknown): value is string[] {
   return Array.isArray(value) && value.every((item) => typeof item === "string");
@@ -156,6 +177,7 @@ function isAttemptEvent(value: unknown): value is AttemptEvent {
     typeof event.answer === "string" &&
     typeof event.correct === "boolean" &&
     typeof event.hintUsed === "boolean" &&
+    (event.isRetry === undefined || typeof event.isRetry === "boolean") &&
     isNonNegativeInteger(event.latencyMs) &&
     isDateString(event.occurredAt)
   );
@@ -180,11 +202,13 @@ function isMasteryState(value: unknown): value is MasteryState {
   );
 }
 
-function isLearnerState(value: unknown): value is LearnerState {
+// Accepts every version this app has written. Upgrading happens once, right
+// after the check, so no reader downstream needs to know an older shape.
+function isStoredState(value: unknown): value is StoredLearnerState {
   if (!value || typeof value !== "object") return false;
-  const state = value as LearnerState;
+  const state = value as StoredLearnerState;
   return (
-    state.version === 1 &&
+    (state.version === 1 || state.version === STATE_VERSION) &&
     isNonNegativeInteger(state.xp) &&
     isNonNegativeInteger(state.streak) &&
     (state.lastLessonDate === undefined || typeof state.lastLessonDate === "string") &&
@@ -202,8 +226,8 @@ function isLearnerState(value: unknown): value is LearnerState {
 }
 
 export async function importLearnerData(file: File): Promise<LearnerState> {
-  // JSON.parse failures used to surface as raw English SyntaxErrors; a broken
-  // file is the same problem as a wrong envelope, so both get one message.
+  // A broken file and a wrong envelope are the same problem to the user, so
+  // both get one message.
   let parsed: unknown;
   try {
     parsed = JSON.parse(await file.text());
@@ -211,9 +235,10 @@ export async function importLearnerData(file: File): Promise<LearnerState> {
     throw new Error("这不是兼容的 Kachi 学习数据文件。");
   }
   const envelope = parsed as { schemaVersion?: unknown; learnerState?: unknown };
-  if (envelope.schemaVersion !== 1 || !isLearnerState(envelope.learnerState)) {
+  if (envelope.schemaVersion !== 1 || !isStoredState(envelope.learnerState)) {
     throw new Error("这不是兼容的 Kachi 学习数据文件。");
   }
-  await saveLearnerState(envelope.learnerState);
-  return envelope.learnerState;
+  const upgraded = upgradeLearnerState(envelope.learnerState).state;
+  await saveLearnerState(upgraded);
+  return upgraded;
 }

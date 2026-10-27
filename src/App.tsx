@@ -1,30 +1,10 @@
-import { type ChangeEvent, useEffect, useMemo, useState } from "react";
-import { MAX_HEARTS, Nav, type Tab } from "./chrome";
+import { type ChangeEvent, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { Nav, type Tab } from "./chrome";
 import { ALL_PACKS, courseFor, DEFAULT_PACK, course as defaultCourse, loadCourse } from "./course";
 import type { Concept, Course, LearnerState, SessionState } from "./domain";
-import {
-  applyAnswer,
-  currentExercise,
-  emptyLearnerState,
-  isLessonDone,
-  isLessonUnlocked,
-  recentMissTermIds,
-  requeuePrompt,
-  startPracticeSession,
-  startSession,
-} from "./engine";
-import {
-  conceptOf,
-  type PresentedExercise,
-  practicePool,
-  present,
-  realTermIds as publishedTermIds,
-  resolveMatch,
-  type Summary,
-  sessionSummary,
-  type TeachMode,
-  teachPlan,
-} from "./flow";
+import { emptyLearnerState, isLessonDone, isLessonUnlocked, recentMissTermIds } from "./engine";
+import { conceptOf } from "./flow";
+import { type FlowEvent, type FlowState, idleState, reduceFlow } from "./flow-machine";
 import { applyMotion, clampLevel, effectiveLevel, loadMotionLevel, saveMotionLevel } from "./motion";
 import { activateUpdate } from "./pwa";
 import { CompleteScreen } from "./screens/CompleteScreen";
@@ -32,7 +12,7 @@ import { FailScreen } from "./screens/FailScreen";
 import { Glossary } from "./screens/Glossary";
 import { GraphScreen } from "./screens/GraphScreen";
 import { LearnHome } from "./screens/LearnHome";
-import { LessonScreen, type Phase } from "./screens/LessonScreen";
+import { LessonScreen } from "./screens/LessonScreen";
 import { PracticeHome } from "./screens/PracticeHome";
 import { Settings } from "./screens/Settings";
 import { ShareSheet } from "./screens/ShareSheet";
@@ -65,7 +45,6 @@ function pairCardInput(course: Course, concept: Concept, t: UiText): PairCardInp
 }
 
 function App() {
-  const [state, setState] = useState<LearnerState>(emptyLearnerState());
   const [ready, setReady] = useState(false);
   const [tab, setTab] = useState<Tab>("learn");
   const [lang, setLangState] = useState<Lang>(() => loadLang());
@@ -75,24 +54,23 @@ function App() {
   // The zh pack is bundled and always renderable; a stored en-US preference
   // swaps in the lazy en pack before the loading screen lifts.
   const [course, setCourse] = useState<Course>(defaultCourse);
-  const [session, setSession] = useState<SessionState | null>(null);
-  const [phase, setPhase] = useState<Phase>("teach");
-  const [presented, setPresented] = useState<PresentedExercise | null>(null);
-  const [selection, setSelection] = useState<string | boolean | null>(null);
-  const [hearts, setHearts] = useState(MAX_HEARTS);
-  const [lastCorrect, setLastCorrect] = useState(false);
-  const [teachMode, setTeachMode] = useState<TeachMode>("first");
-  const [teachTerms, setTeachTerms] = useState<string[]>([]);
-  const [teachIndex, setTeachIndex] = useState(0);
-  const [selL, setSelL] = useState<string | null>(null);
-  const [selR, setSelR] = useState<string | null>(null);
-  const [locked, setLocked] = useState<string[]>([]);
-  const [summary, setSummary] = useState<Summary | null>(null);
+  // The whole lesson lifecycle is one value, owned by the pure reducer in
+  // flow-machine.ts. Nothing below reaches into its fields to mutate them.
+  const [flowState, setFlowState] = useState<FlowState>(() => idleState(emptyLearnerState()));
+  const flow = flowState.flow;
+  // The learner record lives inside flowState so a reducer transition can never
+  // leave the saved snapshot behind the visible flow. `state` is a readable
+  // alias for the many places that only need to read it.
+  const state = flowState.learner;
+  const setState = (next: LearnerState) => setFlowState((current) => ({ ...current, learner: next }));
   const [glossaryQuery, setGlossaryQuery] = useState("");
   const [updateReady, setUpdateReady] = useState(false);
   const [shareCards, setShareCards] = useState<PairCardInput[] | null>(null);
   // null stored = untouched slider = follow the OS reduced-motion preference
   const [motion, setMotionState] = useState<number>(() => effectiveLevel(loadMotionLevel()));
+  // When the prompt on screen was presented — feeds attempt.latencyMs. A ref,
+  // not state: resetting it must not re-render the question.
+  const questionShownAt = useRef(0);
 
   const t = UI[lang];
 
@@ -112,7 +90,7 @@ function App() {
     void Promise.all([loadLearnerState(), loadCourse(DEFAULT_PACK, initialLang)]).then(
       ([loaded, loadedCourse]) => {
         if (!alive) return;
-        setState(loaded);
+        setFlowState((current) => ({ ...current, learner: loaded }));
         setCourse(loadedCourse);
         setReady(true);
       },
@@ -236,188 +214,103 @@ function App() {
       });
   };
 
-  const markSeen = (ids: string[]) => {
-    if (!ids.length) return;
-    setState((prev) => ({
-      ...prev,
-      seenConceptIds: Array.from(new Set([...prev.seenConceptIds, ...ids])),
-    }));
-  };
+  // ---- lesson lifecycle ----------------------------------------------------
+  // All of it lives in one pure reducer (flow-machine.ts). This component only
+  // forwards events, records when the prompt appeared, and persists the result.
 
-  const beginQuiz = (fresh: SessionState) => {
-    setSession(fresh);
-    setPhase("question");
-    setSelection(null);
-    setLocked([]);
-    setSelL(null);
-    setSelR(null);
-    const first = currentExercise(course, fresh);
-    if (first) {
-      setPresented(present(first));
-      markSeen(publishedTermIds(first, course));
-    }
-  };
+  const dispatch = useCallback(
+    (event: FlowEvent) => {
+      setFlowState((current) => {
+        const out = reduceFlow(current, event, { course, environment });
+        // Fold newly met terms into the learner record here, inside the same
+        // update, so the saved snapshot and the flow never disagree.
+        const learner = out.seen.length
+          ? {
+              ...out.state.learner,
+              seenConceptIds: Array.from(new Set([...out.state.learner.seenConceptIds, ...out.seen])),
+            }
+          : out.state.learner;
+        if (out.state.flow.phase === "question") {
+          questionShownAt.current = environment.now().getTime();
+        }
+        return { flow: out.state.flow, learner };
+      });
+    },
+    [course],
+  );
+
+  const latency = useCallback(() => environment.now().getTime() - questionShownAt.current, []);
 
   const beginLesson = (lessonId: string) => {
-    const lesson = course.lessons.find((item) => item.id === lessonId);
-    if (!lesson || !isLessonUnlocked(state, course, lessonId)) return;
-    const fresh = startSession(course, lessonId, environment);
-    const plan = teachPlan(lesson, course);
-    setTeachMode(plan.mode);
-    setTeachTerms(plan.terms);
-    setTeachIndex(0);
-    setHearts(MAX_HEARTS);
-    setLastCorrect(false);
-    setSelection(null);
-    setLocked([]);
-    setSelL(null);
-    setSelR(null);
-    setSummary(null);
-    if (plan.terms.length) {
-      setSession(fresh);
-      setPhase("teach");
-      setPresented(null);
-      markSeen(plan.mode === "recap" ? plan.terms : [plan.terms[0]]);
-    } else {
-      beginQuiz(fresh);
-    }
-  };
-
-  const beginPractice = (focusIds?: string[]) => {
-    const picked = practicePool(state, course, focusIds);
-    if (!picked.length) return;
-
-    const fresh = startPracticeSession(picked, environment);
-    setHearts(MAX_HEARTS);
-    setLastCorrect(false);
-    setSummary(null);
-    beginQuiz(fresh);
-  };
-
-  const submit = (value: string | boolean, confusionPair?: [string, string]) => {
-    if (!session || phase !== "question") return;
-    const result = applyAnswer(course, state, session, value, environment, {
-      heartsAfter: hearts - 1,
-      confusionPair,
-    });
-    if (!result.attempt.correct) setHearts((current) => current - 1);
-    setState(result.state);
-    setSession(result.session);
-    setLastCorrect(result.attempt.correct);
-    setPhase("feedback");
-  };
-
-  const finish = (working: SessionState) => {
-    setSummary(sessionSummary(working));
-    setPhase("complete");
-  };
-
-  const continueAfterFeedback = () => {
-    if (!session || !presented || phase !== "feedback") return;
-    if (!lastCorrect && hearts <= 0) {
-      setPhase("fail");
-      return;
-    }
-    let working = session;
-    // a failed match re-queues itself so the player can still finish the pairs they know
-    if (presented.type === "match" && !lastCorrect) working = requeuePrompt(session, presented.id);
-    if (working.index >= working.promptIds.length) {
-      finish(working);
-      return;
-    }
-    setSession(working);
-    setPhase("question");
-    setSelection(null);
-    setLocked([]);
-    setSelL(null);
-    setSelR(null);
-    const next = currentExercise(course, working);
-    if (next) {
-      setPresented(present(next));
-      markSeen(publishedTermIds(next, course));
-    }
-  };
-
-  const clearSession = () => {
-    setSession(null);
-    setPresented(null);
-    setSummary(null);
-    setPhase("teach");
-  };
-
-  const closeLesson = () => {
-    clearSession();
+    dispatch({ type: "startLesson", lessonId });
     setTab("learn");
   };
 
-  const onTeachContinue = () => {
-    if (phase !== "teach") return;
-    const last = teachMode === "recap" || teachIndex >= teachTerms.length - 1;
-    if (last) {
-      if (session) beginQuiz(session);
+  const beginPractice = (focusIds?: string[]) => dispatch({ type: "startPractice", focusIds });
+
+  const closeLesson = () => {
+    dispatch({ type: "close" });
+    setTab("learn");
+  };
+
+  // A match is two clicks: pick a chip, then pick its partner. The first pick
+  // is selection state; a completed pair is the engine event.
+  const onMatch = (side: "left" | "right", id: string) => {
+    if (flow.phase !== "question" || !flow.presented?.pairs || flow.locked.includes(id)) return;
+    if (side === "left" && flow.selR) {
+      dispatch({ type: "submitMatch", leftId: id, rightId: flow.selR, latencyMs: latency() });
       return;
     }
-    const nextIndex = teachIndex + 1;
-    setTeachIndex(nextIndex);
-    markSeen([teachTerms[nextIndex]]);
-  };
-
-  const onMatch = (side: "left" | "right", id: string) => {
-    if (phase !== "question" || !presented?.pairs || locked.includes(id)) return;
-    if (side === "left") {
-      setSelL(id);
-      if (selR) resolvePair(id, selR);
-    } else {
-      setSelR(id);
-      if (selL) resolvePair(selL, id);
+    if (side === "right" && flow.selL) {
+      dispatch({ type: "submitMatch", leftId: flow.selL, rightId: id, latencyMs: latency() });
+      return;
     }
+    dispatch({ type: "selectChip", side, id });
   };
 
-  const resolvePair = (leftId: string, rightId: string) => {
-    if (!presented?.pairs) return;
-    const outcome = resolveMatch(locked, presented.pairs, leftId, rightId);
-    setLocked(outcome.locked);
-    setSelL(null);
-    setSelR(null);
-    if (outcome.judged === "matched") submit("matched");
-    // A mispair judges the whole prompt wrong; the two selected chips are the
-    // actual confusion pair and must reach the engine as evidence.
-    else if (outcome.judged === false) submit(false, [leftId, rightId]);
-  };
+  // Stable so the keyboard effect below can list it without re-binding on
+  // every render; `latency()` reads a ref, so the identity is all that matters.
+  const answer = useCallback(
+    (value: string | boolean) => dispatch({ type: "submit", answer: value, latencyMs: latency() }),
+    [dispatch, latency],
+  );
 
   // keyboard: Enter drives the lesson; 1-4 pick options; Enter presses the hero CTA on complete/fail
   useEffect(() => {
     const onKey = (event: KeyboardEvent) => {
       if (event.key === "Enter") {
-        if (session && (phase === "teach" || phase === "question" || phase === "feedback")) {
+        if (
+          flow.session &&
+          (flow.phase === "teach" || flow.phase === "question" || flow.phase === "feedback")
+        ) {
           event.preventDefault();
-          if (phase === "teach") onTeachContinue();
-          else if (phase === "question") {
-            if (presented?.type !== "match" && selection !== null) submit(selection);
-          } else continueAfterFeedback();
-        } else if (phase === "complete" || phase === "fail") {
+          if (flow.phase === "teach") dispatch({ type: "teachContinue" });
+          else if (flow.phase === "question") {
+            if (flow.presented?.type !== "match" && flow.selection !== null) answer(flow.selection);
+          } else dispatch({ type: "continue" });
+        } else if (flow.phase === "complete" || flow.phase === "fail") {
           const button = document.querySelector<HTMLElement>(".hero .btn");
           button?.click();
         }
         return;
       }
-      if (!session || phase !== "question" || !presented) return;
+      if (!flow.session || flow.phase !== "question" || !flow.presented) return;
       if (event.key >= "1" && event.key <= "4") {
         const index = Number(event.key) - 1;
-        if (presented.type === "truefalse") {
-          if (index === 0) setSelection(true);
-          if (index === 1) setSelection(false);
-        } else if (presented.type === "fill") {
-          const word = presented.bank?.[index];
-          if (word !== undefined) setSelection(word);
-        } else if (presented.options?.[index]) {
-          setSelection(presented.options[index].text);
+        if (flow.presented.type === "truefalse") {
+          if (index === 0) dispatch({ type: "select", value: true });
+          if (index === 1) dispatch({ type: "select", value: false });
+        } else if (flow.presented.type === "fill") {
+          const word = flow.presented.bank?.[index];
+          if (word !== undefined) dispatch({ type: "select", value: word });
+        } else if (flow.presented.options?.[index]) {
+          dispatch({ type: "select", value: flow.presented.options[index].text });
         }
       }
     };
     document.addEventListener("keydown", onKey);
     return () => document.removeEventListener("keydown", onKey);
-  });
+  }, [flow, dispatch, answer]);
 
   const downloadExport = async () => {
     const blob = await exportLearnerData();
@@ -444,30 +337,30 @@ function App() {
 
   if (!ready) return <main className="loading">{t.loading}</main>;
 
-  if (session && phase === "complete" && summary) {
+  if (flow.session && flow.phase === "complete" && flow.summary) {
     return (
       <>
         <CompleteScreen
-          summary={summary}
-          isPractice={session.mode === "practice"}
-          lessonId={session.lessonId}
+          summary={flow.summary}
+          isPractice={flow.session.mode === "practice"}
+          lessonId={flow.session.lessonId}
           course={course}
           t={t}
           motion={motion}
           onStart={beginLesson}
           onPractice={beginPractice}
           onPath={closeLesson}
-          onShare={() => openShare(shareConceptIds(session))}
+          onShare={() => openShare(shareConceptIds(flow.session!))}
         />
         {shareCards && <ShareSheet cards={shareCards} t={t} onClose={() => setShareCards(null)} />}
       </>
     );
   }
-  if (session && phase === "fail") {
+  if (flow.session && flow.phase === "fail") {
     return (
       <FailScreen
-        isPractice={session.mode === "practice"}
-        lessonId={session.lessonId}
+        isPractice={flow.session.mode === "practice"}
+        lessonId={flow.session.lessonId}
         t={t}
         onRetryLesson={beginLesson}
         onRetryPractice={() => beginPractice()}
@@ -475,32 +368,34 @@ function App() {
       />
     );
   }
-  if (session && (phase === "teach" || phase === "question" || phase === "feedback")) {
-    const activeLesson = course.lessons.find((item) => item.id === session.lessonId);
+  if (flow.session && (flow.phase === "teach" || flow.phase === "question" || flow.phase === "feedback")) {
+    const activeLesson = course.lessons.find((item) => item.id === flow.session?.lessonId);
     return (
       <LessonScreen
-        lessonTitle={session.mode === "practice" ? t.lesson.practiceTitle : (activeLesson?.title ?? "")}
-        phase={phase}
+        lessonTitle={flow.session.mode === "practice" ? t.lesson.practiceTitle : (activeLesson?.title ?? "")}
+        phase={flow.phase}
         t={t}
         lang={lang}
         course={course}
-        teachMode={teachMode}
-        teachTerms={teachTerms}
-        teachIndex={teachIndex}
-        presented={presented}
-        selection={selection}
-        hearts={hearts}
-        lastCorrect={lastCorrect}
-        total={session.promptIds.length}
-        questionIndex={phase === "feedback" ? Math.max(session.index - 1, 0) : session.index}
-        selL={selL}
-        selR={selR}
-        locked={locked}
-        onPick={setSelection}
-        onSubmit={() => selection !== null && submit(selection)}
+        teachMode={flow.teachMode}
+        teachTerms={flow.teachTerms}
+        teachIndex={flow.teachIndex}
+        presented={flow.presented}
+        selection={flow.selection}
+        hearts={flow.hearts}
+        lastCorrect={flow.lastCorrect}
+        total={flow.session.promptIds.length}
+        questionIndex={flow.phase === "feedback" ? Math.max(flow.session.index - 1, 0) : flow.session.index}
+        selL={flow.selL}
+        selR={flow.selR}
+        locked={flow.locked}
+        hintShown={flow.hintShown}
+        onPick={(value) => dispatch({ type: "select", value })}
+        onSubmit={() => flow.selection !== null && answer(flow.selection)}
         onMatch={onMatch}
-        onTeachContinue={onTeachContinue}
-        onContinue={continueAfterFeedback}
+        onHint={() => dispatch({ type: "hint" })}
+        onTeachContinue={() => dispatch({ type: "teachContinue" })}
+        onContinue={() => dispatch({ type: "continue" })}
         onClose={closeLesson}
       />
     );

@@ -5,6 +5,7 @@
 // answers, pairings) so one locale cannot drift from the other.
 import fs from "node:fs";
 import path from "node:path";
+import { fillLeaksAnswer } from "../src/fill.ts";
 import { validateCourse } from "../src/schema/index.ts";
 
 const root = process.cwd();
@@ -110,47 +111,46 @@ const corpusText = () => {
 };
 
 const corpus = corpusText();
-// Terms the author has explicitly justified without corpus evidence. Empty by
-// default: an entry here is a promise that docs/vocabulary-system.md says why
-// the term is taught even though the target material never uses it.
+
+// Vocabulary exemptions: a term may be taught without corpus evidence only if
+// content/vocabulary-exemptions.json says why and when that claim expires.
 //
-// The current pack predates the gate. Its 25 unlisted terms are the exact
-// finding the 2026-10 audit produced, so they are carried as a known debt
-// rather than silently exempted — the list is printed on every build and must
-// shrink to zero as the packs are rebuilt. New packs start with no allowance.
-const KNOWN_UNGATED = new Set(
-  [
-    // pledge collateral haircut margin call leverage derivative option put call
-    // short selling notional basis risk diversification counterparty default
-    // mark-to-market securities-backed loan capital gains buy-borrow-die real rate
-    // quantitative easing spot contango backwardation cost of carry
-    "pledge",
-    "collateral",
-    "haircut",
-    "margin call",
-    "leverage",
-    "derivative",
-    "option",
-    "put",
-    "call",
-    "short selling",
-    "notional",
-    "basis risk",
-    "diversification",
-    "counterparty",
-    "default",
-    "mark-to-market",
-    "securities-backed loan",
-    "capital gains",
-    "buy-borrow-die",
-    "real rate",
-    "quantitative easing",
-    "spot",
-    "contango",
-    "backwardation",
-    "cost of carry",
-  ].map((term) => term.toLowerCase()),
-);
+// A whitelist with no reasons is not a justification, it is a silencer. Every
+// entry carries a reason (what the term is for) and a reviewBy date, and the
+// build fails when the date passes — the debt has to be renewed on purpose or
+// paid off.
+const exemptionsPath = path.join(root, "content/vocabulary-exemptions.json");
+let exemptions = { terms: {} };
+if (fs.existsSync(exemptionsPath)) {
+  try {
+    exemptions = JSON.parse(fs.readFileSync(exemptionsPath, "utf8"));
+  } catch (error) {
+    fail(`[exemptions] content/vocabulary-exemptions.json is not valid JSON: ${error.message}`);
+  }
+}
+const EXEMPT_TERMS = new Map();
+for (const [term, entry] of Object.entries(exemptions.terms ?? {})) {
+  const key = term.toLowerCase();
+  if (!entry?.reason || String(entry.reason).trim().length < 20) {
+    fail(`[exemptions] "${term}" has no usable reason — an exemption must say what the term is for`);
+    continue;
+  }
+  if (!entry.reviewBy || Number.isNaN(Date.parse(entry.reviewBy))) {
+    fail(`[exemptions] "${term}" has no reviewBy date — exemptions expire, they do not persist`);
+    continue;
+  }
+  EXEMPT_TERMS.set(key, entry);
+}
+// Expiry is a build failure, not a warning: a lapsed justification is the same
+// as no justification.
+const today = new Date().toISOString().slice(0, 10);
+for (const [term, entry] of EXEMPT_TERMS) {
+  if (entry.reviewBy < today) {
+    fail(
+      `[exemptions] "${term}" expired on ${entry.reviewBy} — re-justify it or find corpus evidence (content/vocabulary-exemptions.json)`,
+    );
+  }
+}
 
 if (!corpus) {
   console.log("[corpus] no corpus files — vocabulary evidence gate skipped");
@@ -165,7 +165,14 @@ if (!corpus) {
       const escaped = term.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
       const pattern = new RegExp(`\\b${escaped}(s|es|ed|ing)?\\b`);
       if (pattern.test(corpus)) continue;
-      if (KNOWN_UNGATED.has(term)) {
+      const exempt = EXEMPT_TERMS.get(term);
+      if (exempt) {
+        // An exemption is per pack: the reason for teaching a term in T6 does
+        // not automatically cover the same term in a different pack.
+        if (exempt.pack && exempt.pack !== name.split("/")[0]) {
+          missing.push(`${concept.term} (exemption names pack ${exempt.pack})`);
+          continue;
+        }
         excused += 1;
         continue;
       }
@@ -178,10 +185,28 @@ if (!corpus) {
       );
     } else if (excused) {
       console.log(
-        `[corpus] ${name}: every concept appears in the corpus (${excused} carried as known debt — see KNOWN_UNGATED)`,
+        `[corpus] ${name}: every concept appears in the corpus (${excused} exempted with a reason — see content/vocabulary-exemptions.json)`,
       );
     } else {
       console.log(`[corpus] ${name}: every concept appears in the corpus`);
+    }
+  }
+}
+
+if (failed) process.exit(1);
+
+// A fill stem must not contain its answer. The generated pack once shipped
+// stems like "Oil prices rallied 4%… (这里的词是 ____)" because blanking only
+// matched the bare term, not "rallied" — the answer was printed in the
+// sentence. fill.ts matches inflections, and this gate keeps every pack
+// (hand-written ones included) honest about it.
+for (const { name, course } of packs) {
+  for (const lesson of course.lessons) {
+    for (const prompt of lesson.prompts) {
+      if (prompt.type !== "fill" || typeof prompt.answer !== "string") continue;
+      if (fillLeaksAnswer(prompt.story ?? "", prompt.answer)) {
+        fail(`[${name}] fill ${prompt.id}: the answer "${prompt.answer}" appears in its own stem`);
+      }
     }
   }
 }
@@ -247,7 +272,6 @@ function comparePrompts(a, b, tag) {
   if (a.type !== b.type) fail(`${label} type differs`);
   if (a.termId !== b.termId) fail(`${label} termId differs`);
   if (JSON.stringify(a.termIds ?? []) !== JSON.stringify(b.termIds ?? [])) fail(`${label} termIds differ`);
-  if (Boolean(a.assessmentOnly) !== Boolean(b.assessmentOnly)) fail(`${label} assessmentOnly differs`);
   if (JSON.stringify(a.answer) !== JSON.stringify(b.answer)) fail(`${label} answer differs`);
   if ((a.options?.length ?? 0) !== (b.options?.length ?? 0)) return fail(`${label} option count differs`);
   a.options?.forEach((option, index) => {

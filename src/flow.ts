@@ -31,10 +31,10 @@ export function realTermIds(prompt: Exercise, course: Course): string[] {
   return (prompt.termIds ?? []).filter((id) => conceptOf(course, id) !== undefined);
 }
 
-function shuffle<T>(arr: T[]): T[] {
+function shuffle<T>(arr: T[], random: () => number): T[] {
   const copy = arr.slice();
   for (let i = copy.length - 1; i > 0; i -= 1) {
-    const j = Math.floor(Math.random() * (i + 1));
+    const j = Math.floor(random() * (i + 1));
     const t = copy[i];
     copy[i] = copy[j];
     copy[j] = t;
@@ -42,17 +42,28 @@ function shuffle<T>(arr: T[]): T[] {
   return copy;
 }
 
-export function present(prompt: Exercise): PresentedExercise {
+/**
+ * A presentation copy of a published exercise. `random` is injectable so the
+ * session reducer can be driven deterministically in tests; production passes
+ * the environment's generator.
+ */
+export function present(prompt: Exercise, random: () => number = Math.random): PresentedExercise {
   const copy: PresentedExercise = { ...prompt, left: [], right: [] };
   if (prompt.type === "match" && prompt.pairs) {
-    copy.left = shuffle(prompt.pairs.map((pair) => ({ id: pair.id, text: pair.left })));
-    copy.right = shuffle(prompt.pairs.map((pair) => ({ id: pair.id, text: pair.right })));
+    copy.left = shuffle(
+      prompt.pairs.map((pair) => ({ id: pair.id, text: pair.left })),
+      random,
+    );
+    copy.right = shuffle(
+      prompt.pairs.map((pair) => ({ id: pair.id, text: pair.right })),
+      random,
+    );
   }
   if (prompt.options && typeof prompt.answer === "number") {
     copy.correctText = prompt.options[prompt.answer]?.text;
-    copy.options = shuffle(prompt.options);
+    copy.options = shuffle(prompt.options, random);
   }
-  if (prompt.type === "fill" && prompt.bank) copy.bank = shuffle(prompt.bank);
+  if (prompt.type === "fill" && prompt.bank) copy.bank = shuffle(prompt.bank, random);
   return copy;
 }
 
@@ -112,15 +123,22 @@ export function lessonPair(course: Course, lessonId: string): { a: string; b: st
 }
 
 // Practice pool: focus (explicit, then due confusion pairs, then recent misses)
-// sorts weak prompts first; the pool is capped at unlocked lessons, with u1l2
-// kept open as the fresh-player seed. `now` is injectable for deterministic tests.
+// sorts weak prompts first; the pool is capped at unlocked lessons, plus the
+// first two lessons kept open as the fresh-player seed. `now` is injectable
+// for deterministic tests.
+//
+// The seed is "the first two lessons of this course", not the literal ids
+// "u1l1"/"u1l2": hardcoded ids silently produced an empty practice round for
+// any pack that names its lessons differently.
 export function practicePool(
   state: LearnerState,
   course: Course,
   focusIds?: string[],
   roundSize = PRACTICE_ROUND,
   now: Date = new Date(),
+  random: () => number = Math.random,
 ): string[] {
+  const seedIds = new Set(course.lessons.slice(0, 2).map((lesson) => lesson.id));
   const due = new Set(duePairIds(state, now));
   const focus = new Set<string>(focusIds ?? []);
   if (!focus.size) {
@@ -139,19 +157,18 @@ export function practicePool(
     });
 
   const available = course.lessons
-    .filter((lesson) => isLessonUnlocked(state, course, lesson.id) || lesson.id === "u1l2")
+    .filter((lesson) => isLessonUnlocked(state, course, lesson.id) || seedIds.has(lesson.id))
     .flatMap((lesson) => lesson.prompts);
   let pool: Exercise[];
   if (focus.size) {
     const weak = available.filter((prompt) => realTermIds(prompt, course).some((id) => focus.has(id)));
     const weakIds = new Set(weak.map((prompt) => prompt.id));
     const rest = available.filter((prompt) => !weakIds.has(prompt.id));
-    pool = shuffle(weak).concat(shuffle(rest));
+    pool = shuffle(weak, random).concat(shuffle(rest, random));
   } else {
     pool = shuffle(
-      course.lessons
-        .filter((lesson) => lesson.id === "u1l1" || lesson.id === "u1l2")
-        .flatMap((lesson) => lesson.prompts),
+      course.lessons.filter((lesson) => seedIds.has(lesson.id)).flatMap((lesson) => lesson.prompts),
+      random,
     );
   }
   const picked: string[] = [];
@@ -178,12 +195,15 @@ export function resolveMatch(
   return { locked: nextLocked, judged: nextLocked.length === pairs.length ? "matched" : null };
 }
 
-// Mirrors the engine payout (applyAnswer): +10 per correct, +20 lesson
-// completion, +20 no-mistake — practice rounds pay per correct only.
+// Mirrors the engine payout (applyAnswer): +10 per correct first attempt,
+// +20 lesson completion, +20 no-mistake — practice rounds pay per correct
+// only. Re-queued prompts are excluded from both the accuracy denominator and
+// the XP count, matching what the engine actually pays.
 export function sessionSummary(session: SessionState): Summary {
   const results = session.results;
-  const total = results.length;
-  const correct = results.filter((result) => result.correct).length;
+  const graded = results.filter((result) => !result.isRetry);
+  const total = graded.length;
+  const correct = graded.filter((result) => result.correct).length;
   const isPractice = session.mode === "practice";
   const xpHit = correct * 10;
   const xpDone = isPractice ? 0 : 20;

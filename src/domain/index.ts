@@ -1,6 +1,18 @@
-export type ExerciseType = "meaning" | "truefalse" | "fill" | "scenario" | "match";
+/**
+ * `headline` is the reading task: a real-syntax headline with a blank, and the
+ * two confusable terms as options. It tests the product's whole claim — telling
+ * the pair apart inside a sentence — rather than what a term means in isolation.
+ */
+export type ExerciseType = "meaning" | "truefalse" | "fill" | "scenario" | "match" | "headline";
 export type RiskLevel = "evergreen" | "time-sensitive" | "jurisdictional";
 export type ReviewStatus = "legacy" | "draft" | "reviewed";
+
+/**
+ * Why the canonical mix-up pair confuses. The taxonomy is the authoring gate
+ * in the pack source (if you cannot name why two terms mix, the pair is
+ * wrong); the teach card surfaces it so learners build the same schema.
+ */
+export type MixUpType = "opposite" | "coexist" | "hierarchy" | "form" | "timing";
 
 export interface SourceReference {
   id: string;
@@ -43,6 +55,11 @@ export interface Concept {
   example: string;
   mixUp: string;
   mixUpWhy: string;
+  mixUpType?: MixUpType;
+  /** The term's Chinese name, when the pack's zh-CN data carries it natively
+   *  (generated packs do; the hand-written legacy pack keeps its glosses in
+   *  src/localization.ts and this field stays unset). */
+  termZh?: string;
   relations?: ConceptRelation[];
   sourceIds: string[];
   risk: RiskLevel;
@@ -75,7 +92,6 @@ export interface Exercise {
   bank?: string[];
   pairs?: MatchPair[];
   why: string;
-  assessmentOnly?: boolean;
 }
 
 export interface Lesson {
@@ -129,6 +145,14 @@ export interface AttemptEvent {
   answer: string;
   correct: boolean;
   hintUsed: boolean;
+  /**
+   * True when this prompt had already been answered earlier in the same
+   * session (a match mispair re-queues itself). A retry is a rehearsal, not
+   * new evidence: it pays no XP, does not move the mastery ladder, and stays
+   * out of the accuracy denominator. Always present on records the current
+   * engine writes; upgrade.ts sets it on older ones.
+   */
+  isRetry?: boolean;
   latencyMs: number;
   occurredAt: string;
 }
@@ -146,7 +170,8 @@ export interface MasteryState {
 }
 
 export interface LearnerState {
-  version: 1;
+  /** Bumped by upgrade.ts whenever the saved shape changes. */
+  version: 2;
   xp: number;
   streak: number;
   lastLessonDate?: string;

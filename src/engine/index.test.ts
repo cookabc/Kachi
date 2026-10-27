@@ -1,15 +1,19 @@
 import { describe, expect, it } from "vitest";
 import { course as publishedCourse } from "../course";
-import type { Course, Environment, Exercise, LearnerState, SessionState } from "../domain";
+import type { Course, Environment, Exercise, LearnerState } from "../domain";
 import {
   type ApplyOptions,
   applyAnswer,
   currentExercise,
   duePairIds,
   emptyLearnerState,
+  evidenceQuality,
   isCorrect,
   isLessonUnlocked,
+  isRequeuedPrompt,
+  isSlowAnswer,
   isVerifiedMastery,
+  medianCorrectLatencyMs,
   recentMissTermIds,
   requeuePrompt,
   startPracticeSession,
@@ -187,26 +191,24 @@ describe("learning engine", () => {
 });
 
 describe("mastery scheduling", () => {
-  function answerAgain(state: LearnerState, session: SessionState, answer: string, hintUsed = false) {
-    const requeued = requeuePrompt(session, "one");
-    return applyAnswer(course, state, requeued, answer, environment, { hintUsed });
+  // Each practice round is a fresh session, so answering the same prompt again
+  // there is a genuine second encounter — unlike a re-queued prompt inside one
+  // session, which is a rehearsal (see the retry describe block below).
+  function answerFresh(state: LearnerState, answer: string, options: ApplyOptions = {}) {
+    const session = startPracticeSession(["one"], environment);
+    return applyAnswer(course, state, session, answer, environment, options);
   }
 
   it("walks the review-interval ladder on consecutive corrects", () => {
     let state = emptyLearnerState();
-    let session = startSession(course, "lesson", environment);
-    const result = applyAnswer(course, state, session, "right", environment);
-    state = result.state;
-    session = result.session;
+    // First correct: consecutive 1, due +1d.
+    state = answerFresh(state, "right").state;
 
     const pairId = "hedge::pledge";
-    // after the first correct (consecutive 1, due +1d) the 2nd..7th corrects
-    // walk REVIEW_INTERVAL_DAYS[1..5] and cap at 60d
+    // the 2nd..7th corrects walk REVIEW_INTERVAL_DAYS[1..5] and cap at 60d
     const intervals = [3, 7, 14, 30, 60, 60, 60];
     intervals.forEach((days, index) => {
-      const next = answerAgain(state, session, "right");
-      state = next.state;
-      session = next.session;
+      state = answerFresh(state, "right").state;
       const mastery = state.mastery[pairId];
       expect(mastery.consecutiveCorrect).toBe(Math.min(index + 2, 6));
       expect(mastery.dueAt).toBe(
@@ -217,13 +219,8 @@ describe("mastery scheduling", () => {
   });
 
   it("treats a wrong answer as a lapse that resets the ladder", () => {
-    let state = emptyLearnerState();
-    let session = startSession(course, "lesson", environment);
-    const first = applyAnswer(course, state, session, "right", environment);
-    state = first.state;
-    session = first.session;
-    const second = applyAnswer(course, state, requeuePrompt(session, "one"), "wrong", environment);
-    state = second.state;
+    let state = answerFresh(emptyLearnerState(), "right").state;
+    state = answerFresh(state, "wrong").state;
 
     const mastery = state.mastery["hedge::pledge"];
     expect(mastery.consecutiveCorrect).toBe(0);
@@ -280,7 +277,6 @@ describe("mastery scheduling", () => {
               options: [{ text: "right" }],
               answer: 0,
               why: "",
-              assessmentOnly: true,
             },
           ],
         },
@@ -380,6 +376,33 @@ describe("engine guards and grading", () => {
     );
   });
 
+  it("records the caller's latency and never a negative one", () => {
+    const session = startSession(course, "lesson", environment);
+    const timed = applyAnswer(course, emptyLearnerState(), session, "right", environment, {
+      latencyMs: 4200,
+    });
+    expect(timed.attempt.latencyMs).toBe(4200);
+    const negative = applyAnswer(
+      course,
+      emptyLearnerState(),
+      startSession(course, "lesson", environment),
+      "right",
+      environment,
+      {
+        latencyMs: -5,
+      },
+    );
+    expect(negative.attempt.latencyMs).toBe(0);
+    const defaulted = applyAnswer(
+      course,
+      emptyLearnerState(),
+      startSession(course, "lesson", environment),
+      "right",
+      environment,
+    );
+    expect(defaulted.attempt.latencyMs).toBe(0);
+  });
+
   it("refuses to start an empty practice session", () => {
     expect(() => startPracticeSession([], environment)).toThrow(/at least one prompt/);
   });
@@ -467,6 +490,193 @@ describe("engine guards and grading", () => {
     state = { ...state, completedLessonIds: ["test/lesson"] };
     expect(isLessonUnlocked(state, two, "second")).toBe(true);
     expect(isLessonUnlocked(state, two, "third")).toBe(false);
+  });
+});
+
+describe("retries are rehearsals, not evidence", () => {
+  // A match mispair re-queues its own prompt. The player then usually gets it
+  // right — that replay used to advance the mastery ladder, pay XP, and push
+  // the pair out of the review set, so one mistake could be laundered into
+  // progress by finishing the prompt you had just failed.
+  function missThenReplay() {
+    const session = startSession(course, "lesson", environment);
+    const first = applyAnswer(course, emptyLearnerState(), session, "wrong", environment);
+    const requeued = requeuePrompt(first.session, "one");
+    const replay = applyAnswer(course, first.state, requeued, "right", environment);
+    return { first, replay };
+  }
+
+  it("detects a re-queued prompt from the session, not from the caller", () => {
+    const session = startSession(course, "lesson", environment);
+    expect(isRequeuedPrompt(session)).toBe(false);
+    const first = applyAnswer(course, emptyLearnerState(), session, "wrong", environment);
+    expect(isRequeuedPrompt(requeuePrompt(first.session, "one"))).toBe(true);
+  });
+
+  it("marks the replay as a retry without the caller saying so", () => {
+    const { replay } = missThenReplay();
+    expect(replay.attempt.isRetry).toBe(true);
+  });
+
+  it("does not let a replay restore the mastery it just lost", () => {
+    const { first, replay } = missThenReplay();
+    const afterMiss = first.state.mastery["hedge::pledge"];
+    const afterReplay = replay.state.mastery["hedge::pledge"];
+    expect(afterMiss.consecutiveCorrect).toBe(0);
+    expect(afterReplay.consecutiveCorrect).toBe(0);
+    // Not even the review date moves: the clock was set by the mistake.
+    expect(afterReplay.dueAt).toBe(afterMiss.dueAt);
+    expect(afterReplay.lapses).toBe(afterMiss.lapses);
+  });
+
+  it("pays no XP for a replay", () => {
+    const { first, replay } = missThenReplay();
+    // The single-prompt test lesson completes even on a wrong answer (no
+    // hearts tracked), so the first pass pays the +20 completion bonus only.
+    // The replay must add nothing on top of that.
+    expect(first.state.xp).toBe(20);
+    expect(replay.state.xp).toBe(first.state.xp);
+  });
+
+  it("still counts a wrong replay as a fresh lapse", () => {
+    const session = startSession(course, "lesson", environment);
+    const first = applyAnswer(course, emptyLearnerState(), session, "wrong", environment);
+    const again = applyAnswer(course, first.state, requeuePrompt(first.session, "one"), "wrong", environment);
+    expect(again.state.mastery["hedge::pledge"].lapses).toBe(2);
+  });
+
+  it("keeps a replayed term on the review list", () => {
+    const { replay } = missThenReplay();
+    expect(recentMissTermIds(replay.state)).toContain("hedge");
+  });
+
+  it("never calls a lesson with a replay flawless", () => {
+    // Two-prompt lesson: miss the first, replay it correctly, then get the
+    // second right. Every graded answer is correct — but the replay proves the
+    // lesson was not flawless, so the +20 bonus must not be paid.
+    const two: Course = {
+      ...course,
+      lessons: [
+        {
+          ...course.lessons[0],
+          prompts: [course.lessons[0].prompts[0], { ...twoPromptCourse.lessons[0].prompts[1] }],
+        },
+      ],
+    };
+    let state = emptyLearnerState();
+    const start = startSession(two, "lesson", environment);
+    const miss = applyAnswer(two, state, start, "wrong", environment);
+    state = miss.state;
+    const replay = applyAnswer(two, state, requeuePrompt(miss.session, "one"), "right", environment);
+    state = replay.state;
+    // The second prompt is a true/false, whose answer is a boolean.
+    const last = applyAnswer(two, state, replay.session, true, environment);
+    expect(last.finished).toBe(true);
+    // 20 completion + 10 for the second prompt's correct answer; no flawless.
+    expect(last.state.xp).toBe(30);
+
+    // Sanity: the same lesson played clean — both prompts right on first
+    // contact — does pay the flawless bonus (10 + 10 + 20 + 20).
+    const twoPromptLesson: Course = two;
+    const cleanFirst = applyAnswer(
+      twoPromptLesson,
+      emptyLearnerState(),
+      startSession(twoPromptLesson, "lesson", environment),
+      "right",
+      environment,
+    );
+    const cleanLast = applyAnswer(twoPromptLesson, cleanFirst.state, cleanFirst.session, true, environment);
+    expect(cleanLast.finished).toBe(true);
+    expect(cleanLast.state.xp).toBe(60);
+  });
+});
+
+describe("evidence quality", () => {
+  function slowState(): LearnerState {
+    // Eight quick corrects establish a median of 2000ms.
+    let state = emptyLearnerState();
+    for (let i = 0; i < 8; i += 1) {
+      const session = startPracticeSession(["one"], environment);
+      state = applyAnswer(course, state, session, "right", environment, { latencyMs: 2000 }).state;
+    }
+    return state;
+  }
+
+  it("has no opinion about speed until it has enough samples", () => {
+    expect(medianCorrectLatencyMs(emptyLearnerState())).toBeUndefined();
+    expect(isSlowAnswer(emptyLearnerState(), 60_000)).toBe(false);
+  });
+
+  it("derives its own bar from the learner's median", () => {
+    const state = slowState();
+    expect(medianCorrectLatencyMs(state)).toBe(2000);
+    // The bar is max(median * 2, FLOOR) = max(4000, 12000) = 12000. The floor
+    // wins here, which is the point: no answer under 12s is ever "slow".
+    expect(isSlowAnswer(state, 4000)).toBe(false);
+    expect(isSlowAnswer(state, 12_000)).toBe(false);
+    expect(isSlowAnswer(state, 12_001)).toBe(true);
+  });
+
+  it("raises the bar above the floor once the median is genuinely slow", () => {
+    // A learner whose correct answers take 10s has a bar of max(20000, 12000).
+    let state = emptyLearnerState();
+    for (let i = 0; i < 8; i += 1) {
+      state = applyAnswer(course, state, startPracticeSession(["one"], environment), "right", environment, {
+        latencyMs: 10_000,
+      }).state;
+    }
+    expect(isSlowAnswer(state, 15_000)).toBe(false);
+    expect(isSlowAnswer(state, 20_001)).toBe(true);
+  });
+
+  it("never flags an answer under the absolute floor", () => {
+    // A learner whose median is 500ms would otherwise have 1.5s answers
+    // called "slow" — too fast to be meaningful.
+    let state = emptyLearnerState();
+    for (let i = 0; i < 8; i += 1) {
+      state = applyAnswer(course, state, startPracticeSession(["one"], environment), "right", environment, {
+        latencyMs: 500,
+      }).state;
+    }
+    expect(isSlowAnswer(state, 11_000)).toBe(false);
+    expect(isSlowAnswer(state, 12_001)).toBe(true);
+  });
+
+  it("keeps the rung but reviews tomorrow when an answer is slow", () => {
+    const state = slowState();
+    // Two quick corrects already happened in slowState, so the ladder is at 6
+    // (8 corrects capped). A slow answer must hold that rung.
+    const before = state.mastery["hedge::pledge"].consecutiveCorrect;
+    const session = startPracticeSession(["one"], environment);
+    const result = applyAnswer(course, state, session, "right", environment, { latencyMs: 20_000 });
+    const after = result.state.mastery["hedge::pledge"];
+    expect(after.consecutiveCorrect).toBe(before);
+    expect(after.dueAt).toBe(new Date(Date.parse("2026-08-28T12:00:00.000Z") + 86_400_000).toISOString());
+    expect(after.lapses).toBe(0); // effortful recall is not a lapse
+  });
+
+  it("classifies the four cases", () => {
+    const quick = applyAnswer(
+      course,
+      emptyLearnerState(),
+      startSession(course, "lesson", environment),
+      "right",
+      environment,
+      { latencyMs: 1000 },
+    ).attempt;
+    expect(evidenceQuality(emptyLearnerState(), quick)).toBe("strong");
+
+    const hinted = { ...quick, hintUsed: true };
+    expect(evidenceQuality(emptyLearnerState(), hinted)).toBe("lapse");
+
+    const retried = { ...quick, isRetry: true };
+    expect(evidenceQuality(emptyLearnerState(), retried)).toBe("rehearsal");
+
+    const wrongRetry = { ...quick, isRetry: true, correct: false };
+    expect(evidenceQuality(emptyLearnerState(), wrongRetry)).toBe("lapse");
+
+    const slow = { ...quick, latencyMs: 20_000 };
+    expect(evidenceQuality(slowState(), slow)).toBe("weak");
   });
 });
 

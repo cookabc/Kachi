@@ -68,7 +68,7 @@ function validateExercise(exercise: Exercise, conceptIds: Set<string>): Validati
       issues.push({ path: exercise.id, message: `Unknown term reference: ${id}` });
     }
   });
-  if (["meaning", "scenario"].includes(exercise.type)) {
+  if (["meaning", "scenario", "headline"].includes(exercise.type)) {
     if (!exercise.options?.length || typeof exercise.answer !== "number") {
       issues.push({
         path: exercise.id,
@@ -95,6 +95,30 @@ function validateExercise(exercise: Exercise, conceptIds: Set<string>): Validati
       issues.push({
         path: exercise.id,
         message: `Fill answer is not present in the bank: ${exercise.answer}`,
+      });
+    }
+  }
+  // A headline drill is only meaningful when its two options ARE the confusable
+  // pair: the question is "which of these two fits", not "which of four words
+  // fits". Four options would turn it into a vocabulary quiz again.
+  if (exercise.type === "headline") {
+    if (!exercise.story?.includes("____")) {
+      issues.push({ path: exercise.id, message: "Headline drill needs a story with a ____ blank" });
+    }
+    if (exercise.options?.length !== 2) {
+      issues.push({
+        path: exercise.id,
+        message: `Headline drill needs exactly 2 options (the pair), got ${exercise.options?.length ?? 0}`,
+      });
+    }
+    if (exercise.termIds?.length !== 2) {
+      issues.push({ path: exercise.id, message: "Headline drill must reference exactly 2 terms" });
+    }
+    const optionTexts = (exercise.options ?? []).map((option) => option.text);
+    if ([...(exercise.termIds ?? [])].sort().join("|") !== [...optionTexts].sort().join("|")) {
+      issues.push({
+        path: exercise.id,
+        message: "Headline drill options must be exactly its two termIds",
       });
     }
   }
@@ -231,8 +255,8 @@ function conceptCoverageIssues(concept: Course["concepts"][number], course: Cour
 
 // PRD §7 "Provenance and freshness" (amended 10 Sep 2026): governed content —
 // new drafts and anything promoted to reviewed — must carry the fields its
-// risk level relies on. Legacy content predates the rule and is grandfathered
-// (its remediation debt is named in the PRD), so no id allowlist is needed.
+// risk level relies on. Content marked legacy is exempt from the rule, so no
+// id allowlist is needed.
 const GOVERNED_REVIEW_STATUSES: ReadonlySet<Concept["reviewStatus"]> = new Set(["draft", "reviewed"]);
 
 function conceptProvenanceIssues(concept: Concept): ValidationIssue[] {

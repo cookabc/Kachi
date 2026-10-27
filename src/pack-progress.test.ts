@@ -3,6 +3,7 @@ import t1 from "../content/packs/t1-finance-news/zh-CN/course.json";
 import { course as legacyCourse } from "./course";
 import type { Course } from "./domain";
 import { emptyLearnerState, isLessonDone, isLessonUnlocked, lessonKey } from "./engine";
+import { upgradeLearnerState } from "./upgrade";
 
 // Two packs both start at "u1l1". Before lesson ids were namespaced by pack,
 // finishing T1's first lesson marked the legacy pack's first lesson complete
@@ -27,11 +28,16 @@ describe("per-pack lesson progress", () => {
     expect(isLessonUnlocked(state, legacyCourse, "u1l2")).toBe(false);
   });
 
-  it("still reads bare ids saved before packs existed", () => {
-    // Old saved state only ever had the legacy pack, so a bare id is unambiguous.
-    const legacy = { ...emptyLearnerState(), completedLessonIds: ["u1l1"] };
-    expect(isLessonDone(legacy, legacyCourse, "u1l1")).toBe(true);
-    // But a bare id must never be read as belonging to a newer pack.
-    expect(isLessonDone(legacy, t1Course, "u1l1")).toBe(false);
+  it("upgrades bare ids saved before packs existed", () => {
+    // A bare id only ever came from the legacy pack, so the upgrade qualifies
+    // it with that pack. After that, the engine reads one shape only.
+    const upgraded = upgradeLearnerState({
+      ...emptyLearnerState(),
+      version: 1,
+      completedLessonIds: ["u1l1"],
+    }).state;
+    expect(isLessonDone(upgraded, legacyCourse, "u1l1")).toBe(true);
+    // And it must never be read as belonging to a newer pack.
+    expect(isLessonDone(upgraded, t1Course, "u1l1")).toBe(false);
   });
 });

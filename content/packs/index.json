@@ -7,7 +7,7 @@
       "title": "读财经首页",
       "goal": "打开任何财经 App 首屏，标题全看得懂",
       "conceptCount": 42,
-      "status": "building"
+      "status": "ready"
     },
     {
       "id": "t2-company-earnings",

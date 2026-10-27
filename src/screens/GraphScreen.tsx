@@ -46,9 +46,8 @@ export function GraphScreen({
   const seen = useMemo(() => new Set(state.seenConceptIds), [state.seenConceptIds]);
   const missed = useMemo(() => new Set(recentMissTermIds(state)), [state]);
 
-  // Four learning states, derived from data the engine already records. The map
-  // used to show only seen/unseen, so a learner at "two correct in a row" looked
-  // identical to one who had merely opened the word.
+  // Four learning states, derived from data the engine records, so a learner
+  // at "two correct in a row" does not look like one who merely opened the word.
   const progress = useMemo(() => {
     const map = new Map<string, { status: GraphStatus; streak: number }>();
     for (const concept of course.concepts) {
@@ -254,7 +253,7 @@ export function GraphScreen({
           <article className="g-card" aria-live="polite">
             <h3>
               {selectedConcept.term}
-              <span className="zh">{localizedTerm(selectedConcept.id).termZh}</span>
+              <span className="zh">{selectedConcept.termZh ?? localizedTerm(selectedConcept.id).termZh}</span>
             </h3>
             {unit && (
               <p className="g-kicker">

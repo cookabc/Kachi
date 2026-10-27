@@ -1,12 +1,14 @@
 // T1 词库内容源。这是唯一真相：generate-course.mjs 从这里生成 zh/en 两个 course.json。
 // 每个概念必须：出现在 content/corpus 里（语料门禁）、有 mixUp 且声明类型、有 scene 供生图。
+// relations 只声明定义层面站得住的边：prereq = 这个词要先懂那个词才学得会，
+// sibling = 同一族。mixUp 对本身已是 confusable 边，不要重复声明。
 //
 // scene 是给 imagen 的画面描述（中文也行，codex 能懂），一句话说清"画什么"，
 // 不要写画风（画风由 generate-art.mjs 的 STYLE 常量统一注入）。
 
 export const PACK = {
   packId: "t1-finance-news",
-  contentVersion: "2026.10.27-t1",
+  contentVersion: "2026.10.27-t1.1",
   title: "读财经首页",
 };
 
@@ -51,6 +53,7 @@ export const CONCEPTS = [
     mixUp: "selloff",
     mixUpWhy: "rally 是买盘涌入把价格推高；selloff 是卖盘涌出把价格砸低。方向相反。",
     mixUpType: "opposite",
+    relations: [{ type: "sibling", with: "rebound" }],
     tags: ["价格方向"],
   },
   {
@@ -79,6 +82,7 @@ export const CONCEPTS = [
     mixUp: "rebound",
     mixUpWhy: "slump 是持续走低；rebound 是触底之后弹回来。",
     mixUpType: "opposite",
+    relations: [{ type: "sibling", with: "rout" }],
     tags: ["价格方向", "持续时间"],
   },
   {
@@ -137,6 +141,7 @@ export const CONCEPTS = [
     mixUp: "demand",
     mixUpWhy: "supply 是卖方提供的量；demand 是买方想买的量。同一根轴的两端。",
     mixUpType: "opposite",
+    relations: [{ type: "sibling", with: "inventory" }],
     tags: ["供需"],
   },
   {
@@ -237,6 +242,7 @@ export const CONCEPTS = [
     mixUp: "revenue",
     mixUpWhy: "earnings 是扣完成本剩下的；revenue 是还没扣成本的销售总额。",
     mixUpType: "coexist",
+    relations: [{ type: "sibling", with: "profit" }],
     tags: ["财报"],
   },
   {
@@ -265,6 +271,7 @@ export const CONCEPTS = [
     mixUp: "margin",
     mixUpWhy: "profit 是绝对金额；margin 是利润占收入的比例。",
     mixUpType: "coexist",
+    relations: [{ type: "prereq", with: "revenue" }],
     tags: ["财报"],
   },
   {
@@ -279,6 +286,7 @@ export const CONCEPTS = [
     mixUp: "profit",
     mixUpWhy: "margin 是比率；profit 是金额。营收小的公司也可能利润率很高。",
     mixUpType: "coexist",
+    relations: [{ type: "prereq", with: "revenue" }],
     tags: ["财报"],
   },
   {
@@ -293,6 +301,7 @@ export const CONCEPTS = [
     mixUp: "earnings",
     mixUpWhy: "earnings 是公司赚到的；dividend 是从利润里分给股东的那部分。不是所有盈利都发股息。",
     mixUpType: "hierarchy",
+    relations: [{ type: "prereq", with: "profit" }],
     tags: ["财报", "股东回报"],
   },
 
@@ -423,6 +432,7 @@ export const CONCEPTS = [
     mixUp: "rate cut",
     mixUpWhy: "rate hike 往上调；rate cut 往下调。",
     mixUpType: "opposite",
+    relations: [{ type: "prereq", with: "interest rate" }],
     tags: ["利率"],
   },
   {
@@ -437,6 +447,7 @@ export const CONCEPTS = [
     mixUp: "rate hike",
     mixUpWhy: "rate cut 往下调；rate hike 往上调。",
     mixUpType: "opposite",
+    relations: [{ type: "prereq", with: "interest rate" }],
     tags: ["利率"],
   },
   {
@@ -495,6 +506,7 @@ export const CONCEPTS = [
     mixUp: "appreciate",
     mixUpWhy: "depreciate 是变便宜；appreciate 是变值钱。",
     mixUpType: "opposite",
+    relations: [{ type: "prereq", with: "exchange rate" }],
     tags: ["汇率", "方向"],
   },
   {
@@ -509,6 +521,7 @@ export const CONCEPTS = [
     mixUp: "depreciate",
     mixUpWhy: "appreciate 是变值钱；depreciate 是变便宜。",
     mixUpType: "opposite",
+    relations: [{ type: "prereq", with: "exchange rate" }],
     tags: ["汇率", "方向"],
   },
   {
@@ -551,6 +564,7 @@ export const CONCEPTS = [
     mixUp: "market cap",
     mixUpWhy: "P/E 是倍数、和盈利挂钩；market cap 是总市值、和股本挂钩。",
     mixUpType: "coexist",
+    relations: [{ type: "prereq", with: "earnings" }],
     tags: ["估值"],
   },
 

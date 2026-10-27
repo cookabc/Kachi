@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { course } from "./course";
 import type { Exercise, LearnerState, SessionState } from "./domain";
-import { emptyLearnerState } from "./engine";
+import { emptyLearnerState, lessonKey } from "./engine";
 import {
   lessonPair,
   PRACTICE_ROUND,
@@ -210,7 +210,11 @@ describe("practicePool", () => {
   });
 
   it("honors an explicit focus (Practice those)", () => {
-    const state: LearnerState = { ...emptyLearnerState(), completedLessonIds: ["u1l1", "u1l2"] };
+    // Lesson keys are pack-qualified; a bare id no longer means anything.
+    const state: LearnerState = {
+      ...emptyLearnerState(),
+      completedLessonIds: [lessonKey(course, "u1l1"), lessonKey(course, "u1l2")],
+    };
     const ids = practicePool(state, course, ["margin", "margin call"]);
     const weak = ids.filter((id) => {
       const prompt = publishedPrompt(id);
@@ -296,5 +300,27 @@ describe("sessionSummary", () => {
     const summary = sessionSummary(sessionOf("lesson", results));
     expect(summary.xpPerfect).toBe(20);
     expect(summary.gained).toBe(60);
+  });
+
+  it("keeps a re-queued replay out of the accuracy denominator and the XP count", () => {
+    // Miss a match, it re-queues, then answer it right: one graded attempt
+    // (wrong), one rehearsal (right). The old summary showed 1/2 = 50% and
+    // paid 10 XP for the replay; neither matches what the engine did.
+    const results = [
+      { ...attempt(false, ["hedge"]), isRetry: false },
+      { ...attempt(true, ["hedge"]), isRetry: true },
+    ];
+    const summary = sessionSummary(sessionOf("lesson", results));
+    expect(summary.total).toBe(1);
+    expect(summary.correct).toBe(0);
+    expect(summary.xpHit).toBe(0);
+  });
+
+  it("still reports the missed pair even though the replay was correct", () => {
+    const results = [
+      { ...attempt(false, ["hedge"]), isRetry: false },
+      { ...attempt(true, ["hedge"]), isRetry: true },
+    ];
+    expect(sessionSummary(sessionOf("lesson", results)).mix).toContain("hedge");
   });
 });

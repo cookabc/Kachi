@@ -141,7 +141,7 @@ function sampleState(): LearnerState {
     xp: 130,
     streak: 4,
     lastLessonDate: "2026-08-29",
-    completedLessonIds: ["u1l1"],
+    completedLessonIds: ["hedge-or-pledge/u1l1"],
     seenConceptIds: ["hedge", "pledge"],
     attempts: [
       {
@@ -205,7 +205,7 @@ describe("learner storage", () => {
   });
 
   it("rejects learner states whose required collections are missing or malformed", async () => {
-    const broken = { schemaVersion: 1, learnerState: { version: 1, xp: 5, streak: "many" } };
+    const broken = { schemaVersion: 1, learnerState: { version: 2, xp: 5, streak: "many" } };
     await expect(importLearnerData(fileOf(broken))).rejects.toThrow(/不是兼容/);
 
     const noAttempts = { schemaVersion: 1, learnerState: { ...emptyLearnerState(), attempts: "log" } };
@@ -267,6 +267,34 @@ describe("learner storage", () => {
     for (const learnerState of invalidStates) {
       await expect(importLearnerData(fileOf({ schemaVersion: 1, learnerState }))).rejects.toThrow(/不是兼容/);
     }
+  });
+
+  it("accepts records written before the retry flag existed", async () => {
+    // Every saved attempt from engine 0.1.0 lacks isRetry. Rejecting them
+    // would wipe the learner's history on the first load after the upgrade.
+    const legacy = sampleState();
+    for (const attempt of legacy.attempts) delete (attempt as { isRetry?: boolean }).isRetry;
+    await saveLearnerState(legacy);
+    const loaded = await loadLearnerState();
+    expect(loaded.attempts).toHaveLength(legacy.attempts.length);
+    expect(loaded.attempts[0].isRetry).toBeUndefined();
+  });
+
+  it("accepts an explicit retry flag and rejects a non-boolean one", async () => {
+    const marked = sampleState();
+    marked.attempts[0].isRetry = true;
+    await expect(saveLearnerState(marked)).resolves.toBeUndefined();
+    await expect(
+      importLearnerData(
+        fileOf({
+          schemaVersion: 1,
+          learnerState: {
+            ...sampleState(),
+            attempts: [{ ...sampleState().attempts[0], isRetry: "yes" }],
+          },
+        }),
+      ),
+    ).rejects.toThrow(/不是兼容/);
   });
 
   it("rejects invalid mastery counters, evidence types, and pair identities", async () => {
