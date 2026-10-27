@@ -31,7 +31,6 @@
   --muted: #63635e;
   --line: #e9e8e6;
   --green: #4cbba5;
-  --green-2: #7ecfbd;
   --green-deep: #027864;
   --green-dark: #16433c;
   --green-soft: #ddf9f2;
@@ -46,12 +45,10 @@
   --wrong: #e54666;
   --wrong-bg: var(--peach);
   --peach: #fee9f5;
-  --locked: #f2eff3;
   --shadow: 0 18px 46px color-mix(in srgb, var(--ink) 12%, transparent);
   --nav-h: 68px;
   --font: "Zen Maru Gothic", "Avenir Next", "PingFang SC", "Segoe UI", sans-serif;
   --display: "Dela Gothic One", "Zen Maru Gothic", "PingFang SC", sans-serif;
-  --t-fast: 250ms;
   --t-med: 250ms;
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   --press-lg: 5px;
@@ -62,9 +59,6 @@
   --pink-soft: #fbdcef;
   --blue-soft: #edf2fe;
   --yellow: #ffba18;
-  --yellow-deep: #ab6400;
-  --violet: #aa99ec;
-  --radius: 16px;
 }
 * {
   box-sizing: border-box;
@@ -282,8 +276,8 @@ input {
     0 6px 0 #dad9d6,
     0 8px 16px color-mix(in srgb, #86ead4 10%, transparent);
   transition:
-    transform var(--t-fast) var(--ease-out),
-    box-shadow var(--t-fast) var(--ease-out);
+    transform var(--t-med) var(--ease-out),
+    box-shadow var(--t-med) var(--ease-out);
 }
 .node:active {
   transform: translateY(var(--press-sm));
@@ -872,8 +866,8 @@ input {
   font-size: 17px;
   cursor: pointer;
   transition:
-    transform var(--t-fast) var(--ease-out),
-    background var(--t-fast) var(--ease-out);
+    transform var(--t-med) var(--ease-out),
+    background var(--t-med) var(--ease-out);
 }
 .hl-opt:active {
   transform: translateY(2px);
@@ -1758,8 +1752,8 @@ svg.icon {
     font-size: 13px;
     font-weight: 850;
     transition:
-      transform var(--t-fast) var(--ease-out),
-      box-shadow var(--t-fast) var(--ease-out);
+      transform var(--t-med) var(--ease-out),
+      box-shadow var(--t-med) var(--ease-out);
   }
   .desktop-start:hover,
   .desktop-start:focus-visible {
@@ -2066,8 +2060,8 @@ svg.icon {
   font-size: 13px;
   font-weight: 800;
   transition:
-    transform var(--t-fast) var(--ease-out),
-    background var(--t-fast) var(--ease-out);
+    transform var(--t-med) var(--ease-out),
+    background var(--t-med) var(--ease-out);
 }
 .lab-hero-cta:hover {
   transform: translateY(-2px);
@@ -2162,7 +2156,7 @@ svg.icon {
   gap: 14px;
   padding: 0 17px;
   text-align: left;
-  transition: background var(--t-fast) var(--ease-out);
+  transition: background var(--t-med) var(--ease-out);
 }
 .lab-lesson:hover:not(:disabled) {
   background: var(--blue-soft);
@@ -2223,7 +2217,10 @@ svg.icon {
   box-shadow: 0 -9px 24px color-mix(in srgb, var(--ink) 12%, transparent);
 }
 .nav button {
-  color: #8b8d98; /* slate-9 */
+  /* Was #8b8d98: 4.01:1 on the ink bar, under AA for 13px text. #a5a7b5 is
+     5.54:1 — comfortably past 4.5 without competing with the yellow active
+     state (7.74:1). */
+  color: #a5a7b5;
 }
 .nav button.on {
   color: var(--yellow);
@@ -2532,8 +2529,8 @@ svg.icon {
   fill: none;
   stroke-width: 2.2;
   transition:
-    opacity var(--t-fast) var(--ease-out),
-    stroke-width var(--t-fast) var(--ease-out);
+    opacity var(--t-med) var(--ease-out),
+    stroke-width var(--t-med) var(--ease-out);
 }
 .e-confusable {
   stroke: var(--wrong);
@@ -2562,8 +2559,8 @@ svg.icon {
   stroke: var(--ink);
   stroke-width: 1.8;
   transition:
-    fill var(--t-fast) var(--ease-out),
-    stroke var(--t-fast) var(--ease-out);
+    fill var(--t-med) var(--ease-out),
+    stroke var(--t-med) var(--ease-out);
 }
 .g-dot.d-seen {
   fill: var(--green);

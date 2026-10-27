@@ -1,0 +1,8 @@
+{
+  "_comment": "Ids that carry art but are deliberately not concepts: true/false answer art, and distractors the course never teaches ('sell' is the natural wrong answer for 'pledge'). They have no unit, definition or mix-up and must never appear in the map or glossary. Single source: the app derives the runtime set from this file and the build-time validator reads it directly.",
+  "ids": [
+    "sell",
+    "true",
+    "false"
+  ]
+}

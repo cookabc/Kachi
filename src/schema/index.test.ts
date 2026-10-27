@@ -329,21 +329,30 @@ describe("content validation", () => {
     expect(validateCourse(course)).toEqual([]);
   });
 
-  it("allows only the explicit match pseudo-term IDs", () => {
+  it("accepts only ids that art.tsx declares as out-of-syllabus", () => {
+    // "sell" is a legitimate distractor answer and has art, but it is not a
+    // concept. The declaration lives in the art layer so the two cannot drift.
     const allowed = validCourse();
-    const match = allowed.lessons[1].prompts[2];
-    match.termIds = ["sell", "put_u1intro"];
-    match.pairs = [
-      { id: "sell", left: "sell", right: "S" },
-      { id: "put_u1intro", left: "a put", right: "P" },
-    ];
-    expect(validateCourse(allowed).filter((issue) => issue.path === "r3")).toEqual([]);
+    allowed.lessons[0].prompts[1].termIds = ["sell"];
+    expect(validateCourse(allowed).some((issue) => /Unknown term reference: sell/.test(issue.message))).toBe(
+      false,
+    );
 
+    // A made-up id has no art and is not a concept: still rejected.
     const rejected = validCourse();
-    rejected.lessons[0].prompts[1].termIds = ["sell"];
-    const issues = validateCourse(rejected);
+    rejected.lessons[0].prompts[1].termIds = ["made-up-term"];
     expect(
-      issues.some((issue) => issue.path === "p2" && /Unknown term reference: sell/.test(issue.message)),
+      validateCourse(rejected).some((issue) => /Unknown term reference: made-up-term/.test(issue.message)),
+    ).toBe(true);
+  });
+
+  it("rejects the retired put_u1intro pseudo-id", () => {
+    // Content used to smuggle an art-only id through a hardcoded allowlist.
+    // It now resolves to the real concept id instead.
+    const course = validCourse();
+    course.lessons[0].prompts[1].termIds = ["put_u1intro"];
+    expect(
+      validateCourse(course).some((issue) => /Unknown term reference: put_u1intro/.test(issue.message)),
     ).toBe(true);
   });
 

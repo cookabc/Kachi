@@ -15,8 +15,6 @@ function uniqueIssues(ids: string[], label: string): ValidationIssue[] {
   return duplicate ? [{ path: label, message: `Duplicate ID: ${duplicate}` }] : [];
 }
 
-const MATCH_PSEUDO_TERM_IDS = new Set(["sell", "put_u1intro"]);
-
 const RELATION_TYPES = new Set(["confusable", "prereq", "sibling"]);
 
 function validateRelations(concept: Concept, conceptIds: Set<string>): ValidationIssue[] {
@@ -54,17 +52,27 @@ function validateRelations(concept: Concept, conceptIds: Set<string>): Validatio
   return issues;
 }
 
-function isKnownTermId(exercise: Exercise, id: string, conceptIds: Set<string>): boolean {
-  return conceptIds.has(id) || (exercise.type === "match" && MATCH_PSEUDO_TERM_IDS.has(id));
+/**
+ * Whether an id is allowed to appear in an exercise: either a published concept
+ * or an id art.tsx declares as out-of-syllabus. The former had a per-type
+ * exception for match exercises; declaring the ids explicitly made that branch
+ * unnecessary.
+ */
+function isKnownTermId(id: string, conceptIds: Set<string>, outOfSyllabus: ReadonlySet<string>): boolean {
+  return conceptIds.has(id) || outOfSyllabus.has(id);
 }
 
-function validateExercise(exercise: Exercise, conceptIds: Set<string>): ValidationIssue[] {
+function validateExercise(
+  exercise: Exercise,
+  conceptIds: Set<string>,
+  outOfSyllabus: ReadonlySet<string>,
+): ValidationIssue[] {
   const issues: ValidationIssue[] = [];
   if (!exercise.id) issues.push({ path: "exercise", message: "Exercise ID is required" });
   if (!exercise.termIds?.length)
     issues.push({ path: exercise.id, message: "Exercise must reference at least one term" });
   exercise.termIds?.forEach((id) => {
-    if (!isKnownTermId(exercise, id, conceptIds)) {
+    if (!isKnownTermId(id, conceptIds, outOfSyllabus)) {
       issues.push({ path: exercise.id, message: `Unknown term reference: ${id}` });
     }
   });
@@ -130,7 +138,7 @@ function validateExercise(exercise: Exercise, conceptIds: Set<string>): Validati
       const duplicate = pairIds.find((id, index) => pairIds.indexOf(id) !== index);
       if (duplicate) issues.push({ path: exercise.id, message: `Duplicate match pair ID: ${duplicate}` });
       pairIds.forEach((id) => {
-        if (!id || !isKnownTermId(exercise, id, conceptIds)) {
+        if (!id || !isKnownTermId(id, conceptIds, outOfSyllabus)) {
           issues.push({ path: exercise.id, message: `Unknown match pair ID: ${id}` });
         }
       });
@@ -142,7 +150,12 @@ function validateExercise(exercise: Exercise, conceptIds: Set<string>): Validati
   return issues;
 }
 
-export function validateCourse(course: Course): ValidationIssue[] {
+export function validateCourse(
+  course: Course,
+  // Ids with art that are intentionally not concepts. Passed in rather than
+  // imported so this module stays loadable by plain Node at build time.
+  outOfSyllabus: ReadonlySet<string> = new Set(["sell", "true", "false"]),
+): ValidationIssue[] {
   const issues: ValidationIssue[] = [];
   if (course.schemaVersion !== 1)
     issues.push({ path: "schemaVersion", message: "Unsupported schema version" });
@@ -189,7 +202,7 @@ export function validateCourse(course: Course): ValidationIssue[] {
     issues.push(...validateRelations(concept, conceptIds));
   });
   allExercises.forEach((exercise) => {
-    issues.push(...validateExercise(exercise, conceptIds));
+    issues.push(...validateExercise(exercise, conceptIds, outOfSyllabus));
   });
   course.lessons.forEach((lesson) => {
     issues.push(...validateLessonShape(lesson, course));

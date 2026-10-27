@@ -8,6 +8,12 @@ import path from "node:path";
 import { fillLeaksAnswer } from "../src/fill.ts";
 import { validateCourse } from "../src/schema/index.ts";
 
+// Ids that carry art but are not concepts. Read as data: this script runs under
+// plain Node, which cannot resolve the app's extensionless TS imports.
+const outOfSyllabus = new Set(
+  JSON.parse(fs.readFileSync(new URL("../content/out-of-syllabus.json", import.meta.url), "utf8")).ids,
+);
+
 const root = process.cwd();
 const registryPath = path.join(root, "content/packs/index.json");
 const registry = fs.existsSync(registryPath) ? JSON.parse(fs.readFileSync(registryPath, "utf8")) : null;
@@ -48,7 +54,7 @@ const packs = packFiles.map((file) => {
   if (!course.packId || course.packId !== packId) {
     fail(`[${name}] packId "${course.packId}" does not match the pack directory "${packId}"`);
   }
-  for (const issue of validateCourse(course)) {
+  for (const issue of validateCourse(course, outOfSyllabus)) {
     fail(`[${name}] ${issue.path}: ${issue.message}`);
   }
   const prompts = course.lessons.flatMap((lesson) => lesson.prompts);

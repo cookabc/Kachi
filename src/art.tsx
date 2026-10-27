@@ -6,6 +6,7 @@
 // styles.css. Never share hex values across the two — recolor scenes here,
 // recolor chrome there.
 import { artAssetElement } from "./art-assets";
+import { OUT_OF_SYLLABUS_ART } from "./out-of-syllabus";
 
 export const HEDGEHOG_PATHS =
   '<path d="M18 34l-8-12 10 8-2-16 10 14 4-18 6 18 8-16 4 16 12-10-8 14 12-4-10 12" fill="#58CC02" />' +
@@ -168,6 +169,8 @@ const ART_ALIASES: Record<string, string> = {
   false: "false",
   sell: "sell",
 };
+
+export { OUT_OF_SYLLABUS_ART };
 
 export function artIdForLabel(label: string | null | undefined): string {
   const raw = String(label == null ? "" : label).trim();
