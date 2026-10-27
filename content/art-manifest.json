@@ -390,6 +390,176 @@
       "file": "/art/discount.webp",
       "bg": "#ffffff",
       "pack": "t2-company-earnings"
+    },
+    "coupon": {
+      "file": "/art/coupon.webp",
+      "bg": "#ffffff",
+      "pack": "t3-bonds-rates"
+    },
+    "maturity": {
+      "file": "/art/maturity.webp",
+      "bg": "#ffffff",
+      "pack": "t3-bonds-rates"
+    },
+    "principal": {
+      "file": "/art/principal.webp",
+      "bg": "#ffffff",
+      "pack": "t3-bonds-rates"
+    },
+    "price": {
+      "file": "/art/price.webp",
+      "bg": "#ffffff",
+      "pack": "t3-bonds-rates"
+    },
+    "duration": {
+      "file": "/art/duration.webp",
+      "bg": "#ffffff",
+      "pack": "t3-bonds-rates"
+    },
+    "benchmark": {
+      "file": "/art/benchmark.webp",
+      "bg": "#ffffff",
+      "pack": "t3-bonds-rates"
+    },
+    "basis point": {
+      "file": "/art/basis-point.webp",
+      "bg": "#ffffff",
+      "pack": "t3-bonds-rates"
+    },
+    "cut-off yield": {
+      "file": "/art/cut-off-yield.webp",
+      "bg": "#ffffff",
+      "pack": "t3-bonds-rates"
+    },
+    "inflation-linked": {
+      "file": "/art/inflation-linked.webp",
+      "bg": "#ffffff",
+      "pack": "t3-bonds-rates"
+    },
+    "fixed-rate": {
+      "file": "/art/fixed-rate.webp",
+      "bg": "#ffffff",
+      "pack": "t3-bonds-rates"
+    },
+    "floating-rate": {
+      "file": "/art/floating-rate.webp",
+      "bg": "#ffffff",
+      "pack": "t3-bonds-rates"
+    },
+    "bid-to-cover": {
+      "file": "/art/bid-to-cover.webp",
+      "bg": "#ffffff",
+      "pack": "t3-bonds-rates"
+    },
+    "primary dealer": {
+      "file": "/art/primary-dealer.webp",
+      "bg": "#ffffff",
+      "pack": "t3-bonds-rates"
+    },
+    "treasury": {
+      "file": "/art/treasury.webp",
+      "bg": "#ffffff",
+      "pack": "t3-bonds-rates"
+    },
+    "gilt": {
+      "file": "/art/gilt.webp",
+      "bg": "#ffffff",
+      "pack": "t3-bonds-rates"
+    },
+    "sovereign": {
+      "file": "/art/sovereign.webp",
+      "bg": "#ffffff",
+      "pack": "t3-bonds-rates"
+    },
+    "corporate bond": {
+      "file": "/art/corporate-bond.webp",
+      "bg": "#ffffff",
+      "pack": "t3-bonds-rates"
+    },
+    "commercial paper": {
+      "file": "/art/commercial-paper.webp",
+      "bg": "#ffffff",
+      "pack": "t3-bonds-rates"
+    },
+    "junk bond": {
+      "file": "/art/junk-bond.webp",
+      "bg": "#ffffff",
+      "pack": "t3-bonds-rates"
+    },
+    "investment grade": {
+      "file": "/art/investment-grade.webp",
+      "bg": "#ffffff",
+      "pack": "t3-bonds-rates"
+    },
+    "yield curve": {
+      "file": "/art/yield-curve.webp",
+      "bg": "#ffffff",
+      "pack": "t3-bonds-rates"
+    },
+    "credit spread": {
+      "file": "/art/credit-spread.webp",
+      "bg": "#ffffff",
+      "pack": "t3-bonds-rates"
+    },
+    "spread widening": {
+      "file": "/art/spread-widening.webp",
+      "bg": "#ffffff",
+      "pack": "t3-bonds-rates"
+    },
+    "spread tightening": {
+      "file": "/art/spread-tightening.webp",
+      "bg": "#ffffff",
+      "pack": "t3-bonds-rates"
+    },
+    "term premium": {
+      "file": "/art/term-premium.webp",
+      "bg": "#ffffff",
+      "pack": "t3-bonds-rates"
+    },
+    "inversion": {
+      "file": "/art/inversion.webp",
+      "bg": "#ffffff",
+      "pack": "t3-bonds-rates"
+    },
+    "default risk": {
+      "file": "/art/default-risk.webp",
+      "bg": "#ffffff",
+      "pack": "t3-bonds-rates"
+    },
+    "credit rating": {
+      "file": "/art/credit-rating.webp",
+      "bg": "#ffffff",
+      "pack": "t3-bonds-rates"
+    },
+    "downgrade": {
+      "file": "/art/downgrade.webp",
+      "bg": "#ffffff",
+      "pack": "t3-bonds-rates"
+    },
+    "upgrade": {
+      "file": "/art/upgrade.webp",
+      "bg": "#ffffff",
+      "pack": "t3-bonds-rates"
+    },
+    "covenant": {
+      "file": "/art/covenant.webp",
+      "bg": "#ffffff",
+      "pack": "t3-bonds-rates"
+    },
+    "refinancing": {
+      "file": "/art/refinancing.webp",
+      "bg": "#ffffff",
+      "pack": "t3-bonds-rates"
+    },
+    "policy rate": {
+      "file": "/art/policy-rate.webp",
+      "bg": "#ffffff",
+      "pack": "t3-bonds-rates"
+    },
+    "benchmark rate": {
+      "file": "/art/benchmark-rate.webp",
+      "bg": "#ffffff",
+      "pack": "t3-bonds-rates"
     }
   }
 }

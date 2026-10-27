@@ -54,6 +54,8 @@ const LOADERS: Record<string, () => Promise<CourseModule>> = {
   "t1-finance-news/en-US": () => import("../content/packs/t1-finance-news/en-US/course.json"),
   "t2-company-earnings/zh-CN": () => import("../content/packs/t2-company-earnings/zh-CN/course.json"),
   "t2-company-earnings/en-US": () => import("../content/packs/t2-company-earnings/en-US/course.json"),
+  "t3-bonds-rates/zh-CN": () => import("../content/packs/t3-bonds-rates/zh-CN/course.json"),
+  "t3-bonds-rates/en-US": () => import("../content/packs/t3-bonds-rates/en-US/course.json"),
 };
 
 /** Default pack — zh-CN. Tests and legacy call sites read this. */

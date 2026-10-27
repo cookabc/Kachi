@@ -1,0 +1,6313 @@
+{
+  "schemaVersion": 1,
+  "packId": "t3-bonds-rates",
+  "contentVersion": "2026.10.27-t3",
+  "locale": "zh-CN",
+  "generatedAt": "2026.10.27-t3",
+  "units": [
+    {
+      "id": 1,
+      "title": "一张借条上有什么",
+      "blurb": "票息、到期、本金、价格——读懂债券本身的数"
+    },
+    {
+      "id": 2,
+      "title": "收益率与计量",
+      "blurb": "基点、基准券、期限溢价、倒挂"
+    },
+    {
+      "id": 3,
+      "title": "谁在发，发得动吗",
+      "blurb": "拍卖、投标倍数、一级交易商、再融资"
+    },
+    {
+      "id": 4,
+      "title": "发的都是什么债",
+      "blurb": "国债、金边债、公司债、垃圾债"
+    },
+    {
+      "id": 5,
+      "title": "利率的两种写法",
+      "blurb": "固息、浮息、通胀挂钩、政策利率"
+    },
+    {
+      "id": 6,
+      "title": "利差在说什么",
+      "blurb": "信用利差、走阔、收窄、违约风险"
+    },
+    {
+      "id": 7,
+      "title": "信用与条款",
+      "blurb": "评级、升降级、契约——借钱的规矩"
+    }
+  ],
+  "concepts": [
+    {
+      "id": "bond",
+      "unit": 1,
+      "term": "bond",
+      "caption": "一张借条：你把钱借出去，对方按期付息、到期还本。",
+      "definition": "政府或企业发行的债务凭证，承诺按期付息并在到期时偿还本金。",
+      "example": "The benchmark 6.94% 2036 bond settled at 7.4427%.",
+      "mixUp": "yield",
+      "mixUpWhy": "bond 是那张凭证；yield 是这张凭证按你买入价格算出的回报率。",
+      "mixUpType": "coexist",
+      "termZh": "债券",
+      "relations": [],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "draft"
+    },
+    {
+      "id": "coupon",
+      "unit": 1,
+      "term": "coupon",
+      "caption": "借条上写明的、每年按面值付给你的利息率。",
+      "definition": "债券按面值计算的固定年利息率，与实际成交价格无关。",
+      "example": "The security carries a coupon of 6.94% and matures in 2036.",
+      "mixUp": "yield",
+      "mixUpWhy": "coupon 按面值算、写死在票上；yield 按你实际买入的价格算。折价买入时 yield 高于 coupon。",
+      "mixUpType": "scope",
+      "termZh": "票息",
+      "relations": [],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "draft"
+    },
+    {
+      "id": "maturity",
+      "unit": 1,
+      "term": "maturity",
+      "caption": "借条上写的还本那一天。",
+      "definition": "债券本金应偿还的日期，也指距离该日的时间长度。",
+      "example": "Its principal is repaid at maturity, while the coupon is paid semi-annually.",
+      "mixUp": "duration",
+      "mixUpWhy": "maturity 是日历上的那一天；duration 是价格对利率变化的敏感度，通常短于 maturity。",
+      "mixUpType": "coexist",
+      "termZh": "到期日",
+      "relations": [],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "draft"
+    },
+    {
+      "id": "principal",
+      "unit": 1,
+      "term": "principal",
+      "caption": "借出去、到期要还回来的那笔钱。",
+      "definition": "债券的面值，即发行方到期偿还的金额。",
+      "example": "Inflation-linked bonds adjust principal for the consumer price index.",
+      "mixUp": "coupon",
+      "mixUpWhy": "principal 是还回来的本金；coupon 是期间付的利息。",
+      "mixUpType": "coexist",
+      "termZh": "本金",
+      "relations": [],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "draft"
+    },
+    {
+      "id": "yield",
+      "unit": 1,
+      "term": "yield",
+      "caption": "按你买入的价格算，这笔债每年给你多少。",
+      "definition": "投资收益相对于价格的比率，债券价格下跌时收益率上升。",
+      "example": "Bond yields and prices move in opposite directions.",
+      "mixUp": "coupon",
+      "mixUpWhy": "yield 随价格浮动；coupon 写死在票面上。",
+      "mixUpType": "scope",
+      "termZh": "收益率",
+      "relations": [],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "draft"
+    },
+    {
+      "id": "price",
+      "unit": 1,
+      "term": "price",
+      "caption": "这张借条现在在市场上卖多少钱。",
+      "definition": "债券在二级市场的成交价格，通常以面值的百分比表示。",
+      "example": "The benchmark bond settled at 7.4427%, compared with 7.3920% on Monday.",
+      "mixUp": "yield",
+      "mixUpWhy": "价格和收益率反向：价格跌，收益率升。看到其中一个就该想到另一个的方向。",
+      "mixUpType": "opposite",
+      "termZh": "价格（债券报价）",
+      "relations": [],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "draft"
+    },
+    {
+      "id": "duration",
+      "unit": 1,
+      "term": "duration",
+      "caption": "利率动一个点，价格会动多少。",
+      "definition": "衡量债券价格对利率变动敏感度的指标，以年为单位，通常短于到期期限。",
+      "example": "A portfolio with an average duration of seven years loses roughly 7% for a one-point rise.",
+      "mixUp": "maturity",
+      "mixUpWhy": "duration 是敏感度（可短于 maturity）；maturity 是到期时间。零息债两者相等，付息债 duration 更短。",
+      "mixUpType": "coexist",
+      "termZh": "久期",
+      "relations": [],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "draft"
+    },
+    {
+      "id": "benchmark",
+      "unit": 2,
+      "term": "benchmark",
+      "caption": "大家拿来做参照的那一期债券。",
+      "definition": "市场用作定价参照的特定债券或指数，如十年期国债。",
+      "example": "The benchmark yield settled at 7.4427%.",
+      "mixUp": "bond",
+      "mixUpWhy": "benchmark 是被选作参照的那一只；bond 是任何一只债券。",
+      "mixUpType": "hierarchy",
+      "termZh": "基准（券）",
+      "relations": [],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "draft"
+    },
+    {
+      "id": "basis point",
+      "unit": 2,
+      "term": "basis point",
+      "caption": "万分之一，利率变化的标准计量单位。",
+      "definition": "利率或收益率变动的最小常用单位，1 个基点 = 0.01%。",
+      "example": "Swap markets are pricing in about 100 basis points of rate increases.",
+      "mixUp": "policy rate",
+      "mixUpWhy": "basis point 是计量单位（0.01%）；policy rate 是央行设定的那个具体利率。",
+      "mixUpType": "coexist",
+      "termZh": "基点",
+      "relations": [],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "draft"
+    },
+    {
+      "id": "cut-off yield",
+      "unit": 2,
+      "term": "cut-off yield",
+      "caption": "拍卖结束时，被接受的最高收益率。",
+      "definition": "拍卖中发行方接受的最低价格所对应的收益率，决定实际发行成本。",
+      "example": "A weak bid-to-cover forces the central bank to accept a higher cut-off yield.",
+      "mixUp": "yield",
+      "mixUpWhy": "cut-off yield 是拍卖这一场的结果；yield 是任何时点的市场收益率。",
+      "mixUpType": "hierarchy",
+      "termZh": "中标收益率",
+      "relations": [],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "draft"
+    },
+    {
+      "id": "inflation-linked",
+      "unit": 5,
+      "term": "inflation-linked",
+      "caption": "本金或票息跟着物价指数调整。",
+      "definition": "本金或利息按通胀指数调整的债券，用于对冲物价上涨风险。",
+      "example": "Inflation-linked bonds, whose principal is adjusted for the consumer price index, drew strong demand.",
+      "mixUp": "fixed-rate",
+      "mixUpWhy": "inflation-linked 的本金随物价变；fixed-rate 的票息和本金都写死。",
+      "mixUpType": "opposite",
+      "termZh": "通胀挂钩",
+      "relations": [],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "draft"
+    },
+    {
+      "id": "fixed-rate",
+      "unit": 5,
+      "term": "fixed-rate",
+      "caption": "整个期限内利率不变。",
+      "definition": "票息在发行时确定并保持不变直到到期的债券或贷款。",
+      "example": "The corporate bond market priced a large fixed-rate issue at a spread of 180 basis points.",
+      "mixUp": "floating-rate",
+      "mixUpWhy": "fixed-rate 锁死不变；floating-rate 跟着基准利率浮动。",
+      "mixUpType": "opposite",
+      "termZh": "固定利率",
+      "relations": [],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "draft"
+    },
+    {
+      "id": "floating-rate",
+      "unit": 5,
+      "term": "floating-rate",
+      "caption": "利率跟着基准定期重设。",
+      "definition": "票息按某个基准利率加固定利差定期重设的债券或贷款。",
+      "example": "Floating-rate notes attracted buyers expecting the policy rate to keep rising.",
+      "mixUp": "fixed-rate",
+      "mixUpWhy": "floating-rate 随基准变动；fixed-rate 从头到尾不变。",
+      "mixUpType": "opposite",
+      "termZh": "浮动利率",
+      "relations": [],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "draft"
+    },
+    {
+      "id": "auction",
+      "unit": 3,
+      "term": "auction",
+      "caption": "政府或公司按竞价方式卖债券。",
+      "definition": "通过投标竞价方式发行债券的过程。",
+      "example": "The government's borrowing programme relies on regular auctions.",
+      "mixUp": "issuance",
+      "mixUpWhy": "auction 是发行时用的竞价方式；issuance 是发行这件事本身。",
+      "mixUpType": "coexist",
+      "termZh": "拍卖（发行）",
+      "relations": [],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "draft"
+    },
+    {
+      "id": "issuance",
+      "unit": 3,
+      "term": "issuance",
+      "caption": "新债被发出来的数量。",
+      "definition": "发行新证券的行为或其总量。",
+      "example": "Primary dealers must absorb unsold supply when issuance is heavy.",
+      "mixUp": "auction",
+      "mixUpWhy": "issuance 是发行的量或行为；auction 是发行时的一个具体环节。",
+      "mixUpType": "coexist",
+      "termZh": "发行（量）",
+      "relations": [],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "draft"
+    },
+    {
+      "id": "bid-to-cover",
+      "unit": 3,
+      "term": "bid-to-cover",
+      "caption": "有多少人想买，除以实际卖出的量。",
+      "definition": "拍卖中收到的投标总额与实际发行额的比值，衡量需求强弱。",
+      "example": "Dealers watch the bid-to-cover ratio to gauge demand.",
+      "mixUp": "cut-off yield",
+      "mixUpWhy": "bid-to-cover 衡量需求有多热；cut-off yield 是这个需求水平换来的发行成本。",
+      "mixUpType": "coexist",
+      "termZh": "投标倍数",
+      "relations": [],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "draft"
+    },
+    {
+      "id": "primary dealer",
+      "unit": 3,
+      "term": "primary dealer",
+      "caption": "有义务在每场拍卖都投标的机构。",
+      "definition": "获准直接与发行方交易并须在拍卖中投标的金融机构。",
+      "example": "Primary dealers are required to bid at every auction and absorb unsold supply.",
+      "mixUp": "bid-to-cover",
+      "mixUpWhy": "primary dealer 是参与的人；bid-to-cover 是这场拍卖的结果指标。",
+      "mixUpType": "coexist",
+      "termZh": "一级交易商",
+      "relations": [],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "draft"
+    },
+    {
+      "id": "treasury",
+      "unit": 4,
+      "term": "treasury",
+      "caption": "中央政府发的债，信用等级最高。",
+      "definition": "中央政府发行的债务工具，通常被视为无风险基准。",
+      "example": "India's overnight indexed swap rates rose in line with Treasury yields.",
+      "mixUp": "gilt",
+      "mixUpWhy": "treasury 通指中央政府债（美债语境）；gilt 特指英国国债。",
+      "mixUpType": "coexist",
+      "termZh": "国债（美债）",
+      "relations": [],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "draft"
+    },
+    {
+      "id": "gilt",
+      "unit": 4,
+      "term": "gilt",
+      "caption": "英国政府发的债，名字来自当年带金边的凭证。",
+      "definition": "英国政府发行的国债，传统上被认为信用极高。",
+      "example": "UK gilt investors expect the budget to pass without market drama.",
+      "mixUp": "treasury",
+      "mixUpWhy": "gilt 专指英国的；treasury 是各国中央政府债的通称，美债最常见。",
+      "mixUpType": "hierarchy",
+      "termZh": "金边债（英国国债）",
+      "relations": [],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "draft"
+    },
+    {
+      "id": "sovereign",
+      "unit": 4,
+      "term": "sovereign",
+      "caption": "以国家信用发行的债，不分是哪国。",
+      "definition": "由主权政府发行的债务，涵盖各国中央政府债。",
+      "example": "The sovereign yield curve has climbed sharply.",
+      "mixUp": "treasury",
+      "mixUpWhy": "sovereign 是「国家信用」这个类别；treasury 通常指美国的、gilt 指英国的。",
+      "mixUpType": "hierarchy",
+      "termZh": "主权债",
+      "relations": [],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "draft"
+    },
+    {
+      "id": "corporate bond",
+      "unit": 4,
+      "term": "corporate bond",
+      "caption": "企业发的债，利率通常高于同期限国债。",
+      "definition": "非金融机构企业发行的债务证券。",
+      "example": "The corporate bond market priced a large fixed-rate issue at a spread of 180 basis points.",
+      "mixUp": "sovereign",
+      "mixUpWhy": "corporate bond 背后是企业信用；sovereign 背后是国家信用。前者利率更高。",
+      "mixUpType": "opposite",
+      "termZh": "公司债",
+      "relations": [],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "draft"
+    },
+    {
+      "id": "commercial paper",
+      "unit": 4,
+      "term": "commercial paper",
+      "caption": "企业发的短期借条，通常几个月就到期。",
+      "definition": "企业发行的短期无担保债务工具，期限通常在一年以内。",
+      "example": "Foreign holdings of onshore bonds remained unchanged, and commercial paper demand held up.",
+      "mixUp": "corporate bond",
+      "mixUpWhy": "commercial paper 是短期（一年内）、常无担保；corporate bond 是长期、可有担保。",
+      "mixUpType": "coexist",
+      "termZh": "商业票据",
+      "relations": [],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "draft"
+    },
+    {
+      "id": "junk bond",
+      "unit": 4,
+      "term": "junk bond",
+      "caption": "评级低的债，利率高但违约风险也高。",
+      "definition": "信用评级低于投资级的债券，又称高收益债。",
+      "example": "A junk bond sale was pulled after investors asked for a spread beyond the issuer's target.",
+      "mixUp": "investment grade",
+      "mixUpWhy": "junk bond 评级低、利率高；investment grade 评级高、利率低。两者是评级分界线的两侧。",
+      "mixUpType": "opposite",
+      "termZh": "垃圾债",
+      "relations": [],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "draft"
+    },
+    {
+      "id": "investment grade",
+      "unit": 4,
+      "term": "investment grade",
+      "caption": "评级够高、机构可以放心买的等级。",
+      "definition": "信用评级达到投资级门槛（通常 BBB-/Baa3 及以上）的债券。",
+      "example": "Investment grade issuers still found buyers, but a junk sale was pulled.",
+      "mixUp": "junk bond",
+      "mixUpWhy": "investment grade 是门槛以上；junk bond 是门槛以下。",
+      "mixUpType": "opposite",
+      "termZh": "投资级",
+      "relations": [],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "draft"
+    },
+    {
+      "id": "yield curve",
+      "unit": 2,
+      "term": "yield curve",
+      "caption": "把所有期限的收益率连成一条线。",
+      "definition": "不同到期期限的债券收益率连成的曲线，反映市场对利率路径的预期。",
+      "example": "The sovereign yield curve has climbed sharply.",
+      "mixUp": "yield",
+      "mixUpWhy": "yield 是一个点（某个期限的收益率）；yield curve 是把所有期限连起来的形状。",
+      "mixUpType": "hierarchy",
+      "termZh": "收益率曲线",
+      "relations": [],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "draft"
+    },
+    {
+      "id": "credit spread",
+      "unit": 6,
+      "term": "credit spread",
+      "caption": "公司债比同期限国债多出来的那部分收益。",
+      "definition": "公司债收益率与同期限无风险国债收益率之差，衡量信用风险定价。",
+      "example": "Investors demanded a spread of 180 basis points over the comparable government security.",
+      "mixUp": "term premium",
+      "mixUpWhy": "credit spread 是信用风险的价格；term premium 是拉长期限要的补偿。两者都会推高长期利率但不是一回事。",
+      "mixUpType": "coexist",
+      "termZh": "信用利差",
+      "relations": [],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "draft"
+    },
+    {
+      "id": "spread widening",
+      "unit": 6,
+      "term": "spread widening",
+      "caption": "公司债比国债多出来的部分变大了，说明市场更担心。",
+      "definition": "信用利差扩大，通常意味着投资者要求更高的风险补偿。",
+      "example": "The spread widening was most visible at the long end.",
+      "mixUp": "spread tightening",
+      "mixUpWhy": "widening 是市场更担心、要求更多补偿；tightening 是担忧减轻。方向相反。",
+      "mixUpType": "opposite",
+      "termZh": "利差走阔",
+      "relations": [],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "draft"
+    },
+    {
+      "id": "spread tightening",
+      "unit": 6,
+      "term": "spread tightening",
+      "caption": "多出来的部分变小了，市场没那么担心了。",
+      "definition": "信用利差缩小，通常意味着风险偏好改善。",
+      "example": "Spread tightening in high-grade names contrasted with widening in lower-rated credit.",
+      "mixUp": "spread widening",
+      "mixUpWhy": "tightening 是担忧减轻；widening 是担忧加重。",
+      "mixUpType": "opposite",
+      "termZh": "利差收窄",
+      "relations": [],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "draft"
+    },
+    {
+      "id": "term premium",
+      "unit": 2,
+      "term": "term premium",
+      "caption": "锁住长期资金要多要的那部分补偿。",
+      "definition": "投资者持有长期债券相对于滚动短期债券所要求的额外收益率。",
+      "example": "The term premium has risen as supply grows.",
+      "mixUp": "credit spread",
+      "mixUpWhy": "term premium 是期限的代价（与信用无关）；credit spread 是信用风险的代价（与期限无关）。",
+      "mixUpType": "coexist",
+      "termZh": "期限溢价",
+      "relations": [],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "draft"
+    },
+    {
+      "id": "inversion",
+      "unit": 2,
+      "term": "inversion",
+      "caption": "短期收益率反而高于长期，曲线掉头向下。",
+      "definition": "短期债券收益率高于长期债券的异常形态，历史上常先于经济放缓出现。",
+      "example": "Curve inversion has deepened: the two-year now yields more than the ten-year.",
+      "mixUp": "yield curve",
+      "mixUpWhy": "inversion 是曲线的一种特定形状（短高于长）；yield curve 是曲线本身。",
+      "mixUpType": "hierarchy",
+      "termZh": "倒挂",
+      "relations": [],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "draft"
+    },
+    {
+      "id": "default risk",
+      "unit": 6,
+      "term": "default risk",
+      "caption": "借钱的一方还不上钱的可能性。",
+      "definition": "债务人无法按期支付利息或偿还本金的可能性。",
+      "example": "Default risk for the weaker issuers is now priced explicitly.",
+      "mixUp": "credit rating",
+      "mixUpWhy": "default risk 是真实存在的可能性；credit rating 是评级机构对这个可能性的打分。",
+      "mixUpType": "coexist",
+      "termZh": "违约风险",
+      "relations": [],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "draft"
+    },
+    {
+      "id": "credit rating",
+      "unit": 7,
+      "term": "credit rating",
+      "caption": "评级机构给借款人的信用打分。",
+      "definition": "评级机构对发行人偿债能力的评估等级，如 AAA 到 D。",
+      "example": "The sovereign's credit rating was left unchanged, with the outlook stable.",
+      "mixUp": "default risk",
+      "mixUpWhy": "credit rating 是打出来的等级；default risk 是被评估的那个可能性本身。",
+      "mixUpType": "coexist",
+      "termZh": "信用评级",
+      "relations": [],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "draft"
+    },
+    {
+      "id": "downgrade",
+      "unit": 7,
+      "term": "downgrade",
+      "caption": "评级机构把等级往下调了一档。",
+      "definition": "评级机构降低发行人或债券的信用评级。",
+      "example": "A downgrade would raise refinancing costs for the corporate sector too.",
+      "mixUp": "upgrade",
+      "mixUpWhy": "downgrade 往下调；upgrade 往上调。",
+      "mixUpType": "opposite",
+      "termZh": "评级下调",
+      "relations": [],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "draft"
+    },
+    {
+      "id": "upgrade",
+      "unit": 7,
+      "term": "upgrade",
+      "caption": "评级机构把等级往上调了一档。",
+      "definition": "评级机构提高发行人或债券的信用评级。",
+      "example": "The agencies left the rating unchanged, though an upgrade was possible later.",
+      "mixUp": "downgrade",
+      "mixUpWhy": "upgrade 往上调；downgrade 往下调。",
+      "mixUpType": "opposite",
+      "termZh": "评级上调",
+      "relations": [],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "draft"
+    },
+    {
+      "id": "covenant",
+      "unit": 7,
+      "term": "covenant",
+      "caption": "借款合同里限制你怎么用钱的条款。",
+      "definition": "债券或贷款协议中对借款人行为施加限制的条款，如限制新增负债。",
+      "example": "Covenants on the new issues restrict additional borrowing.",
+      "mixUp": "refinancing",
+      "mixUpWhy": "covenant 限制借款人做什么；refinancing 是换一笔新债还旧债。条款常在再融资时被重新谈。",
+      "mixUpType": "coexist",
+      "termZh": "契约条款",
+      "relations": [],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "draft"
+    },
+    {
+      "id": "refinancing",
+      "unit": 3,
+      "term": "refinancing",
+      "caption": "借新债还旧债，把到期日往后推。",
+      "definition": "以新发行债务偿还既有债务的行为。",
+      "example": "Several issuers have begun refinancing existing debt to push out maturities.",
+      "mixUp": "issuance",
+      "mixUpWhy": "refinancing 是用途（还旧债）；issuance 是动作（发新债）。再融资一定涉及发行，但发行不一定为了再融资。",
+      "mixUpType": "coexist",
+      "termZh": "再融资",
+      "relations": [],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "draft"
+    },
+    {
+      "id": "policy rate",
+      "unit": 5,
+      "term": "policy rate",
+      "caption": "央行设定的那个基准利率。",
+      "definition": "中央银行设定的目标利率，用于引导市场利率水平。",
+      "example": "The central bank raised the policy rate earlier this month.",
+      "mixUp": "basis point",
+      "mixUpWhy": "policy rate 是被设定的那个利率水平；basis point 是衡量它变了多少的单位。",
+      "mixUpType": "coexist",
+      "termZh": "政策利率",
+      "relations": [],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "draft"
+    },
+    {
+      "id": "benchmark rate",
+      "unit": 5,
+      "term": "benchmark rate",
+      "caption": "浮息产品定价时参照的那个利率。",
+      "definition": "用于给其他金融产品定价的参考利率，如 SOFR 或 OIS。",
+      "example": "Floating-rate notes are priced at a spread over a benchmark rate.",
+      "mixUp": "policy rate",
+      "mixUpWhy": "benchmark rate 是市场定价的参照（如 SOFR）；policy rate 是央行设定的政策目标。前者跟随后者但不等于后者。",
+      "mixUpType": "coexist",
+      "termZh": "基准利率",
+      "relations": [],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "draft"
+    }
+  ],
+  "lessons": [
+    {
+      "id": "u1l1",
+      "unit": 1,
+      "title": "一张借条上有什么",
+      "icon": "📈",
+      "review": false,
+      "prompts": [
+        {
+          "id": "u1l1-bond-m",
+          "type": "meaning",
+          "termId": "bond",
+          "termIds": [
+            "bond"
+          ],
+          "stem": "bond 是什么意思？",
+          "options": [
+            {
+              "text": "政府或企业发行的债务凭证，承诺按期付息并在到期时偿还本金。",
+              "art": "bond"
+            },
+            {
+              "text": "债券按面值计算的固定年利息率，与实际成交价格无关。",
+              "art": "coupon"
+            },
+            {
+              "text": "债券本金应偿还的日期，也指距离该日的时间长度。",
+              "art": "maturity"
+            },
+            {
+              "text": "债券的面值，即发行方到期偿还的金额。",
+              "art": "principal"
+            }
+          ],
+          "answer": 0,
+          "why": "bond 是那张凭证；yield 是这张凭证按你买入价格算出的回报率。"
+        },
+        {
+          "id": "u1l1-bond-s",
+          "type": "scenario",
+          "termId": "bond",
+          "termIds": [
+            "bond"
+          ],
+          "story": "The benchmark 6.94% 2036 bond settled at 7.4427%.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "bond",
+              "art": "bond"
+            },
+            {
+              "text": "coupon",
+              "art": "coupon"
+            },
+            {
+              "text": "maturity",
+              "art": "maturity"
+            },
+            {
+              "text": "principal",
+              "art": "principal"
+            }
+          ],
+          "answer": 0,
+          "why": "bond：政府或企业发行的债务凭证，承诺按期付息并在到期时偿还本金。"
+        },
+        {
+          "id": "u1l1-bond-t",
+          "type": "truefalse",
+          "termId": "bond",
+          "termIds": [
+            "bond"
+          ],
+          "stem": "bond：债券",
+          "answer": true,
+          "why": "bond 确实是「债券」。"
+        },
+        {
+          "id": "u1l1-bond-f",
+          "type": "fill",
+          "termId": "bond",
+          "termIds": [
+            "bond"
+          ],
+          "story": "The benchmark 6.94% 2036 ____ settled at 7.4427%.",
+          "bank": [
+            "bond",
+            "coupon",
+            "maturity",
+            "principal"
+          ],
+          "answer": "bond",
+          "why": "bond 是那张凭证；yield 是这张凭证按你买入价格算出的回报率。"
+        },
+        {
+          "id": "u1l1-coupon-m",
+          "type": "meaning",
+          "termId": "coupon",
+          "termIds": [
+            "coupon"
+          ],
+          "stem": "coupon 是什么意思？",
+          "options": [
+            {
+              "text": "债券按面值计算的固定年利息率，与实际成交价格无关。",
+              "art": "coupon"
+            },
+            {
+              "text": "政府或企业发行的债务凭证，承诺按期付息并在到期时偿还本金。",
+              "art": "bond"
+            },
+            {
+              "text": "债券本金应偿还的日期，也指距离该日的时间长度。",
+              "art": "maturity"
+            },
+            {
+              "text": "债券的面值，即发行方到期偿还的金额。",
+              "art": "principal"
+            }
+          ],
+          "answer": 0,
+          "why": "coupon 按面值算、写死在票上；yield 按你实际买入的价格算。折价买入时 yield 高于 coupon。"
+        },
+        {
+          "id": "u1l1-coupon-s",
+          "type": "scenario",
+          "termId": "coupon",
+          "termIds": [
+            "coupon"
+          ],
+          "story": "The security carries a coupon of 6.94% and matures in 2036.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "coupon",
+              "art": "coupon"
+            },
+            {
+              "text": "bond",
+              "art": "bond"
+            },
+            {
+              "text": "maturity",
+              "art": "maturity"
+            },
+            {
+              "text": "principal",
+              "art": "principal"
+            }
+          ],
+          "answer": 0,
+          "why": "coupon：债券按面值计算的固定年利息率，与实际成交价格无关。"
+        },
+        {
+          "id": "u1l1-coupon-t",
+          "type": "truefalse",
+          "termId": "coupon",
+          "termIds": [
+            "coupon"
+          ],
+          "stem": "coupon 就是 债券。",
+          "answer": false,
+          "why": "coupon 是「票息」，不是「债券」。"
+        },
+        {
+          "id": "u1l1-coupon-f",
+          "type": "fill",
+          "termId": "coupon",
+          "termIds": [
+            "coupon"
+          ],
+          "story": "The security carries a ____ of 6.94% and matures in 2036.",
+          "bank": [
+            "coupon",
+            "bond",
+            "maturity",
+            "principal"
+          ],
+          "answer": "coupon",
+          "why": "coupon 按面值算、写死在票上；yield 按你实际买入的价格算。折价买入时 yield 高于 coupon。"
+        },
+        {
+          "id": "u1l1-maturity-m",
+          "type": "meaning",
+          "termId": "maturity",
+          "termIds": [
+            "maturity"
+          ],
+          "stem": "maturity 是什么意思？",
+          "options": [
+            {
+              "text": "债券本金应偿还的日期，也指距离该日的时间长度。",
+              "art": "maturity"
+            },
+            {
+              "text": "政府或企业发行的债务凭证，承诺按期付息并在到期时偿还本金。",
+              "art": "bond"
+            },
+            {
+              "text": "债券按面值计算的固定年利息率，与实际成交价格无关。",
+              "art": "coupon"
+            },
+            {
+              "text": "债券的面值，即发行方到期偿还的金额。",
+              "art": "principal"
+            }
+          ],
+          "answer": 0,
+          "why": "maturity 是日历上的那一天；duration 是价格对利率变化的敏感度，通常短于 maturity。"
+        },
+        {
+          "id": "u1l1-maturity-s",
+          "type": "scenario",
+          "termId": "maturity",
+          "termIds": [
+            "maturity"
+          ],
+          "story": "Its principal is repaid at maturity, while the coupon is paid semi-annually.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "maturity",
+              "art": "maturity"
+            },
+            {
+              "text": "bond",
+              "art": "bond"
+            },
+            {
+              "text": "coupon",
+              "art": "coupon"
+            },
+            {
+              "text": "principal",
+              "art": "principal"
+            }
+          ],
+          "answer": 0,
+          "why": "maturity：债券本金应偿还的日期，也指距离该日的时间长度。"
+        },
+        {
+          "id": "u1l1-maturity-t",
+          "type": "truefalse",
+          "termId": "maturity",
+          "termIds": [
+            "maturity"
+          ],
+          "stem": "maturity：到期日",
+          "answer": true,
+          "why": "maturity 确实是「到期日」。"
+        },
+        {
+          "id": "u1l1-maturity-f",
+          "type": "fill",
+          "termId": "maturity",
+          "termIds": [
+            "maturity"
+          ],
+          "story": "Its principal is repaid at ____, while the coupon is paid semi-annually.",
+          "bank": [
+            "maturity",
+            "bond",
+            "coupon",
+            "principal"
+          ],
+          "answer": "maturity",
+          "why": "maturity 是日历上的那一天；duration 是价格对利率变化的敏感度，通常短于 maturity。"
+        },
+        {
+          "id": "u1l1-principal-m",
+          "type": "meaning",
+          "termId": "principal",
+          "termIds": [
+            "principal"
+          ],
+          "stem": "principal 是什么意思？",
+          "options": [
+            {
+              "text": "债券的面值，即发行方到期偿还的金额。",
+              "art": "principal"
+            },
+            {
+              "text": "政府或企业发行的债务凭证，承诺按期付息并在到期时偿还本金。",
+              "art": "bond"
+            },
+            {
+              "text": "债券按面值计算的固定年利息率，与实际成交价格无关。",
+              "art": "coupon"
+            },
+            {
+              "text": "债券本金应偿还的日期，也指距离该日的时间长度。",
+              "art": "maturity"
+            }
+          ],
+          "answer": 0,
+          "why": "principal 是还回来的本金；coupon 是期间付的利息。"
+        },
+        {
+          "id": "u1l1-principal-s",
+          "type": "scenario",
+          "termId": "principal",
+          "termIds": [
+            "principal"
+          ],
+          "story": "Inflation-linked bonds adjust principal for the consumer price index.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "principal",
+              "art": "principal"
+            },
+            {
+              "text": "bond",
+              "art": "bond"
+            },
+            {
+              "text": "coupon",
+              "art": "coupon"
+            },
+            {
+              "text": "maturity",
+              "art": "maturity"
+            }
+          ],
+          "answer": 0,
+          "why": "principal：债券的面值，即发行方到期偿还的金额。"
+        },
+        {
+          "id": "u1l1-principal-t",
+          "type": "truefalse",
+          "termId": "principal",
+          "termIds": [
+            "principal"
+          ],
+          "stem": "principal 就是 债券。",
+          "answer": false,
+          "why": "principal 是「本金」，不是「债券」。"
+        },
+        {
+          "id": "u1l1-principal-f",
+          "type": "fill",
+          "termId": "principal",
+          "termIds": [
+            "principal"
+          ],
+          "story": "Inflation-linked bonds adjust ____ for the consumer price index.",
+          "bank": [
+            "principal",
+            "bond",
+            "coupon",
+            "maturity"
+          ],
+          "answer": "principal",
+          "why": "principal 是还回来的本金；coupon 是期间付的利息。"
+        },
+        {
+          "id": "u1l1-match",
+          "type": "match",
+          "termIds": [
+            "bond",
+            "coupon",
+            "maturity",
+            "principal"
+          ],
+          "pairs": [
+            {
+              "id": "bond",
+              "left": "bond",
+              "right": "债券"
+            },
+            {
+              "id": "coupon",
+              "left": "coupon",
+              "right": "票息"
+            },
+            {
+              "id": "maturity",
+              "left": "maturity",
+              "right": "到期日"
+            },
+            {
+              "id": "principal",
+              "left": "principal",
+              "right": "本金"
+            }
+          ],
+          "why": "把每个词和它的意思对上。"
+        }
+      ]
+    },
+    {
+      "id": "u1l2",
+      "unit": 1,
+      "title": "一张借条上有什么（续）",
+      "icon": "📈",
+      "review": false,
+      "prompts": [
+        {
+          "id": "u1l2-yield-m",
+          "type": "meaning",
+          "termId": "yield",
+          "termIds": [
+            "yield"
+          ],
+          "stem": "yield 是什么意思？",
+          "options": [
+            {
+              "text": "投资收益相对于价格的比率，债券价格下跌时收益率上升。",
+              "art": "yield"
+            },
+            {
+              "text": "政府或企业发行的债务凭证，承诺按期付息并在到期时偿还本金。",
+              "art": "bond"
+            },
+            {
+              "text": "债券按面值计算的固定年利息率，与实际成交价格无关。",
+              "art": "coupon"
+            },
+            {
+              "text": "债券本金应偿还的日期，也指距离该日的时间长度。",
+              "art": "maturity"
+            }
+          ],
+          "answer": 0,
+          "why": "yield 随价格浮动；coupon 写死在票面上。"
+        },
+        {
+          "id": "u1l2-yield-s",
+          "type": "scenario",
+          "termId": "yield",
+          "termIds": [
+            "yield"
+          ],
+          "story": "Bond yields and prices move in opposite directions.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "yield",
+              "art": "yield"
+            },
+            {
+              "text": "bond",
+              "art": "bond"
+            },
+            {
+              "text": "coupon",
+              "art": "coupon"
+            },
+            {
+              "text": "maturity",
+              "art": "maturity"
+            }
+          ],
+          "answer": 0,
+          "why": "yield：投资收益相对于价格的比率，债券价格下跌时收益率上升。"
+        },
+        {
+          "id": "u1l2-yield-t",
+          "type": "truefalse",
+          "termId": "yield",
+          "termIds": [
+            "yield"
+          ],
+          "stem": "yield：收益率",
+          "answer": true,
+          "why": "yield 确实是「收益率」。"
+        },
+        {
+          "id": "u1l2-yield-f",
+          "type": "fill",
+          "termId": "yield",
+          "termIds": [
+            "yield"
+          ],
+          "story": "Bond ____ and prices move in opposite directions.",
+          "bank": [
+            "yield",
+            "price",
+            "duration"
+          ],
+          "answer": "yield",
+          "why": "yield 随价格浮动；coupon 写死在票面上。"
+        },
+        {
+          "id": "u1l2-price-m",
+          "type": "meaning",
+          "termId": "price",
+          "termIds": [
+            "price"
+          ],
+          "stem": "price 是什么意思？",
+          "options": [
+            {
+              "text": "债券在二级市场的成交价格，通常以面值的百分比表示。",
+              "art": "price"
+            },
+            {
+              "text": "政府或企业发行的债务凭证，承诺按期付息并在到期时偿还本金。",
+              "art": "bond"
+            },
+            {
+              "text": "债券按面值计算的固定年利息率，与实际成交价格无关。",
+              "art": "coupon"
+            },
+            {
+              "text": "债券本金应偿还的日期，也指距离该日的时间长度。",
+              "art": "maturity"
+            }
+          ],
+          "answer": 0,
+          "why": "价格和收益率反向：价格跌，收益率升。看到其中一个就该想到另一个的方向。"
+        },
+        {
+          "id": "u1l2-price-s",
+          "type": "scenario",
+          "termId": "price",
+          "termIds": [
+            "price"
+          ],
+          "story": "The benchmark bond settled at 7.4427%, compared with 7.3920% on Monday.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "price",
+              "art": "price"
+            },
+            {
+              "text": "bond",
+              "art": "bond"
+            },
+            {
+              "text": "coupon",
+              "art": "coupon"
+            },
+            {
+              "text": "maturity",
+              "art": "maturity"
+            }
+          ],
+          "answer": 0,
+          "why": "price：债券在二级市场的成交价格，通常以面值的百分比表示。"
+        },
+        {
+          "id": "u1l2-price-t",
+          "type": "truefalse",
+          "termId": "price",
+          "termIds": [
+            "price"
+          ],
+          "stem": "price 就是 债券。",
+          "answer": false,
+          "why": "price 是「价格（债券报价）」，不是「债券」。"
+        },
+        {
+          "id": "u1l2-price-f",
+          "type": "fill",
+          "termId": "price",
+          "termIds": [
+            "price"
+          ],
+          "story": "The benchmark bond settled at 7.4427%, compared with 7.3920% on Monday. (这里的词是 ____)",
+          "bank": [
+            "price",
+            "yield",
+            "duration"
+          ],
+          "answer": "price",
+          "why": "价格和收益率反向：价格跌，收益率升。看到其中一个就该想到另一个的方向。"
+        },
+        {
+          "id": "u1l2-duration-m",
+          "type": "meaning",
+          "termId": "duration",
+          "termIds": [
+            "duration"
+          ],
+          "stem": "duration 是什么意思？",
+          "options": [
+            {
+              "text": "衡量债券价格对利率变动敏感度的指标，以年为单位，通常短于到期期限。",
+              "art": "duration"
+            },
+            {
+              "text": "政府或企业发行的债务凭证，承诺按期付息并在到期时偿还本金。",
+              "art": "bond"
+            },
+            {
+              "text": "债券按面值计算的固定年利息率，与实际成交价格无关。",
+              "art": "coupon"
+            },
+            {
+              "text": "债券本金应偿还的日期，也指距离该日的时间长度。",
+              "art": "maturity"
+            }
+          ],
+          "answer": 0,
+          "why": "duration 是敏感度（可短于 maturity）；maturity 是到期时间。零息债两者相等，付息债 duration 更短。"
+        },
+        {
+          "id": "u1l2-duration-s",
+          "type": "scenario",
+          "termId": "duration",
+          "termIds": [
+            "duration"
+          ],
+          "story": "A portfolio with an average duration of seven years loses roughly 7% for a one-point rise.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "duration",
+              "art": "duration"
+            },
+            {
+              "text": "bond",
+              "art": "bond"
+            },
+            {
+              "text": "coupon",
+              "art": "coupon"
+            },
+            {
+              "text": "maturity",
+              "art": "maturity"
+            }
+          ],
+          "answer": 0,
+          "why": "duration：衡量债券价格对利率变动敏感度的指标，以年为单位，通常短于到期期限。"
+        },
+        {
+          "id": "u1l2-duration-t",
+          "type": "truefalse",
+          "termId": "duration",
+          "termIds": [
+            "duration"
+          ],
+          "stem": "duration：久期",
+          "answer": true,
+          "why": "duration 确实是「久期」。"
+        },
+        {
+          "id": "u1l2-duration-f",
+          "type": "fill",
+          "termId": "duration",
+          "termIds": [
+            "duration"
+          ],
+          "story": "A portfolio with an average ____ of seven years loses roughly 7% for a one-point rise.",
+          "bank": [
+            "duration",
+            "yield",
+            "price"
+          ],
+          "answer": "duration",
+          "why": "duration 是敏感度（可短于 maturity）；maturity 是到期时间。零息债两者相等，付息债 duration 更短。"
+        },
+        {
+          "id": "u1l2-match",
+          "type": "match",
+          "termIds": [
+            "yield",
+            "price",
+            "duration"
+          ],
+          "pairs": [
+            {
+              "id": "yield",
+              "left": "yield",
+              "right": "收益率"
+            },
+            {
+              "id": "price",
+              "left": "price",
+              "right": "价格（债券报价）"
+            },
+            {
+              "id": "duration",
+              "left": "duration",
+              "right": "久期"
+            }
+          ],
+          "why": "把每个词和它的意思对上。"
+        }
+      ]
+    },
+    {
+      "id": "u1r",
+      "unit": 1,
+      "title": "一张借条上有什么 · 回顾",
+      "icon": "🏆",
+      "review": true,
+      "prompts": [
+        {
+          "id": "u1r-bond-s",
+          "type": "scenario",
+          "termId": "bond",
+          "termIds": [
+            "bond"
+          ],
+          "story": "The benchmark 6.94% 2036 bond settled at 7.4427%.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "bond",
+              "art": "bond"
+            },
+            {
+              "text": "coupon",
+              "art": "coupon"
+            },
+            {
+              "text": "maturity",
+              "art": "maturity"
+            },
+            {
+              "text": "principal",
+              "art": "principal"
+            }
+          ],
+          "answer": 0,
+          "why": "bond：政府或企业发行的债务凭证，承诺按期付息并在到期时偿还本金。"
+        },
+        {
+          "id": "u1r-bond-t",
+          "type": "truefalse",
+          "termId": "bond",
+          "termIds": [
+            "bond"
+          ],
+          "stem": "bond：债券",
+          "answer": true,
+          "why": "bond 确实是「债券」。"
+        },
+        {
+          "id": "u1r-coupon-s",
+          "type": "scenario",
+          "termId": "coupon",
+          "termIds": [
+            "coupon"
+          ],
+          "story": "The security carries a coupon of 6.94% and matures in 2036.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "coupon",
+              "art": "coupon"
+            },
+            {
+              "text": "bond",
+              "art": "bond"
+            },
+            {
+              "text": "maturity",
+              "art": "maturity"
+            },
+            {
+              "text": "principal",
+              "art": "principal"
+            }
+          ],
+          "answer": 0,
+          "why": "coupon：债券按面值计算的固定年利息率，与实际成交价格无关。"
+        },
+        {
+          "id": "u1r-coupon-t",
+          "type": "truefalse",
+          "termId": "coupon",
+          "termIds": [
+            "coupon"
+          ],
+          "stem": "coupon 就是 债券。",
+          "answer": false,
+          "why": "coupon 是「票息」，不是「债券」。"
+        },
+        {
+          "id": "u1r-maturity-s",
+          "type": "scenario",
+          "termId": "maturity",
+          "termIds": [
+            "maturity"
+          ],
+          "story": "Its principal is repaid at maturity, while the coupon is paid semi-annually.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "maturity",
+              "art": "maturity"
+            },
+            {
+              "text": "bond",
+              "art": "bond"
+            },
+            {
+              "text": "coupon",
+              "art": "coupon"
+            },
+            {
+              "text": "principal",
+              "art": "principal"
+            }
+          ],
+          "answer": 0,
+          "why": "maturity：债券本金应偿还的日期，也指距离该日的时间长度。"
+        },
+        {
+          "id": "u1r-maturity-t",
+          "type": "truefalse",
+          "termId": "maturity",
+          "termIds": [
+            "maturity"
+          ],
+          "stem": "maturity：到期日",
+          "answer": true,
+          "why": "maturity 确实是「到期日」。"
+        },
+        {
+          "id": "u1r-principal-s",
+          "type": "scenario",
+          "termId": "principal",
+          "termIds": [
+            "principal"
+          ],
+          "story": "Inflation-linked bonds adjust principal for the consumer price index.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "principal",
+              "art": "principal"
+            },
+            {
+              "text": "bond",
+              "art": "bond"
+            },
+            {
+              "text": "coupon",
+              "art": "coupon"
+            },
+            {
+              "text": "maturity",
+              "art": "maturity"
+            }
+          ],
+          "answer": 0,
+          "why": "principal：债券的面值，即发行方到期偿还的金额。"
+        },
+        {
+          "id": "u1r-principal-t",
+          "type": "truefalse",
+          "termId": "principal",
+          "termIds": [
+            "principal"
+          ],
+          "stem": "principal 就是 债券。",
+          "answer": false,
+          "why": "principal 是「本金」，不是「债券」。"
+        },
+        {
+          "id": "u1r-yield-s",
+          "type": "scenario",
+          "termId": "yield",
+          "termIds": [
+            "yield"
+          ],
+          "story": "Bond yields and prices move in opposite directions.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "yield",
+              "art": "yield"
+            },
+            {
+              "text": "bond",
+              "art": "bond"
+            },
+            {
+              "text": "coupon",
+              "art": "coupon"
+            },
+            {
+              "text": "maturity",
+              "art": "maturity"
+            }
+          ],
+          "answer": 0,
+          "why": "yield：投资收益相对于价格的比率，债券价格下跌时收益率上升。"
+        },
+        {
+          "id": "u1r-yield-t",
+          "type": "truefalse",
+          "termId": "yield",
+          "termIds": [
+            "yield"
+          ],
+          "stem": "yield：收益率",
+          "answer": true,
+          "why": "yield 确实是「收益率」。"
+        },
+        {
+          "id": "u1r-price-s",
+          "type": "scenario",
+          "termId": "price",
+          "termIds": [
+            "price"
+          ],
+          "story": "The benchmark bond settled at 7.4427%, compared with 7.3920% on Monday.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "price",
+              "art": "price"
+            },
+            {
+              "text": "bond",
+              "art": "bond"
+            },
+            {
+              "text": "coupon",
+              "art": "coupon"
+            },
+            {
+              "text": "maturity",
+              "art": "maturity"
+            }
+          ],
+          "answer": 0,
+          "why": "price：债券在二级市场的成交价格，通常以面值的百分比表示。"
+        },
+        {
+          "id": "u1r-price-t",
+          "type": "truefalse",
+          "termId": "price",
+          "termIds": [
+            "price"
+          ],
+          "stem": "price 就是 债券。",
+          "answer": false,
+          "why": "price 是「价格（债券报价）」，不是「债券」。"
+        },
+        {
+          "id": "u1r-duration-s",
+          "type": "scenario",
+          "termId": "duration",
+          "termIds": [
+            "duration"
+          ],
+          "story": "A portfolio with an average duration of seven years loses roughly 7% for a one-point rise.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "duration",
+              "art": "duration"
+            },
+            {
+              "text": "bond",
+              "art": "bond"
+            },
+            {
+              "text": "coupon",
+              "art": "coupon"
+            },
+            {
+              "text": "maturity",
+              "art": "maturity"
+            }
+          ],
+          "answer": 0,
+          "why": "duration：衡量债券价格对利率变动敏感度的指标，以年为单位，通常短于到期期限。"
+        },
+        {
+          "id": "u1r-duration-t",
+          "type": "truefalse",
+          "termId": "duration",
+          "termIds": [
+            "duration"
+          ],
+          "stem": "duration：久期",
+          "answer": true,
+          "why": "duration 确实是「久期」。"
+        },
+        {
+          "id": "u1r-match",
+          "type": "match",
+          "termIds": [
+            "bond",
+            "coupon",
+            "maturity",
+            "principal",
+            "yield",
+            "price",
+            "duration"
+          ],
+          "pairs": [
+            {
+              "id": "bond",
+              "left": "bond",
+              "right": "债券"
+            },
+            {
+              "id": "coupon",
+              "left": "coupon",
+              "right": "票息"
+            },
+            {
+              "id": "maturity",
+              "left": "maturity",
+              "right": "到期日"
+            },
+            {
+              "id": "principal",
+              "left": "principal",
+              "right": "本金"
+            },
+            {
+              "id": "yield",
+              "left": "yield",
+              "right": "收益率"
+            },
+            {
+              "id": "price",
+              "left": "price",
+              "right": "价格（债券报价）"
+            },
+            {
+              "id": "duration",
+              "left": "duration",
+              "right": "久期"
+            }
+          ],
+          "why": "把每个词和它的意思对上。"
+        }
+      ]
+    },
+    {
+      "id": "u2l1",
+      "unit": 2,
+      "title": "收益率与计量",
+      "icon": "📈",
+      "review": false,
+      "prompts": [
+        {
+          "id": "u2l1-benchmark-m",
+          "type": "meaning",
+          "termId": "benchmark",
+          "termIds": [
+            "benchmark"
+          ],
+          "stem": "benchmark 是什么意思？",
+          "options": [
+            {
+              "text": "市场用作定价参照的特定债券或指数，如十年期国债。",
+              "art": "benchmark"
+            },
+            {
+              "text": "利率或收益率变动的最小常用单位，1 个基点 = 0.01%。",
+              "art": "basis point"
+            },
+            {
+              "text": "拍卖中发行方接受的最低价格所对应的收益率，决定实际发行成本。",
+              "art": "cut-off yield"
+            },
+            {
+              "text": "不同到期期限的债券收益率连成的曲线，反映市场对利率路径的预期。",
+              "art": "yield curve"
+            }
+          ],
+          "answer": 0,
+          "why": "benchmark 是被选作参照的那一只；bond 是任何一只债券。"
+        },
+        {
+          "id": "u2l1-benchmark-s",
+          "type": "scenario",
+          "termId": "benchmark",
+          "termIds": [
+            "benchmark"
+          ],
+          "story": "The benchmark yield settled at 7.4427%.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "benchmark",
+              "art": "benchmark"
+            },
+            {
+              "text": "basis point",
+              "art": "basis point"
+            },
+            {
+              "text": "cut-off yield",
+              "art": "cut-off yield"
+            },
+            {
+              "text": "yield curve",
+              "art": "yield curve"
+            }
+          ],
+          "answer": 0,
+          "why": "benchmark：市场用作定价参照的特定债券或指数，如十年期国债。"
+        },
+        {
+          "id": "u2l1-benchmark-t",
+          "type": "truefalse",
+          "termId": "benchmark",
+          "termIds": [
+            "benchmark"
+          ],
+          "stem": "benchmark：基准（券）",
+          "answer": true,
+          "why": "benchmark 确实是「基准（券）」。"
+        },
+        {
+          "id": "u2l1-benchmark-f",
+          "type": "fill",
+          "termId": "benchmark",
+          "termIds": [
+            "benchmark"
+          ],
+          "story": "The ____ yield settled at 7.4427%.",
+          "bank": [
+            "benchmark",
+            "basis point",
+            "cut-off yield"
+          ],
+          "answer": "benchmark",
+          "why": "benchmark 是被选作参照的那一只；bond 是任何一只债券。"
+        },
+        {
+          "id": "u2l1-basis point-m",
+          "type": "meaning",
+          "termId": "basis point",
+          "termIds": [
+            "basis point"
+          ],
+          "stem": "basis point 是什么意思？",
+          "options": [
+            {
+              "text": "利率或收益率变动的最小常用单位，1 个基点 = 0.01%。",
+              "art": "basis point"
+            },
+            {
+              "text": "市场用作定价参照的特定债券或指数，如十年期国债。",
+              "art": "benchmark"
+            },
+            {
+              "text": "拍卖中发行方接受的最低价格所对应的收益率，决定实际发行成本。",
+              "art": "cut-off yield"
+            },
+            {
+              "text": "不同到期期限的债券收益率连成的曲线，反映市场对利率路径的预期。",
+              "art": "yield curve"
+            }
+          ],
+          "answer": 0,
+          "why": "basis point 是计量单位（0.01%）；policy rate 是央行设定的那个具体利率。"
+        },
+        {
+          "id": "u2l1-basis point-s",
+          "type": "scenario",
+          "termId": "basis point",
+          "termIds": [
+            "basis point"
+          ],
+          "story": "Swap markets are pricing in about 100 basis points of rate increases.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "basis point",
+              "art": "basis point"
+            },
+            {
+              "text": "benchmark",
+              "art": "benchmark"
+            },
+            {
+              "text": "cut-off yield",
+              "art": "cut-off yield"
+            },
+            {
+              "text": "yield curve",
+              "art": "yield curve"
+            }
+          ],
+          "answer": 0,
+          "why": "basis point：利率或收益率变动的最小常用单位，1 个基点 = 0.01%。"
+        },
+        {
+          "id": "u2l1-basis point-t",
+          "type": "truefalse",
+          "termId": "basis point",
+          "termIds": [
+            "basis point"
+          ],
+          "stem": "basis point 就是 基准（券）。",
+          "answer": false,
+          "why": "basis point 是「基点」，不是「基准（券）」。"
+        },
+        {
+          "id": "u2l1-basis point-f",
+          "type": "fill",
+          "termId": "basis point",
+          "termIds": [
+            "basis point"
+          ],
+          "story": "Swap markets are pricing in about 100 ____ of rate increases.",
+          "bank": [
+            "basis point",
+            "benchmark",
+            "cut-off yield"
+          ],
+          "answer": "basis point",
+          "why": "basis point 是计量单位（0.01%）；policy rate 是央行设定的那个具体利率。"
+        },
+        {
+          "id": "u2l1-cut-off yield-m",
+          "type": "meaning",
+          "termId": "cut-off yield",
+          "termIds": [
+            "cut-off yield"
+          ],
+          "stem": "cut-off yield 是什么意思？",
+          "options": [
+            {
+              "text": "拍卖中发行方接受的最低价格所对应的收益率，决定实际发行成本。",
+              "art": "cut-off yield"
+            },
+            {
+              "text": "市场用作定价参照的特定债券或指数，如十年期国债。",
+              "art": "benchmark"
+            },
+            {
+              "text": "利率或收益率变动的最小常用单位，1 个基点 = 0.01%。",
+              "art": "basis point"
+            },
+            {
+              "text": "不同到期期限的债券收益率连成的曲线，反映市场对利率路径的预期。",
+              "art": "yield curve"
+            }
+          ],
+          "answer": 0,
+          "why": "cut-off yield 是拍卖这一场的结果；yield 是任何时点的市场收益率。"
+        },
+        {
+          "id": "u2l1-cut-off yield-s",
+          "type": "scenario",
+          "termId": "cut-off yield",
+          "termIds": [
+            "cut-off yield"
+          ],
+          "story": "A weak bid-to-cover forces the central bank to accept a higher cut-off yield.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "cut-off yield",
+              "art": "cut-off yield"
+            },
+            {
+              "text": "benchmark",
+              "art": "benchmark"
+            },
+            {
+              "text": "basis point",
+              "art": "basis point"
+            },
+            {
+              "text": "yield curve",
+              "art": "yield curve"
+            }
+          ],
+          "answer": 0,
+          "why": "cut-off yield：拍卖中发行方接受的最低价格所对应的收益率，决定实际发行成本。"
+        },
+        {
+          "id": "u2l1-cut-off yield-t",
+          "type": "truefalse",
+          "termId": "cut-off yield",
+          "termIds": [
+            "cut-off yield"
+          ],
+          "stem": "cut-off yield：中标收益率",
+          "answer": true,
+          "why": "cut-off yield 确实是「中标收益率」。"
+        },
+        {
+          "id": "u2l1-cut-off yield-f",
+          "type": "fill",
+          "termId": "cut-off yield",
+          "termIds": [
+            "cut-off yield"
+          ],
+          "story": "A weak bid-to-cover forces the central bank to accept a higher ____.",
+          "bank": [
+            "cut-off yield",
+            "benchmark",
+            "basis point"
+          ],
+          "answer": "cut-off yield",
+          "why": "cut-off yield 是拍卖这一场的结果；yield 是任何时点的市场收益率。"
+        },
+        {
+          "id": "u2l1-match",
+          "type": "match",
+          "termIds": [
+            "benchmark",
+            "basis point",
+            "cut-off yield"
+          ],
+          "pairs": [
+            {
+              "id": "benchmark",
+              "left": "benchmark",
+              "right": "基准（券）"
+            },
+            {
+              "id": "basis point",
+              "left": "basis point",
+              "right": "基点"
+            },
+            {
+              "id": "cut-off yield",
+              "left": "cut-off yield",
+              "right": "中标收益率"
+            }
+          ],
+          "why": "把每个词和它的意思对上。"
+        }
+      ]
+    },
+    {
+      "id": "u2l2",
+      "unit": 2,
+      "title": "收益率与计量（续）",
+      "icon": "📈",
+      "review": false,
+      "prompts": [
+        {
+          "id": "u2l2-yield curve-m",
+          "type": "meaning",
+          "termId": "yield curve",
+          "termIds": [
+            "yield curve"
+          ],
+          "stem": "yield curve 是什么意思？",
+          "options": [
+            {
+              "text": "不同到期期限的债券收益率连成的曲线，反映市场对利率路径的预期。",
+              "art": "yield curve"
+            },
+            {
+              "text": "市场用作定价参照的特定债券或指数，如十年期国债。",
+              "art": "benchmark"
+            },
+            {
+              "text": "利率或收益率变动的最小常用单位，1 个基点 = 0.01%。",
+              "art": "basis point"
+            },
+            {
+              "text": "拍卖中发行方接受的最低价格所对应的收益率，决定实际发行成本。",
+              "art": "cut-off yield"
+            }
+          ],
+          "answer": 0,
+          "why": "yield 是一个点（某个期限的收益率）；yield curve 是把所有期限连起来的形状。"
+        },
+        {
+          "id": "u2l2-yield curve-s",
+          "type": "scenario",
+          "termId": "yield curve",
+          "termIds": [
+            "yield curve"
+          ],
+          "story": "The sovereign yield curve has climbed sharply.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "yield curve",
+              "art": "yield curve"
+            },
+            {
+              "text": "benchmark",
+              "art": "benchmark"
+            },
+            {
+              "text": "basis point",
+              "art": "basis point"
+            },
+            {
+              "text": "cut-off yield",
+              "art": "cut-off yield"
+            }
+          ],
+          "answer": 0,
+          "why": "yield curve：不同到期期限的债券收益率连成的曲线，反映市场对利率路径的预期。"
+        },
+        {
+          "id": "u2l2-yield curve-t",
+          "type": "truefalse",
+          "termId": "yield curve",
+          "termIds": [
+            "yield curve"
+          ],
+          "stem": "yield curve：收益率曲线",
+          "answer": true,
+          "why": "yield curve 确实是「收益率曲线」。"
+        },
+        {
+          "id": "u2l2-yield curve-f",
+          "type": "fill",
+          "termId": "yield curve",
+          "termIds": [
+            "yield curve"
+          ],
+          "story": "The sovereign ____ has climbed sharply.",
+          "bank": [
+            "yield curve",
+            "term premium",
+            "inversion"
+          ],
+          "answer": "yield curve",
+          "why": "yield 是一个点（某个期限的收益率）；yield curve 是把所有期限连起来的形状。"
+        },
+        {
+          "id": "u2l2-term premium-m",
+          "type": "meaning",
+          "termId": "term premium",
+          "termIds": [
+            "term premium"
+          ],
+          "stem": "term premium 是什么意思？",
+          "options": [
+            {
+              "text": "投资者持有长期债券相对于滚动短期债券所要求的额外收益率。",
+              "art": "term premium"
+            },
+            {
+              "text": "市场用作定价参照的特定债券或指数，如十年期国债。",
+              "art": "benchmark"
+            },
+            {
+              "text": "利率或收益率变动的最小常用单位，1 个基点 = 0.01%。",
+              "art": "basis point"
+            },
+            {
+              "text": "拍卖中发行方接受的最低价格所对应的收益率，决定实际发行成本。",
+              "art": "cut-off yield"
+            }
+          ],
+          "answer": 0,
+          "why": "term premium 是期限的代价（与信用无关）；credit spread 是信用风险的代价（与期限无关）。"
+        },
+        {
+          "id": "u2l2-term premium-s",
+          "type": "scenario",
+          "termId": "term premium",
+          "termIds": [
+            "term premium"
+          ],
+          "story": "The term premium has risen as supply grows.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "term premium",
+              "art": "term premium"
+            },
+            {
+              "text": "benchmark",
+              "art": "benchmark"
+            },
+            {
+              "text": "basis point",
+              "art": "basis point"
+            },
+            {
+              "text": "cut-off yield",
+              "art": "cut-off yield"
+            }
+          ],
+          "answer": 0,
+          "why": "term premium：投资者持有长期债券相对于滚动短期债券所要求的额外收益率。"
+        },
+        {
+          "id": "u2l2-term premium-t",
+          "type": "truefalse",
+          "termId": "term premium",
+          "termIds": [
+            "term premium"
+          ],
+          "stem": "term premium 就是 基准（券）。",
+          "answer": false,
+          "why": "term premium 是「期限溢价」，不是「基准（券）」。"
+        },
+        {
+          "id": "u2l2-term premium-f",
+          "type": "fill",
+          "termId": "term premium",
+          "termIds": [
+            "term premium"
+          ],
+          "story": "The ____ has risen as supply grows.",
+          "bank": [
+            "term premium",
+            "yield curve",
+            "inversion"
+          ],
+          "answer": "term premium",
+          "why": "term premium 是期限的代价（与信用无关）；credit spread 是信用风险的代价（与期限无关）。"
+        },
+        {
+          "id": "u2l2-inversion-m",
+          "type": "meaning",
+          "termId": "inversion",
+          "termIds": [
+            "inversion"
+          ],
+          "stem": "inversion 是什么意思？",
+          "options": [
+            {
+              "text": "短期债券收益率高于长期债券的异常形态，历史上常先于经济放缓出现。",
+              "art": "inversion"
+            },
+            {
+              "text": "市场用作定价参照的特定债券或指数，如十年期国债。",
+              "art": "benchmark"
+            },
+            {
+              "text": "利率或收益率变动的最小常用单位，1 个基点 = 0.01%。",
+              "art": "basis point"
+            },
+            {
+              "text": "拍卖中发行方接受的最低价格所对应的收益率，决定实际发行成本。",
+              "art": "cut-off yield"
+            }
+          ],
+          "answer": 0,
+          "why": "inversion 是曲线的一种特定形状（短高于长）；yield curve 是曲线本身。"
+        },
+        {
+          "id": "u2l2-inversion-s",
+          "type": "scenario",
+          "termId": "inversion",
+          "termIds": [
+            "inversion"
+          ],
+          "story": "Curve inversion has deepened: the two-year now yields more than the ten-year.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "inversion",
+              "art": "inversion"
+            },
+            {
+              "text": "benchmark",
+              "art": "benchmark"
+            },
+            {
+              "text": "basis point",
+              "art": "basis point"
+            },
+            {
+              "text": "cut-off yield",
+              "art": "cut-off yield"
+            }
+          ],
+          "answer": 0,
+          "why": "inversion：短期债券收益率高于长期债券的异常形态，历史上常先于经济放缓出现。"
+        },
+        {
+          "id": "u2l2-inversion-t",
+          "type": "truefalse",
+          "termId": "inversion",
+          "termIds": [
+            "inversion"
+          ],
+          "stem": "inversion：倒挂",
+          "answer": true,
+          "why": "inversion 确实是「倒挂」。"
+        },
+        {
+          "id": "u2l2-inversion-f",
+          "type": "fill",
+          "termId": "inversion",
+          "termIds": [
+            "inversion"
+          ],
+          "story": "Curve ____ has deepened: the two-year now yields more than the ten-year.",
+          "bank": [
+            "inversion",
+            "yield curve",
+            "term premium"
+          ],
+          "answer": "inversion",
+          "why": "inversion 是曲线的一种特定形状（短高于长）；yield curve 是曲线本身。"
+        },
+        {
+          "id": "u2l2-match",
+          "type": "match",
+          "termIds": [
+            "yield curve",
+            "term premium",
+            "inversion"
+          ],
+          "pairs": [
+            {
+              "id": "yield curve",
+              "left": "yield curve",
+              "right": "收益率曲线"
+            },
+            {
+              "id": "term premium",
+              "left": "term premium",
+              "right": "期限溢价"
+            },
+            {
+              "id": "inversion",
+              "left": "inversion",
+              "right": "倒挂"
+            }
+          ],
+          "why": "把每个词和它的意思对上。"
+        }
+      ]
+    },
+    {
+      "id": "u2r",
+      "unit": 2,
+      "title": "收益率与计量 · 回顾",
+      "icon": "🏆",
+      "review": true,
+      "prompts": [
+        {
+          "id": "u2r-benchmark-s",
+          "type": "scenario",
+          "termId": "benchmark",
+          "termIds": [
+            "benchmark"
+          ],
+          "story": "The benchmark yield settled at 7.4427%.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "benchmark",
+              "art": "benchmark"
+            },
+            {
+              "text": "basis point",
+              "art": "basis point"
+            },
+            {
+              "text": "cut-off yield",
+              "art": "cut-off yield"
+            },
+            {
+              "text": "yield curve",
+              "art": "yield curve"
+            }
+          ],
+          "answer": 0,
+          "why": "benchmark：市场用作定价参照的特定债券或指数，如十年期国债。"
+        },
+        {
+          "id": "u2r-benchmark-t",
+          "type": "truefalse",
+          "termId": "benchmark",
+          "termIds": [
+            "benchmark"
+          ],
+          "stem": "benchmark：基准（券）",
+          "answer": true,
+          "why": "benchmark 确实是「基准（券）」。"
+        },
+        {
+          "id": "u2r-basis point-s",
+          "type": "scenario",
+          "termId": "basis point",
+          "termIds": [
+            "basis point"
+          ],
+          "story": "Swap markets are pricing in about 100 basis points of rate increases.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "basis point",
+              "art": "basis point"
+            },
+            {
+              "text": "benchmark",
+              "art": "benchmark"
+            },
+            {
+              "text": "cut-off yield",
+              "art": "cut-off yield"
+            },
+            {
+              "text": "yield curve",
+              "art": "yield curve"
+            }
+          ],
+          "answer": 0,
+          "why": "basis point：利率或收益率变动的最小常用单位，1 个基点 = 0.01%。"
+        },
+        {
+          "id": "u2r-basis point-t",
+          "type": "truefalse",
+          "termId": "basis point",
+          "termIds": [
+            "basis point"
+          ],
+          "stem": "basis point 就是 基准（券）。",
+          "answer": false,
+          "why": "basis point 是「基点」，不是「基准（券）」。"
+        },
+        {
+          "id": "u2r-cut-off yield-s",
+          "type": "scenario",
+          "termId": "cut-off yield",
+          "termIds": [
+            "cut-off yield"
+          ],
+          "story": "A weak bid-to-cover forces the central bank to accept a higher cut-off yield.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "cut-off yield",
+              "art": "cut-off yield"
+            },
+            {
+              "text": "benchmark",
+              "art": "benchmark"
+            },
+            {
+              "text": "basis point",
+              "art": "basis point"
+            },
+            {
+              "text": "yield curve",
+              "art": "yield curve"
+            }
+          ],
+          "answer": 0,
+          "why": "cut-off yield：拍卖中发行方接受的最低价格所对应的收益率，决定实际发行成本。"
+        },
+        {
+          "id": "u2r-cut-off yield-t",
+          "type": "truefalse",
+          "termId": "cut-off yield",
+          "termIds": [
+            "cut-off yield"
+          ],
+          "stem": "cut-off yield：中标收益率",
+          "answer": true,
+          "why": "cut-off yield 确实是「中标收益率」。"
+        },
+        {
+          "id": "u2r-yield curve-s",
+          "type": "scenario",
+          "termId": "yield curve",
+          "termIds": [
+            "yield curve"
+          ],
+          "story": "The sovereign yield curve has climbed sharply.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "yield curve",
+              "art": "yield curve"
+            },
+            {
+              "text": "benchmark",
+              "art": "benchmark"
+            },
+            {
+              "text": "basis point",
+              "art": "basis point"
+            },
+            {
+              "text": "cut-off yield",
+              "art": "cut-off yield"
+            }
+          ],
+          "answer": 0,
+          "why": "yield curve：不同到期期限的债券收益率连成的曲线，反映市场对利率路径的预期。"
+        },
+        {
+          "id": "u2r-yield curve-t",
+          "type": "truefalse",
+          "termId": "yield curve",
+          "termIds": [
+            "yield curve"
+          ],
+          "stem": "yield curve 就是 基准（券）。",
+          "answer": false,
+          "why": "yield curve 是「收益率曲线」，不是「基准（券）」。"
+        },
+        {
+          "id": "u2r-term premium-s",
+          "type": "scenario",
+          "termId": "term premium",
+          "termIds": [
+            "term premium"
+          ],
+          "story": "The term premium has risen as supply grows.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "term premium",
+              "art": "term premium"
+            },
+            {
+              "text": "benchmark",
+              "art": "benchmark"
+            },
+            {
+              "text": "basis point",
+              "art": "basis point"
+            },
+            {
+              "text": "cut-off yield",
+              "art": "cut-off yield"
+            }
+          ],
+          "answer": 0,
+          "why": "term premium：投资者持有长期债券相对于滚动短期债券所要求的额外收益率。"
+        },
+        {
+          "id": "u2r-term premium-t",
+          "type": "truefalse",
+          "termId": "term premium",
+          "termIds": [
+            "term premium"
+          ],
+          "stem": "term premium：期限溢价",
+          "answer": true,
+          "why": "term premium 确实是「期限溢价」。"
+        },
+        {
+          "id": "u2r-inversion-s",
+          "type": "scenario",
+          "termId": "inversion",
+          "termIds": [
+            "inversion"
+          ],
+          "story": "Curve inversion has deepened: the two-year now yields more than the ten-year.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "inversion",
+              "art": "inversion"
+            },
+            {
+              "text": "benchmark",
+              "art": "benchmark"
+            },
+            {
+              "text": "basis point",
+              "art": "basis point"
+            },
+            {
+              "text": "cut-off yield",
+              "art": "cut-off yield"
+            }
+          ],
+          "answer": 0,
+          "why": "inversion：短期债券收益率高于长期债券的异常形态，历史上常先于经济放缓出现。"
+        },
+        {
+          "id": "u2r-inversion-t",
+          "type": "truefalse",
+          "termId": "inversion",
+          "termIds": [
+            "inversion"
+          ],
+          "stem": "inversion 就是 基准（券）。",
+          "answer": false,
+          "why": "inversion 是「倒挂」，不是「基准（券）」。"
+        },
+        {
+          "id": "u2r-match",
+          "type": "match",
+          "termIds": [
+            "benchmark",
+            "basis point",
+            "cut-off yield",
+            "yield curve",
+            "term premium",
+            "inversion"
+          ],
+          "pairs": [
+            {
+              "id": "benchmark",
+              "left": "benchmark",
+              "right": "基准（券）"
+            },
+            {
+              "id": "basis point",
+              "left": "basis point",
+              "right": "基点"
+            },
+            {
+              "id": "cut-off yield",
+              "left": "cut-off yield",
+              "right": "中标收益率"
+            },
+            {
+              "id": "yield curve",
+              "left": "yield curve",
+              "right": "收益率曲线"
+            },
+            {
+              "id": "term premium",
+              "left": "term premium",
+              "right": "期限溢价"
+            },
+            {
+              "id": "inversion",
+              "left": "inversion",
+              "right": "倒挂"
+            }
+          ],
+          "why": "把每个词和它的意思对上。"
+        }
+      ]
+    },
+    {
+      "id": "u3l1",
+      "unit": 3,
+      "title": "谁在发，发得动吗",
+      "icon": "📈",
+      "review": false,
+      "prompts": [
+        {
+          "id": "u3l1-auction-m",
+          "type": "meaning",
+          "termId": "auction",
+          "termIds": [
+            "auction"
+          ],
+          "stem": "auction 是什么意思？",
+          "options": [
+            {
+              "text": "通过投标竞价方式发行债券的过程。",
+              "art": "auction"
+            },
+            {
+              "text": "发行新证券的行为或其总量。",
+              "art": "issuance"
+            },
+            {
+              "text": "拍卖中收到的投标总额与实际发行额的比值，衡量需求强弱。",
+              "art": "bid-to-cover"
+            },
+            {
+              "text": "获准直接与发行方交易并须在拍卖中投标的金融机构。",
+              "art": "primary dealer"
+            }
+          ],
+          "answer": 0,
+          "why": "auction 是发行时用的竞价方式；issuance 是发行这件事本身。"
+        },
+        {
+          "id": "u3l1-auction-s",
+          "type": "scenario",
+          "termId": "auction",
+          "termIds": [
+            "auction"
+          ],
+          "story": "The government's borrowing programme relies on regular auctions.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "auction",
+              "art": "auction"
+            },
+            {
+              "text": "issuance",
+              "art": "issuance"
+            },
+            {
+              "text": "bid-to-cover",
+              "art": "bid-to-cover"
+            },
+            {
+              "text": "primary dealer",
+              "art": "primary dealer"
+            }
+          ],
+          "answer": 0,
+          "why": "auction：通过投标竞价方式发行债券的过程。"
+        },
+        {
+          "id": "u3l1-auction-t",
+          "type": "truefalse",
+          "termId": "auction",
+          "termIds": [
+            "auction"
+          ],
+          "stem": "auction：拍卖（发行）",
+          "answer": true,
+          "why": "auction 确实是「拍卖（发行）」。"
+        },
+        {
+          "id": "u3l1-auction-f",
+          "type": "fill",
+          "termId": "auction",
+          "termIds": [
+            "auction"
+          ],
+          "story": "The government's borrowing programme relies on regular ____.",
+          "bank": [
+            "auction",
+            "issuance",
+            "bid-to-cover"
+          ],
+          "answer": "auction",
+          "why": "auction 是发行时用的竞价方式；issuance 是发行这件事本身。"
+        },
+        {
+          "id": "u3l1-issuance-m",
+          "type": "meaning",
+          "termId": "issuance",
+          "termIds": [
+            "issuance"
+          ],
+          "stem": "issuance 是什么意思？",
+          "options": [
+            {
+              "text": "发行新证券的行为或其总量。",
+              "art": "issuance"
+            },
+            {
+              "text": "通过投标竞价方式发行债券的过程。",
+              "art": "auction"
+            },
+            {
+              "text": "拍卖中收到的投标总额与实际发行额的比值，衡量需求强弱。",
+              "art": "bid-to-cover"
+            },
+            {
+              "text": "获准直接与发行方交易并须在拍卖中投标的金融机构。",
+              "art": "primary dealer"
+            }
+          ],
+          "answer": 0,
+          "why": "issuance 是发行的量或行为；auction 是发行时的一个具体环节。"
+        },
+        {
+          "id": "u3l1-issuance-s",
+          "type": "scenario",
+          "termId": "issuance",
+          "termIds": [
+            "issuance"
+          ],
+          "story": "Primary dealers must absorb unsold supply when issuance is heavy.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "issuance",
+              "art": "issuance"
+            },
+            {
+              "text": "auction",
+              "art": "auction"
+            },
+            {
+              "text": "bid-to-cover",
+              "art": "bid-to-cover"
+            },
+            {
+              "text": "primary dealer",
+              "art": "primary dealer"
+            }
+          ],
+          "answer": 0,
+          "why": "issuance：发行新证券的行为或其总量。"
+        },
+        {
+          "id": "u3l1-issuance-t",
+          "type": "truefalse",
+          "termId": "issuance",
+          "termIds": [
+            "issuance"
+          ],
+          "stem": "issuance 就是 拍卖（发行）。",
+          "answer": false,
+          "why": "issuance 是「发行（量）」，不是「拍卖（发行）」。"
+        },
+        {
+          "id": "u3l1-issuance-f",
+          "type": "fill",
+          "termId": "issuance",
+          "termIds": [
+            "issuance"
+          ],
+          "story": "Primary dealers must absorb unsold supply when ____ is heavy.",
+          "bank": [
+            "issuance",
+            "auction",
+            "bid-to-cover"
+          ],
+          "answer": "issuance",
+          "why": "issuance 是发行的量或行为；auction 是发行时的一个具体环节。"
+        },
+        {
+          "id": "u3l1-bid-to-cover-m",
+          "type": "meaning",
+          "termId": "bid-to-cover",
+          "termIds": [
+            "bid-to-cover"
+          ],
+          "stem": "bid-to-cover 是什么意思？",
+          "options": [
+            {
+              "text": "拍卖中收到的投标总额与实际发行额的比值，衡量需求强弱。",
+              "art": "bid-to-cover"
+            },
+            {
+              "text": "通过投标竞价方式发行债券的过程。",
+              "art": "auction"
+            },
+            {
+              "text": "发行新证券的行为或其总量。",
+              "art": "issuance"
+            },
+            {
+              "text": "获准直接与发行方交易并须在拍卖中投标的金融机构。",
+              "art": "primary dealer"
+            }
+          ],
+          "answer": 0,
+          "why": "bid-to-cover 衡量需求有多热；cut-off yield 是这个需求水平换来的发行成本。"
+        },
+        {
+          "id": "u3l1-bid-to-cover-s",
+          "type": "scenario",
+          "termId": "bid-to-cover",
+          "termIds": [
+            "bid-to-cover"
+          ],
+          "story": "Dealers watch the bid-to-cover ratio to gauge demand.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "bid-to-cover",
+              "art": "bid-to-cover"
+            },
+            {
+              "text": "auction",
+              "art": "auction"
+            },
+            {
+              "text": "issuance",
+              "art": "issuance"
+            },
+            {
+              "text": "primary dealer",
+              "art": "primary dealer"
+            }
+          ],
+          "answer": 0,
+          "why": "bid-to-cover：拍卖中收到的投标总额与实际发行额的比值，衡量需求强弱。"
+        },
+        {
+          "id": "u3l1-bid-to-cover-t",
+          "type": "truefalse",
+          "termId": "bid-to-cover",
+          "termIds": [
+            "bid-to-cover"
+          ],
+          "stem": "bid-to-cover：投标倍数",
+          "answer": true,
+          "why": "bid-to-cover 确实是「投标倍数」。"
+        },
+        {
+          "id": "u3l1-bid-to-cover-f",
+          "type": "fill",
+          "termId": "bid-to-cover",
+          "termIds": [
+            "bid-to-cover"
+          ],
+          "story": "Dealers watch the ____ ratio to gauge demand.",
+          "bank": [
+            "bid-to-cover",
+            "auction",
+            "issuance"
+          ],
+          "answer": "bid-to-cover",
+          "why": "bid-to-cover 衡量需求有多热；cut-off yield 是这个需求水平换来的发行成本。"
+        },
+        {
+          "id": "u3l1-match",
+          "type": "match",
+          "termIds": [
+            "auction",
+            "issuance",
+            "bid-to-cover"
+          ],
+          "pairs": [
+            {
+              "id": "auction",
+              "left": "auction",
+              "right": "拍卖（发行）"
+            },
+            {
+              "id": "issuance",
+              "left": "issuance",
+              "right": "发行（量）"
+            },
+            {
+              "id": "bid-to-cover",
+              "left": "bid-to-cover",
+              "right": "投标倍数"
+            }
+          ],
+          "why": "把每个词和它的意思对上。"
+        }
+      ]
+    },
+    {
+      "id": "u3l2",
+      "unit": 3,
+      "title": "谁在发，发得动吗（续）",
+      "icon": "📈",
+      "review": false,
+      "prompts": [
+        {
+          "id": "u3l2-primary dealer-m",
+          "type": "meaning",
+          "termId": "primary dealer",
+          "termIds": [
+            "primary dealer"
+          ],
+          "stem": "primary dealer 是什么意思？",
+          "options": [
+            {
+              "text": "获准直接与发行方交易并须在拍卖中投标的金融机构。",
+              "art": "primary dealer"
+            },
+            {
+              "text": "通过投标竞价方式发行债券的过程。",
+              "art": "auction"
+            },
+            {
+              "text": "发行新证券的行为或其总量。",
+              "art": "issuance"
+            },
+            {
+              "text": "拍卖中收到的投标总额与实际发行额的比值，衡量需求强弱。",
+              "art": "bid-to-cover"
+            }
+          ],
+          "answer": 0,
+          "why": "primary dealer 是参与的人；bid-to-cover 是这场拍卖的结果指标。"
+        },
+        {
+          "id": "u3l2-primary dealer-s",
+          "type": "scenario",
+          "termId": "primary dealer",
+          "termIds": [
+            "primary dealer"
+          ],
+          "story": "Primary dealers are required to bid at every auction and absorb unsold supply.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "primary dealer",
+              "art": "primary dealer"
+            },
+            {
+              "text": "auction",
+              "art": "auction"
+            },
+            {
+              "text": "issuance",
+              "art": "issuance"
+            },
+            {
+              "text": "bid-to-cover",
+              "art": "bid-to-cover"
+            }
+          ],
+          "answer": 0,
+          "why": "primary dealer：获准直接与发行方交易并须在拍卖中投标的金融机构。"
+        },
+        {
+          "id": "u3l2-primary dealer-t",
+          "type": "truefalse",
+          "termId": "primary dealer",
+          "termIds": [
+            "primary dealer"
+          ],
+          "stem": "primary dealer：一级交易商",
+          "answer": true,
+          "why": "primary dealer 确实是「一级交易商」。"
+        },
+        {
+          "id": "u3l2-primary dealer-f",
+          "type": "fill",
+          "termId": "primary dealer",
+          "termIds": [
+            "primary dealer"
+          ],
+          "story": "____ are required to bid at every auction and absorb unsold supply.",
+          "bank": [
+            "primary dealer",
+            "refinancing"
+          ],
+          "answer": "primary dealer",
+          "why": "primary dealer 是参与的人；bid-to-cover 是这场拍卖的结果指标。"
+        },
+        {
+          "id": "u3l2-refinancing-m",
+          "type": "meaning",
+          "termId": "refinancing",
+          "termIds": [
+            "refinancing"
+          ],
+          "stem": "refinancing 是什么意思？",
+          "options": [
+            {
+              "text": "以新发行债务偿还既有债务的行为。",
+              "art": "refinancing"
+            },
+            {
+              "text": "通过投标竞价方式发行债券的过程。",
+              "art": "auction"
+            },
+            {
+              "text": "发行新证券的行为或其总量。",
+              "art": "issuance"
+            },
+            {
+              "text": "拍卖中收到的投标总额与实际发行额的比值，衡量需求强弱。",
+              "art": "bid-to-cover"
+            }
+          ],
+          "answer": 0,
+          "why": "refinancing 是用途（还旧债）；issuance 是动作（发新债）。再融资一定涉及发行，但发行不一定为了再融资。"
+        },
+        {
+          "id": "u3l2-refinancing-s",
+          "type": "scenario",
+          "termId": "refinancing",
+          "termIds": [
+            "refinancing"
+          ],
+          "story": "Several issuers have begun refinancing existing debt to push out maturities.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "refinancing",
+              "art": "refinancing"
+            },
+            {
+              "text": "auction",
+              "art": "auction"
+            },
+            {
+              "text": "issuance",
+              "art": "issuance"
+            },
+            {
+              "text": "bid-to-cover",
+              "art": "bid-to-cover"
+            }
+          ],
+          "answer": 0,
+          "why": "refinancing：以新发行债务偿还既有债务的行为。"
+        },
+        {
+          "id": "u3l2-refinancing-t",
+          "type": "truefalse",
+          "termId": "refinancing",
+          "termIds": [
+            "refinancing"
+          ],
+          "stem": "refinancing 就是 拍卖（发行）。",
+          "answer": false,
+          "why": "refinancing 是「再融资」，不是「拍卖（发行）」。"
+        },
+        {
+          "id": "u3l2-refinancing-f",
+          "type": "fill",
+          "termId": "refinancing",
+          "termIds": [
+            "refinancing"
+          ],
+          "story": "Several issuers have begun ____ existing debt to push out maturities.",
+          "bank": [
+            "refinancing",
+            "primary dealer"
+          ],
+          "answer": "refinancing",
+          "why": "refinancing 是用途（还旧债）；issuance 是动作（发新债）。再融资一定涉及发行，但发行不一定为了再融资。"
+        },
+        {
+          "id": "u3l2-match",
+          "type": "match",
+          "termIds": [
+            "primary dealer",
+            "refinancing"
+          ],
+          "pairs": [
+            {
+              "id": "primary dealer",
+              "left": "primary dealer",
+              "right": "一级交易商"
+            },
+            {
+              "id": "refinancing",
+              "left": "refinancing",
+              "right": "再融资"
+            }
+          ],
+          "why": "把每个词和它的意思对上。"
+        }
+      ]
+    },
+    {
+      "id": "u3r",
+      "unit": 3,
+      "title": "谁在发，发得动吗 · 回顾",
+      "icon": "🏆",
+      "review": true,
+      "prompts": [
+        {
+          "id": "u3r-auction-s",
+          "type": "scenario",
+          "termId": "auction",
+          "termIds": [
+            "auction"
+          ],
+          "story": "The government's borrowing programme relies on regular auctions.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "auction",
+              "art": "auction"
+            },
+            {
+              "text": "issuance",
+              "art": "issuance"
+            },
+            {
+              "text": "bid-to-cover",
+              "art": "bid-to-cover"
+            },
+            {
+              "text": "primary dealer",
+              "art": "primary dealer"
+            }
+          ],
+          "answer": 0,
+          "why": "auction：通过投标竞价方式发行债券的过程。"
+        },
+        {
+          "id": "u3r-auction-t",
+          "type": "truefalse",
+          "termId": "auction",
+          "termIds": [
+            "auction"
+          ],
+          "stem": "auction：拍卖（发行）",
+          "answer": true,
+          "why": "auction 确实是「拍卖（发行）」。"
+        },
+        {
+          "id": "u3r-issuance-s",
+          "type": "scenario",
+          "termId": "issuance",
+          "termIds": [
+            "issuance"
+          ],
+          "story": "Primary dealers must absorb unsold supply when issuance is heavy.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "issuance",
+              "art": "issuance"
+            },
+            {
+              "text": "auction",
+              "art": "auction"
+            },
+            {
+              "text": "bid-to-cover",
+              "art": "bid-to-cover"
+            },
+            {
+              "text": "primary dealer",
+              "art": "primary dealer"
+            }
+          ],
+          "answer": 0,
+          "why": "issuance：发行新证券的行为或其总量。"
+        },
+        {
+          "id": "u3r-issuance-t",
+          "type": "truefalse",
+          "termId": "issuance",
+          "termIds": [
+            "issuance"
+          ],
+          "stem": "issuance 就是 拍卖（发行）。",
+          "answer": false,
+          "why": "issuance 是「发行（量）」，不是「拍卖（发行）」。"
+        },
+        {
+          "id": "u3r-bid-to-cover-s",
+          "type": "scenario",
+          "termId": "bid-to-cover",
+          "termIds": [
+            "bid-to-cover"
+          ],
+          "story": "Dealers watch the bid-to-cover ratio to gauge demand.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "bid-to-cover",
+              "art": "bid-to-cover"
+            },
+            {
+              "text": "auction",
+              "art": "auction"
+            },
+            {
+              "text": "issuance",
+              "art": "issuance"
+            },
+            {
+              "text": "primary dealer",
+              "art": "primary dealer"
+            }
+          ],
+          "answer": 0,
+          "why": "bid-to-cover：拍卖中收到的投标总额与实际发行额的比值，衡量需求强弱。"
+        },
+        {
+          "id": "u3r-bid-to-cover-t",
+          "type": "truefalse",
+          "termId": "bid-to-cover",
+          "termIds": [
+            "bid-to-cover"
+          ],
+          "stem": "bid-to-cover：投标倍数",
+          "answer": true,
+          "why": "bid-to-cover 确实是「投标倍数」。"
+        },
+        {
+          "id": "u3r-primary dealer-s",
+          "type": "scenario",
+          "termId": "primary dealer",
+          "termIds": [
+            "primary dealer"
+          ],
+          "story": "Primary dealers are required to bid at every auction and absorb unsold supply.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "primary dealer",
+              "art": "primary dealer"
+            },
+            {
+              "text": "auction",
+              "art": "auction"
+            },
+            {
+              "text": "issuance",
+              "art": "issuance"
+            },
+            {
+              "text": "bid-to-cover",
+              "art": "bid-to-cover"
+            }
+          ],
+          "answer": 0,
+          "why": "primary dealer：获准直接与发行方交易并须在拍卖中投标的金融机构。"
+        },
+        {
+          "id": "u3r-primary dealer-t",
+          "type": "truefalse",
+          "termId": "primary dealer",
+          "termIds": [
+            "primary dealer"
+          ],
+          "stem": "primary dealer 就是 拍卖（发行）。",
+          "answer": false,
+          "why": "primary dealer 是「一级交易商」，不是「拍卖（发行）」。"
+        },
+        {
+          "id": "u3r-refinancing-s",
+          "type": "scenario",
+          "termId": "refinancing",
+          "termIds": [
+            "refinancing"
+          ],
+          "story": "Several issuers have begun refinancing existing debt to push out maturities.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "refinancing",
+              "art": "refinancing"
+            },
+            {
+              "text": "auction",
+              "art": "auction"
+            },
+            {
+              "text": "issuance",
+              "art": "issuance"
+            },
+            {
+              "text": "bid-to-cover",
+              "art": "bid-to-cover"
+            }
+          ],
+          "answer": 0,
+          "why": "refinancing：以新发行债务偿还既有债务的行为。"
+        },
+        {
+          "id": "u3r-refinancing-t",
+          "type": "truefalse",
+          "termId": "refinancing",
+          "termIds": [
+            "refinancing"
+          ],
+          "stem": "refinancing：再融资",
+          "answer": true,
+          "why": "refinancing 确实是「再融资」。"
+        },
+        {
+          "id": "u3r-match",
+          "type": "match",
+          "termIds": [
+            "auction",
+            "issuance",
+            "bid-to-cover",
+            "primary dealer",
+            "refinancing"
+          ],
+          "pairs": [
+            {
+              "id": "auction",
+              "left": "auction",
+              "right": "拍卖（发行）"
+            },
+            {
+              "id": "issuance",
+              "left": "issuance",
+              "right": "发行（量）"
+            },
+            {
+              "id": "bid-to-cover",
+              "left": "bid-to-cover",
+              "right": "投标倍数"
+            },
+            {
+              "id": "primary dealer",
+              "left": "primary dealer",
+              "right": "一级交易商"
+            },
+            {
+              "id": "refinancing",
+              "left": "refinancing",
+              "right": "再融资"
+            }
+          ],
+          "why": "把每个词和它的意思对上。"
+        }
+      ]
+    },
+    {
+      "id": "u4l1",
+      "unit": 4,
+      "title": "发的都是什么债",
+      "icon": "📈",
+      "review": false,
+      "prompts": [
+        {
+          "id": "u4l1-treasury-m",
+          "type": "meaning",
+          "termId": "treasury",
+          "termIds": [
+            "treasury"
+          ],
+          "stem": "treasury 是什么意思？",
+          "options": [
+            {
+              "text": "中央政府发行的债务工具，通常被视为无风险基准。",
+              "art": "treasury"
+            },
+            {
+              "text": "英国政府发行的国债，传统上被认为信用极高。",
+              "art": "gilt"
+            },
+            {
+              "text": "由主权政府发行的债务，涵盖各国中央政府债。",
+              "art": "sovereign"
+            },
+            {
+              "text": "非金融机构企业发行的债务证券。",
+              "art": "corporate bond"
+            }
+          ],
+          "answer": 0,
+          "why": "treasury 通指中央政府债（美债语境）；gilt 特指英国国债。"
+        },
+        {
+          "id": "u4l1-treasury-s",
+          "type": "scenario",
+          "termId": "treasury",
+          "termIds": [
+            "treasury"
+          ],
+          "story": "India's overnight indexed swap rates rose in line with Treasury yields.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "treasury",
+              "art": "treasury"
+            },
+            {
+              "text": "gilt",
+              "art": "gilt"
+            },
+            {
+              "text": "sovereign",
+              "art": "sovereign"
+            },
+            {
+              "text": "corporate bond",
+              "art": "corporate bond"
+            }
+          ],
+          "answer": 0,
+          "why": "treasury：中央政府发行的债务工具，通常被视为无风险基准。"
+        },
+        {
+          "id": "u4l1-treasury-t",
+          "type": "truefalse",
+          "termId": "treasury",
+          "termIds": [
+            "treasury"
+          ],
+          "stem": "treasury：国债（美债）",
+          "answer": true,
+          "why": "treasury 确实是「国债（美债）」。"
+        },
+        {
+          "id": "u4l1-treasury-f",
+          "type": "fill",
+          "termId": "treasury",
+          "termIds": [
+            "treasury"
+          ],
+          "story": "India's overnight indexed swap rates rose in line with ____ yields.",
+          "bank": [
+            "treasury",
+            "gilt",
+            "sovereign",
+            "corporate bond"
+          ],
+          "answer": "treasury",
+          "why": "treasury 通指中央政府债（美债语境）；gilt 特指英国国债。"
+        },
+        {
+          "id": "u4l1-gilt-m",
+          "type": "meaning",
+          "termId": "gilt",
+          "termIds": [
+            "gilt"
+          ],
+          "stem": "gilt 是什么意思？",
+          "options": [
+            {
+              "text": "英国政府发行的国债，传统上被认为信用极高。",
+              "art": "gilt"
+            },
+            {
+              "text": "中央政府发行的债务工具，通常被视为无风险基准。",
+              "art": "treasury"
+            },
+            {
+              "text": "由主权政府发行的债务，涵盖各国中央政府债。",
+              "art": "sovereign"
+            },
+            {
+              "text": "非金融机构企业发行的债务证券。",
+              "art": "corporate bond"
+            }
+          ],
+          "answer": 0,
+          "why": "gilt 专指英国的；treasury 是各国中央政府债的通称，美债最常见。"
+        },
+        {
+          "id": "u4l1-gilt-s",
+          "type": "scenario",
+          "termId": "gilt",
+          "termIds": [
+            "gilt"
+          ],
+          "story": "UK gilt investors expect the budget to pass without market drama.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "gilt",
+              "art": "gilt"
+            },
+            {
+              "text": "treasury",
+              "art": "treasury"
+            },
+            {
+              "text": "sovereign",
+              "art": "sovereign"
+            },
+            {
+              "text": "corporate bond",
+              "art": "corporate bond"
+            }
+          ],
+          "answer": 0,
+          "why": "gilt：英国政府发行的国债，传统上被认为信用极高。"
+        },
+        {
+          "id": "u4l1-gilt-t",
+          "type": "truefalse",
+          "termId": "gilt",
+          "termIds": [
+            "gilt"
+          ],
+          "stem": "gilt 就是 国债（美债）。",
+          "answer": false,
+          "why": "gilt 是「金边债（英国国债）」，不是「国债（美债）」。"
+        },
+        {
+          "id": "u4l1-gilt-f",
+          "type": "fill",
+          "termId": "gilt",
+          "termIds": [
+            "gilt"
+          ],
+          "story": "UK ____ investors expect the budget to pass without market drama.",
+          "bank": [
+            "gilt",
+            "treasury",
+            "sovereign",
+            "corporate bond"
+          ],
+          "answer": "gilt",
+          "why": "gilt 专指英国的；treasury 是各国中央政府债的通称，美债最常见。"
+        },
+        {
+          "id": "u4l1-sovereign-m",
+          "type": "meaning",
+          "termId": "sovereign",
+          "termIds": [
+            "sovereign"
+          ],
+          "stem": "sovereign 是什么意思？",
+          "options": [
+            {
+              "text": "由主权政府发行的债务，涵盖各国中央政府债。",
+              "art": "sovereign"
+            },
+            {
+              "text": "中央政府发行的债务工具，通常被视为无风险基准。",
+              "art": "treasury"
+            },
+            {
+              "text": "英国政府发行的国债，传统上被认为信用极高。",
+              "art": "gilt"
+            },
+            {
+              "text": "非金融机构企业发行的债务证券。",
+              "art": "corporate bond"
+            }
+          ],
+          "answer": 0,
+          "why": "sovereign 是「国家信用」这个类别；treasury 通常指美国的、gilt 指英国的。"
+        },
+        {
+          "id": "u4l1-sovereign-s",
+          "type": "scenario",
+          "termId": "sovereign",
+          "termIds": [
+            "sovereign"
+          ],
+          "story": "The sovereign yield curve has climbed sharply.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "sovereign",
+              "art": "sovereign"
+            },
+            {
+              "text": "treasury",
+              "art": "treasury"
+            },
+            {
+              "text": "gilt",
+              "art": "gilt"
+            },
+            {
+              "text": "corporate bond",
+              "art": "corporate bond"
+            }
+          ],
+          "answer": 0,
+          "why": "sovereign：由主权政府发行的债务，涵盖各国中央政府债。"
+        },
+        {
+          "id": "u4l1-sovereign-t",
+          "type": "truefalse",
+          "termId": "sovereign",
+          "termIds": [
+            "sovereign"
+          ],
+          "stem": "sovereign：主权债",
+          "answer": true,
+          "why": "sovereign 确实是「主权债」。"
+        },
+        {
+          "id": "u4l1-sovereign-f",
+          "type": "fill",
+          "termId": "sovereign",
+          "termIds": [
+            "sovereign"
+          ],
+          "story": "The ____ yield curve has climbed sharply.",
+          "bank": [
+            "sovereign",
+            "treasury",
+            "gilt",
+            "corporate bond"
+          ],
+          "answer": "sovereign",
+          "why": "sovereign 是「国家信用」这个类别；treasury 通常指美国的、gilt 指英国的。"
+        },
+        {
+          "id": "u4l1-corporate bond-m",
+          "type": "meaning",
+          "termId": "corporate bond",
+          "termIds": [
+            "corporate bond"
+          ],
+          "stem": "corporate bond 是什么意思？",
+          "options": [
+            {
+              "text": "非金融机构企业发行的债务证券。",
+              "art": "corporate bond"
+            },
+            {
+              "text": "中央政府发行的债务工具，通常被视为无风险基准。",
+              "art": "treasury"
+            },
+            {
+              "text": "英国政府发行的国债，传统上被认为信用极高。",
+              "art": "gilt"
+            },
+            {
+              "text": "由主权政府发行的债务，涵盖各国中央政府债。",
+              "art": "sovereign"
+            }
+          ],
+          "answer": 0,
+          "why": "corporate bond 背后是企业信用；sovereign 背后是国家信用。前者利率更高。"
+        },
+        {
+          "id": "u4l1-corporate bond-s",
+          "type": "scenario",
+          "termId": "corporate bond",
+          "termIds": [
+            "corporate bond"
+          ],
+          "story": "The corporate bond market priced a large fixed-rate issue at a spread of 180 basis points.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "corporate bond",
+              "art": "corporate bond"
+            },
+            {
+              "text": "treasury",
+              "art": "treasury"
+            },
+            {
+              "text": "gilt",
+              "art": "gilt"
+            },
+            {
+              "text": "sovereign",
+              "art": "sovereign"
+            }
+          ],
+          "answer": 0,
+          "why": "corporate bond：非金融机构企业发行的债务证券。"
+        },
+        {
+          "id": "u4l1-corporate bond-t",
+          "type": "truefalse",
+          "termId": "corporate bond",
+          "termIds": [
+            "corporate bond"
+          ],
+          "stem": "corporate bond 就是 国债（美债）。",
+          "answer": false,
+          "why": "corporate bond 是「公司债」，不是「国债（美债）」。"
+        },
+        {
+          "id": "u4l1-corporate bond-f",
+          "type": "fill",
+          "termId": "corporate bond",
+          "termIds": [
+            "corporate bond"
+          ],
+          "story": "The ____ market priced a large fixed-rate issue at a spread of 180 basis points.",
+          "bank": [
+            "corporate bond",
+            "treasury",
+            "gilt",
+            "sovereign"
+          ],
+          "answer": "corporate bond",
+          "why": "corporate bond 背后是企业信用；sovereign 背后是国家信用。前者利率更高。"
+        },
+        {
+          "id": "u4l1-match",
+          "type": "match",
+          "termIds": [
+            "treasury",
+            "gilt",
+            "sovereign",
+            "corporate bond"
+          ],
+          "pairs": [
+            {
+              "id": "treasury",
+              "left": "treasury",
+              "right": "国债（美债）"
+            },
+            {
+              "id": "gilt",
+              "left": "gilt",
+              "right": "金边债（英国国债）"
+            },
+            {
+              "id": "sovereign",
+              "left": "sovereign",
+              "right": "主权债"
+            },
+            {
+              "id": "corporate bond",
+              "left": "corporate bond",
+              "right": "公司债"
+            }
+          ],
+          "why": "把每个词和它的意思对上。"
+        }
+      ]
+    },
+    {
+      "id": "u4l2",
+      "unit": 4,
+      "title": "发的都是什么债（续）",
+      "icon": "📈",
+      "review": false,
+      "prompts": [
+        {
+          "id": "u4l2-commercial paper-m",
+          "type": "meaning",
+          "termId": "commercial paper",
+          "termIds": [
+            "commercial paper"
+          ],
+          "stem": "commercial paper 是什么意思？",
+          "options": [
+            {
+              "text": "企业发行的短期无担保债务工具，期限通常在一年以内。",
+              "art": "commercial paper"
+            },
+            {
+              "text": "中央政府发行的债务工具，通常被视为无风险基准。",
+              "art": "treasury"
+            },
+            {
+              "text": "英国政府发行的国债，传统上被认为信用极高。",
+              "art": "gilt"
+            },
+            {
+              "text": "由主权政府发行的债务，涵盖各国中央政府债。",
+              "art": "sovereign"
+            }
+          ],
+          "answer": 0,
+          "why": "commercial paper 是短期（一年内）、常无担保；corporate bond 是长期、可有担保。"
+        },
+        {
+          "id": "u4l2-commercial paper-s",
+          "type": "scenario",
+          "termId": "commercial paper",
+          "termIds": [
+            "commercial paper"
+          ],
+          "story": "Foreign holdings of onshore bonds remained unchanged, and commercial paper demand held up.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "commercial paper",
+              "art": "commercial paper"
+            },
+            {
+              "text": "treasury",
+              "art": "treasury"
+            },
+            {
+              "text": "gilt",
+              "art": "gilt"
+            },
+            {
+              "text": "sovereign",
+              "art": "sovereign"
+            }
+          ],
+          "answer": 0,
+          "why": "commercial paper：企业发行的短期无担保债务工具，期限通常在一年以内。"
+        },
+        {
+          "id": "u4l2-commercial paper-t",
+          "type": "truefalse",
+          "termId": "commercial paper",
+          "termIds": [
+            "commercial paper"
+          ],
+          "stem": "commercial paper：商业票据",
+          "answer": true,
+          "why": "commercial paper 确实是「商业票据」。"
+        },
+        {
+          "id": "u4l2-commercial paper-f",
+          "type": "fill",
+          "termId": "commercial paper",
+          "termIds": [
+            "commercial paper"
+          ],
+          "story": "Foreign holdings of onshore bonds remained unchanged, and ____ demand held up.",
+          "bank": [
+            "commercial paper",
+            "junk bond",
+            "investment grade"
+          ],
+          "answer": "commercial paper",
+          "why": "commercial paper 是短期（一年内）、常无担保；corporate bond 是长期、可有担保。"
+        },
+        {
+          "id": "u4l2-junk bond-m",
+          "type": "meaning",
+          "termId": "junk bond",
+          "termIds": [
+            "junk bond"
+          ],
+          "stem": "junk bond 是什么意思？",
+          "options": [
+            {
+              "text": "信用评级低于投资级的债券，又称高收益债。",
+              "art": "junk bond"
+            },
+            {
+              "text": "中央政府发行的债务工具，通常被视为无风险基准。",
+              "art": "treasury"
+            },
+            {
+              "text": "英国政府发行的国债，传统上被认为信用极高。",
+              "art": "gilt"
+            },
+            {
+              "text": "由主权政府发行的债务，涵盖各国中央政府债。",
+              "art": "sovereign"
+            }
+          ],
+          "answer": 0,
+          "why": "junk bond 评级低、利率高；investment grade 评级高、利率低。两者是评级分界线的两侧。"
+        },
+        {
+          "id": "u4l2-junk bond-s",
+          "type": "scenario",
+          "termId": "junk bond",
+          "termIds": [
+            "junk bond"
+          ],
+          "story": "A junk bond sale was pulled after investors asked for a spread beyond the issuer's target.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "junk bond",
+              "art": "junk bond"
+            },
+            {
+              "text": "treasury",
+              "art": "treasury"
+            },
+            {
+              "text": "gilt",
+              "art": "gilt"
+            },
+            {
+              "text": "sovereign",
+              "art": "sovereign"
+            }
+          ],
+          "answer": 0,
+          "why": "junk bond：信用评级低于投资级的债券，又称高收益债。"
+        },
+        {
+          "id": "u4l2-junk bond-t",
+          "type": "truefalse",
+          "termId": "junk bond",
+          "termIds": [
+            "junk bond"
+          ],
+          "stem": "junk bond 就是 国债（美债）。",
+          "answer": false,
+          "why": "junk bond 是「垃圾债」，不是「国债（美债）」。"
+        },
+        {
+          "id": "u4l2-junk bond-f",
+          "type": "fill",
+          "termId": "junk bond",
+          "termIds": [
+            "junk bond"
+          ],
+          "story": "A ____ sale was pulled after investors asked for a spread beyond the issuer's target.",
+          "bank": [
+            "junk bond",
+            "commercial paper",
+            "investment grade"
+          ],
+          "answer": "junk bond",
+          "why": "junk bond 评级低、利率高；investment grade 评级高、利率低。两者是评级分界线的两侧。"
+        },
+        {
+          "id": "u4l2-investment grade-m",
+          "type": "meaning",
+          "termId": "investment grade",
+          "termIds": [
+            "investment grade"
+          ],
+          "stem": "investment grade 是什么意思？",
+          "options": [
+            {
+              "text": "信用评级达到投资级门槛（通常 BBB-/Baa3 及以上）的债券。",
+              "art": "investment grade"
+            },
+            {
+              "text": "中央政府发行的债务工具，通常被视为无风险基准。",
+              "art": "treasury"
+            },
+            {
+              "text": "英国政府发行的国债，传统上被认为信用极高。",
+              "art": "gilt"
+            },
+            {
+              "text": "由主权政府发行的债务，涵盖各国中央政府债。",
+              "art": "sovereign"
+            }
+          ],
+          "answer": 0,
+          "why": "investment grade 是门槛以上；junk bond 是门槛以下。"
+        },
+        {
+          "id": "u4l2-investment grade-s",
+          "type": "scenario",
+          "termId": "investment grade",
+          "termIds": [
+            "investment grade"
+          ],
+          "story": "Investment grade issuers still found buyers, but a junk sale was pulled.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "investment grade",
+              "art": "investment grade"
+            },
+            {
+              "text": "treasury",
+              "art": "treasury"
+            },
+            {
+              "text": "gilt",
+              "art": "gilt"
+            },
+            {
+              "text": "sovereign",
+              "art": "sovereign"
+            }
+          ],
+          "answer": 0,
+          "why": "investment grade：信用评级达到投资级门槛（通常 BBB-/Baa3 及以上）的债券。"
+        },
+        {
+          "id": "u4l2-investment grade-t",
+          "type": "truefalse",
+          "termId": "investment grade",
+          "termIds": [
+            "investment grade"
+          ],
+          "stem": "investment grade：投资级",
+          "answer": true,
+          "why": "investment grade 确实是「投资级」。"
+        },
+        {
+          "id": "u4l2-investment grade-f",
+          "type": "fill",
+          "termId": "investment grade",
+          "termIds": [
+            "investment grade"
+          ],
+          "story": "____ issuers still found buyers, but a junk sale was pulled.",
+          "bank": [
+            "investment grade",
+            "commercial paper",
+            "junk bond"
+          ],
+          "answer": "investment grade",
+          "why": "investment grade 是门槛以上；junk bond 是门槛以下。"
+        },
+        {
+          "id": "u4l2-match",
+          "type": "match",
+          "termIds": [
+            "commercial paper",
+            "junk bond",
+            "investment grade"
+          ],
+          "pairs": [
+            {
+              "id": "commercial paper",
+              "left": "commercial paper",
+              "right": "商业票据"
+            },
+            {
+              "id": "junk bond",
+              "left": "junk bond",
+              "right": "垃圾债"
+            },
+            {
+              "id": "investment grade",
+              "left": "investment grade",
+              "right": "投资级"
+            }
+          ],
+          "why": "把每个词和它的意思对上。"
+        }
+      ]
+    },
+    {
+      "id": "u4r",
+      "unit": 4,
+      "title": "发的都是什么债 · 回顾",
+      "icon": "🏆",
+      "review": true,
+      "prompts": [
+        {
+          "id": "u4r-treasury-s",
+          "type": "scenario",
+          "termId": "treasury",
+          "termIds": [
+            "treasury"
+          ],
+          "story": "India's overnight indexed swap rates rose in line with Treasury yields.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "treasury",
+              "art": "treasury"
+            },
+            {
+              "text": "gilt",
+              "art": "gilt"
+            },
+            {
+              "text": "sovereign",
+              "art": "sovereign"
+            },
+            {
+              "text": "corporate bond",
+              "art": "corporate bond"
+            }
+          ],
+          "answer": 0,
+          "why": "treasury：中央政府发行的债务工具，通常被视为无风险基准。"
+        },
+        {
+          "id": "u4r-treasury-t",
+          "type": "truefalse",
+          "termId": "treasury",
+          "termIds": [
+            "treasury"
+          ],
+          "stem": "treasury：国债（美债）",
+          "answer": true,
+          "why": "treasury 确实是「国债（美债）」。"
+        },
+        {
+          "id": "u4r-gilt-s",
+          "type": "scenario",
+          "termId": "gilt",
+          "termIds": [
+            "gilt"
+          ],
+          "story": "UK gilt investors expect the budget to pass without market drama.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "gilt",
+              "art": "gilt"
+            },
+            {
+              "text": "treasury",
+              "art": "treasury"
+            },
+            {
+              "text": "sovereign",
+              "art": "sovereign"
+            },
+            {
+              "text": "corporate bond",
+              "art": "corporate bond"
+            }
+          ],
+          "answer": 0,
+          "why": "gilt：英国政府发行的国债，传统上被认为信用极高。"
+        },
+        {
+          "id": "u4r-gilt-t",
+          "type": "truefalse",
+          "termId": "gilt",
+          "termIds": [
+            "gilt"
+          ],
+          "stem": "gilt 就是 国债（美债）。",
+          "answer": false,
+          "why": "gilt 是「金边债（英国国债）」，不是「国债（美债）」。"
+        },
+        {
+          "id": "u4r-sovereign-s",
+          "type": "scenario",
+          "termId": "sovereign",
+          "termIds": [
+            "sovereign"
+          ],
+          "story": "The sovereign yield curve has climbed sharply.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "sovereign",
+              "art": "sovereign"
+            },
+            {
+              "text": "treasury",
+              "art": "treasury"
+            },
+            {
+              "text": "gilt",
+              "art": "gilt"
+            },
+            {
+              "text": "corporate bond",
+              "art": "corporate bond"
+            }
+          ],
+          "answer": 0,
+          "why": "sovereign：由主权政府发行的债务，涵盖各国中央政府债。"
+        },
+        {
+          "id": "u4r-sovereign-t",
+          "type": "truefalse",
+          "termId": "sovereign",
+          "termIds": [
+            "sovereign"
+          ],
+          "stem": "sovereign：主权债",
+          "answer": true,
+          "why": "sovereign 确实是「主权债」。"
+        },
+        {
+          "id": "u4r-corporate bond-s",
+          "type": "scenario",
+          "termId": "corporate bond",
+          "termIds": [
+            "corporate bond"
+          ],
+          "story": "The corporate bond market priced a large fixed-rate issue at a spread of 180 basis points.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "corporate bond",
+              "art": "corporate bond"
+            },
+            {
+              "text": "treasury",
+              "art": "treasury"
+            },
+            {
+              "text": "gilt",
+              "art": "gilt"
+            },
+            {
+              "text": "sovereign",
+              "art": "sovereign"
+            }
+          ],
+          "answer": 0,
+          "why": "corporate bond：非金融机构企业发行的债务证券。"
+        },
+        {
+          "id": "u4r-corporate bond-t",
+          "type": "truefalse",
+          "termId": "corporate bond",
+          "termIds": [
+            "corporate bond"
+          ],
+          "stem": "corporate bond 就是 国债（美债）。",
+          "answer": false,
+          "why": "corporate bond 是「公司债」，不是「国债（美债）」。"
+        },
+        {
+          "id": "u4r-commercial paper-s",
+          "type": "scenario",
+          "termId": "commercial paper",
+          "termIds": [
+            "commercial paper"
+          ],
+          "story": "Foreign holdings of onshore bonds remained unchanged, and commercial paper demand held up.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "commercial paper",
+              "art": "commercial paper"
+            },
+            {
+              "text": "treasury",
+              "art": "treasury"
+            },
+            {
+              "text": "gilt",
+              "art": "gilt"
+            },
+            {
+              "text": "sovereign",
+              "art": "sovereign"
+            }
+          ],
+          "answer": 0,
+          "why": "commercial paper：企业发行的短期无担保债务工具，期限通常在一年以内。"
+        },
+        {
+          "id": "u4r-commercial paper-t",
+          "type": "truefalse",
+          "termId": "commercial paper",
+          "termIds": [
+            "commercial paper"
+          ],
+          "stem": "commercial paper：商业票据",
+          "answer": true,
+          "why": "commercial paper 确实是「商业票据」。"
+        },
+        {
+          "id": "u4r-junk bond-s",
+          "type": "scenario",
+          "termId": "junk bond",
+          "termIds": [
+            "junk bond"
+          ],
+          "story": "A junk bond sale was pulled after investors asked for a spread beyond the issuer's target.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "junk bond",
+              "art": "junk bond"
+            },
+            {
+              "text": "treasury",
+              "art": "treasury"
+            },
+            {
+              "text": "gilt",
+              "art": "gilt"
+            },
+            {
+              "text": "sovereign",
+              "art": "sovereign"
+            }
+          ],
+          "answer": 0,
+          "why": "junk bond：信用评级低于投资级的债券，又称高收益债。"
+        },
+        {
+          "id": "u4r-junk bond-t",
+          "type": "truefalse",
+          "termId": "junk bond",
+          "termIds": [
+            "junk bond"
+          ],
+          "stem": "junk bond 就是 国债（美债）。",
+          "answer": false,
+          "why": "junk bond 是「垃圾债」，不是「国债（美债）」。"
+        },
+        {
+          "id": "u4r-investment grade-s",
+          "type": "scenario",
+          "termId": "investment grade",
+          "termIds": [
+            "investment grade"
+          ],
+          "story": "Investment grade issuers still found buyers, but a junk sale was pulled.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "investment grade",
+              "art": "investment grade"
+            },
+            {
+              "text": "treasury",
+              "art": "treasury"
+            },
+            {
+              "text": "gilt",
+              "art": "gilt"
+            },
+            {
+              "text": "sovereign",
+              "art": "sovereign"
+            }
+          ],
+          "answer": 0,
+          "why": "investment grade：信用评级达到投资级门槛（通常 BBB-/Baa3 及以上）的债券。"
+        },
+        {
+          "id": "u4r-investment grade-t",
+          "type": "truefalse",
+          "termId": "investment grade",
+          "termIds": [
+            "investment grade"
+          ],
+          "stem": "investment grade：投资级",
+          "answer": true,
+          "why": "investment grade 确实是「投资级」。"
+        },
+        {
+          "id": "u4r-match",
+          "type": "match",
+          "termIds": [
+            "treasury",
+            "gilt",
+            "sovereign",
+            "corporate bond",
+            "commercial paper",
+            "junk bond",
+            "investment grade"
+          ],
+          "pairs": [
+            {
+              "id": "treasury",
+              "left": "treasury",
+              "right": "国债（美债）"
+            },
+            {
+              "id": "gilt",
+              "left": "gilt",
+              "right": "金边债（英国国债）"
+            },
+            {
+              "id": "sovereign",
+              "left": "sovereign",
+              "right": "主权债"
+            },
+            {
+              "id": "corporate bond",
+              "left": "corporate bond",
+              "right": "公司债"
+            },
+            {
+              "id": "commercial paper",
+              "left": "commercial paper",
+              "right": "商业票据"
+            },
+            {
+              "id": "junk bond",
+              "left": "junk bond",
+              "right": "垃圾债"
+            },
+            {
+              "id": "investment grade",
+              "left": "investment grade",
+              "right": "投资级"
+            }
+          ],
+          "why": "把每个词和它的意思对上。"
+        }
+      ]
+    },
+    {
+      "id": "u5l1",
+      "unit": 5,
+      "title": "利率的两种写法",
+      "icon": "📈",
+      "review": false,
+      "prompts": [
+        {
+          "id": "u5l1-inflation-linked-m",
+          "type": "meaning",
+          "termId": "inflation-linked",
+          "termIds": [
+            "inflation-linked"
+          ],
+          "stem": "inflation-linked 是什么意思？",
+          "options": [
+            {
+              "text": "本金或利息按通胀指数调整的债券，用于对冲物价上涨风险。",
+              "art": "inflation-linked"
+            },
+            {
+              "text": "票息在发行时确定并保持不变直到到期的债券或贷款。",
+              "art": "fixed-rate"
+            },
+            {
+              "text": "票息按某个基准利率加固定利差定期重设的债券或贷款。",
+              "art": "floating-rate"
+            },
+            {
+              "text": "中央银行设定的目标利率，用于引导市场利率水平。",
+              "art": "policy rate"
+            }
+          ],
+          "answer": 0,
+          "why": "inflation-linked 的本金随物价变；fixed-rate 的票息和本金都写死。"
+        },
+        {
+          "id": "u5l1-inflation-linked-s",
+          "type": "scenario",
+          "termId": "inflation-linked",
+          "termIds": [
+            "inflation-linked"
+          ],
+          "story": "Inflation-linked bonds, whose principal is adjusted for the consumer price index, drew strong demand.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "inflation-linked",
+              "art": "inflation-linked"
+            },
+            {
+              "text": "fixed-rate",
+              "art": "fixed-rate"
+            },
+            {
+              "text": "floating-rate",
+              "art": "floating-rate"
+            },
+            {
+              "text": "policy rate",
+              "art": "policy rate"
+            }
+          ],
+          "answer": 0,
+          "why": "inflation-linked：本金或利息按通胀指数调整的债券，用于对冲物价上涨风险。"
+        },
+        {
+          "id": "u5l1-inflation-linked-t",
+          "type": "truefalse",
+          "termId": "inflation-linked",
+          "termIds": [
+            "inflation-linked"
+          ],
+          "stem": "inflation-linked：通胀挂钩",
+          "answer": true,
+          "why": "inflation-linked 确实是「通胀挂钩」。"
+        },
+        {
+          "id": "u5l1-inflation-linked-f",
+          "type": "fill",
+          "termId": "inflation-linked",
+          "termIds": [
+            "inflation-linked"
+          ],
+          "story": "____ bonds, whose principal is adjusted for the consumer price index, drew strong demand.",
+          "bank": [
+            "inflation-linked",
+            "fixed-rate",
+            "floating-rate"
+          ],
+          "answer": "inflation-linked",
+          "why": "inflation-linked 的本金随物价变；fixed-rate 的票息和本金都写死。"
+        },
+        {
+          "id": "u5l1-fixed-rate-m",
+          "type": "meaning",
+          "termId": "fixed-rate",
+          "termIds": [
+            "fixed-rate"
+          ],
+          "stem": "fixed-rate 是什么意思？",
+          "options": [
+            {
+              "text": "票息在发行时确定并保持不变直到到期的债券或贷款。",
+              "art": "fixed-rate"
+            },
+            {
+              "text": "本金或利息按通胀指数调整的债券，用于对冲物价上涨风险。",
+              "art": "inflation-linked"
+            },
+            {
+              "text": "票息按某个基准利率加固定利差定期重设的债券或贷款。",
+              "art": "floating-rate"
+            },
+            {
+              "text": "中央银行设定的目标利率，用于引导市场利率水平。",
+              "art": "policy rate"
+            }
+          ],
+          "answer": 0,
+          "why": "fixed-rate 锁死不变；floating-rate 跟着基准利率浮动。"
+        },
+        {
+          "id": "u5l1-fixed-rate-s",
+          "type": "scenario",
+          "termId": "fixed-rate",
+          "termIds": [
+            "fixed-rate"
+          ],
+          "story": "The corporate bond market priced a large fixed-rate issue at a spread of 180 basis points.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "fixed-rate",
+              "art": "fixed-rate"
+            },
+            {
+              "text": "inflation-linked",
+              "art": "inflation-linked"
+            },
+            {
+              "text": "floating-rate",
+              "art": "floating-rate"
+            },
+            {
+              "text": "policy rate",
+              "art": "policy rate"
+            }
+          ],
+          "answer": 0,
+          "why": "fixed-rate：票息在发行时确定并保持不变直到到期的债券或贷款。"
+        },
+        {
+          "id": "u5l1-fixed-rate-t",
+          "type": "truefalse",
+          "termId": "fixed-rate",
+          "termIds": [
+            "fixed-rate"
+          ],
+          "stem": "fixed-rate 就是 通胀挂钩。",
+          "answer": false,
+          "why": "fixed-rate 是「固定利率」，不是「通胀挂钩」。"
+        },
+        {
+          "id": "u5l1-fixed-rate-f",
+          "type": "fill",
+          "termId": "fixed-rate",
+          "termIds": [
+            "fixed-rate"
+          ],
+          "story": "The corporate bond market priced a large ____ issue at a spread of 180 basis points.",
+          "bank": [
+            "fixed-rate",
+            "inflation-linked",
+            "floating-rate"
+          ],
+          "answer": "fixed-rate",
+          "why": "fixed-rate 锁死不变；floating-rate 跟着基准利率浮动。"
+        },
+        {
+          "id": "u5l1-floating-rate-m",
+          "type": "meaning",
+          "termId": "floating-rate",
+          "termIds": [
+            "floating-rate"
+          ],
+          "stem": "floating-rate 是什么意思？",
+          "options": [
+            {
+              "text": "票息按某个基准利率加固定利差定期重设的债券或贷款。",
+              "art": "floating-rate"
+            },
+            {
+              "text": "本金或利息按通胀指数调整的债券，用于对冲物价上涨风险。",
+              "art": "inflation-linked"
+            },
+            {
+              "text": "票息在发行时确定并保持不变直到到期的债券或贷款。",
+              "art": "fixed-rate"
+            },
+            {
+              "text": "中央银行设定的目标利率，用于引导市场利率水平。",
+              "art": "policy rate"
+            }
+          ],
+          "answer": 0,
+          "why": "floating-rate 随基准变动；fixed-rate 从头到尾不变。"
+        },
+        {
+          "id": "u5l1-floating-rate-s",
+          "type": "scenario",
+          "termId": "floating-rate",
+          "termIds": [
+            "floating-rate"
+          ],
+          "story": "Floating-rate notes attracted buyers expecting the policy rate to keep rising.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "floating-rate",
+              "art": "floating-rate"
+            },
+            {
+              "text": "inflation-linked",
+              "art": "inflation-linked"
+            },
+            {
+              "text": "fixed-rate",
+              "art": "fixed-rate"
+            },
+            {
+              "text": "policy rate",
+              "art": "policy rate"
+            }
+          ],
+          "answer": 0,
+          "why": "floating-rate：票息按某个基准利率加固定利差定期重设的债券或贷款。"
+        },
+        {
+          "id": "u5l1-floating-rate-t",
+          "type": "truefalse",
+          "termId": "floating-rate",
+          "termIds": [
+            "floating-rate"
+          ],
+          "stem": "floating-rate：浮动利率",
+          "answer": true,
+          "why": "floating-rate 确实是「浮动利率」。"
+        },
+        {
+          "id": "u5l1-floating-rate-f",
+          "type": "fill",
+          "termId": "floating-rate",
+          "termIds": [
+            "floating-rate"
+          ],
+          "story": "____ notes attracted buyers expecting the policy rate to keep rising.",
+          "bank": [
+            "floating-rate",
+            "inflation-linked",
+            "fixed-rate"
+          ],
+          "answer": "floating-rate",
+          "why": "floating-rate 随基准变动；fixed-rate 从头到尾不变。"
+        },
+        {
+          "id": "u5l1-match",
+          "type": "match",
+          "termIds": [
+            "inflation-linked",
+            "fixed-rate",
+            "floating-rate"
+          ],
+          "pairs": [
+            {
+              "id": "inflation-linked",
+              "left": "inflation-linked",
+              "right": "通胀挂钩"
+            },
+            {
+              "id": "fixed-rate",
+              "left": "fixed-rate",
+              "right": "固定利率"
+            },
+            {
+              "id": "floating-rate",
+              "left": "floating-rate",
+              "right": "浮动利率"
+            }
+          ],
+          "why": "把每个词和它的意思对上。"
+        }
+      ]
+    },
+    {
+      "id": "u5l2",
+      "unit": 5,
+      "title": "利率的两种写法（续）",
+      "icon": "📈",
+      "review": false,
+      "prompts": [
+        {
+          "id": "u5l2-policy rate-m",
+          "type": "meaning",
+          "termId": "policy rate",
+          "termIds": [
+            "policy rate"
+          ],
+          "stem": "policy rate 是什么意思？",
+          "options": [
+            {
+              "text": "中央银行设定的目标利率，用于引导市场利率水平。",
+              "art": "policy rate"
+            },
+            {
+              "text": "本金或利息按通胀指数调整的债券，用于对冲物价上涨风险。",
+              "art": "inflation-linked"
+            },
+            {
+              "text": "票息在发行时确定并保持不变直到到期的债券或贷款。",
+              "art": "fixed-rate"
+            },
+            {
+              "text": "票息按某个基准利率加固定利差定期重设的债券或贷款。",
+              "art": "floating-rate"
+            }
+          ],
+          "answer": 0,
+          "why": "policy rate 是被设定的那个利率水平；basis point 是衡量它变了多少的单位。"
+        },
+        {
+          "id": "u5l2-policy rate-s",
+          "type": "scenario",
+          "termId": "policy rate",
+          "termIds": [
+            "policy rate"
+          ],
+          "story": "The central bank raised the policy rate earlier this month.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "policy rate",
+              "art": "policy rate"
+            },
+            {
+              "text": "inflation-linked",
+              "art": "inflation-linked"
+            },
+            {
+              "text": "fixed-rate",
+              "art": "fixed-rate"
+            },
+            {
+              "text": "floating-rate",
+              "art": "floating-rate"
+            }
+          ],
+          "answer": 0,
+          "why": "policy rate：中央银行设定的目标利率，用于引导市场利率水平。"
+        },
+        {
+          "id": "u5l2-policy rate-t",
+          "type": "truefalse",
+          "termId": "policy rate",
+          "termIds": [
+            "policy rate"
+          ],
+          "stem": "policy rate：政策利率",
+          "answer": true,
+          "why": "policy rate 确实是「政策利率」。"
+        },
+        {
+          "id": "u5l2-policy rate-f",
+          "type": "fill",
+          "termId": "policy rate",
+          "termIds": [
+            "policy rate"
+          ],
+          "story": "The central bank raised the ____ earlier this month.",
+          "bank": [
+            "policy rate",
+            "benchmark rate"
+          ],
+          "answer": "policy rate",
+          "why": "policy rate 是被设定的那个利率水平；basis point 是衡量它变了多少的单位。"
+        },
+        {
+          "id": "u5l2-benchmark rate-m",
+          "type": "meaning",
+          "termId": "benchmark rate",
+          "termIds": [
+            "benchmark rate"
+          ],
+          "stem": "benchmark rate 是什么意思？",
+          "options": [
+            {
+              "text": "用于给其他金融产品定价的参考利率，如 SOFR 或 OIS。",
+              "art": "benchmark rate"
+            },
+            {
+              "text": "本金或利息按通胀指数调整的债券，用于对冲物价上涨风险。",
+              "art": "inflation-linked"
+            },
+            {
+              "text": "票息在发行时确定并保持不变直到到期的债券或贷款。",
+              "art": "fixed-rate"
+            },
+            {
+              "text": "票息按某个基准利率加固定利差定期重设的债券或贷款。",
+              "art": "floating-rate"
+            }
+          ],
+          "answer": 0,
+          "why": "benchmark rate 是市场定价的参照（如 SOFR）；policy rate 是央行设定的政策目标。前者跟随后者但不等于后者。"
+        },
+        {
+          "id": "u5l2-benchmark rate-s",
+          "type": "scenario",
+          "termId": "benchmark rate",
+          "termIds": [
+            "benchmark rate"
+          ],
+          "story": "Floating-rate notes are priced at a spread over a benchmark rate.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "benchmark rate",
+              "art": "benchmark rate"
+            },
+            {
+              "text": "inflation-linked",
+              "art": "inflation-linked"
+            },
+            {
+              "text": "fixed-rate",
+              "art": "fixed-rate"
+            },
+            {
+              "text": "floating-rate",
+              "art": "floating-rate"
+            }
+          ],
+          "answer": 0,
+          "why": "benchmark rate：用于给其他金融产品定价的参考利率，如 SOFR 或 OIS。"
+        },
+        {
+          "id": "u5l2-benchmark rate-t",
+          "type": "truefalse",
+          "termId": "benchmark rate",
+          "termIds": [
+            "benchmark rate"
+          ],
+          "stem": "benchmark rate 就是 通胀挂钩。",
+          "answer": false,
+          "why": "benchmark rate 是「基准利率」，不是「通胀挂钩」。"
+        },
+        {
+          "id": "u5l2-benchmark rate-f",
+          "type": "fill",
+          "termId": "benchmark rate",
+          "termIds": [
+            "benchmark rate"
+          ],
+          "story": "Floating-rate notes are priced at a spread over a ____.",
+          "bank": [
+            "benchmark rate",
+            "policy rate"
+          ],
+          "answer": "benchmark rate",
+          "why": "benchmark rate 是市场定价的参照（如 SOFR）；policy rate 是央行设定的政策目标。前者跟随后者但不等于后者。"
+        },
+        {
+          "id": "u5l2-match",
+          "type": "match",
+          "termIds": [
+            "policy rate",
+            "benchmark rate"
+          ],
+          "pairs": [
+            {
+              "id": "policy rate",
+              "left": "policy rate",
+              "right": "政策利率"
+            },
+            {
+              "id": "benchmark rate",
+              "left": "benchmark rate",
+              "right": "基准利率"
+            }
+          ],
+          "why": "把每个词和它的意思对上。"
+        }
+      ]
+    },
+    {
+      "id": "u5r",
+      "unit": 5,
+      "title": "利率的两种写法 · 回顾",
+      "icon": "🏆",
+      "review": true,
+      "prompts": [
+        {
+          "id": "u5r-inflation-linked-s",
+          "type": "scenario",
+          "termId": "inflation-linked",
+          "termIds": [
+            "inflation-linked"
+          ],
+          "story": "Inflation-linked bonds, whose principal is adjusted for the consumer price index, drew strong demand.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "inflation-linked",
+              "art": "inflation-linked"
+            },
+            {
+              "text": "fixed-rate",
+              "art": "fixed-rate"
+            },
+            {
+              "text": "floating-rate",
+              "art": "floating-rate"
+            },
+            {
+              "text": "policy rate",
+              "art": "policy rate"
+            }
+          ],
+          "answer": 0,
+          "why": "inflation-linked：本金或利息按通胀指数调整的债券，用于对冲物价上涨风险。"
+        },
+        {
+          "id": "u5r-inflation-linked-t",
+          "type": "truefalse",
+          "termId": "inflation-linked",
+          "termIds": [
+            "inflation-linked"
+          ],
+          "stem": "inflation-linked：通胀挂钩",
+          "answer": true,
+          "why": "inflation-linked 确实是「通胀挂钩」。"
+        },
+        {
+          "id": "u5r-fixed-rate-s",
+          "type": "scenario",
+          "termId": "fixed-rate",
+          "termIds": [
+            "fixed-rate"
+          ],
+          "story": "The corporate bond market priced a large fixed-rate issue at a spread of 180 basis points.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "fixed-rate",
+              "art": "fixed-rate"
+            },
+            {
+              "text": "inflation-linked",
+              "art": "inflation-linked"
+            },
+            {
+              "text": "floating-rate",
+              "art": "floating-rate"
+            },
+            {
+              "text": "policy rate",
+              "art": "policy rate"
+            }
+          ],
+          "answer": 0,
+          "why": "fixed-rate：票息在发行时确定并保持不变直到到期的债券或贷款。"
+        },
+        {
+          "id": "u5r-fixed-rate-t",
+          "type": "truefalse",
+          "termId": "fixed-rate",
+          "termIds": [
+            "fixed-rate"
+          ],
+          "stem": "fixed-rate 就是 通胀挂钩。",
+          "answer": false,
+          "why": "fixed-rate 是「固定利率」，不是「通胀挂钩」。"
+        },
+        {
+          "id": "u5r-floating-rate-s",
+          "type": "scenario",
+          "termId": "floating-rate",
+          "termIds": [
+            "floating-rate"
+          ],
+          "story": "Floating-rate notes attracted buyers expecting the policy rate to keep rising.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "floating-rate",
+              "art": "floating-rate"
+            },
+            {
+              "text": "inflation-linked",
+              "art": "inflation-linked"
+            },
+            {
+              "text": "fixed-rate",
+              "art": "fixed-rate"
+            },
+            {
+              "text": "policy rate",
+              "art": "policy rate"
+            }
+          ],
+          "answer": 0,
+          "why": "floating-rate：票息按某个基准利率加固定利差定期重设的债券或贷款。"
+        },
+        {
+          "id": "u5r-floating-rate-t",
+          "type": "truefalse",
+          "termId": "floating-rate",
+          "termIds": [
+            "floating-rate"
+          ],
+          "stem": "floating-rate：浮动利率",
+          "answer": true,
+          "why": "floating-rate 确实是「浮动利率」。"
+        },
+        {
+          "id": "u5r-policy rate-s",
+          "type": "scenario",
+          "termId": "policy rate",
+          "termIds": [
+            "policy rate"
+          ],
+          "story": "The central bank raised the policy rate earlier this month.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "policy rate",
+              "art": "policy rate"
+            },
+            {
+              "text": "inflation-linked",
+              "art": "inflation-linked"
+            },
+            {
+              "text": "fixed-rate",
+              "art": "fixed-rate"
+            },
+            {
+              "text": "floating-rate",
+              "art": "floating-rate"
+            }
+          ],
+          "answer": 0,
+          "why": "policy rate：中央银行设定的目标利率，用于引导市场利率水平。"
+        },
+        {
+          "id": "u5r-policy rate-t",
+          "type": "truefalse",
+          "termId": "policy rate",
+          "termIds": [
+            "policy rate"
+          ],
+          "stem": "policy rate 就是 通胀挂钩。",
+          "answer": false,
+          "why": "policy rate 是「政策利率」，不是「通胀挂钩」。"
+        },
+        {
+          "id": "u5r-benchmark rate-s",
+          "type": "scenario",
+          "termId": "benchmark rate",
+          "termIds": [
+            "benchmark rate"
+          ],
+          "story": "Floating-rate notes are priced at a spread over a benchmark rate.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "benchmark rate",
+              "art": "benchmark rate"
+            },
+            {
+              "text": "inflation-linked",
+              "art": "inflation-linked"
+            },
+            {
+              "text": "fixed-rate",
+              "art": "fixed-rate"
+            },
+            {
+              "text": "floating-rate",
+              "art": "floating-rate"
+            }
+          ],
+          "answer": 0,
+          "why": "benchmark rate：用于给其他金融产品定价的参考利率，如 SOFR 或 OIS。"
+        },
+        {
+          "id": "u5r-benchmark rate-t",
+          "type": "truefalse",
+          "termId": "benchmark rate",
+          "termIds": [
+            "benchmark rate"
+          ],
+          "stem": "benchmark rate：基准利率",
+          "answer": true,
+          "why": "benchmark rate 确实是「基准利率」。"
+        },
+        {
+          "id": "u5r-match",
+          "type": "match",
+          "termIds": [
+            "inflation-linked",
+            "fixed-rate",
+            "floating-rate",
+            "policy rate",
+            "benchmark rate"
+          ],
+          "pairs": [
+            {
+              "id": "inflation-linked",
+              "left": "inflation-linked",
+              "right": "通胀挂钩"
+            },
+            {
+              "id": "fixed-rate",
+              "left": "fixed-rate",
+              "right": "固定利率"
+            },
+            {
+              "id": "floating-rate",
+              "left": "floating-rate",
+              "right": "浮动利率"
+            },
+            {
+              "id": "policy rate",
+              "left": "policy rate",
+              "right": "政策利率"
+            },
+            {
+              "id": "benchmark rate",
+              "left": "benchmark rate",
+              "right": "基准利率"
+            }
+          ],
+          "why": "把每个词和它的意思对上。"
+        }
+      ]
+    },
+    {
+      "id": "u6l1",
+      "unit": 6,
+      "title": "利差在说什么",
+      "icon": "📈",
+      "review": false,
+      "prompts": [
+        {
+          "id": "u6l1-credit spread-m",
+          "type": "meaning",
+          "termId": "credit spread",
+          "termIds": [
+            "credit spread"
+          ],
+          "stem": "credit spread 是什么意思？",
+          "options": [
+            {
+              "text": "公司债收益率与同期限无风险国债收益率之差，衡量信用风险定价。",
+              "art": "credit spread"
+            },
+            {
+              "text": "信用利差扩大，通常意味着投资者要求更高的风险补偿。",
+              "art": "spread widening"
+            },
+            {
+              "text": "信用利差缩小，通常意味着风险偏好改善。",
+              "art": "spread tightening"
+            },
+            {
+              "text": "债务人无法按期支付利息或偿还本金的可能性。",
+              "art": "default risk"
+            }
+          ],
+          "answer": 0,
+          "why": "credit spread 是信用风险的价格；term premium 是拉长期限要的补偿。两者都会推高长期利率但不是一回事。"
+        },
+        {
+          "id": "u6l1-credit spread-s",
+          "type": "scenario",
+          "termId": "credit spread",
+          "termIds": [
+            "credit spread"
+          ],
+          "story": "Investors demanded a spread of 180 basis points over the comparable government security.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "credit spread",
+              "art": "credit spread"
+            },
+            {
+              "text": "spread widening",
+              "art": "spread widening"
+            },
+            {
+              "text": "spread tightening",
+              "art": "spread tightening"
+            },
+            {
+              "text": "default risk",
+              "art": "default risk"
+            }
+          ],
+          "answer": 0,
+          "why": "credit spread：公司债收益率与同期限无风险国债收益率之差，衡量信用风险定价。"
+        },
+        {
+          "id": "u6l1-credit spread-t",
+          "type": "truefalse",
+          "termId": "credit spread",
+          "termIds": [
+            "credit spread"
+          ],
+          "stem": "credit spread：信用利差",
+          "answer": true,
+          "why": "credit spread 确实是「信用利差」。"
+        },
+        {
+          "id": "u6l1-credit spread-f",
+          "type": "fill",
+          "termId": "credit spread",
+          "termIds": [
+            "credit spread"
+          ],
+          "story": "Investors demanded a spread of 180 basis points over the comparable government security. (这里的词是 ____)",
+          "bank": [
+            "credit spread",
+            "spread widening"
+          ],
+          "answer": "credit spread",
+          "why": "credit spread 是信用风险的价格；term premium 是拉长期限要的补偿。两者都会推高长期利率但不是一回事。"
+        },
+        {
+          "id": "u6l1-spread widening-m",
+          "type": "meaning",
+          "termId": "spread widening",
+          "termIds": [
+            "spread widening"
+          ],
+          "stem": "spread widening 是什么意思？",
+          "options": [
+            {
+              "text": "信用利差扩大，通常意味着投资者要求更高的风险补偿。",
+              "art": "spread widening"
+            },
+            {
+              "text": "公司债收益率与同期限无风险国债收益率之差，衡量信用风险定价。",
+              "art": "credit spread"
+            },
+            {
+              "text": "信用利差缩小，通常意味着风险偏好改善。",
+              "art": "spread tightening"
+            },
+            {
+              "text": "债务人无法按期支付利息或偿还本金的可能性。",
+              "art": "default risk"
+            }
+          ],
+          "answer": 0,
+          "why": "widening 是市场更担心、要求更多补偿；tightening 是担忧减轻。方向相反。"
+        },
+        {
+          "id": "u6l1-spread widening-s",
+          "type": "scenario",
+          "termId": "spread widening",
+          "termIds": [
+            "spread widening"
+          ],
+          "story": "The spread widening was most visible at the long end.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "spread widening",
+              "art": "spread widening"
+            },
+            {
+              "text": "credit spread",
+              "art": "credit spread"
+            },
+            {
+              "text": "spread tightening",
+              "art": "spread tightening"
+            },
+            {
+              "text": "default risk",
+              "art": "default risk"
+            }
+          ],
+          "answer": 0,
+          "why": "spread widening：信用利差扩大，通常意味着投资者要求更高的风险补偿。"
+        },
+        {
+          "id": "u6l1-spread widening-t",
+          "type": "truefalse",
+          "termId": "spread widening",
+          "termIds": [
+            "spread widening"
+          ],
+          "stem": "spread widening 就是 信用利差。",
+          "answer": false,
+          "why": "spread widening 是「利差走阔」，不是「信用利差」。"
+        },
+        {
+          "id": "u6l1-spread widening-f",
+          "type": "fill",
+          "termId": "spread widening",
+          "termIds": [
+            "spread widening"
+          ],
+          "story": "The ____ was most visible at the long end.",
+          "bank": [
+            "spread widening",
+            "credit spread"
+          ],
+          "answer": "spread widening",
+          "why": "widening 是市场更担心、要求更多补偿；tightening 是担忧减轻。方向相反。"
+        },
+        {
+          "id": "u6l1-match",
+          "type": "match",
+          "termIds": [
+            "credit spread",
+            "spread widening"
+          ],
+          "pairs": [
+            {
+              "id": "credit spread",
+              "left": "credit spread",
+              "right": "信用利差"
+            },
+            {
+              "id": "spread widening",
+              "left": "spread widening",
+              "right": "利差走阔"
+            }
+          ],
+          "why": "把每个词和它的意思对上。"
+        }
+      ]
+    },
+    {
+      "id": "u6l2",
+      "unit": 6,
+      "title": "利差在说什么（续）",
+      "icon": "📈",
+      "review": false,
+      "prompts": [
+        {
+          "id": "u6l2-spread tightening-m",
+          "type": "meaning",
+          "termId": "spread tightening",
+          "termIds": [
+            "spread tightening"
+          ],
+          "stem": "spread tightening 是什么意思？",
+          "options": [
+            {
+              "text": "信用利差缩小，通常意味着风险偏好改善。",
+              "art": "spread tightening"
+            },
+            {
+              "text": "公司债收益率与同期限无风险国债收益率之差，衡量信用风险定价。",
+              "art": "credit spread"
+            },
+            {
+              "text": "信用利差扩大，通常意味着投资者要求更高的风险补偿。",
+              "art": "spread widening"
+            },
+            {
+              "text": "债务人无法按期支付利息或偿还本金的可能性。",
+              "art": "default risk"
+            }
+          ],
+          "answer": 0,
+          "why": "tightening 是担忧减轻；widening 是担忧加重。"
+        },
+        {
+          "id": "u6l2-spread tightening-s",
+          "type": "scenario",
+          "termId": "spread tightening",
+          "termIds": [
+            "spread tightening"
+          ],
+          "story": "Spread tightening in high-grade names contrasted with widening in lower-rated credit.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "spread tightening",
+              "art": "spread tightening"
+            },
+            {
+              "text": "credit spread",
+              "art": "credit spread"
+            },
+            {
+              "text": "spread widening",
+              "art": "spread widening"
+            },
+            {
+              "text": "default risk",
+              "art": "default risk"
+            }
+          ],
+          "answer": 0,
+          "why": "spread tightening：信用利差缩小，通常意味着风险偏好改善。"
+        },
+        {
+          "id": "u6l2-spread tightening-t",
+          "type": "truefalse",
+          "termId": "spread tightening",
+          "termIds": [
+            "spread tightening"
+          ],
+          "stem": "spread tightening：利差收窄",
+          "answer": true,
+          "why": "spread tightening 确实是「利差收窄」。"
+        },
+        {
+          "id": "u6l2-spread tightening-f",
+          "type": "fill",
+          "termId": "spread tightening",
+          "termIds": [
+            "spread tightening"
+          ],
+          "story": "____ in high-grade names contrasted with widening in lower-rated credit.",
+          "bank": [
+            "spread tightening",
+            "default risk"
+          ],
+          "answer": "spread tightening",
+          "why": "tightening 是担忧减轻；widening 是担忧加重。"
+        },
+        {
+          "id": "u6l2-default risk-m",
+          "type": "meaning",
+          "termId": "default risk",
+          "termIds": [
+            "default risk"
+          ],
+          "stem": "default risk 是什么意思？",
+          "options": [
+            {
+              "text": "债务人无法按期支付利息或偿还本金的可能性。",
+              "art": "default risk"
+            },
+            {
+              "text": "公司债收益率与同期限无风险国债收益率之差，衡量信用风险定价。",
+              "art": "credit spread"
+            },
+            {
+              "text": "信用利差扩大，通常意味着投资者要求更高的风险补偿。",
+              "art": "spread widening"
+            },
+            {
+              "text": "信用利差缩小，通常意味着风险偏好改善。",
+              "art": "spread tightening"
+            }
+          ],
+          "answer": 0,
+          "why": "default risk 是真实存在的可能性；credit rating 是评级机构对这个可能性的打分。"
+        },
+        {
+          "id": "u6l2-default risk-s",
+          "type": "scenario",
+          "termId": "default risk",
+          "termIds": [
+            "default risk"
+          ],
+          "story": "Default risk for the weaker issuers is now priced explicitly.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "default risk",
+              "art": "default risk"
+            },
+            {
+              "text": "credit spread",
+              "art": "credit spread"
+            },
+            {
+              "text": "spread widening",
+              "art": "spread widening"
+            },
+            {
+              "text": "spread tightening",
+              "art": "spread tightening"
+            }
+          ],
+          "answer": 0,
+          "why": "default risk：债务人无法按期支付利息或偿还本金的可能性。"
+        },
+        {
+          "id": "u6l2-default risk-t",
+          "type": "truefalse",
+          "termId": "default risk",
+          "termIds": [
+            "default risk"
+          ],
+          "stem": "default risk 就是 信用利差。",
+          "answer": false,
+          "why": "default risk 是「违约风险」，不是「信用利差」。"
+        },
+        {
+          "id": "u6l2-default risk-f",
+          "type": "fill",
+          "termId": "default risk",
+          "termIds": [
+            "default risk"
+          ],
+          "story": "____ for the weaker issuers is now priced explicitly.",
+          "bank": [
+            "default risk",
+            "spread tightening"
+          ],
+          "answer": "default risk",
+          "why": "default risk 是真实存在的可能性；credit rating 是评级机构对这个可能性的打分。"
+        },
+        {
+          "id": "u6l2-match",
+          "type": "match",
+          "termIds": [
+            "spread tightening",
+            "default risk"
+          ],
+          "pairs": [
+            {
+              "id": "spread tightening",
+              "left": "spread tightening",
+              "right": "利差收窄"
+            },
+            {
+              "id": "default risk",
+              "left": "default risk",
+              "right": "违约风险"
+            }
+          ],
+          "why": "把每个词和它的意思对上。"
+        }
+      ]
+    },
+    {
+      "id": "u6r",
+      "unit": 6,
+      "title": "利差在说什么 · 回顾",
+      "icon": "🏆",
+      "review": true,
+      "prompts": [
+        {
+          "id": "u6r-credit spread-s",
+          "type": "scenario",
+          "termId": "credit spread",
+          "termIds": [
+            "credit spread"
+          ],
+          "story": "Investors demanded a spread of 180 basis points over the comparable government security.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "credit spread",
+              "art": "credit spread"
+            },
+            {
+              "text": "spread widening",
+              "art": "spread widening"
+            },
+            {
+              "text": "spread tightening",
+              "art": "spread tightening"
+            },
+            {
+              "text": "default risk",
+              "art": "default risk"
+            }
+          ],
+          "answer": 0,
+          "why": "credit spread：公司债收益率与同期限无风险国债收益率之差，衡量信用风险定价。"
+        },
+        {
+          "id": "u6r-credit spread-t",
+          "type": "truefalse",
+          "termId": "credit spread",
+          "termIds": [
+            "credit spread"
+          ],
+          "stem": "credit spread：信用利差",
+          "answer": true,
+          "why": "credit spread 确实是「信用利差」。"
+        },
+        {
+          "id": "u6r-spread widening-s",
+          "type": "scenario",
+          "termId": "spread widening",
+          "termIds": [
+            "spread widening"
+          ],
+          "story": "The spread widening was most visible at the long end.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "spread widening",
+              "art": "spread widening"
+            },
+            {
+              "text": "credit spread",
+              "art": "credit spread"
+            },
+            {
+              "text": "spread tightening",
+              "art": "spread tightening"
+            },
+            {
+              "text": "default risk",
+              "art": "default risk"
+            }
+          ],
+          "answer": 0,
+          "why": "spread widening：信用利差扩大，通常意味着投资者要求更高的风险补偿。"
+        },
+        {
+          "id": "u6r-spread widening-t",
+          "type": "truefalse",
+          "termId": "spread widening",
+          "termIds": [
+            "spread widening"
+          ],
+          "stem": "spread widening 就是 信用利差。",
+          "answer": false,
+          "why": "spread widening 是「利差走阔」，不是「信用利差」。"
+        },
+        {
+          "id": "u6r-spread tightening-s",
+          "type": "scenario",
+          "termId": "spread tightening",
+          "termIds": [
+            "spread tightening"
+          ],
+          "story": "Spread tightening in high-grade names contrasted with widening in lower-rated credit.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "spread tightening",
+              "art": "spread tightening"
+            },
+            {
+              "text": "credit spread",
+              "art": "credit spread"
+            },
+            {
+              "text": "spread widening",
+              "art": "spread widening"
+            },
+            {
+              "text": "default risk",
+              "art": "default risk"
+            }
+          ],
+          "answer": 0,
+          "why": "spread tightening：信用利差缩小，通常意味着风险偏好改善。"
+        },
+        {
+          "id": "u6r-spread tightening-t",
+          "type": "truefalse",
+          "termId": "spread tightening",
+          "termIds": [
+            "spread tightening"
+          ],
+          "stem": "spread tightening：利差收窄",
+          "answer": true,
+          "why": "spread tightening 确实是「利差收窄」。"
+        },
+        {
+          "id": "u6r-default risk-s",
+          "type": "scenario",
+          "termId": "default risk",
+          "termIds": [
+            "default risk"
+          ],
+          "story": "Default risk for the weaker issuers is now priced explicitly.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "default risk",
+              "art": "default risk"
+            },
+            {
+              "text": "credit spread",
+              "art": "credit spread"
+            },
+            {
+              "text": "spread widening",
+              "art": "spread widening"
+            },
+            {
+              "text": "spread tightening",
+              "art": "spread tightening"
+            }
+          ],
+          "answer": 0,
+          "why": "default risk：债务人无法按期支付利息或偿还本金的可能性。"
+        },
+        {
+          "id": "u6r-default risk-t",
+          "type": "truefalse",
+          "termId": "default risk",
+          "termIds": [
+            "default risk"
+          ],
+          "stem": "default risk 就是 信用利差。",
+          "answer": false,
+          "why": "default risk 是「违约风险」，不是「信用利差」。"
+        },
+        {
+          "id": "u6r-match",
+          "type": "match",
+          "termIds": [
+            "credit spread",
+            "spread widening",
+            "spread tightening",
+            "default risk"
+          ],
+          "pairs": [
+            {
+              "id": "credit spread",
+              "left": "credit spread",
+              "right": "信用利差"
+            },
+            {
+              "id": "spread widening",
+              "left": "spread widening",
+              "right": "利差走阔"
+            },
+            {
+              "id": "spread tightening",
+              "left": "spread tightening",
+              "right": "利差收窄"
+            },
+            {
+              "id": "default risk",
+              "left": "default risk",
+              "right": "违约风险"
+            }
+          ],
+          "why": "把每个词和它的意思对上。"
+        }
+      ]
+    },
+    {
+      "id": "u7l1",
+      "unit": 7,
+      "title": "信用与条款",
+      "icon": "📈",
+      "review": false,
+      "prompts": [
+        {
+          "id": "u7l1-credit rating-m",
+          "type": "meaning",
+          "termId": "credit rating",
+          "termIds": [
+            "credit rating"
+          ],
+          "stem": "credit rating 是什么意思？",
+          "options": [
+            {
+              "text": "评级机构对发行人偿债能力的评估等级，如 AAA 到 D。",
+              "art": "credit rating"
+            },
+            {
+              "text": "评级机构降低发行人或债券的信用评级。",
+              "art": "downgrade"
+            },
+            {
+              "text": "评级机构提高发行人或债券的信用评级。",
+              "art": "upgrade"
+            },
+            {
+              "text": "债券或贷款协议中对借款人行为施加限制的条款，如限制新增负债。",
+              "art": "covenant"
+            }
+          ],
+          "answer": 0,
+          "why": "credit rating 是打出来的等级；default risk 是被评估的那个可能性本身。"
+        },
+        {
+          "id": "u7l1-credit rating-s",
+          "type": "scenario",
+          "termId": "credit rating",
+          "termIds": [
+            "credit rating"
+          ],
+          "story": "The sovereign's credit rating was left unchanged, with the outlook stable.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "credit rating",
+              "art": "credit rating"
+            },
+            {
+              "text": "downgrade",
+              "art": "downgrade"
+            },
+            {
+              "text": "upgrade",
+              "art": "upgrade"
+            },
+            {
+              "text": "covenant",
+              "art": "covenant"
+            }
+          ],
+          "answer": 0,
+          "why": "credit rating：评级机构对发行人偿债能力的评估等级，如 AAA 到 D。"
+        },
+        {
+          "id": "u7l1-credit rating-t",
+          "type": "truefalse",
+          "termId": "credit rating",
+          "termIds": [
+            "credit rating"
+          ],
+          "stem": "credit rating：信用评级",
+          "answer": true,
+          "why": "credit rating 确实是「信用评级」。"
+        },
+        {
+          "id": "u7l1-credit rating-f",
+          "type": "fill",
+          "termId": "credit rating",
+          "termIds": [
+            "credit rating"
+          ],
+          "story": "The sovereign's ____ was left unchanged, with the outlook stable.",
+          "bank": [
+            "credit rating",
+            "downgrade"
+          ],
+          "answer": "credit rating",
+          "why": "credit rating 是打出来的等级；default risk 是被评估的那个可能性本身。"
+        },
+        {
+          "id": "u7l1-downgrade-m",
+          "type": "meaning",
+          "termId": "downgrade",
+          "termIds": [
+            "downgrade"
+          ],
+          "stem": "downgrade 是什么意思？",
+          "options": [
+            {
+              "text": "评级机构降低发行人或债券的信用评级。",
+              "art": "downgrade"
+            },
+            {
+              "text": "评级机构对发行人偿债能力的评估等级，如 AAA 到 D。",
+              "art": "credit rating"
+            },
+            {
+              "text": "评级机构提高发行人或债券的信用评级。",
+              "art": "upgrade"
+            },
+            {
+              "text": "债券或贷款协议中对借款人行为施加限制的条款，如限制新增负债。",
+              "art": "covenant"
+            }
+          ],
+          "answer": 0,
+          "why": "downgrade 往下调；upgrade 往上调。"
+        },
+        {
+          "id": "u7l1-downgrade-s",
+          "type": "scenario",
+          "termId": "downgrade",
+          "termIds": [
+            "downgrade"
+          ],
+          "story": "A downgrade would raise refinancing costs for the corporate sector too.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "downgrade",
+              "art": "downgrade"
+            },
+            {
+              "text": "credit rating",
+              "art": "credit rating"
+            },
+            {
+              "text": "upgrade",
+              "art": "upgrade"
+            },
+            {
+              "text": "covenant",
+              "art": "covenant"
+            }
+          ],
+          "answer": 0,
+          "why": "downgrade：评级机构降低发行人或债券的信用评级。"
+        },
+        {
+          "id": "u7l1-downgrade-t",
+          "type": "truefalse",
+          "termId": "downgrade",
+          "termIds": [
+            "downgrade"
+          ],
+          "stem": "downgrade 就是 信用评级。",
+          "answer": false,
+          "why": "downgrade 是「评级下调」，不是「信用评级」。"
+        },
+        {
+          "id": "u7l1-downgrade-f",
+          "type": "fill",
+          "termId": "downgrade",
+          "termIds": [
+            "downgrade"
+          ],
+          "story": "A ____ would raise refinancing costs for the corporate sector too.",
+          "bank": [
+            "downgrade",
+            "credit rating"
+          ],
+          "answer": "downgrade",
+          "why": "downgrade 往下调；upgrade 往上调。"
+        },
+        {
+          "id": "u7l1-match",
+          "type": "match",
+          "termIds": [
+            "credit rating",
+            "downgrade"
+          ],
+          "pairs": [
+            {
+              "id": "credit rating",
+              "left": "credit rating",
+              "right": "信用评级"
+            },
+            {
+              "id": "downgrade",
+              "left": "downgrade",
+              "right": "评级下调"
+            }
+          ],
+          "why": "把每个词和它的意思对上。"
+        }
+      ]
+    },
+    {
+      "id": "u7l2",
+      "unit": 7,
+      "title": "信用与条款（续）",
+      "icon": "📈",
+      "review": false,
+      "prompts": [
+        {
+          "id": "u7l2-upgrade-m",
+          "type": "meaning",
+          "termId": "upgrade",
+          "termIds": [
+            "upgrade"
+          ],
+          "stem": "upgrade 是什么意思？",
+          "options": [
+            {
+              "text": "评级机构提高发行人或债券的信用评级。",
+              "art": "upgrade"
+            },
+            {
+              "text": "评级机构对发行人偿债能力的评估等级，如 AAA 到 D。",
+              "art": "credit rating"
+            },
+            {
+              "text": "评级机构降低发行人或债券的信用评级。",
+              "art": "downgrade"
+            },
+            {
+              "text": "债券或贷款协议中对借款人行为施加限制的条款，如限制新增负债。",
+              "art": "covenant"
+            }
+          ],
+          "answer": 0,
+          "why": "upgrade 往上调；downgrade 往下调。"
+        },
+        {
+          "id": "u7l2-upgrade-s",
+          "type": "scenario",
+          "termId": "upgrade",
+          "termIds": [
+            "upgrade"
+          ],
+          "story": "The agencies left the rating unchanged, though an upgrade was possible later.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "upgrade",
+              "art": "upgrade"
+            },
+            {
+              "text": "credit rating",
+              "art": "credit rating"
+            },
+            {
+              "text": "downgrade",
+              "art": "downgrade"
+            },
+            {
+              "text": "covenant",
+              "art": "covenant"
+            }
+          ],
+          "answer": 0,
+          "why": "upgrade：评级机构提高发行人或债券的信用评级。"
+        },
+        {
+          "id": "u7l2-upgrade-t",
+          "type": "truefalse",
+          "termId": "upgrade",
+          "termIds": [
+            "upgrade"
+          ],
+          "stem": "upgrade：评级上调",
+          "answer": true,
+          "why": "upgrade 确实是「评级上调」。"
+        },
+        {
+          "id": "u7l2-upgrade-f",
+          "type": "fill",
+          "termId": "upgrade",
+          "termIds": [
+            "upgrade"
+          ],
+          "story": "The agencies left the rating unchanged, though an ____ was possible later.",
+          "bank": [
+            "upgrade",
+            "covenant"
+          ],
+          "answer": "upgrade",
+          "why": "upgrade 往上调；downgrade 往下调。"
+        },
+        {
+          "id": "u7l2-covenant-m",
+          "type": "meaning",
+          "termId": "covenant",
+          "termIds": [
+            "covenant"
+          ],
+          "stem": "covenant 是什么意思？",
+          "options": [
+            {
+              "text": "债券或贷款协议中对借款人行为施加限制的条款，如限制新增负债。",
+              "art": "covenant"
+            },
+            {
+              "text": "评级机构对发行人偿债能力的评估等级，如 AAA 到 D。",
+              "art": "credit rating"
+            },
+            {
+              "text": "评级机构降低发行人或债券的信用评级。",
+              "art": "downgrade"
+            },
+            {
+              "text": "评级机构提高发行人或债券的信用评级。",
+              "art": "upgrade"
+            }
+          ],
+          "answer": 0,
+          "why": "covenant 限制借款人做什么；refinancing 是换一笔新债还旧债。条款常在再融资时被重新谈。"
+        },
+        {
+          "id": "u7l2-covenant-s",
+          "type": "scenario",
+          "termId": "covenant",
+          "termIds": [
+            "covenant"
+          ],
+          "story": "Covenants on the new issues restrict additional borrowing.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "covenant",
+              "art": "covenant"
+            },
+            {
+              "text": "credit rating",
+              "art": "credit rating"
+            },
+            {
+              "text": "downgrade",
+              "art": "downgrade"
+            },
+            {
+              "text": "upgrade",
+              "art": "upgrade"
+            }
+          ],
+          "answer": 0,
+          "why": "covenant：债券或贷款协议中对借款人行为施加限制的条款，如限制新增负债。"
+        },
+        {
+          "id": "u7l2-covenant-t",
+          "type": "truefalse",
+          "termId": "covenant",
+          "termIds": [
+            "covenant"
+          ],
+          "stem": "covenant 就是 信用评级。",
+          "answer": false,
+          "why": "covenant 是「契约条款」，不是「信用评级」。"
+        },
+        {
+          "id": "u7l2-covenant-f",
+          "type": "fill",
+          "termId": "covenant",
+          "termIds": [
+            "covenant"
+          ],
+          "story": "____ on the new issues restrict additional borrowing.",
+          "bank": [
+            "covenant",
+            "upgrade"
+          ],
+          "answer": "covenant",
+          "why": "covenant 限制借款人做什么；refinancing 是换一笔新债还旧债。条款常在再融资时被重新谈。"
+        },
+        {
+          "id": "u7l2-match",
+          "type": "match",
+          "termIds": [
+            "upgrade",
+            "covenant"
+          ],
+          "pairs": [
+            {
+              "id": "upgrade",
+              "left": "upgrade",
+              "right": "评级上调"
+            },
+            {
+              "id": "covenant",
+              "left": "covenant",
+              "right": "契约条款"
+            }
+          ],
+          "why": "把每个词和它的意思对上。"
+        }
+      ]
+    },
+    {
+      "id": "u7r",
+      "unit": 7,
+      "title": "信用与条款 · 回顾",
+      "icon": "🏆",
+      "review": true,
+      "prompts": [
+        {
+          "id": "u7r-credit rating-s",
+          "type": "scenario",
+          "termId": "credit rating",
+          "termIds": [
+            "credit rating"
+          ],
+          "story": "The sovereign's credit rating was left unchanged, with the outlook stable.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "credit rating",
+              "art": "credit rating"
+            },
+            {
+              "text": "downgrade",
+              "art": "downgrade"
+            },
+            {
+              "text": "upgrade",
+              "art": "upgrade"
+            },
+            {
+              "text": "covenant",
+              "art": "covenant"
+            }
+          ],
+          "answer": 0,
+          "why": "credit rating：评级机构对发行人偿债能力的评估等级，如 AAA 到 D。"
+        },
+        {
+          "id": "u7r-credit rating-t",
+          "type": "truefalse",
+          "termId": "credit rating",
+          "termIds": [
+            "credit rating"
+          ],
+          "stem": "credit rating：信用评级",
+          "answer": true,
+          "why": "credit rating 确实是「信用评级」。"
+        },
+        {
+          "id": "u7r-downgrade-s",
+          "type": "scenario",
+          "termId": "downgrade",
+          "termIds": [
+            "downgrade"
+          ],
+          "story": "A downgrade would raise refinancing costs for the corporate sector too.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "downgrade",
+              "art": "downgrade"
+            },
+            {
+              "text": "credit rating",
+              "art": "credit rating"
+            },
+            {
+              "text": "upgrade",
+              "art": "upgrade"
+            },
+            {
+              "text": "covenant",
+              "art": "covenant"
+            }
+          ],
+          "answer": 0,
+          "why": "downgrade：评级机构降低发行人或债券的信用评级。"
+        },
+        {
+          "id": "u7r-downgrade-t",
+          "type": "truefalse",
+          "termId": "downgrade",
+          "termIds": [
+            "downgrade"
+          ],
+          "stem": "downgrade 就是 信用评级。",
+          "answer": false,
+          "why": "downgrade 是「评级下调」，不是「信用评级」。"
+        },
+        {
+          "id": "u7r-upgrade-s",
+          "type": "scenario",
+          "termId": "upgrade",
+          "termIds": [
+            "upgrade"
+          ],
+          "story": "The agencies left the rating unchanged, though an upgrade was possible later.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "upgrade",
+              "art": "upgrade"
+            },
+            {
+              "text": "credit rating",
+              "art": "credit rating"
+            },
+            {
+              "text": "downgrade",
+              "art": "downgrade"
+            },
+            {
+              "text": "covenant",
+              "art": "covenant"
+            }
+          ],
+          "answer": 0,
+          "why": "upgrade：评级机构提高发行人或债券的信用评级。"
+        },
+        {
+          "id": "u7r-upgrade-t",
+          "type": "truefalse",
+          "termId": "upgrade",
+          "termIds": [
+            "upgrade"
+          ],
+          "stem": "upgrade：评级上调",
+          "answer": true,
+          "why": "upgrade 确实是「评级上调」。"
+        },
+        {
+          "id": "u7r-covenant-s",
+          "type": "scenario",
+          "termId": "covenant",
+          "termIds": [
+            "covenant"
+          ],
+          "story": "Covenants on the new issues restrict additional borrowing.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "covenant",
+              "art": "covenant"
+            },
+            {
+              "text": "credit rating",
+              "art": "credit rating"
+            },
+            {
+              "text": "downgrade",
+              "art": "downgrade"
+            },
+            {
+              "text": "upgrade",
+              "art": "upgrade"
+            }
+          ],
+          "answer": 0,
+          "why": "covenant：债券或贷款协议中对借款人行为施加限制的条款，如限制新增负债。"
+        },
+        {
+          "id": "u7r-covenant-t",
+          "type": "truefalse",
+          "termId": "covenant",
+          "termIds": [
+            "covenant"
+          ],
+          "stem": "covenant 就是 信用评级。",
+          "answer": false,
+          "why": "covenant 是「契约条款」，不是「信用评级」。"
+        },
+        {
+          "id": "u7r-match",
+          "type": "match",
+          "termIds": [
+            "credit rating",
+            "downgrade",
+            "upgrade",
+            "covenant"
+          ],
+          "pairs": [
+            {
+              "id": "credit rating",
+              "left": "credit rating",
+              "right": "信用评级"
+            },
+            {
+              "id": "downgrade",
+              "left": "downgrade",
+              "right": "评级下调"
+            },
+            {
+              "id": "upgrade",
+              "left": "upgrade",
+              "right": "评级上调"
+            },
+            {
+              "id": "covenant",
+              "left": "covenant",
+              "right": "契约条款"
+            }
+          ],
+          "why": "把每个词和它的意思对上。"
+        }
+      ]
+    }
+  ],
+  "sources": []
+}
