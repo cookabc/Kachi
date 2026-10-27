@@ -30,7 +30,11 @@ function stateWithDuePair(pairId: string, dueAt: string): LearnerState {
 
 describe("practiceTargets", () => {
   it("groups due terms by unit and translates them", () => {
-    const targets = practiceTargets(stateWithDuePair("hedge::pledge", "2000-01-01T00:00:00Z"), course);
+    const targets = practiceTargets(
+      stateWithDuePair("hedge::pledge", "2000-01-01T00:00:00Z"),
+      course,
+      "zh-CN",
+    );
     expect(targets.length).toBeGreaterThan(0);
     const flat = targets.flatMap((target) => target.terms);
     expect(flat).toContain("对冲");
@@ -43,14 +47,31 @@ describe("practiceTargets", () => {
     const targets = practiceTargets(
       stateWithDuePair("hedge::no-such-concept", "2000-01-01T00:00:00Z"),
       course,
+      "zh-CN",
     );
     const flat = targets.flatMap((target) => target.terms);
     expect(flat).toContain("对冲");
     expect(flat).toHaveLength(1);
   });
 
+  it("keeps the English headword when the UI is English", () => {
+    const targets = practiceTargets(
+      stateWithDuePair("hedge::pledge", "2000-01-01T00:00:00Z"),
+      course,
+      "en-US",
+    );
+    const flat = targets.flatMap((target) => target.terms);
+    expect(flat).toContain("hedge");
+    expect(flat).toContain("pledge");
+    expect(flat.join(" ")).not.toMatch(/\p{Script=Han}/u);
+  });
+
   it("is empty when nothing is due", () => {
-    const targets = practiceTargets(stateWithDuePair("hedge::pledge", "3000-01-01T00:00:00Z"), course);
+    const targets = practiceTargets(
+      stateWithDuePair("hedge::pledge", "3000-01-01T00:00:00Z"),
+      course,
+      "zh-CN",
+    );
     expect(targets).toHaveLength(0);
   });
 });

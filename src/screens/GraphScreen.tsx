@@ -5,7 +5,7 @@ import { conceptOf } from "../flow";
 import { arcPath, edgePath, graphEdges, graphLayout, labelPlacements } from "../graph";
 import { weakLinks } from "../graph/weak-link";
 import { localizedTerm } from "../localization";
-import type { UiText } from "../ui";
+import type { Lang, UiText } from "../ui";
 
 type GraphStatus = "unseen" | "seen" | "learning" | "mastered" | "missed";
 
@@ -32,11 +32,13 @@ export function GraphScreen({
   state,
   course,
   t,
+  lang,
   onOpenGlossary,
 }: {
   state: LearnerState;
   course: Course;
   t: UiText;
+  lang: Lang;
   onOpenGlossary: (term: string) => void;
 }) {
   const [selected, setSelected] = useState<string | null>(null);
@@ -112,7 +114,7 @@ export function GraphScreen({
                     type="button"
                     className="g-weak-item"
                     onClick={() => setSelected(link.id)}
-                    aria-label={`${link.term}${link.unlocks ? ` — unlocks ${link.unlocks}` : ""}`}
+                    aria-label={t.graph.weakItemAria(link.term, link.unlocks)}
                   >
                     <span className="g-weak-term">{link.term}</span>
                     {link.chain.length > 0 ? (
@@ -253,12 +255,14 @@ export function GraphScreen({
           <article className="g-card" aria-live="polite">
             <h3>
               {selectedConcept.term}
-              <span className="zh">{selectedConcept.termZh ?? localizedTerm(selectedConcept.id).termZh}</span>
+              {lang === "zh-CN" && (
+                <span className="zh">
+                  {selectedConcept.termZh ?? localizedTerm(selectedConcept.id).termZh}
+                </span>
+              )}
             </h3>
             {unit && (
-              <p className="g-kicker">
-                {t.home.unit(selectedConcept.unit)}，{unit.title}
-              </p>
+              <p className="g-kicker">{t.graph.cardMeta(t.home.unit(selectedConcept.unit), unit.title)}</p>
             )}
             <p className="def">{selectedConcept.definition}</p>
             {selectedProgress && selectedProgress.streak > 0 && (

@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import rawCourse from "../../content/packs/hedge-or-pledge/zh-CN/course.json";
 import type { Course, Environment, Exercise } from "../domain";
 import { validateCourse } from "../schema";
-import { applyAnswer, currentExercise, emptyLearnerState, startSession } from "./index";
+import { applyAnswer, currentExercise, emptyLearnerState, MAX_ATTEMPT_LOG, startSession } from "./index";
 
 const course = rawCourse as Course;
 let sequence = 0;
@@ -31,6 +31,8 @@ describe("migrated Hedge or Pledge course", () => {
       208,
     );
     expect(validateCourse(course)).toEqual([]);
+    expect(course.units[0].title).toBe("对冲还是质押");
+    expect(course.units[0].blurb).toBe("是保护它，还是拿它去借钱？");
   });
 
   it("can run 500 complete sessions without mutating published lessons", () => {
@@ -47,8 +49,11 @@ describe("migrated Hedge or Pledge course", () => {
     }
     expect(JSON.stringify(course.lessons)).toBe(source);
     // Completed lessons are namespaced by pack so two courses cannot collide.
-    expect(state.completedLessonIds).toContain("hedge-or-pledge/u1l1");
-    expect(state.attempts).toHaveLength(5000);
+    expect(state.completedLessonIds).toEqual(["hedge-or-pledge/u1l1"]);
+    // The attempt log is capped. Replaying the same perfect lesson also pays
+    // its XP once: 10 prompts × 10, plus the completion and flawless bonuses.
+    expect(state.attempts).toHaveLength(MAX_ATTEMPT_LOG);
+    expect(state.xp).toBe(140);
   });
 
   it("records a miss but advances instead of failing the lesson", () => {

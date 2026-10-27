@@ -115,6 +115,75 @@ export function isLessonUnlocked(state: LearnerState, course: Course, lessonId: 
   return index === 0 || isLessonDone(state, course, course.lessons[index - 1].id);
 }
 
+/** Units the learner can enter: a unit is open once any of its lessons is. */
+export function unlockedUnitIds(state: LearnerState, course: Course): number[] {
+  const ids = new Set<number>();
+  for (const lesson of course.lessons) {
+    if (isLessonUnlocked(state, course, lesson.id)) ids.add(lesson.unit);
+  }
+  return [...ids].sort((a, b) => a - b);
+}
+
+/**
+ * Exercises that have already paid the one-time +10 for a correct answer.
+ * A later session — a replay, or the same lesson after a reload — must not
+ * pay that exercise again.
+ */
+export function paidExerciseIds(state: LearnerState): string[] {
+  const ids: string[] = [];
+  const seen = new Set<string>();
+  for (const attempt of state.attempts) {
+    if (!attempt.correct || attempt.isRetry || seen.has(attempt.exerciseId)) continue;
+    seen.add(attempt.exerciseId);
+    ids.push(attempt.exerciseId);
+  }
+  return ids;
+}
+
+/**
+ * How many attempts the learner record keeps in full. Older history is pinned
+ * only where the engine still reads it: the first sight of an exercise
+ * (`isFirstEncounter`), the attempt that already paid that exercise's XP, and
+ * the latest graded attempt of a concept (`recentMissTermIds`). The tail stays
+ * in order so a re-queued match and its retry remain neighbors, which is what
+ * the latency median and the upgrade's retry inference both assume.
+ */
+export const MAX_ATTEMPT_LOG = 240;
+
+export function compactAttempts(attempts: AttemptEvent[], max = MAX_ATTEMPT_LOG): AttemptEvent[] {
+  if (attempts.length <= max) return attempts;
+  const tailStart = attempts.length - max;
+  const tail = attempts.slice(tailStart);
+  const exerciseInTail = new Set(tail.map((attempt) => attempt.exerciseId));
+  const paidInTail = new Set(
+    tail.filter((attempt) => attempt.correct && !attempt.isRetry).map((attempt) => attempt.exerciseId),
+  );
+  const firstIndex = new Map<string, number>();
+  const firstPaidIndex = new Map<string, number>();
+  const latestConceptIndex = new Map<string, number>();
+  attempts.forEach((attempt, index) => {
+    if (!firstIndex.has(attempt.exerciseId)) firstIndex.set(attempt.exerciseId, index);
+    if (attempt.isRetry) return;
+    if (attempt.correct && !firstPaidIndex.has(attempt.exerciseId))
+      firstPaidIndex.set(attempt.exerciseId, index);
+    for (const conceptId of attempt.conceptIds) latestConceptIndex.set(conceptId, index);
+  });
+  const keep = new Set<number>();
+  for (const [exerciseId, index] of firstIndex) {
+    if (index < tailStart && !exerciseInTail.has(exerciseId)) keep.add(index);
+  }
+  // The +10 is once per exercise. A later wrong answer can push that paying
+  // attempt out of the window; without the pin the same exercise would pay again.
+  for (const [exerciseId, index] of firstPaidIndex) {
+    if (index < tailStart && !paidInTail.has(exerciseId)) keep.add(index);
+  }
+  for (const index of latestConceptIndex.values()) {
+    if (index < tailStart) keep.add(index);
+  }
+  const head = [...keep].sort((a, b) => a - b).map((index) => attempts[index]);
+  return [...head, ...tail];
+}
+
 export function isCorrect(exercise: Exercise, answer: string | boolean): boolean {
   if (exercise.type === "truefalse") return answer === exercise.answer;
   if (exercise.type === "fill") return answer === exercise.answer;
@@ -343,12 +412,7 @@ export function applyAnswer(
   const mastery = nextMasteryFor(prior, attempt, quality, isFirstEncounter(state, exercise, session));
   const nextMasteryMap = mastery ? { ...state.mastery, [mastery.confusionPairId]: mastery } : state.mastery;
   const seenConceptIds = Array.from(new Set([...state.seenConceptIds, ...attempt.conceptIds]));
-  const nextSession: SessionState = {
-    ...session,
-    index: session.index + 1,
-    results: [...session.results, attempt],
-  };
-  const finished = nextSession.index >= nextSession.promptIds.length;
+  const finished = session.index + 1 >= session.promptIds.length;
   // A wrong final answer that also spends the last heart is a failed finish (PRD §9):
   // retry refills hearts, so the lesson is not completed by the failing run.
   const failedFinish =
@@ -364,6 +428,13 @@ export function applyAnswer(
     completesLesson &&
     attempt.correct &&
     session.results.every((result) => result.correct && !result.isRetry);
+  const nextSession: SessionState = {
+    ...session,
+    index: session.index + 1,
+    results: [...session.results, attempt],
+    awardedCompletion: Boolean(session.awardedCompletion) || completesLesson,
+    awardedPerfect: Boolean(session.awardedPerfect) || flawless,
+  };
   const completedLessonIds = completesLesson
     ? Array.from(new Set([...state.completedLessonIds, lessonKey(course, session.lessonId)]))
     : state.completedLessonIds;
@@ -373,10 +444,14 @@ export function applyAnswer(
       ? state.streak + 1
       : 1
     : state.streak;
-  // A rehearsal pays nothing: the prompt already paid (or refused) its XP the
-  // first time round, and re-answering a re-queue would let a learner farm
-  // points by failing the same match twice.
-  const paysXp = !attempt.isRetry && attempt.correct;
+  // A rehearsal pays nothing, and so does a prompt that already paid on an
+  // earlier run. Hearts and the session live in memory, so a reload starts a
+  // fresh session; without this check the same correct answers would pay +10
+  // again every time the lesson is opened.
+  const alreadyPaid = state.attempts.some(
+    (item) => item.exerciseId === exercise.id && item.correct && !item.isRetry,
+  );
+  const paysXp = !attempt.isRetry && attempt.correct && !alreadyPaid;
 
   return {
     state: {
@@ -387,7 +462,7 @@ export function applyAnswer(
       completedLessonIds,
       seenConceptIds,
       mastery: nextMasteryMap,
-      attempts: [...state.attempts, attempt],
+      attempts: compactAttempts([...state.attempts, attempt]),
     },
     session: nextSession,
     attempt,

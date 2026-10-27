@@ -8,9 +8,9 @@ export const MAX_HEARTS = 5;
 
 export type Tab = "learn" | "practice" | "glossary" | "graph" | "settings";
 
-export function StatsBar({ state }: { state: LearnerState }) {
+export function StatsBar({ state, t }: { state: LearnerState; t: UiText }) {
   return (
-    <div className="stats" role="img" aria-label={`XP ${state.xp}, ${state.streak}`}>
+    <div className="stats" role="img" aria-label={t.statsAria(state.xp, state.streak)}>
       <div className="stat xp">
         <span className="ic">◆</span>
         {state.xp}

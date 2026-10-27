@@ -1,6 +1,13 @@
 import { describe, expect, it } from "vitest";
-import type { AttemptEvent, LearnerState } from "./domain";
-import { applyAnswer, emptyLearnerState, isLessonDone, requeuePrompt, startSession } from "./engine";
+import type { AttemptEvent, LearnerState, MasteryState } from "./domain";
+import {
+  applyAnswer,
+  emptyLearnerState,
+  isLessonDone,
+  MAX_ATTEMPT_LOG,
+  requeuePrompt,
+  startSession,
+} from "./engine";
 import { inferredRetryIndices, STATE_VERSION, type StoredLearnerState, upgradeLearnerState } from "./upgrade";
 
 /**
@@ -160,6 +167,43 @@ describe("upgradeLearnerState", () => {
     const twice = upgradeLearnerState(once);
     expect(twice.changed).toBe(false);
     expect(twice.state).toEqual(once);
+  });
+
+  it("caps a current record without replaying its mastery", () => {
+    const attempts = Array.from({ length: MAX_ATTEMPT_LOG + 40 }, (_, index) =>
+      attempt({
+        eventId: `e${index}`,
+        exerciseId: `prompt-${index % 5}`,
+        correct: true,
+        exerciseType: "meaning",
+        occurredAt: `2026-08-30T10:${String(index % 60).padStart(2, "0")}:00.000Z`,
+      }),
+    );
+    const mastery: Record<string, MasteryState> = {
+      "hedge::pledge": {
+        confusionPairId: "hedge::pledge",
+        consecutiveCorrect: 4,
+        lapses: 0,
+        evidenceTypes: ["meaning"],
+        unseenScenarioCorrect: false,
+        schedulerVersion: "0.2.0",
+      },
+    };
+    const report = upgradeLearnerState(
+      v1State({
+        version: STATE_VERSION,
+        completedLessonIds: ["hedge-or-pledge/u1l1"],
+        attempts,
+        mastery,
+      }),
+    );
+    expect(report.changed).toBe(true);
+    expect(report.state.attempts).toHaveLength(MAX_ATTEMPT_LOG);
+    expect(report.state.mastery["hedge::pledge"].consecutiveCorrect).toBe(4);
+    expect(report.loweredPairs).toEqual([]);
+    const again = upgradeLearnerState(report.state);
+    expect(again.changed).toBe(false);
+    expect(again.state).toEqual(report.state);
   });
 
   it("does not need the course to qualify ids", () => {

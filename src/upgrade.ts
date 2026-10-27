@@ -1,5 +1,5 @@
 import type { AttemptEvent, LearnerState, MasteryState } from "./domain";
-import { evidenceQuality, LEGACY_PACK_ID, nextMasteryFor } from "./engine";
+import { compactAttempts, evidenceQuality, LEGACY_PACK_ID, nextMasteryFor } from "./engine";
 
 /**
  * One-shot upgrade of saved learner records to the current shape.
@@ -89,8 +89,12 @@ export function upgradeLearnerState(stored: StoredLearnerState): UpgradeReport {
   });
 
   // 3. Mastery, replayed through the current scheduler with retries excluded.
+  //    Only a log that just gained retry flags is replayed. A current record
+  //    already stores mastery, and compacting its attempt log (below) can
+  //    place two old attempts next to each other; replaying that shorter log
+  //    would rebuild mastery from an incomplete history.
   let mastery: Record<string, MasteryState> = {};
-  const replayed = retryIdx.size > 0;
+  const replayed = newlyMarked > 0;
   if (replayed) {
     upgradedAttempts.forEach((attempt, index) => {
       if (attempt.isRetry) return;
@@ -111,13 +115,16 @@ export function upgradeLearnerState(stored: StoredLearnerState): UpgradeReport {
     mastery = stored.mastery;
   }
 
-  // Only a real difference counts. Replaying a log that already excluded its
-  // retries reproduces the same record, and rewriting it every load would be
-  // a write for nothing.
+  // Only a real difference counts. A log whose retries are already flagged is
+  // not replayed — its mastery is the stored record — so a compacted attempt
+  // list cannot rewrite the ladder on the next load.
   const masteryDiffers = replayed && !sameMastery(mastery, stored.mastery);
   const loweredPairs = Object.keys(mastery).filter(
     (key) => (mastery[key]?.consecutiveCorrect ?? 0) < (stored.mastery[key]?.consecutiveCorrect ?? 0),
   );
+
+  const attemptsOut = compactAttempts(upgradedAttempts);
+  const compacted = attemptsOut.length !== upgradedAttempts.length;
 
   const state: LearnerState = {
     version: STATE_VERSION,
@@ -127,11 +134,15 @@ export function upgradeLearnerState(stored: StoredLearnerState): UpgradeReport {
     completedLessonIds: Array.from(new Set(completedLessonIds)),
     seenConceptIds: stored.seenConceptIds,
     mastery: masteryDiffers ? mastery : stored.mastery,
-    attempts: upgradedAttempts,
+    attempts: attemptsOut,
   };
 
   const changed =
-    stored.version !== STATE_VERSION || qualifiedLessons > 0 || newlyMarked > 0 || masteryDiffers;
+    stored.version !== STATE_VERSION ||
+    qualifiedLessons > 0 ||
+    newlyMarked > 0 ||
+    masteryDiffers ||
+    compacted;
 
   return { changed, qualifiedLessons, retries: retryIdx.size, loweredPairs, state };
 }

@@ -3,6 +3,7 @@ import {
   applyAnswer,
   currentExercise,
   isLessonUnlocked,
+  paidExerciseIds,
   requeuePrompt,
   startPracticeSession,
   startSession,
@@ -156,7 +157,10 @@ export function reduceFlow(state: FlowState, event: FlowEvent, ctx: FlowContext)
     case "startLesson": {
       const lesson = course.lessons.find((item) => item.id === event.lessonId);
       if (!lesson || !isLessonUnlocked(learner, course, event.lessonId)) return keep(flow);
-      const fresh = startSession(course, event.lessonId, environment);
+      const fresh = {
+        ...startSession(course, event.lessonId, environment),
+        priorPaidExerciseIds: paidExerciseIds(learner),
+      };
       const plan = teachPlan(lesson, course);
       const base: LessonFlow = {
         ...idleFlow(),
@@ -187,7 +191,10 @@ export function reduceFlow(state: FlowState, event: FlowEvent, ctx: FlowContext)
         environment.random,
       );
       if (!picked.length) return keep(flow);
-      const fresh = startPracticeSession(picked, environment);
+      const fresh = {
+        ...startPracticeSession(picked, environment),
+        priorPaidExerciseIds: paidExerciseIds(learner),
+      };
       const first = currentExercise(course, fresh);
       if (!first) return keep(flow);
       return keep(

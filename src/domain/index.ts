@@ -188,6 +188,16 @@ export interface SessionState {
   index: number;
   results: AttemptEvent[];
   startedAt: string;
+  /**
+   * Exercise ids that already earned their one-time correct-answer XP before
+   * this session. The completion summary reads the snapshot so a payment made
+   * earlier is not shown again as if this run had earned it.
+   */
+  priorPaidExerciseIds?: string[];
+  /** This session itself earned the one-time lesson completion bonus. */
+  awardedCompletion?: boolean;
+  /** This session itself earned the one-time flawless bonus. */
+  awardedPerfect?: boolean;
 }
 
 export interface Environment {

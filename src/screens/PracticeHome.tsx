@@ -3,7 +3,7 @@ import type { Course, LearnerState } from "../domain";
 import { duePairIds } from "../engine";
 import { conceptOf, PRACTICE_ROUND } from "../flow";
 import { localizedTerm } from "../localization";
-import type { UiText } from "../ui";
+import type { Lang, UiText } from "../ui";
 
 /** The terms due for practice, grouped by the unit they live in.
  *
@@ -15,6 +15,7 @@ import type { UiText } from "../ui";
 export function practiceTargets(
   state: LearnerState,
   course: Course,
+  lang: Lang,
 ): Array<{ unit: number; terms: string[] }> {
   const focus = new Set<string>();
   for (const pairId of duePairIds(state, new Date())) {
@@ -26,28 +27,33 @@ export function practiceTargets(
   for (const id of focus) {
     const concept = conceptOf(course, id)!;
     const list = byUnit.get(concept.unit) ?? [];
-    list.push(localizedTerm(id).termZh || concept.term);
+    const label =
+      lang === "zh-CN" ? concept.termZh || localizedTerm(id).termZh || concept.term : concept.term;
+    list.push(label);
     byUnit.set(concept.unit, list);
   }
+  const sortLocale = lang === "zh-CN" ? "zh" : "en";
   return [...byUnit.entries()]
     .sort((a, b) => a[0] - b[0])
-    .map(([unit, terms]) => ({ unit, terms: terms.sort((a, b) => a.localeCompare(b, "zh")) }));
+    .map(([unit, terms]) => ({ unit, terms: terms.sort((a, b) => a.localeCompare(b, sortLocale)) }));
 }
 
 export function PracticeHome({
   state,
   course,
   t,
+  lang,
   missedCount,
   onStart,
 }: {
   state: LearnerState;
   course: Course;
   t: UiText;
+  lang: Lang;
   missedCount: number;
   onStart: () => void;
 }) {
-  const targets = practiceTargets(state, course);
+  const targets = practiceTargets(state, course, lang);
 
   return (
     <>
@@ -75,7 +81,7 @@ export function PracticeHome({
                 <li key={unit}>
                   <span className="prac-target-unit">{t.practice.unitLabel(unit)}</span>
                   <span className="prac-target-terms">
-                    {terms.slice(0, 4).join("、")}
+                    {terms.slice(0, 4).join(t.practice.listSep)}
                     {terms.length > 4 ? <em>　{t.practice.moreCount(terms.length - 4)}</em> : null}
                   </span>
                 </li>

@@ -17,8 +17,11 @@ vi.mock("./course", async () => {
   };
 });
 
+let failSnapshotPutsAfter = Number.POSITIVE_INFINITY;
+
 function installMemoryIndexedDB() {
   const stores = new Map<string, Map<string, unknown>>();
+  let snapshotPuts = 0;
   class FakeRequest {
     result: unknown;
     error: unknown = null;
@@ -26,6 +29,7 @@ function installMemoryIndexedDB() {
     onerror: (() => void) | null = null;
   }
   class FakeTransaction {
+    error: unknown = null;
     oncomplete: (() => void) | null = null;
     onerror: (() => void) | null = null;
     onabort: (() => void) | null = null;
@@ -65,6 +69,15 @@ function installMemoryIndexedDB() {
       const request = new FakeRequest();
       this.transaction.pending += 1;
       setTimeout(() => {
+        if (this.name === "snapshots") snapshotPuts += 1;
+        if (this.name === "snapshots" && snapshotPuts > failSnapshotPutsAfter) {
+          const error = new Error("quota");
+          request.error = error;
+          this.transaction.error = error;
+          request.onerror?.();
+          this.transaction.onerror?.();
+          return;
+        }
         const record = value as Record<string, unknown>;
         this.map().set(key ?? String(record.eventId), value);
         request.onsuccess?.();
@@ -132,6 +145,7 @@ async function waitForHome() {
 
 beforeEach(async () => {
   localStorage.clear();
+  failSnapshotPutsAfter = Number.POSITIVE_INFINITY;
   installMemoryIndexedDB();
   const actual = await vi.importActual<typeof import("./course")>("./course");
   loadCourseMock.mockImplementation((packId, lang) => actual.loadCourse(packId, lang));
@@ -159,6 +173,28 @@ describe("startup failures", () => {
     await waitForHome();
     expect(document.querySelector(".loading")).toBeNull();
     expect(document.querySelector("[role='alert']")?.textContent).toContain("暂时读不到学习记录");
+  });
+
+  it("shows the storage alert and logs when a save fails", async () => {
+    const errorSpy = vi.spyOn(console, "error").mockImplementation(() => undefined);
+    // The boot transaction writes the fresh profile. The next snapshot write
+    // is the save effect, and that one fails.
+    failSnapshotPutsAfter = 1;
+    installMemoryIndexedDB();
+    await renderApp();
+    await waitForHome();
+    const started = Date.now();
+    while (!document.querySelector("[role='alert']")) {
+      if (Date.now() - started > 2000) {
+        throw new Error(`save failure was not surfaced: ${document.body.textContent}`);
+      }
+      await act(async () => {
+        await new Promise((resolve) => setTimeout(resolve, 10));
+      });
+    }
+    expect(document.querySelector("[role='alert']")?.textContent).toContain("暂时读不到学习记录");
+    expect(errorSpy).toHaveBeenCalledWith("Failed to save learning progress", expect.any(Error));
+    errorSpy.mockRestore();
   });
 
   it("falls back to the bundled Chinese pack when the selected course fails to load", async () => {

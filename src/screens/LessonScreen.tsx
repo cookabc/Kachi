@@ -171,13 +171,10 @@ function TeachCard({ termId, course, t, lang }: { termId: string; course: Course
       <div className="teach-mix">
         <TermArt id={sibling ? sibling.id : concept.mixUp} size="xs" />
         <div>
-          <strong>
-            {lang === "zh-CN" ? "别混淆" : "Don't mix up"}
-            {mixLabel ? ` · ${mixLabel}` : ""}
-          </strong>
-          {lang === "zh-CN" ? "：" : ": "}
+          <strong>{t.lesson.mixCue(mixLabel)}</strong>
+          {t.lesson.mixColon}
           {sibling ? sibling.term : concept.mixUp}
-          {lang === "zh-CN" ? "。" : ". "}
+          {t.lesson.mixStop}
           {concept.mixUpWhy}
         </div>
       </div>

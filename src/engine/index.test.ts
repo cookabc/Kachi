@@ -1,23 +1,27 @@
 import { describe, expect, it } from "vitest";
 import { course as publishedCourse } from "../course";
-import type { Course, Environment, Exercise, LearnerState } from "../domain";
+import type { AttemptEvent, Course, Environment, Exercise, LearnerState } from "../domain";
 import {
   type ApplyOptions,
   applyAnswer,
+  compactAttempts,
   currentExercise,
   duePairIds,
   emptyLearnerState,
   evidenceQuality,
   isCorrect,
+  isFirstEncounter,
   isLessonUnlocked,
   isRequeuedPrompt,
   isSlowAnswer,
   isVerifiedMastery,
+  MAX_ATTEMPT_LOG,
   medianCorrectLatencyMs,
   recentMissTermIds,
   requeuePrompt,
   startPracticeSession,
   startSession,
+  unlockedUnitIds,
 } from "./index";
 
 const course: Course = {
@@ -908,5 +912,178 @@ describe("real-course playthrough", () => {
     expect(state.completedLessonIds).toEqual([]);
     expect(state.xp).toBe(lesson.prompts.length * 10);
     expect(state.streak).toBe(0);
+  });
+});
+
+describe("XP is paid once per exercise and once per lesson", () => {
+  it("does not pay again when the same lesson is completed a second time", () => {
+    const first = applyAnswer(
+      course,
+      emptyLearnerState(),
+      startSession(course, "lesson", environment),
+      "right",
+      environment,
+    );
+    const second = applyAnswer(
+      course,
+      first.state,
+      startSession(course, "lesson", environment),
+      "right",
+      environment,
+    );
+    expect(first.state.xp).toBe(50);
+    expect(second.state.xp).toBe(first.state.xp);
+    expect(second.state.completedLessonIds).toEqual(["test/lesson"]);
+  });
+
+  it("does not pay again after the paying attempt leaves the recent window", () => {
+    const missed = applyAnswer(
+      course,
+      emptyLearnerState(),
+      startSession(course, "lesson", environment),
+      "wrong",
+      environment,
+      { heartsAfter: 2 },
+    );
+    let state = applyAnswer(
+      course,
+      missed.state,
+      startSession(course, "lesson", environment),
+      "right",
+      environment,
+    ).state;
+    for (let index = 0; index < MAX_ATTEMPT_LOG; index += 1) {
+      state = applyAnswer(course, state, startSession(course, "lesson", environment), "wrong", environment, {
+        heartsAfter: 2,
+      }).state;
+    }
+    const again = applyAnswer(
+      course,
+      state,
+      startSession(course, "lesson", environment),
+      "right",
+      environment,
+    );
+    expect(again.state.xp).toBe(state.xp);
+    expect(again.state.completedLessonIds).toEqual(["test/lesson"]);
+  });
+
+  it("still pays the first correct answer after a miss, and only that once", () => {
+    const missed = applyAnswer(
+      course,
+      emptyLearnerState(),
+      startSession(course, "lesson", environment),
+      "wrong",
+      environment,
+      { heartsAfter: 2 },
+    );
+    const corrected = applyAnswer(
+      course,
+      missed.state,
+      startSession(course, "lesson", environment),
+      "right",
+      environment,
+    );
+    const repeated = applyAnswer(
+      course,
+      corrected.state,
+      startSession(course, "lesson", environment),
+      "right",
+      environment,
+    );
+    expect(missed.state.xp).toBe(20);
+    expect(corrected.state.xp).toBe(30);
+    expect(repeated.state.xp).toBe(corrected.state.xp);
+    expect(repeated.state.completedLessonIds).toEqual(missed.state.completedLessonIds);
+  });
+});
+
+describe("attempt log cap", () => {
+  function stamped(index: number, overrides: Partial<AttemptEvent> = {}): AttemptEvent {
+    return {
+      eventId: `e${index}`,
+      deviceId: "t",
+      contentVersion: "1",
+      engineVersion: "0.2.0",
+      exerciseId: `filler-${index}`,
+      conceptIds: ["pledge"],
+      exerciseType: "meaning",
+      answer: "x",
+      correct: true,
+      hintUsed: false,
+      latencyMs: 1000,
+      occurredAt: "2026-08-28T12:00:00.000Z",
+      ...overrides,
+    };
+  }
+
+  it("keeps the latest miss and the first sight of an exercise the tail no longer holds", () => {
+    const miss = stamped(0, {
+      exerciseId: "old-scenario",
+      conceptIds: ["hedge"],
+      exerciseType: "scenario",
+      correct: false,
+      latencyMs: 4000,
+    });
+    const filler = Array.from({ length: MAX_ATTEMPT_LOG }, (_, index) => stamped(index + 1));
+    const compacted = compactAttempts([miss, ...filler]);
+    expect(compacted).toHaveLength(MAX_ATTEMPT_LOG + 1);
+    expect(compacted[0]).toBe(miss);
+    expect(recentMissTermIds({ ...emptyLearnerState(), attempts: compacted })).toContain("hedge");
+
+    const scenario: Exercise = {
+      id: "old-scenario",
+      type: "scenario",
+      termIds: ["hedge"],
+      why: "",
+    };
+    const session = startSession(course, "lesson", environment);
+    expect(isFirstEncounter({ ...emptyLearnerState(), attempts: compacted }, scenario, session)).toBe(false);
+  });
+
+  it("leaves a re-queued pair at the end of a capped log adjacent", () => {
+    const filler = Array.from({ length: MAX_ATTEMPT_LOG }, (_, index) => stamped(index));
+    const wrong = stamped(MAX_ATTEMPT_LOG, {
+      exerciseId: "match-1",
+      exerciseType: "match",
+      correct: false,
+    });
+    const retry = stamped(MAX_ATTEMPT_LOG + 1, {
+      exerciseId: "match-1",
+      exerciseType: "match",
+      correct: true,
+      isRetry: true,
+    });
+    const compacted = compactAttempts([...filler, wrong, retry]);
+    expect(compacted.length).toBeGreaterThan(MAX_ATTEMPT_LOG);
+    expect(compacted.slice(-2)).toEqual([wrong, retry]);
+  });
+});
+
+describe("unlocked units", () => {
+  it("names only the units a learner can actually enter", () => {
+    const units: Course = {
+      ...course,
+      units: [
+        { id: 1, title: "One", blurb: "" },
+        { id: 2, title: "Two", blurb: "" },
+      ],
+      lessons: [
+        course.lessons[0],
+        { ...course.lessons[0], id: "second", unit: 1 },
+        { ...course.lessons[0], id: "third", unit: 2 },
+      ],
+    };
+    expect(unlockedUnitIds(emptyLearnerState(), units)).toEqual([1]);
+    const doneFirst = {
+      ...emptyLearnerState(),
+      completedLessonIds: ["test/lesson"],
+    };
+    expect(unlockedUnitIds(doneFirst, units)).toEqual([1]);
+    const doneSecond = {
+      ...emptyLearnerState(),
+      completedLessonIds: ["test/lesson", "test/second"],
+    };
+    expect(unlockedUnitIds(doneSecond, units)).toEqual([1, 2]);
   });
 });
