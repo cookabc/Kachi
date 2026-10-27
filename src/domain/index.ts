@@ -2,8 +2,14 @@
  * `headline` is the reading task: a real-syntax headline with a blank, and the
  * two confusable terms as options. It tests the product's whole claim — telling
  * the pair apart inside a sentence — rather than what a term means in isolation.
+ *
+ * `audit` is the sceptic's task: a short claim about a backtest, and several
+ * statements about it, exactly one of which is unsound. Every other exercise
+ * type asks "do you know this word"; audit asks "would you have caught the
+ * mistake". It is the only type that can teach the habit the product is for —
+ * reading a number and asking what it is hiding.
  */
-export type ExerciseType = "meaning" | "truefalse" | "fill" | "scenario" | "match" | "headline";
+export type ExerciseType = "meaning" | "truefalse" | "fill" | "scenario" | "match" | "headline" | "audit";
 export type RiskLevel = "evergreen" | "time-sensitive" | "jurisdictional";
 export type ReviewStatus = "legacy" | "draft" | "reviewed";
 

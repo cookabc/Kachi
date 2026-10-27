@@ -3204,3 +3204,49 @@ svg.icon {
 .g-mastery.done {
   color: var(--green-dark);
 }
+
+/* The audit exercise: a claim to be examined, then statements about it.
+   Deliberately not picture tiles — the object under review is a sentence, and
+   dressing each candidate in a cartoon would suggest they are vocabulary
+   choices rather than claims to be checked. */
+.claim {
+  margin: 4px 0 16px;
+  padding: 14px 16px;
+  border-left: 3px solid var(--coral);
+  background: var(--card);
+  border-radius: 0 12px 12px 0;
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--ink);
+}
+.audit-opts {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.audit-opt {
+  display: block;
+  width: 100%;
+  padding: 14px 16px;
+  border: 0.5px solid #dad9d6;
+  border-radius: 14px;
+  background: var(--card);
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 1.5;
+  text-align: left;
+  color: var(--ink);
+  cursor: pointer;
+}
+.audit-opt.sel {
+  border-color: var(--ink);
+  box-shadow: 0 0 0 1.5px var(--ink);
+}
+.audit-opt.good {
+  border-color: var(--green-deep);
+  background: var(--green-soft);
+}
+.audit-opt.bad {
+  border-color: var(--coral-deep);
+  background: var(--wrong-bg);
+}

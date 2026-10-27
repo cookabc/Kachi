@@ -239,10 +239,37 @@ function PromptBody(props: {
     <>
       <div className="kicker2">{t.lesson.kickers[presented.type]}</div>
       {presented.type === "scenario" && presented.story && <div className="story">{presented.story}</div>}
+      {presented.type === "audit" && presented.story && (
+        <blockquote className="claim">{presented.story}</blockquote>
+      )}
       {presented.type === "fill" && presented.story ? (
         <FillStory presented={presented} selection={selection} />
       ) : (
         presented.stem && <div className="stem">{presented.stem}</div>
+      )}
+
+      {presented.type === "audit" && (
+        <div className="audit-opts">
+          {presented.options?.map((option) => {
+            let cls = "audit-opt";
+            if (selection === option.text) cls += " sel";
+            if (locked) {
+              if (option.text === presented.correctText) cls += " good";
+              else if (selection === option.text) cls += " bad";
+            }
+            return (
+              <button
+                type="button"
+                key={option.text}
+                className={cls}
+                disabled={locked}
+                onClick={() => props.onPick(option.text)}
+              >
+                <span className="audit-text">{option.text}</span>
+              </button>
+            );
+          })}
+        </div>
       )}
 
       {(presented.type === "meaning" || presented.type === "scenario") && (
