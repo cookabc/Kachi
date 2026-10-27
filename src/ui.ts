@@ -159,6 +159,8 @@ export interface UiText {
   };
   updateBanner: string;
   loading: string;
+  /** Shown when IndexedDB could not be read at startup. */
+  storageUnavailable: string;
   /** Document shell metadata — synced onto <html> whenever the language changes. */
   doc: { title: string; description: string };
 }
@@ -313,6 +315,7 @@ export const UI: Record<Lang, UiText> = {
     },
     updateBanner: "新版本已准备好，完成当前学习后点击更新",
     loading: "正在准备离线学习空间…",
+    storageUnavailable: "这台设备暂时读不到学习记录，本次进度可能无法保存。",
     doc: {
       title: "Kachi — 财经英语学习",
       description: "Kachi：面向中文用户的财经英语学习。",
@@ -475,6 +478,7 @@ export const UI: Record<Lang, UiText> = {
     },
     updateBanner: "A new version is ready — update after this session",
     loading: "Preparing your offline study space…",
+    storageUnavailable: "This device can't read saved progress right now. This visit may not be saved.",
     doc: {
       title: "Kachi — Finance English, without the mix-ups",
       description: "Tell confusable finance-English terms apart. Five minutes a day, no investment advice.",

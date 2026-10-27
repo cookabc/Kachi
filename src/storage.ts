@@ -8,6 +8,8 @@ const SNAPSHOT_STORE = "snapshots";
 const EVENT_STORE = "events";
 const META_STORE = "meta";
 const PROFILE_KEY = "local-profile";
+/** Invalid live snapshots are moved here instead of being discarded. */
+export const REJECTED_PROFILE_KEY = "local-profile-rejected";
 
 function request<T>(value: IDBRequest<T>): Promise<T> {
   return new Promise((resolve, reject) => {
@@ -61,7 +63,8 @@ export async function loadLearnerState(): Promise<LearnerState> {
   const transaction = database.transaction([SNAPSHOT_STORE, META_STORE], "readwrite");
   const snapshot = (await request(transaction.objectStore(SNAPSHOT_STORE).get(PROFILE_KEY))) as unknown;
   if (isStoredState(snapshot)) {
-    // One upgrade at the boundary; every reader below sees the current shape.
+    // A readable record is migrated in place. It is not a rejected snapshot:
+    // parking it under the backup key would hide a successful upgrade.
     const report = upgradeLearnerState(snapshot);
     if (report.changed) {
       transaction.objectStore(SNAPSHOT_STORE).put(report.state, PROFILE_KEY);
@@ -83,15 +86,24 @@ export async function loadLearnerState(): Promise<LearnerState> {
   }
 
   const recovered = emptyLearnerState();
+  // The rejected value is the only copy of progress we could not read. Keep it
+  // before the live profile is replaced, in the same transaction, so a failed
+  // write rolls both back and the original snapshot stays put.
+  if (snapshot !== undefined) {
+    transaction.objectStore(SNAPSHOT_STORE).put(snapshot, REJECTED_PROFILE_KEY);
+  }
   transaction.objectStore(SNAPSHOT_STORE).put(recovered, PROFILE_KEY);
-  transaction
-    .objectStore(META_STORE)
-    .put(
-      snapshot === undefined
-        ? { createdAt: new Date().toISOString(), source: "fresh" }
-        : { recoveredAt: new Date().toISOString(), source: "fresh", reason: "invalid-snapshot" },
-      snapshot === undefined ? "migration" : "recovery",
-    );
+  transaction.objectStore(META_STORE).put(
+    snapshot === undefined
+      ? { createdAt: new Date().toISOString(), source: "fresh" }
+      : {
+          recoveredAt: new Date().toISOString(),
+          source: "fresh",
+          reason: "invalid-snapshot",
+          preservedKey: REJECTED_PROFILE_KEY,
+        },
+    snapshot === undefined ? "migration" : "recovery",
+  );
   await transactionDone(transaction);
   return recovered;
 }

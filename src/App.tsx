@@ -5,6 +5,7 @@ import type { Concept, Course, LearnerState, SessionState } from "./domain";
 import { emptyLearnerState, isLessonDone, isLessonUnlocked, recentMissTermIds } from "./engine";
 import { conceptOf } from "./flow";
 import { type FlowEvent, type FlowState, idleState, reduceFlow } from "./flow-machine";
+import { handleEnterShortcut } from "./keyboard";
 import { applyMotion, clampLevel, effectiveLevel, loadMotionLevel, saveMotionLevel } from "./motion";
 import { activateUpdate } from "./pwa";
 import { CompleteScreen } from "./screens/CompleteScreen";
@@ -66,6 +67,7 @@ function App() {
   const [glossaryQuery, setGlossaryQuery] = useState("");
   const [updateReady, setUpdateReady] = useState(false);
   const [shareCards, setShareCards] = useState<PairCardInput[] | null>(null);
+  const [storageFailed, setStorageFailed] = useState(false);
   // null stored = untouched slider = follow the OS reduced-motion preference
   const [motion, setMotionState] = useState<number>(() => effectiveLevel(loadMotionLevel()));
   // When the prompt on screen was presented — feeds attempt.latencyMs. A ref,
@@ -87,14 +89,29 @@ function App() {
     // Re-read the stored language here: this effect is mount-only, and a
     // state variable would drag a later language change back into it.
     const initialLang = loadLang();
-    void Promise.all([loadLearnerState(), loadCourse(DEFAULT_PACK, initialLang)]).then(
-      ([loaded, loadedCourse]) => {
-        if (!alive) return;
-        setFlowState((current) => ({ ...current, learner: loaded }));
-        setCourse(loadedCourse);
-        setReady(true);
+    // Course and IndexedDB fail on their own. One shared promise used to reject
+    // the whole boot, and the loading screen never lifted.
+    const learner = loadLearnerState().then(
+      (loaded) => ({ loaded, failed: false }),
+      () => ({ loaded: emptyLearnerState(), failed: true }),
+    );
+    const pack = loadCourse(DEFAULT_PACK, initialLang).then(
+      (loadedCourse) => ({ loadedCourse, lang: initialLang }),
+      () => {
+        // The lazy pack could not be fetched. The bundled zh pack is always
+        // renderable; keep the interface strings and the course together.
+        saveLang("zh-CN");
+        return { loadedCourse: defaultCourse, lang: "zh-CN" as const };
       },
     );
+    void Promise.all([learner, pack]).then(([learnerResult, packResult]) => {
+      if (!alive) return;
+      setFlowState((current) => ({ ...current, learner: learnerResult.loaded }));
+      setStorageFailed(learnerResult.failed);
+      setCourse(packResult.loadedCourse);
+      if (packResult.lang !== initialLang) setLangState(packResult.lang);
+      setReady(true);
+    });
     const listener = () => setUpdateReady(true);
     window.addEventListener("kachi-update-ready", listener);
     return () => {
@@ -106,8 +123,8 @@ function App() {
   // Every committed state change is durable: one save path for answers, seen
   // terms, and imports alike — updaters stay pure.
   useEffect(() => {
-    if (ready) void saveLearnerState(state);
-  }, [state, ready]);
+    if (ready && !storageFailed) void saveLearnerState(state);
+  }, [state, ready, storageFailed]);
 
   // Mirror the motion level onto <html data-motion> whenever it changes.
   useEffect(() => {
@@ -275,23 +292,25 @@ function App() {
     [dispatch, latency],
   );
 
-  // keyboard: Enter drives the lesson; 1-4 pick options; Enter presses the hero CTA on complete/fail
+  // keyboard: Enter drives the lesson; 1-4 pick options. On complete/fail, Enter
+  // activates the primary action only when focus is not already on a control.
   useEffect(() => {
     const onKey = (event: KeyboardEvent) => {
       if (event.key === "Enter") {
-        if (
-          flow.session &&
-          (flow.phase === "teach" || flow.phase === "question" || flow.phase === "feedback")
-        ) {
-          event.preventDefault();
-          if (flow.phase === "teach") dispatch({ type: "teachContinue" });
-          else if (flow.phase === "question") {
-            if (flow.presented?.type !== "match" && flow.selection !== null) answer(flow.selection);
-          } else dispatch({ type: "continue" });
-        } else if (flow.phase === "complete" || flow.phase === "fail") {
-          const button = document.querySelector<HTMLElement>(".hero .btn");
-          button?.click();
-        }
+        // Lesson phases dispatch into the flow machine. Complete/fail only
+        // activate the primary button when Enter was not already aimed at a
+        // control or the share dialog.
+        handleEnterShortcut(event, {
+          shareOpen: shareCards !== null,
+          phase: flow.phase,
+          inSession: flow.session !== null,
+          onLessonEnter: () => {
+            if (flow.phase === "teach") dispatch({ type: "teachContinue" });
+            else if (flow.phase === "question") {
+              if (flow.presented?.type !== "match" && flow.selection !== null) answer(flow.selection);
+            } else dispatch({ type: "continue" });
+          },
+        });
         return;
       }
       if (!flow.session || flow.phase !== "question" || !flow.presented) return;
@@ -310,7 +329,7 @@ function App() {
     };
     document.addEventListener("keydown", onKey);
     return () => document.removeEventListener("keydown", onKey);
-  }, [flow, dispatch, answer]);
+  }, [flow, dispatch, answer, shareCards]);
 
   const downloadExport = async () => {
     const blob = await exportLearnerData();
@@ -347,6 +366,7 @@ function App() {
           course={course}
           t={t}
           motion={motion}
+          blocked={shareCards !== null}
           onStart={beginLesson}
           onPractice={beginPractice}
           onPath={closeLesson}
@@ -485,6 +505,11 @@ function App() {
           <button type="button" className="update" onClick={activateUpdate}>
             {t.updateBanner}
           </button>
+        )}
+        {storageFailed && (
+          <p className="fine" role="alert">
+            {t.storageUnavailable}
+          </p>
         )}
 
         {tab === "learn" && (

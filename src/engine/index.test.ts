@@ -188,6 +188,52 @@ describe("learning engine", () => {
 
     expect(result.state.streak).toBe(1);
   });
+
+  it("keeps the streak across a DST spring-forward", () => {
+    // 00:30 EST on 8 Mar, then 00:30 EDT on 9 Mar. Those instants are 23 hours
+    // apart, so "now minus 24 hours" falls on 7 Mar and used to reset the streak.
+    // The second finish has to be a different lesson: a repeated lesson no
+    // longer counts as a new completion.
+    const dstCourse: Course = {
+      ...course,
+      lessons: [
+        course.lessons[0],
+        {
+          ...course.lessons[0],
+          id: "lesson-2",
+          prompts: [{ ...course.lessons[0].prompts[0], id: "two" }],
+        },
+      ],
+    };
+    const previousTz = process.env.TZ;
+    process.env.TZ = "America/New_York";
+    try {
+      const sunday = { ...environment, now: () => new Date("2026-03-08T05:30:00.000Z") };
+      const started = applyAnswer(
+        dstCourse,
+        emptyLearnerState(),
+        startSession(dstCourse, "lesson", sunday),
+        "right",
+        sunday,
+      );
+      expect(started.state.lastLessonDate).toBe("2026-03-08");
+      expect(started.state.streak).toBe(1);
+
+      const monday = { ...environment, now: () => new Date("2026-03-09T04:30:00.000Z") };
+      const next = applyAnswer(
+        dstCourse,
+        started.state,
+        startSession(dstCourse, "lesson-2", monday),
+        "right",
+        monday,
+      );
+      expect(next.state.lastLessonDate).toBe("2026-03-09");
+      expect(next.state.streak).toBe(2);
+    } finally {
+      if (previousTz === undefined) delete process.env.TZ;
+      else process.env.TZ = previousTz;
+    }
+  });
 });
 
 describe("mastery scheduling", () => {

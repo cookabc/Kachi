@@ -131,6 +131,14 @@ function localDate(date: Date): string {
   return `${date.getFullYear()}-${month}-${day}`;
 }
 
+// Yesterday is the previous local calendar date. Subtracting a fixed 24 hours
+// lands on the day before yesterday when a DST spring-forward removes an hour.
+function previousLocalDate(date: Date): string {
+  const previous = new Date(date);
+  previous.setDate(previous.getDate() - 1);
+  return localDate(previous);
+}
+
 function addDays(date: Date, days: number): string {
   const next = new Date(date);
   next.setUTCDate(next.getUTCDate() + days);
@@ -361,7 +369,7 @@ export function applyAnswer(
     : state.completedLessonIds;
   const completedToday = completesLesson && state.lastLessonDate !== localDate(now);
   const streak = completedToday
-    ? state.lastLessonDate === localDate(new Date(now.getTime() - 86_400_000))
+    ? state.lastLessonDate === previousLocalDate(now)
       ? state.streak + 1
       : 1
     : state.streak;
