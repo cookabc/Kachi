@@ -705,6 +705,161 @@
       "file": "/art/carry-trade.webp",
       "bg": "#ffffff",
       "pack": "t4-forex-macro"
+    },
+    "backtest": {
+      "file": "/art/backtest.webp",
+      "bg": "#ffffff",
+      "pack": "t5-quant-research"
+    },
+    "in-sample": {
+      "file": "/art/in-sample.webp",
+      "bg": "#ffffff",
+      "pack": "t5-quant-research"
+    },
+    "out-of-sample": {
+      "file": "/art/out-of-sample.webp",
+      "bg": "#ffffff",
+      "pack": "t5-quant-research"
+    },
+    "walk-forward": {
+      "file": "/art/walk-forward.webp",
+      "bg": "#ffffff",
+      "pack": "t5-quant-research"
+    },
+    "overfitting": {
+      "file": "/art/overfitting.webp",
+      "bg": "#ffffff",
+      "pack": "t5-quant-research"
+    },
+    "look-ahead bias": {
+      "file": "/art/look-ahead-bias.webp",
+      "bg": "#ffffff",
+      "pack": "t5-quant-research"
+    },
+    "survivorship bias": {
+      "file": "/art/survivorship-bias.webp",
+      "bg": "#ffffff",
+      "pack": "t5-quant-research"
+    },
+    "data snooping": {
+      "file": "/art/data-snooping.webp",
+      "bg": "#ffffff",
+      "pack": "t5-quant-research"
+    },
+    "multiple testing": {
+      "file": "/art/multiple-testing.webp",
+      "bg": "#ffffff",
+      "pack": "t5-quant-research"
+    },
+    "sharpe ratio": {
+      "file": "/art/sharpe-ratio.webp",
+      "bg": "#ffffff",
+      "pack": "t5-quant-research"
+    },
+    "max drawdown": {
+      "file": "/art/max-drawdown.webp",
+      "bg": "#ffffff",
+      "pack": "t5-quant-research"
+    },
+    "hit rate": {
+      "file": "/art/hit-rate.webp",
+      "bg": "#ffffff",
+      "pack": "t5-quant-research"
+    },
+    "expectancy": {
+      "file": "/art/expectancy.webp",
+      "bg": "#ffffff",
+      "pack": "t5-quant-research"
+    },
+    "alpha": {
+      "file": "/art/alpha.webp",
+      "bg": "#ffffff",
+      "pack": "t5-quant-research"
+    },
+    "beta": {
+      "file": "/art/beta.webp",
+      "bg": "#ffffff",
+      "pack": "t5-quant-research"
+    },
+    "tracking error": {
+      "file": "/art/tracking-error.webp",
+      "bg": "#ffffff",
+      "pack": "t5-quant-research"
+    },
+    "universe": {
+      "file": "/art/universe.webp",
+      "bg": "#ffffff",
+      "pack": "t5-quant-research"
+    },
+    "rebalance": {
+      "file": "/art/rebalance.webp",
+      "bg": "#ffffff",
+      "pack": "t5-quant-research"
+    },
+    "position sizing": {
+      "file": "/art/position-sizing.webp",
+      "bg": "#ffffff",
+      "pack": "t5-quant-research"
+    },
+    "turnover": {
+      "file": "/art/turnover.webp",
+      "bg": "#ffffff",
+      "pack": "t5-quant-research"
+    },
+    "correlation": {
+      "file": "/art/correlation.webp",
+      "bg": "#ffffff",
+      "pack": "t5-quant-research"
+    },
+    "exposure": {
+      "file": "/art/exposure.webp",
+      "bg": "#ffffff",
+      "pack": "t5-quant-research"
+    },
+    "transaction cost": {
+      "file": "/art/transaction-cost.webp",
+      "bg": "#ffffff",
+      "pack": "t5-quant-research"
+    },
+    "slippage": {
+      "file": "/art/slippage.webp",
+      "bg": "#ffffff",
+      "pack": "t5-quant-research"
+    },
+    "capacity constraint": {
+      "file": "/art/capacity-constraint.webp",
+      "bg": "#ffffff",
+      "pack": "t5-quant-research"
+    },
+    "liquidity constraint": {
+      "file": "/art/liquidity-constraint.webp",
+      "bg": "#ffffff",
+      "pack": "t5-quant-research"
+    },
+    "stress test": {
+      "file": "/art/stress-test.webp",
+      "bg": "#ffffff",
+      "pack": "t5-quant-research"
+    },
+    "scenario analysis": {
+      "file": "/art/scenario-analysis.webp",
+      "bg": "#ffffff",
+      "pack": "t5-quant-research"
+    },
+    "value at risk": {
+      "file": "/art/value-at-risk.webp",
+      "bg": "#ffffff",
+      "pack": "t5-quant-research"
+    },
+    "sensitivity": {
+      "file": "/art/sensitivity.webp",
+      "bg": "#ffffff",
+      "pack": "t5-quant-research"
+    },
+    "robustness": {
+      "file": "/art/robustness.webp",
+      "bg": "#ffffff",
+      "pack": "t5-quant-research"
     }
   }
 }
