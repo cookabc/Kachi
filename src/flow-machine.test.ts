@@ -402,6 +402,37 @@ describe("practice", () => {
   });
 });
 
+describe("repeated completion", () => {
+  function finishLesson(learner?: LearnerState) {
+    return teachThrough(
+      [
+        start,
+        correct(),
+        advancePast,
+        { type: "submit", answer: true, latencyMs: 1000 },
+        advancePast,
+        { type: "submit", answer: "pledge", latencyMs: 1000 },
+        advancePast,
+      ],
+      learner,
+    );
+  }
+
+  it("pays XP once when the same lesson is completed again", () => {
+    const first = finishLesson();
+    expect(first.flow.phase).toBe("complete");
+    expect(first.learner.xp).toBe(70);
+    expect(first.learner.completedLessonIds).toEqual([lessonKey(course, "l1")]);
+    expect(first.flow.summary).toMatchObject({ xpHit: 30, xpDone: 20, xpPerfect: 20, gained: 70 });
+
+    const second = finishLesson(first.learner);
+    expect(second.flow.phase).toBe("complete");
+    expect(second.learner.xp).toBe(first.learner.xp);
+    expect(second.learner.completedLessonIds).toEqual(first.learner.completedLessonIds);
+    expect(second.flow.summary).toMatchObject({ xpHit: 0, xpDone: 0, xpPerfect: 0, gained: 0 });
+  });
+});
+
 describe("close", () => {
   it("returns to the idle flow from any phase", () => {
     const mid = teachThrough([start]);

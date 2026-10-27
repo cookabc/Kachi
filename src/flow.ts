@@ -195,19 +195,40 @@ export function resolveMatch(
   return { locked: nextLocked, judged: nextLocked.length === pairs.length ? "matched" : null };
 }
 
-// Mirrors the engine payout (applyAnswer): +10 per correct first attempt,
-// +20 lesson completion, +20 no-mistake — practice rounds pay per correct
-// only. Re-queued prompts are excluded from both the accuracy denominator and
-// the XP count, matching what the engine actually pays.
+// Mirrors the engine payout (applyAnswer): +10 the first time an exercise is
+// answered correctly, +20 lesson completion once, +20 no-mistake once.
+// Practice rounds pay per first correct only. Re-queued prompts are excluded
+// from both the accuracy denominator and the XP count.
+//
+// Sessions built by the flow machine carry `priorPaidExerciseIds` and the
+// awarded-bonus flags, so a replay shows what this run actually paid. A
+// hand-built session without those fields keeps the historical formula
+// (every correct non-retry pays, and a lesson pays both bonuses).
 export function sessionSummary(session: SessionState): Summary {
   const results = session.results;
   const graded = results.filter((result) => !result.isRetry);
   const total = graded.length;
   const correct = graded.filter((result) => result.correct).length;
   const isPractice = session.mode === "practice";
-  const xpHit = correct * 10;
-  const xpDone = isPractice ? 0 : 20;
-  const xpPerfect = !isPractice && total > 0 && correct === total ? 20 : 0;
+  const trackPaid = session.priorPaidExerciseIds !== undefined;
+  const paid = new Set(session.priorPaidExerciseIds ?? []);
+  let xpHit = 0;
+  for (const result of graded) {
+    if (!result.correct) continue;
+    if (trackPaid && paid.has(result.exerciseId)) continue;
+    if (trackPaid) paid.add(result.exerciseId);
+    xpHit += 10;
+  }
+  const xpDone =
+    session.awardedCompletion === undefined ? (isPractice ? 0 : 20) : session.awardedCompletion ? 20 : 0;
+  const xpPerfect =
+    session.awardedPerfect === undefined
+      ? !isPractice && total > 0 && correct === total
+        ? 20
+        : 0
+      : session.awardedPerfect
+        ? 20
+        : 0;
   const mix: string[] = [];
   results.forEach((result) => {
     if (!result.correct) {

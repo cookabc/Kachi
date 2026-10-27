@@ -44,7 +44,7 @@ export function Settings({
       <div className="prac-hero">
         <h1>{t.settings.title}</h1>
         <p className="sub">{t.settings.copy}</p>
-        <fieldset className="pack-switch" aria-label={lang === "zh-CN" ? "课程包" : "Course packs"}>
+        <fieldset className="pack-switch" aria-label={t.settings.packsAria}>
           {packs.map((pack) => (
             <button
               type="button"
@@ -58,11 +58,7 @@ export function Settings({
               <span className="pack-level">T{pack.level}</span>
               <span className="pack-title">{pack.title}</span>
               <span className="pack-count">
-                {pack.ready
-                  ? `${pack.conceptCount} ${lang === "zh-CN" ? "个词" : "terms"}`
-                  : lang === "zh-CN"
-                    ? "准备中"
-                    : "in progress"}
+                {pack.ready ? t.settings.packTerms(pack.conceptCount) : t.settings.packPending}
               </span>
             </button>
           ))}

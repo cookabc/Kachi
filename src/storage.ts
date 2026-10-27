@@ -8,6 +8,8 @@ const SNAPSHOT_STORE = "snapshots";
 const EVENT_STORE = "events";
 const META_STORE = "meta";
 const PROFILE_KEY = "local-profile";
+/** Thrown when an imported file is not a learner record this app can read. */
+export const INCOMPATIBLE_LEARNER_FILE = "incompatible-learner-file";
 /** Invalid live snapshots are moved here instead of being discarded. */
 export const REJECTED_PROFILE_KEY = "local-profile-rejected";
 
@@ -244,11 +246,11 @@ export async function importLearnerData(file: File): Promise<LearnerState> {
   try {
     parsed = JSON.parse(await file.text());
   } catch {
-    throw new Error("这不是兼容的 Kachi 学习数据文件。");
+    throw new Error(INCOMPATIBLE_LEARNER_FILE);
   }
   const envelope = parsed as { schemaVersion?: unknown; learnerState?: unknown };
   if (envelope.schemaVersion !== 1 || !isStoredState(envelope.learnerState)) {
-    throw new Error("这不是兼容的 Kachi 学习数据文件。");
+    throw new Error(INCOMPATIBLE_LEARNER_FILE);
   }
   const upgraded = upgradeLearnerState(envelope.learnerState).state;
   await saveLearnerState(upgraded);

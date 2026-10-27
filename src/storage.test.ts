@@ -3,6 +3,7 @@ import type { LearnerState } from "./domain";
 import { emptyLearnerState } from "./engine";
 import {
   exportLearnerData,
+  INCOMPATIBLE_LEARNER_FILE,
   importLearnerData,
   loadLearnerState,
   REJECTED_PROFILE_KEY,
@@ -200,23 +201,23 @@ describe("learner storage", () => {
   });
 
   it("rejects envelopes that are not Kachi learning data", async () => {
-    await expect(importLearnerData(fileOf({ hello: "world" }))).rejects.toThrow(/不是兼容/);
+    await expect(importLearnerData(fileOf({ hello: "world" }))).rejects.toThrow(INCOMPATIBLE_LEARNER_FILE);
     await expect(
       importLearnerData(fileOf({ schemaVersion: 2, learnerState: sampleState() })),
-    ).rejects.toThrow(/不是兼容/);
+    ).rejects.toThrow(INCOMPATIBLE_LEARNER_FILE);
     // A file that is not JSON at all fails with the same localized message,
     // not a raw English SyntaxError.
     await expect(
       importLearnerData({ text: async () => "not json at all" } as unknown as File),
-    ).rejects.toThrow(/不是兼容/);
+    ).rejects.toThrow(INCOMPATIBLE_LEARNER_FILE);
   });
 
   it("rejects learner states whose required collections are missing or malformed", async () => {
     const broken = { schemaVersion: 1, learnerState: { version: 2, xp: 5, streak: "many" } };
-    await expect(importLearnerData(fileOf(broken))).rejects.toThrow(/不是兼容/);
+    await expect(importLearnerData(fileOf(broken))).rejects.toThrow(INCOMPATIBLE_LEARNER_FILE);
 
     const noAttempts = { schemaVersion: 1, learnerState: { ...emptyLearnerState(), attempts: "log" } };
-    await expect(importLearnerData(fileOf(noAttempts))).rejects.toThrow(/不是兼容/);
+    await expect(importLearnerData(fileOf(noAttempts))).rejects.toThrow(INCOMPATIBLE_LEARNER_FILE);
   });
 
   it("rejects attempt collections containing malformed events", async () => {
@@ -224,7 +225,7 @@ describe("learner storage", () => {
       schemaVersion: 1,
       learnerState: { ...emptyLearnerState(), attempts: [{ eventId: "x" }] },
     };
-    await expect(importLearnerData(fileOf(partialEvent))).rejects.toThrow(/不是兼容/);
+    await expect(importLearnerData(fileOf(partialEvent))).rejects.toThrow(INCOMPATIBLE_LEARNER_FILE);
 
     const unknownType = {
       schemaVersion: 1,
@@ -233,7 +234,7 @@ describe("learner storage", () => {
         attempts: [{ ...sampleState().attempts[0], exerciseType: "spelling" }],
       },
     };
-    await expect(importLearnerData(fileOf(unknownType))).rejects.toThrow(/不是兼容/);
+    await expect(importLearnerData(fileOf(unknownType))).rejects.toThrow(INCOMPATIBLE_LEARNER_FILE);
 
     const badDate = {
       schemaVersion: 1,
@@ -242,7 +243,7 @@ describe("learner storage", () => {
         attempts: [{ ...sampleState().attempts[0], occurredAt: "yesterday" }],
       },
     };
-    await expect(importLearnerData(fileOf(badDate))).rejects.toThrow(/不是兼容/);
+    await expect(importLearnerData(fileOf(badDate))).rejects.toThrow(INCOMPATIBLE_LEARNER_FILE);
   });
 
   it("rejects mastery maps whose entries are not mastery states", async () => {
@@ -250,7 +251,7 @@ describe("learner storage", () => {
       schemaVersion: 1,
       learnerState: { ...emptyLearnerState(), mastery: { "hedge::pledge": null } },
     };
-    await expect(importLearnerData(fileOf(nullEntry))).rejects.toThrow(/不是兼容/);
+    await expect(importLearnerData(fileOf(nullEntry))).rejects.toThrow(INCOMPATIBLE_LEARNER_FILE);
 
     const partialEntry = {
       schemaVersion: 1,
@@ -259,7 +260,7 @@ describe("learner storage", () => {
         mastery: { "hedge::pledge": { confusionPairId: "hedge::pledge" } },
       },
     };
-    await expect(importLearnerData(fileOf(partialEntry))).rejects.toThrow(/不是兼容/);
+    await expect(importLearnerData(fileOf(partialEntry))).rejects.toThrow(INCOMPATIBLE_LEARNER_FILE);
   });
 
   it("rejects invalid collection members and negative or fractional counters", async () => {
@@ -272,7 +273,9 @@ describe("learner storage", () => {
       { ...emptyLearnerState(), attempts: [{ ...sampleState().attempts[0], latencyMs: -1 }] },
     ];
     for (const learnerState of invalidStates) {
-      await expect(importLearnerData(fileOf({ schemaVersion: 1, learnerState }))).rejects.toThrow(/不是兼容/);
+      await expect(importLearnerData(fileOf({ schemaVersion: 1, learnerState }))).rejects.toThrow(
+        INCOMPATIBLE_LEARNER_FILE,
+      );
     }
   });
 
@@ -301,7 +304,7 @@ describe("learner storage", () => {
           },
         }),
       ),
-    ).rejects.toThrow(/不是兼容/);
+    ).rejects.toThrow(INCOMPATIBLE_LEARNER_FILE);
   });
 
   it("rejects invalid mastery counters, evidence types, and pair identities", async () => {
@@ -318,7 +321,9 @@ describe("learner storage", () => {
     ];
     for (const entry of invalidEntries) {
       const learnerState = { ...emptyLearnerState(), mastery: { [entry.key]: entry.value } };
-      await expect(importLearnerData(fileOf({ schemaVersion: 1, learnerState }))).rejects.toThrow(/不是兼容/);
+      await expect(importLearnerData(fileOf({ schemaVersion: 1, learnerState }))).rejects.toThrow(
+        INCOMPATIBLE_LEARNER_FILE,
+      );
     }
     const invalidAttempt = {
       ...emptyLearnerState(),
@@ -326,7 +331,7 @@ describe("learner storage", () => {
     };
     await expect(
       importLearnerData(fileOf({ schemaVersion: 1, learnerState: invalidAttempt })),
-    ).rejects.toThrow(/不是兼容/);
+    ).rejects.toThrow(INCOMPATIBLE_LEARNER_FILE);
   });
 
   it("accepts a complete canonical mastery entry", async () => {

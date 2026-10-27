@@ -165,7 +165,12 @@ export function ContrastBench({
           aria-valuemin={6}
           aria-valuemax={94}
           aria-valuenow={Math.round(split)}
-          aria-valuetext={`${concept.term} ${Math.round(split)}% / ${twin.term} ${100 - Math.round(split)}%`}
+          aria-valuetext={t.bench.splitText(
+            concept.term,
+            Math.round(split),
+            twin.term,
+            100 - Math.round(split),
+          )}
           onKeyDown={onKeyDown}
           style={{ left: `${split}%` }}
         >

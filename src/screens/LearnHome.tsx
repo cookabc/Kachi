@@ -1,6 +1,6 @@
 import { StatsBar } from "../chrome";
 import type { Course, LearnerState } from "../domain";
-import { isLessonDone, isLessonUnlocked } from "../engine";
+import { isLessonDone, isLessonUnlocked, unlockedUnitIds } from "../engine";
 import type { UiText } from "../ui";
 
 export function LearnHome({
@@ -16,7 +16,6 @@ export function LearnHome({
   missedCount: number;
   onStart: (id: string) => void;
 }) {
-  const isZh = course.locale.startsWith("zh");
   const upNext = course.lessons.find(
     (lesson) => !isLessonDone(state, course, lesson.id) && isLessonUnlocked(state, course, lesson.id),
   );
@@ -41,17 +40,15 @@ export function LearnHome({
         <div className="brand">
           Kachi<span aria-hidden="true">✳</span>
         </div>
-        <StatsBar state={state} />
+        <StatsBar state={state} t={t} />
       </header>
       <div className="scroll lab-scroll">
         <section className="lab-hero" aria-labelledby="lab-course-title">
           <div className="lab-hero-meta">
-            <span>{isZh ? "概念对照实验室" : "THE CONTRAST LAB"}</span>
-            <span>COURSE / 01</span>
+            <span>{t.home.labKicker}</span>
+            <span>{t.home.courseMark}</span>
           </div>
-          <p className="lab-overline">
-            {isZh ? `第一组：${heroUnit?.blurb ?? ""}` : `PAIR 01 / ${(heroUnit?.blurb ?? "").toUpperCase()}`}
-          </p>
+          <p className="lab-overline">{t.home.pairKicker(heroUnit?.blurb ?? "")}</p>
           <h1 id="lab-course-title" className="lab-hero-title">
             {openingPair?.left} <span aria-hidden="true">/</span>
             <br />
@@ -61,7 +58,7 @@ export function LearnHome({
           <p className="lab-hero-copy">{t.home.tagline}</p>
           <div className="lab-hero-progress">
             <div>
-              <span>{isZh ? "课程进度" : "YOUR PROGRESS"}</span>
+              <span>{t.home.progressLabel}</span>
               <strong>
                 {String(completed).padStart(2, "0")} <i>/</i> {String(total).padStart(2, "0")}
               </strong>
@@ -72,16 +69,14 @@ export function LearnHome({
               aria-valuenow={completed}
               aria-valuemin={0}
               aria-valuemax={total}
-              aria-label={isZh ? "课程进度" : "Course progress"}
+              aria-label={t.home.progressAria}
             >
               <span style={{ width: `${total ? (completed / total) * 100 : 0}%` }} />
             </div>
           </div>
           {activeLesson && (
             <button type="button" className="lab-hero-cta" onClick={() => onStart(activeLesson.id)}>
-              <span>
-                {isZh ? (upNext ? "继续学习" : "重新学习") : upNext ? "Continue learning" : "Study again"}
-              </span>
+              <span>{upNext ? t.home.continueLearning : t.home.studyAgain}</span>
               <span aria-hidden="true">↗</span>
             </button>
           )}
@@ -90,12 +85,10 @@ export function LearnHome({
         <section className="lab-curriculum" aria-labelledby="lab-curriculum-title">
           <div className="lab-section-head">
             <div>
-              <span>FIELD NOTES / 01—{String(course.units.length).padStart(2, "0")}</span>
-              <h2 id="lab-curriculum-title">{isZh ? "学习路径" : "Learning path"}</h2>
+              <span>{t.home.fieldNotes(course.units.length)}</span>
+              <h2 id="lab-curriculum-title">{t.home.pathTitle}</h2>
             </div>
-            <span>
-              {course.concepts.length} {isZh ? "个概念" : "concepts"}
-            </span>
+            <span>{t.home.conceptCount(course.concepts.length)}</span>
           </div>
 
           {course.units.map((unit) => {
@@ -166,7 +159,7 @@ export function LearnHome({
             );
           })}
           {missedCount > 0 && <p className="lab-note">{t.home.missedNote(missedCount)}</p>}
-          <p className="lab-note">{t.home.unitNote}</p>
+          <p className="lab-note">{t.home.unitNote(unlockedUnitIds(state, course), course.units.length)}</p>
         </section>
       </div>
     </>

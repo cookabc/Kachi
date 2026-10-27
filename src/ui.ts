@@ -22,16 +22,39 @@ export function saveLang(lang: Lang) {
   }
 }
 
+function joinUnitIds(ids: number[], lang: Lang): string {
+  if (ids.length <= 1) return String(ids[0] ?? "");
+  if (lang === "zh-CN") {
+    if (ids.length === 2) return `${ids[0]} 和 ${ids[1]}`;
+    return `${ids.slice(0, -1).join("、")} 和 ${ids[ids.length - 1]}`;
+  }
+  if (ids.length === 2) return `${ids[0]} and ${ids[1]}`;
+  return `${ids.slice(0, -1).join(", ")}, and ${ids[ids.length - 1]}`;
+}
+
 export interface UiText {
   navAria: string;
+  /** Accessible name for the XP and streak cluster. */
+  statsAria: (xp: number, streak: number) => string;
   nav: Record<"learn" | "practice" | "glossary" | "graph" | "settings", { label: string; aria: string }>;
   home: {
     tagline: string;
     unit: (id: number) => string;
     upNext: string;
     missedNote: (n: number) => string;
-    unitNote: string;
+    /** Names the units that are actually open, not a fixed list. */
+    unitNote: (unlocked: number[], total: number) => string;
     lockedLesson: (title: string) => string;
+    labKicker: string;
+    courseMark: string;
+    pairKicker: (blurb: string) => string;
+    progressLabel: string;
+    progressAria: string;
+    continueLearning: string;
+    studyAgain: string;
+    fieldNotes: (count: number) => string;
+    pathTitle: string;
+    conceptCount: (n: number) => string;
   };
   practice: {
     brand: string;
@@ -42,6 +65,7 @@ export interface UiText {
     targetsTitle: string;
     unitLabel: (n: number) => string;
     moreCount: (n: number) => string;
+    listSep: string;
   };
   glossary: {
     brand: string;
@@ -59,6 +83,7 @@ export interface UiText {
     kicker: string;
     sliderLabel: string;
     hint: string;
+    splitText: (termA: string, pctA: number, termB: string, pctB: number) => string;
   };
   graph: {
     brand: string;
@@ -78,6 +103,8 @@ export interface UiText {
     weakTitle: string;
     weakExplore: string;
     weakUnlocks: (n: number) => string;
+    weakItemAria: (term: string, unlocks: number) => string;
+    cardMeta: (unit: string, title: string) => string;
   };
   settings: {
     brand: string;
@@ -95,6 +122,10 @@ export interface UiText {
     motionHint: (pct: number) => string;
     imported: string;
     importFailed: string;
+    importInvalid: string;
+    packsAria: string;
+    packTerms: (n: number) => string;
+    packPending: string;
   };
   lesson: {
     close: string;
@@ -120,6 +151,23 @@ export interface UiText {
     teachContinue: string;
     teachStart: string;
     practiceTitle: string;
+    mixCue: (label: string | null) => string;
+    mixColon: string;
+    mixStop: string;
+  };
+  desktop: {
+    edition: string;
+    eyebrow: string;
+    titleLead: string;
+    titleBefore: string;
+    titleEm: string;
+    copy: string;
+    hedge: string;
+    pledge: string;
+    hedgeMark: string;
+    pledgeMark: string;
+    start: string;
+    footer: string;
   };
   verdicts: { nice: string[]; nope: string[] };
   complete: {
@@ -168,6 +216,7 @@ export interface UiText {
 export const UI: Record<Lang, UiText> = {
   "zh-CN": {
     navAria: "主导航",
+    statsAria: (xp, streak) => `经验值 ${xp}，连续学习 ${streak} 天`,
     nav: {
       learn: { label: "学习", aria: "学习路径" },
       practice: { label: "复习", aria: "复习练习" },
@@ -180,8 +229,24 @@ export const UI: Record<Lang, UiText> = {
       unit: (id) => `单元 ${id}`,
       upNext: "接下来，",
       missedNote: (n) => `${n} 个术语需要复习。`,
-      unitNote: "单元 1 和 2 已解锁，其余单元完成前面的课程后开放。",
+      unitNote: (unlocked, total) => {
+        if (unlocked.length === 0 || total === 0) return "完成前面的课程后，单元会依次开放。";
+        const names =
+          unlocked.length === 1 ? `单元 ${unlocked[0]}` : `单元 ${joinUnitIds(unlocked, "zh-CN")}`;
+        if (unlocked.length >= total) return `${names} 已全部解锁。`;
+        return `${names} 已解锁，其余单元完成前面的课程后开放。`;
+      },
       lockedLesson: (title) => `${title}（未解锁）`,
+      labKicker: "概念对照实验室",
+      courseMark: "课程 / 01",
+      pairKicker: (blurb) => `第一组：${blurb}`,
+      progressLabel: "课程进度",
+      progressAria: "课程进度",
+      continueLearning: "继续学习",
+      studyAgain: "重新学习",
+      fieldNotes: (count) => `田野笔记 / 01—${String(count).padStart(2, "0")}`,
+      pathTitle: "学习路径",
+      conceptCount: (n) => `${n} 个概念`,
     },
     practice: {
       brand: "今日复习",
@@ -192,6 +257,7 @@ export const UI: Record<Lang, UiText> = {
       targetsTitle: "今天轮到这些",
       unitLabel: (n) => `第 ${n} 单元`,
       moreCount: (n) => `另有 ${n} 个`,
+      listSep: "、",
     },
     glossary: {
       brand: "词汇表",
@@ -209,6 +275,7 @@ export const UI: Record<Lang, UiText> = {
       kicker: "对照台",
       sliderLabel: "拖动分隔线，比较两个词",
       hint: "拖动分隔线，或者用方向键移动。",
+      splitText: (termA, pctA, termB, pctB) => `${termA} ${pctA}% / ${termB} ${pctB}%`,
     },
     graph: {
       brand: "知识图谱",
@@ -228,6 +295,8 @@ export const UI: Record<Lang, UiText> = {
       weakTitle: "卡住你的是这些",
       weakExplore: "还没有先修关系——按课程顺序学就好",
       weakUnlocks: (n) => `会解锁 ${n} 个词`,
+      weakItemAria: (term, unlocks) => (unlocks > 0 ? `${term}，会解锁 ${unlocks} 个词` : term),
+      cardMeta: (unit, title) => `${unit}，${title}`,
     },
     settings: {
       brand: "设置",
@@ -245,6 +314,10 @@ export const UI: Record<Lang, UiText> = {
       motionHint: (pct) => (pct === 0 ? "彩纸与动画已关闭。" : `彩纸密度 ${pct}%；0% 关闭彩纸与动画。`),
       imported: "学习数据已导入。",
       importFailed: "导入失败。",
+      importInvalid: "这不是兼容的 Kachi 学习数据文件。",
+      packsAria: "课程包",
+      packTerms: (n) => `${n} 个词`,
+      packPending: "准备中",
     },
     lesson: {
       close: "退出课程",
@@ -274,6 +347,23 @@ export const UI: Record<Lang, UiText> = {
       teachContinue: "继续",
       teachStart: "开始练习",
       practiceTitle: "今日复习",
+      mixCue: (label) => (label ? `别混淆 · ${label}` : "别混淆"),
+      mixColon: "：",
+      mixStop: "。",
+    },
+    desktop: {
+      edition: "财经英语实验室 / 001",
+      eyebrow: "学会看清词语背后的动作",
+      titleLead: "别背单词。",
+      titleBefore: "学会",
+      titleEm: "分辨。",
+      copy: "Hedge 是保护风险，Pledge 是拿资产作抵押。一个词的差别，可能让整段财经新闻的意思反过来。",
+      hedge: "对冲风险",
+      pledge: "抵押资产",
+      hedgeMark: "01 / HEDGE",
+      pledgeMark: "02 / PLEDGE",
+      start: "开始下一课",
+      footer: "本地保存，无账户，无投资建议",
     },
     verdicts: {
       nice: ["不错。", "正是。", "答对了。", "漂亮。"],
@@ -323,6 +413,7 @@ export const UI: Record<Lang, UiText> = {
   },
   "en-US": {
     navAria: "Main navigation",
+    statsAria: (xp, streak) => `XP ${xp}, streak ${streak}`,
     nav: {
       learn: { label: "Learn", aria: "Learning path" },
       practice: { label: "Practice", aria: "Practice rounds" },
@@ -335,8 +426,24 @@ export const UI: Record<Lang, UiText> = {
       unit: (id) => `Unit ${id}`,
       upNext: "Up next, ",
       missedNote: (n) => `${n} term${n === 1 ? "" : "s"} to review.`,
-      unitNote: "Units 1 and 2 are open. The rest unlock as you finish the ones before them.",
+      unitNote: (unlocked, total) => {
+        if (unlocked.length === 0 || total === 0) return "Units unlock as you finish the ones before them.";
+        if (unlocked.length >= total) return "Every unit is open.";
+        const rest = "The rest unlock as you finish the ones before them.";
+        if (unlocked.length === 1) return `Unit ${unlocked[0]} is open. ${rest}`;
+        return `Units ${joinUnitIds(unlocked, "en-US")} are open. ${rest}`;
+      },
       lockedLesson: (title) => `${title} (locked)`,
+      labKicker: "The contrast lab",
+      courseMark: "Course / 01",
+      pairKicker: (blurb) => `Pair 01 / ${blurb.toUpperCase()}`,
+      progressLabel: "Your progress",
+      progressAria: "Course progress",
+      continueLearning: "Continue learning",
+      studyAgain: "Study again",
+      fieldNotes: (count) => `Field notes / 01—${String(count).padStart(2, "0")}`,
+      pathTitle: "Learning path",
+      conceptCount: (n) => `${n} concept${n === 1 ? "" : "s"}`,
     },
     practice: {
       brand: "Practice",
@@ -347,6 +454,7 @@ export const UI: Record<Lang, UiText> = {
       targetsTitle: "Up today",
       unitLabel: (n) => `Unit ${n}`,
       moreCount: (n) => `${n} more`,
+      listSep: ", ",
     },
     glossary: {
       brand: "Glossary",
@@ -364,6 +472,7 @@ export const UI: Record<Lang, UiText> = {
       kicker: "Contrast bench",
       sliderLabel: "Drag the divider to compare the two words",
       hint: "Drag the divider, or move it with the arrow keys.",
+      splitText: (termA, pctA, termB, pctB) => `${termA} ${pctA}% / ${termB} ${pctB}%`,
     },
     graph: {
       brand: "The map",
@@ -383,6 +492,9 @@ export const UI: Record<Lang, UiText> = {
       weakTitle: "What's holding you up",
       weakExplore: "No prereq chain yet — just follow the course order",
       weakUnlocks: (n) => `unlocks ${n} term${n === 1 ? "" : "s"}`,
+      weakItemAria: (term, unlocks) =>
+        unlocks > 0 ? `${term}, unlocks ${unlocks} term${unlocks === 1 ? "" : "s"}` : term,
+      cardMeta: (unit, title) => `${unit}, ${title}`,
     },
     settings: {
       brand: "Settings",
@@ -402,6 +514,10 @@ export const UI: Record<Lang, UiText> = {
         pct === 0 ? "Confetti and animation are off." : `Confetti density ${pct}%; 0% turns it all off.`,
       imported: "Learning data imported.",
       importFailed: "Import failed.",
+      importInvalid: "This file is not a Kachi learning record.",
+      packsAria: "Course packs",
+      packTerms: (n) => `${n} term${n === 1 ? "" : "s"}`,
+      packPending: "In progress",
     },
     lesson: {
       close: "Close lesson",
@@ -437,6 +553,23 @@ export const UI: Record<Lang, UiText> = {
       teachContinue: "Continue",
       teachStart: "Let's practice",
       practiceTitle: "Practice",
+      mixCue: (label) => (label ? `Don't mix up · ${label}` : "Don't mix up"),
+      mixColon: ": ",
+      mixStop: ". ",
+    },
+    desktop: {
+      edition: "FINANCIAL ENGLISH LAB / 001",
+      eyebrow: "SEE THE ACTION BEHIND THE WORD",
+      titleLead: "Less memorizing.",
+      titleBefore: "",
+      titleEm: "More meaning.",
+      copy: "Hedge protects against risk. Pledge puts an asset up as collateral. One word can change the meaning of a financial story.",
+      hedge: "Protect",
+      pledge: "Collateral",
+      hedgeMark: "01 / HEDGE",
+      pledgeMark: "02 / PLEDGE",
+      start: "Start the next lesson",
+      footer: "LOCAL FIRST, NO ACCOUNT, NO INVESTMENT ADVICE",
     },
     verdicts: {
       nice: ["Nice.", "Exactly.", "You got it.", "Clean."],

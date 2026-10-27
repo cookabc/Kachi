@@ -18,7 +18,13 @@ import { PracticeHome } from "./screens/PracticeHome";
 import { Settings } from "./screens/Settings";
 import { ShareSheet } from "./screens/ShareSheet";
 import type { PairCardInput } from "./share-card";
-import { exportLearnerData, importLearnerData, loadLearnerState, saveLearnerState } from "./storage";
+import {
+  exportLearnerData,
+  INCOMPATIBLE_LEARNER_FILE,
+  importLearnerData,
+  loadLearnerState,
+  saveLearnerState,
+} from "./storage";
 import { type Lang, loadLang, saveLang, UI, type UiText } from "./ui";
 
 const deviceId = crypto.randomUUID();
@@ -121,9 +127,19 @@ function App() {
   }, []);
 
   // Every committed state change is durable: one save path for answers, seen
-  // terms, and imports alike — updaters stay pure.
+  // terms, and imports alike — updaters stay pure. A rejected write is shown
+  // on the same alert the startup path uses, and logged, without taking the
+  // UI down with it.
   useEffect(() => {
-    if (ready && !storageFailed) void saveLearnerState(state);
+    if (!ready || storageFailed) return;
+    let active = true;
+    void saveLearnerState(state).catch((error: unknown) => {
+      console.error("Failed to save learning progress", error);
+      if (active) setStorageFailed(true);
+    });
+    return () => {
+      active = false;
+    };
   }, [state, ready, storageFailed]);
 
   // Mirror the motion level onto <html data-motion> whenever it changes.
@@ -348,7 +364,8 @@ function App() {
       setState(await importLearnerData(file));
       alert(t.settings.imported);
     } catch (error) {
-      alert(error instanceof Error ? error.message : t.settings.importFailed);
+      const incompatible = error instanceof Error && error.message === INCOMPATIBLE_LEARNER_FILE;
+      alert(incompatible ? t.settings.importInvalid : t.settings.importFailed);
     } finally {
       event.target.value = "";
     }
@@ -428,45 +445,28 @@ function App() {
           <span className="desktop-wordmark">
             Kachi<span aria-hidden="true">✳</span>
           </span>
-          <span className="desktop-edition">
-            {lang === "zh-CN" ? "财经英语实验室 / 001" : "FINANCIAL ENGLISH LAB / 001"}
-          </span>
+          <span className="desktop-edition">{t.desktop.edition}</span>
         </div>
         <div className="desktop-story-main">
-          <p className="desktop-eyebrow">
-            {lang === "zh-CN" ? "学会看清词语背后的动作" : "SEE THE ACTION BEHIND THE WORD"}
-          </p>
+          <p className="desktop-eyebrow">{t.desktop.eyebrow}</p>
           <p id="desktop-story-title" className="desktop-story-title">
-            {lang === "zh-CN" ? (
-              <>
-                别背单词。
-                <br />
-                学会<span>分辨。</span>
-              </>
-            ) : (
-              <>
-                Less memorizing.
-                <br />
-                <span>More meaning.</span>
-              </>
-            )}
+            {t.desktop.titleLead}
+            <br />
+            {t.desktop.titleBefore}
+            <span>{t.desktop.titleEm}</span>
           </p>
-          <p className="desktop-story-copy">
-            {lang === "zh-CN"
-              ? "Hedge 是保护风险，Pledge 是拿资产作抵押。一个词的差别，可能让整段财经新闻的意思反过来。"
-              : "Hedge protects against risk. Pledge puts an asset up as collateral. One word can change the meaning of a financial story."}
-          </p>
+          <p className="desktop-story-copy">{t.desktop.copy}</p>
           <div className="concept-pair">
             <div>
-              <span>01 / HEDGE</span>
-              <strong>{lang === "zh-CN" ? "对冲风险" : "Protect"}</strong>
+              <span>{t.desktop.hedgeMark}</span>
+              <strong>{t.desktop.hedge}</strong>
             </div>
             <span className="concept-pair-divider" aria-hidden="true">
               ≠
             </span>
             <div>
-              <span>02 / PLEDGE</span>
-              <strong>{lang === "zh-CN" ? "抵押资产" : "Collateral"}</strong>
+              <span>{t.desktop.pledgeMark}</span>
+              <strong>{t.desktop.pledge}</strong>
             </div>
           </div>
           <button
@@ -481,16 +481,12 @@ function App() {
               )
             }
           >
-            {lang === "zh-CN" ? "开始下一课" : "Start the next lesson"}
+            {t.desktop.start}
             <span aria-hidden="true">↗</span>
           </button>
         </div>
         <div className="desktop-story-bottom">
-          <span>
-            {lang === "zh-CN"
-              ? "本地保存，无账户，无投资建议"
-              : "LOCAL FIRST, NO ACCOUNT, NO INVESTMENT ADVICE"}
-          </span>
+          <span>{t.desktop.footer}</span>
           <span>
             {course.lessons
               .filter((lesson) => isLessonDone(state, course, lesson.id))
@@ -520,6 +516,7 @@ function App() {
             state={state}
             course={course}
             t={t}
+            lang={lang}
             missedCount={missedCount}
             onStart={() => beginPractice()}
           />
@@ -540,6 +537,7 @@ function App() {
             state={state}
             course={course}
             t={t}
+            lang={lang}
             onOpenGlossary={(term) => {
               setGlossaryQuery(term);
               setTab("glossary");

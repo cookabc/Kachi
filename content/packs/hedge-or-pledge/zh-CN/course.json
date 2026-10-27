@@ -1,14 +1,14 @@
 {
   "schemaVersion": 1,
   "packId": "hedge-or-pledge",
-  "contentVersion": "2026.10.03-zh-full",
+  "contentVersion": "2026.10.27-zh-u1",
   "locale": "zh-CN",
-  "generatedAt": "2026-10-03T09:00:00.000Z",
+  "generatedAt": "2026-10-27T07:00:00.000Z",
   "units": [
     {
       "id": 1,
-      "title": "Hedge or Pledge",
-      "blurb": "Protect it, or borrow against it?"
+      "title": "对冲还是质押",
+      "blurb": "是保护它，还是拿它去借钱？"
     },
     {
       "id": 2,
