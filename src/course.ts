@@ -56,6 +56,8 @@ const LOADERS: Record<string, () => Promise<CourseModule>> = {
   "t2-company-earnings/en-US": () => import("../content/packs/t2-company-earnings/en-US/course.json"),
   "t3-bonds-rates/zh-CN": () => import("../content/packs/t3-bonds-rates/zh-CN/course.json"),
   "t3-bonds-rates/en-US": () => import("../content/packs/t3-bonds-rates/en-US/course.json"),
+  "t4-forex-macro/zh-CN": () => import("../content/packs/t4-forex-macro/zh-CN/course.json"),
+  "t4-forex-macro/en-US": () => import("../content/packs/t4-forex-macro/en-US/course.json"),
 };
 
 /** Default pack — zh-CN. Tests and legacy call sites read this. */
