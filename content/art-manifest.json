@@ -210,6 +210,186 @@
       "file": "/art/p-e.webp",
       "bg": "#ffffff",
       "pack": "t1-finance-news"
+    },
+    "gross": {
+      "file": "/art/gross.webp",
+      "bg": "#ffffff",
+      "pack": "t2-company-earnings"
+    },
+    "net": {
+      "file": "/art/net.webp",
+      "bg": "#ffffff",
+      "pack": "t2-company-earnings"
+    },
+    "eps": {
+      "file": "/art/eps.webp",
+      "bg": "#ffffff",
+      "pack": "t2-company-earnings"
+    },
+    "headwinds": {
+      "file": "/art/headwinds.webp",
+      "bg": "#ffffff",
+      "pack": "t2-company-earnings"
+    },
+    "tailwinds": {
+      "file": "/art/tailwinds.webp",
+      "bg": "#ffffff",
+      "pack": "t2-company-earnings"
+    },
+    "working capital": {
+      "file": "/art/working-capital.webp",
+      "bg": "#ffffff",
+      "pack": "t2-company-earnings"
+    },
+    "free cash flow": {
+      "file": "/art/free-cash-flow.webp",
+      "bg": "#ffffff",
+      "pack": "t2-company-earnings"
+    },
+    "opex": {
+      "file": "/art/opex.webp",
+      "bg": "#ffffff",
+      "pack": "t2-company-earnings"
+    },
+    "capex": {
+      "file": "/art/capex.webp",
+      "bg": "#ffffff",
+      "pack": "t2-company-earnings"
+    },
+    "leverage": {
+      "file": "/art/leverage.webp",
+      "bg": "#ffffff",
+      "pack": "t2-company-earnings"
+    },
+    "beat": {
+      "file": "/art/beat.webp",
+      "bg": "#ffffff",
+      "pack": "t2-company-earnings"
+    },
+    "miss": {
+      "file": "/art/miss.webp",
+      "bg": "#ffffff",
+      "pack": "t2-company-earnings"
+    },
+    "outlook": {
+      "file": "/art/outlook.webp",
+      "bg": "#ffffff",
+      "pack": "t2-company-earnings"
+    },
+    "debt": {
+      "file": "/art/debt.webp",
+      "bg": "#ffffff",
+      "pack": "t2-company-earnings"
+    },
+    "equity": {
+      "file": "/art/equity.webp",
+      "bg": "#ffffff",
+      "pack": "t2-company-earnings"
+    },
+    "net debt": {
+      "file": "/art/net-debt.webp",
+      "bg": "#ffffff",
+      "pack": "t2-company-earnings"
+    },
+    "capital expenditure": {
+      "file": "/art/capital-expenditure.webp",
+      "bg": "#ffffff",
+      "pack": "t2-company-earnings"
+    },
+    "margin call": {
+      "file": "/art/margin-call.webp",
+      "bg": "#ffffff",
+      "pack": "t2-company-earnings"
+    },
+    "buyback": {
+      "file": "/art/buyback.webp",
+      "bg": "#ffffff",
+      "pack": "t2-company-earnings"
+    },
+    "payout": {
+      "file": "/art/payout.webp",
+      "bg": "#ffffff",
+      "pack": "t2-company-earnings"
+    },
+    "shareholder": {
+      "file": "/art/shareholder.webp",
+      "bg": "#ffffff",
+      "pack": "t2-company-earnings"
+    },
+    "share issuance": {
+      "file": "/art/share-issuance.webp",
+      "bg": "#ffffff",
+      "pack": "t2-company-earnings"
+    },
+    "acquisition": {
+      "file": "/art/acquisition.webp",
+      "bg": "#ffffff",
+      "pack": "t2-company-earnings"
+    },
+    "merger": {
+      "file": "/art/merger.webp",
+      "bg": "#ffffff",
+      "pack": "t2-company-earnings"
+    },
+    "divestiture": {
+      "file": "/art/divestiture.webp",
+      "bg": "#ffffff",
+      "pack": "t2-company-earnings"
+    },
+    "spin-off": {
+      "file": "/art/spin-off.webp",
+      "bg": "#ffffff",
+      "pack": "t2-company-earnings"
+    },
+    "write-down": {
+      "file": "/art/write-down.webp",
+      "bg": "#ffffff",
+      "pack": "t2-company-earnings"
+    },
+    "impairment": {
+      "file": "/art/impairment.webp",
+      "bg": "#ffffff",
+      "pack": "t2-company-earnings"
+    },
+    "restructuring": {
+      "file": "/art/restructuring.webp",
+      "bg": "#ffffff",
+      "pack": "t2-company-earnings"
+    },
+    "ipo": {
+      "file": "/art/ipo.webp",
+      "bg": "#ffffff",
+      "pack": "t2-company-earnings"
+    },
+    "listing": {
+      "file": "/art/listing.webp",
+      "bg": "#ffffff",
+      "pack": "t2-company-earnings"
+    },
+    "p/b": {
+      "file": "/art/p-b.webp",
+      "bg": "#ffffff",
+      "pack": "t2-company-earnings"
+    },
+    "book value": {
+      "file": "/art/book-value.webp",
+      "bg": "#ffffff",
+      "pack": "t2-company-earnings"
+    },
+    "stakeholder": {
+      "file": "/art/stakeholder.webp",
+      "bg": "#ffffff",
+      "pack": "t2-company-earnings"
+    },
+    "payout ratio": {
+      "file": "/art/payout-ratio.webp",
+      "bg": "#ffffff",
+      "pack": "t2-company-earnings"
+    },
+    "discount": {
+      "file": "/art/discount.webp",
+      "bg": "#ffffff",
+      "pack": "t2-company-earnings"
     }
   }
 }

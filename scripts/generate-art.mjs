@@ -137,6 +137,39 @@ function slug(id) {
     .replace(/^-|-$/g, "");
 }
 
+/** The PNG codex produced: the requested path if honoured, else the newest generated file. */
+function locateProduced(pngTarget, sinceMs) {
+  if (existsSync(pngTarget)) return pngTarget;
+  return newestGenerated(sinceMs);
+}
+
+/** Run codex for one prompt with stdin closed (it blocks on a non-TTY stdin). */
+async function invokeCodex(prompt, label) {
+  await new Promise((resolve, reject) => {
+    const child = spawn("codex", ["exec", "--skip-git-repo-check", "--sandbox", "workspace-write", prompt], {
+      cwd: ROOT,
+      stdio: ["ignore", "pipe", "pipe"],
+    });
+    let err = "";
+    child.stderr.on("data", (chunk) => {
+      err += chunk;
+    });
+    const timer = setTimeout(() => {
+      child.kill();
+      reject(new Error(`${label}: codex timed out after 300s`));
+    }, 300_000);
+    child.on("error", (error) => {
+      clearTimeout(timer);
+      reject(error);
+    });
+    child.on("close", (code) => {
+      clearTimeout(timer);
+      if (code === 0) resolve();
+      else reject(new Error(`${label}: codex exited ${code}: ${err.slice(-300)}`));
+    });
+  });
+}
+
 async function generateOne(concept, options) {
   const base = slug(concept.id);
   const pngTarget = path.join(ART_DIR, `${base}.png`);
@@ -153,35 +186,19 @@ Subject: ${concept.scene}`;
   }
 
   const started = Date.now();
-  // stdin MUST be closed. codex reads stdin whenever it is not a TTY and then
-  // exits without generating ("Reading additional input from stdin...").
-  await new Promise((resolve, reject) => {
-    const child = spawn("codex", ["exec", "--skip-git-repo-check", "--sandbox", "workspace-write", prompt], {
-      cwd: ROOT,
-      stdio: ["ignore", "pipe", "pipe"],
-    });
-    let err = "";
-    child.stderr.on("data", (chunk) => {
-      err += chunk;
-    });
-    const timer = setTimeout(() => {
-      child.kill();
-      reject(new Error(`${concept.id}: codex timed out after 300s`));
-    }, 300_000);
-    child.on("error", (error) => {
-      clearTimeout(timer);
-      reject(error);
-    });
-    child.on("close", (code) => {
-      clearTimeout(timer);
-      if (code === 0) resolve();
-      else reject(new Error(`${concept.id}: codex exited ${code}: ${err.slice(-300)}`));
-    });
-  });
+  await invokeCodex(prompt, concept.id);
 
   // codex usually honors the target path, but has also written into
-  // ~/.codex/generated_images instead — accept either.
-  const produced = existsSync(pngTarget) ? pngTarget : newestGenerated(started);
+  // ~/.codex/generated_images instead — accept either. Occasionally it exits 0
+  // having written nothing at all, which in a 36-image batch would strand the
+  // run on one word; retry once before giving up.
+  let produced = locateProduced(pngTarget, started);
+  if (!produced) {
+    console.warn(`  [retry] ${concept.id}: no file after first attempt`);
+    const retryStart = Date.now();
+    await invokeCodex(prompt, concept.id);
+    produced = locateProduced(pngTarget, retryStart);
+  }
   if (!produced) throw new Error(`codex reported success but wrote no image for ${concept.id}`);
 
   mkdirSync(ART_DIR, { recursive: true });
