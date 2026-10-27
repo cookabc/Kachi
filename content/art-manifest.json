@@ -560,6 +560,151 @@
       "file": "/art/benchmark-rate.webp",
       "bg": "#ffffff",
       "pack": "t3-bonds-rates"
+    },
+    "dollar": {
+      "file": "/art/dollar.webp",
+      "bg": "#ffffff",
+      "pack": "t4-forex-macro"
+    },
+    "euro": {
+      "file": "/art/euro.webp",
+      "bg": "#ffffff",
+      "pack": "t4-forex-macro"
+    },
+    "yen": {
+      "file": "/art/yen.webp",
+      "bg": "#ffffff",
+      "pack": "t4-forex-macro"
+    },
+    "yuan": {
+      "file": "/art/yuan.webp",
+      "bg": "#ffffff",
+      "pack": "t4-forex-macro"
+    },
+    "sterling": {
+      "file": "/art/sterling.webp",
+      "bg": "#ffffff",
+      "pack": "t4-forex-macro"
+    },
+    "peso": {
+      "file": "/art/peso.webp",
+      "bg": "#ffffff",
+      "pack": "t4-forex-macro"
+    },
+    "rupiah": {
+      "file": "/art/rupiah.webp",
+      "bg": "#ffffff",
+      "pack": "t4-forex-macro"
+    },
+    "strengthen": {
+      "file": "/art/strengthen.webp",
+      "bg": "#ffffff",
+      "pack": "t4-forex-macro"
+    },
+    "weaken": {
+      "file": "/art/weaken.webp",
+      "bg": "#ffffff",
+      "pack": "t4-forex-macro"
+    },
+    "hawkish": {
+      "file": "/art/hawkish.webp",
+      "bg": "#ffffff",
+      "pack": "t4-forex-macro"
+    },
+    "dovish": {
+      "file": "/art/dovish.webp",
+      "bg": "#ffffff",
+      "pack": "t4-forex-macro"
+    },
+    "forward guidance": {
+      "file": "/art/forward-guidance.webp",
+      "bg": "#ffffff",
+      "pack": "t4-forex-macro"
+    },
+    "tapering": {
+      "file": "/art/tapering.webp",
+      "bg": "#ffffff",
+      "pack": "t4-forex-macro"
+    },
+    "monetary policy": {
+      "file": "/art/monetary-policy.webp",
+      "bg": "#ffffff",
+      "pack": "t4-forex-macro"
+    },
+    "fiscal policy": {
+      "file": "/art/fiscal-policy.webp",
+      "bg": "#ffffff",
+      "pack": "t4-forex-macro"
+    },
+    "quantitative easing": {
+      "file": "/art/quantitative-easing.webp",
+      "bg": "#ffffff",
+      "pack": "t4-forex-macro"
+    },
+    "tightening": {
+      "file": "/art/tightening.webp",
+      "bg": "#ffffff",
+      "pack": "t4-forex-macro"
+    },
+    "easing": {
+      "file": "/art/easing.webp",
+      "bg": "#ffffff",
+      "pack": "t4-forex-macro"
+    },
+    "deflation": {
+      "file": "/art/deflation.webp",
+      "bg": "#ffffff",
+      "pack": "t4-forex-macro"
+    },
+    "stagflation": {
+      "file": "/art/stagflation.webp",
+      "bg": "#ffffff",
+      "pack": "t4-forex-macro"
+    },
+    "soft landing": {
+      "file": "/art/soft-landing.webp",
+      "bg": "#ffffff",
+      "pack": "t4-forex-macro"
+    },
+    "current account": {
+      "file": "/art/current-account.webp",
+      "bg": "#ffffff",
+      "pack": "t4-forex-macro"
+    },
+    "trade balance": {
+      "file": "/art/trade-balance.webp",
+      "bg": "#ffffff",
+      "pack": "t4-forex-macro"
+    },
+    "intervention": {
+      "file": "/art/intervention.webp",
+      "bg": "#ffffff",
+      "pack": "t4-forex-macro"
+    },
+    "capital flow": {
+      "file": "/art/capital-flow.webp",
+      "bg": "#ffffff",
+      "pack": "t4-forex-macro"
+    },
+    "risk appetite": {
+      "file": "/art/risk-appetite.webp",
+      "bg": "#ffffff",
+      "pack": "t4-forex-macro"
+    },
+    "risk-off": {
+      "file": "/art/risk-off.webp",
+      "bg": "#ffffff",
+      "pack": "t4-forex-macro"
+    },
+    "safe-haven": {
+      "file": "/art/safe-haven.webp",
+      "bg": "#ffffff",
+      "pack": "t4-forex-macro"
+    },
+    "carry trade": {
+      "file": "/art/carry-trade.webp",
+      "bg": "#ffffff",
+      "pack": "t4-forex-macro"
     }
   }
 }
