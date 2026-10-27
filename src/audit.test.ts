@@ -3,6 +3,7 @@ import type { Concept, Course, Exercise } from "./domain";
 import { applyAnswer, emptyLearnerState, isCorrect, startSession } from "./engine";
 import { present } from "./flow";
 import { validateCourse } from "./schema";
+import { UI } from "./ui";
 
 // The audit exercise is the only type that teaches scepticism: a claim about a
 // backtest, and several statements about it, exactly one of which does not hold.
@@ -118,5 +119,18 @@ describe("audit exercise", () => {
     const shown = present(auditPrompt, () => 0.99);
     expect(shown.correctText).toBe(auditPrompt.options![2].text);
     expect(shown.options).toHaveLength(4);
+  });
+});
+
+describe("audit feedback copy", () => {
+  // The default verdict lines talk about mixing up a pair ("That pair again").
+  // On an audit item that reads as nonsense: nothing was confused with anything,
+  // the learner either caught a bad argument or let one through.
+  it("has its own verdict lines in both locales", () => {
+    for (const locale of ["zh-CN", "en-US"] as const) {
+      const v = UI[locale].verdicts;
+      expect(v.auditNice.length).toBeGreaterThan(0);
+      expect(v.auditNope.length).toBeGreaterThan(0);
+    }
   });
 });

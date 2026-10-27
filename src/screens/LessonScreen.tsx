@@ -135,7 +135,17 @@ export function LessonScreen(props: {
       )}
       {phase === "feedback" && presented && (
         <div className={`sheet ${props.lastCorrect ? "ok" : "no"}`} role="status">
-          <h3>{pick(props.lastCorrect ? t.verdicts.nice : t.verdicts.nope)}</h3>
+          <h3>
+            {pick(
+              props.lastCorrect
+                ? presented.type === "audit"
+                  ? t.verdicts.auditNice
+                  : t.verdicts.nice
+                : presented.type === "audit"
+                  ? t.verdicts.auditNope
+                  : t.verdicts.nope,
+            )}
+          </h3>
           <p>{presented.why}</p>
           <button
             type="button"

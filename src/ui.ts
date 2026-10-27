@@ -169,7 +169,13 @@ export interface UiText {
     start: string;
     footer: string;
   };
-  verdicts: { nice: string[]; nope: string[] };
+  verdicts: {
+    nice: string[];
+    nope: string[];
+    /** For audit items only: "a pair mix-up" makes no sense when auditing a claim. */
+    auditNice: string[];
+    auditNope: string[];
+  };
   complete: {
     flawless: string;
     done: string;
@@ -369,6 +375,10 @@ export const UI: Record<Lang, UiText> = {
     verdicts: {
       nice: ["不错。", "正是。", "答对了。", "漂亮。"],
       nope: ["还差一点。", "混淆了。", "又是这一对。", "岔路走反了。"],
+      // The default verdicts talk about mixing up a pair, which is nonsense for
+      // an audit item — there the mistake is letting a bad argument through.
+      auditNice: ["抓住了。", "对，这句站不住。", "正是这句。"],
+      auditNope: ["这句其实站得住。", "放过了真正的问题。", "再读一遍那句结论。"],
     },
     complete: {
       flawless: "完美。",
@@ -576,6 +586,12 @@ export const UI: Record<Lang, UiText> = {
     verdicts: {
       nice: ["Nice.", "Exactly.", "You got it.", "Clean."],
       nope: ["Not quite.", "Mix-up.", "That pair again.", "Close, wrong fork."],
+      auditNice: ["Caught it.", "Yes — that one does not hold.", "That is the sentence."],
+      auditNope: [
+        "That one actually holds.",
+        "You let the real problem through.",
+        "Read that conclusion again.",
+      ],
     },
     complete: {
       flawless: "Flawless.",
