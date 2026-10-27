@@ -13,17 +13,48 @@
  *   fill       挖空句子，从词库里选词
  *   match      每课一个：把本课 6 个词和释义配对
  *
- * 输出：content/packs/t1-finance-news/{zh-CN,en-US}/course.json
- * 用法：node scripts/generate-course.mjs [--check]
+ * 输出：content/packs/<packId>/{zh-CN,en-US}/course.json
+ * 用法：node scripts/generate-course.mjs [--pack t2-company-earnings]
+ *       不带 --pack 时生成全部有 source.mjs 的 pack。
  */
-import { writeFileSync } from "node:fs";
+import { existsSync, readdirSync, writeFileSync } from "node:fs";
 import path from "node:path";
-import { HEADLINE_DRILLS } from "../content/packs/t1-finance-news/headlines.mjs";
-import { CONCEPTS, PACK, UNITS } from "../content/packs/t1-finance-news/source.mjs";
+import { pathToFileURL } from "node:url";
 import { blankTerm, fillLeaksAnswer } from "../src/fill.ts";
 
 const ROOT = process.cwd();
-const OUT_DIR = path.join(ROOT, "content/packs", PACK.packId);
+const PACKS_DIR = path.join(ROOT, "content/packs");
+
+/** Packs that carry a source.mjs — the generated ones. */
+// Set once per pack by generatePack(). Module-level state is acceptable here:
+// this is a one-shot script that processes one pack at a time, and threading
+// five parameters through every helper would add noise without adding safety.
+let CONCEPTS = [];
+let UNITS = [];
+let PACK = {};
+let HEADLINE_DRILLS = [];
+let OUT_DIR = "";
+
+function availablePacks() {
+  return readdirSync(PACKS_DIR, { withFileTypes: true })
+    .filter((entry) => entry.isDirectory())
+    .map((entry) => entry.name)
+    .filter((id) => existsSync(path.join(PACKS_DIR, id, "source.mjs")));
+}
+
+/**
+ * Load one pack's source. headline drills are optional: they are T1-specific
+ * (reading a real headline), so a pack without that file simply has none.
+ */
+async function loadPack(packId) {
+  const sourceUrl = pathToFileURL(path.join(PACKS_DIR, packId, "source.mjs")).href;
+  const source = await import(sourceUrl);
+  const drillsPath = path.join(PACKS_DIR, packId, "headlines.mjs");
+  const drills = existsSync(drillsPath)
+    ? ((await import(pathToFileURL(drillsPath).href)).HEADLINE_DRILLS ?? [])
+    : [];
+  return { source, drills };
+}
 
 /** 每单元两课，第三课是复习。6 概念 → 每课 3 个。 */
 function lessonsFor(unit) {
@@ -272,7 +303,10 @@ function buildCourse(locale) {
     packId: PACK.packId,
     contentVersion: PACK.contentVersion,
     locale,
-    generatedAt: new Date().toISOString(),
+    // A wall-clock timestamp here made every regeneration produce a diff even
+    // when no content changed, which buried real edits. The content version is
+    // what actually identifies a pack revision.
+    generatedAt: PACK.contentVersion,
     units,
     concepts,
     lessons,
@@ -280,21 +314,40 @@ function buildCourse(locale) {
   };
 }
 
-for (const locale of ["zh-CN", "en-US"]) {
-  const course = buildCourse(locale);
-  // Generation-time mirror of the validator's fill gate: fail loudly here so
-  // a leaky stem never reaches course.json in the first place.
-  for (const lesson of course.lessons) {
-    for (const prompt of lesson.prompts) {
-      if (prompt.type === "fill" && fillLeaksAnswer(prompt.story, prompt.answer)) {
-        throw new Error(`Fill ${prompt.id} gives the answer away: ${prompt.story}`);
+async function generatePack(packId) {
+  const { source, drills } = await loadPack(packId);
+  CONCEPTS = source.CONCEPTS;
+  UNITS = source.UNITS;
+  PACK = source.PACK;
+  HEADLINE_DRILLS = drills;
+  OUT_DIR = path.join(ROOT, "content/packs", PACK.packId);
+
+  for (const locale of ["zh-CN", "en-US"]) {
+    const course = buildCourse(locale);
+    // Generation-time mirror of the validator's fill gate: fail loudly here so
+    // a leaky stem never reaches course.json in the first place.
+    for (const lesson of course.lessons) {
+      for (const prompt of lesson.prompts) {
+        if (prompt.type === "fill" && fillLeaksAnswer(prompt.story, prompt.answer)) {
+          throw new Error(`Fill ${prompt.id} gives the answer away: ${prompt.story}`);
+        }
       }
     }
+    const file = path.join(OUT_DIR, locale, "course.json");
+    writeFileSync(file, `${JSON.stringify(course, null, 2)}\n`);
+    const promptCount = course.lessons.reduce((sum, l) => sum + l.prompts.length, 0);
+    console.log(
+      `[${packId}] ${locale}: ${course.units.length} units, ${course.concepts.length} concepts, ${course.lessons.length} lessons, ${promptCount} prompts`,
+    );
   }
-  const file = path.join(OUT_DIR, locale, "course.json");
-  writeFileSync(file, `${JSON.stringify(course, null, 2)}\n`);
-  const promptCount = course.lessons.reduce((sum, l) => sum + l.prompts.length, 0);
-  console.log(
-    `${locale}: ${course.units.length} units, ${course.concepts.length} concepts, ${course.lessons.length} lessons, ${promptCount} prompts → ${path.relative(ROOT, file)}`,
-  );
+}
+
+const only = process.argv.includes("--pack") ? process.argv[process.argv.indexOf("--pack") + 1] : null;
+const targets = only ? [only] : availablePacks();
+if (!targets.length) {
+  console.error("No packs with source.mjs found under content/packs.");
+  process.exit(1);
+}
+for (const packId of targets) {
+  await generatePack(packId);
 }

@@ -94,27 +94,60 @@ const corpusDir = path.join(root, "content/corpus");
 const corpusText = () => {
   if (!fs.existsSync(corpusDir)) return null;
   const parts = [];
-  for (const entry of fs.readdirSync(corpusDir, { withFileTypes: true })) {
-    if (entry.isDirectory()) continue;
-    const file = path.join(corpusDir, entry.name);
-    if (entry.name.endsWith(".json")) {
-      // headline batches: flatten every array of strings
-      const walk = (value) => {
-        if (typeof value === "string") parts.push(value);
-        else if (Array.isArray(value)) value.forEach(walk);
-        else if (value && typeof value === "object") Object.values(value).forEach(walk);
-      };
-      try {
-        walk(JSON.parse(fs.readFileSync(file, "utf8")));
-      } catch (error) {
-        fail(`[corpus] ${entry.name} is not valid JSON: ${error.message}`);
+  // Corpus is organised by pack (content/corpus/t2-earnings/…), so the walk has
+  // to descend: a top-level-only read silently ignored every pack subdirectory.
+  const walkDir = (directory) => {
+    for (const entry of fs.readdirSync(directory, { withFileTypes: true })) {
+      const file = path.join(directory, entry.name);
+      if (entry.isDirectory()) {
+        walkDir(file);
+        continue;
       }
-    } else if (entry.name.endsWith(".txt")) {
-      parts.push(fs.readFileSync(file, "utf8"));
+      if (entry.name.endsWith(".json")) {
+        // headline batches: flatten every array of strings
+        const walkJson = (value) => {
+          if (typeof value === "string") parts.push(value);
+          else if (Array.isArray(value)) value.forEach(walkJson);
+          else if (value && typeof value === "object") Object.values(value).forEach(walkJson);
+        };
+        try {
+          walkJson(JSON.parse(fs.readFileSync(file, "utf8")));
+        } catch (error) {
+          fail(`[corpus] ${entry.name} is not valid JSON: ${error.message}`);
+        }
+      } else if (entry.name.endsWith(".txt")) {
+        parts.push(fs.readFileSync(file, "utf8"));
+      }
     }
-  }
+  };
+  walkDir(corpusDir);
   return parts.length ? parts.join("\n").toLowerCase() : null;
 };
+
+/**
+ * Does the corpus use this term?
+ *
+ * Two things the naive \b match got wrong:
+ *  - Hyphenated terms ("write-down") — \b sits between "-" and a letter, so
+ *    the pattern never matched even when the text said "write-down".
+ *  - Compound terms whose words may carry other punctuation ("free cash flow"
+ *    written across a line break or with different spacing).
+ * The term is matched word-by-word, with the final word allowed to inflect.
+ */
+function corpusHasTerm(corpus, term) {
+  const words = term
+    .toLowerCase()
+    .split(/[\s-]+/)
+    .filter(Boolean);
+  if (!words.length) return false;
+  const escaped = words.map((w) => w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"));
+  const last = escaped.pop();
+  // Words may be separated by a space or a hyphen in the text.
+  const pattern = new RegExp(
+    `\\b${escaped.join("[\\s-]+")}${escaped.length ? "[\\s-]+" : ""}${last}(s|es|ed|ing)?\\b`,
+  );
+  return pattern.test(corpus);
+}
 
 const corpus = corpusText();
 
@@ -166,11 +199,7 @@ if (!corpus) {
     let excused = 0;
     for (const concept of course.concepts) {
       const term = String(concept.term).toLowerCase();
-      // Match the term as a phrase, allowing inflection on the final word:
-      // "yield" hits "yields", "rate hike" hits "rate hikes".
-      const escaped = term.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-      const pattern = new RegExp(`\\b${escaped}(s|es|ed|ing)?\\b`);
-      if (pattern.test(corpus)) continue;
+      if (corpusHasTerm(corpus, term)) continue;
       const exempt = EXEMPT_TERMS.get(term);
       if (exempt) {
         // An exemption is per pack: the reason for teaching a term in T6 does

@@ -14,8 +14,8 @@
       "level": 2,
       "title": "读公司财报",
       "goal": "读一份季报快讯，知道在说好还是坏",
-      "conceptCount": 44,
-      "status": "planned"
+      "conceptCount": 49,
+      "status": "ready"
     },
     {
       "id": "t3-bonds-rates",
