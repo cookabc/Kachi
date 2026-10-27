@@ -183,6 +183,24 @@ function promptsFor(concept, index, lessonConcepts, lessonId, locale) {
     why: text(concept, "mixUpWhy", locale),
   });
 
+  // 5) audit：只在概念自带 audit 数据时出。这是「疑」的题型——给一段回测
+  // 结论和几句关于它的话，挑出站不住的那一句。它不是每个词都该有：只有那些
+  // 天然对应一种自欺方式的词（过拟合、幸存者偏差、数据挖掘）才配得上。
+  if (concept.audit) {
+    const audit = concept.audit[locale === "en-US" ? "en" : "zh"] ?? concept.audit.zh;
+    out.push({
+      id: pid("a"),
+      type: "audit",
+      termId: concept.id,
+      termIds: [concept.id],
+      story: audit.claim,
+      stem: locale === "en-US" ? "Which statement does not hold?" : "哪一句站不住？",
+      options: audit.options.map((text) => ({ text })),
+      answer: audit.answer,
+      why: audit.why,
+    });
+  }
+
   return out;
 }
 

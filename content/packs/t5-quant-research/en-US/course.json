@@ -1,0 +1,5472 @@
+{
+  "schemaVersion": 1,
+  "packId": "t5-quant-research",
+  "contentVersion": "2026.10.28-t5",
+  "locale": "en-US",
+  "generatedAt": "2026.10.28-t5",
+  "units": [
+    {
+      "id": 1,
+      "title": "How You Test It",
+      "blurb": "Backtest, in and out of sample, walk-forward."
+    },
+    {
+      "id": 2,
+      "title": "How You Fool Yourself",
+      "blurb": "Overfitting, look-ahead, survivorship, snooping."
+    },
+    {
+      "id": 3,
+      "title": "Reading the Numbers",
+      "blurb": "Sharpe, drawdown, hit rate, expectancy, alpha and beta."
+    },
+    {
+      "id": 4,
+      "title": "Building the Portfolio",
+      "blurb": "Universe, rebalance, sizing, turnover, correlation."
+    },
+    {
+      "id": 5,
+      "title": "What Costs Eat",
+      "blurb": "Transaction cost, slippage, capacity, liquidity."
+    },
+    {
+      "id": 6,
+      "title": "Measuring the Risk",
+      "blurb": "Stress test, scenarios, VaR, sensitivity, robustness."
+    }
+  ],
+  "concepts": [
+    {
+      "id": "backtest",
+      "unit": 1,
+      "term": "backtest",
+      "caption": "Run the strategy over old data and see what it would have done.",
+      "definition": "Simulating a strategy on historical data to estimate its return and risk.",
+      "example": "We backtest a simple momentum overlay on a universe of ten energy futures.",
+      "mixUp": "overfitting",
+      "mixUpWhy": "A backtest is the experiment; overfitting is a disease the experiment can catch.",
+      "mixUpType": "coexist",
+      "relations": [],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "draft"
+    },
+    {
+      "id": "in-sample",
+      "unit": 1,
+      "term": "in-sample",
+      "caption": "The stretch of data you tuned the parameters on.",
+      "definition": "The period used to fit or optimise a model, where results are optimistic by construction.",
+      "example": "In-sample, from 2010 to 2019, the strategy produces a Sharpe of 1.4.",
+      "mixUp": "out-of-sample",
+      "mixUpWhy": "In-sample is the data you tuned on, so it flatters; out-of-sample is untouched and shows what generalises.",
+      "mixUpType": "opposite",
+      "relations": [],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "draft"
+    },
+    {
+      "id": "out-of-sample",
+      "unit": 1,
+      "term": "out-of-sample",
+      "caption": "The stretch you never touched, held back for the test.",
+      "definition": "Data excluded from fitting and tuning, used to test whether a strategy generalises.",
+      "example": "Out-of-sample, from 2020 to 2024, the Sharpe falls to 0.4.",
+      "mixUp": "in-sample",
+      "mixUpWhy": "Out-of-sample is untouched and tests generalisation; in-sample was tuned and tests fit.",
+      "mixUpType": "opposite",
+      "relations": [],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "draft"
+    },
+    {
+      "id": "walk-forward",
+      "unit": 1,
+      "term": "walk-forward",
+      "caption": "Refit each year on what was knowable then, trade the next year.",
+      "definition": "A validation method that rolls forward in time, refitting on past data only — the closest simulation of live constraints.",
+      "example": "A walk-forward test produces a Sharpe of 0.6, between the two.",
+      "mixUp": "backtest",
+      "mixUpWhy": "Walk-forward is a backtest with time discipline (only past data each step); a plain backtest can peek at the future.",
+      "mixUpType": "hierarchy",
+      "relations": [],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "draft"
+    },
+    {
+      "id": "benchmark",
+      "unit": 1,
+      "term": "benchmark",
+      "caption": "The yardstick you are measured against.",
+      "definition": "The index or strategy used as the reference for judging whether active management added value.",
+      "example": "Alpha against the benchmark is 4.2% a year.",
+      "mixUp": "universe",
+      "mixUpWhy": "A benchmark is what you are compared to; a universe is what you pick from.",
+      "mixUpType": "coexist",
+      "relations": [],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "draft"
+    },
+    {
+      "id": "overfitting",
+      "unit": 2,
+      "term": "overfitting",
+      "caption": "Tuned until it fits the noise, not the signal.",
+      "definition": "Fitting a model so closely to past data that it captures random variation and breaks on new data.",
+      "example": "The drop is what you expect when a specification is overfitting the first decade.",
+      "mixUp": "data snooping",
+      "mixUpWhy": "Overfitting is the model hugging noise (the result); data snooping is the repeated searching that gets you there (the cause).",
+      "mixUpType": "coexist",
+      "relations": [],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "draft"
+    },
+    {
+      "id": "look-ahead bias",
+      "unit": 2,
+      "term": "look-ahead bias",
+      "caption": "Deciding with data that was not published yet.",
+      "definition": "Using information published after the decision point in a backtest, which inflates returns.",
+      "example": "Look-ahead bias appears if a signal uses data published after the decision point.",
+      "mixUp": "survivorship bias",
+      "mixUpWhy": "Look-ahead bias cheats on time; survivorship bias cheats on the sample.",
+      "mixUpType": "coexist",
+      "relations": [],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "draft"
+    },
+    {
+      "id": "survivorship bias",
+      "unit": 2,
+      "term": "survivorship bias",
+      "caption": "Counting only what survived, ignoring what died.",
+      "definition": "A sample containing only currently existing assets, dropping those delisted or closed, which flatters results.",
+      "example": "Survivorship bias appears if the universe is taken from today's list of contracts.",
+      "mixUp": "look-ahead bias",
+      "mixUpWhy": "Survivorship bias is the wrong sample (only survivors); look-ahead bias is the wrong time (the future).",
+      "mixUpType": "coexist",
+      "relations": [],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "draft"
+    },
+    {
+      "id": "data snooping",
+      "unit": 2,
+      "term": "data snooping",
+      "caption": "Rummaging through one dataset until something looks significant.",
+      "definition": "Testing hypotheses repeatedly on the same data until a statistically significant result appears by chance, then treating it as a finding.",
+      "example": "Data snooping appears if we try many variants and report the best.",
+      "mixUp": "multiple testing",
+      "mixUpWhy": "Data snooping is the habit of hunting; multiple testing is the statistical consequence that produces the false positives.",
+      "mixUpType": "coexist",
+      "relations": [],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "draft"
+    },
+    {
+      "id": "multiple testing",
+      "unit": 2,
+      "term": "multiple testing",
+      "caption": "Run many tests and false positives show up on schedule.",
+      "definition": "The statistical fact that the chance of at least one false positive rises with the number of tests run on one dataset.",
+      "example": "At a 5% level, twenty independent tests produce roughly one false positive by construction.",
+      "mixUp": "data snooping",
+      "mixUpWhy": "Multiple testing is the statistical fact; data snooping is how that fact gets exploited.",
+      "mixUpType": "hierarchy",
+      "relations": [],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "draft"
+    },
+    {
+      "id": "sharpe ratio",
+      "unit": 3,
+      "term": "sharpe ratio",
+      "caption": "Return earned per unit of the bumpiness endured.",
+      "definition": "Excess return divided by return volatility — the reward per unit of risk taken.",
+      "example": "In-sample the strategy produces a Sharpe ratio of 1.4.",
+      "mixUp": "max drawdown",
+      "mixUpWhy": "Sharpe looks at average volatility (how smooth the ride was); max drawdown looks at the single worst fall. A high Sharpe can still hide a deep drawdown.",
+      "mixUpType": "coexist",
+      "relations": [],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "draft"
+    },
+    {
+      "id": "max drawdown",
+      "unit": 3,
+      "term": "max drawdown",
+      "caption": "The deepest fall from a peak.",
+      "definition": "The largest decline from a peak to the subsequent trough — the worst loss actually suffered.",
+      "example": "The maximum drawdown widens to 31% out of sample.",
+      "mixUp": "value at risk",
+      "mixUpWhy": "Max drawdown is the deepest fall that actually happened; VaR is an estimated threshold from a distribution.",
+      "mixUpType": "coexist",
+      "relations": [],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "draft"
+    },
+    {
+      "id": "hit rate",
+      "unit": 3,
+      "term": "hit rate",
+      "caption": "How many trades made money, as a share of all trades.",
+      "definition": "The share of trades that were profitable.",
+      "example": "The hit rate is 54%.",
+      "mixUp": "expectancy",
+      "mixUpWhy": "Hit rate counts trades; expectancy weighs how much each win and loss was worth. A high hit rate with negative expectancy is common.",
+      "mixUpType": "coexist",
+      "relations": [],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "draft"
+    },
+    {
+      "id": "expectancy",
+      "unit": 3,
+      "term": "expectancy",
+      "caption": "What an average trade is worth.",
+      "definition": "The expected profit or loss per trade: win rate times average win, minus loss rate times average loss.",
+      "example": "The expectancy per trade is 0.6%.",
+      "mixUp": "hit rate",
+      "mixUpWhy": "Expectancy is weighted by size; hit rate only counts frequency.",
+      "mixUpType": "coexist",
+      "relations": [],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "draft"
+    },
+    {
+      "id": "alpha",
+      "unit": 3,
+      "term": "alpha",
+      "caption": "The part left over after the market's contribution is removed.",
+      "definition": "Risk-adjusted excess return over a benchmark — the strategy's own contribution.",
+      "example": "Alpha against the benchmark is 4.2% a year.",
+      "mixUp": "beta",
+      "mixUpWhy": "Alpha is the excess over the benchmark (skill); beta is how much of the market you carry (exposure).",
+      "mixUpType": "coexist",
+      "relations": [],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "draft"
+    },
+    {
+      "id": "beta",
+      "unit": 3,
+      "term": "beta",
+      "caption": "How much you move when the market moves one percent.",
+      "definition": "An asset's systematic exposure to the market, measuring sensitivity to market moves.",
+      "example": "With a beta of 0.35, most of the return is not explained by market exposure.",
+      "mixUp": "alpha",
+      "mixUpWhy": "Beta is exposure (how much you ride the market); alpha is what is left after that exposure is accounted for.",
+      "mixUpType": "coexist",
+      "relations": [],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "draft"
+    },
+    {
+      "id": "tracking error",
+      "unit": 3,
+      "term": "tracking error",
+      "caption": "How far your return drifts from the benchmark's.",
+      "definition": "The volatility of the difference between portfolio and benchmark returns — how much you deviate.",
+      "example": "Tracking error against the benchmark is 6.5% a year.",
+      "mixUp": "alpha",
+      "mixUpWhy": "Tracking error measures deviation regardless of direction; alpha measures the directional part you keep.",
+      "mixUpType": "coexist",
+      "relations": [],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "draft"
+    },
+    {
+      "id": "universe",
+      "unit": 4,
+      "term": "universe",
+      "caption": "The set you are allowed to pick from.",
+      "definition": "The collection of assets a strategy may invest in, which sets its boundaries and bias risk.",
+      "example": "We backtest on a universe of the ten largest energy futures.",
+      "mixUp": "benchmark",
+      "mixUpWhy": "The universe is where you pick from; the benchmark is what you are compared to.",
+      "mixUpType": "coexist",
+      "relations": [],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "draft"
+    },
+    {
+      "id": "rebalance",
+      "unit": 4,
+      "term": "rebalance",
+      "caption": "Drag the holdings back to their target weights.",
+      "definition": "Adjusting holdings back to target weights on a schedule or rule.",
+      "example": "We rebalance monthly at 12% one-way turnover.",
+      "mixUp": "turnover",
+      "mixUpWhy": "Rebalancing is the act of restoring weights; turnover is how much trading that act required.",
+      "mixUpType": "coexist",
+      "relations": [],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "draft"
+    },
+    {
+      "id": "position sizing",
+      "unit": 4,
+      "term": "position sizing",
+      "caption": "How much money each position gets.",
+      "definition": "Deciding how much capital each trade or holding receives — the direct driver of risk exposure.",
+      "example": "Position sizing is capped well below the notional the backtest implies.",
+      "mixUp": "exposure",
+      "mixUpWhy": "Position sizing is the decision of how much to put on; exposure is what you actually ended up carrying. Sizing at 10% can still expose you to more or less than 10% depending on volatility.",
+      "mixUpType": "coexist",
+      "relations": [],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "draft"
+    },
+    {
+      "id": "turnover",
+      "unit": 4,
+      "term": "turnover",
+      "caption": "How much of the portfolio gets replaced.",
+      "definition": "Trading volume relative to portfolio size over a period — the direct driver of transaction cost.",
+      "example": "At 12% one-way turnover, costs reach about 1.3% a year.",
+      "mixUp": "transaction cost",
+      "mixUpWhy": "Turnover is how much is traded; transaction cost is what that trading costs.",
+      "mixUpType": "coexist",
+      "relations": [],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "draft"
+    },
+    {
+      "id": "correlation",
+      "unit": 4,
+      "term": "correlation",
+      "caption": "Whether two things move together.",
+      "definition": "The statistical association between two assets' returns, from -1 to 1.",
+      "example": "Correlation across the ten contracts is high, around 0.7.",
+      "mixUp": "exposure",
+      "mixUpWhy": "Correlation is how much two assets move together; exposure is how much risk you carry in one.",
+      "mixUpType": "coexist",
+      "relations": [],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "draft"
+    },
+    {
+      "id": "exposure",
+      "unit": 4,
+      "term": "exposure",
+      "caption": "How much risk you are actually carrying.",
+      "definition": "The degree to which a portfolio is sensitive to, or concentrated in, a given risk factor.",
+      "example": "Most of the return is not explained by market exposure.",
+      "mixUp": "position sizing",
+      "mixUpWhy": "Exposure is what you ended up carrying; position sizing is the decision that produced it.",
+      "mixUpType": "coexist",
+      "relations": [],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "draft"
+    },
+    {
+      "id": "transaction cost",
+      "unit": 5,
+      "term": "transaction cost",
+      "caption": "What the buying and selling itself costs.",
+      "definition": "Costs incurred in trading: commissions, bid-ask spread and taxes.",
+      "example": "With 6 basis points of transaction cost per side, costs reach 1.3% a year.",
+      "mixUp": "slippage",
+      "mixUpWhy": "Transaction cost is the visible fee (commission, spread); slippage is the gap between the price you wanted and the price you got.",
+      "mixUpType": "hierarchy",
+      "relations": [],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "draft"
+    },
+    {
+      "id": "slippage",
+      "unit": 5,
+      "term": "slippage",
+      "caption": "How much worse your fill was than the price you wanted.",
+      "definition": "The difference between the intended and executed price, caused by market impact and delay.",
+      "example": "Doubling slippage removes the edge entirely.",
+      "mixUp": "transaction cost",
+      "mixUpWhy": "Slippage is a price gap (implicit); transaction cost is the explicit fee.",
+      "mixUpType": "hierarchy",
+      "relations": [],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "draft"
+    },
+    {
+      "id": "capacity constraint",
+      "unit": 5,
+      "term": "capacity constraint",
+      "caption": "The most money the strategy can hold.",
+      "definition": "The maximum capital a strategy can absorb before trading costs consume the return.",
+      "example": "A capacity constraint this tight means the strategy cannot absorb meaningful capital.",
+      "mixUp": "liquidity constraint",
+      "mixUpWhy": "Capacity is how much the strategy can hold; the liquidity constraint is how much the market can trade. The second causes the first.",
+      "mixUpType": "hierarchy",
+      "relations": [],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "draft"
+    },
+    {
+      "id": "liquidity constraint",
+      "unit": 5,
+      "term": "liquidity constraint",
+      "caption": "Not enough volume in the market to trade the size.",
+      "definition": "A limit imposed by insufficient market depth, making the intended size or price unreachable.",
+      "example": "The liquidity constraint binds at roughly $40 million.",
+      "mixUp": "capacity constraint",
+      "mixUpWhy": "The liquidity constraint is a property of the market's depth; the capacity constraint is the strategy-level ceiling it produces.",
+      "mixUpType": "hierarchy",
+      "relations": [],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "draft"
+    },
+    {
+      "id": "stress test",
+      "unit": 6,
+      "term": "stress test",
+      "caption": "Replay the worst historical moment and see what happens.",
+      "definition": "Evaluating a portfolio under an extreme but plausible scenario to probe tail risk.",
+      "example": "A stress test on the 2020 oil crash shows the overlay loses 14% in that month.",
+      "mixUp": "scenario analysis",
+      "mixUpWhy": "A stress test is one extreme scenario (often a real past one); scenario analysis compares several hypothetical paths.",
+      "mixUpType": "coexist",
+      "relations": [],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "draft"
+    },
+    {
+      "id": "scenario analysis",
+      "unit": 6,
+      "term": "scenario analysis",
+      "caption": "Assume several futures and run each one.",
+      "definition": "Evaluating a strategy under several assumed paths to compare outcomes across environments.",
+      "example": "We run a scenario analysis on three paths.",
+      "mixUp": "stress test",
+      "mixUpWhy": "Scenario analysis compares several hypothetical paths; a stress test is a single extreme shock.",
+      "mixUpType": "coexist",
+      "relations": [],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "draft"
+    },
+    {
+      "id": "value at risk",
+      "unit": 6,
+      "term": "value at risk",
+      "caption": "The loss you should not exceed on a given share of days.",
+      "definition": "The maximum expected loss over a holding period at a given confidence level.",
+      "example": "Value at risk at the 95% level is 2.1% daily.",
+      "mixUp": "max drawdown",
+      "mixUpWhy": "VaR is a threshold not exceeded 95% of the time; max drawdown is the deepest fall that actually happened. VaR routinely understates tail risk.",
+      "mixUpType": "coexist",
+      "relations": [],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "draft"
+    },
+    {
+      "id": "sensitivity",
+      "unit": 6,
+      "term": "sensitivity",
+      "caption": "How much the answer moves when an assumption moves.",
+      "definition": "The degree to which a result responds to a change in a parameter or assumption.",
+      "example": "The result is sensitive to the cost assumption.",
+      "mixUp": "robustness",
+      "mixUpWhy": "Sensitivity measures 'what if this changes'; robustness is the conclusion about whether the result still stands.",
+      "mixUpType": "coexist",
+      "relations": [],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "draft"
+    },
+    {
+      "id": "robustness",
+      "unit": 6,
+      "term": "robustness",
+      "caption": "Does the conclusion hold if you change the assumptions?",
+      "definition": "The degree to which a strategy stays effective when parameters, samples or assumptions change.",
+      "example": "A robustness check shows the sign holds in most but not all windows.",
+      "mixUp": "sensitivity",
+      "mixUpWhy": "Robustness is the overall verdict (does it hold); sensitivity is the measurement that gets you there.",
+      "mixUpType": "coexist",
+      "relations": [],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "draft"
+    }
+  ],
+  "lessons": [
+    {
+      "id": "u1l1",
+      "unit": 1,
+      "title": "怎么验",
+      "icon": "📈",
+      "review": false,
+      "prompts": [
+        {
+          "id": "u1l1-backtest-m",
+          "type": "meaning",
+          "termId": "backtest",
+          "termIds": [
+            "backtest"
+          ],
+          "stem": "What does backtest mean?",
+          "options": [
+            {
+              "text": "Simulating a strategy on historical data to estimate its return and risk.",
+              "art": "backtest"
+            },
+            {
+              "text": "The period used to fit or optimise a model, where results are optimistic by construction.",
+              "art": "in-sample"
+            },
+            {
+              "text": "Data excluded from fitting and tuning, used to test whether a strategy generalises.",
+              "art": "out-of-sample"
+            },
+            {
+              "text": "A validation method that rolls forward in time, refitting on past data only — the closest simulation of live constraints.",
+              "art": "walk-forward"
+            }
+          ],
+          "answer": 0,
+          "why": "A backtest is the experiment; overfitting is a disease the experiment can catch."
+        },
+        {
+          "id": "u1l1-backtest-s",
+          "type": "scenario",
+          "termId": "backtest",
+          "termIds": [
+            "backtest"
+          ],
+          "story": "We backtest a simple momentum overlay on a universe of ten energy futures.",
+          "stem": "Which term does this describe?",
+          "options": [
+            {
+              "text": "backtest",
+              "art": "backtest"
+            },
+            {
+              "text": "in-sample",
+              "art": "in-sample"
+            },
+            {
+              "text": "out-of-sample",
+              "art": "out-of-sample"
+            },
+            {
+              "text": "walk-forward",
+              "art": "walk-forward"
+            }
+          ],
+          "answer": 0,
+          "why": "backtest: Simulating a strategy on historical data to estimate its return and risk."
+        },
+        {
+          "id": "u1l1-backtest-t",
+          "type": "truefalse",
+          "termId": "backtest",
+          "termIds": [
+            "backtest"
+          ],
+          "stem": "backtest means: Run the strategy over old data and see what it would have done.",
+          "answer": true,
+          "why": "Correct — Simulating a strategy on historical data to estimate its return and risk."
+        },
+        {
+          "id": "u1l1-backtest-f",
+          "type": "fill",
+          "termId": "backtest",
+          "termIds": [
+            "backtest"
+          ],
+          "story": "We ____ a simple momentum overlay on a universe of ten energy futures.",
+          "bank": [
+            "backtest",
+            "in-sample",
+            "out-of-sample"
+          ],
+          "answer": "backtest",
+          "why": "A backtest is the experiment; overfitting is a disease the experiment can catch."
+        },
+        {
+          "id": "u1l1-backtest-a",
+          "type": "audit",
+          "termId": "backtest",
+          "termIds": [
+            "backtest"
+          ],
+          "story": "We ran the strategy on 2015-2024 data: 18% a year, 12% max drawdown. So it should deliver about that live.",
+          "stem": "Which statement does not hold?",
+          "options": [
+            {
+              "text": "Carrying a backtest result straight into live trading ignores costs and slippage."
+            },
+            {
+              "text": "The backtest is enough evidence that the strategy works."
+            },
+            {
+              "text": "18% a year with 12% drawdown looks like a reasonable risk-return trade."
+            },
+            {
+              "text": "Ten years is not too short a sample."
+            }
+          ],
+          "answer": 0,
+          "why": "Between a backtest and live trading sits a layer of cost — fees, slippage, worse fills. Deduct those and 18% often shrinks to very little. A backtest only says the idea held on that stretch of history."
+        },
+        {
+          "id": "u1l1-in-sample-m",
+          "type": "meaning",
+          "termId": "in-sample",
+          "termIds": [
+            "in-sample"
+          ],
+          "stem": "What does in-sample mean?",
+          "options": [
+            {
+              "text": "The period used to fit or optimise a model, where results are optimistic by construction.",
+              "art": "in-sample"
+            },
+            {
+              "text": "Simulating a strategy on historical data to estimate its return and risk.",
+              "art": "backtest"
+            },
+            {
+              "text": "Data excluded from fitting and tuning, used to test whether a strategy generalises.",
+              "art": "out-of-sample"
+            },
+            {
+              "text": "A validation method that rolls forward in time, refitting on past data only — the closest simulation of live constraints.",
+              "art": "walk-forward"
+            }
+          ],
+          "answer": 0,
+          "why": "In-sample is the data you tuned on, so it flatters; out-of-sample is untouched and shows what generalises."
+        },
+        {
+          "id": "u1l1-in-sample-s",
+          "type": "scenario",
+          "termId": "in-sample",
+          "termIds": [
+            "in-sample"
+          ],
+          "story": "In-sample, from 2010 to 2019, the strategy produces a Sharpe of 1.4.",
+          "stem": "Which term does this describe?",
+          "options": [
+            {
+              "text": "in-sample",
+              "art": "in-sample"
+            },
+            {
+              "text": "backtest",
+              "art": "backtest"
+            },
+            {
+              "text": "out-of-sample",
+              "art": "out-of-sample"
+            },
+            {
+              "text": "walk-forward",
+              "art": "walk-forward"
+            }
+          ],
+          "answer": 0,
+          "why": "in-sample: The period used to fit or optimise a model, where results are optimistic by construction."
+        },
+        {
+          "id": "u1l1-in-sample-t",
+          "type": "truefalse",
+          "termId": "in-sample",
+          "termIds": [
+            "in-sample"
+          ],
+          "stem": "in-sample means: Run the strategy over old data and see what it would have done.",
+          "answer": false,
+          "why": "in-sample means The period used to fit or optimise a model, where results are optimistic by construction., not Simulating a strategy on historical data to estimate its return and risk.."
+        },
+        {
+          "id": "u1l1-in-sample-f",
+          "type": "fill",
+          "termId": "in-sample",
+          "termIds": [
+            "in-sample"
+          ],
+          "story": "____, from 2010 to 2019, the strategy produces a Sharpe of 1.4.",
+          "bank": [
+            "in-sample",
+            "backtest",
+            "out-of-sample"
+          ],
+          "answer": "in-sample",
+          "why": "In-sample is the data you tuned on, so it flatters; out-of-sample is untouched and shows what generalises."
+        },
+        {
+          "id": "u1l1-in-sample-a",
+          "type": "audit",
+          "termId": "in-sample",
+          "termIds": [
+            "in-sample"
+          ],
+          "story": "The strategy has an in-sample Sharpe of 1.4, so we quote its Sharpe as 1.4.",
+          "stem": "Which statement does not hold?",
+          "options": [
+            {
+              "text": "An in-sample Sharpe is measured on the data the parameters were tuned on, so it is not a measure of skill."
+            },
+            {
+              "text": "1.4 is a respectable Sharpe and can be disclosed as is."
+            },
+            {
+              "text": "A good in-sample result means the parameters were chosen well."
+            },
+            {
+              "text": "Sharpe ignores drawdown, so drawdown data should be added too."
+            }
+          ],
+          "answer": 0,
+          "why": "The parameters were fitted on that window, which lifts the number by construction. Quoting it turns 'the best of what I tried' into 'what it can do'. Report out-of-sample or walk-forward instead."
+        },
+        {
+          "id": "u1l1-out-of-sample-m",
+          "type": "meaning",
+          "termId": "out-of-sample",
+          "termIds": [
+            "out-of-sample"
+          ],
+          "stem": "What does out-of-sample mean?",
+          "options": [
+            {
+              "text": "Data excluded from fitting and tuning, used to test whether a strategy generalises.",
+              "art": "out-of-sample"
+            },
+            {
+              "text": "Simulating a strategy on historical data to estimate its return and risk.",
+              "art": "backtest"
+            },
+            {
+              "text": "The period used to fit or optimise a model, where results are optimistic by construction.",
+              "art": "in-sample"
+            },
+            {
+              "text": "A validation method that rolls forward in time, refitting on past data only — the closest simulation of live constraints.",
+              "art": "walk-forward"
+            }
+          ],
+          "answer": 0,
+          "why": "Out-of-sample is untouched and tests generalisation; in-sample was tuned and tests fit."
+        },
+        {
+          "id": "u1l1-out-of-sample-s",
+          "type": "scenario",
+          "termId": "out-of-sample",
+          "termIds": [
+            "out-of-sample"
+          ],
+          "story": "Out-of-sample, from 2020 to 2024, the Sharpe falls to 0.4.",
+          "stem": "Which term does this describe?",
+          "options": [
+            {
+              "text": "out-of-sample",
+              "art": "out-of-sample"
+            },
+            {
+              "text": "backtest",
+              "art": "backtest"
+            },
+            {
+              "text": "in-sample",
+              "art": "in-sample"
+            },
+            {
+              "text": "walk-forward",
+              "art": "walk-forward"
+            }
+          ],
+          "answer": 0,
+          "why": "out-of-sample: Data excluded from fitting and tuning, used to test whether a strategy generalises."
+        },
+        {
+          "id": "u1l1-out-of-sample-t",
+          "type": "truefalse",
+          "termId": "out-of-sample",
+          "termIds": [
+            "out-of-sample"
+          ],
+          "stem": "out-of-sample means: The stretch you never touched, held back for the test.",
+          "answer": true,
+          "why": "Correct — Data excluded from fitting and tuning, used to test whether a strategy generalises."
+        },
+        {
+          "id": "u1l1-out-of-sample-f",
+          "type": "fill",
+          "termId": "out-of-sample",
+          "termIds": [
+            "out-of-sample"
+          ],
+          "story": "____, from 2020 to 2024, the Sharpe falls to 0.4.",
+          "bank": [
+            "out-of-sample",
+            "backtest",
+            "in-sample"
+          ],
+          "answer": "out-of-sample",
+          "why": "Out-of-sample is untouched and tests generalisation; in-sample was tuned and tests fit."
+        },
+        {
+          "id": "u1l1-match",
+          "type": "match",
+          "termIds": [
+            "backtest",
+            "in-sample",
+            "out-of-sample"
+          ],
+          "pairs": [
+            {
+              "id": "backtest",
+              "left": "backtest",
+              "right": "Run the strategy over old data and see what it would have done."
+            },
+            {
+              "id": "in-sample",
+              "left": "in-sample",
+              "right": "The stretch of data you tuned the parameters on."
+            },
+            {
+              "id": "out-of-sample",
+              "left": "out-of-sample",
+              "right": "The stretch you never touched, held back for the test."
+            }
+          ],
+          "why": "Match each term to what it means."
+        }
+      ]
+    },
+    {
+      "id": "u1l2",
+      "unit": 1,
+      "title": "怎么验（续）",
+      "icon": "📈",
+      "review": false,
+      "prompts": [
+        {
+          "id": "u1l2-walk-forward-m",
+          "type": "meaning",
+          "termId": "walk-forward",
+          "termIds": [
+            "walk-forward"
+          ],
+          "stem": "What does walk-forward mean?",
+          "options": [
+            {
+              "text": "A validation method that rolls forward in time, refitting on past data only — the closest simulation of live constraints.",
+              "art": "walk-forward"
+            },
+            {
+              "text": "Simulating a strategy on historical data to estimate its return and risk.",
+              "art": "backtest"
+            },
+            {
+              "text": "The period used to fit or optimise a model, where results are optimistic by construction.",
+              "art": "in-sample"
+            },
+            {
+              "text": "Data excluded from fitting and tuning, used to test whether a strategy generalises.",
+              "art": "out-of-sample"
+            }
+          ],
+          "answer": 0,
+          "why": "Walk-forward is a backtest with time discipline (only past data each step); a plain backtest can peek at the future."
+        },
+        {
+          "id": "u1l2-walk-forward-s",
+          "type": "scenario",
+          "termId": "walk-forward",
+          "termIds": [
+            "walk-forward"
+          ],
+          "story": "A walk-forward test produces a Sharpe of 0.6, between the two.",
+          "stem": "Which term does this describe?",
+          "options": [
+            {
+              "text": "walk-forward",
+              "art": "walk-forward"
+            },
+            {
+              "text": "backtest",
+              "art": "backtest"
+            },
+            {
+              "text": "in-sample",
+              "art": "in-sample"
+            },
+            {
+              "text": "out-of-sample",
+              "art": "out-of-sample"
+            }
+          ],
+          "answer": 0,
+          "why": "walk-forward: A validation method that rolls forward in time, refitting on past data only — the closest simulation of live constraints."
+        },
+        {
+          "id": "u1l2-walk-forward-t",
+          "type": "truefalse",
+          "termId": "walk-forward",
+          "termIds": [
+            "walk-forward"
+          ],
+          "stem": "walk-forward means: Refit each year on what was knowable then, trade the next year.",
+          "answer": true,
+          "why": "Correct — A validation method that rolls forward in time, refitting on past data only — the closest simulation of live constraints."
+        },
+        {
+          "id": "u1l2-walk-forward-f",
+          "type": "fill",
+          "termId": "walk-forward",
+          "termIds": [
+            "walk-forward"
+          ],
+          "story": "A ____ test produces a Sharpe of 0.6, between the two.",
+          "bank": [
+            "walk-forward",
+            "benchmark"
+          ],
+          "answer": "walk-forward",
+          "why": "Walk-forward is a backtest with time discipline (only past data each step); a plain backtest can peek at the future."
+        },
+        {
+          "id": "u1l2-benchmark-m",
+          "type": "meaning",
+          "termId": "benchmark",
+          "termIds": [
+            "benchmark"
+          ],
+          "stem": "What does benchmark mean?",
+          "options": [
+            {
+              "text": "The index or strategy used as the reference for judging whether active management added value.",
+              "art": "benchmark"
+            },
+            {
+              "text": "Simulating a strategy on historical data to estimate its return and risk.",
+              "art": "backtest"
+            },
+            {
+              "text": "The period used to fit or optimise a model, where results are optimistic by construction.",
+              "art": "in-sample"
+            },
+            {
+              "text": "Data excluded from fitting and tuning, used to test whether a strategy generalises.",
+              "art": "out-of-sample"
+            }
+          ],
+          "answer": 0,
+          "why": "A benchmark is what you are compared to; a universe is what you pick from."
+        },
+        {
+          "id": "u1l2-benchmark-s",
+          "type": "scenario",
+          "termId": "benchmark",
+          "termIds": [
+            "benchmark"
+          ],
+          "story": "Alpha against the benchmark is 4.2% a year.",
+          "stem": "Which term does this describe?",
+          "options": [
+            {
+              "text": "benchmark",
+              "art": "benchmark"
+            },
+            {
+              "text": "backtest",
+              "art": "backtest"
+            },
+            {
+              "text": "in-sample",
+              "art": "in-sample"
+            },
+            {
+              "text": "out-of-sample",
+              "art": "out-of-sample"
+            }
+          ],
+          "answer": 0,
+          "why": "benchmark: The index or strategy used as the reference for judging whether active management added value."
+        },
+        {
+          "id": "u1l2-benchmark-t",
+          "type": "truefalse",
+          "termId": "benchmark",
+          "termIds": [
+            "benchmark"
+          ],
+          "stem": "benchmark means: Run the strategy over old data and see what it would have done.",
+          "answer": false,
+          "why": "benchmark means The index or strategy used as the reference for judging whether active management added value., not Simulating a strategy on historical data to estimate its return and risk.."
+        },
+        {
+          "id": "u1l2-benchmark-f",
+          "type": "fill",
+          "termId": "benchmark",
+          "termIds": [
+            "benchmark"
+          ],
+          "story": "Alpha against the ____ is 4.2% a year.",
+          "bank": [
+            "benchmark",
+            "walk-forward"
+          ],
+          "answer": "benchmark",
+          "why": "A benchmark is what you are compared to; a universe is what you pick from."
+        },
+        {
+          "id": "u1l2-match",
+          "type": "match",
+          "termIds": [
+            "walk-forward",
+            "benchmark"
+          ],
+          "pairs": [
+            {
+              "id": "walk-forward",
+              "left": "walk-forward",
+              "right": "Refit each year on what was knowable then, trade the next year."
+            },
+            {
+              "id": "benchmark",
+              "left": "benchmark",
+              "right": "The yardstick you are measured against."
+            }
+          ],
+          "why": "Match each term to what it means."
+        }
+      ]
+    },
+    {
+      "id": "u1r",
+      "unit": 1,
+      "title": "怎么验 · 回顾",
+      "icon": "🏆",
+      "review": true,
+      "prompts": [
+        {
+          "id": "u1r-backtest-s",
+          "type": "scenario",
+          "termId": "backtest",
+          "termIds": [
+            "backtest"
+          ],
+          "story": "We backtest a simple momentum overlay on a universe of ten energy futures.",
+          "stem": "Which term does this describe?",
+          "options": [
+            {
+              "text": "backtest",
+              "art": "backtest"
+            },
+            {
+              "text": "in-sample",
+              "art": "in-sample"
+            },
+            {
+              "text": "out-of-sample",
+              "art": "out-of-sample"
+            },
+            {
+              "text": "walk-forward",
+              "art": "walk-forward"
+            }
+          ],
+          "answer": 0,
+          "why": "backtest: Simulating a strategy on historical data to estimate its return and risk."
+        },
+        {
+          "id": "u1r-backtest-t",
+          "type": "truefalse",
+          "termId": "backtest",
+          "termIds": [
+            "backtest"
+          ],
+          "stem": "backtest means: Run the strategy over old data and see what it would have done.",
+          "answer": true,
+          "why": "Correct — Simulating a strategy on historical data to estimate its return and risk."
+        },
+        {
+          "id": "u1r-in-sample-s",
+          "type": "scenario",
+          "termId": "in-sample",
+          "termIds": [
+            "in-sample"
+          ],
+          "story": "In-sample, from 2010 to 2019, the strategy produces a Sharpe of 1.4.",
+          "stem": "Which term does this describe?",
+          "options": [
+            {
+              "text": "in-sample",
+              "art": "in-sample"
+            },
+            {
+              "text": "backtest",
+              "art": "backtest"
+            },
+            {
+              "text": "out-of-sample",
+              "art": "out-of-sample"
+            },
+            {
+              "text": "walk-forward",
+              "art": "walk-forward"
+            }
+          ],
+          "answer": 0,
+          "why": "in-sample: The period used to fit or optimise a model, where results are optimistic by construction."
+        },
+        {
+          "id": "u1r-in-sample-t",
+          "type": "truefalse",
+          "termId": "in-sample",
+          "termIds": [
+            "in-sample"
+          ],
+          "stem": "in-sample means: Run the strategy over old data and see what it would have done.",
+          "answer": false,
+          "why": "in-sample means The period used to fit or optimise a model, where results are optimistic by construction., not Simulating a strategy on historical data to estimate its return and risk.."
+        },
+        {
+          "id": "u1r-out-of-sample-s",
+          "type": "scenario",
+          "termId": "out-of-sample",
+          "termIds": [
+            "out-of-sample"
+          ],
+          "story": "Out-of-sample, from 2020 to 2024, the Sharpe falls to 0.4.",
+          "stem": "Which term does this describe?",
+          "options": [
+            {
+              "text": "out-of-sample",
+              "art": "out-of-sample"
+            },
+            {
+              "text": "backtest",
+              "art": "backtest"
+            },
+            {
+              "text": "in-sample",
+              "art": "in-sample"
+            },
+            {
+              "text": "walk-forward",
+              "art": "walk-forward"
+            }
+          ],
+          "answer": 0,
+          "why": "out-of-sample: Data excluded from fitting and tuning, used to test whether a strategy generalises."
+        },
+        {
+          "id": "u1r-out-of-sample-t",
+          "type": "truefalse",
+          "termId": "out-of-sample",
+          "termIds": [
+            "out-of-sample"
+          ],
+          "stem": "out-of-sample means: The stretch you never touched, held back for the test.",
+          "answer": true,
+          "why": "Correct — Data excluded from fitting and tuning, used to test whether a strategy generalises."
+        },
+        {
+          "id": "u1r-walk-forward-s",
+          "type": "scenario",
+          "termId": "walk-forward",
+          "termIds": [
+            "walk-forward"
+          ],
+          "story": "A walk-forward test produces a Sharpe of 0.6, between the two.",
+          "stem": "Which term does this describe?",
+          "options": [
+            {
+              "text": "walk-forward",
+              "art": "walk-forward"
+            },
+            {
+              "text": "backtest",
+              "art": "backtest"
+            },
+            {
+              "text": "in-sample",
+              "art": "in-sample"
+            },
+            {
+              "text": "out-of-sample",
+              "art": "out-of-sample"
+            }
+          ],
+          "answer": 0,
+          "why": "walk-forward: A validation method that rolls forward in time, refitting on past data only — the closest simulation of live constraints."
+        },
+        {
+          "id": "u1r-walk-forward-t",
+          "type": "truefalse",
+          "termId": "walk-forward",
+          "termIds": [
+            "walk-forward"
+          ],
+          "stem": "walk-forward means: Run the strategy over old data and see what it would have done.",
+          "answer": false,
+          "why": "walk-forward means A validation method that rolls forward in time, refitting on past data only — the closest simulation of live constraints., not Simulating a strategy on historical data to estimate its return and risk.."
+        },
+        {
+          "id": "u1r-benchmark-s",
+          "type": "scenario",
+          "termId": "benchmark",
+          "termIds": [
+            "benchmark"
+          ],
+          "story": "Alpha against the benchmark is 4.2% a year.",
+          "stem": "Which term does this describe?",
+          "options": [
+            {
+              "text": "benchmark",
+              "art": "benchmark"
+            },
+            {
+              "text": "backtest",
+              "art": "backtest"
+            },
+            {
+              "text": "in-sample",
+              "art": "in-sample"
+            },
+            {
+              "text": "out-of-sample",
+              "art": "out-of-sample"
+            }
+          ],
+          "answer": 0,
+          "why": "benchmark: The index or strategy used as the reference for judging whether active management added value."
+        },
+        {
+          "id": "u1r-benchmark-t",
+          "type": "truefalse",
+          "termId": "benchmark",
+          "termIds": [
+            "benchmark"
+          ],
+          "stem": "benchmark means: The yardstick you are measured against.",
+          "answer": true,
+          "why": "Correct — The index or strategy used as the reference for judging whether active management added value."
+        },
+        {
+          "id": "u1r-match",
+          "type": "match",
+          "termIds": [
+            "backtest",
+            "in-sample",
+            "out-of-sample",
+            "walk-forward",
+            "benchmark"
+          ],
+          "pairs": [
+            {
+              "id": "backtest",
+              "left": "backtest",
+              "right": "Run the strategy over old data and see what it would have done."
+            },
+            {
+              "id": "in-sample",
+              "left": "in-sample",
+              "right": "The stretch of data you tuned the parameters on."
+            },
+            {
+              "id": "out-of-sample",
+              "left": "out-of-sample",
+              "right": "The stretch you never touched, held back for the test."
+            },
+            {
+              "id": "walk-forward",
+              "left": "walk-forward",
+              "right": "Refit each year on what was knowable then, trade the next year."
+            },
+            {
+              "id": "benchmark",
+              "left": "benchmark",
+              "right": "The yardstick you are measured against."
+            }
+          ],
+          "why": "Match each term to what it means."
+        }
+      ]
+    },
+    {
+      "id": "u2l1",
+      "unit": 2,
+      "title": "怎么骗自己",
+      "icon": "📈",
+      "review": false,
+      "prompts": [
+        {
+          "id": "u2l1-overfitting-m",
+          "type": "meaning",
+          "termId": "overfitting",
+          "termIds": [
+            "overfitting"
+          ],
+          "stem": "What does overfitting mean?",
+          "options": [
+            {
+              "text": "Fitting a model so closely to past data that it captures random variation and breaks on new data.",
+              "art": "overfitting"
+            },
+            {
+              "text": "Using information published after the decision point in a backtest, which inflates returns.",
+              "art": "look-ahead bias"
+            },
+            {
+              "text": "A sample containing only currently existing assets, dropping those delisted or closed, which flatters results.",
+              "art": "survivorship bias"
+            },
+            {
+              "text": "Testing hypotheses repeatedly on the same data until a statistically significant result appears by chance, then treating it as a finding.",
+              "art": "data snooping"
+            }
+          ],
+          "answer": 0,
+          "why": "Overfitting is the model hugging noise (the result); data snooping is the repeated searching that gets you there (the cause)."
+        },
+        {
+          "id": "u2l1-overfitting-s",
+          "type": "scenario",
+          "termId": "overfitting",
+          "termIds": [
+            "overfitting"
+          ],
+          "story": "The drop is what you expect when a specification is overfitting the first decade.",
+          "stem": "Which term does this describe?",
+          "options": [
+            {
+              "text": "overfitting",
+              "art": "overfitting"
+            },
+            {
+              "text": "look-ahead bias",
+              "art": "look-ahead bias"
+            },
+            {
+              "text": "survivorship bias",
+              "art": "survivorship bias"
+            },
+            {
+              "text": "data snooping",
+              "art": "data snooping"
+            }
+          ],
+          "answer": 0,
+          "why": "overfitting: Fitting a model so closely to past data that it captures random variation and breaks on new data."
+        },
+        {
+          "id": "u2l1-overfitting-t",
+          "type": "truefalse",
+          "termId": "overfitting",
+          "termIds": [
+            "overfitting"
+          ],
+          "stem": "overfitting means: Tuned until it fits the noise, not the signal.",
+          "answer": true,
+          "why": "Correct — Fitting a model so closely to past data that it captures random variation and breaks on new data."
+        },
+        {
+          "id": "u2l1-overfitting-f",
+          "type": "fill",
+          "termId": "overfitting",
+          "termIds": [
+            "overfitting"
+          ],
+          "story": "The drop is what you expect when a specification is ____ the first decade.",
+          "bank": [
+            "overfitting",
+            "look-ahead bias",
+            "survivorship bias"
+          ],
+          "answer": "overfitting",
+          "why": "Overfitting is the model hugging noise (the result); data snooping is the repeated searching that gets you there (the cause)."
+        },
+        {
+          "id": "u2l1-overfitting-a",
+          "type": "audit",
+          "termId": "overfitting",
+          "termIds": [
+            "overfitting"
+          ],
+          "story": "We tried 2,000 parameter sets and kept the one that did best over 2015-2024: 41% a year. That shows we found a strong pattern.",
+          "stem": "Which statement does not hold?",
+          "options": [
+            {
+              "text": "Trying 2,000 sets will surface a lucky survivor from pure noise; the 41% is not evidence of a pattern."
+            },
+            {
+              "text": "41% a year shows the pattern really is strong."
+            },
+            {
+              "text": "The more parameter sets you try, the more reliable the pattern you find."
+            },
+            {
+              "text": "Testing on another period would confirm the pattern."
+            }
+          ],
+          "answer": 0,
+          "why": "Try enough times and pure noise will produce a set that looks excellent. The best of 2,000 is the best result of a search, not a measure of skill. Evidence requires out-of-sample data, not picking the winner inside one window."
+        },
+        {
+          "id": "u2l1-look-ahead bias-m",
+          "type": "meaning",
+          "termId": "look-ahead bias",
+          "termIds": [
+            "look-ahead bias"
+          ],
+          "stem": "What does look-ahead bias mean?",
+          "options": [
+            {
+              "text": "Using information published after the decision point in a backtest, which inflates returns.",
+              "art": "look-ahead bias"
+            },
+            {
+              "text": "Fitting a model so closely to past data that it captures random variation and breaks on new data.",
+              "art": "overfitting"
+            },
+            {
+              "text": "A sample containing only currently existing assets, dropping those delisted or closed, which flatters results.",
+              "art": "survivorship bias"
+            },
+            {
+              "text": "Testing hypotheses repeatedly on the same data until a statistically significant result appears by chance, then treating it as a finding.",
+              "art": "data snooping"
+            }
+          ],
+          "answer": 0,
+          "why": "Look-ahead bias cheats on time; survivorship bias cheats on the sample."
+        },
+        {
+          "id": "u2l1-look-ahead bias-s",
+          "type": "scenario",
+          "termId": "look-ahead bias",
+          "termIds": [
+            "look-ahead bias"
+          ],
+          "story": "Look-ahead bias appears if a signal uses data published after the decision point.",
+          "stem": "Which term does this describe?",
+          "options": [
+            {
+              "text": "look-ahead bias",
+              "art": "look-ahead bias"
+            },
+            {
+              "text": "overfitting",
+              "art": "overfitting"
+            },
+            {
+              "text": "survivorship bias",
+              "art": "survivorship bias"
+            },
+            {
+              "text": "data snooping",
+              "art": "data snooping"
+            }
+          ],
+          "answer": 0,
+          "why": "look-ahead bias: Using information published after the decision point in a backtest, which inflates returns."
+        },
+        {
+          "id": "u2l1-look-ahead bias-t",
+          "type": "truefalse",
+          "termId": "look-ahead bias",
+          "termIds": [
+            "look-ahead bias"
+          ],
+          "stem": "look-ahead bias means: Tuned until it fits the noise, not the signal.",
+          "answer": false,
+          "why": "look-ahead bias means Using information published after the decision point in a backtest, which inflates returns., not Fitting a model so closely to past data that it captures random variation and breaks on new data.."
+        },
+        {
+          "id": "u2l1-look-ahead bias-f",
+          "type": "fill",
+          "termId": "look-ahead bias",
+          "termIds": [
+            "look-ahead bias"
+          ],
+          "story": "____ appears if a signal uses data published after the decision point.",
+          "bank": [
+            "look-ahead bias",
+            "overfitting",
+            "survivorship bias"
+          ],
+          "answer": "look-ahead bias",
+          "why": "Look-ahead bias cheats on time; survivorship bias cheats on the sample."
+        },
+        {
+          "id": "u2l1-look-ahead bias-a",
+          "type": "audit",
+          "termId": "look-ahead bias",
+          "termIds": [
+            "look-ahead bias"
+          ],
+          "story": "Our signal trades on Tuesday using the inventory report published on Wednesday, and the backtest shows 25% a year. That means inventory data is highly predictive.",
+          "stem": "Which statement does not hold?",
+          "options": [
+            {
+              "text": "Using Wednesday's data to trade Tuesday is look-ahead bias; the return cannot be earned live."
+            },
+            {
+              "text": "25% a year shows inventory data is highly predictive."
+            },
+            {
+              "text": "Inventory data is high frequency, so a strong result is plausible."
+            },
+            {
+              "text": "Switching to monthly data would remove the problem."
+            }
+          ],
+          "answer": 0,
+          "why": "On Tuesday the Wednesday report does not exist yet. Treating it as known means trading on future information, so the return is fabricated. This error is common and hard to spot because nothing breaks — it only lifts the result."
+        },
+        {
+          "id": "u2l1-survivorship bias-m",
+          "type": "meaning",
+          "termId": "survivorship bias",
+          "termIds": [
+            "survivorship bias"
+          ],
+          "stem": "What does survivorship bias mean?",
+          "options": [
+            {
+              "text": "A sample containing only currently existing assets, dropping those delisted or closed, which flatters results.",
+              "art": "survivorship bias"
+            },
+            {
+              "text": "Fitting a model so closely to past data that it captures random variation and breaks on new data.",
+              "art": "overfitting"
+            },
+            {
+              "text": "Using information published after the decision point in a backtest, which inflates returns.",
+              "art": "look-ahead bias"
+            },
+            {
+              "text": "Testing hypotheses repeatedly on the same data until a statistically significant result appears by chance, then treating it as a finding.",
+              "art": "data snooping"
+            }
+          ],
+          "answer": 0,
+          "why": "Survivorship bias is the wrong sample (only survivors); look-ahead bias is the wrong time (the future)."
+        },
+        {
+          "id": "u2l1-survivorship bias-s",
+          "type": "scenario",
+          "termId": "survivorship bias",
+          "termIds": [
+            "survivorship bias"
+          ],
+          "story": "Survivorship bias appears if the universe is taken from today's list of contracts.",
+          "stem": "Which term does this describe?",
+          "options": [
+            {
+              "text": "survivorship bias",
+              "art": "survivorship bias"
+            },
+            {
+              "text": "overfitting",
+              "art": "overfitting"
+            },
+            {
+              "text": "look-ahead bias",
+              "art": "look-ahead bias"
+            },
+            {
+              "text": "data snooping",
+              "art": "data snooping"
+            }
+          ],
+          "answer": 0,
+          "why": "survivorship bias: A sample containing only currently existing assets, dropping those delisted or closed, which flatters results."
+        },
+        {
+          "id": "u2l1-survivorship bias-t",
+          "type": "truefalse",
+          "termId": "survivorship bias",
+          "termIds": [
+            "survivorship bias"
+          ],
+          "stem": "survivorship bias means: Counting only what survived, ignoring what died.",
+          "answer": true,
+          "why": "Correct — A sample containing only currently existing assets, dropping those delisted or closed, which flatters results."
+        },
+        {
+          "id": "u2l1-survivorship bias-f",
+          "type": "fill",
+          "termId": "survivorship bias",
+          "termIds": [
+            "survivorship bias"
+          ],
+          "story": "____ appears if the universe is taken from today's list of contracts.",
+          "bank": [
+            "survivorship bias",
+            "overfitting",
+            "look-ahead bias"
+          ],
+          "answer": "survivorship bias",
+          "why": "Survivorship bias is the wrong sample (only survivors); look-ahead bias is the wrong time (the future)."
+        },
+        {
+          "id": "u2l1-survivorship bias-a",
+          "type": "audit",
+          "termId": "survivorship bias",
+          "termIds": [
+            "survivorship bias"
+          ],
+          "story": "We averaged the past decade's returns for hedge funds still running today: 9% a year. So the industry has delivered a solid long-run return.",
+          "stem": "Which statement does not hold?",
+          "options": [
+            {
+              "text": "The sample only includes funds that survived to today; those that closed are missing, which biases the 9% upward."
+            },
+            {
+              "text": "9% a year shows the industry has delivered well."
+            },
+            {
+              "text": "Ten years is a long enough sample to represent the industry."
+            },
+            {
+              "text": "The funds' maximum drawdowns should be examined as well."
+            }
+          ],
+          "answer": 0,
+          "why": "Funds that blew up disappeared from the list, so what you measured is the survivors. A true industry return must include the dead — and they tend to be exactly the worst performers. This is the textbook survivorship trap."
+        },
+        {
+          "id": "u2l1-match",
+          "type": "match",
+          "termIds": [
+            "overfitting",
+            "look-ahead bias",
+            "survivorship bias"
+          ],
+          "pairs": [
+            {
+              "id": "overfitting",
+              "left": "overfitting",
+              "right": "Tuned until it fits the noise, not the signal."
+            },
+            {
+              "id": "look-ahead bias",
+              "left": "look-ahead bias",
+              "right": "Deciding with data that was not published yet."
+            },
+            {
+              "id": "survivorship bias",
+              "left": "survivorship bias",
+              "right": "Counting only what survived, ignoring what died."
+            }
+          ],
+          "why": "Match each term to what it means."
+        }
+      ]
+    },
+    {
+      "id": "u2l2",
+      "unit": 2,
+      "title": "怎么骗自己（续）",
+      "icon": "📈",
+      "review": false,
+      "prompts": [
+        {
+          "id": "u2l2-data snooping-m",
+          "type": "meaning",
+          "termId": "data snooping",
+          "termIds": [
+            "data snooping"
+          ],
+          "stem": "What does data snooping mean?",
+          "options": [
+            {
+              "text": "Testing hypotheses repeatedly on the same data until a statistically significant result appears by chance, then treating it as a finding.",
+              "art": "data snooping"
+            },
+            {
+              "text": "Fitting a model so closely to past data that it captures random variation and breaks on new data.",
+              "art": "overfitting"
+            },
+            {
+              "text": "Using information published after the decision point in a backtest, which inflates returns.",
+              "art": "look-ahead bias"
+            },
+            {
+              "text": "A sample containing only currently existing assets, dropping those delisted or closed, which flatters results.",
+              "art": "survivorship bias"
+            }
+          ],
+          "answer": 0,
+          "why": "Data snooping is the habit of hunting; multiple testing is the statistical consequence that produces the false positives."
+        },
+        {
+          "id": "u2l2-data snooping-s",
+          "type": "scenario",
+          "termId": "data snooping",
+          "termIds": [
+            "data snooping"
+          ],
+          "story": "Data snooping appears if we try many variants and report the best.",
+          "stem": "Which term does this describe?",
+          "options": [
+            {
+              "text": "data snooping",
+              "art": "data snooping"
+            },
+            {
+              "text": "overfitting",
+              "art": "overfitting"
+            },
+            {
+              "text": "look-ahead bias",
+              "art": "look-ahead bias"
+            },
+            {
+              "text": "survivorship bias",
+              "art": "survivorship bias"
+            }
+          ],
+          "answer": 0,
+          "why": "data snooping: Testing hypotheses repeatedly on the same data until a statistically significant result appears by chance, then treating it as a finding."
+        },
+        {
+          "id": "u2l2-data snooping-t",
+          "type": "truefalse",
+          "termId": "data snooping",
+          "termIds": [
+            "data snooping"
+          ],
+          "stem": "data snooping means: Rummaging through one dataset until something looks significant.",
+          "answer": true,
+          "why": "Correct — Testing hypotheses repeatedly on the same data until a statistically significant result appears by chance, then treating it as a finding."
+        },
+        {
+          "id": "u2l2-data snooping-f",
+          "type": "fill",
+          "termId": "data snooping",
+          "termIds": [
+            "data snooping"
+          ],
+          "story": "____ appears if we try many variants and report the best.",
+          "bank": [
+            "data snooping",
+            "multiple testing"
+          ],
+          "answer": "data snooping",
+          "why": "Data snooping is the habit of hunting; multiple testing is the statistical consequence that produces the false positives."
+        },
+        {
+          "id": "u2l2-data snooping-a",
+          "type": "audit",
+          "termId": "data snooping",
+          "termIds": [
+            "data snooping"
+          ],
+          "story": "We tested a hundred factors and found five significant at the 5% level. So those five are genuinely effective.",
+          "stem": "Which statement does not hold?",
+          "options": [
+            {
+              "text": "At a 5% level, a hundred tests on pure noise yield about five false positives by construction; multiple testing must be corrected for."
+            },
+            {
+              "text": "Five significant factors show they genuinely work."
+            },
+            {
+              "text": "5% is the academic standard, so the conclusion is sound."
+            },
+            {
+              "text": "The 95 insignificant factors should be reported as well."
+            }
+          ],
+          "answer": 0,
+          "why": "A 5% level means a 5% chance of calling a truly useless factor significant. Run a hundred tests and pure noise produces about five false positives — exactly what was found. Data snooping is how those five get published as discoveries."
+        },
+        {
+          "id": "u2l2-multiple testing-m",
+          "type": "meaning",
+          "termId": "multiple testing",
+          "termIds": [
+            "multiple testing"
+          ],
+          "stem": "What does multiple testing mean?",
+          "options": [
+            {
+              "text": "The statistical fact that the chance of at least one false positive rises with the number of tests run on one dataset.",
+              "art": "multiple testing"
+            },
+            {
+              "text": "Fitting a model so closely to past data that it captures random variation and breaks on new data.",
+              "art": "overfitting"
+            },
+            {
+              "text": "Using information published after the decision point in a backtest, which inflates returns.",
+              "art": "look-ahead bias"
+            },
+            {
+              "text": "A sample containing only currently existing assets, dropping those delisted or closed, which flatters results.",
+              "art": "survivorship bias"
+            }
+          ],
+          "answer": 0,
+          "why": "Multiple testing is the statistical fact; data snooping is how that fact gets exploited."
+        },
+        {
+          "id": "u2l2-multiple testing-s",
+          "type": "scenario",
+          "termId": "multiple testing",
+          "termIds": [
+            "multiple testing"
+          ],
+          "story": "At a 5% level, twenty independent tests produce roughly one false positive by construction.",
+          "stem": "Which term does this describe?",
+          "options": [
+            {
+              "text": "multiple testing",
+              "art": "multiple testing"
+            },
+            {
+              "text": "overfitting",
+              "art": "overfitting"
+            },
+            {
+              "text": "look-ahead bias",
+              "art": "look-ahead bias"
+            },
+            {
+              "text": "survivorship bias",
+              "art": "survivorship bias"
+            }
+          ],
+          "answer": 0,
+          "why": "multiple testing: The statistical fact that the chance of at least one false positive rises with the number of tests run on one dataset."
+        },
+        {
+          "id": "u2l2-multiple testing-t",
+          "type": "truefalse",
+          "termId": "multiple testing",
+          "termIds": [
+            "multiple testing"
+          ],
+          "stem": "multiple testing means: Tuned until it fits the noise, not the signal.",
+          "answer": false,
+          "why": "multiple testing means The statistical fact that the chance of at least one false positive rises with the number of tests run on one dataset., not Fitting a model so closely to past data that it captures random variation and breaks on new data.."
+        },
+        {
+          "id": "u2l2-multiple testing-f",
+          "type": "fill",
+          "termId": "multiple testing",
+          "termIds": [
+            "multiple testing"
+          ],
+          "story": "At a 5% level, twenty independent tests produce roughly one false positive by construction. (the word here is ____)",
+          "bank": [
+            "multiple testing",
+            "data snooping"
+          ],
+          "answer": "multiple testing",
+          "why": "Multiple testing is the statistical fact; data snooping is how that fact gets exploited."
+        },
+        {
+          "id": "u2l2-match",
+          "type": "match",
+          "termIds": [
+            "data snooping",
+            "multiple testing"
+          ],
+          "pairs": [
+            {
+              "id": "data snooping",
+              "left": "data snooping",
+              "right": "Rummaging through one dataset until something looks significant."
+            },
+            {
+              "id": "multiple testing",
+              "left": "multiple testing",
+              "right": "Run many tests and false positives show up on schedule."
+            }
+          ],
+          "why": "Match each term to what it means."
+        }
+      ]
+    },
+    {
+      "id": "u2r",
+      "unit": 2,
+      "title": "怎么骗自己 · 回顾",
+      "icon": "🏆",
+      "review": true,
+      "prompts": [
+        {
+          "id": "u2r-overfitting-s",
+          "type": "scenario",
+          "termId": "overfitting",
+          "termIds": [
+            "overfitting"
+          ],
+          "story": "The drop is what you expect when a specification is overfitting the first decade.",
+          "stem": "Which term does this describe?",
+          "options": [
+            {
+              "text": "overfitting",
+              "art": "overfitting"
+            },
+            {
+              "text": "look-ahead bias",
+              "art": "look-ahead bias"
+            },
+            {
+              "text": "survivorship bias",
+              "art": "survivorship bias"
+            },
+            {
+              "text": "data snooping",
+              "art": "data snooping"
+            }
+          ],
+          "answer": 0,
+          "why": "overfitting: Fitting a model so closely to past data that it captures random variation and breaks on new data."
+        },
+        {
+          "id": "u2r-overfitting-t",
+          "type": "truefalse",
+          "termId": "overfitting",
+          "termIds": [
+            "overfitting"
+          ],
+          "stem": "overfitting means: Tuned until it fits the noise, not the signal.",
+          "answer": true,
+          "why": "Correct — Fitting a model so closely to past data that it captures random variation and breaks on new data."
+        },
+        {
+          "id": "u2r-look-ahead bias-s",
+          "type": "scenario",
+          "termId": "look-ahead bias",
+          "termIds": [
+            "look-ahead bias"
+          ],
+          "story": "Look-ahead bias appears if a signal uses data published after the decision point.",
+          "stem": "Which term does this describe?",
+          "options": [
+            {
+              "text": "look-ahead bias",
+              "art": "look-ahead bias"
+            },
+            {
+              "text": "overfitting",
+              "art": "overfitting"
+            },
+            {
+              "text": "survivorship bias",
+              "art": "survivorship bias"
+            },
+            {
+              "text": "data snooping",
+              "art": "data snooping"
+            }
+          ],
+          "answer": 0,
+          "why": "look-ahead bias: Using information published after the decision point in a backtest, which inflates returns."
+        },
+        {
+          "id": "u2r-look-ahead bias-t",
+          "type": "truefalse",
+          "termId": "look-ahead bias",
+          "termIds": [
+            "look-ahead bias"
+          ],
+          "stem": "look-ahead bias means: Tuned until it fits the noise, not the signal.",
+          "answer": false,
+          "why": "look-ahead bias means Using information published after the decision point in a backtest, which inflates returns., not Fitting a model so closely to past data that it captures random variation and breaks on new data.."
+        },
+        {
+          "id": "u2r-survivorship bias-s",
+          "type": "scenario",
+          "termId": "survivorship bias",
+          "termIds": [
+            "survivorship bias"
+          ],
+          "story": "Survivorship bias appears if the universe is taken from today's list of contracts.",
+          "stem": "Which term does this describe?",
+          "options": [
+            {
+              "text": "survivorship bias",
+              "art": "survivorship bias"
+            },
+            {
+              "text": "overfitting",
+              "art": "overfitting"
+            },
+            {
+              "text": "look-ahead bias",
+              "art": "look-ahead bias"
+            },
+            {
+              "text": "data snooping",
+              "art": "data snooping"
+            }
+          ],
+          "answer": 0,
+          "why": "survivorship bias: A sample containing only currently existing assets, dropping those delisted or closed, which flatters results."
+        },
+        {
+          "id": "u2r-survivorship bias-t",
+          "type": "truefalse",
+          "termId": "survivorship bias",
+          "termIds": [
+            "survivorship bias"
+          ],
+          "stem": "survivorship bias means: Counting only what survived, ignoring what died.",
+          "answer": true,
+          "why": "Correct — A sample containing only currently existing assets, dropping those delisted or closed, which flatters results."
+        },
+        {
+          "id": "u2r-data snooping-s",
+          "type": "scenario",
+          "termId": "data snooping",
+          "termIds": [
+            "data snooping"
+          ],
+          "story": "Data snooping appears if we try many variants and report the best.",
+          "stem": "Which term does this describe?",
+          "options": [
+            {
+              "text": "data snooping",
+              "art": "data snooping"
+            },
+            {
+              "text": "overfitting",
+              "art": "overfitting"
+            },
+            {
+              "text": "look-ahead bias",
+              "art": "look-ahead bias"
+            },
+            {
+              "text": "survivorship bias",
+              "art": "survivorship bias"
+            }
+          ],
+          "answer": 0,
+          "why": "data snooping: Testing hypotheses repeatedly on the same data until a statistically significant result appears by chance, then treating it as a finding."
+        },
+        {
+          "id": "u2r-data snooping-t",
+          "type": "truefalse",
+          "termId": "data snooping",
+          "termIds": [
+            "data snooping"
+          ],
+          "stem": "data snooping means: Tuned until it fits the noise, not the signal.",
+          "answer": false,
+          "why": "data snooping means Testing hypotheses repeatedly on the same data until a statistically significant result appears by chance, then treating it as a finding., not Fitting a model so closely to past data that it captures random variation and breaks on new data.."
+        },
+        {
+          "id": "u2r-multiple testing-s",
+          "type": "scenario",
+          "termId": "multiple testing",
+          "termIds": [
+            "multiple testing"
+          ],
+          "story": "At a 5% level, twenty independent tests produce roughly one false positive by construction.",
+          "stem": "Which term does this describe?",
+          "options": [
+            {
+              "text": "multiple testing",
+              "art": "multiple testing"
+            },
+            {
+              "text": "overfitting",
+              "art": "overfitting"
+            },
+            {
+              "text": "look-ahead bias",
+              "art": "look-ahead bias"
+            },
+            {
+              "text": "survivorship bias",
+              "art": "survivorship bias"
+            }
+          ],
+          "answer": 0,
+          "why": "multiple testing: The statistical fact that the chance of at least one false positive rises with the number of tests run on one dataset."
+        },
+        {
+          "id": "u2r-multiple testing-t",
+          "type": "truefalse",
+          "termId": "multiple testing",
+          "termIds": [
+            "multiple testing"
+          ],
+          "stem": "multiple testing means: Run many tests and false positives show up on schedule.",
+          "answer": true,
+          "why": "Correct — The statistical fact that the chance of at least one false positive rises with the number of tests run on one dataset."
+        },
+        {
+          "id": "u2r-match",
+          "type": "match",
+          "termIds": [
+            "overfitting",
+            "look-ahead bias",
+            "survivorship bias",
+            "data snooping",
+            "multiple testing"
+          ],
+          "pairs": [
+            {
+              "id": "overfitting",
+              "left": "overfitting",
+              "right": "Tuned until it fits the noise, not the signal."
+            },
+            {
+              "id": "look-ahead bias",
+              "left": "look-ahead bias",
+              "right": "Deciding with data that was not published yet."
+            },
+            {
+              "id": "survivorship bias",
+              "left": "survivorship bias",
+              "right": "Counting only what survived, ignoring what died."
+            },
+            {
+              "id": "data snooping",
+              "left": "data snooping",
+              "right": "Rummaging through one dataset until something looks significant."
+            },
+            {
+              "id": "multiple testing",
+              "left": "multiple testing",
+              "right": "Run many tests and false positives show up on schedule."
+            }
+          ],
+          "why": "Match each term to what it means."
+        }
+      ]
+    },
+    {
+      "id": "u3l1",
+      "unit": 3,
+      "title": "绩效怎么读",
+      "icon": "📈",
+      "review": false,
+      "prompts": [
+        {
+          "id": "u3l1-sharpe ratio-m",
+          "type": "meaning",
+          "termId": "sharpe ratio",
+          "termIds": [
+            "sharpe ratio"
+          ],
+          "stem": "What does sharpe ratio mean?",
+          "options": [
+            {
+              "text": "Excess return divided by return volatility — the reward per unit of risk taken.",
+              "art": "sharpe ratio"
+            },
+            {
+              "text": "The largest decline from a peak to the subsequent trough — the worst loss actually suffered.",
+              "art": "max drawdown"
+            },
+            {
+              "text": "The share of trades that were profitable.",
+              "art": "hit rate"
+            },
+            {
+              "text": "The expected profit or loss per trade: win rate times average win, minus loss rate times average loss.",
+              "art": "expectancy"
+            }
+          ],
+          "answer": 0,
+          "why": "Sharpe looks at average volatility (how smooth the ride was); max drawdown looks at the single worst fall. A high Sharpe can still hide a deep drawdown."
+        },
+        {
+          "id": "u3l1-sharpe ratio-s",
+          "type": "scenario",
+          "termId": "sharpe ratio",
+          "termIds": [
+            "sharpe ratio"
+          ],
+          "story": "In-sample the strategy produces a Sharpe ratio of 1.4.",
+          "stem": "Which term does this describe?",
+          "options": [
+            {
+              "text": "sharpe ratio",
+              "art": "sharpe ratio"
+            },
+            {
+              "text": "max drawdown",
+              "art": "max drawdown"
+            },
+            {
+              "text": "hit rate",
+              "art": "hit rate"
+            },
+            {
+              "text": "expectancy",
+              "art": "expectancy"
+            }
+          ],
+          "answer": 0,
+          "why": "sharpe ratio: Excess return divided by return volatility — the reward per unit of risk taken."
+        },
+        {
+          "id": "u3l1-sharpe ratio-t",
+          "type": "truefalse",
+          "termId": "sharpe ratio",
+          "termIds": [
+            "sharpe ratio"
+          ],
+          "stem": "sharpe ratio means: Return earned per unit of the bumpiness endured.",
+          "answer": true,
+          "why": "Correct — Excess return divided by return volatility — the reward per unit of risk taken."
+        },
+        {
+          "id": "u3l1-sharpe ratio-f",
+          "type": "fill",
+          "termId": "sharpe ratio",
+          "termIds": [
+            "sharpe ratio"
+          ],
+          "story": "In-sample the strategy produces a ____ of 1.4.",
+          "bank": [
+            "sharpe ratio",
+            "max drawdown",
+            "hit rate",
+            "expectancy"
+          ],
+          "answer": "sharpe ratio",
+          "why": "Sharpe looks at average volatility (how smooth the ride was); max drawdown looks at the single worst fall. A high Sharpe can still hide a deep drawdown."
+        },
+        {
+          "id": "u3l1-max drawdown-m",
+          "type": "meaning",
+          "termId": "max drawdown",
+          "termIds": [
+            "max drawdown"
+          ],
+          "stem": "What does max drawdown mean?",
+          "options": [
+            {
+              "text": "The largest decline from a peak to the subsequent trough — the worst loss actually suffered.",
+              "art": "max drawdown"
+            },
+            {
+              "text": "Excess return divided by return volatility — the reward per unit of risk taken.",
+              "art": "sharpe ratio"
+            },
+            {
+              "text": "The share of trades that were profitable.",
+              "art": "hit rate"
+            },
+            {
+              "text": "The expected profit or loss per trade: win rate times average win, minus loss rate times average loss.",
+              "art": "expectancy"
+            }
+          ],
+          "answer": 0,
+          "why": "Max drawdown is the deepest fall that actually happened; VaR is an estimated threshold from a distribution."
+        },
+        {
+          "id": "u3l1-max drawdown-s",
+          "type": "scenario",
+          "termId": "max drawdown",
+          "termIds": [
+            "max drawdown"
+          ],
+          "story": "The maximum drawdown widens to 31% out of sample.",
+          "stem": "Which term does this describe?",
+          "options": [
+            {
+              "text": "max drawdown",
+              "art": "max drawdown"
+            },
+            {
+              "text": "sharpe ratio",
+              "art": "sharpe ratio"
+            },
+            {
+              "text": "hit rate",
+              "art": "hit rate"
+            },
+            {
+              "text": "expectancy",
+              "art": "expectancy"
+            }
+          ],
+          "answer": 0,
+          "why": "max drawdown: The largest decline from a peak to the subsequent trough — the worst loss actually suffered."
+        },
+        {
+          "id": "u3l1-max drawdown-t",
+          "type": "truefalse",
+          "termId": "max drawdown",
+          "termIds": [
+            "max drawdown"
+          ],
+          "stem": "max drawdown means: Return earned per unit of the bumpiness endured.",
+          "answer": false,
+          "why": "max drawdown means The largest decline from a peak to the subsequent trough — the worst loss actually suffered., not Excess return divided by return volatility — the reward per unit of risk taken.."
+        },
+        {
+          "id": "u3l1-max drawdown-f",
+          "type": "fill",
+          "termId": "max drawdown",
+          "termIds": [
+            "max drawdown"
+          ],
+          "story": "The maximum drawdown widens to 31% out of sample. (the word here is ____)",
+          "bank": [
+            "max drawdown",
+            "sharpe ratio",
+            "hit rate",
+            "expectancy"
+          ],
+          "answer": "max drawdown",
+          "why": "Max drawdown is the deepest fall that actually happened; VaR is an estimated threshold from a distribution."
+        },
+        {
+          "id": "u3l1-hit rate-m",
+          "type": "meaning",
+          "termId": "hit rate",
+          "termIds": [
+            "hit rate"
+          ],
+          "stem": "What does hit rate mean?",
+          "options": [
+            {
+              "text": "The share of trades that were profitable.",
+              "art": "hit rate"
+            },
+            {
+              "text": "Excess return divided by return volatility — the reward per unit of risk taken.",
+              "art": "sharpe ratio"
+            },
+            {
+              "text": "The largest decline from a peak to the subsequent trough — the worst loss actually suffered.",
+              "art": "max drawdown"
+            },
+            {
+              "text": "The expected profit or loss per trade: win rate times average win, minus loss rate times average loss.",
+              "art": "expectancy"
+            }
+          ],
+          "answer": 0,
+          "why": "Hit rate counts trades; expectancy weighs how much each win and loss was worth. A high hit rate with negative expectancy is common."
+        },
+        {
+          "id": "u3l1-hit rate-s",
+          "type": "scenario",
+          "termId": "hit rate",
+          "termIds": [
+            "hit rate"
+          ],
+          "story": "The hit rate is 54%.",
+          "stem": "Which term does this describe?",
+          "options": [
+            {
+              "text": "hit rate",
+              "art": "hit rate"
+            },
+            {
+              "text": "sharpe ratio",
+              "art": "sharpe ratio"
+            },
+            {
+              "text": "max drawdown",
+              "art": "max drawdown"
+            },
+            {
+              "text": "expectancy",
+              "art": "expectancy"
+            }
+          ],
+          "answer": 0,
+          "why": "hit rate: The share of trades that were profitable."
+        },
+        {
+          "id": "u3l1-hit rate-t",
+          "type": "truefalse",
+          "termId": "hit rate",
+          "termIds": [
+            "hit rate"
+          ],
+          "stem": "hit rate means: How many trades made money, as a share of all trades.",
+          "answer": true,
+          "why": "Correct — The share of trades that were profitable."
+        },
+        {
+          "id": "u3l1-hit rate-f",
+          "type": "fill",
+          "termId": "hit rate",
+          "termIds": [
+            "hit rate"
+          ],
+          "story": "The ____ is 54%.",
+          "bank": [
+            "hit rate",
+            "sharpe ratio",
+            "max drawdown",
+            "expectancy"
+          ],
+          "answer": "hit rate",
+          "why": "Hit rate counts trades; expectancy weighs how much each win and loss was worth. A high hit rate with negative expectancy is common."
+        },
+        {
+          "id": "u3l1-expectancy-m",
+          "type": "meaning",
+          "termId": "expectancy",
+          "termIds": [
+            "expectancy"
+          ],
+          "stem": "What does expectancy mean?",
+          "options": [
+            {
+              "text": "The expected profit or loss per trade: win rate times average win, minus loss rate times average loss.",
+              "art": "expectancy"
+            },
+            {
+              "text": "Excess return divided by return volatility — the reward per unit of risk taken.",
+              "art": "sharpe ratio"
+            },
+            {
+              "text": "The largest decline from a peak to the subsequent trough — the worst loss actually suffered.",
+              "art": "max drawdown"
+            },
+            {
+              "text": "The share of trades that were profitable.",
+              "art": "hit rate"
+            }
+          ],
+          "answer": 0,
+          "why": "Expectancy is weighted by size; hit rate only counts frequency."
+        },
+        {
+          "id": "u3l1-expectancy-s",
+          "type": "scenario",
+          "termId": "expectancy",
+          "termIds": [
+            "expectancy"
+          ],
+          "story": "The expectancy per trade is 0.6%.",
+          "stem": "Which term does this describe?",
+          "options": [
+            {
+              "text": "expectancy",
+              "art": "expectancy"
+            },
+            {
+              "text": "sharpe ratio",
+              "art": "sharpe ratio"
+            },
+            {
+              "text": "max drawdown",
+              "art": "max drawdown"
+            },
+            {
+              "text": "hit rate",
+              "art": "hit rate"
+            }
+          ],
+          "answer": 0,
+          "why": "expectancy: The expected profit or loss per trade: win rate times average win, minus loss rate times average loss."
+        },
+        {
+          "id": "u3l1-expectancy-t",
+          "type": "truefalse",
+          "termId": "expectancy",
+          "termIds": [
+            "expectancy"
+          ],
+          "stem": "expectancy means: Return earned per unit of the bumpiness endured.",
+          "answer": false,
+          "why": "expectancy means The expected profit or loss per trade: win rate times average win, minus loss rate times average loss., not Excess return divided by return volatility — the reward per unit of risk taken.."
+        },
+        {
+          "id": "u3l1-expectancy-f",
+          "type": "fill",
+          "termId": "expectancy",
+          "termIds": [
+            "expectancy"
+          ],
+          "story": "The ____ per trade is 0.6%.",
+          "bank": [
+            "expectancy",
+            "sharpe ratio",
+            "max drawdown",
+            "hit rate"
+          ],
+          "answer": "expectancy",
+          "why": "Expectancy is weighted by size; hit rate only counts frequency."
+        },
+        {
+          "id": "u3l1-match",
+          "type": "match",
+          "termIds": [
+            "sharpe ratio",
+            "max drawdown",
+            "hit rate",
+            "expectancy"
+          ],
+          "pairs": [
+            {
+              "id": "sharpe ratio",
+              "left": "sharpe ratio",
+              "right": "Return earned per unit of the bumpiness endured."
+            },
+            {
+              "id": "max drawdown",
+              "left": "max drawdown",
+              "right": "The deepest fall from a peak."
+            },
+            {
+              "id": "hit rate",
+              "left": "hit rate",
+              "right": "How many trades made money, as a share of all trades."
+            },
+            {
+              "id": "expectancy",
+              "left": "expectancy",
+              "right": "What an average trade is worth."
+            }
+          ],
+          "why": "Match each term to what it means."
+        }
+      ]
+    },
+    {
+      "id": "u3l2",
+      "unit": 3,
+      "title": "绩效怎么读（续）",
+      "icon": "📈",
+      "review": false,
+      "prompts": [
+        {
+          "id": "u3l2-alpha-m",
+          "type": "meaning",
+          "termId": "alpha",
+          "termIds": [
+            "alpha"
+          ],
+          "stem": "What does alpha mean?",
+          "options": [
+            {
+              "text": "Risk-adjusted excess return over a benchmark — the strategy's own contribution.",
+              "art": "alpha"
+            },
+            {
+              "text": "Excess return divided by return volatility — the reward per unit of risk taken.",
+              "art": "sharpe ratio"
+            },
+            {
+              "text": "The largest decline from a peak to the subsequent trough — the worst loss actually suffered.",
+              "art": "max drawdown"
+            },
+            {
+              "text": "The share of trades that were profitable.",
+              "art": "hit rate"
+            }
+          ],
+          "answer": 0,
+          "why": "Alpha is the excess over the benchmark (skill); beta is how much of the market you carry (exposure)."
+        },
+        {
+          "id": "u3l2-alpha-s",
+          "type": "scenario",
+          "termId": "alpha",
+          "termIds": [
+            "alpha"
+          ],
+          "story": "Alpha against the benchmark is 4.2% a year.",
+          "stem": "Which term does this describe?",
+          "options": [
+            {
+              "text": "alpha",
+              "art": "alpha"
+            },
+            {
+              "text": "sharpe ratio",
+              "art": "sharpe ratio"
+            },
+            {
+              "text": "max drawdown",
+              "art": "max drawdown"
+            },
+            {
+              "text": "hit rate",
+              "art": "hit rate"
+            }
+          ],
+          "answer": 0,
+          "why": "alpha: Risk-adjusted excess return over a benchmark — the strategy's own contribution."
+        },
+        {
+          "id": "u3l2-alpha-t",
+          "type": "truefalse",
+          "termId": "alpha",
+          "termIds": [
+            "alpha"
+          ],
+          "stem": "alpha means: The part left over after the market's contribution is removed.",
+          "answer": true,
+          "why": "Correct — Risk-adjusted excess return over a benchmark — the strategy's own contribution."
+        },
+        {
+          "id": "u3l2-alpha-f",
+          "type": "fill",
+          "termId": "alpha",
+          "termIds": [
+            "alpha"
+          ],
+          "story": "____ against the benchmark is 4.2% a year.",
+          "bank": [
+            "alpha",
+            "beta",
+            "tracking error"
+          ],
+          "answer": "alpha",
+          "why": "Alpha is the excess over the benchmark (skill); beta is how much of the market you carry (exposure)."
+        },
+        {
+          "id": "u3l2-beta-m",
+          "type": "meaning",
+          "termId": "beta",
+          "termIds": [
+            "beta"
+          ],
+          "stem": "What does beta mean?",
+          "options": [
+            {
+              "text": "An asset's systematic exposure to the market, measuring sensitivity to market moves.",
+              "art": "beta"
+            },
+            {
+              "text": "Excess return divided by return volatility — the reward per unit of risk taken.",
+              "art": "sharpe ratio"
+            },
+            {
+              "text": "The largest decline from a peak to the subsequent trough — the worst loss actually suffered.",
+              "art": "max drawdown"
+            },
+            {
+              "text": "The share of trades that were profitable.",
+              "art": "hit rate"
+            }
+          ],
+          "answer": 0,
+          "why": "Beta is exposure (how much you ride the market); alpha is what is left after that exposure is accounted for."
+        },
+        {
+          "id": "u3l2-beta-s",
+          "type": "scenario",
+          "termId": "beta",
+          "termIds": [
+            "beta"
+          ],
+          "story": "With a beta of 0.35, most of the return is not explained by market exposure.",
+          "stem": "Which term does this describe?",
+          "options": [
+            {
+              "text": "beta",
+              "art": "beta"
+            },
+            {
+              "text": "sharpe ratio",
+              "art": "sharpe ratio"
+            },
+            {
+              "text": "max drawdown",
+              "art": "max drawdown"
+            },
+            {
+              "text": "hit rate",
+              "art": "hit rate"
+            }
+          ],
+          "answer": 0,
+          "why": "beta: An asset's systematic exposure to the market, measuring sensitivity to market moves."
+        },
+        {
+          "id": "u3l2-beta-t",
+          "type": "truefalse",
+          "termId": "beta",
+          "termIds": [
+            "beta"
+          ],
+          "stem": "beta means: Return earned per unit of the bumpiness endured.",
+          "answer": false,
+          "why": "beta means An asset's systematic exposure to the market, measuring sensitivity to market moves., not Excess return divided by return volatility — the reward per unit of risk taken.."
+        },
+        {
+          "id": "u3l2-beta-f",
+          "type": "fill",
+          "termId": "beta",
+          "termIds": [
+            "beta"
+          ],
+          "story": "With a ____ of 0.35, most of the return is not explained by market exposure.",
+          "bank": [
+            "beta",
+            "alpha",
+            "tracking error"
+          ],
+          "answer": "beta",
+          "why": "Beta is exposure (how much you ride the market); alpha is what is left after that exposure is accounted for."
+        },
+        {
+          "id": "u3l2-tracking error-m",
+          "type": "meaning",
+          "termId": "tracking error",
+          "termIds": [
+            "tracking error"
+          ],
+          "stem": "What does tracking error mean?",
+          "options": [
+            {
+              "text": "The volatility of the difference between portfolio and benchmark returns — how much you deviate.",
+              "art": "tracking error"
+            },
+            {
+              "text": "Excess return divided by return volatility — the reward per unit of risk taken.",
+              "art": "sharpe ratio"
+            },
+            {
+              "text": "The largest decline from a peak to the subsequent trough — the worst loss actually suffered.",
+              "art": "max drawdown"
+            },
+            {
+              "text": "The share of trades that were profitable.",
+              "art": "hit rate"
+            }
+          ],
+          "answer": 0,
+          "why": "Tracking error measures deviation regardless of direction; alpha measures the directional part you keep."
+        },
+        {
+          "id": "u3l2-tracking error-s",
+          "type": "scenario",
+          "termId": "tracking error",
+          "termIds": [
+            "tracking error"
+          ],
+          "story": "Tracking error against the benchmark is 6.5% a year.",
+          "stem": "Which term does this describe?",
+          "options": [
+            {
+              "text": "tracking error",
+              "art": "tracking error"
+            },
+            {
+              "text": "sharpe ratio",
+              "art": "sharpe ratio"
+            },
+            {
+              "text": "max drawdown",
+              "art": "max drawdown"
+            },
+            {
+              "text": "hit rate",
+              "art": "hit rate"
+            }
+          ],
+          "answer": 0,
+          "why": "tracking error: The volatility of the difference between portfolio and benchmark returns — how much you deviate."
+        },
+        {
+          "id": "u3l2-tracking error-t",
+          "type": "truefalse",
+          "termId": "tracking error",
+          "termIds": [
+            "tracking error"
+          ],
+          "stem": "tracking error means: How far your return drifts from the benchmark's.",
+          "answer": true,
+          "why": "Correct — The volatility of the difference between portfolio and benchmark returns — how much you deviate."
+        },
+        {
+          "id": "u3l2-tracking error-f",
+          "type": "fill",
+          "termId": "tracking error",
+          "termIds": [
+            "tracking error"
+          ],
+          "story": "____ against the benchmark is 6.5% a year.",
+          "bank": [
+            "tracking error",
+            "alpha",
+            "beta"
+          ],
+          "answer": "tracking error",
+          "why": "Tracking error measures deviation regardless of direction; alpha measures the directional part you keep."
+        },
+        {
+          "id": "u3l2-match",
+          "type": "match",
+          "termIds": [
+            "alpha",
+            "beta",
+            "tracking error"
+          ],
+          "pairs": [
+            {
+              "id": "alpha",
+              "left": "alpha",
+              "right": "The part left over after the market's contribution is removed."
+            },
+            {
+              "id": "beta",
+              "left": "beta",
+              "right": "How much you move when the market moves one percent."
+            },
+            {
+              "id": "tracking error",
+              "left": "tracking error",
+              "right": "How far your return drifts from the benchmark's."
+            }
+          ],
+          "why": "Match each term to what it means."
+        }
+      ]
+    },
+    {
+      "id": "u3r",
+      "unit": 3,
+      "title": "绩效怎么读 · 回顾",
+      "icon": "🏆",
+      "review": true,
+      "prompts": [
+        {
+          "id": "u3r-sharpe ratio-s",
+          "type": "scenario",
+          "termId": "sharpe ratio",
+          "termIds": [
+            "sharpe ratio"
+          ],
+          "story": "In-sample the strategy produces a Sharpe ratio of 1.4.",
+          "stem": "Which term does this describe?",
+          "options": [
+            {
+              "text": "sharpe ratio",
+              "art": "sharpe ratio"
+            },
+            {
+              "text": "max drawdown",
+              "art": "max drawdown"
+            },
+            {
+              "text": "hit rate",
+              "art": "hit rate"
+            },
+            {
+              "text": "expectancy",
+              "art": "expectancy"
+            }
+          ],
+          "answer": 0,
+          "why": "sharpe ratio: Excess return divided by return volatility — the reward per unit of risk taken."
+        },
+        {
+          "id": "u3r-sharpe ratio-t",
+          "type": "truefalse",
+          "termId": "sharpe ratio",
+          "termIds": [
+            "sharpe ratio"
+          ],
+          "stem": "sharpe ratio means: Return earned per unit of the bumpiness endured.",
+          "answer": true,
+          "why": "Correct — Excess return divided by return volatility — the reward per unit of risk taken."
+        },
+        {
+          "id": "u3r-max drawdown-s",
+          "type": "scenario",
+          "termId": "max drawdown",
+          "termIds": [
+            "max drawdown"
+          ],
+          "story": "The maximum drawdown widens to 31% out of sample.",
+          "stem": "Which term does this describe?",
+          "options": [
+            {
+              "text": "max drawdown",
+              "art": "max drawdown"
+            },
+            {
+              "text": "sharpe ratio",
+              "art": "sharpe ratio"
+            },
+            {
+              "text": "hit rate",
+              "art": "hit rate"
+            },
+            {
+              "text": "expectancy",
+              "art": "expectancy"
+            }
+          ],
+          "answer": 0,
+          "why": "max drawdown: The largest decline from a peak to the subsequent trough — the worst loss actually suffered."
+        },
+        {
+          "id": "u3r-max drawdown-t",
+          "type": "truefalse",
+          "termId": "max drawdown",
+          "termIds": [
+            "max drawdown"
+          ],
+          "stem": "max drawdown means: Return earned per unit of the bumpiness endured.",
+          "answer": false,
+          "why": "max drawdown means The largest decline from a peak to the subsequent trough — the worst loss actually suffered., not Excess return divided by return volatility — the reward per unit of risk taken.."
+        },
+        {
+          "id": "u3r-hit rate-s",
+          "type": "scenario",
+          "termId": "hit rate",
+          "termIds": [
+            "hit rate"
+          ],
+          "story": "The hit rate is 54%.",
+          "stem": "Which term does this describe?",
+          "options": [
+            {
+              "text": "hit rate",
+              "art": "hit rate"
+            },
+            {
+              "text": "sharpe ratio",
+              "art": "sharpe ratio"
+            },
+            {
+              "text": "max drawdown",
+              "art": "max drawdown"
+            },
+            {
+              "text": "expectancy",
+              "art": "expectancy"
+            }
+          ],
+          "answer": 0,
+          "why": "hit rate: The share of trades that were profitable."
+        },
+        {
+          "id": "u3r-hit rate-t",
+          "type": "truefalse",
+          "termId": "hit rate",
+          "termIds": [
+            "hit rate"
+          ],
+          "stem": "hit rate means: How many trades made money, as a share of all trades.",
+          "answer": true,
+          "why": "Correct — The share of trades that were profitable."
+        },
+        {
+          "id": "u3r-expectancy-s",
+          "type": "scenario",
+          "termId": "expectancy",
+          "termIds": [
+            "expectancy"
+          ],
+          "story": "The expectancy per trade is 0.6%.",
+          "stem": "Which term does this describe?",
+          "options": [
+            {
+              "text": "expectancy",
+              "art": "expectancy"
+            },
+            {
+              "text": "sharpe ratio",
+              "art": "sharpe ratio"
+            },
+            {
+              "text": "max drawdown",
+              "art": "max drawdown"
+            },
+            {
+              "text": "hit rate",
+              "art": "hit rate"
+            }
+          ],
+          "answer": 0,
+          "why": "expectancy: The expected profit or loss per trade: win rate times average win, minus loss rate times average loss."
+        },
+        {
+          "id": "u3r-expectancy-t",
+          "type": "truefalse",
+          "termId": "expectancy",
+          "termIds": [
+            "expectancy"
+          ],
+          "stem": "expectancy means: Return earned per unit of the bumpiness endured.",
+          "answer": false,
+          "why": "expectancy means The expected profit or loss per trade: win rate times average win, minus loss rate times average loss., not Excess return divided by return volatility — the reward per unit of risk taken.."
+        },
+        {
+          "id": "u3r-alpha-s",
+          "type": "scenario",
+          "termId": "alpha",
+          "termIds": [
+            "alpha"
+          ],
+          "story": "Alpha against the benchmark is 4.2% a year.",
+          "stem": "Which term does this describe?",
+          "options": [
+            {
+              "text": "alpha",
+              "art": "alpha"
+            },
+            {
+              "text": "sharpe ratio",
+              "art": "sharpe ratio"
+            },
+            {
+              "text": "max drawdown",
+              "art": "max drawdown"
+            },
+            {
+              "text": "hit rate",
+              "art": "hit rate"
+            }
+          ],
+          "answer": 0,
+          "why": "alpha: Risk-adjusted excess return over a benchmark — the strategy's own contribution."
+        },
+        {
+          "id": "u3r-alpha-t",
+          "type": "truefalse",
+          "termId": "alpha",
+          "termIds": [
+            "alpha"
+          ],
+          "stem": "alpha means: The part left over after the market's contribution is removed.",
+          "answer": true,
+          "why": "Correct — Risk-adjusted excess return over a benchmark — the strategy's own contribution."
+        },
+        {
+          "id": "u3r-beta-s",
+          "type": "scenario",
+          "termId": "beta",
+          "termIds": [
+            "beta"
+          ],
+          "story": "With a beta of 0.35, most of the return is not explained by market exposure.",
+          "stem": "Which term does this describe?",
+          "options": [
+            {
+              "text": "beta",
+              "art": "beta"
+            },
+            {
+              "text": "sharpe ratio",
+              "art": "sharpe ratio"
+            },
+            {
+              "text": "max drawdown",
+              "art": "max drawdown"
+            },
+            {
+              "text": "hit rate",
+              "art": "hit rate"
+            }
+          ],
+          "answer": 0,
+          "why": "beta: An asset's systematic exposure to the market, measuring sensitivity to market moves."
+        },
+        {
+          "id": "u3r-beta-t",
+          "type": "truefalse",
+          "termId": "beta",
+          "termIds": [
+            "beta"
+          ],
+          "stem": "beta means: Return earned per unit of the bumpiness endured.",
+          "answer": false,
+          "why": "beta means An asset's systematic exposure to the market, measuring sensitivity to market moves., not Excess return divided by return volatility — the reward per unit of risk taken.."
+        },
+        {
+          "id": "u3r-tracking error-s",
+          "type": "scenario",
+          "termId": "tracking error",
+          "termIds": [
+            "tracking error"
+          ],
+          "story": "Tracking error against the benchmark is 6.5% a year.",
+          "stem": "Which term does this describe?",
+          "options": [
+            {
+              "text": "tracking error",
+              "art": "tracking error"
+            },
+            {
+              "text": "sharpe ratio",
+              "art": "sharpe ratio"
+            },
+            {
+              "text": "max drawdown",
+              "art": "max drawdown"
+            },
+            {
+              "text": "hit rate",
+              "art": "hit rate"
+            }
+          ],
+          "answer": 0,
+          "why": "tracking error: The volatility of the difference between portfolio and benchmark returns — how much you deviate."
+        },
+        {
+          "id": "u3r-tracking error-t",
+          "type": "truefalse",
+          "termId": "tracking error",
+          "termIds": [
+            "tracking error"
+          ],
+          "stem": "tracking error means: How far your return drifts from the benchmark's.",
+          "answer": true,
+          "why": "Correct — The volatility of the difference between portfolio and benchmark returns — how much you deviate."
+        },
+        {
+          "id": "u3r-match",
+          "type": "match",
+          "termIds": [
+            "sharpe ratio",
+            "max drawdown",
+            "hit rate",
+            "expectancy",
+            "alpha",
+            "beta",
+            "tracking error"
+          ],
+          "pairs": [
+            {
+              "id": "sharpe ratio",
+              "left": "sharpe ratio",
+              "right": "Return earned per unit of the bumpiness endured."
+            },
+            {
+              "id": "max drawdown",
+              "left": "max drawdown",
+              "right": "The deepest fall from a peak."
+            },
+            {
+              "id": "hit rate",
+              "left": "hit rate",
+              "right": "How many trades made money, as a share of all trades."
+            },
+            {
+              "id": "expectancy",
+              "left": "expectancy",
+              "right": "What an average trade is worth."
+            },
+            {
+              "id": "alpha",
+              "left": "alpha",
+              "right": "The part left over after the market's contribution is removed."
+            },
+            {
+              "id": "beta",
+              "left": "beta",
+              "right": "How much you move when the market moves one percent."
+            },
+            {
+              "id": "tracking error",
+              "left": "tracking error",
+              "right": "How far your return drifts from the benchmark's."
+            }
+          ],
+          "why": "Match each term to what it means."
+        }
+      ]
+    },
+    {
+      "id": "u4l1",
+      "unit": 4,
+      "title": "组合怎么搭",
+      "icon": "📈",
+      "review": false,
+      "prompts": [
+        {
+          "id": "u4l1-universe-m",
+          "type": "meaning",
+          "termId": "universe",
+          "termIds": [
+            "universe"
+          ],
+          "stem": "What does universe mean?",
+          "options": [
+            {
+              "text": "The collection of assets a strategy may invest in, which sets its boundaries and bias risk.",
+              "art": "universe"
+            },
+            {
+              "text": "Adjusting holdings back to target weights on a schedule or rule.",
+              "art": "rebalance"
+            },
+            {
+              "text": "Deciding how much capital each trade or holding receives — the direct driver of risk exposure.",
+              "art": "position sizing"
+            },
+            {
+              "text": "Trading volume relative to portfolio size over a period — the direct driver of transaction cost.",
+              "art": "turnover"
+            }
+          ],
+          "answer": 0,
+          "why": "The universe is where you pick from; the benchmark is what you are compared to."
+        },
+        {
+          "id": "u4l1-universe-s",
+          "type": "scenario",
+          "termId": "universe",
+          "termIds": [
+            "universe"
+          ],
+          "story": "We backtest on a universe of the ten largest energy futures.",
+          "stem": "Which term does this describe?",
+          "options": [
+            {
+              "text": "universe",
+              "art": "universe"
+            },
+            {
+              "text": "rebalance",
+              "art": "rebalance"
+            },
+            {
+              "text": "position sizing",
+              "art": "position sizing"
+            },
+            {
+              "text": "turnover",
+              "art": "turnover"
+            }
+          ],
+          "answer": 0,
+          "why": "universe: The collection of assets a strategy may invest in, which sets its boundaries and bias risk."
+        },
+        {
+          "id": "u4l1-universe-t",
+          "type": "truefalse",
+          "termId": "universe",
+          "termIds": [
+            "universe"
+          ],
+          "stem": "universe means: The set you are allowed to pick from.",
+          "answer": true,
+          "why": "Correct — The collection of assets a strategy may invest in, which sets its boundaries and bias risk."
+        },
+        {
+          "id": "u4l1-universe-f",
+          "type": "fill",
+          "termId": "universe",
+          "termIds": [
+            "universe"
+          ],
+          "story": "We backtest on a ____ of the ten largest energy futures.",
+          "bank": [
+            "universe",
+            "rebalance",
+            "position sizing"
+          ],
+          "answer": "universe",
+          "why": "The universe is where you pick from; the benchmark is what you are compared to."
+        },
+        {
+          "id": "u4l1-rebalance-m",
+          "type": "meaning",
+          "termId": "rebalance",
+          "termIds": [
+            "rebalance"
+          ],
+          "stem": "What does rebalance mean?",
+          "options": [
+            {
+              "text": "Adjusting holdings back to target weights on a schedule or rule.",
+              "art": "rebalance"
+            },
+            {
+              "text": "The collection of assets a strategy may invest in, which sets its boundaries and bias risk.",
+              "art": "universe"
+            },
+            {
+              "text": "Deciding how much capital each trade or holding receives — the direct driver of risk exposure.",
+              "art": "position sizing"
+            },
+            {
+              "text": "Trading volume relative to portfolio size over a period — the direct driver of transaction cost.",
+              "art": "turnover"
+            }
+          ],
+          "answer": 0,
+          "why": "Rebalancing is the act of restoring weights; turnover is how much trading that act required."
+        },
+        {
+          "id": "u4l1-rebalance-s",
+          "type": "scenario",
+          "termId": "rebalance",
+          "termIds": [
+            "rebalance"
+          ],
+          "story": "We rebalance monthly at 12% one-way turnover.",
+          "stem": "Which term does this describe?",
+          "options": [
+            {
+              "text": "rebalance",
+              "art": "rebalance"
+            },
+            {
+              "text": "universe",
+              "art": "universe"
+            },
+            {
+              "text": "position sizing",
+              "art": "position sizing"
+            },
+            {
+              "text": "turnover",
+              "art": "turnover"
+            }
+          ],
+          "answer": 0,
+          "why": "rebalance: Adjusting holdings back to target weights on a schedule or rule."
+        },
+        {
+          "id": "u4l1-rebalance-t",
+          "type": "truefalse",
+          "termId": "rebalance",
+          "termIds": [
+            "rebalance"
+          ],
+          "stem": "rebalance means: The set you are allowed to pick from.",
+          "answer": false,
+          "why": "rebalance means Adjusting holdings back to target weights on a schedule or rule., not The collection of assets a strategy may invest in, which sets its boundaries and bias risk.."
+        },
+        {
+          "id": "u4l1-rebalance-f",
+          "type": "fill",
+          "termId": "rebalance",
+          "termIds": [
+            "rebalance"
+          ],
+          "story": "We ____ monthly at 12% one-way turnover.",
+          "bank": [
+            "rebalance",
+            "universe",
+            "position sizing"
+          ],
+          "answer": "rebalance",
+          "why": "Rebalancing is the act of restoring weights; turnover is how much trading that act required."
+        },
+        {
+          "id": "u4l1-position sizing-m",
+          "type": "meaning",
+          "termId": "position sizing",
+          "termIds": [
+            "position sizing"
+          ],
+          "stem": "What does position sizing mean?",
+          "options": [
+            {
+              "text": "Deciding how much capital each trade or holding receives — the direct driver of risk exposure.",
+              "art": "position sizing"
+            },
+            {
+              "text": "The collection of assets a strategy may invest in, which sets its boundaries and bias risk.",
+              "art": "universe"
+            },
+            {
+              "text": "Adjusting holdings back to target weights on a schedule or rule.",
+              "art": "rebalance"
+            },
+            {
+              "text": "Trading volume relative to portfolio size over a period — the direct driver of transaction cost.",
+              "art": "turnover"
+            }
+          ],
+          "answer": 0,
+          "why": "Position sizing is the decision of how much to put on; exposure is what you actually ended up carrying. Sizing at 10% can still expose you to more or less than 10% depending on volatility."
+        },
+        {
+          "id": "u4l1-position sizing-s",
+          "type": "scenario",
+          "termId": "position sizing",
+          "termIds": [
+            "position sizing"
+          ],
+          "story": "Position sizing is capped well below the notional the backtest implies.",
+          "stem": "Which term does this describe?",
+          "options": [
+            {
+              "text": "position sizing",
+              "art": "position sizing"
+            },
+            {
+              "text": "universe",
+              "art": "universe"
+            },
+            {
+              "text": "rebalance",
+              "art": "rebalance"
+            },
+            {
+              "text": "turnover",
+              "art": "turnover"
+            }
+          ],
+          "answer": 0,
+          "why": "position sizing: Deciding how much capital each trade or holding receives — the direct driver of risk exposure."
+        },
+        {
+          "id": "u4l1-position sizing-t",
+          "type": "truefalse",
+          "termId": "position sizing",
+          "termIds": [
+            "position sizing"
+          ],
+          "stem": "position sizing means: How much money each position gets.",
+          "answer": true,
+          "why": "Correct — Deciding how much capital each trade or holding receives — the direct driver of risk exposure."
+        },
+        {
+          "id": "u4l1-position sizing-f",
+          "type": "fill",
+          "termId": "position sizing",
+          "termIds": [
+            "position sizing"
+          ],
+          "story": "____ is capped well below the notional the backtest implies.",
+          "bank": [
+            "position sizing",
+            "universe",
+            "rebalance"
+          ],
+          "answer": "position sizing",
+          "why": "Position sizing is the decision of how much to put on; exposure is what you actually ended up carrying. Sizing at 10% can still expose you to more or less than 10% depending on volatility."
+        },
+        {
+          "id": "u4l1-match",
+          "type": "match",
+          "termIds": [
+            "universe",
+            "rebalance",
+            "position sizing"
+          ],
+          "pairs": [
+            {
+              "id": "universe",
+              "left": "universe",
+              "right": "The set you are allowed to pick from."
+            },
+            {
+              "id": "rebalance",
+              "left": "rebalance",
+              "right": "Drag the holdings back to their target weights."
+            },
+            {
+              "id": "position sizing",
+              "left": "position sizing",
+              "right": "How much money each position gets."
+            }
+          ],
+          "why": "Match each term to what it means."
+        }
+      ]
+    },
+    {
+      "id": "u4l2",
+      "unit": 4,
+      "title": "组合怎么搭（续）",
+      "icon": "📈",
+      "review": false,
+      "prompts": [
+        {
+          "id": "u4l2-turnover-m",
+          "type": "meaning",
+          "termId": "turnover",
+          "termIds": [
+            "turnover"
+          ],
+          "stem": "What does turnover mean?",
+          "options": [
+            {
+              "text": "Trading volume relative to portfolio size over a period — the direct driver of transaction cost.",
+              "art": "turnover"
+            },
+            {
+              "text": "The collection of assets a strategy may invest in, which sets its boundaries and bias risk.",
+              "art": "universe"
+            },
+            {
+              "text": "Adjusting holdings back to target weights on a schedule or rule.",
+              "art": "rebalance"
+            },
+            {
+              "text": "Deciding how much capital each trade or holding receives — the direct driver of risk exposure.",
+              "art": "position sizing"
+            }
+          ],
+          "answer": 0,
+          "why": "Turnover is how much is traded; transaction cost is what that trading costs."
+        },
+        {
+          "id": "u4l2-turnover-s",
+          "type": "scenario",
+          "termId": "turnover",
+          "termIds": [
+            "turnover"
+          ],
+          "story": "At 12% one-way turnover, costs reach about 1.3% a year.",
+          "stem": "Which term does this describe?",
+          "options": [
+            {
+              "text": "turnover",
+              "art": "turnover"
+            },
+            {
+              "text": "universe",
+              "art": "universe"
+            },
+            {
+              "text": "rebalance",
+              "art": "rebalance"
+            },
+            {
+              "text": "position sizing",
+              "art": "position sizing"
+            }
+          ],
+          "answer": 0,
+          "why": "turnover: Trading volume relative to portfolio size over a period — the direct driver of transaction cost."
+        },
+        {
+          "id": "u4l2-turnover-t",
+          "type": "truefalse",
+          "termId": "turnover",
+          "termIds": [
+            "turnover"
+          ],
+          "stem": "turnover means: How much of the portfolio gets replaced.",
+          "answer": true,
+          "why": "Correct — Trading volume relative to portfolio size over a period — the direct driver of transaction cost."
+        },
+        {
+          "id": "u4l2-turnover-f",
+          "type": "fill",
+          "termId": "turnover",
+          "termIds": [
+            "turnover"
+          ],
+          "story": "At 12% one-way ____, costs reach about 1.3% a year.",
+          "bank": [
+            "turnover",
+            "correlation",
+            "exposure"
+          ],
+          "answer": "turnover",
+          "why": "Turnover is how much is traded; transaction cost is what that trading costs."
+        },
+        {
+          "id": "u4l2-correlation-m",
+          "type": "meaning",
+          "termId": "correlation",
+          "termIds": [
+            "correlation"
+          ],
+          "stem": "What does correlation mean?",
+          "options": [
+            {
+              "text": "The statistical association between two assets' returns, from -1 to 1.",
+              "art": "correlation"
+            },
+            {
+              "text": "The collection of assets a strategy may invest in, which sets its boundaries and bias risk.",
+              "art": "universe"
+            },
+            {
+              "text": "Adjusting holdings back to target weights on a schedule or rule.",
+              "art": "rebalance"
+            },
+            {
+              "text": "Deciding how much capital each trade or holding receives — the direct driver of risk exposure.",
+              "art": "position sizing"
+            }
+          ],
+          "answer": 0,
+          "why": "Correlation is how much two assets move together; exposure is how much risk you carry in one."
+        },
+        {
+          "id": "u4l2-correlation-s",
+          "type": "scenario",
+          "termId": "correlation",
+          "termIds": [
+            "correlation"
+          ],
+          "story": "Correlation across the ten contracts is high, around 0.7.",
+          "stem": "Which term does this describe?",
+          "options": [
+            {
+              "text": "correlation",
+              "art": "correlation"
+            },
+            {
+              "text": "universe",
+              "art": "universe"
+            },
+            {
+              "text": "rebalance",
+              "art": "rebalance"
+            },
+            {
+              "text": "position sizing",
+              "art": "position sizing"
+            }
+          ],
+          "answer": 0,
+          "why": "correlation: The statistical association between two assets' returns, from -1 to 1."
+        },
+        {
+          "id": "u4l2-correlation-t",
+          "type": "truefalse",
+          "termId": "correlation",
+          "termIds": [
+            "correlation"
+          ],
+          "stem": "correlation means: The set you are allowed to pick from.",
+          "answer": false,
+          "why": "correlation means The statistical association between two assets' returns, from -1 to 1., not The collection of assets a strategy may invest in, which sets its boundaries and bias risk.."
+        },
+        {
+          "id": "u4l2-correlation-f",
+          "type": "fill",
+          "termId": "correlation",
+          "termIds": [
+            "correlation"
+          ],
+          "story": "____ across the ten contracts is high, around 0.7.",
+          "bank": [
+            "correlation",
+            "turnover",
+            "exposure"
+          ],
+          "answer": "correlation",
+          "why": "Correlation is how much two assets move together; exposure is how much risk you carry in one."
+        },
+        {
+          "id": "u4l2-exposure-m",
+          "type": "meaning",
+          "termId": "exposure",
+          "termIds": [
+            "exposure"
+          ],
+          "stem": "What does exposure mean?",
+          "options": [
+            {
+              "text": "The degree to which a portfolio is sensitive to, or concentrated in, a given risk factor.",
+              "art": "exposure"
+            },
+            {
+              "text": "The collection of assets a strategy may invest in, which sets its boundaries and bias risk.",
+              "art": "universe"
+            },
+            {
+              "text": "Adjusting holdings back to target weights on a schedule or rule.",
+              "art": "rebalance"
+            },
+            {
+              "text": "Deciding how much capital each trade or holding receives — the direct driver of risk exposure.",
+              "art": "position sizing"
+            }
+          ],
+          "answer": 0,
+          "why": "Exposure is what you ended up carrying; position sizing is the decision that produced it."
+        },
+        {
+          "id": "u4l2-exposure-s",
+          "type": "scenario",
+          "termId": "exposure",
+          "termIds": [
+            "exposure"
+          ],
+          "story": "Most of the return is not explained by market exposure.",
+          "stem": "Which term does this describe?",
+          "options": [
+            {
+              "text": "exposure",
+              "art": "exposure"
+            },
+            {
+              "text": "universe",
+              "art": "universe"
+            },
+            {
+              "text": "rebalance",
+              "art": "rebalance"
+            },
+            {
+              "text": "position sizing",
+              "art": "position sizing"
+            }
+          ],
+          "answer": 0,
+          "why": "exposure: The degree to which a portfolio is sensitive to, or concentrated in, a given risk factor."
+        },
+        {
+          "id": "u4l2-exposure-t",
+          "type": "truefalse",
+          "termId": "exposure",
+          "termIds": [
+            "exposure"
+          ],
+          "stem": "exposure means: How much risk you are actually carrying.",
+          "answer": true,
+          "why": "Correct — The degree to which a portfolio is sensitive to, or concentrated in, a given risk factor."
+        },
+        {
+          "id": "u4l2-exposure-f",
+          "type": "fill",
+          "termId": "exposure",
+          "termIds": [
+            "exposure"
+          ],
+          "story": "Most of the return is not explained by market ____.",
+          "bank": [
+            "exposure",
+            "turnover",
+            "correlation"
+          ],
+          "answer": "exposure",
+          "why": "Exposure is what you ended up carrying; position sizing is the decision that produced it."
+        },
+        {
+          "id": "u4l2-match",
+          "type": "match",
+          "termIds": [
+            "turnover",
+            "correlation",
+            "exposure"
+          ],
+          "pairs": [
+            {
+              "id": "turnover",
+              "left": "turnover",
+              "right": "How much of the portfolio gets replaced."
+            },
+            {
+              "id": "correlation",
+              "left": "correlation",
+              "right": "Whether two things move together."
+            },
+            {
+              "id": "exposure",
+              "left": "exposure",
+              "right": "How much risk you are actually carrying."
+            }
+          ],
+          "why": "Match each term to what it means."
+        }
+      ]
+    },
+    {
+      "id": "u4r",
+      "unit": 4,
+      "title": "组合怎么搭 · 回顾",
+      "icon": "🏆",
+      "review": true,
+      "prompts": [
+        {
+          "id": "u4r-universe-s",
+          "type": "scenario",
+          "termId": "universe",
+          "termIds": [
+            "universe"
+          ],
+          "story": "We backtest on a universe of the ten largest energy futures.",
+          "stem": "Which term does this describe?",
+          "options": [
+            {
+              "text": "universe",
+              "art": "universe"
+            },
+            {
+              "text": "rebalance",
+              "art": "rebalance"
+            },
+            {
+              "text": "position sizing",
+              "art": "position sizing"
+            },
+            {
+              "text": "turnover",
+              "art": "turnover"
+            }
+          ],
+          "answer": 0,
+          "why": "universe: The collection of assets a strategy may invest in, which sets its boundaries and bias risk."
+        },
+        {
+          "id": "u4r-universe-t",
+          "type": "truefalse",
+          "termId": "universe",
+          "termIds": [
+            "universe"
+          ],
+          "stem": "universe means: The set you are allowed to pick from.",
+          "answer": true,
+          "why": "Correct — The collection of assets a strategy may invest in, which sets its boundaries and bias risk."
+        },
+        {
+          "id": "u4r-rebalance-s",
+          "type": "scenario",
+          "termId": "rebalance",
+          "termIds": [
+            "rebalance"
+          ],
+          "story": "We rebalance monthly at 12% one-way turnover.",
+          "stem": "Which term does this describe?",
+          "options": [
+            {
+              "text": "rebalance",
+              "art": "rebalance"
+            },
+            {
+              "text": "universe",
+              "art": "universe"
+            },
+            {
+              "text": "position sizing",
+              "art": "position sizing"
+            },
+            {
+              "text": "turnover",
+              "art": "turnover"
+            }
+          ],
+          "answer": 0,
+          "why": "rebalance: Adjusting holdings back to target weights on a schedule or rule."
+        },
+        {
+          "id": "u4r-rebalance-t",
+          "type": "truefalse",
+          "termId": "rebalance",
+          "termIds": [
+            "rebalance"
+          ],
+          "stem": "rebalance means: The set you are allowed to pick from.",
+          "answer": false,
+          "why": "rebalance means Adjusting holdings back to target weights on a schedule or rule., not The collection of assets a strategy may invest in, which sets its boundaries and bias risk.."
+        },
+        {
+          "id": "u4r-position sizing-s",
+          "type": "scenario",
+          "termId": "position sizing",
+          "termIds": [
+            "position sizing"
+          ],
+          "story": "Position sizing is capped well below the notional the backtest implies.",
+          "stem": "Which term does this describe?",
+          "options": [
+            {
+              "text": "position sizing",
+              "art": "position sizing"
+            },
+            {
+              "text": "universe",
+              "art": "universe"
+            },
+            {
+              "text": "rebalance",
+              "art": "rebalance"
+            },
+            {
+              "text": "turnover",
+              "art": "turnover"
+            }
+          ],
+          "answer": 0,
+          "why": "position sizing: Deciding how much capital each trade or holding receives — the direct driver of risk exposure."
+        },
+        {
+          "id": "u4r-position sizing-t",
+          "type": "truefalse",
+          "termId": "position sizing",
+          "termIds": [
+            "position sizing"
+          ],
+          "stem": "position sizing means: How much money each position gets.",
+          "answer": true,
+          "why": "Correct — Deciding how much capital each trade or holding receives — the direct driver of risk exposure."
+        },
+        {
+          "id": "u4r-turnover-s",
+          "type": "scenario",
+          "termId": "turnover",
+          "termIds": [
+            "turnover"
+          ],
+          "story": "At 12% one-way turnover, costs reach about 1.3% a year.",
+          "stem": "Which term does this describe?",
+          "options": [
+            {
+              "text": "turnover",
+              "art": "turnover"
+            },
+            {
+              "text": "universe",
+              "art": "universe"
+            },
+            {
+              "text": "rebalance",
+              "art": "rebalance"
+            },
+            {
+              "text": "position sizing",
+              "art": "position sizing"
+            }
+          ],
+          "answer": 0,
+          "why": "turnover: Trading volume relative to portfolio size over a period — the direct driver of transaction cost."
+        },
+        {
+          "id": "u4r-turnover-t",
+          "type": "truefalse",
+          "termId": "turnover",
+          "termIds": [
+            "turnover"
+          ],
+          "stem": "turnover means: The set you are allowed to pick from.",
+          "answer": false,
+          "why": "turnover means Trading volume relative to portfolio size over a period — the direct driver of transaction cost., not The collection of assets a strategy may invest in, which sets its boundaries and bias risk.."
+        },
+        {
+          "id": "u4r-correlation-s",
+          "type": "scenario",
+          "termId": "correlation",
+          "termIds": [
+            "correlation"
+          ],
+          "story": "Correlation across the ten contracts is high, around 0.7.",
+          "stem": "Which term does this describe?",
+          "options": [
+            {
+              "text": "correlation",
+              "art": "correlation"
+            },
+            {
+              "text": "universe",
+              "art": "universe"
+            },
+            {
+              "text": "rebalance",
+              "art": "rebalance"
+            },
+            {
+              "text": "position sizing",
+              "art": "position sizing"
+            }
+          ],
+          "answer": 0,
+          "why": "correlation: The statistical association between two assets' returns, from -1 to 1."
+        },
+        {
+          "id": "u4r-correlation-t",
+          "type": "truefalse",
+          "termId": "correlation",
+          "termIds": [
+            "correlation"
+          ],
+          "stem": "correlation means: Whether two things move together.",
+          "answer": true,
+          "why": "Correct — The statistical association between two assets' returns, from -1 to 1."
+        },
+        {
+          "id": "u4r-exposure-s",
+          "type": "scenario",
+          "termId": "exposure",
+          "termIds": [
+            "exposure"
+          ],
+          "story": "Most of the return is not explained by market exposure.",
+          "stem": "Which term does this describe?",
+          "options": [
+            {
+              "text": "exposure",
+              "art": "exposure"
+            },
+            {
+              "text": "universe",
+              "art": "universe"
+            },
+            {
+              "text": "rebalance",
+              "art": "rebalance"
+            },
+            {
+              "text": "position sizing",
+              "art": "position sizing"
+            }
+          ],
+          "answer": 0,
+          "why": "exposure: The degree to which a portfolio is sensitive to, or concentrated in, a given risk factor."
+        },
+        {
+          "id": "u4r-exposure-t",
+          "type": "truefalse",
+          "termId": "exposure",
+          "termIds": [
+            "exposure"
+          ],
+          "stem": "exposure means: The set you are allowed to pick from.",
+          "answer": false,
+          "why": "exposure means The degree to which a portfolio is sensitive to, or concentrated in, a given risk factor., not The collection of assets a strategy may invest in, which sets its boundaries and bias risk.."
+        },
+        {
+          "id": "u4r-match",
+          "type": "match",
+          "termIds": [
+            "universe",
+            "rebalance",
+            "position sizing",
+            "turnover",
+            "correlation",
+            "exposure"
+          ],
+          "pairs": [
+            {
+              "id": "universe",
+              "left": "universe",
+              "right": "The set you are allowed to pick from."
+            },
+            {
+              "id": "rebalance",
+              "left": "rebalance",
+              "right": "Drag the holdings back to their target weights."
+            },
+            {
+              "id": "position sizing",
+              "left": "position sizing",
+              "right": "How much money each position gets."
+            },
+            {
+              "id": "turnover",
+              "left": "turnover",
+              "right": "How much of the portfolio gets replaced."
+            },
+            {
+              "id": "correlation",
+              "left": "correlation",
+              "right": "Whether two things move together."
+            },
+            {
+              "id": "exposure",
+              "left": "exposure",
+              "right": "How much risk you are actually carrying."
+            }
+          ],
+          "why": "Match each term to what it means."
+        }
+      ]
+    },
+    {
+      "id": "u5l1",
+      "unit": 5,
+      "title": "成本吃多少",
+      "icon": "📈",
+      "review": false,
+      "prompts": [
+        {
+          "id": "u5l1-transaction cost-m",
+          "type": "meaning",
+          "termId": "transaction cost",
+          "termIds": [
+            "transaction cost"
+          ],
+          "stem": "What does transaction cost mean?",
+          "options": [
+            {
+              "text": "Costs incurred in trading: commissions, bid-ask spread and taxes.",
+              "art": "transaction cost"
+            },
+            {
+              "text": "The difference between the intended and executed price, caused by market impact and delay.",
+              "art": "slippage"
+            },
+            {
+              "text": "The maximum capital a strategy can absorb before trading costs consume the return.",
+              "art": "capacity constraint"
+            },
+            {
+              "text": "A limit imposed by insufficient market depth, making the intended size or price unreachable.",
+              "art": "liquidity constraint"
+            }
+          ],
+          "answer": 0,
+          "why": "Transaction cost is the visible fee (commission, spread); slippage is the gap between the price you wanted and the price you got."
+        },
+        {
+          "id": "u5l1-transaction cost-s",
+          "type": "scenario",
+          "termId": "transaction cost",
+          "termIds": [
+            "transaction cost"
+          ],
+          "story": "With 6 basis points of transaction cost per side, costs reach 1.3% a year.",
+          "stem": "Which term does this describe?",
+          "options": [
+            {
+              "text": "transaction cost",
+              "art": "transaction cost"
+            },
+            {
+              "text": "slippage",
+              "art": "slippage"
+            },
+            {
+              "text": "capacity constraint",
+              "art": "capacity constraint"
+            },
+            {
+              "text": "liquidity constraint",
+              "art": "liquidity constraint"
+            }
+          ],
+          "answer": 0,
+          "why": "transaction cost: Costs incurred in trading: commissions, bid-ask spread and taxes."
+        },
+        {
+          "id": "u5l1-transaction cost-t",
+          "type": "truefalse",
+          "termId": "transaction cost",
+          "termIds": [
+            "transaction cost"
+          ],
+          "stem": "transaction cost means: What the buying and selling itself costs.",
+          "answer": true,
+          "why": "Correct — Costs incurred in trading: commissions, bid-ask spread and taxes."
+        },
+        {
+          "id": "u5l1-transaction cost-f",
+          "type": "fill",
+          "termId": "transaction cost",
+          "termIds": [
+            "transaction cost"
+          ],
+          "story": "With 6 basis points of ____ per side, costs reach 1.3% a year.",
+          "bank": [
+            "transaction cost",
+            "slippage"
+          ],
+          "answer": "transaction cost",
+          "why": "Transaction cost is the visible fee (commission, spread); slippage is the gap between the price you wanted and the price you got."
+        },
+        {
+          "id": "u5l1-slippage-m",
+          "type": "meaning",
+          "termId": "slippage",
+          "termIds": [
+            "slippage"
+          ],
+          "stem": "What does slippage mean?",
+          "options": [
+            {
+              "text": "The difference between the intended and executed price, caused by market impact and delay.",
+              "art": "slippage"
+            },
+            {
+              "text": "Costs incurred in trading: commissions, bid-ask spread and taxes.",
+              "art": "transaction cost"
+            },
+            {
+              "text": "The maximum capital a strategy can absorb before trading costs consume the return.",
+              "art": "capacity constraint"
+            },
+            {
+              "text": "A limit imposed by insufficient market depth, making the intended size or price unreachable.",
+              "art": "liquidity constraint"
+            }
+          ],
+          "answer": 0,
+          "why": "Slippage is a price gap (implicit); transaction cost is the explicit fee."
+        },
+        {
+          "id": "u5l1-slippage-s",
+          "type": "scenario",
+          "termId": "slippage",
+          "termIds": [
+            "slippage"
+          ],
+          "story": "Doubling slippage removes the edge entirely.",
+          "stem": "Which term does this describe?",
+          "options": [
+            {
+              "text": "slippage",
+              "art": "slippage"
+            },
+            {
+              "text": "transaction cost",
+              "art": "transaction cost"
+            },
+            {
+              "text": "capacity constraint",
+              "art": "capacity constraint"
+            },
+            {
+              "text": "liquidity constraint",
+              "art": "liquidity constraint"
+            }
+          ],
+          "answer": 0,
+          "why": "slippage: The difference between the intended and executed price, caused by market impact and delay."
+        },
+        {
+          "id": "u5l1-slippage-t",
+          "type": "truefalse",
+          "termId": "slippage",
+          "termIds": [
+            "slippage"
+          ],
+          "stem": "slippage means: What the buying and selling itself costs.",
+          "answer": false,
+          "why": "slippage means The difference between the intended and executed price, caused by market impact and delay., not Costs incurred in trading: commissions, bid-ask spread and taxes.."
+        },
+        {
+          "id": "u5l1-slippage-f",
+          "type": "fill",
+          "termId": "slippage",
+          "termIds": [
+            "slippage"
+          ],
+          "story": "Doubling ____ removes the edge entirely.",
+          "bank": [
+            "slippage",
+            "transaction cost"
+          ],
+          "answer": "slippage",
+          "why": "Slippage is a price gap (implicit); transaction cost is the explicit fee."
+        },
+        {
+          "id": "u5l1-match",
+          "type": "match",
+          "termIds": [
+            "transaction cost",
+            "slippage"
+          ],
+          "pairs": [
+            {
+              "id": "transaction cost",
+              "left": "transaction cost",
+              "right": "What the buying and selling itself costs."
+            },
+            {
+              "id": "slippage",
+              "left": "slippage",
+              "right": "How much worse your fill was than the price you wanted."
+            }
+          ],
+          "why": "Match each term to what it means."
+        }
+      ]
+    },
+    {
+      "id": "u5l2",
+      "unit": 5,
+      "title": "成本吃多少（续）",
+      "icon": "📈",
+      "review": false,
+      "prompts": [
+        {
+          "id": "u5l2-capacity constraint-m",
+          "type": "meaning",
+          "termId": "capacity constraint",
+          "termIds": [
+            "capacity constraint"
+          ],
+          "stem": "What does capacity constraint mean?",
+          "options": [
+            {
+              "text": "The maximum capital a strategy can absorb before trading costs consume the return.",
+              "art": "capacity constraint"
+            },
+            {
+              "text": "Costs incurred in trading: commissions, bid-ask spread and taxes.",
+              "art": "transaction cost"
+            },
+            {
+              "text": "The difference between the intended and executed price, caused by market impact and delay.",
+              "art": "slippage"
+            },
+            {
+              "text": "A limit imposed by insufficient market depth, making the intended size or price unreachable.",
+              "art": "liquidity constraint"
+            }
+          ],
+          "answer": 0,
+          "why": "Capacity is how much the strategy can hold; the liquidity constraint is how much the market can trade. The second causes the first."
+        },
+        {
+          "id": "u5l2-capacity constraint-s",
+          "type": "scenario",
+          "termId": "capacity constraint",
+          "termIds": [
+            "capacity constraint"
+          ],
+          "story": "A capacity constraint this tight means the strategy cannot absorb meaningful capital.",
+          "stem": "Which term does this describe?",
+          "options": [
+            {
+              "text": "capacity constraint",
+              "art": "capacity constraint"
+            },
+            {
+              "text": "transaction cost",
+              "art": "transaction cost"
+            },
+            {
+              "text": "slippage",
+              "art": "slippage"
+            },
+            {
+              "text": "liquidity constraint",
+              "art": "liquidity constraint"
+            }
+          ],
+          "answer": 0,
+          "why": "capacity constraint: The maximum capital a strategy can absorb before trading costs consume the return."
+        },
+        {
+          "id": "u5l2-capacity constraint-t",
+          "type": "truefalse",
+          "termId": "capacity constraint",
+          "termIds": [
+            "capacity constraint"
+          ],
+          "stem": "capacity constraint means: The most money the strategy can hold.",
+          "answer": true,
+          "why": "Correct — The maximum capital a strategy can absorb before trading costs consume the return."
+        },
+        {
+          "id": "u5l2-capacity constraint-f",
+          "type": "fill",
+          "termId": "capacity constraint",
+          "termIds": [
+            "capacity constraint"
+          ],
+          "story": "A ____ this tight means the strategy cannot absorb meaningful capital.",
+          "bank": [
+            "capacity constraint",
+            "liquidity constraint"
+          ],
+          "answer": "capacity constraint",
+          "why": "Capacity is how much the strategy can hold; the liquidity constraint is how much the market can trade. The second causes the first."
+        },
+        {
+          "id": "u5l2-liquidity constraint-m",
+          "type": "meaning",
+          "termId": "liquidity constraint",
+          "termIds": [
+            "liquidity constraint"
+          ],
+          "stem": "What does liquidity constraint mean?",
+          "options": [
+            {
+              "text": "A limit imposed by insufficient market depth, making the intended size or price unreachable.",
+              "art": "liquidity constraint"
+            },
+            {
+              "text": "Costs incurred in trading: commissions, bid-ask spread and taxes.",
+              "art": "transaction cost"
+            },
+            {
+              "text": "The difference between the intended and executed price, caused by market impact and delay.",
+              "art": "slippage"
+            },
+            {
+              "text": "The maximum capital a strategy can absorb before trading costs consume the return.",
+              "art": "capacity constraint"
+            }
+          ],
+          "answer": 0,
+          "why": "The liquidity constraint is a property of the market's depth; the capacity constraint is the strategy-level ceiling it produces."
+        },
+        {
+          "id": "u5l2-liquidity constraint-s",
+          "type": "scenario",
+          "termId": "liquidity constraint",
+          "termIds": [
+            "liquidity constraint"
+          ],
+          "story": "The liquidity constraint binds at roughly $40 million.",
+          "stem": "Which term does this describe?",
+          "options": [
+            {
+              "text": "liquidity constraint",
+              "art": "liquidity constraint"
+            },
+            {
+              "text": "transaction cost",
+              "art": "transaction cost"
+            },
+            {
+              "text": "slippage",
+              "art": "slippage"
+            },
+            {
+              "text": "capacity constraint",
+              "art": "capacity constraint"
+            }
+          ],
+          "answer": 0,
+          "why": "liquidity constraint: A limit imposed by insufficient market depth, making the intended size or price unreachable."
+        },
+        {
+          "id": "u5l2-liquidity constraint-t",
+          "type": "truefalse",
+          "termId": "liquidity constraint",
+          "termIds": [
+            "liquidity constraint"
+          ],
+          "stem": "liquidity constraint means: What the buying and selling itself costs.",
+          "answer": false,
+          "why": "liquidity constraint means A limit imposed by insufficient market depth, making the intended size or price unreachable., not Costs incurred in trading: commissions, bid-ask spread and taxes.."
+        },
+        {
+          "id": "u5l2-liquidity constraint-f",
+          "type": "fill",
+          "termId": "liquidity constraint",
+          "termIds": [
+            "liquidity constraint"
+          ],
+          "story": "The ____ binds at roughly $40 million.",
+          "bank": [
+            "liquidity constraint",
+            "capacity constraint"
+          ],
+          "answer": "liquidity constraint",
+          "why": "The liquidity constraint is a property of the market's depth; the capacity constraint is the strategy-level ceiling it produces."
+        },
+        {
+          "id": "u5l2-match",
+          "type": "match",
+          "termIds": [
+            "capacity constraint",
+            "liquidity constraint"
+          ],
+          "pairs": [
+            {
+              "id": "capacity constraint",
+              "left": "capacity constraint",
+              "right": "The most money the strategy can hold."
+            },
+            {
+              "id": "liquidity constraint",
+              "left": "liquidity constraint",
+              "right": "Not enough volume in the market to trade the size."
+            }
+          ],
+          "why": "Match each term to what it means."
+        }
+      ]
+    },
+    {
+      "id": "u5r",
+      "unit": 5,
+      "title": "成本吃多少 · 回顾",
+      "icon": "🏆",
+      "review": true,
+      "prompts": [
+        {
+          "id": "u5r-transaction cost-s",
+          "type": "scenario",
+          "termId": "transaction cost",
+          "termIds": [
+            "transaction cost"
+          ],
+          "story": "With 6 basis points of transaction cost per side, costs reach 1.3% a year.",
+          "stem": "Which term does this describe?",
+          "options": [
+            {
+              "text": "transaction cost",
+              "art": "transaction cost"
+            },
+            {
+              "text": "slippage",
+              "art": "slippage"
+            },
+            {
+              "text": "capacity constraint",
+              "art": "capacity constraint"
+            },
+            {
+              "text": "liquidity constraint",
+              "art": "liquidity constraint"
+            }
+          ],
+          "answer": 0,
+          "why": "transaction cost: Costs incurred in trading: commissions, bid-ask spread and taxes."
+        },
+        {
+          "id": "u5r-transaction cost-t",
+          "type": "truefalse",
+          "termId": "transaction cost",
+          "termIds": [
+            "transaction cost"
+          ],
+          "stem": "transaction cost means: What the buying and selling itself costs.",
+          "answer": true,
+          "why": "Correct — Costs incurred in trading: commissions, bid-ask spread and taxes."
+        },
+        {
+          "id": "u5r-slippage-s",
+          "type": "scenario",
+          "termId": "slippage",
+          "termIds": [
+            "slippage"
+          ],
+          "story": "Doubling slippage removes the edge entirely.",
+          "stem": "Which term does this describe?",
+          "options": [
+            {
+              "text": "slippage",
+              "art": "slippage"
+            },
+            {
+              "text": "transaction cost",
+              "art": "transaction cost"
+            },
+            {
+              "text": "capacity constraint",
+              "art": "capacity constraint"
+            },
+            {
+              "text": "liquidity constraint",
+              "art": "liquidity constraint"
+            }
+          ],
+          "answer": 0,
+          "why": "slippage: The difference between the intended and executed price, caused by market impact and delay."
+        },
+        {
+          "id": "u5r-slippage-t",
+          "type": "truefalse",
+          "termId": "slippage",
+          "termIds": [
+            "slippage"
+          ],
+          "stem": "slippage means: What the buying and selling itself costs.",
+          "answer": false,
+          "why": "slippage means The difference between the intended and executed price, caused by market impact and delay., not Costs incurred in trading: commissions, bid-ask spread and taxes.."
+        },
+        {
+          "id": "u5r-capacity constraint-s",
+          "type": "scenario",
+          "termId": "capacity constraint",
+          "termIds": [
+            "capacity constraint"
+          ],
+          "story": "A capacity constraint this tight means the strategy cannot absorb meaningful capital.",
+          "stem": "Which term does this describe?",
+          "options": [
+            {
+              "text": "capacity constraint",
+              "art": "capacity constraint"
+            },
+            {
+              "text": "transaction cost",
+              "art": "transaction cost"
+            },
+            {
+              "text": "slippage",
+              "art": "slippage"
+            },
+            {
+              "text": "liquidity constraint",
+              "art": "liquidity constraint"
+            }
+          ],
+          "answer": 0,
+          "why": "capacity constraint: The maximum capital a strategy can absorb before trading costs consume the return."
+        },
+        {
+          "id": "u5r-capacity constraint-t",
+          "type": "truefalse",
+          "termId": "capacity constraint",
+          "termIds": [
+            "capacity constraint"
+          ],
+          "stem": "capacity constraint means: The most money the strategy can hold.",
+          "answer": true,
+          "why": "Correct — The maximum capital a strategy can absorb before trading costs consume the return."
+        },
+        {
+          "id": "u5r-liquidity constraint-s",
+          "type": "scenario",
+          "termId": "liquidity constraint",
+          "termIds": [
+            "liquidity constraint"
+          ],
+          "story": "The liquidity constraint binds at roughly $40 million.",
+          "stem": "Which term does this describe?",
+          "options": [
+            {
+              "text": "liquidity constraint",
+              "art": "liquidity constraint"
+            },
+            {
+              "text": "transaction cost",
+              "art": "transaction cost"
+            },
+            {
+              "text": "slippage",
+              "art": "slippage"
+            },
+            {
+              "text": "capacity constraint",
+              "art": "capacity constraint"
+            }
+          ],
+          "answer": 0,
+          "why": "liquidity constraint: A limit imposed by insufficient market depth, making the intended size or price unreachable."
+        },
+        {
+          "id": "u5r-liquidity constraint-t",
+          "type": "truefalse",
+          "termId": "liquidity constraint",
+          "termIds": [
+            "liquidity constraint"
+          ],
+          "stem": "liquidity constraint means: What the buying and selling itself costs.",
+          "answer": false,
+          "why": "liquidity constraint means A limit imposed by insufficient market depth, making the intended size or price unreachable., not Costs incurred in trading: commissions, bid-ask spread and taxes.."
+        },
+        {
+          "id": "u5r-match",
+          "type": "match",
+          "termIds": [
+            "transaction cost",
+            "slippage",
+            "capacity constraint",
+            "liquidity constraint"
+          ],
+          "pairs": [
+            {
+              "id": "transaction cost",
+              "left": "transaction cost",
+              "right": "What the buying and selling itself costs."
+            },
+            {
+              "id": "slippage",
+              "left": "slippage",
+              "right": "How much worse your fill was than the price you wanted."
+            },
+            {
+              "id": "capacity constraint",
+              "left": "capacity constraint",
+              "right": "The most money the strategy can hold."
+            },
+            {
+              "id": "liquidity constraint",
+              "left": "liquidity constraint",
+              "right": "Not enough volume in the market to trade the size."
+            }
+          ],
+          "why": "Match each term to what it means."
+        }
+      ]
+    },
+    {
+      "id": "u6l1",
+      "unit": 6,
+      "title": "风险怎么量",
+      "icon": "📈",
+      "review": false,
+      "prompts": [
+        {
+          "id": "u6l1-stress test-m",
+          "type": "meaning",
+          "termId": "stress test",
+          "termIds": [
+            "stress test"
+          ],
+          "stem": "What does stress test mean?",
+          "options": [
+            {
+              "text": "Evaluating a portfolio under an extreme but plausible scenario to probe tail risk.",
+              "art": "stress test"
+            },
+            {
+              "text": "Evaluating a strategy under several assumed paths to compare outcomes across environments.",
+              "art": "scenario analysis"
+            },
+            {
+              "text": "The maximum expected loss over a holding period at a given confidence level.",
+              "art": "value at risk"
+            },
+            {
+              "text": "The degree to which a result responds to a change in a parameter or assumption.",
+              "art": "sensitivity"
+            }
+          ],
+          "answer": 0,
+          "why": "A stress test is one extreme scenario (often a real past one); scenario analysis compares several hypothetical paths."
+        },
+        {
+          "id": "u6l1-stress test-s",
+          "type": "scenario",
+          "termId": "stress test",
+          "termIds": [
+            "stress test"
+          ],
+          "story": "A stress test on the 2020 oil crash shows the overlay loses 14% in that month.",
+          "stem": "Which term does this describe?",
+          "options": [
+            {
+              "text": "stress test",
+              "art": "stress test"
+            },
+            {
+              "text": "scenario analysis",
+              "art": "scenario analysis"
+            },
+            {
+              "text": "value at risk",
+              "art": "value at risk"
+            },
+            {
+              "text": "sensitivity",
+              "art": "sensitivity"
+            }
+          ],
+          "answer": 0,
+          "why": "stress test: Evaluating a portfolio under an extreme but plausible scenario to probe tail risk."
+        },
+        {
+          "id": "u6l1-stress test-t",
+          "type": "truefalse",
+          "termId": "stress test",
+          "termIds": [
+            "stress test"
+          ],
+          "stem": "stress test means: Replay the worst historical moment and see what happens.",
+          "answer": true,
+          "why": "Correct — Evaluating a portfolio under an extreme but plausible scenario to probe tail risk."
+        },
+        {
+          "id": "u6l1-stress test-f",
+          "type": "fill",
+          "termId": "stress test",
+          "termIds": [
+            "stress test"
+          ],
+          "story": "A ____ on the 2020 oil crash shows the overlay loses 14% in that month.",
+          "bank": [
+            "stress test",
+            "scenario analysis",
+            "value at risk"
+          ],
+          "answer": "stress test",
+          "why": "A stress test is one extreme scenario (often a real past one); scenario analysis compares several hypothetical paths."
+        },
+        {
+          "id": "u6l1-scenario analysis-m",
+          "type": "meaning",
+          "termId": "scenario analysis",
+          "termIds": [
+            "scenario analysis"
+          ],
+          "stem": "What does scenario analysis mean?",
+          "options": [
+            {
+              "text": "Evaluating a strategy under several assumed paths to compare outcomes across environments.",
+              "art": "scenario analysis"
+            },
+            {
+              "text": "Evaluating a portfolio under an extreme but plausible scenario to probe tail risk.",
+              "art": "stress test"
+            },
+            {
+              "text": "The maximum expected loss over a holding period at a given confidence level.",
+              "art": "value at risk"
+            },
+            {
+              "text": "The degree to which a result responds to a change in a parameter or assumption.",
+              "art": "sensitivity"
+            }
+          ],
+          "answer": 0,
+          "why": "Scenario analysis compares several hypothetical paths; a stress test is a single extreme shock."
+        },
+        {
+          "id": "u6l1-scenario analysis-s",
+          "type": "scenario",
+          "termId": "scenario analysis",
+          "termIds": [
+            "scenario analysis"
+          ],
+          "story": "We run a scenario analysis on three paths.",
+          "stem": "Which term does this describe?",
+          "options": [
+            {
+              "text": "scenario analysis",
+              "art": "scenario analysis"
+            },
+            {
+              "text": "stress test",
+              "art": "stress test"
+            },
+            {
+              "text": "value at risk",
+              "art": "value at risk"
+            },
+            {
+              "text": "sensitivity",
+              "art": "sensitivity"
+            }
+          ],
+          "answer": 0,
+          "why": "scenario analysis: Evaluating a strategy under several assumed paths to compare outcomes across environments."
+        },
+        {
+          "id": "u6l1-scenario analysis-t",
+          "type": "truefalse",
+          "termId": "scenario analysis",
+          "termIds": [
+            "scenario analysis"
+          ],
+          "stem": "scenario analysis means: Replay the worst historical moment and see what happens.",
+          "answer": false,
+          "why": "scenario analysis means Evaluating a strategy under several assumed paths to compare outcomes across environments., not Evaluating a portfolio under an extreme but plausible scenario to probe tail risk.."
+        },
+        {
+          "id": "u6l1-scenario analysis-f",
+          "type": "fill",
+          "termId": "scenario analysis",
+          "termIds": [
+            "scenario analysis"
+          ],
+          "story": "We run a ____ on three paths.",
+          "bank": [
+            "scenario analysis",
+            "stress test",
+            "value at risk"
+          ],
+          "answer": "scenario analysis",
+          "why": "Scenario analysis compares several hypothetical paths; a stress test is a single extreme shock."
+        },
+        {
+          "id": "u6l1-value at risk-m",
+          "type": "meaning",
+          "termId": "value at risk",
+          "termIds": [
+            "value at risk"
+          ],
+          "stem": "What does value at risk mean?",
+          "options": [
+            {
+              "text": "The maximum expected loss over a holding period at a given confidence level.",
+              "art": "value at risk"
+            },
+            {
+              "text": "Evaluating a portfolio under an extreme but plausible scenario to probe tail risk.",
+              "art": "stress test"
+            },
+            {
+              "text": "Evaluating a strategy under several assumed paths to compare outcomes across environments.",
+              "art": "scenario analysis"
+            },
+            {
+              "text": "The degree to which a result responds to a change in a parameter or assumption.",
+              "art": "sensitivity"
+            }
+          ],
+          "answer": 0,
+          "why": "VaR is a threshold not exceeded 95% of the time; max drawdown is the deepest fall that actually happened. VaR routinely understates tail risk."
+        },
+        {
+          "id": "u6l1-value at risk-s",
+          "type": "scenario",
+          "termId": "value at risk",
+          "termIds": [
+            "value at risk"
+          ],
+          "story": "Value at risk at the 95% level is 2.1% daily.",
+          "stem": "Which term does this describe?",
+          "options": [
+            {
+              "text": "value at risk",
+              "art": "value at risk"
+            },
+            {
+              "text": "stress test",
+              "art": "stress test"
+            },
+            {
+              "text": "scenario analysis",
+              "art": "scenario analysis"
+            },
+            {
+              "text": "sensitivity",
+              "art": "sensitivity"
+            }
+          ],
+          "answer": 0,
+          "why": "value at risk: The maximum expected loss over a holding period at a given confidence level."
+        },
+        {
+          "id": "u6l1-value at risk-t",
+          "type": "truefalse",
+          "termId": "value at risk",
+          "termIds": [
+            "value at risk"
+          ],
+          "stem": "value at risk means: The loss you should not exceed on a given share of days.",
+          "answer": true,
+          "why": "Correct — The maximum expected loss over a holding period at a given confidence level."
+        },
+        {
+          "id": "u6l1-value at risk-f",
+          "type": "fill",
+          "termId": "value at risk",
+          "termIds": [
+            "value at risk"
+          ],
+          "story": "____ at the 95% level is 2.1% daily.",
+          "bank": [
+            "value at risk",
+            "stress test",
+            "scenario analysis"
+          ],
+          "answer": "value at risk",
+          "why": "VaR is a threshold not exceeded 95% of the time; max drawdown is the deepest fall that actually happened. VaR routinely understates tail risk."
+        },
+        {
+          "id": "u6l1-value at risk-a",
+          "type": "audit",
+          "termId": "value at risk",
+          "termIds": [
+            "value at risk"
+          ],
+          "story": "The strategy's daily VaR at 95% is 2.1%, so the most it can lose in a day is 2.1%.",
+          "stem": "Which statement does not hold?",
+          "options": [
+            {
+              "text": "VaR is a threshold not exceeded on 95% of days; the other 5% can lose far more than 2.1%."
+            },
+            {
+              "text": "2.1% is the maximum possible daily loss."
+            },
+            {
+              "text": "95% is a high confidence level, so the ceiling is reliable."
+            },
+            {
+              "text": "Maximum drawdown should be reported alongside it."
+            }
+          ],
+          "answer": 0,
+          "why": "VaR never promises 'no more than this'; it says 'on 95% of days, no more than this'. The remaining 5% can be far deeper — in 2008 many firms lost many multiples of their VaR. Reading VaR as a maximum loss is the most common misreading in these reports."
+        },
+        {
+          "id": "u6l1-match",
+          "type": "match",
+          "termIds": [
+            "stress test",
+            "scenario analysis",
+            "value at risk"
+          ],
+          "pairs": [
+            {
+              "id": "stress test",
+              "left": "stress test",
+              "right": "Replay the worst historical moment and see what happens."
+            },
+            {
+              "id": "scenario analysis",
+              "left": "scenario analysis",
+              "right": "Assume several futures and run each one."
+            },
+            {
+              "id": "value at risk",
+              "left": "value at risk",
+              "right": "The loss you should not exceed on a given share of days."
+            }
+          ],
+          "why": "Match each term to what it means."
+        }
+      ]
+    },
+    {
+      "id": "u6l2",
+      "unit": 6,
+      "title": "风险怎么量（续）",
+      "icon": "📈",
+      "review": false,
+      "prompts": [
+        {
+          "id": "u6l2-sensitivity-m",
+          "type": "meaning",
+          "termId": "sensitivity",
+          "termIds": [
+            "sensitivity"
+          ],
+          "stem": "What does sensitivity mean?",
+          "options": [
+            {
+              "text": "The degree to which a result responds to a change in a parameter or assumption.",
+              "art": "sensitivity"
+            },
+            {
+              "text": "Evaluating a portfolio under an extreme but plausible scenario to probe tail risk.",
+              "art": "stress test"
+            },
+            {
+              "text": "Evaluating a strategy under several assumed paths to compare outcomes across environments.",
+              "art": "scenario analysis"
+            },
+            {
+              "text": "The maximum expected loss over a holding period at a given confidence level.",
+              "art": "value at risk"
+            }
+          ],
+          "answer": 0,
+          "why": "Sensitivity measures 'what if this changes'; robustness is the conclusion about whether the result still stands."
+        },
+        {
+          "id": "u6l2-sensitivity-s",
+          "type": "scenario",
+          "termId": "sensitivity",
+          "termIds": [
+            "sensitivity"
+          ],
+          "story": "The result is sensitive to the cost assumption.",
+          "stem": "Which term does this describe?",
+          "options": [
+            {
+              "text": "sensitivity",
+              "art": "sensitivity"
+            },
+            {
+              "text": "stress test",
+              "art": "stress test"
+            },
+            {
+              "text": "scenario analysis",
+              "art": "scenario analysis"
+            },
+            {
+              "text": "value at risk",
+              "art": "value at risk"
+            }
+          ],
+          "answer": 0,
+          "why": "sensitivity: The degree to which a result responds to a change in a parameter or assumption."
+        },
+        {
+          "id": "u6l2-sensitivity-t",
+          "type": "truefalse",
+          "termId": "sensitivity",
+          "termIds": [
+            "sensitivity"
+          ],
+          "stem": "sensitivity means: How much the answer moves when an assumption moves.",
+          "answer": true,
+          "why": "Correct — The degree to which a result responds to a change in a parameter or assumption."
+        },
+        {
+          "id": "u6l2-sensitivity-f",
+          "type": "fill",
+          "termId": "sensitivity",
+          "termIds": [
+            "sensitivity"
+          ],
+          "story": "The result is sensitive to the cost assumption. (the word here is ____)",
+          "bank": [
+            "sensitivity",
+            "robustness"
+          ],
+          "answer": "sensitivity",
+          "why": "Sensitivity measures 'what if this changes'; robustness is the conclusion about whether the result still stands."
+        },
+        {
+          "id": "u6l2-robustness-m",
+          "type": "meaning",
+          "termId": "robustness",
+          "termIds": [
+            "robustness"
+          ],
+          "stem": "What does robustness mean?",
+          "options": [
+            {
+              "text": "The degree to which a strategy stays effective when parameters, samples or assumptions change.",
+              "art": "robustness"
+            },
+            {
+              "text": "Evaluating a portfolio under an extreme but plausible scenario to probe tail risk.",
+              "art": "stress test"
+            },
+            {
+              "text": "Evaluating a strategy under several assumed paths to compare outcomes across environments.",
+              "art": "scenario analysis"
+            },
+            {
+              "text": "The maximum expected loss over a holding period at a given confidence level.",
+              "art": "value at risk"
+            }
+          ],
+          "answer": 0,
+          "why": "Robustness is the overall verdict (does it hold); sensitivity is the measurement that gets you there."
+        },
+        {
+          "id": "u6l2-robustness-s",
+          "type": "scenario",
+          "termId": "robustness",
+          "termIds": [
+            "robustness"
+          ],
+          "story": "A robustness check shows the sign holds in most but not all windows.",
+          "stem": "Which term does this describe?",
+          "options": [
+            {
+              "text": "robustness",
+              "art": "robustness"
+            },
+            {
+              "text": "stress test",
+              "art": "stress test"
+            },
+            {
+              "text": "scenario analysis",
+              "art": "scenario analysis"
+            },
+            {
+              "text": "value at risk",
+              "art": "value at risk"
+            }
+          ],
+          "answer": 0,
+          "why": "robustness: The degree to which a strategy stays effective when parameters, samples or assumptions change."
+        },
+        {
+          "id": "u6l2-robustness-t",
+          "type": "truefalse",
+          "termId": "robustness",
+          "termIds": [
+            "robustness"
+          ],
+          "stem": "robustness means: Replay the worst historical moment and see what happens.",
+          "answer": false,
+          "why": "robustness means The degree to which a strategy stays effective when parameters, samples or assumptions change., not Evaluating a portfolio under an extreme but plausible scenario to probe tail risk.."
+        },
+        {
+          "id": "u6l2-robustness-f",
+          "type": "fill",
+          "termId": "robustness",
+          "termIds": [
+            "robustness"
+          ],
+          "story": "A ____ check shows the sign holds in most but not all windows.",
+          "bank": [
+            "robustness",
+            "sensitivity"
+          ],
+          "answer": "robustness",
+          "why": "Robustness is the overall verdict (does it hold); sensitivity is the measurement that gets you there."
+        },
+        {
+          "id": "u6l2-match",
+          "type": "match",
+          "termIds": [
+            "sensitivity",
+            "robustness"
+          ],
+          "pairs": [
+            {
+              "id": "sensitivity",
+              "left": "sensitivity",
+              "right": "How much the answer moves when an assumption moves."
+            },
+            {
+              "id": "robustness",
+              "left": "robustness",
+              "right": "Does the conclusion hold if you change the assumptions?"
+            }
+          ],
+          "why": "Match each term to what it means."
+        }
+      ]
+    },
+    {
+      "id": "u6r",
+      "unit": 6,
+      "title": "风险怎么量 · 回顾",
+      "icon": "🏆",
+      "review": true,
+      "prompts": [
+        {
+          "id": "u6r-stress test-s",
+          "type": "scenario",
+          "termId": "stress test",
+          "termIds": [
+            "stress test"
+          ],
+          "story": "A stress test on the 2020 oil crash shows the overlay loses 14% in that month.",
+          "stem": "Which term does this describe?",
+          "options": [
+            {
+              "text": "stress test",
+              "art": "stress test"
+            },
+            {
+              "text": "scenario analysis",
+              "art": "scenario analysis"
+            },
+            {
+              "text": "value at risk",
+              "art": "value at risk"
+            },
+            {
+              "text": "sensitivity",
+              "art": "sensitivity"
+            }
+          ],
+          "answer": 0,
+          "why": "stress test: Evaluating a portfolio under an extreme but plausible scenario to probe tail risk."
+        },
+        {
+          "id": "u6r-stress test-t",
+          "type": "truefalse",
+          "termId": "stress test",
+          "termIds": [
+            "stress test"
+          ],
+          "stem": "stress test means: Replay the worst historical moment and see what happens.",
+          "answer": true,
+          "why": "Correct — Evaluating a portfolio under an extreme but plausible scenario to probe tail risk."
+        },
+        {
+          "id": "u6r-scenario analysis-s",
+          "type": "scenario",
+          "termId": "scenario analysis",
+          "termIds": [
+            "scenario analysis"
+          ],
+          "story": "We run a scenario analysis on three paths.",
+          "stem": "Which term does this describe?",
+          "options": [
+            {
+              "text": "scenario analysis",
+              "art": "scenario analysis"
+            },
+            {
+              "text": "stress test",
+              "art": "stress test"
+            },
+            {
+              "text": "value at risk",
+              "art": "value at risk"
+            },
+            {
+              "text": "sensitivity",
+              "art": "sensitivity"
+            }
+          ],
+          "answer": 0,
+          "why": "scenario analysis: Evaluating a strategy under several assumed paths to compare outcomes across environments."
+        },
+        {
+          "id": "u6r-scenario analysis-t",
+          "type": "truefalse",
+          "termId": "scenario analysis",
+          "termIds": [
+            "scenario analysis"
+          ],
+          "stem": "scenario analysis means: Replay the worst historical moment and see what happens.",
+          "answer": false,
+          "why": "scenario analysis means Evaluating a strategy under several assumed paths to compare outcomes across environments., not Evaluating a portfolio under an extreme but plausible scenario to probe tail risk.."
+        },
+        {
+          "id": "u6r-value at risk-s",
+          "type": "scenario",
+          "termId": "value at risk",
+          "termIds": [
+            "value at risk"
+          ],
+          "story": "Value at risk at the 95% level is 2.1% daily.",
+          "stem": "Which term does this describe?",
+          "options": [
+            {
+              "text": "value at risk",
+              "art": "value at risk"
+            },
+            {
+              "text": "stress test",
+              "art": "stress test"
+            },
+            {
+              "text": "scenario analysis",
+              "art": "scenario analysis"
+            },
+            {
+              "text": "sensitivity",
+              "art": "sensitivity"
+            }
+          ],
+          "answer": 0,
+          "why": "value at risk: The maximum expected loss over a holding period at a given confidence level."
+        },
+        {
+          "id": "u6r-value at risk-t",
+          "type": "truefalse",
+          "termId": "value at risk",
+          "termIds": [
+            "value at risk"
+          ],
+          "stem": "value at risk means: The loss you should not exceed on a given share of days.",
+          "answer": true,
+          "why": "Correct — The maximum expected loss over a holding period at a given confidence level."
+        },
+        {
+          "id": "u6r-sensitivity-s",
+          "type": "scenario",
+          "termId": "sensitivity",
+          "termIds": [
+            "sensitivity"
+          ],
+          "story": "The result is sensitive to the cost assumption.",
+          "stem": "Which term does this describe?",
+          "options": [
+            {
+              "text": "sensitivity",
+              "art": "sensitivity"
+            },
+            {
+              "text": "stress test",
+              "art": "stress test"
+            },
+            {
+              "text": "scenario analysis",
+              "art": "scenario analysis"
+            },
+            {
+              "text": "value at risk",
+              "art": "value at risk"
+            }
+          ],
+          "answer": 0,
+          "why": "sensitivity: The degree to which a result responds to a change in a parameter or assumption."
+        },
+        {
+          "id": "u6r-sensitivity-t",
+          "type": "truefalse",
+          "termId": "sensitivity",
+          "termIds": [
+            "sensitivity"
+          ],
+          "stem": "sensitivity means: Replay the worst historical moment and see what happens.",
+          "answer": false,
+          "why": "sensitivity means The degree to which a result responds to a change in a parameter or assumption., not Evaluating a portfolio under an extreme but plausible scenario to probe tail risk.."
+        },
+        {
+          "id": "u6r-robustness-s",
+          "type": "scenario",
+          "termId": "robustness",
+          "termIds": [
+            "robustness"
+          ],
+          "story": "A robustness check shows the sign holds in most but not all windows.",
+          "stem": "Which term does this describe?",
+          "options": [
+            {
+              "text": "robustness",
+              "art": "robustness"
+            },
+            {
+              "text": "stress test",
+              "art": "stress test"
+            },
+            {
+              "text": "scenario analysis",
+              "art": "scenario analysis"
+            },
+            {
+              "text": "value at risk",
+              "art": "value at risk"
+            }
+          ],
+          "answer": 0,
+          "why": "robustness: The degree to which a strategy stays effective when parameters, samples or assumptions change."
+        },
+        {
+          "id": "u6r-robustness-t",
+          "type": "truefalse",
+          "termId": "robustness",
+          "termIds": [
+            "robustness"
+          ],
+          "stem": "robustness means: Does the conclusion hold if you change the assumptions?",
+          "answer": true,
+          "why": "Correct — The degree to which a strategy stays effective when parameters, samples or assumptions change."
+        },
+        {
+          "id": "u6r-match",
+          "type": "match",
+          "termIds": [
+            "stress test",
+            "scenario analysis",
+            "value at risk",
+            "sensitivity",
+            "robustness"
+          ],
+          "pairs": [
+            {
+              "id": "stress test",
+              "left": "stress test",
+              "right": "Replay the worst historical moment and see what happens."
+            },
+            {
+              "id": "scenario analysis",
+              "left": "scenario analysis",
+              "right": "Assume several futures and run each one."
+            },
+            {
+              "id": "value at risk",
+              "left": "value at risk",
+              "right": "The loss you should not exceed on a given share of days."
+            },
+            {
+              "id": "sensitivity",
+              "left": "sensitivity",
+              "right": "How much the answer moves when an assumption moves."
+            },
+            {
+              "id": "robustness",
+              "left": "robustness",
+              "right": "Does the conclusion hold if you change the assumptions?"
+            }
+          ],
+          "why": "Match each term to what it means."
+        }
+      ]
+    }
+  ],
+  "sources": []
+}

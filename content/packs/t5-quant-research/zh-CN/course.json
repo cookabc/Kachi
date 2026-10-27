@@ -1,0 +1,5504 @@
+{
+  "schemaVersion": 1,
+  "packId": "t5-quant-research",
+  "contentVersion": "2026.10.28-t5",
+  "locale": "zh-CN",
+  "generatedAt": "2026.10.28-t5",
+  "units": [
+    {
+      "id": 1,
+      "title": "怎么验",
+      "blurb": "回测、样本内外、滚动验证。"
+    },
+    {
+      "id": 2,
+      "title": "怎么骗自己",
+      "blurb": "过拟合、未来函数、幸存者偏差、数据挖掘。"
+    },
+    {
+      "id": 3,
+      "title": "绩效怎么读",
+      "blurb": "夏普、回撤、胜率、期望、α与β。"
+    },
+    {
+      "id": 4,
+      "title": "组合怎么搭",
+      "blurb": "标的池、再平衡、仓位、换手、相关性。"
+    },
+    {
+      "id": 5,
+      "title": "成本吃多少",
+      "blurb": "交易成本、滑点、容量与流动性约束。"
+    },
+    {
+      "id": 6,
+      "title": "风险怎么量",
+      "blurb": "压力测试、情景分析、VaR、敏感性、稳健性。"
+    }
+  ],
+  "concepts": [
+    {
+      "id": "backtest",
+      "unit": 1,
+      "term": "backtest",
+      "caption": "把策略放到历史数据上跑一遍，看它会怎样。",
+      "definition": "用历史数据模拟一个策略的收益与风险，评估其可行性。",
+      "example": "We backtest a simple momentum overlay on a universe of ten energy futures.",
+      "mixUp": "overfitting",
+      "mixUpWhy": "backtest 是实验本身；overfitting 是这个实验可能得的一种病。",
+      "mixUpType": "coexist",
+      "termZh": "回测",
+      "relations": [],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "draft"
+    },
+    {
+      "id": "in-sample",
+      "unit": 1,
+      "term": "in-sample",
+      "caption": "你用来调参数的那段数据。",
+      "definition": "用于拟合或优化模型参数的数据区间，结果天然偏乐观。",
+      "example": "In-sample, from 2010 to 2019, the strategy produces a Sharpe of 1.4.",
+      "mixUp": "out-of-sample",
+      "mixUpWhy": "in-sample 是你调过参数的数据，表现天生好看；out-of-sample 是没碰过的数据，才测得出真本事。",
+      "mixUpType": "opposite",
+      "termZh": "样本内",
+      "relations": [],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "draft"
+    },
+    {
+      "id": "out-of-sample",
+      "unit": 1,
+      "term": "out-of-sample",
+      "caption": "你完全没碰过、留到最后才用的那段数据。",
+      "definition": "未参与建模与调参的数据区间，用于检验策略是否真的可泛化。",
+      "example": "Out-of-sample, from 2020 to 2024, the Sharpe falls to 0.4.",
+      "mixUp": "in-sample",
+      "mixUpWhy": "out-of-sample 没碰过，测的是泛化；in-sample 调过，测的是拟合。",
+      "mixUpType": "opposite",
+      "termZh": "样本外",
+      "relations": [],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "draft"
+    },
+    {
+      "id": "walk-forward",
+      "unit": 1,
+      "term": "walk-forward",
+      "caption": "每年只用当时能看到的数据重新调参，再交易下一年。",
+      "definition": "按时间顺序滚动地用历史数据重新拟合并检验的策略验证方法，最接近真实交易的约束。",
+      "example": "A walk-forward test produces a Sharpe of 0.6, between the two.",
+      "mixUp": "backtest",
+      "mixUpWhy": "walk-forward 是带时间约束的回测（每次只用当时已知的数据）；backtest 可以是全样本一次性跑完，容易偷看未来。",
+      "mixUpType": "hierarchy",
+      "termZh": "滚动验证",
+      "relations": [],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "draft"
+    },
+    {
+      "id": "benchmark",
+      "unit": 1,
+      "term": "benchmark",
+      "caption": "用来比较的那把尺子。",
+      "definition": "作为业绩参照的指数或策略，衡量主动管理是否创造了价值。",
+      "example": "Alpha against the benchmark is 4.2% a year.",
+      "mixUp": "universe",
+      "mixUpWhy": "benchmark 是用来比成绩的参照；universe 是你可以从中挑选标的的范围。",
+      "mixUpType": "coexist",
+      "termZh": "基准",
+      "relations": [],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "draft"
+    },
+    {
+      "id": "overfitting",
+      "unit": 2,
+      "term": "overfitting",
+      "caption": "把历史里的噪声也当成规律调进去了。",
+      "definition": "模型过度贴合历史数据中的偶然波动，导致在新数据上表现大幅下降。",
+      "example": "The drop is what you expect when a specification is overfitting the first decade.",
+      "mixUp": "data snooping",
+      "mixUpWhy": "overfitting 是模型本身贴合了噪声（结果）；data snooping 是反复试参数这个过程（原因）。",
+      "mixUpType": "coexist",
+      "termZh": "过拟合",
+      "relations": [],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "draft"
+    },
+    {
+      "id": "look-ahead bias",
+      "unit": 2,
+      "term": "look-ahead bias",
+      "caption": "用了当时还看不到的数据做决定。",
+      "definition": "在回测中使用了决策时点之后才公布的信息，人为抬高收益。",
+      "example": "Look-ahead bias appears if a signal uses data published after the decision point.",
+      "mixUp": "survivorship bias",
+      "mixUpWhy": "look-ahead bias 是偷看了未来（时间维度）；survivorship bias 是只看活下来的（样本维度）。",
+      "mixUpType": "coexist",
+      "termZh": "未来函数",
+      "relations": [],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "draft"
+    },
+    {
+      "id": "survivorship bias",
+      "unit": 2,
+      "term": "survivorship bias",
+      "caption": "只统计活下来的，没算已经消失的。",
+      "definition": "样本只包含存续至今的标的，剔除了已退市或已清盘的，导致结果系统性偏乐观。",
+      "example": "Survivorship bias appears if the universe is taken from today's list of contracts.",
+      "mixUp": "look-ahead bias",
+      "mixUpWhy": "survivorship bias 是样本选错了（只留下活着的）；look-ahead bias 是时间用错了（看了未来）。",
+      "mixUpType": "coexist",
+      "termZh": "幸存者偏差",
+      "relations": [],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "draft"
+    },
+    {
+      "id": "data snooping",
+      "unit": 2,
+      "term": "data snooping",
+      "caption": "反复翻同一份数据，直到翻出一个“显著”的结果。",
+      "definition": "在同一份数据上反复检验假设，直到偶然出现统计显著的结果，并把它当成发现。",
+      "example": "Data snooping appears if we try many variants and report the best.",
+      "mixUp": "multiple testing",
+      "mixUpWhy": "data snooping 是反复翻找这个习惯；multiple testing 是它带来的统计后果（多重比较）。",
+      "mixUpType": "coexist",
+      "termZh": "数据挖掘（诱导）",
+      "relations": [],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "draft"
+    },
+    {
+      "id": "multiple testing",
+      "unit": 2,
+      "term": "multiple testing",
+      "caption": "同时检验很多假设，假阳性会按比例出现。",
+      "definition": "对同一数据做多次统计检验时，至少出现一次假阳性的概率随检验次数上升。",
+      "example": "Multiple testing does: at a 5% level, twenty independent tests produce roughly one false positive.",
+      "mixUp": "data snooping",
+      "mixUpWhy": "multiple testing 是统计事实（检验多了必有假阳性）；data snooping 是这个事实被利用的方式。",
+      "mixUpType": "hierarchy",
+      "termZh": "多重检验",
+      "relations": [],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "draft"
+    },
+    {
+      "id": "sharpe ratio",
+      "unit": 3,
+      "term": "sharpe ratio",
+      "caption": "每承担一份波动，换来多少超额收益。",
+      "definition": "超额收益除以收益波动率，衡量单位风险下的回报。",
+      "example": "In-sample the strategy produces a Sharpe ratio of 1.4.",
+      "mixUp": "max drawdown",
+      "mixUpWhy": "sharpe ratio 看的是平均波动（收益的平滑程度）；max drawdown 看的是最坏那一跌。高夏普也可能有极深回撤。",
+      "mixUpType": "coexist",
+      "termZh": "夏普比",
+      "relations": [],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "draft"
+    },
+    {
+      "id": "max drawdown",
+      "unit": 3,
+      "term": "max drawdown",
+      "caption": "从最高点跌下来最深的那一次。",
+      "definition": "净值从峰值到随后谷值的最大跌幅，衡量最坏情况下的损失。",
+      "example": "The maximum drawdown widens to 31% out of sample.",
+      "mixUp": "value at risk",
+      "mixUpWhy": "max drawdown 是历史上真正发生过的最深一跌；value at risk 是基于分布估计的单日损失阈值。",
+      "mixUpType": "coexist",
+      "termZh": "最大回撤",
+      "relations": [],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "draft"
+    },
+    {
+      "id": "hit rate",
+      "unit": 3,
+      "term": "hit rate",
+      "caption": "多少次交易里赚了几次。",
+      "definition": "盈利交易占总交易次数的比例。",
+      "example": "The hit rate is 54%.",
+      "mixUp": "expectancy",
+      "mixUpWhy": "hit rate 只数次数；expectancy 把每次赚亏多少也算进去。胜率高而期望为负是常有的事。",
+      "mixUpType": "coexist",
+      "termZh": "胜率",
+      "relations": [],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "draft"
+    },
+    {
+      "id": "expectancy",
+      "unit": 3,
+      "term": "expectancy",
+      "caption": "平均每笔交易能赚多少。",
+      "definition": "每次交易的期望盈亏，等于胜率乘以平均盈利减去败率乘以平均亏损。",
+      "example": "The expectancy per trade is 0.6%.",
+      "mixUp": "hit rate",
+      "mixUpWhy": "expectancy 是金额加权后的平均；hit rate 只数次数。",
+      "mixUpType": "coexist",
+      "termZh": "期望收益",
+      "relations": [],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "draft"
+    },
+    {
+      "id": "alpha",
+      "unit": 3,
+      "term": "alpha",
+      "caption": "扣掉市场给的那份之后，还多赚的。",
+      "definition": "经风险调整后相对于基准的超额收益，衡量策略本身的贡献。",
+      "example": "Alpha against the benchmark is 4.2% a year.",
+      "mixUp": "beta",
+      "mixUpWhy": "alpha 是超出基准的部分（本事）；beta 是跟着市场涨跌的幅度（暴露）。",
+      "mixUpType": "coexist",
+      "termZh": "阿尔法（超额收益）",
+      "relations": [],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "draft"
+    },
+    {
+      "id": "beta",
+      "unit": 3,
+      "term": "beta",
+      "caption": "市场动 1%，大致跟着动多少。",
+      "definition": "资产相对市场的系统性风险暴露，衡量其对市场波动的敏感度。",
+      "example": "With a beta of 0.35, most of the return is not explained by market exposure.",
+      "mixUp": "alpha",
+      "mixUpWhy": "beta 是暴露（跟涨跟跌的幅度）；alpha 是扣掉这份暴露后剩下的。",
+      "mixUpType": "coexist",
+      "termZh": "贝塔（市场敏感度）",
+      "relations": [],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "draft"
+    },
+    {
+      "id": "tracking error",
+      "unit": 3,
+      "term": "tracking error",
+      "caption": "你的收益和基准之间偏得多厉害。",
+      "definition": "组合收益与基准收益之差的波动率，衡量偏离基准的程度。",
+      "example": "Tracking error against the benchmark is 6.5% a year.",
+      "mixUp": "alpha",
+      "mixUpWhy": "tracking error 是偏离的幅度（不管好坏方向）；alpha 是偏离的方向性收益。",
+      "mixUpType": "coexist",
+      "termZh": "跟踪误差",
+      "relations": [],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "draft"
+    },
+    {
+      "id": "universe",
+      "unit": 4,
+      "term": "universe",
+      "caption": "你可以从中挑选的那个范围。",
+      "definition": "策略可投资的资产集合，决定了策略的边界与偏差风险。",
+      "example": "We backtest on a universe of the ten largest energy futures.",
+      "mixUp": "benchmark",
+      "mixUpWhy": "universe 是挑选范围（从哪选）；benchmark 是比较对象（和什么比）。",
+      "mixUpType": "coexist",
+      "termZh": "标的池",
+      "relations": [],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "draft"
+    },
+    {
+      "id": "rebalance",
+      "unit": 4,
+      "term": "rebalance",
+      "caption": "把持仓调回目标权重。",
+      "definition": "按既定规则调整持仓比例，使其回到目标权重，通常按固定周期执行。",
+      "example": "We rebalance monthly at 12% one-way turnover.",
+      "mixUp": "turnover",
+      "mixUpWhy": "rebalance 是调回权重的动作；turnover 是这个动作带来了多少交易量。",
+      "mixUpType": "coexist",
+      "termZh": "再平衡",
+      "relations": [],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "draft"
+    },
+    {
+      "id": "position sizing",
+      "unit": 4,
+      "term": "position sizing",
+      "caption": "每个标的放多少钱。",
+      "definition": "决定每笔交易或每个标的分配多少资金的过程，直接影响风险敞口。",
+      "example": "Position sizing is capped well below the notional the backtest implies.",
+      "mixUp": "exposure",
+      "mixUpWhy": "position sizing 是决定放多少（决策）；exposure 是实际暴露了多少（结果）。放 10% 的仓位，可能因为波动率不同而暴露得更多或更少。",
+      "mixUpType": "coexist",
+      "termZh": "仓位管理",
+      "relations": [],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "draft"
+    },
+    {
+      "id": "turnover",
+      "unit": 4,
+      "term": "turnover",
+      "caption": "一段时间里持仓被换掉多少。",
+      "definition": "单位时间内买卖量相对于组合规模的比例，直接决定交易成本。",
+      "example": "At 12% one-way turnover, costs reach about 1.3% a year.",
+      "mixUp": "transaction cost",
+      "mixUpWhy": "turnover 是换了多少（量）；transaction cost 是换这些要付多少钱。",
+      "mixUpType": "coexist",
+      "termZh": "换手率",
+      "relations": [],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "draft"
+    },
+    {
+      "id": "correlation",
+      "unit": 4,
+      "term": "correlation",
+      "caption": "两个东西是不是一起动。",
+      "definition": "两个资产收益之间的统计关联程度，取值从 -1 到 1。",
+      "example": "Correlation across the ten contracts is high, around 0.7.",
+      "mixUp": "exposure",
+      "mixUpWhy": "correlation 是资产之间一起动的程度；exposure 是你在某个风险上暴露了多少。",
+      "mixUpType": "coexist",
+      "termZh": "相关性",
+      "relations": [],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "draft"
+    },
+    {
+      "id": "exposure",
+      "unit": 4,
+      "term": "exposure",
+      "caption": "你在某个风险上到底押了多少。",
+      "definition": "组合对某一风险因子或资产的敏感程度与规模。",
+      "example": "Most of the return is not explained by market exposure.",
+      "mixUp": "position sizing",
+      "mixUpWhy": "exposure 是实际的暴露（结果）；position sizing 是决定放多少（过程）。",
+      "mixUpType": "coexist",
+      "termZh": "敞口",
+      "relations": [],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "draft"
+    },
+    {
+      "id": "transaction cost",
+      "unit": 5,
+      "term": "transaction cost",
+      "caption": "买卖本身的费用。",
+      "definition": "交易过程中产生的费用，包括佣金、买卖价差与税费。",
+      "example": "With 6 basis points of transaction cost per side, costs reach 1.3% a year.",
+      "mixUp": "slippage",
+      "mixUpWhy": "transaction cost 是明面上的费用（佣金、价差）；slippage 是你的成交价不如预期的那部分。",
+      "mixUpType": "hierarchy",
+      "termZh": "交易成本",
+      "relations": [],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "draft"
+    },
+    {
+      "id": "slippage",
+      "unit": 5,
+      "term": "slippage",
+      "caption": "实际成交价比你想要的差多少。",
+      "definition": "下单价格与实际成交价格之间的差异，通常由市场冲击与延迟造成。",
+      "example": "Doubling slippage removes the edge entirely.",
+      "mixUp": "transaction cost",
+      "mixUpWhy": "slippage 是价格偏离（隐性）；transaction cost 是明确的费用。",
+      "mixUpType": "hierarchy",
+      "termZh": "滑点",
+      "relations": [],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "draft"
+    },
+    {
+      "id": "capacity constraint",
+      "unit": 5,
+      "term": "capacity constraint",
+      "caption": "这套策略最多能装多少钱。",
+      "definition": "策略在交易成本吞掉收益之前所能容纳的最大资金规模。",
+      "example": "A capacity constraint this tight means the strategy cannot absorb meaningful capital.",
+      "mixUp": "liquidity constraint",
+      "mixUpWhy": "capacity constraint 是策略能装多少资金；liquidity constraint 是市场有多少量可成交。后者是因，前者是果。",
+      "mixUpType": "hierarchy",
+      "termZh": "容量约束",
+      "relations": [],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "draft"
+    },
+    {
+      "id": "liquidity constraint",
+      "unit": 5,
+      "term": "liquidity constraint",
+      "caption": "市场里能成交的量不够。",
+      "definition": "市场深度不足导致无法按预期规模或价格成交的限制。",
+      "example": "The liquidity constraint binds at roughly $40 million.",
+      "mixUp": "capacity constraint",
+      "mixUpWhy": "liquidity constraint 是市场层面的量；capacity constraint 是策略层面的上限。",
+      "mixUpType": "hierarchy",
+      "termZh": "流动性约束",
+      "relations": [],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "draft"
+    },
+    {
+      "id": "stress test",
+      "unit": 6,
+      "term": "stress test",
+      "caption": "把历史最坏的情况重放一遍，看会怎样。",
+      "definition": "在极端但可能的情景下评估组合表现的方法，用于检验尾部风险。",
+      "example": "A stress test on the 2020 oil crash shows the overlay loses 14% in that month.",
+      "mixUp": "scenario analysis",
+      "mixUpWhy": "stress test 是单一极端情形（历史上真的发生过）；scenario analysis 是多个假设路径的比较。",
+      "mixUpType": "coexist",
+      "termZh": "压力测试",
+      "relations": [],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "draft"
+    },
+    {
+      "id": "scenario analysis",
+      "unit": 6,
+      "term": "scenario analysis",
+      "caption": "假设几种未来，逐一算一遍。",
+      "definition": "在若干条假设路径下评估策略表现的方法，比较不同环境下的结果。",
+      "example": "We run a scenario analysis on three paths.",
+      "mixUp": "stress test",
+      "mixUpWhy": "scenario analysis 是多情景比较；stress test 是单点极端冲击。",
+      "mixUpType": "coexist",
+      "termZh": "情景分析",
+      "relations": [],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "draft"
+    },
+    {
+      "id": "value at risk",
+      "unit": 6,
+      "term": "value at risk",
+      "caption": "在给定置信度下，一天最多可能亏多少。",
+      "definition": "在特定置信水平与持有期内，组合可能遭受的最大预期损失。",
+      "example": "Value at risk at the 95% level is 2.1% daily.",
+      "mixUp": "max drawdown",
+      "mixUpWhy": "VaR 是概率意义上的单期限额（95% 情况下不超过）；max drawdown 是历史上真实发生的最深一跌。VaR 常低估尾部风险。",
+      "mixUpType": "coexist",
+      "termZh": "风险价值（VaR）",
+      "relations": [],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "draft"
+    },
+    {
+      "id": "sensitivity",
+      "unit": 6,
+      "term": "sensitivity",
+      "caption": "某个假设变一点，结果会变多少。",
+      "definition": "结果对某一参数或假设变化的反应程度。",
+      "example": "The result is sensitive to the cost assumption.",
+      "mixUp": "robustness",
+      "mixUpWhy": "sensitivity 是「变一点会怎样」的测量；robustness 是「变了很多还稳不稳」的结论。",
+      "mixUpType": "coexist",
+      "termZh": "敏感性",
+      "relations": [],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "draft"
+    },
+    {
+      "id": "robustness",
+      "unit": 6,
+      "term": "robustness",
+      "caption": "换个参数、换段时间，结论还站得住吗。",
+      "definition": "策略在参数、样本或假设变化下仍能保持有效的程度。",
+      "example": "A robustness check shows the sign holds in most but not all windows.",
+      "mixUp": "sensitivity",
+      "mixUpWhy": "robustness 是整体结论（稳不稳）；sensitivity 是达到这个结论的测量手段。",
+      "mixUpType": "coexist",
+      "termZh": "稳健性",
+      "relations": [],
+      "sourceIds": [],
+      "risk": "evergreen",
+      "reviewStatus": "draft"
+    }
+  ],
+  "lessons": [
+    {
+      "id": "u1l1",
+      "unit": 1,
+      "title": "怎么验",
+      "icon": "📈",
+      "review": false,
+      "prompts": [
+        {
+          "id": "u1l1-backtest-m",
+          "type": "meaning",
+          "termId": "backtest",
+          "termIds": [
+            "backtest"
+          ],
+          "stem": "backtest 是什么意思？",
+          "options": [
+            {
+              "text": "用历史数据模拟一个策略的收益与风险，评估其可行性。",
+              "art": "backtest"
+            },
+            {
+              "text": "用于拟合或优化模型参数的数据区间，结果天然偏乐观。",
+              "art": "in-sample"
+            },
+            {
+              "text": "未参与建模与调参的数据区间，用于检验策略是否真的可泛化。",
+              "art": "out-of-sample"
+            },
+            {
+              "text": "按时间顺序滚动地用历史数据重新拟合并检验的策略验证方法，最接近真实交易的约束。",
+              "art": "walk-forward"
+            }
+          ],
+          "answer": 0,
+          "why": "backtest 是实验本身；overfitting 是这个实验可能得的一种病。"
+        },
+        {
+          "id": "u1l1-backtest-s",
+          "type": "scenario",
+          "termId": "backtest",
+          "termIds": [
+            "backtest"
+          ],
+          "story": "We backtest a simple momentum overlay on a universe of ten energy futures.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "backtest",
+              "art": "backtest"
+            },
+            {
+              "text": "in-sample",
+              "art": "in-sample"
+            },
+            {
+              "text": "out-of-sample",
+              "art": "out-of-sample"
+            },
+            {
+              "text": "walk-forward",
+              "art": "walk-forward"
+            }
+          ],
+          "answer": 0,
+          "why": "backtest：用历史数据模拟一个策略的收益与风险，评估其可行性。"
+        },
+        {
+          "id": "u1l1-backtest-t",
+          "type": "truefalse",
+          "termId": "backtest",
+          "termIds": [
+            "backtest"
+          ],
+          "stem": "backtest：回测",
+          "answer": true,
+          "why": "backtest 确实是「回测」。"
+        },
+        {
+          "id": "u1l1-backtest-f",
+          "type": "fill",
+          "termId": "backtest",
+          "termIds": [
+            "backtest"
+          ],
+          "story": "We ____ a simple momentum overlay on a universe of ten energy futures.",
+          "bank": [
+            "backtest",
+            "in-sample",
+            "out-of-sample"
+          ],
+          "answer": "backtest",
+          "why": "backtest 是实验本身；overfitting 是这个实验可能得的一种病。"
+        },
+        {
+          "id": "u1l1-backtest-a",
+          "type": "audit",
+          "termId": "backtest",
+          "termIds": [
+            "backtest"
+          ],
+          "story": "我们把策略在 2015–2024 年数据上跑了一遍，年化 18%，最大回撤 12%。所以它在实盘里应该也能做到这个水平。",
+          "stem": "哪一句站不住？",
+          "options": [
+            {
+              "text": "回测结果直接外推到实盘，忽略了实盘的交易成本与滑点。"
+            },
+            {
+              "text": "这个回测已经足够说明策略有效。"
+            },
+            {
+              "text": "18% 的年化和 12% 的回撤看起来是合理的风险收益比。"
+            },
+            {
+              "text": "十年样本区间不算太短。"
+            }
+          ],
+          "answer": 0,
+          "why": "回测到实盘之间隔着一层成本：手续费、滑点、成交价偏离。扣掉这些，18% 常常所剩无几。回测只能说明「过去这段数据上成立」，不能直接当作实盘预期。"
+        },
+        {
+          "id": "u1l1-in-sample-m",
+          "type": "meaning",
+          "termId": "in-sample",
+          "termIds": [
+            "in-sample"
+          ],
+          "stem": "in-sample 是什么意思？",
+          "options": [
+            {
+              "text": "用于拟合或优化模型参数的数据区间，结果天然偏乐观。",
+              "art": "in-sample"
+            },
+            {
+              "text": "用历史数据模拟一个策略的收益与风险，评估其可行性。",
+              "art": "backtest"
+            },
+            {
+              "text": "未参与建模与调参的数据区间，用于检验策略是否真的可泛化。",
+              "art": "out-of-sample"
+            },
+            {
+              "text": "按时间顺序滚动地用历史数据重新拟合并检验的策略验证方法，最接近真实交易的约束。",
+              "art": "walk-forward"
+            }
+          ],
+          "answer": 0,
+          "why": "in-sample 是你调过参数的数据，表现天生好看；out-of-sample 是没碰过的数据，才测得出真本事。"
+        },
+        {
+          "id": "u1l1-in-sample-s",
+          "type": "scenario",
+          "termId": "in-sample",
+          "termIds": [
+            "in-sample"
+          ],
+          "story": "In-sample, from 2010 to 2019, the strategy produces a Sharpe of 1.4.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "in-sample",
+              "art": "in-sample"
+            },
+            {
+              "text": "backtest",
+              "art": "backtest"
+            },
+            {
+              "text": "out-of-sample",
+              "art": "out-of-sample"
+            },
+            {
+              "text": "walk-forward",
+              "art": "walk-forward"
+            }
+          ],
+          "answer": 0,
+          "why": "in-sample：用于拟合或优化模型参数的数据区间，结果天然偏乐观。"
+        },
+        {
+          "id": "u1l1-in-sample-t",
+          "type": "truefalse",
+          "termId": "in-sample",
+          "termIds": [
+            "in-sample"
+          ],
+          "stem": "in-sample 就是 回测。",
+          "answer": false,
+          "why": "in-sample 是「样本内」，不是「回测」。"
+        },
+        {
+          "id": "u1l1-in-sample-f",
+          "type": "fill",
+          "termId": "in-sample",
+          "termIds": [
+            "in-sample"
+          ],
+          "story": "____, from 2010 to 2019, the strategy produces a Sharpe of 1.4.",
+          "bank": [
+            "in-sample",
+            "backtest",
+            "out-of-sample"
+          ],
+          "answer": "in-sample",
+          "why": "in-sample 是你调过参数的数据，表现天生好看；out-of-sample 是没碰过的数据，才测得出真本事。"
+        },
+        {
+          "id": "u1l1-in-sample-a",
+          "type": "audit",
+          "termId": "in-sample",
+          "termIds": [
+            "in-sample"
+          ],
+          "story": "策略在样本内夏普 1.4，所以我们对外说它的夏普是 1.4。",
+          "stem": "哪一句站不住？",
+          "options": [
+            {
+              "text": "样本内夏普是在调参用过的数据上算出来的，不能当作策略能力。"
+            },
+            {
+              "text": "1.4 是一个不错的夏普，可以直接对外披露。"
+            },
+            {
+              "text": "样本内表现好说明参数选得对。"
+            },
+            {
+              "text": "夏普比只看收益不看回撤，所以还应该补充回撤数据。"
+            }
+          ],
+          "answer": 0,
+          "why": "参数是在样本内调的，指标自然被调高。对外报样本内夏普等于把「我试过的这些里最好的那个」当成「它的能力」。要报就报样本外或滚动验证的结果。"
+        },
+        {
+          "id": "u1l1-out-of-sample-m",
+          "type": "meaning",
+          "termId": "out-of-sample",
+          "termIds": [
+            "out-of-sample"
+          ],
+          "stem": "out-of-sample 是什么意思？",
+          "options": [
+            {
+              "text": "未参与建模与调参的数据区间，用于检验策略是否真的可泛化。",
+              "art": "out-of-sample"
+            },
+            {
+              "text": "用历史数据模拟一个策略的收益与风险，评估其可行性。",
+              "art": "backtest"
+            },
+            {
+              "text": "用于拟合或优化模型参数的数据区间，结果天然偏乐观。",
+              "art": "in-sample"
+            },
+            {
+              "text": "按时间顺序滚动地用历史数据重新拟合并检验的策略验证方法，最接近真实交易的约束。",
+              "art": "walk-forward"
+            }
+          ],
+          "answer": 0,
+          "why": "out-of-sample 没碰过，测的是泛化；in-sample 调过，测的是拟合。"
+        },
+        {
+          "id": "u1l1-out-of-sample-s",
+          "type": "scenario",
+          "termId": "out-of-sample",
+          "termIds": [
+            "out-of-sample"
+          ],
+          "story": "Out-of-sample, from 2020 to 2024, the Sharpe falls to 0.4.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "out-of-sample",
+              "art": "out-of-sample"
+            },
+            {
+              "text": "backtest",
+              "art": "backtest"
+            },
+            {
+              "text": "in-sample",
+              "art": "in-sample"
+            },
+            {
+              "text": "walk-forward",
+              "art": "walk-forward"
+            }
+          ],
+          "answer": 0,
+          "why": "out-of-sample：未参与建模与调参的数据区间，用于检验策略是否真的可泛化。"
+        },
+        {
+          "id": "u1l1-out-of-sample-t",
+          "type": "truefalse",
+          "termId": "out-of-sample",
+          "termIds": [
+            "out-of-sample"
+          ],
+          "stem": "out-of-sample：样本外",
+          "answer": true,
+          "why": "out-of-sample 确实是「样本外」。"
+        },
+        {
+          "id": "u1l1-out-of-sample-f",
+          "type": "fill",
+          "termId": "out-of-sample",
+          "termIds": [
+            "out-of-sample"
+          ],
+          "story": "____, from 2020 to 2024, the Sharpe falls to 0.4.",
+          "bank": [
+            "out-of-sample",
+            "backtest",
+            "in-sample"
+          ],
+          "answer": "out-of-sample",
+          "why": "out-of-sample 没碰过，测的是泛化；in-sample 调过，测的是拟合。"
+        },
+        {
+          "id": "u1l1-match",
+          "type": "match",
+          "termIds": [
+            "backtest",
+            "in-sample",
+            "out-of-sample"
+          ],
+          "pairs": [
+            {
+              "id": "backtest",
+              "left": "backtest",
+              "right": "回测"
+            },
+            {
+              "id": "in-sample",
+              "left": "in-sample",
+              "right": "样本内"
+            },
+            {
+              "id": "out-of-sample",
+              "left": "out-of-sample",
+              "right": "样本外"
+            }
+          ],
+          "why": "把每个词和它的意思对上。"
+        }
+      ]
+    },
+    {
+      "id": "u1l2",
+      "unit": 1,
+      "title": "怎么验（续）",
+      "icon": "📈",
+      "review": false,
+      "prompts": [
+        {
+          "id": "u1l2-walk-forward-m",
+          "type": "meaning",
+          "termId": "walk-forward",
+          "termIds": [
+            "walk-forward"
+          ],
+          "stem": "walk-forward 是什么意思？",
+          "options": [
+            {
+              "text": "按时间顺序滚动地用历史数据重新拟合并检验的策略验证方法，最接近真实交易的约束。",
+              "art": "walk-forward"
+            },
+            {
+              "text": "用历史数据模拟一个策略的收益与风险，评估其可行性。",
+              "art": "backtest"
+            },
+            {
+              "text": "用于拟合或优化模型参数的数据区间，结果天然偏乐观。",
+              "art": "in-sample"
+            },
+            {
+              "text": "未参与建模与调参的数据区间，用于检验策略是否真的可泛化。",
+              "art": "out-of-sample"
+            }
+          ],
+          "answer": 0,
+          "why": "walk-forward 是带时间约束的回测（每次只用当时已知的数据）；backtest 可以是全样本一次性跑完，容易偷看未来。"
+        },
+        {
+          "id": "u1l2-walk-forward-s",
+          "type": "scenario",
+          "termId": "walk-forward",
+          "termIds": [
+            "walk-forward"
+          ],
+          "story": "A walk-forward test produces a Sharpe of 0.6, between the two.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "walk-forward",
+              "art": "walk-forward"
+            },
+            {
+              "text": "backtest",
+              "art": "backtest"
+            },
+            {
+              "text": "in-sample",
+              "art": "in-sample"
+            },
+            {
+              "text": "out-of-sample",
+              "art": "out-of-sample"
+            }
+          ],
+          "answer": 0,
+          "why": "walk-forward：按时间顺序滚动地用历史数据重新拟合并检验的策略验证方法，最接近真实交易的约束。"
+        },
+        {
+          "id": "u1l2-walk-forward-t",
+          "type": "truefalse",
+          "termId": "walk-forward",
+          "termIds": [
+            "walk-forward"
+          ],
+          "stem": "walk-forward：滚动验证",
+          "answer": true,
+          "why": "walk-forward 确实是「滚动验证」。"
+        },
+        {
+          "id": "u1l2-walk-forward-f",
+          "type": "fill",
+          "termId": "walk-forward",
+          "termIds": [
+            "walk-forward"
+          ],
+          "story": "A ____ test produces a Sharpe of 0.6, between the two.",
+          "bank": [
+            "walk-forward",
+            "benchmark"
+          ],
+          "answer": "walk-forward",
+          "why": "walk-forward 是带时间约束的回测（每次只用当时已知的数据）；backtest 可以是全样本一次性跑完，容易偷看未来。"
+        },
+        {
+          "id": "u1l2-benchmark-m",
+          "type": "meaning",
+          "termId": "benchmark",
+          "termIds": [
+            "benchmark"
+          ],
+          "stem": "benchmark 是什么意思？",
+          "options": [
+            {
+              "text": "作为业绩参照的指数或策略，衡量主动管理是否创造了价值。",
+              "art": "benchmark"
+            },
+            {
+              "text": "用历史数据模拟一个策略的收益与风险，评估其可行性。",
+              "art": "backtest"
+            },
+            {
+              "text": "用于拟合或优化模型参数的数据区间，结果天然偏乐观。",
+              "art": "in-sample"
+            },
+            {
+              "text": "未参与建模与调参的数据区间，用于检验策略是否真的可泛化。",
+              "art": "out-of-sample"
+            }
+          ],
+          "answer": 0,
+          "why": "benchmark 是用来比成绩的参照；universe 是你可以从中挑选标的的范围。"
+        },
+        {
+          "id": "u1l2-benchmark-s",
+          "type": "scenario",
+          "termId": "benchmark",
+          "termIds": [
+            "benchmark"
+          ],
+          "story": "Alpha against the benchmark is 4.2% a year.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "benchmark",
+              "art": "benchmark"
+            },
+            {
+              "text": "backtest",
+              "art": "backtest"
+            },
+            {
+              "text": "in-sample",
+              "art": "in-sample"
+            },
+            {
+              "text": "out-of-sample",
+              "art": "out-of-sample"
+            }
+          ],
+          "answer": 0,
+          "why": "benchmark：作为业绩参照的指数或策略，衡量主动管理是否创造了价值。"
+        },
+        {
+          "id": "u1l2-benchmark-t",
+          "type": "truefalse",
+          "termId": "benchmark",
+          "termIds": [
+            "benchmark"
+          ],
+          "stem": "benchmark 就是 回测。",
+          "answer": false,
+          "why": "benchmark 是「基准」，不是「回测」。"
+        },
+        {
+          "id": "u1l2-benchmark-f",
+          "type": "fill",
+          "termId": "benchmark",
+          "termIds": [
+            "benchmark"
+          ],
+          "story": "Alpha against the ____ is 4.2% a year.",
+          "bank": [
+            "benchmark",
+            "walk-forward"
+          ],
+          "answer": "benchmark",
+          "why": "benchmark 是用来比成绩的参照；universe 是你可以从中挑选标的的范围。"
+        },
+        {
+          "id": "u1l2-match",
+          "type": "match",
+          "termIds": [
+            "walk-forward",
+            "benchmark"
+          ],
+          "pairs": [
+            {
+              "id": "walk-forward",
+              "left": "walk-forward",
+              "right": "滚动验证"
+            },
+            {
+              "id": "benchmark",
+              "left": "benchmark",
+              "right": "基准"
+            }
+          ],
+          "why": "把每个词和它的意思对上。"
+        }
+      ]
+    },
+    {
+      "id": "u1r",
+      "unit": 1,
+      "title": "怎么验 · 回顾",
+      "icon": "🏆",
+      "review": true,
+      "prompts": [
+        {
+          "id": "u1r-backtest-s",
+          "type": "scenario",
+          "termId": "backtest",
+          "termIds": [
+            "backtest"
+          ],
+          "story": "We backtest a simple momentum overlay on a universe of ten energy futures.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "backtest",
+              "art": "backtest"
+            },
+            {
+              "text": "in-sample",
+              "art": "in-sample"
+            },
+            {
+              "text": "out-of-sample",
+              "art": "out-of-sample"
+            },
+            {
+              "text": "walk-forward",
+              "art": "walk-forward"
+            }
+          ],
+          "answer": 0,
+          "why": "backtest：用历史数据模拟一个策略的收益与风险，评估其可行性。"
+        },
+        {
+          "id": "u1r-backtest-t",
+          "type": "truefalse",
+          "termId": "backtest",
+          "termIds": [
+            "backtest"
+          ],
+          "stem": "backtest：回测",
+          "answer": true,
+          "why": "backtest 确实是「回测」。"
+        },
+        {
+          "id": "u1r-in-sample-s",
+          "type": "scenario",
+          "termId": "in-sample",
+          "termIds": [
+            "in-sample"
+          ],
+          "story": "In-sample, from 2010 to 2019, the strategy produces a Sharpe of 1.4.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "in-sample",
+              "art": "in-sample"
+            },
+            {
+              "text": "backtest",
+              "art": "backtest"
+            },
+            {
+              "text": "out-of-sample",
+              "art": "out-of-sample"
+            },
+            {
+              "text": "walk-forward",
+              "art": "walk-forward"
+            }
+          ],
+          "answer": 0,
+          "why": "in-sample：用于拟合或优化模型参数的数据区间，结果天然偏乐观。"
+        },
+        {
+          "id": "u1r-in-sample-t",
+          "type": "truefalse",
+          "termId": "in-sample",
+          "termIds": [
+            "in-sample"
+          ],
+          "stem": "in-sample 就是 回测。",
+          "answer": false,
+          "why": "in-sample 是「样本内」，不是「回测」。"
+        },
+        {
+          "id": "u1r-out-of-sample-s",
+          "type": "scenario",
+          "termId": "out-of-sample",
+          "termIds": [
+            "out-of-sample"
+          ],
+          "story": "Out-of-sample, from 2020 to 2024, the Sharpe falls to 0.4.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "out-of-sample",
+              "art": "out-of-sample"
+            },
+            {
+              "text": "backtest",
+              "art": "backtest"
+            },
+            {
+              "text": "in-sample",
+              "art": "in-sample"
+            },
+            {
+              "text": "walk-forward",
+              "art": "walk-forward"
+            }
+          ],
+          "answer": 0,
+          "why": "out-of-sample：未参与建模与调参的数据区间，用于检验策略是否真的可泛化。"
+        },
+        {
+          "id": "u1r-out-of-sample-t",
+          "type": "truefalse",
+          "termId": "out-of-sample",
+          "termIds": [
+            "out-of-sample"
+          ],
+          "stem": "out-of-sample：样本外",
+          "answer": true,
+          "why": "out-of-sample 确实是「样本外」。"
+        },
+        {
+          "id": "u1r-walk-forward-s",
+          "type": "scenario",
+          "termId": "walk-forward",
+          "termIds": [
+            "walk-forward"
+          ],
+          "story": "A walk-forward test produces a Sharpe of 0.6, between the two.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "walk-forward",
+              "art": "walk-forward"
+            },
+            {
+              "text": "backtest",
+              "art": "backtest"
+            },
+            {
+              "text": "in-sample",
+              "art": "in-sample"
+            },
+            {
+              "text": "out-of-sample",
+              "art": "out-of-sample"
+            }
+          ],
+          "answer": 0,
+          "why": "walk-forward：按时间顺序滚动地用历史数据重新拟合并检验的策略验证方法，最接近真实交易的约束。"
+        },
+        {
+          "id": "u1r-walk-forward-t",
+          "type": "truefalse",
+          "termId": "walk-forward",
+          "termIds": [
+            "walk-forward"
+          ],
+          "stem": "walk-forward 就是 回测。",
+          "answer": false,
+          "why": "walk-forward 是「滚动验证」，不是「回测」。"
+        },
+        {
+          "id": "u1r-benchmark-s",
+          "type": "scenario",
+          "termId": "benchmark",
+          "termIds": [
+            "benchmark"
+          ],
+          "story": "Alpha against the benchmark is 4.2% a year.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "benchmark",
+              "art": "benchmark"
+            },
+            {
+              "text": "backtest",
+              "art": "backtest"
+            },
+            {
+              "text": "in-sample",
+              "art": "in-sample"
+            },
+            {
+              "text": "out-of-sample",
+              "art": "out-of-sample"
+            }
+          ],
+          "answer": 0,
+          "why": "benchmark：作为业绩参照的指数或策略，衡量主动管理是否创造了价值。"
+        },
+        {
+          "id": "u1r-benchmark-t",
+          "type": "truefalse",
+          "termId": "benchmark",
+          "termIds": [
+            "benchmark"
+          ],
+          "stem": "benchmark：基准",
+          "answer": true,
+          "why": "benchmark 确实是「基准」。"
+        },
+        {
+          "id": "u1r-match",
+          "type": "match",
+          "termIds": [
+            "backtest",
+            "in-sample",
+            "out-of-sample",
+            "walk-forward",
+            "benchmark"
+          ],
+          "pairs": [
+            {
+              "id": "backtest",
+              "left": "backtest",
+              "right": "回测"
+            },
+            {
+              "id": "in-sample",
+              "left": "in-sample",
+              "right": "样本内"
+            },
+            {
+              "id": "out-of-sample",
+              "left": "out-of-sample",
+              "right": "样本外"
+            },
+            {
+              "id": "walk-forward",
+              "left": "walk-forward",
+              "right": "滚动验证"
+            },
+            {
+              "id": "benchmark",
+              "left": "benchmark",
+              "right": "基准"
+            }
+          ],
+          "why": "把每个词和它的意思对上。"
+        }
+      ]
+    },
+    {
+      "id": "u2l1",
+      "unit": 2,
+      "title": "怎么骗自己",
+      "icon": "📈",
+      "review": false,
+      "prompts": [
+        {
+          "id": "u2l1-overfitting-m",
+          "type": "meaning",
+          "termId": "overfitting",
+          "termIds": [
+            "overfitting"
+          ],
+          "stem": "overfitting 是什么意思？",
+          "options": [
+            {
+              "text": "模型过度贴合历史数据中的偶然波动，导致在新数据上表现大幅下降。",
+              "art": "overfitting"
+            },
+            {
+              "text": "在回测中使用了决策时点之后才公布的信息，人为抬高收益。",
+              "art": "look-ahead bias"
+            },
+            {
+              "text": "样本只包含存续至今的标的，剔除了已退市或已清盘的，导致结果系统性偏乐观。",
+              "art": "survivorship bias"
+            },
+            {
+              "text": "在同一份数据上反复检验假设，直到偶然出现统计显著的结果，并把它当成发现。",
+              "art": "data snooping"
+            }
+          ],
+          "answer": 0,
+          "why": "overfitting 是模型本身贴合了噪声（结果）；data snooping 是反复试参数这个过程（原因）。"
+        },
+        {
+          "id": "u2l1-overfitting-s",
+          "type": "scenario",
+          "termId": "overfitting",
+          "termIds": [
+            "overfitting"
+          ],
+          "story": "The drop is what you expect when a specification is overfitting the first decade.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "overfitting",
+              "art": "overfitting"
+            },
+            {
+              "text": "look-ahead bias",
+              "art": "look-ahead bias"
+            },
+            {
+              "text": "survivorship bias",
+              "art": "survivorship bias"
+            },
+            {
+              "text": "data snooping",
+              "art": "data snooping"
+            }
+          ],
+          "answer": 0,
+          "why": "overfitting：模型过度贴合历史数据中的偶然波动，导致在新数据上表现大幅下降。"
+        },
+        {
+          "id": "u2l1-overfitting-t",
+          "type": "truefalse",
+          "termId": "overfitting",
+          "termIds": [
+            "overfitting"
+          ],
+          "stem": "overfitting：过拟合",
+          "answer": true,
+          "why": "overfitting 确实是「过拟合」。"
+        },
+        {
+          "id": "u2l1-overfitting-f",
+          "type": "fill",
+          "termId": "overfitting",
+          "termIds": [
+            "overfitting"
+          ],
+          "story": "The drop is what you expect when a specification is ____ the first decade.",
+          "bank": [
+            "overfitting",
+            "look-ahead bias",
+            "survivorship bias"
+          ],
+          "answer": "overfitting",
+          "why": "overfitting 是模型本身贴合了噪声（结果）；data snooping 是反复试参数这个过程（原因）。"
+        },
+        {
+          "id": "u2l1-overfitting-a",
+          "type": "audit",
+          "termId": "overfitting",
+          "termIds": [
+            "overfitting"
+          ],
+          "story": "我们试了 2,000 组参数，选了在 2015–2024 年表现最好的那一组，年化 41%。这说明找到了一个很强的规律。",
+          "stem": "哪一句站不住？",
+          "options": [
+            {
+              "text": "2,000 次尝试本身就会从噪声里挑出一个漂亮的幸存者，这个 41% 不是规律的证据。"
+            },
+            {
+              "text": "41% 的年化说明规律确实很强。"
+            },
+            {
+              "text": "参数组合越多，找到的规律越可靠。"
+            },
+            {
+              "text": "只要再换一段数据验证一下，就可以确认这个规律。"
+            }
+          ],
+          "answer": 0,
+          "why": "试得足够多次，纯噪声里也一定会出现一组看着很好的参数。2,000 次尝试选出的最优值，是这个搜索过程的最好结果，不是策略的能力。要证明规律，需要样本外验证，而不是在同一个窗口里挑最好。"
+        },
+        {
+          "id": "u2l1-look-ahead bias-m",
+          "type": "meaning",
+          "termId": "look-ahead bias",
+          "termIds": [
+            "look-ahead bias"
+          ],
+          "stem": "look-ahead bias 是什么意思？",
+          "options": [
+            {
+              "text": "在回测中使用了决策时点之后才公布的信息，人为抬高收益。",
+              "art": "look-ahead bias"
+            },
+            {
+              "text": "模型过度贴合历史数据中的偶然波动，导致在新数据上表现大幅下降。",
+              "art": "overfitting"
+            },
+            {
+              "text": "样本只包含存续至今的标的，剔除了已退市或已清盘的，导致结果系统性偏乐观。",
+              "art": "survivorship bias"
+            },
+            {
+              "text": "在同一份数据上反复检验假设，直到偶然出现统计显著的结果，并把它当成发现。",
+              "art": "data snooping"
+            }
+          ],
+          "answer": 0,
+          "why": "look-ahead bias 是偷看了未来（时间维度）；survivorship bias 是只看活下来的（样本维度）。"
+        },
+        {
+          "id": "u2l1-look-ahead bias-s",
+          "type": "scenario",
+          "termId": "look-ahead bias",
+          "termIds": [
+            "look-ahead bias"
+          ],
+          "story": "Look-ahead bias appears if a signal uses data published after the decision point.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "look-ahead bias",
+              "art": "look-ahead bias"
+            },
+            {
+              "text": "overfitting",
+              "art": "overfitting"
+            },
+            {
+              "text": "survivorship bias",
+              "art": "survivorship bias"
+            },
+            {
+              "text": "data snooping",
+              "art": "data snooping"
+            }
+          ],
+          "answer": 0,
+          "why": "look-ahead bias：在回测中使用了决策时点之后才公布的信息，人为抬高收益。"
+        },
+        {
+          "id": "u2l1-look-ahead bias-t",
+          "type": "truefalse",
+          "termId": "look-ahead bias",
+          "termIds": [
+            "look-ahead bias"
+          ],
+          "stem": "look-ahead bias 就是 过拟合。",
+          "answer": false,
+          "why": "look-ahead bias 是「未来函数」，不是「过拟合」。"
+        },
+        {
+          "id": "u2l1-look-ahead bias-f",
+          "type": "fill",
+          "termId": "look-ahead bias",
+          "termIds": [
+            "look-ahead bias"
+          ],
+          "story": "____ appears if a signal uses data published after the decision point.",
+          "bank": [
+            "look-ahead bias",
+            "overfitting",
+            "survivorship bias"
+          ],
+          "answer": "look-ahead bias",
+          "why": "look-ahead bias 是偷看了未来（时间维度）；survivorship bias 是只看活下来的（样本维度）。"
+        },
+        {
+          "id": "u2l1-look-ahead bias-a",
+          "type": "audit",
+          "termId": "look-ahead bias",
+          "termIds": [
+            "look-ahead bias"
+          ],
+          "story": "我们的信号用每周三公布的库存数据来交易周二，回测显示年化 25%。这说明库存数据有很强的预测力。",
+          "stem": "哪一句站不住？",
+          "options": [
+            {
+              "text": "用周三才公布的数据去交易周二，是未来函数，回测里的收益在实盘中拿不到。"
+            },
+            {
+              "text": "25% 说明库存数据很有预测力。"
+            },
+            {
+              "text": "库存数据本身是高频数据，所以效果好是合理的。"
+            },
+            {
+              "text": "只要把库存数据换成月度数据，就没有这个问题了。"
+            }
+          ],
+          "answer": 0,
+          "why": "周二做决定时，周三的库存报告还不存在。回测里把它当作已知，等于用未来的信息交易，收益是虚构的。这类错误在回测里极常见，而且往往难以察觉——因为它不报错，只是把结果抬高。"
+        },
+        {
+          "id": "u2l1-survivorship bias-m",
+          "type": "meaning",
+          "termId": "survivorship bias",
+          "termIds": [
+            "survivorship bias"
+          ],
+          "stem": "survivorship bias 是什么意思？",
+          "options": [
+            {
+              "text": "样本只包含存续至今的标的，剔除了已退市或已清盘的，导致结果系统性偏乐观。",
+              "art": "survivorship bias"
+            },
+            {
+              "text": "模型过度贴合历史数据中的偶然波动，导致在新数据上表现大幅下降。",
+              "art": "overfitting"
+            },
+            {
+              "text": "在回测中使用了决策时点之后才公布的信息，人为抬高收益。",
+              "art": "look-ahead bias"
+            },
+            {
+              "text": "在同一份数据上反复检验假设，直到偶然出现统计显著的结果，并把它当成发现。",
+              "art": "data snooping"
+            }
+          ],
+          "answer": 0,
+          "why": "survivorship bias 是样本选错了（只留下活着的）；look-ahead bias 是时间用错了（看了未来）。"
+        },
+        {
+          "id": "u2l1-survivorship bias-s",
+          "type": "scenario",
+          "termId": "survivorship bias",
+          "termIds": [
+            "survivorship bias"
+          ],
+          "story": "Survivorship bias appears if the universe is taken from today's list of contracts.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "survivorship bias",
+              "art": "survivorship bias"
+            },
+            {
+              "text": "overfitting",
+              "art": "overfitting"
+            },
+            {
+              "text": "look-ahead bias",
+              "art": "look-ahead bias"
+            },
+            {
+              "text": "data snooping",
+              "art": "data snooping"
+            }
+          ],
+          "answer": 0,
+          "why": "survivorship bias：样本只包含存续至今的标的，剔除了已退市或已清盘的，导致结果系统性偏乐观。"
+        },
+        {
+          "id": "u2l1-survivorship bias-t",
+          "type": "truefalse",
+          "termId": "survivorship bias",
+          "termIds": [
+            "survivorship bias"
+          ],
+          "stem": "survivorship bias：幸存者偏差",
+          "answer": true,
+          "why": "survivorship bias 确实是「幸存者偏差」。"
+        },
+        {
+          "id": "u2l1-survivorship bias-f",
+          "type": "fill",
+          "termId": "survivorship bias",
+          "termIds": [
+            "survivorship bias"
+          ],
+          "story": "____ appears if the universe is taken from today's list of contracts.",
+          "bank": [
+            "survivorship bias",
+            "overfitting",
+            "look-ahead bias"
+          ],
+          "answer": "survivorship bias",
+          "why": "survivorship bias 是样本选错了（只留下活着的）；look-ahead bias 是时间用错了（看了未来）。"
+        },
+        {
+          "id": "u2l1-survivorship bias-a",
+          "type": "audit",
+          "termId": "survivorship bias",
+          "termIds": [
+            "survivorship bias"
+          ],
+          "story": "我们统计了目前还在运行的对冲基金过去十年的平均收益，年化 9%。所以对冲基金这个行业长期回报不错。",
+          "stem": "哪一句站不住？",
+          "options": [
+            {
+              "text": "样本只包含活到今天的基金，期间清盘的那些不在其中，这个 9% 被系统性抬高。"
+            },
+            {
+              "text": "9% 说明对冲基金行业长期回报不错。"
+            },
+            {
+              "text": "十年是很长的样本，足以代表行业水平。"
+            },
+            {
+              "text": "应该同时看这些基金的最大回撤。"
+            }
+          ],
+          "answer": 0,
+          "why": "失败清盘的基金从名单里消失了，你统计到的只是幸存者。真实行业回报必须包含那些死掉的——它们往往正是收益最差的。这是幸存者偏差最典型的用法。"
+        },
+        {
+          "id": "u2l1-match",
+          "type": "match",
+          "termIds": [
+            "overfitting",
+            "look-ahead bias",
+            "survivorship bias"
+          ],
+          "pairs": [
+            {
+              "id": "overfitting",
+              "left": "overfitting",
+              "right": "过拟合"
+            },
+            {
+              "id": "look-ahead bias",
+              "left": "look-ahead bias",
+              "right": "未来函数"
+            },
+            {
+              "id": "survivorship bias",
+              "left": "survivorship bias",
+              "right": "幸存者偏差"
+            }
+          ],
+          "why": "把每个词和它的意思对上。"
+        }
+      ]
+    },
+    {
+      "id": "u2l2",
+      "unit": 2,
+      "title": "怎么骗自己（续）",
+      "icon": "📈",
+      "review": false,
+      "prompts": [
+        {
+          "id": "u2l2-data snooping-m",
+          "type": "meaning",
+          "termId": "data snooping",
+          "termIds": [
+            "data snooping"
+          ],
+          "stem": "data snooping 是什么意思？",
+          "options": [
+            {
+              "text": "在同一份数据上反复检验假设，直到偶然出现统计显著的结果，并把它当成发现。",
+              "art": "data snooping"
+            },
+            {
+              "text": "模型过度贴合历史数据中的偶然波动，导致在新数据上表现大幅下降。",
+              "art": "overfitting"
+            },
+            {
+              "text": "在回测中使用了决策时点之后才公布的信息，人为抬高收益。",
+              "art": "look-ahead bias"
+            },
+            {
+              "text": "样本只包含存续至今的标的，剔除了已退市或已清盘的，导致结果系统性偏乐观。",
+              "art": "survivorship bias"
+            }
+          ],
+          "answer": 0,
+          "why": "data snooping 是反复翻找这个习惯；multiple testing 是它带来的统计后果（多重比较）。"
+        },
+        {
+          "id": "u2l2-data snooping-s",
+          "type": "scenario",
+          "termId": "data snooping",
+          "termIds": [
+            "data snooping"
+          ],
+          "story": "Data snooping appears if we try many variants and report the best.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "data snooping",
+              "art": "data snooping"
+            },
+            {
+              "text": "overfitting",
+              "art": "overfitting"
+            },
+            {
+              "text": "look-ahead bias",
+              "art": "look-ahead bias"
+            },
+            {
+              "text": "survivorship bias",
+              "art": "survivorship bias"
+            }
+          ],
+          "answer": 0,
+          "why": "data snooping：在同一份数据上反复检验假设，直到偶然出现统计显著的结果，并把它当成发现。"
+        },
+        {
+          "id": "u2l2-data snooping-t",
+          "type": "truefalse",
+          "termId": "data snooping",
+          "termIds": [
+            "data snooping"
+          ],
+          "stem": "data snooping：数据挖掘（诱导）",
+          "answer": true,
+          "why": "data snooping 确实是「数据挖掘（诱导）」。"
+        },
+        {
+          "id": "u2l2-data snooping-f",
+          "type": "fill",
+          "termId": "data snooping",
+          "termIds": [
+            "data snooping"
+          ],
+          "story": "____ appears if we try many variants and report the best.",
+          "bank": [
+            "data snooping",
+            "multiple testing"
+          ],
+          "answer": "data snooping",
+          "why": "data snooping 是反复翻找这个习惯；multiple testing 是它带来的统计后果（多重比较）。"
+        },
+        {
+          "id": "u2l2-data snooping-a",
+          "type": "audit",
+          "termId": "data snooping",
+          "termIds": [
+            "data snooping"
+          ],
+          "story": "我们在一百个因子里找到了 5 个在 5% 水平上显著的。这说明这 5 个因子是真的有效。",
+          "stem": "哪一句站不住？",
+          "options": [
+            {
+              "text": "在 5% 显著性水平下检验 100 次，纯噪声也会给出约 5 个「显著」结果，需要多重比较校正。"
+            },
+            {
+              "text": "5 个显著因子说明它们确实有效。"
+            },
+            {
+              "text": "5% 的显著性水平是学术标准，所以结论可靠。"
+            },
+            {
+              "text": "应该把不显著的 95 个因子也报告出来。"
+            }
+          ],
+          "answer": 0,
+          "why": "5% 显著性的意思是「如果真实无效，有 5% 的概率被误判为显著」。检验 100 次，纯噪声下期望就有 5 个假阳性。你找到的 5 个恰好是这个数量，说明它们可能全是噪声。这正是 data snooping / multiple testing 的问题。"
+        },
+        {
+          "id": "u2l2-multiple testing-m",
+          "type": "meaning",
+          "termId": "multiple testing",
+          "termIds": [
+            "multiple testing"
+          ],
+          "stem": "multiple testing 是什么意思？",
+          "options": [
+            {
+              "text": "对同一数据做多次统计检验时，至少出现一次假阳性的概率随检验次数上升。",
+              "art": "multiple testing"
+            },
+            {
+              "text": "模型过度贴合历史数据中的偶然波动，导致在新数据上表现大幅下降。",
+              "art": "overfitting"
+            },
+            {
+              "text": "在回测中使用了决策时点之后才公布的信息，人为抬高收益。",
+              "art": "look-ahead bias"
+            },
+            {
+              "text": "样本只包含存续至今的标的，剔除了已退市或已清盘的，导致结果系统性偏乐观。",
+              "art": "survivorship bias"
+            }
+          ],
+          "answer": 0,
+          "why": "multiple testing 是统计事实（检验多了必有假阳性）；data snooping 是这个事实被利用的方式。"
+        },
+        {
+          "id": "u2l2-multiple testing-s",
+          "type": "scenario",
+          "termId": "multiple testing",
+          "termIds": [
+            "multiple testing"
+          ],
+          "story": "Multiple testing does: at a 5% level, twenty independent tests produce roughly one false positive.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "multiple testing",
+              "art": "multiple testing"
+            },
+            {
+              "text": "overfitting",
+              "art": "overfitting"
+            },
+            {
+              "text": "look-ahead bias",
+              "art": "look-ahead bias"
+            },
+            {
+              "text": "survivorship bias",
+              "art": "survivorship bias"
+            }
+          ],
+          "answer": 0,
+          "why": "multiple testing：对同一数据做多次统计检验时，至少出现一次假阳性的概率随检验次数上升。"
+        },
+        {
+          "id": "u2l2-multiple testing-t",
+          "type": "truefalse",
+          "termId": "multiple testing",
+          "termIds": [
+            "multiple testing"
+          ],
+          "stem": "multiple testing 就是 过拟合。",
+          "answer": false,
+          "why": "multiple testing 是「多重检验」，不是「过拟合」。"
+        },
+        {
+          "id": "u2l2-multiple testing-f",
+          "type": "fill",
+          "termId": "multiple testing",
+          "termIds": [
+            "multiple testing"
+          ],
+          "story": "____ does: at a 5% level, twenty independent tests produce roughly one false positive.",
+          "bank": [
+            "multiple testing",
+            "data snooping"
+          ],
+          "answer": "multiple testing",
+          "why": "multiple testing 是统计事实（检验多了必有假阳性）；data snooping 是这个事实被利用的方式。"
+        },
+        {
+          "id": "u2l2-match",
+          "type": "match",
+          "termIds": [
+            "data snooping",
+            "multiple testing"
+          ],
+          "pairs": [
+            {
+              "id": "data snooping",
+              "left": "data snooping",
+              "right": "数据挖掘（诱导）"
+            },
+            {
+              "id": "multiple testing",
+              "left": "multiple testing",
+              "right": "多重检验"
+            }
+          ],
+          "why": "把每个词和它的意思对上。"
+        }
+      ]
+    },
+    {
+      "id": "u2r",
+      "unit": 2,
+      "title": "怎么骗自己 · 回顾",
+      "icon": "🏆",
+      "review": true,
+      "prompts": [
+        {
+          "id": "u2r-overfitting-s",
+          "type": "scenario",
+          "termId": "overfitting",
+          "termIds": [
+            "overfitting"
+          ],
+          "story": "The drop is what you expect when a specification is overfitting the first decade.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "overfitting",
+              "art": "overfitting"
+            },
+            {
+              "text": "look-ahead bias",
+              "art": "look-ahead bias"
+            },
+            {
+              "text": "survivorship bias",
+              "art": "survivorship bias"
+            },
+            {
+              "text": "data snooping",
+              "art": "data snooping"
+            }
+          ],
+          "answer": 0,
+          "why": "overfitting：模型过度贴合历史数据中的偶然波动，导致在新数据上表现大幅下降。"
+        },
+        {
+          "id": "u2r-overfitting-t",
+          "type": "truefalse",
+          "termId": "overfitting",
+          "termIds": [
+            "overfitting"
+          ],
+          "stem": "overfitting：过拟合",
+          "answer": true,
+          "why": "overfitting 确实是「过拟合」。"
+        },
+        {
+          "id": "u2r-look-ahead bias-s",
+          "type": "scenario",
+          "termId": "look-ahead bias",
+          "termIds": [
+            "look-ahead bias"
+          ],
+          "story": "Look-ahead bias appears if a signal uses data published after the decision point.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "look-ahead bias",
+              "art": "look-ahead bias"
+            },
+            {
+              "text": "overfitting",
+              "art": "overfitting"
+            },
+            {
+              "text": "survivorship bias",
+              "art": "survivorship bias"
+            },
+            {
+              "text": "data snooping",
+              "art": "data snooping"
+            }
+          ],
+          "answer": 0,
+          "why": "look-ahead bias：在回测中使用了决策时点之后才公布的信息，人为抬高收益。"
+        },
+        {
+          "id": "u2r-look-ahead bias-t",
+          "type": "truefalse",
+          "termId": "look-ahead bias",
+          "termIds": [
+            "look-ahead bias"
+          ],
+          "stem": "look-ahead bias 就是 过拟合。",
+          "answer": false,
+          "why": "look-ahead bias 是「未来函数」，不是「过拟合」。"
+        },
+        {
+          "id": "u2r-survivorship bias-s",
+          "type": "scenario",
+          "termId": "survivorship bias",
+          "termIds": [
+            "survivorship bias"
+          ],
+          "story": "Survivorship bias appears if the universe is taken from today's list of contracts.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "survivorship bias",
+              "art": "survivorship bias"
+            },
+            {
+              "text": "overfitting",
+              "art": "overfitting"
+            },
+            {
+              "text": "look-ahead bias",
+              "art": "look-ahead bias"
+            },
+            {
+              "text": "data snooping",
+              "art": "data snooping"
+            }
+          ],
+          "answer": 0,
+          "why": "survivorship bias：样本只包含存续至今的标的，剔除了已退市或已清盘的，导致结果系统性偏乐观。"
+        },
+        {
+          "id": "u2r-survivorship bias-t",
+          "type": "truefalse",
+          "termId": "survivorship bias",
+          "termIds": [
+            "survivorship bias"
+          ],
+          "stem": "survivorship bias：幸存者偏差",
+          "answer": true,
+          "why": "survivorship bias 确实是「幸存者偏差」。"
+        },
+        {
+          "id": "u2r-data snooping-s",
+          "type": "scenario",
+          "termId": "data snooping",
+          "termIds": [
+            "data snooping"
+          ],
+          "story": "Data snooping appears if we try many variants and report the best.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "data snooping",
+              "art": "data snooping"
+            },
+            {
+              "text": "overfitting",
+              "art": "overfitting"
+            },
+            {
+              "text": "look-ahead bias",
+              "art": "look-ahead bias"
+            },
+            {
+              "text": "survivorship bias",
+              "art": "survivorship bias"
+            }
+          ],
+          "answer": 0,
+          "why": "data snooping：在同一份数据上反复检验假设，直到偶然出现统计显著的结果，并把它当成发现。"
+        },
+        {
+          "id": "u2r-data snooping-t",
+          "type": "truefalse",
+          "termId": "data snooping",
+          "termIds": [
+            "data snooping"
+          ],
+          "stem": "data snooping 就是 过拟合。",
+          "answer": false,
+          "why": "data snooping 是「数据挖掘（诱导）」，不是「过拟合」。"
+        },
+        {
+          "id": "u2r-multiple testing-s",
+          "type": "scenario",
+          "termId": "multiple testing",
+          "termIds": [
+            "multiple testing"
+          ],
+          "story": "Multiple testing does: at a 5% level, twenty independent tests produce roughly one false positive.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "multiple testing",
+              "art": "multiple testing"
+            },
+            {
+              "text": "overfitting",
+              "art": "overfitting"
+            },
+            {
+              "text": "look-ahead bias",
+              "art": "look-ahead bias"
+            },
+            {
+              "text": "survivorship bias",
+              "art": "survivorship bias"
+            }
+          ],
+          "answer": 0,
+          "why": "multiple testing：对同一数据做多次统计检验时，至少出现一次假阳性的概率随检验次数上升。"
+        },
+        {
+          "id": "u2r-multiple testing-t",
+          "type": "truefalse",
+          "termId": "multiple testing",
+          "termIds": [
+            "multiple testing"
+          ],
+          "stem": "multiple testing：多重检验",
+          "answer": true,
+          "why": "multiple testing 确实是「多重检验」。"
+        },
+        {
+          "id": "u2r-match",
+          "type": "match",
+          "termIds": [
+            "overfitting",
+            "look-ahead bias",
+            "survivorship bias",
+            "data snooping",
+            "multiple testing"
+          ],
+          "pairs": [
+            {
+              "id": "overfitting",
+              "left": "overfitting",
+              "right": "过拟合"
+            },
+            {
+              "id": "look-ahead bias",
+              "left": "look-ahead bias",
+              "right": "未来函数"
+            },
+            {
+              "id": "survivorship bias",
+              "left": "survivorship bias",
+              "right": "幸存者偏差"
+            },
+            {
+              "id": "data snooping",
+              "left": "data snooping",
+              "right": "数据挖掘（诱导）"
+            },
+            {
+              "id": "multiple testing",
+              "left": "multiple testing",
+              "right": "多重检验"
+            }
+          ],
+          "why": "把每个词和它的意思对上。"
+        }
+      ]
+    },
+    {
+      "id": "u3l1",
+      "unit": 3,
+      "title": "绩效怎么读",
+      "icon": "📈",
+      "review": false,
+      "prompts": [
+        {
+          "id": "u3l1-sharpe ratio-m",
+          "type": "meaning",
+          "termId": "sharpe ratio",
+          "termIds": [
+            "sharpe ratio"
+          ],
+          "stem": "sharpe ratio 是什么意思？",
+          "options": [
+            {
+              "text": "超额收益除以收益波动率，衡量单位风险下的回报。",
+              "art": "sharpe ratio"
+            },
+            {
+              "text": "净值从峰值到随后谷值的最大跌幅，衡量最坏情况下的损失。",
+              "art": "max drawdown"
+            },
+            {
+              "text": "盈利交易占总交易次数的比例。",
+              "art": "hit rate"
+            },
+            {
+              "text": "每次交易的期望盈亏，等于胜率乘以平均盈利减去败率乘以平均亏损。",
+              "art": "expectancy"
+            }
+          ],
+          "answer": 0,
+          "why": "sharpe ratio 看的是平均波动（收益的平滑程度）；max drawdown 看的是最坏那一跌。高夏普也可能有极深回撤。"
+        },
+        {
+          "id": "u3l1-sharpe ratio-s",
+          "type": "scenario",
+          "termId": "sharpe ratio",
+          "termIds": [
+            "sharpe ratio"
+          ],
+          "story": "In-sample the strategy produces a Sharpe ratio of 1.4.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "sharpe ratio",
+              "art": "sharpe ratio"
+            },
+            {
+              "text": "max drawdown",
+              "art": "max drawdown"
+            },
+            {
+              "text": "hit rate",
+              "art": "hit rate"
+            },
+            {
+              "text": "expectancy",
+              "art": "expectancy"
+            }
+          ],
+          "answer": 0,
+          "why": "sharpe ratio：超额收益除以收益波动率，衡量单位风险下的回报。"
+        },
+        {
+          "id": "u3l1-sharpe ratio-t",
+          "type": "truefalse",
+          "termId": "sharpe ratio",
+          "termIds": [
+            "sharpe ratio"
+          ],
+          "stem": "sharpe ratio：夏普比",
+          "answer": true,
+          "why": "sharpe ratio 确实是「夏普比」。"
+        },
+        {
+          "id": "u3l1-sharpe ratio-f",
+          "type": "fill",
+          "termId": "sharpe ratio",
+          "termIds": [
+            "sharpe ratio"
+          ],
+          "story": "In-sample the strategy produces a ____ of 1.4.",
+          "bank": [
+            "sharpe ratio",
+            "max drawdown",
+            "hit rate",
+            "expectancy"
+          ],
+          "answer": "sharpe ratio",
+          "why": "sharpe ratio 看的是平均波动（收益的平滑程度）；max drawdown 看的是最坏那一跌。高夏普也可能有极深回撤。"
+        },
+        {
+          "id": "u3l1-max drawdown-m",
+          "type": "meaning",
+          "termId": "max drawdown",
+          "termIds": [
+            "max drawdown"
+          ],
+          "stem": "max drawdown 是什么意思？",
+          "options": [
+            {
+              "text": "净值从峰值到随后谷值的最大跌幅，衡量最坏情况下的损失。",
+              "art": "max drawdown"
+            },
+            {
+              "text": "超额收益除以收益波动率，衡量单位风险下的回报。",
+              "art": "sharpe ratio"
+            },
+            {
+              "text": "盈利交易占总交易次数的比例。",
+              "art": "hit rate"
+            },
+            {
+              "text": "每次交易的期望盈亏，等于胜率乘以平均盈利减去败率乘以平均亏损。",
+              "art": "expectancy"
+            }
+          ],
+          "answer": 0,
+          "why": "max drawdown 是历史上真正发生过的最深一跌；value at risk 是基于分布估计的单日损失阈值。"
+        },
+        {
+          "id": "u3l1-max drawdown-s",
+          "type": "scenario",
+          "termId": "max drawdown",
+          "termIds": [
+            "max drawdown"
+          ],
+          "story": "The maximum drawdown widens to 31% out of sample.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "max drawdown",
+              "art": "max drawdown"
+            },
+            {
+              "text": "sharpe ratio",
+              "art": "sharpe ratio"
+            },
+            {
+              "text": "hit rate",
+              "art": "hit rate"
+            },
+            {
+              "text": "expectancy",
+              "art": "expectancy"
+            }
+          ],
+          "answer": 0,
+          "why": "max drawdown：净值从峰值到随后谷值的最大跌幅，衡量最坏情况下的损失。"
+        },
+        {
+          "id": "u3l1-max drawdown-t",
+          "type": "truefalse",
+          "termId": "max drawdown",
+          "termIds": [
+            "max drawdown"
+          ],
+          "stem": "max drawdown 就是 夏普比。",
+          "answer": false,
+          "why": "max drawdown 是「最大回撤」，不是「夏普比」。"
+        },
+        {
+          "id": "u3l1-max drawdown-f",
+          "type": "fill",
+          "termId": "max drawdown",
+          "termIds": [
+            "max drawdown"
+          ],
+          "story": "The maximum drawdown widens to 31% out of sample. (这里的词是 ____)",
+          "bank": [
+            "max drawdown",
+            "sharpe ratio",
+            "hit rate",
+            "expectancy"
+          ],
+          "answer": "max drawdown",
+          "why": "max drawdown 是历史上真正发生过的最深一跌；value at risk 是基于分布估计的单日损失阈值。"
+        },
+        {
+          "id": "u3l1-hit rate-m",
+          "type": "meaning",
+          "termId": "hit rate",
+          "termIds": [
+            "hit rate"
+          ],
+          "stem": "hit rate 是什么意思？",
+          "options": [
+            {
+              "text": "盈利交易占总交易次数的比例。",
+              "art": "hit rate"
+            },
+            {
+              "text": "超额收益除以收益波动率，衡量单位风险下的回报。",
+              "art": "sharpe ratio"
+            },
+            {
+              "text": "净值从峰值到随后谷值的最大跌幅，衡量最坏情况下的损失。",
+              "art": "max drawdown"
+            },
+            {
+              "text": "每次交易的期望盈亏，等于胜率乘以平均盈利减去败率乘以平均亏损。",
+              "art": "expectancy"
+            }
+          ],
+          "answer": 0,
+          "why": "hit rate 只数次数；expectancy 把每次赚亏多少也算进去。胜率高而期望为负是常有的事。"
+        },
+        {
+          "id": "u3l1-hit rate-s",
+          "type": "scenario",
+          "termId": "hit rate",
+          "termIds": [
+            "hit rate"
+          ],
+          "story": "The hit rate is 54%.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "hit rate",
+              "art": "hit rate"
+            },
+            {
+              "text": "sharpe ratio",
+              "art": "sharpe ratio"
+            },
+            {
+              "text": "max drawdown",
+              "art": "max drawdown"
+            },
+            {
+              "text": "expectancy",
+              "art": "expectancy"
+            }
+          ],
+          "answer": 0,
+          "why": "hit rate：盈利交易占总交易次数的比例。"
+        },
+        {
+          "id": "u3l1-hit rate-t",
+          "type": "truefalse",
+          "termId": "hit rate",
+          "termIds": [
+            "hit rate"
+          ],
+          "stem": "hit rate：胜率",
+          "answer": true,
+          "why": "hit rate 确实是「胜率」。"
+        },
+        {
+          "id": "u3l1-hit rate-f",
+          "type": "fill",
+          "termId": "hit rate",
+          "termIds": [
+            "hit rate"
+          ],
+          "story": "The ____ is 54%.",
+          "bank": [
+            "hit rate",
+            "sharpe ratio",
+            "max drawdown",
+            "expectancy"
+          ],
+          "answer": "hit rate",
+          "why": "hit rate 只数次数；expectancy 把每次赚亏多少也算进去。胜率高而期望为负是常有的事。"
+        },
+        {
+          "id": "u3l1-expectancy-m",
+          "type": "meaning",
+          "termId": "expectancy",
+          "termIds": [
+            "expectancy"
+          ],
+          "stem": "expectancy 是什么意思？",
+          "options": [
+            {
+              "text": "每次交易的期望盈亏，等于胜率乘以平均盈利减去败率乘以平均亏损。",
+              "art": "expectancy"
+            },
+            {
+              "text": "超额收益除以收益波动率，衡量单位风险下的回报。",
+              "art": "sharpe ratio"
+            },
+            {
+              "text": "净值从峰值到随后谷值的最大跌幅，衡量最坏情况下的损失。",
+              "art": "max drawdown"
+            },
+            {
+              "text": "盈利交易占总交易次数的比例。",
+              "art": "hit rate"
+            }
+          ],
+          "answer": 0,
+          "why": "expectancy 是金额加权后的平均；hit rate 只数次数。"
+        },
+        {
+          "id": "u3l1-expectancy-s",
+          "type": "scenario",
+          "termId": "expectancy",
+          "termIds": [
+            "expectancy"
+          ],
+          "story": "The expectancy per trade is 0.6%.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "expectancy",
+              "art": "expectancy"
+            },
+            {
+              "text": "sharpe ratio",
+              "art": "sharpe ratio"
+            },
+            {
+              "text": "max drawdown",
+              "art": "max drawdown"
+            },
+            {
+              "text": "hit rate",
+              "art": "hit rate"
+            }
+          ],
+          "answer": 0,
+          "why": "expectancy：每次交易的期望盈亏，等于胜率乘以平均盈利减去败率乘以平均亏损。"
+        },
+        {
+          "id": "u3l1-expectancy-t",
+          "type": "truefalse",
+          "termId": "expectancy",
+          "termIds": [
+            "expectancy"
+          ],
+          "stem": "expectancy 就是 夏普比。",
+          "answer": false,
+          "why": "expectancy 是「期望收益」，不是「夏普比」。"
+        },
+        {
+          "id": "u3l1-expectancy-f",
+          "type": "fill",
+          "termId": "expectancy",
+          "termIds": [
+            "expectancy"
+          ],
+          "story": "The ____ per trade is 0.6%.",
+          "bank": [
+            "expectancy",
+            "sharpe ratio",
+            "max drawdown",
+            "hit rate"
+          ],
+          "answer": "expectancy",
+          "why": "expectancy 是金额加权后的平均；hit rate 只数次数。"
+        },
+        {
+          "id": "u3l1-match",
+          "type": "match",
+          "termIds": [
+            "sharpe ratio",
+            "max drawdown",
+            "hit rate",
+            "expectancy"
+          ],
+          "pairs": [
+            {
+              "id": "sharpe ratio",
+              "left": "sharpe ratio",
+              "right": "夏普比"
+            },
+            {
+              "id": "max drawdown",
+              "left": "max drawdown",
+              "right": "最大回撤"
+            },
+            {
+              "id": "hit rate",
+              "left": "hit rate",
+              "right": "胜率"
+            },
+            {
+              "id": "expectancy",
+              "left": "expectancy",
+              "right": "期望收益"
+            }
+          ],
+          "why": "把每个词和它的意思对上。"
+        }
+      ]
+    },
+    {
+      "id": "u3l2",
+      "unit": 3,
+      "title": "绩效怎么读（续）",
+      "icon": "📈",
+      "review": false,
+      "prompts": [
+        {
+          "id": "u3l2-alpha-m",
+          "type": "meaning",
+          "termId": "alpha",
+          "termIds": [
+            "alpha"
+          ],
+          "stem": "alpha 是什么意思？",
+          "options": [
+            {
+              "text": "经风险调整后相对于基准的超额收益，衡量策略本身的贡献。",
+              "art": "alpha"
+            },
+            {
+              "text": "超额收益除以收益波动率，衡量单位风险下的回报。",
+              "art": "sharpe ratio"
+            },
+            {
+              "text": "净值从峰值到随后谷值的最大跌幅，衡量最坏情况下的损失。",
+              "art": "max drawdown"
+            },
+            {
+              "text": "盈利交易占总交易次数的比例。",
+              "art": "hit rate"
+            }
+          ],
+          "answer": 0,
+          "why": "alpha 是超出基准的部分（本事）；beta 是跟着市场涨跌的幅度（暴露）。"
+        },
+        {
+          "id": "u3l2-alpha-s",
+          "type": "scenario",
+          "termId": "alpha",
+          "termIds": [
+            "alpha"
+          ],
+          "story": "Alpha against the benchmark is 4.2% a year.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "alpha",
+              "art": "alpha"
+            },
+            {
+              "text": "sharpe ratio",
+              "art": "sharpe ratio"
+            },
+            {
+              "text": "max drawdown",
+              "art": "max drawdown"
+            },
+            {
+              "text": "hit rate",
+              "art": "hit rate"
+            }
+          ],
+          "answer": 0,
+          "why": "alpha：经风险调整后相对于基准的超额收益，衡量策略本身的贡献。"
+        },
+        {
+          "id": "u3l2-alpha-t",
+          "type": "truefalse",
+          "termId": "alpha",
+          "termIds": [
+            "alpha"
+          ],
+          "stem": "alpha：阿尔法（超额收益）",
+          "answer": true,
+          "why": "alpha 确实是「阿尔法（超额收益）」。"
+        },
+        {
+          "id": "u3l2-alpha-f",
+          "type": "fill",
+          "termId": "alpha",
+          "termIds": [
+            "alpha"
+          ],
+          "story": "____ against the benchmark is 4.2% a year.",
+          "bank": [
+            "alpha",
+            "beta",
+            "tracking error"
+          ],
+          "answer": "alpha",
+          "why": "alpha 是超出基准的部分（本事）；beta 是跟着市场涨跌的幅度（暴露）。"
+        },
+        {
+          "id": "u3l2-beta-m",
+          "type": "meaning",
+          "termId": "beta",
+          "termIds": [
+            "beta"
+          ],
+          "stem": "beta 是什么意思？",
+          "options": [
+            {
+              "text": "资产相对市场的系统性风险暴露，衡量其对市场波动的敏感度。",
+              "art": "beta"
+            },
+            {
+              "text": "超额收益除以收益波动率，衡量单位风险下的回报。",
+              "art": "sharpe ratio"
+            },
+            {
+              "text": "净值从峰值到随后谷值的最大跌幅，衡量最坏情况下的损失。",
+              "art": "max drawdown"
+            },
+            {
+              "text": "盈利交易占总交易次数的比例。",
+              "art": "hit rate"
+            }
+          ],
+          "answer": 0,
+          "why": "beta 是暴露（跟涨跟跌的幅度）；alpha 是扣掉这份暴露后剩下的。"
+        },
+        {
+          "id": "u3l2-beta-s",
+          "type": "scenario",
+          "termId": "beta",
+          "termIds": [
+            "beta"
+          ],
+          "story": "With a beta of 0.35, most of the return is not explained by market exposure.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "beta",
+              "art": "beta"
+            },
+            {
+              "text": "sharpe ratio",
+              "art": "sharpe ratio"
+            },
+            {
+              "text": "max drawdown",
+              "art": "max drawdown"
+            },
+            {
+              "text": "hit rate",
+              "art": "hit rate"
+            }
+          ],
+          "answer": 0,
+          "why": "beta：资产相对市场的系统性风险暴露，衡量其对市场波动的敏感度。"
+        },
+        {
+          "id": "u3l2-beta-t",
+          "type": "truefalse",
+          "termId": "beta",
+          "termIds": [
+            "beta"
+          ],
+          "stem": "beta 就是 夏普比。",
+          "answer": false,
+          "why": "beta 是「贝塔（市场敏感度）」，不是「夏普比」。"
+        },
+        {
+          "id": "u3l2-beta-f",
+          "type": "fill",
+          "termId": "beta",
+          "termIds": [
+            "beta"
+          ],
+          "story": "With a ____ of 0.35, most of the return is not explained by market exposure.",
+          "bank": [
+            "beta",
+            "alpha",
+            "tracking error"
+          ],
+          "answer": "beta",
+          "why": "beta 是暴露（跟涨跟跌的幅度）；alpha 是扣掉这份暴露后剩下的。"
+        },
+        {
+          "id": "u3l2-tracking error-m",
+          "type": "meaning",
+          "termId": "tracking error",
+          "termIds": [
+            "tracking error"
+          ],
+          "stem": "tracking error 是什么意思？",
+          "options": [
+            {
+              "text": "组合收益与基准收益之差的波动率，衡量偏离基准的程度。",
+              "art": "tracking error"
+            },
+            {
+              "text": "超额收益除以收益波动率，衡量单位风险下的回报。",
+              "art": "sharpe ratio"
+            },
+            {
+              "text": "净值从峰值到随后谷值的最大跌幅，衡量最坏情况下的损失。",
+              "art": "max drawdown"
+            },
+            {
+              "text": "盈利交易占总交易次数的比例。",
+              "art": "hit rate"
+            }
+          ],
+          "answer": 0,
+          "why": "tracking error 是偏离的幅度（不管好坏方向）；alpha 是偏离的方向性收益。"
+        },
+        {
+          "id": "u3l2-tracking error-s",
+          "type": "scenario",
+          "termId": "tracking error",
+          "termIds": [
+            "tracking error"
+          ],
+          "story": "Tracking error against the benchmark is 6.5% a year.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "tracking error",
+              "art": "tracking error"
+            },
+            {
+              "text": "sharpe ratio",
+              "art": "sharpe ratio"
+            },
+            {
+              "text": "max drawdown",
+              "art": "max drawdown"
+            },
+            {
+              "text": "hit rate",
+              "art": "hit rate"
+            }
+          ],
+          "answer": 0,
+          "why": "tracking error：组合收益与基准收益之差的波动率，衡量偏离基准的程度。"
+        },
+        {
+          "id": "u3l2-tracking error-t",
+          "type": "truefalse",
+          "termId": "tracking error",
+          "termIds": [
+            "tracking error"
+          ],
+          "stem": "tracking error：跟踪误差",
+          "answer": true,
+          "why": "tracking error 确实是「跟踪误差」。"
+        },
+        {
+          "id": "u3l2-tracking error-f",
+          "type": "fill",
+          "termId": "tracking error",
+          "termIds": [
+            "tracking error"
+          ],
+          "story": "____ against the benchmark is 6.5% a year.",
+          "bank": [
+            "tracking error",
+            "alpha",
+            "beta"
+          ],
+          "answer": "tracking error",
+          "why": "tracking error 是偏离的幅度（不管好坏方向）；alpha 是偏离的方向性收益。"
+        },
+        {
+          "id": "u3l2-match",
+          "type": "match",
+          "termIds": [
+            "alpha",
+            "beta",
+            "tracking error"
+          ],
+          "pairs": [
+            {
+              "id": "alpha",
+              "left": "alpha",
+              "right": "阿尔法（超额收益）"
+            },
+            {
+              "id": "beta",
+              "left": "beta",
+              "right": "贝塔（市场敏感度）"
+            },
+            {
+              "id": "tracking error",
+              "left": "tracking error",
+              "right": "跟踪误差"
+            }
+          ],
+          "why": "把每个词和它的意思对上。"
+        }
+      ]
+    },
+    {
+      "id": "u3r",
+      "unit": 3,
+      "title": "绩效怎么读 · 回顾",
+      "icon": "🏆",
+      "review": true,
+      "prompts": [
+        {
+          "id": "u3r-sharpe ratio-s",
+          "type": "scenario",
+          "termId": "sharpe ratio",
+          "termIds": [
+            "sharpe ratio"
+          ],
+          "story": "In-sample the strategy produces a Sharpe ratio of 1.4.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "sharpe ratio",
+              "art": "sharpe ratio"
+            },
+            {
+              "text": "max drawdown",
+              "art": "max drawdown"
+            },
+            {
+              "text": "hit rate",
+              "art": "hit rate"
+            },
+            {
+              "text": "expectancy",
+              "art": "expectancy"
+            }
+          ],
+          "answer": 0,
+          "why": "sharpe ratio：超额收益除以收益波动率，衡量单位风险下的回报。"
+        },
+        {
+          "id": "u3r-sharpe ratio-t",
+          "type": "truefalse",
+          "termId": "sharpe ratio",
+          "termIds": [
+            "sharpe ratio"
+          ],
+          "stem": "sharpe ratio：夏普比",
+          "answer": true,
+          "why": "sharpe ratio 确实是「夏普比」。"
+        },
+        {
+          "id": "u3r-max drawdown-s",
+          "type": "scenario",
+          "termId": "max drawdown",
+          "termIds": [
+            "max drawdown"
+          ],
+          "story": "The maximum drawdown widens to 31% out of sample.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "max drawdown",
+              "art": "max drawdown"
+            },
+            {
+              "text": "sharpe ratio",
+              "art": "sharpe ratio"
+            },
+            {
+              "text": "hit rate",
+              "art": "hit rate"
+            },
+            {
+              "text": "expectancy",
+              "art": "expectancy"
+            }
+          ],
+          "answer": 0,
+          "why": "max drawdown：净值从峰值到随后谷值的最大跌幅，衡量最坏情况下的损失。"
+        },
+        {
+          "id": "u3r-max drawdown-t",
+          "type": "truefalse",
+          "termId": "max drawdown",
+          "termIds": [
+            "max drawdown"
+          ],
+          "stem": "max drawdown 就是 夏普比。",
+          "answer": false,
+          "why": "max drawdown 是「最大回撤」，不是「夏普比」。"
+        },
+        {
+          "id": "u3r-hit rate-s",
+          "type": "scenario",
+          "termId": "hit rate",
+          "termIds": [
+            "hit rate"
+          ],
+          "story": "The hit rate is 54%.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "hit rate",
+              "art": "hit rate"
+            },
+            {
+              "text": "sharpe ratio",
+              "art": "sharpe ratio"
+            },
+            {
+              "text": "max drawdown",
+              "art": "max drawdown"
+            },
+            {
+              "text": "expectancy",
+              "art": "expectancy"
+            }
+          ],
+          "answer": 0,
+          "why": "hit rate：盈利交易占总交易次数的比例。"
+        },
+        {
+          "id": "u3r-hit rate-t",
+          "type": "truefalse",
+          "termId": "hit rate",
+          "termIds": [
+            "hit rate"
+          ],
+          "stem": "hit rate：胜率",
+          "answer": true,
+          "why": "hit rate 确实是「胜率」。"
+        },
+        {
+          "id": "u3r-expectancy-s",
+          "type": "scenario",
+          "termId": "expectancy",
+          "termIds": [
+            "expectancy"
+          ],
+          "story": "The expectancy per trade is 0.6%.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "expectancy",
+              "art": "expectancy"
+            },
+            {
+              "text": "sharpe ratio",
+              "art": "sharpe ratio"
+            },
+            {
+              "text": "max drawdown",
+              "art": "max drawdown"
+            },
+            {
+              "text": "hit rate",
+              "art": "hit rate"
+            }
+          ],
+          "answer": 0,
+          "why": "expectancy：每次交易的期望盈亏，等于胜率乘以平均盈利减去败率乘以平均亏损。"
+        },
+        {
+          "id": "u3r-expectancy-t",
+          "type": "truefalse",
+          "termId": "expectancy",
+          "termIds": [
+            "expectancy"
+          ],
+          "stem": "expectancy 就是 夏普比。",
+          "answer": false,
+          "why": "expectancy 是「期望收益」，不是「夏普比」。"
+        },
+        {
+          "id": "u3r-alpha-s",
+          "type": "scenario",
+          "termId": "alpha",
+          "termIds": [
+            "alpha"
+          ],
+          "story": "Alpha against the benchmark is 4.2% a year.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "alpha",
+              "art": "alpha"
+            },
+            {
+              "text": "sharpe ratio",
+              "art": "sharpe ratio"
+            },
+            {
+              "text": "max drawdown",
+              "art": "max drawdown"
+            },
+            {
+              "text": "hit rate",
+              "art": "hit rate"
+            }
+          ],
+          "answer": 0,
+          "why": "alpha：经风险调整后相对于基准的超额收益，衡量策略本身的贡献。"
+        },
+        {
+          "id": "u3r-alpha-t",
+          "type": "truefalse",
+          "termId": "alpha",
+          "termIds": [
+            "alpha"
+          ],
+          "stem": "alpha：阿尔法（超额收益）",
+          "answer": true,
+          "why": "alpha 确实是「阿尔法（超额收益）」。"
+        },
+        {
+          "id": "u3r-beta-s",
+          "type": "scenario",
+          "termId": "beta",
+          "termIds": [
+            "beta"
+          ],
+          "story": "With a beta of 0.35, most of the return is not explained by market exposure.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "beta",
+              "art": "beta"
+            },
+            {
+              "text": "sharpe ratio",
+              "art": "sharpe ratio"
+            },
+            {
+              "text": "max drawdown",
+              "art": "max drawdown"
+            },
+            {
+              "text": "hit rate",
+              "art": "hit rate"
+            }
+          ],
+          "answer": 0,
+          "why": "beta：资产相对市场的系统性风险暴露，衡量其对市场波动的敏感度。"
+        },
+        {
+          "id": "u3r-beta-t",
+          "type": "truefalse",
+          "termId": "beta",
+          "termIds": [
+            "beta"
+          ],
+          "stem": "beta 就是 夏普比。",
+          "answer": false,
+          "why": "beta 是「贝塔（市场敏感度）」，不是「夏普比」。"
+        },
+        {
+          "id": "u3r-tracking error-s",
+          "type": "scenario",
+          "termId": "tracking error",
+          "termIds": [
+            "tracking error"
+          ],
+          "story": "Tracking error against the benchmark is 6.5% a year.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "tracking error",
+              "art": "tracking error"
+            },
+            {
+              "text": "sharpe ratio",
+              "art": "sharpe ratio"
+            },
+            {
+              "text": "max drawdown",
+              "art": "max drawdown"
+            },
+            {
+              "text": "hit rate",
+              "art": "hit rate"
+            }
+          ],
+          "answer": 0,
+          "why": "tracking error：组合收益与基准收益之差的波动率，衡量偏离基准的程度。"
+        },
+        {
+          "id": "u3r-tracking error-t",
+          "type": "truefalse",
+          "termId": "tracking error",
+          "termIds": [
+            "tracking error"
+          ],
+          "stem": "tracking error：跟踪误差",
+          "answer": true,
+          "why": "tracking error 确实是「跟踪误差」。"
+        },
+        {
+          "id": "u3r-match",
+          "type": "match",
+          "termIds": [
+            "sharpe ratio",
+            "max drawdown",
+            "hit rate",
+            "expectancy",
+            "alpha",
+            "beta",
+            "tracking error"
+          ],
+          "pairs": [
+            {
+              "id": "sharpe ratio",
+              "left": "sharpe ratio",
+              "right": "夏普比"
+            },
+            {
+              "id": "max drawdown",
+              "left": "max drawdown",
+              "right": "最大回撤"
+            },
+            {
+              "id": "hit rate",
+              "left": "hit rate",
+              "right": "胜率"
+            },
+            {
+              "id": "expectancy",
+              "left": "expectancy",
+              "right": "期望收益"
+            },
+            {
+              "id": "alpha",
+              "left": "alpha",
+              "right": "阿尔法（超额收益）"
+            },
+            {
+              "id": "beta",
+              "left": "beta",
+              "right": "贝塔（市场敏感度）"
+            },
+            {
+              "id": "tracking error",
+              "left": "tracking error",
+              "right": "跟踪误差"
+            }
+          ],
+          "why": "把每个词和它的意思对上。"
+        }
+      ]
+    },
+    {
+      "id": "u4l1",
+      "unit": 4,
+      "title": "组合怎么搭",
+      "icon": "📈",
+      "review": false,
+      "prompts": [
+        {
+          "id": "u4l1-universe-m",
+          "type": "meaning",
+          "termId": "universe",
+          "termIds": [
+            "universe"
+          ],
+          "stem": "universe 是什么意思？",
+          "options": [
+            {
+              "text": "策略可投资的资产集合，决定了策略的边界与偏差风险。",
+              "art": "universe"
+            },
+            {
+              "text": "按既定规则调整持仓比例，使其回到目标权重，通常按固定周期执行。",
+              "art": "rebalance"
+            },
+            {
+              "text": "决定每笔交易或每个标的分配多少资金的过程，直接影响风险敞口。",
+              "art": "position sizing"
+            },
+            {
+              "text": "单位时间内买卖量相对于组合规模的比例，直接决定交易成本。",
+              "art": "turnover"
+            }
+          ],
+          "answer": 0,
+          "why": "universe 是挑选范围（从哪选）；benchmark 是比较对象（和什么比）。"
+        },
+        {
+          "id": "u4l1-universe-s",
+          "type": "scenario",
+          "termId": "universe",
+          "termIds": [
+            "universe"
+          ],
+          "story": "We backtest on a universe of the ten largest energy futures.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "universe",
+              "art": "universe"
+            },
+            {
+              "text": "rebalance",
+              "art": "rebalance"
+            },
+            {
+              "text": "position sizing",
+              "art": "position sizing"
+            },
+            {
+              "text": "turnover",
+              "art": "turnover"
+            }
+          ],
+          "answer": 0,
+          "why": "universe：策略可投资的资产集合，决定了策略的边界与偏差风险。"
+        },
+        {
+          "id": "u4l1-universe-t",
+          "type": "truefalse",
+          "termId": "universe",
+          "termIds": [
+            "universe"
+          ],
+          "stem": "universe：标的池",
+          "answer": true,
+          "why": "universe 确实是「标的池」。"
+        },
+        {
+          "id": "u4l1-universe-f",
+          "type": "fill",
+          "termId": "universe",
+          "termIds": [
+            "universe"
+          ],
+          "story": "We backtest on a ____ of the ten largest energy futures.",
+          "bank": [
+            "universe",
+            "rebalance",
+            "position sizing"
+          ],
+          "answer": "universe",
+          "why": "universe 是挑选范围（从哪选）；benchmark 是比较对象（和什么比）。"
+        },
+        {
+          "id": "u4l1-rebalance-m",
+          "type": "meaning",
+          "termId": "rebalance",
+          "termIds": [
+            "rebalance"
+          ],
+          "stem": "rebalance 是什么意思？",
+          "options": [
+            {
+              "text": "按既定规则调整持仓比例，使其回到目标权重，通常按固定周期执行。",
+              "art": "rebalance"
+            },
+            {
+              "text": "策略可投资的资产集合，决定了策略的边界与偏差风险。",
+              "art": "universe"
+            },
+            {
+              "text": "决定每笔交易或每个标的分配多少资金的过程，直接影响风险敞口。",
+              "art": "position sizing"
+            },
+            {
+              "text": "单位时间内买卖量相对于组合规模的比例，直接决定交易成本。",
+              "art": "turnover"
+            }
+          ],
+          "answer": 0,
+          "why": "rebalance 是调回权重的动作；turnover 是这个动作带来了多少交易量。"
+        },
+        {
+          "id": "u4l1-rebalance-s",
+          "type": "scenario",
+          "termId": "rebalance",
+          "termIds": [
+            "rebalance"
+          ],
+          "story": "We rebalance monthly at 12% one-way turnover.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "rebalance",
+              "art": "rebalance"
+            },
+            {
+              "text": "universe",
+              "art": "universe"
+            },
+            {
+              "text": "position sizing",
+              "art": "position sizing"
+            },
+            {
+              "text": "turnover",
+              "art": "turnover"
+            }
+          ],
+          "answer": 0,
+          "why": "rebalance：按既定规则调整持仓比例，使其回到目标权重，通常按固定周期执行。"
+        },
+        {
+          "id": "u4l1-rebalance-t",
+          "type": "truefalse",
+          "termId": "rebalance",
+          "termIds": [
+            "rebalance"
+          ],
+          "stem": "rebalance 就是 标的池。",
+          "answer": false,
+          "why": "rebalance 是「再平衡」，不是「标的池」。"
+        },
+        {
+          "id": "u4l1-rebalance-f",
+          "type": "fill",
+          "termId": "rebalance",
+          "termIds": [
+            "rebalance"
+          ],
+          "story": "We ____ monthly at 12% one-way turnover.",
+          "bank": [
+            "rebalance",
+            "universe",
+            "position sizing"
+          ],
+          "answer": "rebalance",
+          "why": "rebalance 是调回权重的动作；turnover 是这个动作带来了多少交易量。"
+        },
+        {
+          "id": "u4l1-position sizing-m",
+          "type": "meaning",
+          "termId": "position sizing",
+          "termIds": [
+            "position sizing"
+          ],
+          "stem": "position sizing 是什么意思？",
+          "options": [
+            {
+              "text": "决定每笔交易或每个标的分配多少资金的过程，直接影响风险敞口。",
+              "art": "position sizing"
+            },
+            {
+              "text": "策略可投资的资产集合，决定了策略的边界与偏差风险。",
+              "art": "universe"
+            },
+            {
+              "text": "按既定规则调整持仓比例，使其回到目标权重，通常按固定周期执行。",
+              "art": "rebalance"
+            },
+            {
+              "text": "单位时间内买卖量相对于组合规模的比例，直接决定交易成本。",
+              "art": "turnover"
+            }
+          ],
+          "answer": 0,
+          "why": "position sizing 是决定放多少（决策）；exposure 是实际暴露了多少（结果）。放 10% 的仓位，可能因为波动率不同而暴露得更多或更少。"
+        },
+        {
+          "id": "u4l1-position sizing-s",
+          "type": "scenario",
+          "termId": "position sizing",
+          "termIds": [
+            "position sizing"
+          ],
+          "story": "Position sizing is capped well below the notional the backtest implies.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "position sizing",
+              "art": "position sizing"
+            },
+            {
+              "text": "universe",
+              "art": "universe"
+            },
+            {
+              "text": "rebalance",
+              "art": "rebalance"
+            },
+            {
+              "text": "turnover",
+              "art": "turnover"
+            }
+          ],
+          "answer": 0,
+          "why": "position sizing：决定每笔交易或每个标的分配多少资金的过程，直接影响风险敞口。"
+        },
+        {
+          "id": "u4l1-position sizing-t",
+          "type": "truefalse",
+          "termId": "position sizing",
+          "termIds": [
+            "position sizing"
+          ],
+          "stem": "position sizing：仓位管理",
+          "answer": true,
+          "why": "position sizing 确实是「仓位管理」。"
+        },
+        {
+          "id": "u4l1-position sizing-f",
+          "type": "fill",
+          "termId": "position sizing",
+          "termIds": [
+            "position sizing"
+          ],
+          "story": "____ is capped well below the notional the backtest implies.",
+          "bank": [
+            "position sizing",
+            "universe",
+            "rebalance"
+          ],
+          "answer": "position sizing",
+          "why": "position sizing 是决定放多少（决策）；exposure 是实际暴露了多少（结果）。放 10% 的仓位，可能因为波动率不同而暴露得更多或更少。"
+        },
+        {
+          "id": "u4l1-match",
+          "type": "match",
+          "termIds": [
+            "universe",
+            "rebalance",
+            "position sizing"
+          ],
+          "pairs": [
+            {
+              "id": "universe",
+              "left": "universe",
+              "right": "标的池"
+            },
+            {
+              "id": "rebalance",
+              "left": "rebalance",
+              "right": "再平衡"
+            },
+            {
+              "id": "position sizing",
+              "left": "position sizing",
+              "right": "仓位管理"
+            }
+          ],
+          "why": "把每个词和它的意思对上。"
+        }
+      ]
+    },
+    {
+      "id": "u4l2",
+      "unit": 4,
+      "title": "组合怎么搭（续）",
+      "icon": "📈",
+      "review": false,
+      "prompts": [
+        {
+          "id": "u4l2-turnover-m",
+          "type": "meaning",
+          "termId": "turnover",
+          "termIds": [
+            "turnover"
+          ],
+          "stem": "turnover 是什么意思？",
+          "options": [
+            {
+              "text": "单位时间内买卖量相对于组合规模的比例，直接决定交易成本。",
+              "art": "turnover"
+            },
+            {
+              "text": "策略可投资的资产集合，决定了策略的边界与偏差风险。",
+              "art": "universe"
+            },
+            {
+              "text": "按既定规则调整持仓比例，使其回到目标权重，通常按固定周期执行。",
+              "art": "rebalance"
+            },
+            {
+              "text": "决定每笔交易或每个标的分配多少资金的过程，直接影响风险敞口。",
+              "art": "position sizing"
+            }
+          ],
+          "answer": 0,
+          "why": "turnover 是换了多少（量）；transaction cost 是换这些要付多少钱。"
+        },
+        {
+          "id": "u4l2-turnover-s",
+          "type": "scenario",
+          "termId": "turnover",
+          "termIds": [
+            "turnover"
+          ],
+          "story": "At 12% one-way turnover, costs reach about 1.3% a year.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "turnover",
+              "art": "turnover"
+            },
+            {
+              "text": "universe",
+              "art": "universe"
+            },
+            {
+              "text": "rebalance",
+              "art": "rebalance"
+            },
+            {
+              "text": "position sizing",
+              "art": "position sizing"
+            }
+          ],
+          "answer": 0,
+          "why": "turnover：单位时间内买卖量相对于组合规模的比例，直接决定交易成本。"
+        },
+        {
+          "id": "u4l2-turnover-t",
+          "type": "truefalse",
+          "termId": "turnover",
+          "termIds": [
+            "turnover"
+          ],
+          "stem": "turnover：换手率",
+          "answer": true,
+          "why": "turnover 确实是「换手率」。"
+        },
+        {
+          "id": "u4l2-turnover-f",
+          "type": "fill",
+          "termId": "turnover",
+          "termIds": [
+            "turnover"
+          ],
+          "story": "At 12% one-way ____, costs reach about 1.3% a year.",
+          "bank": [
+            "turnover",
+            "correlation",
+            "exposure"
+          ],
+          "answer": "turnover",
+          "why": "turnover 是换了多少（量）；transaction cost 是换这些要付多少钱。"
+        },
+        {
+          "id": "u4l2-correlation-m",
+          "type": "meaning",
+          "termId": "correlation",
+          "termIds": [
+            "correlation"
+          ],
+          "stem": "correlation 是什么意思？",
+          "options": [
+            {
+              "text": "两个资产收益之间的统计关联程度，取值从 -1 到 1。",
+              "art": "correlation"
+            },
+            {
+              "text": "策略可投资的资产集合，决定了策略的边界与偏差风险。",
+              "art": "universe"
+            },
+            {
+              "text": "按既定规则调整持仓比例，使其回到目标权重，通常按固定周期执行。",
+              "art": "rebalance"
+            },
+            {
+              "text": "决定每笔交易或每个标的分配多少资金的过程，直接影响风险敞口。",
+              "art": "position sizing"
+            }
+          ],
+          "answer": 0,
+          "why": "correlation 是资产之间一起动的程度；exposure 是你在某个风险上暴露了多少。"
+        },
+        {
+          "id": "u4l2-correlation-s",
+          "type": "scenario",
+          "termId": "correlation",
+          "termIds": [
+            "correlation"
+          ],
+          "story": "Correlation across the ten contracts is high, around 0.7.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "correlation",
+              "art": "correlation"
+            },
+            {
+              "text": "universe",
+              "art": "universe"
+            },
+            {
+              "text": "rebalance",
+              "art": "rebalance"
+            },
+            {
+              "text": "position sizing",
+              "art": "position sizing"
+            }
+          ],
+          "answer": 0,
+          "why": "correlation：两个资产收益之间的统计关联程度，取值从 -1 到 1。"
+        },
+        {
+          "id": "u4l2-correlation-t",
+          "type": "truefalse",
+          "termId": "correlation",
+          "termIds": [
+            "correlation"
+          ],
+          "stem": "correlation 就是 标的池。",
+          "answer": false,
+          "why": "correlation 是「相关性」，不是「标的池」。"
+        },
+        {
+          "id": "u4l2-correlation-f",
+          "type": "fill",
+          "termId": "correlation",
+          "termIds": [
+            "correlation"
+          ],
+          "story": "____ across the ten contracts is high, around 0.7.",
+          "bank": [
+            "correlation",
+            "turnover",
+            "exposure"
+          ],
+          "answer": "correlation",
+          "why": "correlation 是资产之间一起动的程度；exposure 是你在某个风险上暴露了多少。"
+        },
+        {
+          "id": "u4l2-exposure-m",
+          "type": "meaning",
+          "termId": "exposure",
+          "termIds": [
+            "exposure"
+          ],
+          "stem": "exposure 是什么意思？",
+          "options": [
+            {
+              "text": "组合对某一风险因子或资产的敏感程度与规模。",
+              "art": "exposure"
+            },
+            {
+              "text": "策略可投资的资产集合，决定了策略的边界与偏差风险。",
+              "art": "universe"
+            },
+            {
+              "text": "按既定规则调整持仓比例，使其回到目标权重，通常按固定周期执行。",
+              "art": "rebalance"
+            },
+            {
+              "text": "决定每笔交易或每个标的分配多少资金的过程，直接影响风险敞口。",
+              "art": "position sizing"
+            }
+          ],
+          "answer": 0,
+          "why": "exposure 是实际的暴露（结果）；position sizing 是决定放多少（过程）。"
+        },
+        {
+          "id": "u4l2-exposure-s",
+          "type": "scenario",
+          "termId": "exposure",
+          "termIds": [
+            "exposure"
+          ],
+          "story": "Most of the return is not explained by market exposure.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "exposure",
+              "art": "exposure"
+            },
+            {
+              "text": "universe",
+              "art": "universe"
+            },
+            {
+              "text": "rebalance",
+              "art": "rebalance"
+            },
+            {
+              "text": "position sizing",
+              "art": "position sizing"
+            }
+          ],
+          "answer": 0,
+          "why": "exposure：组合对某一风险因子或资产的敏感程度与规模。"
+        },
+        {
+          "id": "u4l2-exposure-t",
+          "type": "truefalse",
+          "termId": "exposure",
+          "termIds": [
+            "exposure"
+          ],
+          "stem": "exposure：敞口",
+          "answer": true,
+          "why": "exposure 确实是「敞口」。"
+        },
+        {
+          "id": "u4l2-exposure-f",
+          "type": "fill",
+          "termId": "exposure",
+          "termIds": [
+            "exposure"
+          ],
+          "story": "Most of the return is not explained by market ____.",
+          "bank": [
+            "exposure",
+            "turnover",
+            "correlation"
+          ],
+          "answer": "exposure",
+          "why": "exposure 是实际的暴露（结果）；position sizing 是决定放多少（过程）。"
+        },
+        {
+          "id": "u4l2-match",
+          "type": "match",
+          "termIds": [
+            "turnover",
+            "correlation",
+            "exposure"
+          ],
+          "pairs": [
+            {
+              "id": "turnover",
+              "left": "turnover",
+              "right": "换手率"
+            },
+            {
+              "id": "correlation",
+              "left": "correlation",
+              "right": "相关性"
+            },
+            {
+              "id": "exposure",
+              "left": "exposure",
+              "right": "敞口"
+            }
+          ],
+          "why": "把每个词和它的意思对上。"
+        }
+      ]
+    },
+    {
+      "id": "u4r",
+      "unit": 4,
+      "title": "组合怎么搭 · 回顾",
+      "icon": "🏆",
+      "review": true,
+      "prompts": [
+        {
+          "id": "u4r-universe-s",
+          "type": "scenario",
+          "termId": "universe",
+          "termIds": [
+            "universe"
+          ],
+          "story": "We backtest on a universe of the ten largest energy futures.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "universe",
+              "art": "universe"
+            },
+            {
+              "text": "rebalance",
+              "art": "rebalance"
+            },
+            {
+              "text": "position sizing",
+              "art": "position sizing"
+            },
+            {
+              "text": "turnover",
+              "art": "turnover"
+            }
+          ],
+          "answer": 0,
+          "why": "universe：策略可投资的资产集合，决定了策略的边界与偏差风险。"
+        },
+        {
+          "id": "u4r-universe-t",
+          "type": "truefalse",
+          "termId": "universe",
+          "termIds": [
+            "universe"
+          ],
+          "stem": "universe：标的池",
+          "answer": true,
+          "why": "universe 确实是「标的池」。"
+        },
+        {
+          "id": "u4r-rebalance-s",
+          "type": "scenario",
+          "termId": "rebalance",
+          "termIds": [
+            "rebalance"
+          ],
+          "story": "We rebalance monthly at 12% one-way turnover.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "rebalance",
+              "art": "rebalance"
+            },
+            {
+              "text": "universe",
+              "art": "universe"
+            },
+            {
+              "text": "position sizing",
+              "art": "position sizing"
+            },
+            {
+              "text": "turnover",
+              "art": "turnover"
+            }
+          ],
+          "answer": 0,
+          "why": "rebalance：按既定规则调整持仓比例，使其回到目标权重，通常按固定周期执行。"
+        },
+        {
+          "id": "u4r-rebalance-t",
+          "type": "truefalse",
+          "termId": "rebalance",
+          "termIds": [
+            "rebalance"
+          ],
+          "stem": "rebalance 就是 标的池。",
+          "answer": false,
+          "why": "rebalance 是「再平衡」，不是「标的池」。"
+        },
+        {
+          "id": "u4r-position sizing-s",
+          "type": "scenario",
+          "termId": "position sizing",
+          "termIds": [
+            "position sizing"
+          ],
+          "story": "Position sizing is capped well below the notional the backtest implies.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "position sizing",
+              "art": "position sizing"
+            },
+            {
+              "text": "universe",
+              "art": "universe"
+            },
+            {
+              "text": "rebalance",
+              "art": "rebalance"
+            },
+            {
+              "text": "turnover",
+              "art": "turnover"
+            }
+          ],
+          "answer": 0,
+          "why": "position sizing：决定每笔交易或每个标的分配多少资金的过程，直接影响风险敞口。"
+        },
+        {
+          "id": "u4r-position sizing-t",
+          "type": "truefalse",
+          "termId": "position sizing",
+          "termIds": [
+            "position sizing"
+          ],
+          "stem": "position sizing：仓位管理",
+          "answer": true,
+          "why": "position sizing 确实是「仓位管理」。"
+        },
+        {
+          "id": "u4r-turnover-s",
+          "type": "scenario",
+          "termId": "turnover",
+          "termIds": [
+            "turnover"
+          ],
+          "story": "At 12% one-way turnover, costs reach about 1.3% a year.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "turnover",
+              "art": "turnover"
+            },
+            {
+              "text": "universe",
+              "art": "universe"
+            },
+            {
+              "text": "rebalance",
+              "art": "rebalance"
+            },
+            {
+              "text": "position sizing",
+              "art": "position sizing"
+            }
+          ],
+          "answer": 0,
+          "why": "turnover：单位时间内买卖量相对于组合规模的比例，直接决定交易成本。"
+        },
+        {
+          "id": "u4r-turnover-t",
+          "type": "truefalse",
+          "termId": "turnover",
+          "termIds": [
+            "turnover"
+          ],
+          "stem": "turnover 就是 标的池。",
+          "answer": false,
+          "why": "turnover 是「换手率」，不是「标的池」。"
+        },
+        {
+          "id": "u4r-correlation-s",
+          "type": "scenario",
+          "termId": "correlation",
+          "termIds": [
+            "correlation"
+          ],
+          "story": "Correlation across the ten contracts is high, around 0.7.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "correlation",
+              "art": "correlation"
+            },
+            {
+              "text": "universe",
+              "art": "universe"
+            },
+            {
+              "text": "rebalance",
+              "art": "rebalance"
+            },
+            {
+              "text": "position sizing",
+              "art": "position sizing"
+            }
+          ],
+          "answer": 0,
+          "why": "correlation：两个资产收益之间的统计关联程度，取值从 -1 到 1。"
+        },
+        {
+          "id": "u4r-correlation-t",
+          "type": "truefalse",
+          "termId": "correlation",
+          "termIds": [
+            "correlation"
+          ],
+          "stem": "correlation：相关性",
+          "answer": true,
+          "why": "correlation 确实是「相关性」。"
+        },
+        {
+          "id": "u4r-exposure-s",
+          "type": "scenario",
+          "termId": "exposure",
+          "termIds": [
+            "exposure"
+          ],
+          "story": "Most of the return is not explained by market exposure.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "exposure",
+              "art": "exposure"
+            },
+            {
+              "text": "universe",
+              "art": "universe"
+            },
+            {
+              "text": "rebalance",
+              "art": "rebalance"
+            },
+            {
+              "text": "position sizing",
+              "art": "position sizing"
+            }
+          ],
+          "answer": 0,
+          "why": "exposure：组合对某一风险因子或资产的敏感程度与规模。"
+        },
+        {
+          "id": "u4r-exposure-t",
+          "type": "truefalse",
+          "termId": "exposure",
+          "termIds": [
+            "exposure"
+          ],
+          "stem": "exposure 就是 标的池。",
+          "answer": false,
+          "why": "exposure 是「敞口」，不是「标的池」。"
+        },
+        {
+          "id": "u4r-match",
+          "type": "match",
+          "termIds": [
+            "universe",
+            "rebalance",
+            "position sizing",
+            "turnover",
+            "correlation",
+            "exposure"
+          ],
+          "pairs": [
+            {
+              "id": "universe",
+              "left": "universe",
+              "right": "标的池"
+            },
+            {
+              "id": "rebalance",
+              "left": "rebalance",
+              "right": "再平衡"
+            },
+            {
+              "id": "position sizing",
+              "left": "position sizing",
+              "right": "仓位管理"
+            },
+            {
+              "id": "turnover",
+              "left": "turnover",
+              "right": "换手率"
+            },
+            {
+              "id": "correlation",
+              "left": "correlation",
+              "right": "相关性"
+            },
+            {
+              "id": "exposure",
+              "left": "exposure",
+              "right": "敞口"
+            }
+          ],
+          "why": "把每个词和它的意思对上。"
+        }
+      ]
+    },
+    {
+      "id": "u5l1",
+      "unit": 5,
+      "title": "成本吃多少",
+      "icon": "📈",
+      "review": false,
+      "prompts": [
+        {
+          "id": "u5l1-transaction cost-m",
+          "type": "meaning",
+          "termId": "transaction cost",
+          "termIds": [
+            "transaction cost"
+          ],
+          "stem": "transaction cost 是什么意思？",
+          "options": [
+            {
+              "text": "交易过程中产生的费用，包括佣金、买卖价差与税费。",
+              "art": "transaction cost"
+            },
+            {
+              "text": "下单价格与实际成交价格之间的差异，通常由市场冲击与延迟造成。",
+              "art": "slippage"
+            },
+            {
+              "text": "策略在交易成本吞掉收益之前所能容纳的最大资金规模。",
+              "art": "capacity constraint"
+            },
+            {
+              "text": "市场深度不足导致无法按预期规模或价格成交的限制。",
+              "art": "liquidity constraint"
+            }
+          ],
+          "answer": 0,
+          "why": "transaction cost 是明面上的费用（佣金、价差）；slippage 是你的成交价不如预期的那部分。"
+        },
+        {
+          "id": "u5l1-transaction cost-s",
+          "type": "scenario",
+          "termId": "transaction cost",
+          "termIds": [
+            "transaction cost"
+          ],
+          "story": "With 6 basis points of transaction cost per side, costs reach 1.3% a year.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "transaction cost",
+              "art": "transaction cost"
+            },
+            {
+              "text": "slippage",
+              "art": "slippage"
+            },
+            {
+              "text": "capacity constraint",
+              "art": "capacity constraint"
+            },
+            {
+              "text": "liquidity constraint",
+              "art": "liquidity constraint"
+            }
+          ],
+          "answer": 0,
+          "why": "transaction cost：交易过程中产生的费用，包括佣金、买卖价差与税费。"
+        },
+        {
+          "id": "u5l1-transaction cost-t",
+          "type": "truefalse",
+          "termId": "transaction cost",
+          "termIds": [
+            "transaction cost"
+          ],
+          "stem": "transaction cost：交易成本",
+          "answer": true,
+          "why": "transaction cost 确实是「交易成本」。"
+        },
+        {
+          "id": "u5l1-transaction cost-f",
+          "type": "fill",
+          "termId": "transaction cost",
+          "termIds": [
+            "transaction cost"
+          ],
+          "story": "With 6 basis points of ____ per side, costs reach 1.3% a year.",
+          "bank": [
+            "transaction cost",
+            "slippage"
+          ],
+          "answer": "transaction cost",
+          "why": "transaction cost 是明面上的费用（佣金、价差）；slippage 是你的成交价不如预期的那部分。"
+        },
+        {
+          "id": "u5l1-slippage-m",
+          "type": "meaning",
+          "termId": "slippage",
+          "termIds": [
+            "slippage"
+          ],
+          "stem": "slippage 是什么意思？",
+          "options": [
+            {
+              "text": "下单价格与实际成交价格之间的差异，通常由市场冲击与延迟造成。",
+              "art": "slippage"
+            },
+            {
+              "text": "交易过程中产生的费用，包括佣金、买卖价差与税费。",
+              "art": "transaction cost"
+            },
+            {
+              "text": "策略在交易成本吞掉收益之前所能容纳的最大资金规模。",
+              "art": "capacity constraint"
+            },
+            {
+              "text": "市场深度不足导致无法按预期规模或价格成交的限制。",
+              "art": "liquidity constraint"
+            }
+          ],
+          "answer": 0,
+          "why": "slippage 是价格偏离（隐性）；transaction cost 是明确的费用。"
+        },
+        {
+          "id": "u5l1-slippage-s",
+          "type": "scenario",
+          "termId": "slippage",
+          "termIds": [
+            "slippage"
+          ],
+          "story": "Doubling slippage removes the edge entirely.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "slippage",
+              "art": "slippage"
+            },
+            {
+              "text": "transaction cost",
+              "art": "transaction cost"
+            },
+            {
+              "text": "capacity constraint",
+              "art": "capacity constraint"
+            },
+            {
+              "text": "liquidity constraint",
+              "art": "liquidity constraint"
+            }
+          ],
+          "answer": 0,
+          "why": "slippage：下单价格与实际成交价格之间的差异，通常由市场冲击与延迟造成。"
+        },
+        {
+          "id": "u5l1-slippage-t",
+          "type": "truefalse",
+          "termId": "slippage",
+          "termIds": [
+            "slippage"
+          ],
+          "stem": "slippage 就是 交易成本。",
+          "answer": false,
+          "why": "slippage 是「滑点」，不是「交易成本」。"
+        },
+        {
+          "id": "u5l1-slippage-f",
+          "type": "fill",
+          "termId": "slippage",
+          "termIds": [
+            "slippage"
+          ],
+          "story": "Doubling ____ removes the edge entirely.",
+          "bank": [
+            "slippage",
+            "transaction cost"
+          ],
+          "answer": "slippage",
+          "why": "slippage 是价格偏离（隐性）；transaction cost 是明确的费用。"
+        },
+        {
+          "id": "u5l1-match",
+          "type": "match",
+          "termIds": [
+            "transaction cost",
+            "slippage"
+          ],
+          "pairs": [
+            {
+              "id": "transaction cost",
+              "left": "transaction cost",
+              "right": "交易成本"
+            },
+            {
+              "id": "slippage",
+              "left": "slippage",
+              "right": "滑点"
+            }
+          ],
+          "why": "把每个词和它的意思对上。"
+        }
+      ]
+    },
+    {
+      "id": "u5l2",
+      "unit": 5,
+      "title": "成本吃多少（续）",
+      "icon": "📈",
+      "review": false,
+      "prompts": [
+        {
+          "id": "u5l2-capacity constraint-m",
+          "type": "meaning",
+          "termId": "capacity constraint",
+          "termIds": [
+            "capacity constraint"
+          ],
+          "stem": "capacity constraint 是什么意思？",
+          "options": [
+            {
+              "text": "策略在交易成本吞掉收益之前所能容纳的最大资金规模。",
+              "art": "capacity constraint"
+            },
+            {
+              "text": "交易过程中产生的费用，包括佣金、买卖价差与税费。",
+              "art": "transaction cost"
+            },
+            {
+              "text": "下单价格与实际成交价格之间的差异，通常由市场冲击与延迟造成。",
+              "art": "slippage"
+            },
+            {
+              "text": "市场深度不足导致无法按预期规模或价格成交的限制。",
+              "art": "liquidity constraint"
+            }
+          ],
+          "answer": 0,
+          "why": "capacity constraint 是策略能装多少资金；liquidity constraint 是市场有多少量可成交。后者是因，前者是果。"
+        },
+        {
+          "id": "u5l2-capacity constraint-s",
+          "type": "scenario",
+          "termId": "capacity constraint",
+          "termIds": [
+            "capacity constraint"
+          ],
+          "story": "A capacity constraint this tight means the strategy cannot absorb meaningful capital.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "capacity constraint",
+              "art": "capacity constraint"
+            },
+            {
+              "text": "transaction cost",
+              "art": "transaction cost"
+            },
+            {
+              "text": "slippage",
+              "art": "slippage"
+            },
+            {
+              "text": "liquidity constraint",
+              "art": "liquidity constraint"
+            }
+          ],
+          "answer": 0,
+          "why": "capacity constraint：策略在交易成本吞掉收益之前所能容纳的最大资金规模。"
+        },
+        {
+          "id": "u5l2-capacity constraint-t",
+          "type": "truefalse",
+          "termId": "capacity constraint",
+          "termIds": [
+            "capacity constraint"
+          ],
+          "stem": "capacity constraint：容量约束",
+          "answer": true,
+          "why": "capacity constraint 确实是「容量约束」。"
+        },
+        {
+          "id": "u5l2-capacity constraint-f",
+          "type": "fill",
+          "termId": "capacity constraint",
+          "termIds": [
+            "capacity constraint"
+          ],
+          "story": "A ____ this tight means the strategy cannot absorb meaningful capital.",
+          "bank": [
+            "capacity constraint",
+            "liquidity constraint"
+          ],
+          "answer": "capacity constraint",
+          "why": "capacity constraint 是策略能装多少资金；liquidity constraint 是市场有多少量可成交。后者是因，前者是果。"
+        },
+        {
+          "id": "u5l2-liquidity constraint-m",
+          "type": "meaning",
+          "termId": "liquidity constraint",
+          "termIds": [
+            "liquidity constraint"
+          ],
+          "stem": "liquidity constraint 是什么意思？",
+          "options": [
+            {
+              "text": "市场深度不足导致无法按预期规模或价格成交的限制。",
+              "art": "liquidity constraint"
+            },
+            {
+              "text": "交易过程中产生的费用，包括佣金、买卖价差与税费。",
+              "art": "transaction cost"
+            },
+            {
+              "text": "下单价格与实际成交价格之间的差异，通常由市场冲击与延迟造成。",
+              "art": "slippage"
+            },
+            {
+              "text": "策略在交易成本吞掉收益之前所能容纳的最大资金规模。",
+              "art": "capacity constraint"
+            }
+          ],
+          "answer": 0,
+          "why": "liquidity constraint 是市场层面的量；capacity constraint 是策略层面的上限。"
+        },
+        {
+          "id": "u5l2-liquidity constraint-s",
+          "type": "scenario",
+          "termId": "liquidity constraint",
+          "termIds": [
+            "liquidity constraint"
+          ],
+          "story": "The liquidity constraint binds at roughly $40 million.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "liquidity constraint",
+              "art": "liquidity constraint"
+            },
+            {
+              "text": "transaction cost",
+              "art": "transaction cost"
+            },
+            {
+              "text": "slippage",
+              "art": "slippage"
+            },
+            {
+              "text": "capacity constraint",
+              "art": "capacity constraint"
+            }
+          ],
+          "answer": 0,
+          "why": "liquidity constraint：市场深度不足导致无法按预期规模或价格成交的限制。"
+        },
+        {
+          "id": "u5l2-liquidity constraint-t",
+          "type": "truefalse",
+          "termId": "liquidity constraint",
+          "termIds": [
+            "liquidity constraint"
+          ],
+          "stem": "liquidity constraint 就是 交易成本。",
+          "answer": false,
+          "why": "liquidity constraint 是「流动性约束」，不是「交易成本」。"
+        },
+        {
+          "id": "u5l2-liquidity constraint-f",
+          "type": "fill",
+          "termId": "liquidity constraint",
+          "termIds": [
+            "liquidity constraint"
+          ],
+          "story": "The ____ binds at roughly $40 million.",
+          "bank": [
+            "liquidity constraint",
+            "capacity constraint"
+          ],
+          "answer": "liquidity constraint",
+          "why": "liquidity constraint 是市场层面的量；capacity constraint 是策略层面的上限。"
+        },
+        {
+          "id": "u5l2-match",
+          "type": "match",
+          "termIds": [
+            "capacity constraint",
+            "liquidity constraint"
+          ],
+          "pairs": [
+            {
+              "id": "capacity constraint",
+              "left": "capacity constraint",
+              "right": "容量约束"
+            },
+            {
+              "id": "liquidity constraint",
+              "left": "liquidity constraint",
+              "right": "流动性约束"
+            }
+          ],
+          "why": "把每个词和它的意思对上。"
+        }
+      ]
+    },
+    {
+      "id": "u5r",
+      "unit": 5,
+      "title": "成本吃多少 · 回顾",
+      "icon": "🏆",
+      "review": true,
+      "prompts": [
+        {
+          "id": "u5r-transaction cost-s",
+          "type": "scenario",
+          "termId": "transaction cost",
+          "termIds": [
+            "transaction cost"
+          ],
+          "story": "With 6 basis points of transaction cost per side, costs reach 1.3% a year.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "transaction cost",
+              "art": "transaction cost"
+            },
+            {
+              "text": "slippage",
+              "art": "slippage"
+            },
+            {
+              "text": "capacity constraint",
+              "art": "capacity constraint"
+            },
+            {
+              "text": "liquidity constraint",
+              "art": "liquidity constraint"
+            }
+          ],
+          "answer": 0,
+          "why": "transaction cost：交易过程中产生的费用，包括佣金、买卖价差与税费。"
+        },
+        {
+          "id": "u5r-transaction cost-t",
+          "type": "truefalse",
+          "termId": "transaction cost",
+          "termIds": [
+            "transaction cost"
+          ],
+          "stem": "transaction cost：交易成本",
+          "answer": true,
+          "why": "transaction cost 确实是「交易成本」。"
+        },
+        {
+          "id": "u5r-slippage-s",
+          "type": "scenario",
+          "termId": "slippage",
+          "termIds": [
+            "slippage"
+          ],
+          "story": "Doubling slippage removes the edge entirely.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "slippage",
+              "art": "slippage"
+            },
+            {
+              "text": "transaction cost",
+              "art": "transaction cost"
+            },
+            {
+              "text": "capacity constraint",
+              "art": "capacity constraint"
+            },
+            {
+              "text": "liquidity constraint",
+              "art": "liquidity constraint"
+            }
+          ],
+          "answer": 0,
+          "why": "slippage：下单价格与实际成交价格之间的差异，通常由市场冲击与延迟造成。"
+        },
+        {
+          "id": "u5r-slippage-t",
+          "type": "truefalse",
+          "termId": "slippage",
+          "termIds": [
+            "slippage"
+          ],
+          "stem": "slippage 就是 交易成本。",
+          "answer": false,
+          "why": "slippage 是「滑点」，不是「交易成本」。"
+        },
+        {
+          "id": "u5r-capacity constraint-s",
+          "type": "scenario",
+          "termId": "capacity constraint",
+          "termIds": [
+            "capacity constraint"
+          ],
+          "story": "A capacity constraint this tight means the strategy cannot absorb meaningful capital.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "capacity constraint",
+              "art": "capacity constraint"
+            },
+            {
+              "text": "transaction cost",
+              "art": "transaction cost"
+            },
+            {
+              "text": "slippage",
+              "art": "slippage"
+            },
+            {
+              "text": "liquidity constraint",
+              "art": "liquidity constraint"
+            }
+          ],
+          "answer": 0,
+          "why": "capacity constraint：策略在交易成本吞掉收益之前所能容纳的最大资金规模。"
+        },
+        {
+          "id": "u5r-capacity constraint-t",
+          "type": "truefalse",
+          "termId": "capacity constraint",
+          "termIds": [
+            "capacity constraint"
+          ],
+          "stem": "capacity constraint：容量约束",
+          "answer": true,
+          "why": "capacity constraint 确实是「容量约束」。"
+        },
+        {
+          "id": "u5r-liquidity constraint-s",
+          "type": "scenario",
+          "termId": "liquidity constraint",
+          "termIds": [
+            "liquidity constraint"
+          ],
+          "story": "The liquidity constraint binds at roughly $40 million.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "liquidity constraint",
+              "art": "liquidity constraint"
+            },
+            {
+              "text": "transaction cost",
+              "art": "transaction cost"
+            },
+            {
+              "text": "slippage",
+              "art": "slippage"
+            },
+            {
+              "text": "capacity constraint",
+              "art": "capacity constraint"
+            }
+          ],
+          "answer": 0,
+          "why": "liquidity constraint：市场深度不足导致无法按预期规模或价格成交的限制。"
+        },
+        {
+          "id": "u5r-liquidity constraint-t",
+          "type": "truefalse",
+          "termId": "liquidity constraint",
+          "termIds": [
+            "liquidity constraint"
+          ],
+          "stem": "liquidity constraint 就是 交易成本。",
+          "answer": false,
+          "why": "liquidity constraint 是「流动性约束」，不是「交易成本」。"
+        },
+        {
+          "id": "u5r-match",
+          "type": "match",
+          "termIds": [
+            "transaction cost",
+            "slippage",
+            "capacity constraint",
+            "liquidity constraint"
+          ],
+          "pairs": [
+            {
+              "id": "transaction cost",
+              "left": "transaction cost",
+              "right": "交易成本"
+            },
+            {
+              "id": "slippage",
+              "left": "slippage",
+              "right": "滑点"
+            },
+            {
+              "id": "capacity constraint",
+              "left": "capacity constraint",
+              "right": "容量约束"
+            },
+            {
+              "id": "liquidity constraint",
+              "left": "liquidity constraint",
+              "right": "流动性约束"
+            }
+          ],
+          "why": "把每个词和它的意思对上。"
+        }
+      ]
+    },
+    {
+      "id": "u6l1",
+      "unit": 6,
+      "title": "风险怎么量",
+      "icon": "📈",
+      "review": false,
+      "prompts": [
+        {
+          "id": "u6l1-stress test-m",
+          "type": "meaning",
+          "termId": "stress test",
+          "termIds": [
+            "stress test"
+          ],
+          "stem": "stress test 是什么意思？",
+          "options": [
+            {
+              "text": "在极端但可能的情景下评估组合表现的方法，用于检验尾部风险。",
+              "art": "stress test"
+            },
+            {
+              "text": "在若干条假设路径下评估策略表现的方法，比较不同环境下的结果。",
+              "art": "scenario analysis"
+            },
+            {
+              "text": "在特定置信水平与持有期内，组合可能遭受的最大预期损失。",
+              "art": "value at risk"
+            },
+            {
+              "text": "结果对某一参数或假设变化的反应程度。",
+              "art": "sensitivity"
+            }
+          ],
+          "answer": 0,
+          "why": "stress test 是单一极端情形（历史上真的发生过）；scenario analysis 是多个假设路径的比较。"
+        },
+        {
+          "id": "u6l1-stress test-s",
+          "type": "scenario",
+          "termId": "stress test",
+          "termIds": [
+            "stress test"
+          ],
+          "story": "A stress test on the 2020 oil crash shows the overlay loses 14% in that month.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "stress test",
+              "art": "stress test"
+            },
+            {
+              "text": "scenario analysis",
+              "art": "scenario analysis"
+            },
+            {
+              "text": "value at risk",
+              "art": "value at risk"
+            },
+            {
+              "text": "sensitivity",
+              "art": "sensitivity"
+            }
+          ],
+          "answer": 0,
+          "why": "stress test：在极端但可能的情景下评估组合表现的方法，用于检验尾部风险。"
+        },
+        {
+          "id": "u6l1-stress test-t",
+          "type": "truefalse",
+          "termId": "stress test",
+          "termIds": [
+            "stress test"
+          ],
+          "stem": "stress test：压力测试",
+          "answer": true,
+          "why": "stress test 确实是「压力测试」。"
+        },
+        {
+          "id": "u6l1-stress test-f",
+          "type": "fill",
+          "termId": "stress test",
+          "termIds": [
+            "stress test"
+          ],
+          "story": "A ____ on the 2020 oil crash shows the overlay loses 14% in that month.",
+          "bank": [
+            "stress test",
+            "scenario analysis",
+            "value at risk"
+          ],
+          "answer": "stress test",
+          "why": "stress test 是单一极端情形（历史上真的发生过）；scenario analysis 是多个假设路径的比较。"
+        },
+        {
+          "id": "u6l1-scenario analysis-m",
+          "type": "meaning",
+          "termId": "scenario analysis",
+          "termIds": [
+            "scenario analysis"
+          ],
+          "stem": "scenario analysis 是什么意思？",
+          "options": [
+            {
+              "text": "在若干条假设路径下评估策略表现的方法，比较不同环境下的结果。",
+              "art": "scenario analysis"
+            },
+            {
+              "text": "在极端但可能的情景下评估组合表现的方法，用于检验尾部风险。",
+              "art": "stress test"
+            },
+            {
+              "text": "在特定置信水平与持有期内，组合可能遭受的最大预期损失。",
+              "art": "value at risk"
+            },
+            {
+              "text": "结果对某一参数或假设变化的反应程度。",
+              "art": "sensitivity"
+            }
+          ],
+          "answer": 0,
+          "why": "scenario analysis 是多情景比较；stress test 是单点极端冲击。"
+        },
+        {
+          "id": "u6l1-scenario analysis-s",
+          "type": "scenario",
+          "termId": "scenario analysis",
+          "termIds": [
+            "scenario analysis"
+          ],
+          "story": "We run a scenario analysis on three paths.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "scenario analysis",
+              "art": "scenario analysis"
+            },
+            {
+              "text": "stress test",
+              "art": "stress test"
+            },
+            {
+              "text": "value at risk",
+              "art": "value at risk"
+            },
+            {
+              "text": "sensitivity",
+              "art": "sensitivity"
+            }
+          ],
+          "answer": 0,
+          "why": "scenario analysis：在若干条假设路径下评估策略表现的方法，比较不同环境下的结果。"
+        },
+        {
+          "id": "u6l1-scenario analysis-t",
+          "type": "truefalse",
+          "termId": "scenario analysis",
+          "termIds": [
+            "scenario analysis"
+          ],
+          "stem": "scenario analysis 就是 压力测试。",
+          "answer": false,
+          "why": "scenario analysis 是「情景分析」，不是「压力测试」。"
+        },
+        {
+          "id": "u6l1-scenario analysis-f",
+          "type": "fill",
+          "termId": "scenario analysis",
+          "termIds": [
+            "scenario analysis"
+          ],
+          "story": "We run a ____ on three paths.",
+          "bank": [
+            "scenario analysis",
+            "stress test",
+            "value at risk"
+          ],
+          "answer": "scenario analysis",
+          "why": "scenario analysis 是多情景比较；stress test 是单点极端冲击。"
+        },
+        {
+          "id": "u6l1-value at risk-m",
+          "type": "meaning",
+          "termId": "value at risk",
+          "termIds": [
+            "value at risk"
+          ],
+          "stem": "value at risk 是什么意思？",
+          "options": [
+            {
+              "text": "在特定置信水平与持有期内，组合可能遭受的最大预期损失。",
+              "art": "value at risk"
+            },
+            {
+              "text": "在极端但可能的情景下评估组合表现的方法，用于检验尾部风险。",
+              "art": "stress test"
+            },
+            {
+              "text": "在若干条假设路径下评估策略表现的方法，比较不同环境下的结果。",
+              "art": "scenario analysis"
+            },
+            {
+              "text": "结果对某一参数或假设变化的反应程度。",
+              "art": "sensitivity"
+            }
+          ],
+          "answer": 0,
+          "why": "VaR 是概率意义上的单期限额（95% 情况下不超过）；max drawdown 是历史上真实发生的最深一跌。VaR 常低估尾部风险。"
+        },
+        {
+          "id": "u6l1-value at risk-s",
+          "type": "scenario",
+          "termId": "value at risk",
+          "termIds": [
+            "value at risk"
+          ],
+          "story": "Value at risk at the 95% level is 2.1% daily.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "value at risk",
+              "art": "value at risk"
+            },
+            {
+              "text": "stress test",
+              "art": "stress test"
+            },
+            {
+              "text": "scenario analysis",
+              "art": "scenario analysis"
+            },
+            {
+              "text": "sensitivity",
+              "art": "sensitivity"
+            }
+          ],
+          "answer": 0,
+          "why": "value at risk：在特定置信水平与持有期内，组合可能遭受的最大预期损失。"
+        },
+        {
+          "id": "u6l1-value at risk-t",
+          "type": "truefalse",
+          "termId": "value at risk",
+          "termIds": [
+            "value at risk"
+          ],
+          "stem": "value at risk：风险价值（VaR）",
+          "answer": true,
+          "why": "value at risk 确实是「风险价值（VaR）」。"
+        },
+        {
+          "id": "u6l1-value at risk-f",
+          "type": "fill",
+          "termId": "value at risk",
+          "termIds": [
+            "value at risk"
+          ],
+          "story": "____ at the 95% level is 2.1% daily.",
+          "bank": [
+            "value at risk",
+            "stress test",
+            "scenario analysis"
+          ],
+          "answer": "value at risk",
+          "why": "VaR 是概率意义上的单期限额（95% 情况下不超过）；max drawdown 是历史上真实发生的最深一跌。VaR 常低估尾部风险。"
+        },
+        {
+          "id": "u6l1-value at risk-a",
+          "type": "audit",
+          "termId": "value at risk",
+          "termIds": [
+            "value at risk"
+          ],
+          "story": "策略的日 VaR 在 95% 水平下是 2.1%，所以一天最多亏 2.1%。",
+          "stem": "哪一句站不住？",
+          "options": [
+            {
+              "text": "VaR 是「95% 的情况下不超过」的阈值，剩下 5% 的尾部可能亏得远多于 2.1%。"
+            },
+            {
+              "text": "2.1% 就是一天的最大可能亏损。"
+            },
+            {
+              "text": "95% 是高置信度，所以这个上限很可靠。"
+            },
+            {
+              "text": "应该同时报告最大回撤。"
+            }
+          ],
+          "answer": 0,
+          "why": "VaR 从来不承诺「最多亏这么多」，它说的是「95% 的日子里不超过这个数」。剩下 5% 的尾部可以亏得深不见底——次贷危机里很多机构的实际亏损是 VaR 的许多倍。把 VaR 当成最大亏损是这类报告里最常见的误读。"
+        },
+        {
+          "id": "u6l1-match",
+          "type": "match",
+          "termIds": [
+            "stress test",
+            "scenario analysis",
+            "value at risk"
+          ],
+          "pairs": [
+            {
+              "id": "stress test",
+              "left": "stress test",
+              "right": "压力测试"
+            },
+            {
+              "id": "scenario analysis",
+              "left": "scenario analysis",
+              "right": "情景分析"
+            },
+            {
+              "id": "value at risk",
+              "left": "value at risk",
+              "right": "风险价值（VaR）"
+            }
+          ],
+          "why": "把每个词和它的意思对上。"
+        }
+      ]
+    },
+    {
+      "id": "u6l2",
+      "unit": 6,
+      "title": "风险怎么量（续）",
+      "icon": "📈",
+      "review": false,
+      "prompts": [
+        {
+          "id": "u6l2-sensitivity-m",
+          "type": "meaning",
+          "termId": "sensitivity",
+          "termIds": [
+            "sensitivity"
+          ],
+          "stem": "sensitivity 是什么意思？",
+          "options": [
+            {
+              "text": "结果对某一参数或假设变化的反应程度。",
+              "art": "sensitivity"
+            },
+            {
+              "text": "在极端但可能的情景下评估组合表现的方法，用于检验尾部风险。",
+              "art": "stress test"
+            },
+            {
+              "text": "在若干条假设路径下评估策略表现的方法，比较不同环境下的结果。",
+              "art": "scenario analysis"
+            },
+            {
+              "text": "在特定置信水平与持有期内，组合可能遭受的最大预期损失。",
+              "art": "value at risk"
+            }
+          ],
+          "answer": 0,
+          "why": "sensitivity 是「变一点会怎样」的测量；robustness 是「变了很多还稳不稳」的结论。"
+        },
+        {
+          "id": "u6l2-sensitivity-s",
+          "type": "scenario",
+          "termId": "sensitivity",
+          "termIds": [
+            "sensitivity"
+          ],
+          "story": "The result is sensitive to the cost assumption.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "sensitivity",
+              "art": "sensitivity"
+            },
+            {
+              "text": "stress test",
+              "art": "stress test"
+            },
+            {
+              "text": "scenario analysis",
+              "art": "scenario analysis"
+            },
+            {
+              "text": "value at risk",
+              "art": "value at risk"
+            }
+          ],
+          "answer": 0,
+          "why": "sensitivity：结果对某一参数或假设变化的反应程度。"
+        },
+        {
+          "id": "u6l2-sensitivity-t",
+          "type": "truefalse",
+          "termId": "sensitivity",
+          "termIds": [
+            "sensitivity"
+          ],
+          "stem": "sensitivity：敏感性",
+          "answer": true,
+          "why": "sensitivity 确实是「敏感性」。"
+        },
+        {
+          "id": "u6l2-sensitivity-f",
+          "type": "fill",
+          "termId": "sensitivity",
+          "termIds": [
+            "sensitivity"
+          ],
+          "story": "The result is sensitive to the cost assumption. (这里的词是 ____)",
+          "bank": [
+            "sensitivity",
+            "robustness"
+          ],
+          "answer": "sensitivity",
+          "why": "sensitivity 是「变一点会怎样」的测量；robustness 是「变了很多还稳不稳」的结论。"
+        },
+        {
+          "id": "u6l2-robustness-m",
+          "type": "meaning",
+          "termId": "robustness",
+          "termIds": [
+            "robustness"
+          ],
+          "stem": "robustness 是什么意思？",
+          "options": [
+            {
+              "text": "策略在参数、样本或假设变化下仍能保持有效的程度。",
+              "art": "robustness"
+            },
+            {
+              "text": "在极端但可能的情景下评估组合表现的方法，用于检验尾部风险。",
+              "art": "stress test"
+            },
+            {
+              "text": "在若干条假设路径下评估策略表现的方法，比较不同环境下的结果。",
+              "art": "scenario analysis"
+            },
+            {
+              "text": "在特定置信水平与持有期内，组合可能遭受的最大预期损失。",
+              "art": "value at risk"
+            }
+          ],
+          "answer": 0,
+          "why": "robustness 是整体结论（稳不稳）；sensitivity 是达到这个结论的测量手段。"
+        },
+        {
+          "id": "u6l2-robustness-s",
+          "type": "scenario",
+          "termId": "robustness",
+          "termIds": [
+            "robustness"
+          ],
+          "story": "A robustness check shows the sign holds in most but not all windows.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "robustness",
+              "art": "robustness"
+            },
+            {
+              "text": "stress test",
+              "art": "stress test"
+            },
+            {
+              "text": "scenario analysis",
+              "art": "scenario analysis"
+            },
+            {
+              "text": "value at risk",
+              "art": "value at risk"
+            }
+          ],
+          "answer": 0,
+          "why": "robustness：策略在参数、样本或假设变化下仍能保持有效的程度。"
+        },
+        {
+          "id": "u6l2-robustness-t",
+          "type": "truefalse",
+          "termId": "robustness",
+          "termIds": [
+            "robustness"
+          ],
+          "stem": "robustness 就是 压力测试。",
+          "answer": false,
+          "why": "robustness 是「稳健性」，不是「压力测试」。"
+        },
+        {
+          "id": "u6l2-robustness-f",
+          "type": "fill",
+          "termId": "robustness",
+          "termIds": [
+            "robustness"
+          ],
+          "story": "A ____ check shows the sign holds in most but not all windows.",
+          "bank": [
+            "robustness",
+            "sensitivity"
+          ],
+          "answer": "robustness",
+          "why": "robustness 是整体结论（稳不稳）；sensitivity 是达到这个结论的测量手段。"
+        },
+        {
+          "id": "u6l2-match",
+          "type": "match",
+          "termIds": [
+            "sensitivity",
+            "robustness"
+          ],
+          "pairs": [
+            {
+              "id": "sensitivity",
+              "left": "sensitivity",
+              "right": "敏感性"
+            },
+            {
+              "id": "robustness",
+              "left": "robustness",
+              "right": "稳健性"
+            }
+          ],
+          "why": "把每个词和它的意思对上。"
+        }
+      ]
+    },
+    {
+      "id": "u6r",
+      "unit": 6,
+      "title": "风险怎么量 · 回顾",
+      "icon": "🏆",
+      "review": true,
+      "prompts": [
+        {
+          "id": "u6r-stress test-s",
+          "type": "scenario",
+          "termId": "stress test",
+          "termIds": [
+            "stress test"
+          ],
+          "story": "A stress test on the 2020 oil crash shows the overlay loses 14% in that month.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "stress test",
+              "art": "stress test"
+            },
+            {
+              "text": "scenario analysis",
+              "art": "scenario analysis"
+            },
+            {
+              "text": "value at risk",
+              "art": "value at risk"
+            },
+            {
+              "text": "sensitivity",
+              "art": "sensitivity"
+            }
+          ],
+          "answer": 0,
+          "why": "stress test：在极端但可能的情景下评估组合表现的方法，用于检验尾部风险。"
+        },
+        {
+          "id": "u6r-stress test-t",
+          "type": "truefalse",
+          "termId": "stress test",
+          "termIds": [
+            "stress test"
+          ],
+          "stem": "stress test：压力测试",
+          "answer": true,
+          "why": "stress test 确实是「压力测试」。"
+        },
+        {
+          "id": "u6r-scenario analysis-s",
+          "type": "scenario",
+          "termId": "scenario analysis",
+          "termIds": [
+            "scenario analysis"
+          ],
+          "story": "We run a scenario analysis on three paths.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "scenario analysis",
+              "art": "scenario analysis"
+            },
+            {
+              "text": "stress test",
+              "art": "stress test"
+            },
+            {
+              "text": "value at risk",
+              "art": "value at risk"
+            },
+            {
+              "text": "sensitivity",
+              "art": "sensitivity"
+            }
+          ],
+          "answer": 0,
+          "why": "scenario analysis：在若干条假设路径下评估策略表现的方法，比较不同环境下的结果。"
+        },
+        {
+          "id": "u6r-scenario analysis-t",
+          "type": "truefalse",
+          "termId": "scenario analysis",
+          "termIds": [
+            "scenario analysis"
+          ],
+          "stem": "scenario analysis 就是 压力测试。",
+          "answer": false,
+          "why": "scenario analysis 是「情景分析」，不是「压力测试」。"
+        },
+        {
+          "id": "u6r-value at risk-s",
+          "type": "scenario",
+          "termId": "value at risk",
+          "termIds": [
+            "value at risk"
+          ],
+          "story": "Value at risk at the 95% level is 2.1% daily.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "value at risk",
+              "art": "value at risk"
+            },
+            {
+              "text": "stress test",
+              "art": "stress test"
+            },
+            {
+              "text": "scenario analysis",
+              "art": "scenario analysis"
+            },
+            {
+              "text": "sensitivity",
+              "art": "sensitivity"
+            }
+          ],
+          "answer": 0,
+          "why": "value at risk：在特定置信水平与持有期内，组合可能遭受的最大预期损失。"
+        },
+        {
+          "id": "u6r-value at risk-t",
+          "type": "truefalse",
+          "termId": "value at risk",
+          "termIds": [
+            "value at risk"
+          ],
+          "stem": "value at risk：风险价值（VaR）",
+          "answer": true,
+          "why": "value at risk 确实是「风险价值（VaR）」。"
+        },
+        {
+          "id": "u6r-sensitivity-s",
+          "type": "scenario",
+          "termId": "sensitivity",
+          "termIds": [
+            "sensitivity"
+          ],
+          "story": "The result is sensitive to the cost assumption.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "sensitivity",
+              "art": "sensitivity"
+            },
+            {
+              "text": "stress test",
+              "art": "stress test"
+            },
+            {
+              "text": "scenario analysis",
+              "art": "scenario analysis"
+            },
+            {
+              "text": "value at risk",
+              "art": "value at risk"
+            }
+          ],
+          "answer": 0,
+          "why": "sensitivity：结果对某一参数或假设变化的反应程度。"
+        },
+        {
+          "id": "u6r-sensitivity-t",
+          "type": "truefalse",
+          "termId": "sensitivity",
+          "termIds": [
+            "sensitivity"
+          ],
+          "stem": "sensitivity 就是 压力测试。",
+          "answer": false,
+          "why": "sensitivity 是「敏感性」，不是「压力测试」。"
+        },
+        {
+          "id": "u6r-robustness-s",
+          "type": "scenario",
+          "termId": "robustness",
+          "termIds": [
+            "robustness"
+          ],
+          "story": "A robustness check shows the sign holds in most but not all windows.",
+          "stem": "这句话里最关键的那个词是？",
+          "options": [
+            {
+              "text": "robustness",
+              "art": "robustness"
+            },
+            {
+              "text": "stress test",
+              "art": "stress test"
+            },
+            {
+              "text": "scenario analysis",
+              "art": "scenario analysis"
+            },
+            {
+              "text": "value at risk",
+              "art": "value at risk"
+            }
+          ],
+          "answer": 0,
+          "why": "robustness：策略在参数、样本或假设变化下仍能保持有效的程度。"
+        },
+        {
+          "id": "u6r-robustness-t",
+          "type": "truefalse",
+          "termId": "robustness",
+          "termIds": [
+            "robustness"
+          ],
+          "stem": "robustness：稳健性",
+          "answer": true,
+          "why": "robustness 确实是「稳健性」。"
+        },
+        {
+          "id": "u6r-match",
+          "type": "match",
+          "termIds": [
+            "stress test",
+            "scenario analysis",
+            "value at risk",
+            "sensitivity",
+            "robustness"
+          ],
+          "pairs": [
+            {
+              "id": "stress test",
+              "left": "stress test",
+              "right": "压力测试"
+            },
+            {
+              "id": "scenario analysis",
+              "left": "scenario analysis",
+              "right": "情景分析"
+            },
+            {
+              "id": "value at risk",
+              "left": "value at risk",
+              "right": "风险价值（VaR）"
+            },
+            {
+              "id": "sensitivity",
+              "left": "sensitivity",
+              "right": "敏感性"
+            },
+            {
+              "id": "robustness",
+              "left": "robustness",
+              "right": "稳健性"
+            }
+          ],
+          "why": "把每个词和它的意思对上。"
+        }
+      ]
+    }
+  ],
+  "sources": []
+}
