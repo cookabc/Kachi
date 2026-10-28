@@ -1,7 +1,14 @@
 import { describe, expect, it } from "vitest";
 import { course } from "./course";
 import type { AttemptEvent, Course, LearnerState } from "./domain";
-import { applyAnswer, emptyLearnerState, isFirstEncounter, isVerifiedMastery, startSession } from "./engine";
+import {
+  applyAnswer,
+  emptyLearnerState,
+  isFirstEncounter,
+  isVerifiedMastery,
+  missHistory,
+  startSession,
+} from "./engine";
 
 // "Verified mastery" is a product promise: three correct answers in a row, in
 // at least two exercise formats, including a scenario the learner had never
@@ -115,5 +122,42 @@ describe("verified mastery is reachable", () => {
       schedulerVersion: "test",
     };
     expect(isVerifiedMastery(thin)).toBe(false);
+  });
+});
+
+describe("missHistory (mistake book)", () => {
+  it("aggregates failed attempts per concept, worst first, ignoring retries", () => {
+    const attempt = (id: string, conceptIds: string[], correct: boolean, at: string, isRetry = false) => ({
+      eventId: id,
+      deviceId: "d",
+      contentVersion: "v",
+      engineVersion: "v",
+      exerciseId: id,
+      conceptIds,
+      confusionPairId: undefined,
+      exerciseType: "meaning" as const,
+      answer: "x",
+      correct,
+      hintUsed: false,
+      latencyMs: 0,
+      occurredAt: at,
+      isRetry,
+    });
+    const state = {
+      ...emptyLearnerState(),
+      attempts: [
+        attempt("e1", ["hedge"], false, "2026-10-20T00:00:00Z"),
+        attempt("e2", ["hedge"], false, "2026-10-25T00:00:00Z"),
+        attempt("e3", ["pledge"], false, "2026-10-26T00:00:00Z"),
+        // Retries are practice replays, not fresh evidence of missing it.
+        attempt("e4", ["pledge"], false, "2026-10-27T00:00:00Z", true),
+        // Correct answers never appear in the mistake book.
+        attempt("e5", ["margin"], true, "2026-10-27T01:00:00Z"),
+      ],
+    };
+    const history = missHistory(state);
+    expect(history.map((h) => h.conceptId)).toEqual(["hedge", "pledge"]);
+    expect(history[0].misses).toBe(2);
+    expect(history[0].lastMissedAt).toBe("2026-10-25T00:00:00Z");
   });
 });

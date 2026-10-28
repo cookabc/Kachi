@@ -63,6 +63,8 @@ export interface UiText {
     noMissCopy: string;
     start: (n: number) => string;
     targetsTitle: string;
+    missBookTitle: string;
+    missCountCopy: (n: number) => string;
     unitLabel: (n: number) => string;
     moreCount: (n: number) => string;
     listSep: string;
@@ -264,6 +266,8 @@ export const UI: Record<Lang, UiText> = {
       noMissCopy: "还没有错题。先练第 1 单元。",
       start: (n) => `开始 ${n} 题复习`,
       targetsTitle: "今天轮到这些",
+      missBookTitle: "最近错过",
+      missCountCopy: (n) => `错过 ${n} 次`,
       unitLabel: (n) => `第 ${n} 单元`,
       moreCount: (n) => `另有 ${n} 个`,
       listSep: "、",
@@ -470,6 +474,8 @@ export const UI: Record<Lang, UiText> = {
       noMissCopy: "No misses yet — we'll drill Unit 1.",
       start: (n) => `Start a ${n}-prompt round`,
       targetsTitle: "Up today",
+      missBookTitle: "Missed recently",
+      missCountCopy: (n) => `missed ${n}${n === 1 ? " time" : " times"}`,
       unitLabel: (n) => `Unit ${n}`,
       moreCount: (n) => `${n} more`,
       listSep: ", ",

@@ -3391,3 +3391,87 @@ svg.icon {
 .g-row {
   padding-right: 56px;
 }
+
+/* CJK headings must not inherit Latin display tracking. --display is a Latin
+   typeface (Dela Gothic One's unicode-range covers only U+0000-00FF), so on
+   the zh UI every CJK glyph in these headings falls back to PingFang — and
+   negative letter-spacing, which tightens Latin display type, squashes Han
+   characters instead (measured: 学习路径 at -1.53px/char). documentElement
+   .lang is synced by the app, so scoping on it is exact. */
+html[lang="zh-CN"] .unit-banner h2,
+html[lang="zh-CN"] .prac-hero h1,
+html[lang="zh-CN"] .lab-section-head h2,
+html[lang="zh-CN"] .lab-unit-heading h3,
+html[lang="zh-CN"] .stem,
+html[lang="zh-CN"] .g-card h3,
+html[lang="zh-CN"] .g-weak-term,
+html[lang="zh-CN"] .bench__term strong {
+  letter-spacing: 0;
+}
+
+/* Folded path: the unit head is now the toggle for its lesson list. It keeps
+   all its information (number, progress, title, blurb) because folded, it is
+   the only thing a closed unit shows. */
+button.lab-unit-head {
+  display: flex;
+  width: 100%;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 0;
+  border: 0;
+  background: none;
+  font-family: inherit;
+  text-align: left;
+  color: inherit;
+  cursor: pointer;
+}
+.lab-unit-chevron {
+  margin-left: auto;
+  align-self: center;
+  color: var(--muted);
+  font-size: 13px;
+}
+.lab-unit:not(.lab-unit-current) button.lab-unit-head {
+  opacity: 0.72;
+}
+
+/* The mistake book: worst misses first, with the pair explanation inline so
+   the fix reads where the miss reads. */
+.prac-misses {
+  width: 100%;
+  max-width: 420px;
+  margin: 22px auto 0;
+}
+.prac-misses ul {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 10px;
+  padding: 0;
+  list-style: none;
+}
+.prac-misses li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 10px;
+  padding: 10px 12px;
+  border: 0.5px solid var(--line);
+  border-radius: 12px;
+  background: var(--card);
+}
+.prac-miss-term {
+  font-weight: 800;
+  font-size: 14px;
+}
+.prac-miss-count {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 11px;
+  color: var(--coral-deep);
+}
+.prac-miss-why {
+  flex-basis: 100%;
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--ink-soft);
+}

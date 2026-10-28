@@ -4,6 +4,7 @@ import type {
   Course,
   Environment,
   Exercise,
+  ExerciseType,
   LearnerState,
   MasteryState,
   SessionState,
@@ -527,4 +528,43 @@ export function recentMissTermIds(state: LearnerState): string[] {
     if (!correct) missed.push(conceptId);
   }
   return missed;
+}
+
+export interface MissRecord {
+  conceptId: string;
+  /** How many failed attempts touched this concept (match mispairs included). */
+  misses: number;
+  /** The exercise type of the latest failure — what the learner last got wrong. */
+  lastMissedType: ExerciseType;
+  /** ISO time of the latest failure. */
+  lastMissedAt: string;
+}
+
+/**
+ * Failed-attempt history per concept, worst first.
+ *
+ * The mistake book needs more than a set of ids: "you missed this once a week
+ * ago" and "you missed this four times, latest today" are different coaching
+ * problems. Attempts are the only record, so the aggregation lives here.
+ */
+export function missHistory(state: LearnerState): MissRecord[] {
+  const byConcept = new Map<string, MissRecord>();
+  for (const attempt of state.attempts) {
+    // Same rehearsal rule as recentMissTermIds: a re-queued match replay is not
+    // a fresh miss, it is the corrective rerun of one the player already made.
+    if (attempt.correct || attempt.isRetry) continue;
+    for (const conceptId of attempt.conceptIds) {
+      const prior = byConcept.get(conceptId);
+      const later = !prior || attempt.occurredAt >= prior.lastMissedAt;
+      byConcept.set(conceptId, {
+        conceptId,
+        misses: (prior?.misses ?? 0) + 1,
+        lastMissedType: later ? attempt.exerciseType : prior.lastMissedType,
+        lastMissedAt: later ? attempt.occurredAt : prior.lastMissedAt,
+      });
+    }
+  }
+  return [...byConcept.values()].sort(
+    (a, b) => b.misses - a.misses || b.lastMissedAt.localeCompare(a.lastMissedAt),
+  );
 }

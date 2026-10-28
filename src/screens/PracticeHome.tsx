@@ -1,6 +1,6 @@
 import { Hedgehog } from "../art";
 import type { Course, LearnerState } from "../domain";
-import { duePairIds } from "../engine";
+import { duePairIds, missHistory } from "../engine";
 import { conceptOf, PRACTICE_ROUND } from "../flow";
 import { localizedTerm } from "../localization";
 import type { Lang, UiText } from "../ui";
@@ -55,6 +55,23 @@ export function PracticeHome({
 }) {
   const targets = practiceTargets(state, course, lang);
 
+  // The mistake book: failed attempts aggregated per concept, worst first, so
+  // the tab answers "what have I been getting wrong" and not just "what is due
+  // today". The why-line is the pair explanation — the same sentence the teach
+  // card and the feedback sheet use, so the fix reads the same everywhere.
+  const misses = missHistory(state)
+    .map((record) => {
+      const concept = conceptOf(course, record.conceptId);
+      if (!concept) return null;
+      return {
+        conceptId: record.conceptId,
+        term: concept.term,
+        misses: record.misses,
+        why: concept.mixUpWhy,
+      };
+    })
+    .filter((entry): entry is NonNullable<typeof entry> => entry !== null);
+
   return (
     <>
       <header className="top">
@@ -71,6 +88,22 @@ export function PracticeHome({
         <button type="button" className="btn btn-gold" onClick={onStart}>
           {t.practice.start(PRACTICE_ROUND)}
         </button>
+        {misses.length > 0 && (
+          <section className="prac-misses" aria-labelledby="pracMissesTitle">
+            <h2 id="pracMissesTitle" className="g-kicker">
+              {t.practice.missBookTitle}
+            </h2>
+            <ul>
+              {misses.slice(0, 5).map(({ conceptId, term, misses: count, why }) => (
+                <li key={conceptId}>
+                  <span className="prac-miss-term">{term}</span>
+                  <span className="prac-miss-count">{t.practice.missCountCopy(count)}</span>
+                  {why && <span className="prac-miss-why">{why}</span>}
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
         {targets.length > 0 && (
           <section className="prac-targets" aria-labelledby="pracTargetsTitle">
             <h2 id="pracTargetsTitle" className="g-kicker">
