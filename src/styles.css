@@ -1335,10 +1335,18 @@ svg.icon {
 .term-art.hero svg {
   border-radius: 24px;
 }
+/* No tinted plate behind the art.
+   Two art systems coexist: hand-drawn SVG (the legacy pack) and generated
+   raster images (every pack since T1). The raster images are opaque with a
+   white field and are blended onto the paper with mix-blend-mode: multiply, so
+   any plate behind them shows through as a coloured frame. Giving only the
+   SVG a plate made the two systems look like different products on the same
+   screen — the T6 teach card had a green box where T1-T5 had a bare
+   illustration. Both now sit directly on the card. */
 .term-art.hero,
 .prompt .opt .term-art.lg {
-  background: #f8faf3;
-  border: 0.5px solid #eef6d6;
+  background: none;
+  border: 0;
 }
 .prompt.teach {
   display: flex;
