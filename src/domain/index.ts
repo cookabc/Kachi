@@ -8,8 +8,25 @@
  * type asks "do you know this word"; audit asks "would you have caught the
  * mistake". It is the only type that can teach the habit the product is for —
  * reading a number and asking what it is hiding.
+ *
+ * `listen` is the ear task: the term is spoken, the options are terms. It is
+ * the one exercise the product could not offer at all before synthesis — and
+ * the reason audio exists. The word is never shown as text in the stem; the
+ * ear has to do the work.
  */
-export type ExerciseType = "meaning" | "truefalse" | "fill" | "scenario" | "match" | "headline" | "audit";
+// "listen" is the ear task: the term is spoken, the options are terms. It is
+// the one exercise the product could not offer at all before synthesis — and
+// the reason audio exists. The word is never shown as text in the stem; the
+// ear does the work.
+export type ExerciseType =
+  | "meaning"
+  | "truefalse"
+  | "fill"
+  | "scenario"
+  | "match"
+  | "headline"
+  | "audit"
+  | "listen";
 export type RiskLevel = "evergreen" | "time-sensitive" | "jurisdictional";
 export type ReviewStatus = "legacy" | "draft" | "reviewed";
 

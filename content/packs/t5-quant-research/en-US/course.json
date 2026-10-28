@@ -862,6 +862,31 @@
             }
           ],
           "why": "Match each term to what it means."
+        },
+        {
+          "id": "u1l1-listen",
+          "type": "listen",
+          "termId": "backtest",
+          "termIds": [
+            "backtest"
+          ],
+          "stem": "Which term did you hear?",
+          "options": [
+            {
+              "text": "backtest",
+              "art": "backtest"
+            },
+            {
+              "text": "in-sample",
+              "art": "in-sample"
+            },
+            {
+              "text": "out-of-sample",
+              "art": "out-of-sample"
+            }
+          ],
+          "answer": 0,
+          "why": "backtest: Simulating a strategy on historical data to estimate its return and risk."
         }
       ]
     },
@@ -1062,6 +1087,27 @@
             }
           ],
           "why": "Match each term to what it means."
+        },
+        {
+          "id": "u1l2-listen",
+          "type": "listen",
+          "termId": "walk-forward",
+          "termIds": [
+            "walk-forward"
+          ],
+          "stem": "Which term did you hear?",
+          "options": [
+            {
+              "text": "walk-forward",
+              "art": "walk-forward"
+            },
+            {
+              "text": "benchmark",
+              "art": "benchmark"
+            }
+          ],
+          "answer": 0,
+          "why": "walk-forward: A validation method that rolls forward in time, refitting on past data only — the closest simulation of live constraints."
         }
       ]
     },
@@ -1315,6 +1361,35 @@
             }
           ],
           "why": "Match each term to what it means."
+        },
+        {
+          "id": "u1r-listen",
+          "type": "listen",
+          "termId": "backtest",
+          "termIds": [
+            "backtest"
+          ],
+          "stem": "Which term did you hear?",
+          "options": [
+            {
+              "text": "backtest",
+              "art": "backtest"
+            },
+            {
+              "text": "in-sample",
+              "art": "in-sample"
+            },
+            {
+              "text": "out-of-sample",
+              "art": "out-of-sample"
+            },
+            {
+              "text": "walk-forward",
+              "art": "walk-forward"
+            }
+          ],
+          "answer": 0,
+          "why": "backtest: Simulating a strategy on historical data to estimate its return and risk."
         }
       ]
     },
@@ -1687,6 +1762,31 @@
             }
           ],
           "why": "Match each term to what it means."
+        },
+        {
+          "id": "u2l1-listen",
+          "type": "listen",
+          "termId": "overfitting",
+          "termIds": [
+            "overfitting"
+          ],
+          "stem": "Which term did you hear?",
+          "options": [
+            {
+              "text": "overfitting",
+              "art": "overfitting"
+            },
+            {
+              "text": "look-ahead bias",
+              "art": "look-ahead bias"
+            },
+            {
+              "text": "survivorship bias",
+              "art": "survivorship bias"
+            }
+          ],
+          "answer": 0,
+          "why": "overfitting: Fitting a model so closely to past data that it captures random variation and breaks on new data."
         }
       ]
     },
@@ -1913,6 +2013,27 @@
             }
           ],
           "why": "Match each term to what it means."
+        },
+        {
+          "id": "u2l2-listen",
+          "type": "listen",
+          "termId": "data snooping",
+          "termIds": [
+            "data snooping"
+          ],
+          "stem": "Which term did you hear?",
+          "options": [
+            {
+              "text": "data snooping",
+              "art": "data snooping"
+            },
+            {
+              "text": "multiple testing",
+              "art": "multiple testing"
+            }
+          ],
+          "answer": 0,
+          "why": "data snooping: Testing hypotheses repeatedly on the same data until a statistically significant result appears by chance, then treating it as a finding."
         }
       ]
     },
@@ -2166,6 +2287,35 @@
             }
           ],
           "why": "Match each term to what it means."
+        },
+        {
+          "id": "u2r-listen",
+          "type": "listen",
+          "termId": "overfitting",
+          "termIds": [
+            "overfitting"
+          ],
+          "stem": "Which term did you hear?",
+          "options": [
+            {
+              "text": "overfitting",
+              "art": "overfitting"
+            },
+            {
+              "text": "look-ahead bias",
+              "art": "look-ahead bias"
+            },
+            {
+              "text": "survivorship bias",
+              "art": "survivorship bias"
+            },
+            {
+              "text": "data snooping",
+              "art": "data snooping"
+            }
+          ],
+          "answer": 0,
+          "why": "overfitting: Fitting a model so closely to past data that it captures random variation and breaks on new data."
         }
       ]
     },
@@ -2556,6 +2706,35 @@
             }
           ],
           "why": "Match each term to what it means."
+        },
+        {
+          "id": "u3l1-listen",
+          "type": "listen",
+          "termId": "sharpe ratio",
+          "termIds": [
+            "sharpe ratio"
+          ],
+          "stem": "Which term did you hear?",
+          "options": [
+            {
+              "text": "sharpe ratio",
+              "art": "sharpe ratio"
+            },
+            {
+              "text": "max drawdown",
+              "art": "max drawdown"
+            },
+            {
+              "text": "hit rate",
+              "art": "hit rate"
+            },
+            {
+              "text": "expectancy",
+              "art": "expectancy"
+            }
+          ],
+          "answer": 0,
+          "why": "sharpe ratio: Excess return divided by return volatility — the reward per unit of risk taken."
         }
       ]
     },
@@ -2850,6 +3029,31 @@
             }
           ],
           "why": "Match each term to what it means."
+        },
+        {
+          "id": "u3l2-listen",
+          "type": "listen",
+          "termId": "alpha",
+          "termIds": [
+            "alpha"
+          ],
+          "stem": "Which term did you hear?",
+          "options": [
+            {
+              "text": "alpha",
+              "art": "alpha"
+            },
+            {
+              "text": "beta",
+              "art": "beta"
+            },
+            {
+              "text": "tracking error",
+              "art": "tracking error"
+            }
+          ],
+          "answer": 0,
+          "why": "alpha: Risk-adjusted excess return over a benchmark — the strategy's own contribution."
         }
       ]
     },
@@ -3197,6 +3401,35 @@
             }
           ],
           "why": "Match each term to what it means."
+        },
+        {
+          "id": "u3r-listen",
+          "type": "listen",
+          "termId": "sharpe ratio",
+          "termIds": [
+            "sharpe ratio"
+          ],
+          "stem": "Which term did you hear?",
+          "options": [
+            {
+              "text": "sharpe ratio",
+              "art": "sharpe ratio"
+            },
+            {
+              "text": "max drawdown",
+              "art": "max drawdown"
+            },
+            {
+              "text": "hit rate",
+              "art": "hit rate"
+            },
+            {
+              "text": "expectancy",
+              "art": "expectancy"
+            }
+          ],
+          "answer": 0,
+          "why": "sharpe ratio: Excess return divided by return volatility — the reward per unit of risk taken."
         }
       ]
     },
@@ -3491,6 +3724,31 @@
             }
           ],
           "why": "Match each term to what it means."
+        },
+        {
+          "id": "u4l1-listen",
+          "type": "listen",
+          "termId": "universe",
+          "termIds": [
+            "universe"
+          ],
+          "stem": "Which term did you hear?",
+          "options": [
+            {
+              "text": "universe",
+              "art": "universe"
+            },
+            {
+              "text": "rebalance",
+              "art": "rebalance"
+            },
+            {
+              "text": "position sizing",
+              "art": "position sizing"
+            }
+          ],
+          "answer": 0,
+          "why": "universe: The collection of assets a strategy may invest in, which sets its boundaries and bias risk."
         }
       ]
     },
@@ -3785,6 +4043,31 @@
             }
           ],
           "why": "Match each term to what it means."
+        },
+        {
+          "id": "u4l2-listen",
+          "type": "listen",
+          "termId": "turnover",
+          "termIds": [
+            "turnover"
+          ],
+          "stem": "Which term did you hear?",
+          "options": [
+            {
+              "text": "turnover",
+              "art": "turnover"
+            },
+            {
+              "text": "correlation",
+              "art": "correlation"
+            },
+            {
+              "text": "exposure",
+              "art": "exposure"
+            }
+          ],
+          "answer": 0,
+          "why": "turnover: Trading volume relative to portfolio size over a period — the direct driver of transaction cost."
         }
       ]
     },
@@ -4085,6 +4368,35 @@
             }
           ],
           "why": "Match each term to what it means."
+        },
+        {
+          "id": "u4r-listen",
+          "type": "listen",
+          "termId": "universe",
+          "termIds": [
+            "universe"
+          ],
+          "stem": "Which term did you hear?",
+          "options": [
+            {
+              "text": "universe",
+              "art": "universe"
+            },
+            {
+              "text": "rebalance",
+              "art": "rebalance"
+            },
+            {
+              "text": "position sizing",
+              "art": "position sizing"
+            },
+            {
+              "text": "turnover",
+              "art": "turnover"
+            }
+          ],
+          "answer": 0,
+          "why": "universe: The collection of assets a strategy may invest in, which sets its boundaries and bias risk."
         }
       ]
     },
@@ -4285,6 +4597,27 @@
             }
           ],
           "why": "Match each term to what it means."
+        },
+        {
+          "id": "u5l1-listen",
+          "type": "listen",
+          "termId": "transaction cost",
+          "termIds": [
+            "transaction cost"
+          ],
+          "stem": "Which term did you hear?",
+          "options": [
+            {
+              "text": "transaction cost",
+              "art": "transaction cost"
+            },
+            {
+              "text": "slippage",
+              "art": "slippage"
+            }
+          ],
+          "answer": 0,
+          "why": "transaction cost: Costs incurred in trading: commissions, bid-ask spread and taxes."
         }
       ]
     },
@@ -4485,6 +4818,27 @@
             }
           ],
           "why": "Match each term to what it means."
+        },
+        {
+          "id": "u5l2-listen",
+          "type": "listen",
+          "termId": "capacity constraint",
+          "termIds": [
+            "capacity constraint"
+          ],
+          "stem": "Which term did you hear?",
+          "options": [
+            {
+              "text": "capacity constraint",
+              "art": "capacity constraint"
+            },
+            {
+              "text": "liquidity constraint",
+              "art": "liquidity constraint"
+            }
+          ],
+          "answer": 0,
+          "why": "capacity constraint: The maximum capital a strategy can absorb before trading costs consume the return."
         }
       ]
     },
@@ -4691,6 +5045,35 @@
             }
           ],
           "why": "Match each term to what it means."
+        },
+        {
+          "id": "u5r-listen",
+          "type": "listen",
+          "termId": "transaction cost",
+          "termIds": [
+            "transaction cost"
+          ],
+          "stem": "Which term did you hear?",
+          "options": [
+            {
+              "text": "transaction cost",
+              "art": "transaction cost"
+            },
+            {
+              "text": "slippage",
+              "art": "slippage"
+            },
+            {
+              "text": "capacity constraint",
+              "art": "capacity constraint"
+            },
+            {
+              "text": "liquidity constraint",
+              "art": "liquidity constraint"
+            }
+          ],
+          "answer": 0,
+          "why": "transaction cost: Costs incurred in trading: commissions, bid-ask spread and taxes."
         }
       ]
     },
@@ -5011,6 +5394,31 @@
             }
           ],
           "why": "Match each term to what it means."
+        },
+        {
+          "id": "u6l1-listen",
+          "type": "listen",
+          "termId": "stress test",
+          "termIds": [
+            "stress test"
+          ],
+          "stem": "Which term did you hear?",
+          "options": [
+            {
+              "text": "stress test",
+              "art": "stress test"
+            },
+            {
+              "text": "scenario analysis",
+              "art": "scenario analysis"
+            },
+            {
+              "text": "value at risk",
+              "art": "value at risk"
+            }
+          ],
+          "answer": 0,
+          "why": "stress test: Evaluating a portfolio under an extreme but plausible scenario to probe tail risk."
         }
       ]
     },
@@ -5211,6 +5619,27 @@
             }
           ],
           "why": "Match each term to what it means."
+        },
+        {
+          "id": "u6l2-listen",
+          "type": "listen",
+          "termId": "sensitivity",
+          "termIds": [
+            "sensitivity"
+          ],
+          "stem": "Which term did you hear?",
+          "options": [
+            {
+              "text": "sensitivity",
+              "art": "sensitivity"
+            },
+            {
+              "text": "robustness",
+              "art": "robustness"
+            }
+          ],
+          "answer": 0,
+          "why": "sensitivity: The degree to which a result responds to a change in a parameter or assumption."
         }
       ]
     },
@@ -5464,6 +5893,35 @@
             }
           ],
           "why": "Match each term to what it means."
+        },
+        {
+          "id": "u6r-listen",
+          "type": "listen",
+          "termId": "stress test",
+          "termIds": [
+            "stress test"
+          ],
+          "stem": "Which term did you hear?",
+          "options": [
+            {
+              "text": "stress test",
+              "art": "stress test"
+            },
+            {
+              "text": "scenario analysis",
+              "art": "scenario analysis"
+            },
+            {
+              "text": "value at risk",
+              "art": "value at risk"
+            },
+            {
+              "text": "sensitivity",
+              "art": "sensitivity"
+            }
+          ],
+          "answer": 0,
+          "why": "stress test: Evaluating a portfolio under an extreme but plausible scenario to probe tail risk."
         }
       ]
     }

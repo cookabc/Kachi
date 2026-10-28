@@ -1067,6 +1067,31 @@
             }
           ],
           "why": "把每个词和它的意思对上。"
+        },
+        {
+          "id": "u1l1-listen",
+          "type": "listen",
+          "termId": "rally",
+          "termIds": [
+            "rally"
+          ],
+          "stem": "你听到的是哪个词？",
+          "options": [
+            {
+              "text": "rally",
+              "art": "rally"
+            },
+            {
+              "text": "selloff",
+              "art": "selloff"
+            },
+            {
+              "text": "slump",
+              "art": "slump"
+            }
+          ],
+          "answer": 0,
+          "why": "rally：价格在一段时间下跌后出现的持续上涨。"
         }
       ]
     },
@@ -1361,6 +1386,31 @@
             }
           ],
           "why": "把每个词和它的意思对上。"
+        },
+        {
+          "id": "u1l2-listen",
+          "type": "listen",
+          "termId": "rebound",
+          "termIds": [
+            "rebound"
+          ],
+          "stem": "你听到的是哪个词？",
+          "options": [
+            {
+              "text": "rebound",
+              "art": "rebound"
+            },
+            {
+              "text": "rout",
+              "art": "rout"
+            },
+            {
+              "text": "profit-taking",
+              "art": "profit-taking"
+            }
+          ],
+          "answer": 0,
+          "why": "rebound：价格下跌后出现回升，通常指短期。"
         }
       ]
     },
@@ -1771,6 +1821,35 @@
             }
           ],
           "why": "把每个词和它的意思对上。"
+        },
+        {
+          "id": "u1r-listen",
+          "type": "listen",
+          "termId": "rally",
+          "termIds": [
+            "rally"
+          ],
+          "stem": "你听到的是哪个词？",
+          "options": [
+            {
+              "text": "rally",
+              "art": "rally"
+            },
+            {
+              "text": "selloff",
+              "art": "selloff"
+            },
+            {
+              "text": "slump",
+              "art": "slump"
+            },
+            {
+              "text": "rebound",
+              "art": "rebound"
+            }
+          ],
+          "answer": 0,
+          "why": "rally：价格在一段时间下跌后出现的持续上涨。"
         }
       ]
     },
@@ -2065,6 +2144,31 @@
             }
           ],
           "why": "把每个词和它的意思对上。"
+        },
+        {
+          "id": "u2l1-listen",
+          "type": "listen",
+          "termId": "supply",
+          "termIds": [
+            "supply"
+          ],
+          "stem": "你听到的是哪个词？",
+          "options": [
+            {
+              "text": "supply",
+              "art": "supply"
+            },
+            {
+              "text": "demand",
+              "art": "demand"
+            },
+            {
+              "text": "capacity",
+              "art": "capacity"
+            }
+          ],
+          "answer": 0,
+          "why": "supply：生产者愿意并能够在特定价格下提供的商品或资产数量。"
         }
       ]
     },
@@ -2359,6 +2463,31 @@
             }
           ],
           "why": "把每个词和它的意思对上。"
+        },
+        {
+          "id": "u2l2-listen",
+          "type": "listen",
+          "termId": "output",
+          "termIds": [
+            "output"
+          ],
+          "stem": "你听到的是哪个词？",
+          "options": [
+            {
+              "text": "output",
+              "art": "output"
+            },
+            {
+              "text": "inventory",
+              "art": "inventory"
+            },
+            {
+              "text": "surplus",
+              "art": "surplus"
+            }
+          ],
+          "answer": 0,
+          "why": "output：在特定时期内实际生产出来的数量。"
         }
       ]
     },
@@ -2747,6 +2876,35 @@
             }
           ],
           "why": "把每个词和它的意思对上。"
+        },
+        {
+          "id": "u2r-listen",
+          "type": "listen",
+          "termId": "supply",
+          "termIds": [
+            "supply"
+          ],
+          "stem": "你听到的是哪个词？",
+          "options": [
+            {
+              "text": "supply",
+              "art": "supply"
+            },
+            {
+              "text": "demand",
+              "art": "demand"
+            },
+            {
+              "text": "capacity",
+              "art": "capacity"
+            },
+            {
+              "text": "output",
+              "art": "output"
+            }
+          ],
+          "answer": 0,
+          "why": "supply：生产者愿意并能够在特定价格下提供的商品或资产数量。"
         }
       ]
     },
@@ -3041,6 +3199,31 @@
             }
           ],
           "why": "把每个词和它的意思对上。"
+        },
+        {
+          "id": "u3l1-listen",
+          "type": "listen",
+          "termId": "deficit",
+          "termIds": [
+            "deficit"
+          ],
+          "stem": "你听到的是哪个词？",
+          "options": [
+            {
+              "text": "deficit",
+              "art": "deficit"
+            },
+            {
+              "text": "earnings",
+              "art": "earnings"
+            },
+            {
+              "text": "revenue",
+              "art": "revenue"
+            }
+          ],
+          "answer": 0,
+          "why": "deficit：支出超过收入的部分，或供给不足需求的部分。"
         }
       ]
     },
@@ -3335,6 +3518,31 @@
             }
           ],
           "why": "把每个词和它的意思对上。"
+        },
+        {
+          "id": "u3l2-listen",
+          "type": "listen",
+          "termId": "profit",
+          "termIds": [
+            "profit"
+          ],
+          "stem": "你听到的是哪个词？",
+          "options": [
+            {
+              "text": "profit",
+              "art": "profit"
+            },
+            {
+              "text": "margin",
+              "art": "margin"
+            },
+            {
+              "text": "dividend",
+              "art": "dividend"
+            }
+          ],
+          "answer": 0,
+          "why": "profit：收入扣除全部成本和费用后的剩余金额。"
         }
       ]
     },
@@ -3745,6 +3953,35 @@
             }
           ],
           "why": "把每个词和它的意思对上。"
+        },
+        {
+          "id": "u3r-listen",
+          "type": "listen",
+          "termId": "deficit",
+          "termIds": [
+            "deficit"
+          ],
+          "stem": "你听到的是哪个词？",
+          "options": [
+            {
+              "text": "deficit",
+              "art": "deficit"
+            },
+            {
+              "text": "earnings",
+              "art": "earnings"
+            },
+            {
+              "text": "revenue",
+              "art": "revenue"
+            },
+            {
+              "text": "profit",
+              "art": "profit"
+            }
+          ],
+          "answer": 0,
+          "why": "deficit：支出超过收入的部分，或供给不足需求的部分。"
         }
       ]
     },
@@ -4039,6 +4276,31 @@
             }
           ],
           "why": "把每个词和它的意思对上。"
+        },
+        {
+          "id": "u4l1-listen",
+          "type": "listen",
+          "termId": "guidance",
+          "termIds": [
+            "guidance"
+          ],
+          "stem": "你听到的是哪个词？",
+          "options": [
+            {
+              "text": "guidance",
+              "art": "guidance"
+            },
+            {
+              "text": "forecast",
+              "art": "forecast"
+            },
+            {
+              "text": "consensus",
+              "art": "consensus"
+            }
+          ],
+          "answer": 0,
+          "why": "guidance：公司管理层对未来业绩给出的官方预期。"
         }
       ]
     },
@@ -4333,6 +4595,31 @@
             }
           ],
           "why": "把每个词和它的意思对上。"
+        },
+        {
+          "id": "u4l2-listen",
+          "type": "listen",
+          "termId": "estimate",
+          "termIds": [
+            "estimate"
+          ],
+          "stem": "你听到的是哪个词？",
+          "options": [
+            {
+              "text": "estimate",
+              "art": "estimate"
+            },
+            {
+              "text": "bond",
+              "art": "bond"
+            },
+            {
+              "text": "yield",
+              "art": "yield"
+            }
+          ],
+          "answer": 0,
+          "why": "estimate：对某个数值的个别估计。"
         }
       ]
     },
@@ -4699,6 +4986,35 @@
             }
           ],
           "why": "把每个词和它的意思对上。"
+        },
+        {
+          "id": "u4r-listen",
+          "type": "listen",
+          "termId": "guidance",
+          "termIds": [
+            "guidance"
+          ],
+          "stem": "你听到的是哪个词？",
+          "options": [
+            {
+              "text": "guidance",
+              "art": "guidance"
+            },
+            {
+              "text": "forecast",
+              "art": "forecast"
+            },
+            {
+              "text": "consensus",
+              "art": "consensus"
+            },
+            {
+              "text": "estimate",
+              "art": "estimate"
+            }
+          ],
+          "answer": 0,
+          "why": "guidance：公司管理层对未来业绩给出的官方预期。"
         }
       ]
     },
@@ -4993,6 +5309,31 @@
             }
           ],
           "why": "把每个词和它的意思对上。"
+        },
+        {
+          "id": "u5l1-listen",
+          "type": "listen",
+          "termId": "inflation",
+          "termIds": [
+            "inflation"
+          ],
+          "stem": "你听到的是哪个词？",
+          "options": [
+            {
+              "text": "inflation",
+              "art": "inflation"
+            },
+            {
+              "text": "interest rate",
+              "art": "interest rate"
+            },
+            {
+              "text": "rate hike",
+              "art": "rate hike"
+            }
+          ],
+          "answer": 0,
+          "why": "inflation：整体物价水平持续上涨，货币购买力下降。"
         }
       ]
     },
@@ -5287,6 +5628,31 @@
             }
           ],
           "why": "把每个词和它的意思对上。"
+        },
+        {
+          "id": "u5l2-listen",
+          "type": "listen",
+          "termId": "rate cut",
+          "termIds": [
+            "rate cut"
+          ],
+          "stem": "你听到的是哪个词？",
+          "options": [
+            {
+              "text": "rate cut",
+              "art": "rate cut"
+            },
+            {
+              "text": "central bank",
+              "art": "central bank"
+            },
+            {
+              "text": "currency",
+              "art": "currency"
+            }
+          ],
+          "answer": 0,
+          "why": "rate cut：中央银行降低政策利率的行为。"
         }
       ]
     },
@@ -5631,6 +5997,35 @@
             }
           ],
           "why": "把每个词和它的意思对上。"
+        },
+        {
+          "id": "u5r-listen",
+          "type": "listen",
+          "termId": "inflation",
+          "termIds": [
+            "inflation"
+          ],
+          "stem": "你听到的是哪个词？",
+          "options": [
+            {
+              "text": "inflation",
+              "art": "inflation"
+            },
+            {
+              "text": "interest rate",
+              "art": "interest rate"
+            },
+            {
+              "text": "rate hike",
+              "art": "rate hike"
+            },
+            {
+              "text": "rate cut",
+              "art": "rate cut"
+            }
+          ],
+          "answer": 0,
+          "why": "inflation：整体物价水平持续上涨，货币购买力下降。"
         }
       ]
     },
@@ -5925,6 +6320,31 @@
             }
           ],
           "why": "把每个词和它的意思对上。"
+        },
+        {
+          "id": "u6l1-listen",
+          "type": "listen",
+          "termId": "exchange rate",
+          "termIds": [
+            "exchange rate"
+          ],
+          "stem": "你听到的是哪个词？",
+          "options": [
+            {
+              "text": "exchange rate",
+              "art": "exchange rate"
+            },
+            {
+              "text": "depreciate",
+              "art": "depreciate"
+            },
+            {
+              "text": "appreciate",
+              "art": "appreciate"
+            }
+          ],
+          "answer": 0,
+          "why": "exchange rate：两种货币之间的兑换比率。"
         }
       ]
     },
@@ -6219,6 +6639,31 @@
             }
           ],
           "why": "把每个词和它的意思对上。"
+        },
+        {
+          "id": "u6l2-listen",
+          "type": "listen",
+          "termId": "market cap",
+          "termIds": [
+            "market cap"
+          ],
+          "stem": "你听到的是哪个词？",
+          "options": [
+            {
+              "text": "market cap",
+              "art": "market cap"
+            },
+            {
+              "text": "valuation",
+              "art": "valuation"
+            },
+            {
+              "text": "P/E",
+              "art": "p/e"
+            }
+          ],
+          "answer": 0,
+          "why": "market cap：公司股价乘以总股本，代表市场对公司的整体估值。"
         }
       ]
     },
@@ -6585,6 +7030,35 @@
             }
           ],
           "why": "把每个词和它的意思对上。"
+        },
+        {
+          "id": "u6r-listen",
+          "type": "listen",
+          "termId": "exchange rate",
+          "termIds": [
+            "exchange rate"
+          ],
+          "stem": "你听到的是哪个词？",
+          "options": [
+            {
+              "text": "exchange rate",
+              "art": "exchange rate"
+            },
+            {
+              "text": "depreciate",
+              "art": "depreciate"
+            },
+            {
+              "text": "appreciate",
+              "art": "appreciate"
+            },
+            {
+              "text": "market cap",
+              "art": "market cap"
+            }
+          ],
+          "answer": 0,
+          "why": "exchange rate：两种货币之间的兑换比率。"
         }
       ]
     },
@@ -6879,6 +7353,31 @@
             }
           ],
           "why": "把每个词和它的意思对上。"
+        },
+        {
+          "id": "u7l1-listen",
+          "type": "listen",
+          "termId": "index",
+          "termIds": [
+            "index"
+          ],
+          "stem": "你听到的是哪个词？",
+          "options": [
+            {
+              "text": "index",
+              "art": "index"
+            },
+            {
+              "text": "blue chip",
+              "art": "blue chip"
+            },
+            {
+              "text": "auction",
+              "art": "auction"
+            }
+          ],
+          "answer": 0,
+          "why": "index：由一组资产按规则加权计算出的综合指标。"
         }
       ]
     },
@@ -7173,6 +7672,31 @@
             }
           ],
           "why": "把每个词和它的意思对上。"
+        },
+        {
+          "id": "u7l2-listen",
+          "type": "listen",
+          "termId": "issuance",
+          "termIds": [
+            "issuance"
+          ],
+          "stem": "你听到的是哪个词？",
+          "options": [
+            {
+              "text": "issuance",
+              "art": "issuance"
+            },
+            {
+              "text": "tariff",
+              "art": "tariff"
+            },
+            {
+              "text": "volatility",
+              "art": "volatility"
+            }
+          ],
+          "answer": 0,
+          "why": "issuance：发行新证券的行为或其总量。"
         }
       ]
     },
@@ -7517,6 +8041,35 @@
             }
           ],
           "why": "把每个词和它的意思对上。"
+        },
+        {
+          "id": "u7r-listen",
+          "type": "listen",
+          "termId": "index",
+          "termIds": [
+            "index"
+          ],
+          "stem": "你听到的是哪个词？",
+          "options": [
+            {
+              "text": "index",
+              "art": "index"
+            },
+            {
+              "text": "blue chip",
+              "art": "blue chip"
+            },
+            {
+              "text": "auction",
+              "art": "auction"
+            },
+            {
+              "text": "issuance",
+              "art": "issuance"
+            }
+          ],
+          "answer": 0,
+          "why": "index：由一组资产按规则加权计算出的综合指标。"
         }
       ]
     }

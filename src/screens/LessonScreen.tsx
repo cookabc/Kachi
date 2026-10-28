@@ -1,4 +1,6 @@
+import { useEffect } from "react";
 import { artIdForLabel, TermArt } from "../art";
+import { speak } from "../audio";
 import { HeartRow } from "../chrome";
 import type { Course } from "../domain";
 import { conceptOf, type PresentedExercise, type TeachMode } from "../flow";
@@ -175,9 +177,58 @@ function TeachCard({ termId, course, t, lang }: { termId: string; course: Course
         <TermArt id={concept.id} size="hero" />
       </div>
       {concept.caption && <p className="teach-cap">{concept.caption}</p>}
-      <div className="teach-term">{concept.term}</div>
+      <div className="teach-term">
+        {concept.term}
+        <button
+          type="button"
+          className="speak-btn"
+          aria-label={t.lesson.speakTermAria}
+          onClick={() => {
+            void speak(concept.term);
+          }}
+        >
+          <svg
+            viewBox="0 0 24 24"
+            width="20"
+            height="20"
+            aria-hidden="true"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="M11 5 6 9H3v6h3l5 4z" />
+            <path d="M15.5 8.5a5 5 0 0 1 0 7" />
+            <path d="M18.5 5.5a9 9 0 0 1 0 13" />
+          </svg>
+        </button>
+      </div>
       <p className="teach-def">{concept.definition}</p>
-      <div className="teach-ex">{concept.example}</div>
+      <button
+        type="button"
+        className="speak-btn speak-ex"
+        aria-label={t.lesson.speakExampleAria}
+        onClick={() => {
+          void speak(concept.example);
+        }}
+      >
+        <svg
+          viewBox="0 0 24 24"
+          width="16"
+          height="16"
+          aria-hidden="true"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <path d="M11 5 6 9H3v6h3l5 4z" />
+          <path d="M15.5 8.5a5 5 0 0 1 0 7" />
+        </svg>
+        <span>{concept.example}</span>
+      </button>
       <div className="teach-mix">
         <TermArt id={sibling ? sibling.id : concept.mixUp} size="xs" />
         <div>
@@ -245,6 +296,14 @@ function PromptBody(props: {
   onMatch: (side: "left" | "right", id: string) => void;
 }) {
   const { presented, selection, locked, t } = props;
+  // A listen question speaks its answer on arrival. The user activated the page
+  // by starting the lesson, so synthesis is allowed; if it is still blocked the
+  // replay button below is the fallback. speak() cancels the previous utterance,
+  // so a fast advance cannot stack overlapping audio.
+  useEffect(() => {
+    if (presented.type !== "listen" || locked) return;
+    void speak(presented.correctText ?? "");
+  }, [presented, locked]);
   return (
     <>
       <div className="kicker2">{t.lesson.kickers[presented.type]}</div>
@@ -252,10 +311,48 @@ function PromptBody(props: {
       {presented.type === "audit" && presented.story && (
         <blockquote className="claim">{presented.story}</blockquote>
       )}
+      {presented.type === "listen" && (
+        <div className="listen-hint">
+          <span className="listen-dots" aria-hidden="true">
+            <i />
+            <i />
+            <i />
+          </span>
+        </div>
+      )}
       {presented.type === "fill" && presented.story ? (
         <FillStory presented={presented} selection={selection} />
       ) : (
         presented.stem && <div className="stem">{presented.stem}</div>
+      )}
+
+      {presented.type === "listen" && (
+        <div className="listen-row">
+          <button
+            type="button"
+            className="listen-replay"
+            onClick={() => {
+              void speak(presented.correctText ?? "", { rate: 0.75 });
+            }}
+            aria-label={t.lesson.replayAria}
+          >
+            <svg
+              viewBox="0 0 24 24"
+              width="26"
+              height="26"
+              aria-hidden="true"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M11 5 6 9H3v6h3l5 4z" />
+              <path d="M15.5 8.5a5 5 0 0 1 0 7" />
+              <path d="M18.5 5.5a9 9 0 0 1 0 13" />
+            </svg>
+          </button>
+        </div>
       )}
 
       {presented.type === "audit" && (
@@ -282,7 +379,7 @@ function PromptBody(props: {
         </div>
       )}
 
-      {(presented.type === "meaning" || presented.type === "scenario") && (
+      {(presented.type === "meaning" || presented.type === "scenario" || presented.type === "listen") && (
         <div className="opts">
           {presented.options?.map((option) => {
             let cls = "opt tile";

@@ -204,6 +204,34 @@ function promptsFor(concept, index, lessonConcepts, lessonId, locale) {
   return out;
 }
 
+/**
+ * The listen exercise: the term is spoken, options are terms. Synthesis happens
+ * at runtime, so the prompt carries only which term is the answer — no audio
+ * files exist. Distractors come from the same lesson so the ear has to
+ * distinguish confusable neighbours, not arbitrary words.
+ */
+function listenPrompt(lessonConcepts, lessonId, locale) {
+  if (lessonConcepts.length < 2) return null;
+  const answer = lessonConcepts[0];
+  const options = [answer, ...lessonConcepts.slice(1, 4)].map((c) => ({
+    text: c.term,
+    art: c.id,
+  }));
+  return {
+    id: `${lessonId}-listen`,
+    type: "listen",
+    termId: answer.id,
+    termIds: [answer.id],
+    stem: locale === "en-US" ? "Which term did you hear?" : "你听到的是哪个词？",
+    options,
+    answer: 0,
+    why:
+      locale === "en-US"
+        ? `${answer.term}: ${text(answer, "definition", locale)}`
+        : `${answer.term}：${answer.definition}`,
+  };
+}
+
 function matchPrompt(lessonConcepts, lessonId, locale) {
   if (lessonConcepts.length < 2) return null;
   return {
@@ -305,6 +333,8 @@ function buildCourse(locale) {
       prompts.unshift(...reviewPrompts);
       const match = matchPrompt(lesson.concepts, lesson.id, locale);
       if (match) prompts.push(match);
+      const listen = listenPrompt(lesson.concepts, lesson.id, locale);
+      if (listen) prompts.push(listen);
       lessons.push({
         id: lesson.id,
         unit: unit.id,

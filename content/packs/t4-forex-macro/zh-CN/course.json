@@ -927,6 +927,31 @@
             }
           ],
           "why": "把每个词和它的意思对上。"
+        },
+        {
+          "id": "u1l1-listen",
+          "type": "listen",
+          "termId": "currency",
+          "termIds": [
+            "currency"
+          ],
+          "stem": "你听到的是哪个词？",
+          "options": [
+            {
+              "text": "currency",
+              "art": "currency"
+            },
+            {
+              "text": "exchange rate",
+              "art": "exchange rate"
+            },
+            {
+              "text": "dollar",
+              "art": "dollar"
+            }
+          ],
+          "answer": 0,
+          "why": "currency：一国政府发行并强制流通的支付手段。"
         }
       ]
     },
@@ -1221,6 +1246,31 @@
             }
           ],
           "why": "把每个词和它的意思对上。"
+        },
+        {
+          "id": "u1l2-listen",
+          "type": "listen",
+          "termId": "euro",
+          "termIds": [
+            "euro"
+          ],
+          "stem": "你听到的是哪个词？",
+          "options": [
+            {
+              "text": "euro",
+              "art": "euro"
+            },
+            {
+              "text": "yen",
+              "art": "yen"
+            },
+            {
+              "text": "yuan",
+              "art": "yuan"
+            }
+          ],
+          "answer": 0,
+          "why": "euro：欧元区成员国共同使用的货币，由欧洲央行统一制定政策。"
         }
       ]
     },
@@ -1521,6 +1571,35 @@
             }
           ],
           "why": "把每个词和它的意思对上。"
+        },
+        {
+          "id": "u1r-listen",
+          "type": "listen",
+          "termId": "currency",
+          "termIds": [
+            "currency"
+          ],
+          "stem": "你听到的是哪个词？",
+          "options": [
+            {
+              "text": "currency",
+              "art": "currency"
+            },
+            {
+              "text": "exchange rate",
+              "art": "exchange rate"
+            },
+            {
+              "text": "dollar",
+              "art": "dollar"
+            },
+            {
+              "text": "euro",
+              "art": "euro"
+            }
+          ],
+          "answer": 0,
+          "why": "currency：一国政府发行并强制流通的支付手段。"
         }
       ]
     },
@@ -1911,6 +1990,35 @@
             }
           ],
           "why": "把每个词和它的意思对上。"
+        },
+        {
+          "id": "u2l1-listen",
+          "type": "listen",
+          "termId": "sterling",
+          "termIds": [
+            "sterling"
+          ],
+          "stem": "你听到的是哪个词？",
+          "options": [
+            {
+              "text": "sterling",
+              "art": "sterling"
+            },
+            {
+              "text": "peso",
+              "art": "peso"
+            },
+            {
+              "text": "rupiah",
+              "art": "rupiah"
+            },
+            {
+              "text": "appreciate",
+              "art": "appreciate"
+            }
+          ],
+          "answer": 0,
+          "why": "sterling：英国货币，国际代码 GBP，也称 pound sterling。"
         }
       ]
     },
@@ -2205,6 +2313,31 @@
             }
           ],
           "why": "把每个词和它的意思对上。"
+        },
+        {
+          "id": "u2l2-listen",
+          "type": "listen",
+          "termId": "depreciate",
+          "termIds": [
+            "depreciate"
+          ],
+          "stem": "你听到的是哪个词？",
+          "options": [
+            {
+              "text": "depreciate",
+              "art": "depreciate"
+            },
+            {
+              "text": "strengthen",
+              "art": "strengthen"
+            },
+            {
+              "text": "weaken",
+              "art": "weaken"
+            }
+          ],
+          "answer": 0,
+          "why": "depreciate：一种货币相对于另一种货币的价值下降。"
         }
       ]
     },
@@ -2552,6 +2685,35 @@
             }
           ],
           "why": "把每个词和它的意思对上。"
+        },
+        {
+          "id": "u2r-listen",
+          "type": "listen",
+          "termId": "sterling",
+          "termIds": [
+            "sterling"
+          ],
+          "stem": "你听到的是哪个词？",
+          "options": [
+            {
+              "text": "sterling",
+              "art": "sterling"
+            },
+            {
+              "text": "peso",
+              "art": "peso"
+            },
+            {
+              "text": "rupiah",
+              "art": "rupiah"
+            },
+            {
+              "text": "appreciate",
+              "art": "appreciate"
+            }
+          ],
+          "answer": 0,
+          "why": "sterling：英国货币，国际代码 GBP，也称 pound sterling。"
         }
       ]
     },
@@ -2942,6 +3104,35 @@
             }
           ],
           "why": "把每个词和它的意思对上。"
+        },
+        {
+          "id": "u3l1-listen",
+          "type": "listen",
+          "termId": "central bank",
+          "termIds": [
+            "central bank"
+          ],
+          "stem": "你听到的是哪个词？",
+          "options": [
+            {
+              "text": "central bank",
+              "art": "central bank"
+            },
+            {
+              "text": "rate hike",
+              "art": "rate hike"
+            },
+            {
+              "text": "rate cut",
+              "art": "rate cut"
+            },
+            {
+              "text": "hawkish",
+              "art": "hawkish"
+            }
+          ],
+          "answer": 0,
+          "why": "central bank：负责制定货币政策、控制货币供应和利率的机构。"
         }
       ]
     },
@@ -3236,6 +3427,31 @@
             }
           ],
           "why": "把每个词和它的意思对上。"
+        },
+        {
+          "id": "u3l2-listen",
+          "type": "listen",
+          "termId": "dovish",
+          "termIds": [
+            "dovish"
+          ],
+          "stem": "你听到的是哪个词？",
+          "options": [
+            {
+              "text": "dovish",
+              "art": "dovish"
+            },
+            {
+              "text": "forward guidance",
+              "art": "forward guidance"
+            },
+            {
+              "text": "tapering",
+              "art": "tapering"
+            }
+          ],
+          "answer": 0,
+          "why": "dovish：货币政策取向上偏向宽松、优先支持增长的立场。"
         }
       ]
     },
@@ -3583,6 +3799,35 @@
             }
           ],
           "why": "把每个词和它的意思对上。"
+        },
+        {
+          "id": "u3r-listen",
+          "type": "listen",
+          "termId": "central bank",
+          "termIds": [
+            "central bank"
+          ],
+          "stem": "你听到的是哪个词？",
+          "options": [
+            {
+              "text": "central bank",
+              "art": "central bank"
+            },
+            {
+              "text": "rate hike",
+              "art": "rate hike"
+            },
+            {
+              "text": "rate cut",
+              "art": "rate cut"
+            },
+            {
+              "text": "hawkish",
+              "art": "hawkish"
+            }
+          ],
+          "answer": 0,
+          "why": "central bank：负责制定货币政策、控制货币供应和利率的机构。"
         }
       ]
     },
@@ -3877,6 +4122,31 @@
             }
           ],
           "why": "把每个词和它的意思对上。"
+        },
+        {
+          "id": "u4l1-listen",
+          "type": "listen",
+          "termId": "monetary policy",
+          "termIds": [
+            "monetary policy"
+          ],
+          "stem": "你听到的是哪个词？",
+          "options": [
+            {
+              "text": "monetary policy",
+              "art": "monetary policy"
+            },
+            {
+              "text": "fiscal policy",
+              "art": "fiscal policy"
+            },
+            {
+              "text": "quantitative easing",
+              "art": "quantitative easing"
+            }
+          ],
+          "answer": 0,
+          "why": "monetary policy：中央银行通过调节利率、货币供应和信贷条件来影响经济的政策。"
         }
       ]
     },
@@ -4077,6 +4347,27 @@
             }
           ],
           "why": "把每个词和它的意思对上。"
+        },
+        {
+          "id": "u4l2-listen",
+          "type": "listen",
+          "termId": "tightening",
+          "termIds": [
+            "tightening"
+          ],
+          "stem": "你听到的是哪个词？",
+          "options": [
+            {
+              "text": "tightening",
+              "art": "tightening"
+            },
+            {
+              "text": "easing",
+              "art": "easing"
+            }
+          ],
+          "answer": 0,
+          "why": "tightening：减少货币供应或提高融资成本的政策取向，包括加息和缩减资产购买。"
         }
       ]
     },
@@ -4330,6 +4621,35 @@
             }
           ],
           "why": "把每个词和它的意思对上。"
+        },
+        {
+          "id": "u4r-listen",
+          "type": "listen",
+          "termId": "monetary policy",
+          "termIds": [
+            "monetary policy"
+          ],
+          "stem": "你听到的是哪个词？",
+          "options": [
+            {
+              "text": "monetary policy",
+              "art": "monetary policy"
+            },
+            {
+              "text": "fiscal policy",
+              "art": "fiscal policy"
+            },
+            {
+              "text": "quantitative easing",
+              "art": "quantitative easing"
+            },
+            {
+              "text": "tightening",
+              "art": "tightening"
+            }
+          ],
+          "answer": 0,
+          "why": "monetary policy：中央银行通过调节利率、货币供应和信贷条件来影响经济的政策。"
         }
       ]
     },
@@ -4530,6 +4850,27 @@
             }
           ],
           "why": "把每个词和它的意思对上。"
+        },
+        {
+          "id": "u5l1-listen",
+          "type": "listen",
+          "termId": "inflation",
+          "termIds": [
+            "inflation"
+          ],
+          "stem": "你听到的是哪个词？",
+          "options": [
+            {
+              "text": "inflation",
+              "art": "inflation"
+            },
+            {
+              "text": "deflation",
+              "art": "deflation"
+            }
+          ],
+          "answer": 0,
+          "why": "inflation：整体物价水平持续上涨，货币购买力下降。"
         }
       ]
     },
@@ -4730,6 +5071,27 @@
             }
           ],
           "why": "把每个词和它的意思对上。"
+        },
+        {
+          "id": "u5l2-listen",
+          "type": "listen",
+          "termId": "stagflation",
+          "termIds": [
+            "stagflation"
+          ],
+          "stem": "你听到的是哪个词？",
+          "options": [
+            {
+              "text": "stagflation",
+              "art": "stagflation"
+            },
+            {
+              "text": "soft landing",
+              "art": "soft landing"
+            }
+          ],
+          "answer": 0,
+          "why": "stagflation：经济增长停滞与高通胀同时出现的状态。"
         }
       ]
     },
@@ -4936,6 +5298,35 @@
             }
           ],
           "why": "把每个词和它的意思对上。"
+        },
+        {
+          "id": "u5r-listen",
+          "type": "listen",
+          "termId": "inflation",
+          "termIds": [
+            "inflation"
+          ],
+          "stem": "你听到的是哪个词？",
+          "options": [
+            {
+              "text": "inflation",
+              "art": "inflation"
+            },
+            {
+              "text": "deflation",
+              "art": "deflation"
+            },
+            {
+              "text": "stagflation",
+              "art": "stagflation"
+            },
+            {
+              "text": "soft landing",
+              "art": "soft landing"
+            }
+          ],
+          "answer": 0,
+          "why": "inflation：整体物价水平持续上涨，货币购买力下降。"
         }
       ]
     },
@@ -5136,6 +5527,27 @@
             }
           ],
           "why": "把每个词和它的意思对上。"
+        },
+        {
+          "id": "u6l1-listen",
+          "type": "listen",
+          "termId": "current account",
+          "termIds": [
+            "current account"
+          ],
+          "stem": "你听到的是哪个词？",
+          "options": [
+            {
+              "text": "current account",
+              "art": "current account"
+            },
+            {
+              "text": "trade balance",
+              "art": "trade balance"
+            }
+          ],
+          "answer": 0,
+          "why": "current account：一国货物、服务和转移支付的净收支，广义上衡量对外部资金的依赖。"
         }
       ]
     },
@@ -5336,6 +5748,27 @@
             }
           ],
           "why": "把每个词和它的意思对上。"
+        },
+        {
+          "id": "u6l2-listen",
+          "type": "listen",
+          "termId": "intervention",
+          "termIds": [
+            "intervention"
+          ],
+          "stem": "你听到的是哪个词？",
+          "options": [
+            {
+              "text": "intervention",
+              "art": "intervention"
+            },
+            {
+              "text": "capital flow",
+              "art": "capital flow"
+            }
+          ],
+          "answer": 0,
+          "why": "intervention：中央银行在外汇市场买卖本币以影响汇率的操作。"
         }
       ]
     },
@@ -5542,6 +5975,35 @@
             }
           ],
           "why": "把每个词和它的意思对上。"
+        },
+        {
+          "id": "u6r-listen",
+          "type": "listen",
+          "termId": "current account",
+          "termIds": [
+            "current account"
+          ],
+          "stem": "你听到的是哪个词？",
+          "options": [
+            {
+              "text": "current account",
+              "art": "current account"
+            },
+            {
+              "text": "trade balance",
+              "art": "trade balance"
+            },
+            {
+              "text": "intervention",
+              "art": "intervention"
+            },
+            {
+              "text": "capital flow",
+              "art": "capital flow"
+            }
+          ],
+          "answer": 0,
+          "why": "current account：一国货物、服务和转移支付的净收支，广义上衡量对外部资金的依赖。"
         }
       ]
     },
@@ -5742,6 +6204,27 @@
             }
           ],
           "why": "把每个词和它的意思对上。"
+        },
+        {
+          "id": "u7l1-listen",
+          "type": "listen",
+          "termId": "risk appetite",
+          "termIds": [
+            "risk appetite"
+          ],
+          "stem": "你听到的是哪个词？",
+          "options": [
+            {
+              "text": "risk appetite",
+              "art": "risk appetite"
+            },
+            {
+              "text": "risk-off",
+              "art": "risk-off"
+            }
+          ],
+          "answer": 0,
+          "why": "risk appetite：投资者承担风险的意愿，高涨时资金流向高收益资产，低迷时涌向避险资产。"
         }
       ]
     },
@@ -5942,6 +6425,27 @@
             }
           ],
           "why": "把每个词和它的意思对上。"
+        },
+        {
+          "id": "u7l2-listen",
+          "type": "listen",
+          "termId": "safe-haven",
+          "termIds": [
+            "safe-haven"
+          ],
+          "stem": "你听到的是哪个词？",
+          "options": [
+            {
+              "text": "safe-haven",
+              "art": "safe-haven"
+            },
+            {
+              "text": "carry trade",
+              "art": "carry trade"
+            }
+          ],
+          "answer": 0,
+          "why": "safe-haven：在市场动荡时被视为保值去向的资产，如日元、瑞郎、黄金、美债。"
         }
       ]
     },
@@ -6148,6 +6652,35 @@
             }
           ],
           "why": "把每个词和它的意思对上。"
+        },
+        {
+          "id": "u7r-listen",
+          "type": "listen",
+          "termId": "risk appetite",
+          "termIds": [
+            "risk appetite"
+          ],
+          "stem": "你听到的是哪个词？",
+          "options": [
+            {
+              "text": "risk appetite",
+              "art": "risk appetite"
+            },
+            {
+              "text": "risk-off",
+              "art": "risk-off"
+            },
+            {
+              "text": "safe-haven",
+              "art": "safe-haven"
+            },
+            {
+              "text": "carry trade",
+              "art": "carry trade"
+            }
+          ],
+          "answer": 0,
+          "why": "risk appetite：投资者承担风险的意愿，高涨时资金流向高收益资产，低迷时涌向避险资产。"
         }
       ]
     }

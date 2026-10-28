@@ -1215,6 +1215,35 @@
             }
           ],
           "why": "把每个词和它的意思对上。"
+        },
+        {
+          "id": "u1l1-listen",
+          "type": "listen",
+          "termId": "earnings",
+          "termIds": [
+            "earnings"
+          ],
+          "stem": "你听到的是哪个词？",
+          "options": [
+            {
+              "text": "earnings",
+              "art": "earnings"
+            },
+            {
+              "text": "revenue",
+              "art": "revenue"
+            },
+            {
+              "text": "profit",
+              "art": "profit"
+            },
+            {
+              "text": "gross",
+              "art": "gross"
+            }
+          ],
+          "answer": 0,
+          "why": "earnings：公司在一段时期内扣除全部成本后的净利润，财报的核心数字。"
         }
       ]
     },
@@ -1509,6 +1538,31 @@
             }
           ],
           "why": "把每个词和它的意思对上。"
+        },
+        {
+          "id": "u1l2-listen",
+          "type": "listen",
+          "termId": "net",
+          "termIds": [
+            "net"
+          ],
+          "stem": "你听到的是哪个词？",
+          "options": [
+            {
+              "text": "net",
+              "art": "net"
+            },
+            {
+              "text": "EPS",
+              "art": "eps"
+            },
+            {
+              "text": "margin",
+              "art": "margin"
+            }
+          ],
+          "answer": 0,
+          "why": "net：扣除全部成本、费用、利息和税之后的金额。"
         }
       ]
     },
@@ -1856,6 +1910,35 @@
             }
           ],
           "why": "把每个词和它的意思对上。"
+        },
+        {
+          "id": "u1r-listen",
+          "type": "listen",
+          "termId": "earnings",
+          "termIds": [
+            "earnings"
+          ],
+          "stem": "你听到的是哪个词？",
+          "options": [
+            {
+              "text": "earnings",
+              "art": "earnings"
+            },
+            {
+              "text": "revenue",
+              "art": "revenue"
+            },
+            {
+              "text": "profit",
+              "art": "profit"
+            },
+            {
+              "text": "gross",
+              "art": "gross"
+            }
+          ],
+          "answer": 0,
+          "why": "earnings：公司在一段时期内扣除全部成本后的净利润，财报的核心数字。"
         }
       ]
     },
@@ -2246,6 +2329,35 @@
             }
           ],
           "why": "把每个词和它的意思对上。"
+        },
+        {
+          "id": "u2l1-listen",
+          "type": "listen",
+          "termId": "headwinds",
+          "termIds": [
+            "headwinds"
+          ],
+          "stem": "你听到的是哪个词？",
+          "options": [
+            {
+              "text": "headwinds",
+              "art": "headwinds"
+            },
+            {
+              "text": "tailwinds",
+              "art": "tailwinds"
+            },
+            {
+              "text": "working capital",
+              "art": "working capital"
+            },
+            {
+              "text": "free cash flow",
+              "art": "free cash flow"
+            }
+          ],
+          "answer": 0,
+          "why": "headwinds：对业绩产生负面影响的外部因素，如成本上涨、汇率不利、需求疲软。"
         }
       ]
     },
@@ -2540,6 +2652,31 @@
             }
           ],
           "why": "把每个词和它的意思对上。"
+        },
+        {
+          "id": "u2l2-listen",
+          "type": "listen",
+          "termId": "opex",
+          "termIds": [
+            "opex"
+          ],
+          "stem": "你听到的是哪个词？",
+          "options": [
+            {
+              "text": "opex",
+              "art": "opex"
+            },
+            {
+              "text": "capex",
+              "art": "capex"
+            },
+            {
+              "text": "leverage",
+              "art": "leverage"
+            }
+          ],
+          "answer": 0,
+          "why": "opex：operating expenditure，日常经营支出如工资、租金、维护费。"
         }
       ]
     },
@@ -2887,6 +3024,35 @@
             }
           ],
           "why": "把每个词和它的意思对上。"
+        },
+        {
+          "id": "u2r-listen",
+          "type": "listen",
+          "termId": "headwinds",
+          "termIds": [
+            "headwinds"
+          ],
+          "stem": "你听到的是哪个词？",
+          "options": [
+            {
+              "text": "headwinds",
+              "art": "headwinds"
+            },
+            {
+              "text": "tailwinds",
+              "art": "tailwinds"
+            },
+            {
+              "text": "working capital",
+              "art": "working capital"
+            },
+            {
+              "text": "free cash flow",
+              "art": "free cash flow"
+            }
+          ],
+          "answer": 0,
+          "why": "headwinds：对业绩产生负面影响的外部因素，如成本上涨、汇率不利、需求疲软。"
         }
       ]
     },
@@ -3277,6 +3443,35 @@
             }
           ],
           "why": "把每个词和它的意思对上。"
+        },
+        {
+          "id": "u3l1-listen",
+          "type": "listen",
+          "termId": "consensus",
+          "termIds": [
+            "consensus"
+          ],
+          "stem": "你听到的是哪个词？",
+          "options": [
+            {
+              "text": "consensus",
+              "art": "consensus"
+            },
+            {
+              "text": "estimate",
+              "art": "estimate"
+            },
+            {
+              "text": "beat",
+              "art": "beat"
+            },
+            {
+              "text": "miss",
+              "art": "miss"
+            }
+          ],
+          "answer": 0,
+          "why": "consensus：多位分析师预测的平均，作为衡量业绩是否超预期的基准。"
         }
       ]
     },
@@ -3571,6 +3766,31 @@
             }
           ],
           "why": "把每个词和它的意思对上。"
+        },
+        {
+          "id": "u3l2-listen",
+          "type": "listen",
+          "termId": "guidance",
+          "termIds": [
+            "guidance"
+          ],
+          "stem": "你听到的是哪个词？",
+          "options": [
+            {
+              "text": "guidance",
+              "art": "guidance"
+            },
+            {
+              "text": "forecast",
+              "art": "forecast"
+            },
+            {
+              "text": "outlook",
+              "art": "outlook"
+            }
+          ],
+          "answer": 0,
+          "why": "guidance：管理层对未来业绩给出的官方预期。"
         }
       ]
     },
@@ -3918,6 +4138,35 @@
             }
           ],
           "why": "把每个词和它的意思对上。"
+        },
+        {
+          "id": "u3r-listen",
+          "type": "listen",
+          "termId": "consensus",
+          "termIds": [
+            "consensus"
+          ],
+          "stem": "你听到的是哪个词？",
+          "options": [
+            {
+              "text": "consensus",
+              "art": "consensus"
+            },
+            {
+              "text": "estimate",
+              "art": "estimate"
+            },
+            {
+              "text": "beat",
+              "art": "beat"
+            },
+            {
+              "text": "miss",
+              "art": "miss"
+            }
+          ],
+          "answer": 0,
+          "why": "consensus：多位分析师预测的平均，作为衡量业绩是否超预期的基准。"
         }
       ]
     },
@@ -4212,6 +4461,31 @@
             }
           ],
           "why": "把每个词和它的意思对上。"
+        },
+        {
+          "id": "u4l1-listen",
+          "type": "listen",
+          "termId": "debt",
+          "termIds": [
+            "debt"
+          ],
+          "stem": "你听到的是哪个词？",
+          "options": [
+            {
+              "text": "debt",
+              "art": "debt"
+            },
+            {
+              "text": "equity",
+              "art": "equity"
+            },
+            {
+              "text": "net debt",
+              "art": "net debt"
+            }
+          ],
+          "answer": 0,
+          "why": "debt：公司需要偿还的借款与债券总额。"
         }
       ]
     },
@@ -4412,6 +4686,27 @@
             }
           ],
           "why": "把每个词和它的意思对上。"
+        },
+        {
+          "id": "u4l2-listen",
+          "type": "listen",
+          "termId": "capital expenditure",
+          "termIds": [
+            "capital expenditure"
+          ],
+          "stem": "你听到的是哪个词？",
+          "options": [
+            {
+              "text": "capital expenditure",
+              "art": "capital expenditure"
+            },
+            {
+              "text": "margin call",
+              "art": "margin call"
+            }
+          ],
+          "answer": 0,
+          "why": "capital expenditure：用于获取或升级固定资产的支出，会形成资产并逐年折旧。"
         }
       ]
     },
@@ -4665,6 +4960,35 @@
             }
           ],
           "why": "把每个词和它的意思对上。"
+        },
+        {
+          "id": "u4r-listen",
+          "type": "listen",
+          "termId": "debt",
+          "termIds": [
+            "debt"
+          ],
+          "stem": "你听到的是哪个词？",
+          "options": [
+            {
+              "text": "debt",
+              "art": "debt"
+            },
+            {
+              "text": "equity",
+              "art": "equity"
+            },
+            {
+              "text": "net debt",
+              "art": "net debt"
+            },
+            {
+              "text": "capital expenditure",
+              "art": "capital expenditure"
+            }
+          ],
+          "answer": 0,
+          "why": "debt：公司需要偿还的借款与债券总额。"
         }
       ]
     },
@@ -4959,6 +5283,31 @@
             }
           ],
           "why": "把每个词和它的意思对上。"
+        },
+        {
+          "id": "u5l1-listen",
+          "type": "listen",
+          "termId": "dividend",
+          "termIds": [
+            "dividend"
+          ],
+          "stem": "你听到的是哪个词？",
+          "options": [
+            {
+              "text": "dividend",
+              "art": "dividend"
+            },
+            {
+              "text": "buyback",
+              "art": "buyback"
+            },
+            {
+              "text": "payout",
+              "art": "payout"
+            }
+          ],
+          "answer": 0,
+          "why": "dividend：公司从利润中按股分配给股东的现金或股票。"
         }
       ]
     },
@@ -5253,6 +5602,31 @@
             }
           ],
           "why": "把每个词和它的意思对上。"
+        },
+        {
+          "id": "u5l2-listen",
+          "type": "listen",
+          "termId": "yield",
+          "termIds": [
+            "yield"
+          ],
+          "stem": "你听到的是哪个词？",
+          "options": [
+            {
+              "text": "yield",
+              "art": "yield"
+            },
+            {
+              "text": "shareholder",
+              "art": "shareholder"
+            },
+            {
+              "text": "share issuance",
+              "art": "share issuance"
+            }
+          ],
+          "answer": 0,
+          "why": "yield：投资收益相对于价格的比率；股票语境下常指股息率。"
         }
       ]
     },
@@ -5553,6 +5927,35 @@
             }
           ],
           "why": "把每个词和它的意思对上。"
+        },
+        {
+          "id": "u5r-listen",
+          "type": "listen",
+          "termId": "dividend",
+          "termIds": [
+            "dividend"
+          ],
+          "stem": "你听到的是哪个词？",
+          "options": [
+            {
+              "text": "dividend",
+              "art": "dividend"
+            },
+            {
+              "text": "buyback",
+              "art": "buyback"
+            },
+            {
+              "text": "payout",
+              "art": "payout"
+            },
+            {
+              "text": "yield",
+              "art": "yield"
+            }
+          ],
+          "answer": 0,
+          "why": "dividend：公司从利润中按股分配给股东的现金或股票。"
         }
       ]
     },
@@ -6036,6 +6439,35 @@
             }
           ],
           "why": "把每个词和它的意思对上。"
+        },
+        {
+          "id": "u6l1-listen",
+          "type": "listen",
+          "termId": "acquisition",
+          "termIds": [
+            "acquisition"
+          ],
+          "stem": "你听到的是哪个词？",
+          "options": [
+            {
+              "text": "acquisition",
+              "art": "acquisition"
+            },
+            {
+              "text": "merger",
+              "art": "merger"
+            },
+            {
+              "text": "divestiture",
+              "art": "divestiture"
+            },
+            {
+              "text": "spin-off",
+              "art": "spin-off"
+            }
+          ],
+          "answer": 0,
+          "why": "acquisition：一家公司取得另一家公司控制权的交易。"
         }
       ]
     },
@@ -6426,6 +6858,35 @@
             }
           ],
           "why": "把每个词和它的意思对上。"
+        },
+        {
+          "id": "u6l2-listen",
+          "type": "listen",
+          "termId": "impairment",
+          "termIds": [
+            "impairment"
+          ],
+          "stem": "你听到的是哪个词？",
+          "options": [
+            {
+              "text": "impairment",
+              "art": "impairment"
+            },
+            {
+              "text": "restructuring",
+              "art": "restructuring"
+            },
+            {
+              "text": "IPO",
+              "art": "ipo"
+            },
+            {
+              "text": "listing",
+              "art": "listing"
+            }
+          ],
+          "answer": 0,
+          "why": "impairment：资产可回收金额低于账面价值的差额，作为损失确认。"
         }
       ]
     },
@@ -6867,6 +7328,35 @@
             }
           ],
           "why": "把每个词和它的意思对上。"
+        },
+        {
+          "id": "u6r-listen",
+          "type": "listen",
+          "termId": "acquisition",
+          "termIds": [
+            "acquisition"
+          ],
+          "stem": "你听到的是哪个词？",
+          "options": [
+            {
+              "text": "acquisition",
+              "art": "acquisition"
+            },
+            {
+              "text": "merger",
+              "art": "merger"
+            },
+            {
+              "text": "divestiture",
+              "art": "divestiture"
+            },
+            {
+              "text": "spin-off",
+              "art": "spin-off"
+            }
+          ],
+          "answer": 0,
+          "why": "acquisition：一家公司取得另一家公司控制权的交易。"
         }
       ]
     },
@@ -7257,6 +7747,35 @@
             }
           ],
           "why": "把每个词和它的意思对上。"
+        },
+        {
+          "id": "u7l1-listen",
+          "type": "listen",
+          "termId": "market cap",
+          "termIds": [
+            "market cap"
+          ],
+          "stem": "你听到的是哪个词？",
+          "options": [
+            {
+              "text": "market cap",
+              "art": "market cap"
+            },
+            {
+              "text": "valuation",
+              "art": "valuation"
+            },
+            {
+              "text": "P/E",
+              "art": "p/e"
+            },
+            {
+              "text": "P/B",
+              "art": "p/b"
+            }
+          ],
+          "answer": 0,
+          "why": "market cap：股价乘以总股本，市场对公司的总定价。"
         }
       ]
     },
@@ -7647,6 +8166,35 @@
             }
           ],
           "why": "把每个词和它的意思对上。"
+        },
+        {
+          "id": "u7l2-listen",
+          "type": "listen",
+          "termId": "book value",
+          "termIds": [
+            "book value"
+          ],
+          "stem": "你听到的是哪个词？",
+          "options": [
+            {
+              "text": "book value",
+              "art": "book value"
+            },
+            {
+              "text": "stakeholder",
+              "art": "stakeholder"
+            },
+            {
+              "text": "payout ratio",
+              "art": "payout ratio"
+            },
+            {
+              "text": "discount",
+              "art": "discount"
+            }
+          ],
+          "answer": 0,
+          "why": "book value：资产减去负债后的账面净值，通常按历史成本计量。"
         }
       ]
     },
@@ -8041,6 +8589,35 @@
             }
           ],
           "why": "把每个词和它的意思对上。"
+        },
+        {
+          "id": "u7r-listen",
+          "type": "listen",
+          "termId": "market cap",
+          "termIds": [
+            "market cap"
+          ],
+          "stem": "你听到的是哪个词？",
+          "options": [
+            {
+              "text": "market cap",
+              "art": "market cap"
+            },
+            {
+              "text": "valuation",
+              "art": "valuation"
+            },
+            {
+              "text": "P/E",
+              "art": "p/e"
+            },
+            {
+              "text": "P/B",
+              "art": "p/b"
+            }
+          ],
+          "answer": 0,
+          "why": "market cap：股价乘以总股本，市场对公司的总定价。"
         }
       ]
     }

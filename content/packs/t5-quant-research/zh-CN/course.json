@@ -894,6 +894,31 @@
             }
           ],
           "why": "把每个词和它的意思对上。"
+        },
+        {
+          "id": "u1l1-listen",
+          "type": "listen",
+          "termId": "backtest",
+          "termIds": [
+            "backtest"
+          ],
+          "stem": "你听到的是哪个词？",
+          "options": [
+            {
+              "text": "backtest",
+              "art": "backtest"
+            },
+            {
+              "text": "in-sample",
+              "art": "in-sample"
+            },
+            {
+              "text": "out-of-sample",
+              "art": "out-of-sample"
+            }
+          ],
+          "answer": 0,
+          "why": "backtest：用历史数据模拟一个策略的收益与风险，评估其可行性。"
         }
       ]
     },
@@ -1094,6 +1119,27 @@
             }
           ],
           "why": "把每个词和它的意思对上。"
+        },
+        {
+          "id": "u1l2-listen",
+          "type": "listen",
+          "termId": "walk-forward",
+          "termIds": [
+            "walk-forward"
+          ],
+          "stem": "你听到的是哪个词？",
+          "options": [
+            {
+              "text": "walk-forward",
+              "art": "walk-forward"
+            },
+            {
+              "text": "benchmark",
+              "art": "benchmark"
+            }
+          ],
+          "answer": 0,
+          "why": "walk-forward：按时间顺序滚动地用历史数据重新拟合并检验的策略验证方法，最接近真实交易的约束。"
         }
       ]
     },
@@ -1347,6 +1393,35 @@
             }
           ],
           "why": "把每个词和它的意思对上。"
+        },
+        {
+          "id": "u1r-listen",
+          "type": "listen",
+          "termId": "backtest",
+          "termIds": [
+            "backtest"
+          ],
+          "stem": "你听到的是哪个词？",
+          "options": [
+            {
+              "text": "backtest",
+              "art": "backtest"
+            },
+            {
+              "text": "in-sample",
+              "art": "in-sample"
+            },
+            {
+              "text": "out-of-sample",
+              "art": "out-of-sample"
+            },
+            {
+              "text": "walk-forward",
+              "art": "walk-forward"
+            }
+          ],
+          "answer": 0,
+          "why": "backtest：用历史数据模拟一个策略的收益与风险，评估其可行性。"
         }
       ]
     },
@@ -1719,6 +1794,31 @@
             }
           ],
           "why": "把每个词和它的意思对上。"
+        },
+        {
+          "id": "u2l1-listen",
+          "type": "listen",
+          "termId": "overfitting",
+          "termIds": [
+            "overfitting"
+          ],
+          "stem": "你听到的是哪个词？",
+          "options": [
+            {
+              "text": "overfitting",
+              "art": "overfitting"
+            },
+            {
+              "text": "look-ahead bias",
+              "art": "look-ahead bias"
+            },
+            {
+              "text": "survivorship bias",
+              "art": "survivorship bias"
+            }
+          ],
+          "answer": 0,
+          "why": "overfitting：模型过度贴合历史数据中的偶然波动，导致在新数据上表现大幅下降。"
         }
       ]
     },
@@ -1945,6 +2045,27 @@
             }
           ],
           "why": "把每个词和它的意思对上。"
+        },
+        {
+          "id": "u2l2-listen",
+          "type": "listen",
+          "termId": "data snooping",
+          "termIds": [
+            "data snooping"
+          ],
+          "stem": "你听到的是哪个词？",
+          "options": [
+            {
+              "text": "data snooping",
+              "art": "data snooping"
+            },
+            {
+              "text": "multiple testing",
+              "art": "multiple testing"
+            }
+          ],
+          "answer": 0,
+          "why": "data snooping：在同一份数据上反复检验假设，直到偶然出现统计显著的结果，并把它当成发现。"
         }
       ]
     },
@@ -2198,6 +2319,35 @@
             }
           ],
           "why": "把每个词和它的意思对上。"
+        },
+        {
+          "id": "u2r-listen",
+          "type": "listen",
+          "termId": "overfitting",
+          "termIds": [
+            "overfitting"
+          ],
+          "stem": "你听到的是哪个词？",
+          "options": [
+            {
+              "text": "overfitting",
+              "art": "overfitting"
+            },
+            {
+              "text": "look-ahead bias",
+              "art": "look-ahead bias"
+            },
+            {
+              "text": "survivorship bias",
+              "art": "survivorship bias"
+            },
+            {
+              "text": "data snooping",
+              "art": "data snooping"
+            }
+          ],
+          "answer": 0,
+          "why": "overfitting：模型过度贴合历史数据中的偶然波动，导致在新数据上表现大幅下降。"
         }
       ]
     },
@@ -2588,6 +2738,35 @@
             }
           ],
           "why": "把每个词和它的意思对上。"
+        },
+        {
+          "id": "u3l1-listen",
+          "type": "listen",
+          "termId": "sharpe ratio",
+          "termIds": [
+            "sharpe ratio"
+          ],
+          "stem": "你听到的是哪个词？",
+          "options": [
+            {
+              "text": "sharpe ratio",
+              "art": "sharpe ratio"
+            },
+            {
+              "text": "max drawdown",
+              "art": "max drawdown"
+            },
+            {
+              "text": "hit rate",
+              "art": "hit rate"
+            },
+            {
+              "text": "expectancy",
+              "art": "expectancy"
+            }
+          ],
+          "answer": 0,
+          "why": "sharpe ratio：超额收益除以收益波动率，衡量单位风险下的回报。"
         }
       ]
     },
@@ -2882,6 +3061,31 @@
             }
           ],
           "why": "把每个词和它的意思对上。"
+        },
+        {
+          "id": "u3l2-listen",
+          "type": "listen",
+          "termId": "alpha",
+          "termIds": [
+            "alpha"
+          ],
+          "stem": "你听到的是哪个词？",
+          "options": [
+            {
+              "text": "alpha",
+              "art": "alpha"
+            },
+            {
+              "text": "beta",
+              "art": "beta"
+            },
+            {
+              "text": "tracking error",
+              "art": "tracking error"
+            }
+          ],
+          "answer": 0,
+          "why": "alpha：经风险调整后相对于基准的超额收益，衡量策略本身的贡献。"
         }
       ]
     },
@@ -3229,6 +3433,35 @@
             }
           ],
           "why": "把每个词和它的意思对上。"
+        },
+        {
+          "id": "u3r-listen",
+          "type": "listen",
+          "termId": "sharpe ratio",
+          "termIds": [
+            "sharpe ratio"
+          ],
+          "stem": "你听到的是哪个词？",
+          "options": [
+            {
+              "text": "sharpe ratio",
+              "art": "sharpe ratio"
+            },
+            {
+              "text": "max drawdown",
+              "art": "max drawdown"
+            },
+            {
+              "text": "hit rate",
+              "art": "hit rate"
+            },
+            {
+              "text": "expectancy",
+              "art": "expectancy"
+            }
+          ],
+          "answer": 0,
+          "why": "sharpe ratio：超额收益除以收益波动率，衡量单位风险下的回报。"
         }
       ]
     },
@@ -3523,6 +3756,31 @@
             }
           ],
           "why": "把每个词和它的意思对上。"
+        },
+        {
+          "id": "u4l1-listen",
+          "type": "listen",
+          "termId": "universe",
+          "termIds": [
+            "universe"
+          ],
+          "stem": "你听到的是哪个词？",
+          "options": [
+            {
+              "text": "universe",
+              "art": "universe"
+            },
+            {
+              "text": "rebalance",
+              "art": "rebalance"
+            },
+            {
+              "text": "position sizing",
+              "art": "position sizing"
+            }
+          ],
+          "answer": 0,
+          "why": "universe：策略可投资的资产集合，决定了策略的边界与偏差风险。"
         }
       ]
     },
@@ -3817,6 +4075,31 @@
             }
           ],
           "why": "把每个词和它的意思对上。"
+        },
+        {
+          "id": "u4l2-listen",
+          "type": "listen",
+          "termId": "turnover",
+          "termIds": [
+            "turnover"
+          ],
+          "stem": "你听到的是哪个词？",
+          "options": [
+            {
+              "text": "turnover",
+              "art": "turnover"
+            },
+            {
+              "text": "correlation",
+              "art": "correlation"
+            },
+            {
+              "text": "exposure",
+              "art": "exposure"
+            }
+          ],
+          "answer": 0,
+          "why": "turnover：单位时间内买卖量相对于组合规模的比例，直接决定交易成本。"
         }
       ]
     },
@@ -4117,6 +4400,35 @@
             }
           ],
           "why": "把每个词和它的意思对上。"
+        },
+        {
+          "id": "u4r-listen",
+          "type": "listen",
+          "termId": "universe",
+          "termIds": [
+            "universe"
+          ],
+          "stem": "你听到的是哪个词？",
+          "options": [
+            {
+              "text": "universe",
+              "art": "universe"
+            },
+            {
+              "text": "rebalance",
+              "art": "rebalance"
+            },
+            {
+              "text": "position sizing",
+              "art": "position sizing"
+            },
+            {
+              "text": "turnover",
+              "art": "turnover"
+            }
+          ],
+          "answer": 0,
+          "why": "universe：策略可投资的资产集合，决定了策略的边界与偏差风险。"
         }
       ]
     },
@@ -4317,6 +4629,27 @@
             }
           ],
           "why": "把每个词和它的意思对上。"
+        },
+        {
+          "id": "u5l1-listen",
+          "type": "listen",
+          "termId": "transaction cost",
+          "termIds": [
+            "transaction cost"
+          ],
+          "stem": "你听到的是哪个词？",
+          "options": [
+            {
+              "text": "transaction cost",
+              "art": "transaction cost"
+            },
+            {
+              "text": "slippage",
+              "art": "slippage"
+            }
+          ],
+          "answer": 0,
+          "why": "transaction cost：交易过程中产生的费用，包括佣金、买卖价差与税费。"
         }
       ]
     },
@@ -4517,6 +4850,27 @@
             }
           ],
           "why": "把每个词和它的意思对上。"
+        },
+        {
+          "id": "u5l2-listen",
+          "type": "listen",
+          "termId": "capacity constraint",
+          "termIds": [
+            "capacity constraint"
+          ],
+          "stem": "你听到的是哪个词？",
+          "options": [
+            {
+              "text": "capacity constraint",
+              "art": "capacity constraint"
+            },
+            {
+              "text": "liquidity constraint",
+              "art": "liquidity constraint"
+            }
+          ],
+          "answer": 0,
+          "why": "capacity constraint：策略在交易成本吞掉收益之前所能容纳的最大资金规模。"
         }
       ]
     },
@@ -4723,6 +5077,35 @@
             }
           ],
           "why": "把每个词和它的意思对上。"
+        },
+        {
+          "id": "u5r-listen",
+          "type": "listen",
+          "termId": "transaction cost",
+          "termIds": [
+            "transaction cost"
+          ],
+          "stem": "你听到的是哪个词？",
+          "options": [
+            {
+              "text": "transaction cost",
+              "art": "transaction cost"
+            },
+            {
+              "text": "slippage",
+              "art": "slippage"
+            },
+            {
+              "text": "capacity constraint",
+              "art": "capacity constraint"
+            },
+            {
+              "text": "liquidity constraint",
+              "art": "liquidity constraint"
+            }
+          ],
+          "answer": 0,
+          "why": "transaction cost：交易过程中产生的费用，包括佣金、买卖价差与税费。"
         }
       ]
     },
@@ -5043,6 +5426,31 @@
             }
           ],
           "why": "把每个词和它的意思对上。"
+        },
+        {
+          "id": "u6l1-listen",
+          "type": "listen",
+          "termId": "stress test",
+          "termIds": [
+            "stress test"
+          ],
+          "stem": "你听到的是哪个词？",
+          "options": [
+            {
+              "text": "stress test",
+              "art": "stress test"
+            },
+            {
+              "text": "scenario analysis",
+              "art": "scenario analysis"
+            },
+            {
+              "text": "value at risk",
+              "art": "value at risk"
+            }
+          ],
+          "answer": 0,
+          "why": "stress test：在极端但可能的情景下评估组合表现的方法，用于检验尾部风险。"
         }
       ]
     },
@@ -5243,6 +5651,27 @@
             }
           ],
           "why": "把每个词和它的意思对上。"
+        },
+        {
+          "id": "u6l2-listen",
+          "type": "listen",
+          "termId": "sensitivity",
+          "termIds": [
+            "sensitivity"
+          ],
+          "stem": "你听到的是哪个词？",
+          "options": [
+            {
+              "text": "sensitivity",
+              "art": "sensitivity"
+            },
+            {
+              "text": "robustness",
+              "art": "robustness"
+            }
+          ],
+          "answer": 0,
+          "why": "sensitivity：结果对某一参数或假设变化的反应程度。"
         }
       ]
     },
@@ -5496,6 +5925,35 @@
             }
           ],
           "why": "把每个词和它的意思对上。"
+        },
+        {
+          "id": "u6r-listen",
+          "type": "listen",
+          "termId": "stress test",
+          "termIds": [
+            "stress test"
+          ],
+          "stem": "你听到的是哪个词？",
+          "options": [
+            {
+              "text": "stress test",
+              "art": "stress test"
+            },
+            {
+              "text": "scenario analysis",
+              "art": "scenario analysis"
+            },
+            {
+              "text": "value at risk",
+              "art": "value at risk"
+            },
+            {
+              "text": "sensitivity",
+              "art": "sensitivity"
+            }
+          ],
+          "answer": 0,
+          "why": "stress test：在极端但可能的情景下评估组合表现的方法，用于检验尾部风险。"
         }
       ]
     }

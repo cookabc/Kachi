@@ -132,6 +132,9 @@ export interface UiText {
     learnTag: string;
     kickers: Record<ExerciseType, string>;
     matchHint: string;
+    replayAria: string;
+    speakTermAria: string;
+    speakExampleAria: string;
     tfLabels: { true: string; false: string };
     /** Why the pair confuses, per the pack's mixUpType taxonomy. */
     mixTypes: Record<MixUpType, string>;
@@ -336,8 +339,12 @@ export const UI: Record<Lang, UiText> = {
         match: "配对练习",
         headline: "读真标题",
         audit: "挑出站不住的那句",
+        listen: "听音辨词",
       },
       matchHint: "先点术语，再点解释。",
+      replayAria: "重新朗读",
+      speakTermAria: "朗读术语",
+      speakExampleAria: "朗读例句",
       tfLabels: { true: "正确", false: "错误" },
       mixTypes: { opposite: "义反", coexist: "同场", hierarchy: "层级", form: "形近", timing: "时序" },
       check: "检查",
@@ -541,8 +548,12 @@ export const UI: Record<Lang, UiText> = {
         match: "Match the pairs",
         headline: "Read the headline",
         audit: "Find the claim that does not hold",
+        listen: "Listen and choose",
       },
       matchHint: "Tap a term, then its match.",
+      replayAria: "Play it again",
+      speakTermAria: "Say the term",
+      speakExampleAria: "Say the example",
       tfLabels: { true: "True", false: "False" },
       mixTypes: {
         opposite: "Opposites",

@@ -890,6 +890,31 @@
             }
           ],
           "why": "Match each term to what it means."
+        },
+        {
+          "id": "u1l1-listen",
+          "type": "listen",
+          "termId": "currency",
+          "termIds": [
+            "currency"
+          ],
+          "stem": "Which term did you hear?",
+          "options": [
+            {
+              "text": "currency",
+              "art": "currency"
+            },
+            {
+              "text": "exchange rate",
+              "art": "exchange rate"
+            },
+            {
+              "text": "dollar",
+              "art": "dollar"
+            }
+          ],
+          "answer": 0,
+          "why": "currency: The means of payment issued and enforced by a government."
         }
       ]
     },
@@ -1184,6 +1209,31 @@
             }
           ],
           "why": "Match each term to what it means."
+        },
+        {
+          "id": "u1l2-listen",
+          "type": "listen",
+          "termId": "euro",
+          "termIds": [
+            "euro"
+          ],
+          "stem": "Which term did you hear?",
+          "options": [
+            {
+              "text": "euro",
+              "art": "euro"
+            },
+            {
+              "text": "yen",
+              "art": "yen"
+            },
+            {
+              "text": "yuan",
+              "art": "yuan"
+            }
+          ],
+          "answer": 0,
+          "why": "euro: The shared currency of the euro area, with policy set by the European Central Bank."
         }
       ]
     },
@@ -1484,6 +1534,35 @@
             }
           ],
           "why": "Match each term to what it means."
+        },
+        {
+          "id": "u1r-listen",
+          "type": "listen",
+          "termId": "currency",
+          "termIds": [
+            "currency"
+          ],
+          "stem": "Which term did you hear?",
+          "options": [
+            {
+              "text": "currency",
+              "art": "currency"
+            },
+            {
+              "text": "exchange rate",
+              "art": "exchange rate"
+            },
+            {
+              "text": "dollar",
+              "art": "dollar"
+            },
+            {
+              "text": "euro",
+              "art": "euro"
+            }
+          ],
+          "answer": 0,
+          "why": "currency: The means of payment issued and enforced by a government."
         }
       ]
     },
@@ -1874,6 +1953,35 @@
             }
           ],
           "why": "Match each term to what it means."
+        },
+        {
+          "id": "u2l1-listen",
+          "type": "listen",
+          "termId": "sterling",
+          "termIds": [
+            "sterling"
+          ],
+          "stem": "Which term did you hear?",
+          "options": [
+            {
+              "text": "sterling",
+              "art": "sterling"
+            },
+            {
+              "text": "peso",
+              "art": "peso"
+            },
+            {
+              "text": "rupiah",
+              "art": "rupiah"
+            },
+            {
+              "text": "appreciate",
+              "art": "appreciate"
+            }
+          ],
+          "answer": 0,
+          "why": "sterling: The British currency, code GBP, also called pound sterling."
         }
       ]
     },
@@ -2168,6 +2276,31 @@
             }
           ],
           "why": "Match each term to what it means."
+        },
+        {
+          "id": "u2l2-listen",
+          "type": "listen",
+          "termId": "depreciate",
+          "termIds": [
+            "depreciate"
+          ],
+          "stem": "Which term did you hear?",
+          "options": [
+            {
+              "text": "depreciate",
+              "art": "depreciate"
+            },
+            {
+              "text": "strengthen",
+              "art": "strengthen"
+            },
+            {
+              "text": "weaken",
+              "art": "weaken"
+            }
+          ],
+          "answer": 0,
+          "why": "depreciate: A fall in one currency's value against another."
         }
       ]
     },
@@ -2515,6 +2648,35 @@
             }
           ],
           "why": "Match each term to what it means."
+        },
+        {
+          "id": "u2r-listen",
+          "type": "listen",
+          "termId": "sterling",
+          "termIds": [
+            "sterling"
+          ],
+          "stem": "Which term did you hear?",
+          "options": [
+            {
+              "text": "sterling",
+              "art": "sterling"
+            },
+            {
+              "text": "peso",
+              "art": "peso"
+            },
+            {
+              "text": "rupiah",
+              "art": "rupiah"
+            },
+            {
+              "text": "appreciate",
+              "art": "appreciate"
+            }
+          ],
+          "answer": 0,
+          "why": "sterling: The British currency, code GBP, also called pound sterling."
         }
       ]
     },
@@ -2905,6 +3067,35 @@
             }
           ],
           "why": "Match each term to what it means."
+        },
+        {
+          "id": "u3l1-listen",
+          "type": "listen",
+          "termId": "central bank",
+          "termIds": [
+            "central bank"
+          ],
+          "stem": "Which term did you hear?",
+          "options": [
+            {
+              "text": "central bank",
+              "art": "central bank"
+            },
+            {
+              "text": "rate hike",
+              "art": "rate hike"
+            },
+            {
+              "text": "rate cut",
+              "art": "rate cut"
+            },
+            {
+              "text": "hawkish",
+              "art": "hawkish"
+            }
+          ],
+          "answer": 0,
+          "why": "central bank: The authority responsible for monetary policy, money supply and interest rates."
         }
       ]
     },
@@ -3199,6 +3390,31 @@
             }
           ],
           "why": "Match each term to what it means."
+        },
+        {
+          "id": "u3l2-listen",
+          "type": "listen",
+          "termId": "dovish",
+          "termIds": [
+            "dovish"
+          ],
+          "stem": "Which term did you hear?",
+          "options": [
+            {
+              "text": "dovish",
+              "art": "dovish"
+            },
+            {
+              "text": "forward guidance",
+              "art": "forward guidance"
+            },
+            {
+              "text": "tapering",
+              "art": "tapering"
+            }
+          ],
+          "answer": 0,
+          "why": "dovish: A monetary policy stance that favours easing and prioritises supporting growth."
         }
       ]
     },
@@ -3546,6 +3762,35 @@
             }
           ],
           "why": "Match each term to what it means."
+        },
+        {
+          "id": "u3r-listen",
+          "type": "listen",
+          "termId": "central bank",
+          "termIds": [
+            "central bank"
+          ],
+          "stem": "Which term did you hear?",
+          "options": [
+            {
+              "text": "central bank",
+              "art": "central bank"
+            },
+            {
+              "text": "rate hike",
+              "art": "rate hike"
+            },
+            {
+              "text": "rate cut",
+              "art": "rate cut"
+            },
+            {
+              "text": "hawkish",
+              "art": "hawkish"
+            }
+          ],
+          "answer": 0,
+          "why": "central bank: The authority responsible for monetary policy, money supply and interest rates."
         }
       ]
     },
@@ -3840,6 +4085,31 @@
             }
           ],
           "why": "Match each term to what it means."
+        },
+        {
+          "id": "u4l1-listen",
+          "type": "listen",
+          "termId": "monetary policy",
+          "termIds": [
+            "monetary policy"
+          ],
+          "stem": "Which term did you hear?",
+          "options": [
+            {
+              "text": "monetary policy",
+              "art": "monetary policy"
+            },
+            {
+              "text": "fiscal policy",
+              "art": "fiscal policy"
+            },
+            {
+              "text": "quantitative easing",
+              "art": "quantitative easing"
+            }
+          ],
+          "answer": 0,
+          "why": "monetary policy: Policy that influences the economy through interest rates, money supply and credit conditions."
         }
       ]
     },
@@ -4040,6 +4310,27 @@
             }
           ],
           "why": "Match each term to what it means."
+        },
+        {
+          "id": "u4l2-listen",
+          "type": "listen",
+          "termId": "tightening",
+          "termIds": [
+            "tightening"
+          ],
+          "stem": "Which term did you hear?",
+          "options": [
+            {
+              "text": "tightening",
+              "art": "tightening"
+            },
+            {
+              "text": "easing",
+              "art": "easing"
+            }
+          ],
+          "answer": 0,
+          "why": "tightening: A policy stance that reduces money supply or raises funding costs, including hikes and smaller asset purchases."
         }
       ]
     },
@@ -4293,6 +4584,35 @@
             }
           ],
           "why": "Match each term to what it means."
+        },
+        {
+          "id": "u4r-listen",
+          "type": "listen",
+          "termId": "monetary policy",
+          "termIds": [
+            "monetary policy"
+          ],
+          "stem": "Which term did you hear?",
+          "options": [
+            {
+              "text": "monetary policy",
+              "art": "monetary policy"
+            },
+            {
+              "text": "fiscal policy",
+              "art": "fiscal policy"
+            },
+            {
+              "text": "quantitative easing",
+              "art": "quantitative easing"
+            },
+            {
+              "text": "tightening",
+              "art": "tightening"
+            }
+          ],
+          "answer": 0,
+          "why": "monetary policy: Policy that influences the economy through interest rates, money supply and credit conditions."
         }
       ]
     },
@@ -4493,6 +4813,27 @@
             }
           ],
           "why": "Match each term to what it means."
+        },
+        {
+          "id": "u5l1-listen",
+          "type": "listen",
+          "termId": "inflation",
+          "termIds": [
+            "inflation"
+          ],
+          "stem": "Which term did you hear?",
+          "options": [
+            {
+              "text": "inflation",
+              "art": "inflation"
+            },
+            {
+              "text": "deflation",
+              "art": "deflation"
+            }
+          ],
+          "answer": 0,
+          "why": "inflation: A sustained rise in the general price level, eroding purchasing power."
         }
       ]
     },
@@ -4693,6 +5034,27 @@
             }
           ],
           "why": "Match each term to what it means."
+        },
+        {
+          "id": "u5l2-listen",
+          "type": "listen",
+          "termId": "stagflation",
+          "termIds": [
+            "stagflation"
+          ],
+          "stem": "Which term did you hear?",
+          "options": [
+            {
+              "text": "stagflation",
+              "art": "stagflation"
+            },
+            {
+              "text": "soft landing",
+              "art": "soft landing"
+            }
+          ],
+          "answer": 0,
+          "why": "stagflation: The coexistence of stagnant growth and high inflation."
         }
       ]
     },
@@ -4899,6 +5261,35 @@
             }
           ],
           "why": "Match each term to what it means."
+        },
+        {
+          "id": "u5r-listen",
+          "type": "listen",
+          "termId": "inflation",
+          "termIds": [
+            "inflation"
+          ],
+          "stem": "Which term did you hear?",
+          "options": [
+            {
+              "text": "inflation",
+              "art": "inflation"
+            },
+            {
+              "text": "deflation",
+              "art": "deflation"
+            },
+            {
+              "text": "stagflation",
+              "art": "stagflation"
+            },
+            {
+              "text": "soft landing",
+              "art": "soft landing"
+            }
+          ],
+          "answer": 0,
+          "why": "inflation: A sustained rise in the general price level, eroding purchasing power."
         }
       ]
     },
@@ -5099,6 +5490,27 @@
             }
           ],
           "why": "Match each term to what it means."
+        },
+        {
+          "id": "u6l1-listen",
+          "type": "listen",
+          "termId": "current account",
+          "termIds": [
+            "current account"
+          ],
+          "stem": "Which term did you hear?",
+          "options": [
+            {
+              "text": "current account",
+              "art": "current account"
+            },
+            {
+              "text": "trade balance",
+              "art": "trade balance"
+            }
+          ],
+          "answer": 0,
+          "why": "current account: A country's net balance on goods, services and transfers — broadly, how much it relies on outside money."
         }
       ]
     },
@@ -5299,6 +5711,27 @@
             }
           ],
           "why": "Match each term to what it means."
+        },
+        {
+          "id": "u6l2-listen",
+          "type": "listen",
+          "termId": "intervention",
+          "termIds": [
+            "intervention"
+          ],
+          "stem": "Which term did you hear?",
+          "options": [
+            {
+              "text": "intervention",
+              "art": "intervention"
+            },
+            {
+              "text": "capital flow",
+              "art": "capital flow"
+            }
+          ],
+          "answer": 0,
+          "why": "intervention: A central bank buying or selling its own currency to influence the exchange rate."
         }
       ]
     },
@@ -5505,6 +5938,35 @@
             }
           ],
           "why": "Match each term to what it means."
+        },
+        {
+          "id": "u6r-listen",
+          "type": "listen",
+          "termId": "current account",
+          "termIds": [
+            "current account"
+          ],
+          "stem": "Which term did you hear?",
+          "options": [
+            {
+              "text": "current account",
+              "art": "current account"
+            },
+            {
+              "text": "trade balance",
+              "art": "trade balance"
+            },
+            {
+              "text": "intervention",
+              "art": "intervention"
+            },
+            {
+              "text": "capital flow",
+              "art": "capital flow"
+            }
+          ],
+          "answer": 0,
+          "why": "current account: A country's net balance on goods, services and transfers — broadly, how much it relies on outside money."
         }
       ]
     },
@@ -5705,6 +6167,27 @@
             }
           ],
           "why": "Match each term to what it means."
+        },
+        {
+          "id": "u7l1-listen",
+          "type": "listen",
+          "termId": "risk appetite",
+          "termIds": [
+            "risk appetite"
+          ],
+          "stem": "Which term did you hear?",
+          "options": [
+            {
+              "text": "risk appetite",
+              "art": "risk appetite"
+            },
+            {
+              "text": "risk-off",
+              "art": "risk-off"
+            }
+          ],
+          "answer": 0,
+          "why": "risk appetite: Investors' willingness to bear risk: when it is high money chases higher-yielding assets, when it is low it retreats to havens."
         }
       ]
     },
@@ -5905,6 +6388,27 @@
             }
           ],
           "why": "Match each term to what it means."
+        },
+        {
+          "id": "u7l2-listen",
+          "type": "listen",
+          "termId": "safe-haven",
+          "termIds": [
+            "safe-haven"
+          ],
+          "stem": "Which term did you hear?",
+          "options": [
+            {
+              "text": "safe-haven",
+              "art": "safe-haven"
+            },
+            {
+              "text": "carry trade",
+              "art": "carry trade"
+            }
+          ],
+          "answer": 0,
+          "why": "safe-haven: An asset treated as a store of value in turmoil — the yen, the franc, gold, Treasuries."
         }
       ]
     },
@@ -6111,6 +6615,35 @@
             }
           ],
           "why": "Match each term to what it means."
+        },
+        {
+          "id": "u7r-listen",
+          "type": "listen",
+          "termId": "risk appetite",
+          "termIds": [
+            "risk appetite"
+          ],
+          "stem": "Which term did you hear?",
+          "options": [
+            {
+              "text": "risk appetite",
+              "art": "risk appetite"
+            },
+            {
+              "text": "risk-off",
+              "art": "risk-off"
+            },
+            {
+              "text": "safe-haven",
+              "art": "safe-haven"
+            },
+            {
+              "text": "carry trade",
+              "art": "carry trade"
+            }
+          ],
+          "answer": 0,
+          "why": "risk appetite: Investors' willingness to bear risk: when it is high money chases higher-yielding assets, when it is low it retreats to havens."
         }
       ]
     }

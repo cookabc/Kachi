@@ -134,3 +134,25 @@ describe("audit feedback copy", () => {
     }
   });
 });
+
+describe("listen exercise", () => {
+  // present() shuffles the options; the auto-speak must use correctText (taken
+  // before the shuffle) or it reads whichever word landed at index `answer`.
+  it("exposes correctText after shuffling so the spoken word is the answer", () => {
+    const listenPrompt: Exercise = {
+      id: "t5-listen-1",
+      type: "listen",
+      termId: "overfitting",
+      termIds: ["overfitting"],
+      stem: "你听到的是哪个词？",
+      options: [{ text: "overfitting" }, { text: "backtest" }, { text: "rebalance" }, { text: "slippage" }],
+      answer: 0,
+      why: "y",
+    };
+    for (const random of [() => 0.99, () => 0.3, () => 0.5]) {
+      const shown = present(listenPrompt, random);
+      // Whatever the shuffle did, the spoken word must be the answer term.
+      expect(shown.correctText).toBe("overfitting");
+    }
+  });
+});

@@ -1001,6 +1001,35 @@
             }
           ],
           "why": "Match each term to what it means."
+        },
+        {
+          "id": "u1l1-listen",
+          "type": "listen",
+          "termId": "bond",
+          "termIds": [
+            "bond"
+          ],
+          "stem": "Which term did you hear?",
+          "options": [
+            {
+              "text": "bond",
+              "art": "bond"
+            },
+            {
+              "text": "coupon",
+              "art": "coupon"
+            },
+            {
+              "text": "maturity",
+              "art": "maturity"
+            },
+            {
+              "text": "principal",
+              "art": "principal"
+            }
+          ],
+          "answer": 0,
+          "why": "bond: A debt security issued by a government or company, paying interest and repaying principal at maturity."
         }
       ]
     },
@@ -1295,6 +1324,31 @@
             }
           ],
           "why": "Match each term to what it means."
+        },
+        {
+          "id": "u1l2-listen",
+          "type": "listen",
+          "termId": "yield",
+          "termIds": [
+            "yield"
+          ],
+          "stem": "Which term did you hear?",
+          "options": [
+            {
+              "text": "yield",
+              "art": "yield"
+            },
+            {
+              "text": "price",
+              "art": "price"
+            },
+            {
+              "text": "duration",
+              "art": "duration"
+            }
+          ],
+          "answer": 0,
+          "why": "yield: Investment return relative to price; bond yields rise when prices fall."
         }
       ]
     },
@@ -1642,6 +1696,35 @@
             }
           ],
           "why": "Match each term to what it means."
+        },
+        {
+          "id": "u1r-listen",
+          "type": "listen",
+          "termId": "bond",
+          "termIds": [
+            "bond"
+          ],
+          "stem": "Which term did you hear?",
+          "options": [
+            {
+              "text": "bond",
+              "art": "bond"
+            },
+            {
+              "text": "coupon",
+              "art": "coupon"
+            },
+            {
+              "text": "maturity",
+              "art": "maturity"
+            },
+            {
+              "text": "principal",
+              "art": "principal"
+            }
+          ],
+          "answer": 0,
+          "why": "bond: A debt security issued by a government or company, paying interest and repaying principal at maturity."
         }
       ]
     },
@@ -1936,6 +2019,31 @@
             }
           ],
           "why": "Match each term to what it means."
+        },
+        {
+          "id": "u2l1-listen",
+          "type": "listen",
+          "termId": "benchmark",
+          "termIds": [
+            "benchmark"
+          ],
+          "stem": "Which term did you hear?",
+          "options": [
+            {
+              "text": "benchmark",
+              "art": "benchmark"
+            },
+            {
+              "text": "basis point",
+              "art": "basis point"
+            },
+            {
+              "text": "cut-off yield",
+              "art": "cut-off yield"
+            }
+          ],
+          "answer": 0,
+          "why": "benchmark: A specific bond or index used as the reference for pricing, such as the ten-year government bond."
         }
       ]
     },
@@ -2230,6 +2338,31 @@
             }
           ],
           "why": "Match each term to what it means."
+        },
+        {
+          "id": "u2l2-listen",
+          "type": "listen",
+          "termId": "yield curve",
+          "termIds": [
+            "yield curve"
+          ],
+          "stem": "Which term did you hear?",
+          "options": [
+            {
+              "text": "yield curve",
+              "art": "yield curve"
+            },
+            {
+              "text": "term premium",
+              "art": "term premium"
+            },
+            {
+              "text": "inversion",
+              "art": "inversion"
+            }
+          ],
+          "answer": 0,
+          "why": "yield curve: Yields across maturities plotted together, showing what the market expects rates to do."
         }
       ]
     },
@@ -2530,6 +2663,35 @@
             }
           ],
           "why": "Match each term to what it means."
+        },
+        {
+          "id": "u2r-listen",
+          "type": "listen",
+          "termId": "benchmark",
+          "termIds": [
+            "benchmark"
+          ],
+          "stem": "Which term did you hear?",
+          "options": [
+            {
+              "text": "benchmark",
+              "art": "benchmark"
+            },
+            {
+              "text": "basis point",
+              "art": "basis point"
+            },
+            {
+              "text": "cut-off yield",
+              "art": "cut-off yield"
+            },
+            {
+              "text": "yield curve",
+              "art": "yield curve"
+            }
+          ],
+          "answer": 0,
+          "why": "benchmark: A specific bond or index used as the reference for pricing, such as the ten-year government bond."
         }
       ]
     },
@@ -2824,6 +2986,31 @@
             }
           ],
           "why": "Match each term to what it means."
+        },
+        {
+          "id": "u3l1-listen",
+          "type": "listen",
+          "termId": "auction",
+          "termIds": [
+            "auction"
+          ],
+          "stem": "Which term did you hear?",
+          "options": [
+            {
+              "text": "auction",
+              "art": "auction"
+            },
+            {
+              "text": "issuance",
+              "art": "issuance"
+            },
+            {
+              "text": "bid-to-cover",
+              "art": "bid-to-cover"
+            }
+          ],
+          "answer": 0,
+          "why": "auction: Issuing bonds through a competitive bidding process."
         }
       ]
     },
@@ -3024,6 +3211,27 @@
             }
           ],
           "why": "Match each term to what it means."
+        },
+        {
+          "id": "u3l2-listen",
+          "type": "listen",
+          "termId": "primary dealer",
+          "termIds": [
+            "primary dealer"
+          ],
+          "stem": "Which term did you hear?",
+          "options": [
+            {
+              "text": "primary dealer",
+              "art": "primary dealer"
+            },
+            {
+              "text": "refinancing",
+              "art": "refinancing"
+            }
+          ],
+          "answer": 0,
+          "why": "primary dealer: A firm authorised to deal directly with the issuer and required to bid in auctions."
         }
       ]
     },
@@ -3277,6 +3485,35 @@
             }
           ],
           "why": "Match each term to what it means."
+        },
+        {
+          "id": "u3r-listen",
+          "type": "listen",
+          "termId": "auction",
+          "termIds": [
+            "auction"
+          ],
+          "stem": "Which term did you hear?",
+          "options": [
+            {
+              "text": "auction",
+              "art": "auction"
+            },
+            {
+              "text": "issuance",
+              "art": "issuance"
+            },
+            {
+              "text": "bid-to-cover",
+              "art": "bid-to-cover"
+            },
+            {
+              "text": "primary dealer",
+              "art": "primary dealer"
+            }
+          ],
+          "answer": 0,
+          "why": "auction: Issuing bonds through a competitive bidding process."
         }
       ]
     },
@@ -3667,6 +3904,35 @@
             }
           ],
           "why": "Match each term to what it means."
+        },
+        {
+          "id": "u4l1-listen",
+          "type": "listen",
+          "termId": "treasury",
+          "termIds": [
+            "treasury"
+          ],
+          "stem": "Which term did you hear?",
+          "options": [
+            {
+              "text": "treasury",
+              "art": "treasury"
+            },
+            {
+              "text": "gilt",
+              "art": "gilt"
+            },
+            {
+              "text": "sovereign",
+              "art": "sovereign"
+            },
+            {
+              "text": "corporate bond",
+              "art": "corporate bond"
+            }
+          ],
+          "answer": 0,
+          "why": "treasury: Debt issued by a central government, generally treated as the risk-free benchmark."
         }
       ]
     },
@@ -3961,6 +4227,31 @@
             }
           ],
           "why": "Match each term to what it means."
+        },
+        {
+          "id": "u4l2-listen",
+          "type": "listen",
+          "termId": "commercial paper",
+          "termIds": [
+            "commercial paper"
+          ],
+          "stem": "Which term did you hear?",
+          "options": [
+            {
+              "text": "commercial paper",
+              "art": "commercial paper"
+            },
+            {
+              "text": "junk bond",
+              "art": "junk bond"
+            },
+            {
+              "text": "investment grade",
+              "art": "investment grade"
+            }
+          ],
+          "answer": 0,
+          "why": "commercial paper: Unsecured short-term debt issued by companies, typically under a year."
         }
       ]
     },
@@ -4308,6 +4599,35 @@
             }
           ],
           "why": "Match each term to what it means."
+        },
+        {
+          "id": "u4r-listen",
+          "type": "listen",
+          "termId": "treasury",
+          "termIds": [
+            "treasury"
+          ],
+          "stem": "Which term did you hear?",
+          "options": [
+            {
+              "text": "treasury",
+              "art": "treasury"
+            },
+            {
+              "text": "gilt",
+              "art": "gilt"
+            },
+            {
+              "text": "sovereign",
+              "art": "sovereign"
+            },
+            {
+              "text": "corporate bond",
+              "art": "corporate bond"
+            }
+          ],
+          "answer": 0,
+          "why": "treasury: Debt issued by a central government, generally treated as the risk-free benchmark."
         }
       ]
     },
@@ -4602,6 +4922,31 @@
             }
           ],
           "why": "Match each term to what it means."
+        },
+        {
+          "id": "u5l1-listen",
+          "type": "listen",
+          "termId": "inflation-linked",
+          "termIds": [
+            "inflation-linked"
+          ],
+          "stem": "Which term did you hear?",
+          "options": [
+            {
+              "text": "inflation-linked",
+              "art": "inflation-linked"
+            },
+            {
+              "text": "fixed-rate",
+              "art": "fixed-rate"
+            },
+            {
+              "text": "floating-rate",
+              "art": "floating-rate"
+            }
+          ],
+          "answer": 0,
+          "why": "inflation-linked: A bond whose principal or interest is adjusted for inflation, hedging rising prices."
         }
       ]
     },
@@ -4802,6 +5147,27 @@
             }
           ],
           "why": "Match each term to what it means."
+        },
+        {
+          "id": "u5l2-listen",
+          "type": "listen",
+          "termId": "policy rate",
+          "termIds": [
+            "policy rate"
+          ],
+          "stem": "Which term did you hear?",
+          "options": [
+            {
+              "text": "policy rate",
+              "art": "policy rate"
+            },
+            {
+              "text": "benchmark rate",
+              "art": "benchmark rate"
+            }
+          ],
+          "answer": 0,
+          "why": "policy rate: The target rate set by a central bank to steer market rates."
         }
       ]
     },
@@ -5055,6 +5421,35 @@
             }
           ],
           "why": "Match each term to what it means."
+        },
+        {
+          "id": "u5r-listen",
+          "type": "listen",
+          "termId": "inflation-linked",
+          "termIds": [
+            "inflation-linked"
+          ],
+          "stem": "Which term did you hear?",
+          "options": [
+            {
+              "text": "inflation-linked",
+              "art": "inflation-linked"
+            },
+            {
+              "text": "fixed-rate",
+              "art": "fixed-rate"
+            },
+            {
+              "text": "floating-rate",
+              "art": "floating-rate"
+            },
+            {
+              "text": "policy rate",
+              "art": "policy rate"
+            }
+          ],
+          "answer": 0,
+          "why": "inflation-linked: A bond whose principal or interest is adjusted for inflation, hedging rising prices."
         }
       ]
     },
@@ -5255,6 +5650,27 @@
             }
           ],
           "why": "Match each term to what it means."
+        },
+        {
+          "id": "u6l1-listen",
+          "type": "listen",
+          "termId": "credit spread",
+          "termIds": [
+            "credit spread"
+          ],
+          "stem": "Which term did you hear?",
+          "options": [
+            {
+              "text": "credit spread",
+              "art": "credit spread"
+            },
+            {
+              "text": "spread widening",
+              "art": "spread widening"
+            }
+          ],
+          "answer": 0,
+          "why": "credit spread: The gap between a corporate bond's yield and a government bond of the same maturity — the price of credit risk."
         }
       ]
     },
@@ -5455,6 +5871,27 @@
             }
           ],
           "why": "Match each term to what it means."
+        },
+        {
+          "id": "u6l2-listen",
+          "type": "listen",
+          "termId": "spread tightening",
+          "termIds": [
+            "spread tightening"
+          ],
+          "stem": "Which term did you hear?",
+          "options": [
+            {
+              "text": "spread tightening",
+              "art": "spread tightening"
+            },
+            {
+              "text": "default risk",
+              "art": "default risk"
+            }
+          ],
+          "answer": 0,
+          "why": "spread tightening: Credit spreads narrowing, usually meaning improved risk appetite."
         }
       ]
     },
@@ -5661,6 +6098,35 @@
             }
           ],
           "why": "Match each term to what it means."
+        },
+        {
+          "id": "u6r-listen",
+          "type": "listen",
+          "termId": "credit spread",
+          "termIds": [
+            "credit spread"
+          ],
+          "stem": "Which term did you hear?",
+          "options": [
+            {
+              "text": "credit spread",
+              "art": "credit spread"
+            },
+            {
+              "text": "spread widening",
+              "art": "spread widening"
+            },
+            {
+              "text": "spread tightening",
+              "art": "spread tightening"
+            },
+            {
+              "text": "default risk",
+              "art": "default risk"
+            }
+          ],
+          "answer": 0,
+          "why": "credit spread: The gap between a corporate bond's yield and a government bond of the same maturity — the price of credit risk."
         }
       ]
     },
@@ -5861,6 +6327,27 @@
             }
           ],
           "why": "Match each term to what it means."
+        },
+        {
+          "id": "u7l1-listen",
+          "type": "listen",
+          "termId": "credit rating",
+          "termIds": [
+            "credit rating"
+          ],
+          "stem": "Which term did you hear?",
+          "options": [
+            {
+              "text": "credit rating",
+              "art": "credit rating"
+            },
+            {
+              "text": "downgrade",
+              "art": "downgrade"
+            }
+          ],
+          "answer": 0,
+          "why": "credit rating: An assessment of an issuer's ability to repay, graded from AAA down to D."
         }
       ]
     },
@@ -6061,6 +6548,27 @@
             }
           ],
           "why": "Match each term to what it means."
+        },
+        {
+          "id": "u7l2-listen",
+          "type": "listen",
+          "termId": "upgrade",
+          "termIds": [
+            "upgrade"
+          ],
+          "stem": "Which term did you hear?",
+          "options": [
+            {
+              "text": "upgrade",
+              "art": "upgrade"
+            },
+            {
+              "text": "covenant",
+              "art": "covenant"
+            }
+          ],
+          "answer": 0,
+          "why": "upgrade: A ratings agency raising an issuer's or bond's credit rating."
         }
       ]
     },
@@ -6267,6 +6775,35 @@
             }
           ],
           "why": "Match each term to what it means."
+        },
+        {
+          "id": "u7r-listen",
+          "type": "listen",
+          "termId": "credit rating",
+          "termIds": [
+            "credit rating"
+          ],
+          "stem": "Which term did you hear?",
+          "options": [
+            {
+              "text": "credit rating",
+              "art": "credit rating"
+            },
+            {
+              "text": "downgrade",
+              "art": "downgrade"
+            },
+            {
+              "text": "upgrade",
+              "art": "upgrade"
+            },
+            {
+              "text": "covenant",
+              "art": "covenant"
+            }
+          ],
+          "answer": 0,
+          "why": "credit rating: An assessment of an issuer's ability to repay, graded from AAA down to D."
         }
       ]
     }

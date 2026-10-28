@@ -3250,3 +3250,93 @@ svg.icon {
   border-color: var(--coral-deep);
   background: var(--wrong-bg);
 }
+
+/* The listen exercise. The word is deliberately absent as text — the ear does
+   the work — so the visual is a speaker control and a small sound-wave mark,
+   nothing that could be read as the answer. */
+.listen-row {
+  display: flex;
+  justify-content: center;
+  margin: 6px 0 14px;
+}
+.listen-replay {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  border: 0;
+  background: var(--blue);
+  color: #fff;
+  cursor: pointer;
+  box-shadow: 0 4px 0 color-mix(in srgb, var(--ink) 55%, transparent);
+}
+.listen-replay:active {
+  transform: translateY(2px);
+  box-shadow: 0 2px 0 color-mix(in srgb, var(--ink) 55%, transparent);
+}
+.listen-hint {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 14px;
+}
+.listen-dots {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+.listen-dots i {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--ink-soft);
+  opacity: 0.5;
+}
+.listen-dots i:nth-child(2) {
+  height: 14px;
+  opacity: 0.8;
+}
+.listen-dots i:nth-child(3) {
+  height: 9px;
+}
+
+/* Speaker controls on the teach card. The term button sits beside the big
+   word; the example becomes its own spoken line so the whole sentence is
+   tappable, not a tiny icon floating after text. */
+.teach-term {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+.speak-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  border: 0.5px solid var(--line);
+  border-radius: 50%;
+  background: var(--card);
+  color: var(--ink-soft);
+  cursor: pointer;
+}
+.speak-btn:active {
+  background: var(--blue-soft);
+}
+.speak-ex {
+  display: flex;
+  width: 100%;
+  gap: 10px;
+  margin: 0 0 14px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  text-align: left;
+  font-size: 14px;
+  line-height: 1.5;
+  font-family: inherit;
+}
+.speak-ex svg {
+  flex-shrink: 0;
+  margin-top: 3px;
+}
