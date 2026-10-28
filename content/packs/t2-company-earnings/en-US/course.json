@@ -54,7 +54,9 @@
       "mixUpType": "coexist",
       "sourceIds": [
         "t2-src-bp-q2",
-        "t2-src-chevron-q2"
+        "t2-src-chevron-q2",
+        "t2-src-adm-q2",
+        "t2-src-mmg-deal"
       ],
       "relations": [],
       "risk": "evergreen",
@@ -70,7 +72,9 @@
       "mixUp": "earnings",
       "mixUpWhy": "Revenue is the gross take; earnings are what survives the costs.",
       "mixUpType": "coexist",
-      "sourceIds": [],
+      "sourceIds": [
+        "t2-src-adm-q2"
+      ],
       "relations": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
@@ -87,7 +91,8 @@
       "mixUpType": "scope",
       "sourceIds": [
         "t2-src-bp-q2",
-        "t2-src-chevron-q2"
+        "t2-src-chevron-q2",
+        "t2-src-adm-q2"
       ],
       "relations": [],
       "risk": "evergreen",
@@ -103,7 +108,9 @@
       "mixUp": "net",
       "mixUpWhy": "Gross stops at direct costs; net deducts everything, including interest and tax.",
       "mixUpType": "hierarchy",
-      "sourceIds": [],
+      "sourceIds": [
+        "t2-src-adm-q2"
+      ],
       "relations": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
@@ -119,7 +126,9 @@
       "mixUpWhy": "Net is the last figure standing; gross only cleared the first layer.",
       "mixUpType": "hierarchy",
       "sourceIds": [
-        "t2-src-bp-q2"
+        "t2-src-bp-q2",
+        "t2-src-adm-q2",
+        "t2-src-mmg-deal"
       ],
       "relations": [],
       "risk": "evergreen",
@@ -135,7 +144,9 @@
       "mixUp": "earnings",
       "mixUpWhy": "EPS is divided by share count; earnings is the whole. Same profit with a different share count gives a very different EPS.",
       "mixUpType": "scope",
-      "sourceIds": [],
+      "sourceIds": [
+        "t2-src-mmg-deal"
+      ],
       "relations": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
@@ -152,7 +163,8 @@
       "mixUpType": "scope",
       "sourceIds": [
         "t2-src-bp-q2",
-        "t2-src-chevron-q2"
+        "t2-src-chevron-q2",
+        "t2-src-adm-q2"
       ],
       "relations": [],
       "risk": "evergreen",
@@ -168,7 +180,9 @@
       "mixUp": "tailwinds",
       "mixUpWhy": "Headwinds resist; tailwinds assist. One release often names both.",
       "mixUpType": "opposite",
-      "sourceIds": [],
+      "sourceIds": [
+        "t2-src-mmg-deal"
+      ],
       "relations": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
@@ -183,7 +197,9 @@
       "mixUp": "headwinds",
       "mixUpWhy": "Tailwinds assist; headwinds resist.",
       "mixUpType": "opposite",
-      "sourceIds": [],
+      "sourceIds": [
+        "t2-src-mmg-deal"
+      ],
       "relations": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
@@ -199,7 +215,8 @@
       "mixUpWhy": "Working capital is money tied up in operations; free cash flow is what is actually left over.",
       "mixUpType": "coexist",
       "sourceIds": [
-        "t2-src-chevron-q2"
+        "t2-src-chevron-q2",
+        "t2-src-adm-q2"
       ],
       "relations": [],
       "risk": "evergreen",
@@ -216,7 +233,9 @@
       "mixUpWhy": "Free cash flow is spendable cash; working capital is cash locked in the operating cycle.",
       "mixUpType": "coexist",
       "sourceIds": [
-        "t2-src-chevron-q2"
+        "t2-src-chevron-q2",
+        "t2-src-adm-q2",
+        "t2-src-mmg-deal"
       ],
       "relations": [],
       "risk": "evergreen",
@@ -232,7 +251,9 @@
       "mixUp": "capex",
       "mixUpWhy": "Opex is consumed and expensed now; capex becomes an asset and is depreciated over years.",
       "mixUpType": "opposite",
-      "sourceIds": [],
+      "sourceIds": [
+        "t2-src-mmg-deal"
+      ],
       "relations": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
@@ -247,7 +268,9 @@
       "mixUp": "opex",
       "mixUpWhy": "Capex builds an asset; opex is expensed in the period.",
       "mixUpType": "opposite",
-      "sourceIds": [],
+      "sourceIds": [
+        "t2-src-adm-q2"
+      ],
       "relations": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
@@ -262,7 +285,10 @@
       "mixUp": "net debt",
       "mixUpWhy": "Leverage is a ratio; net debt is the amount that ratio is built from.",
       "mixUpType": "scope",
-      "sourceIds": [],
+      "sourceIds": [
+        "t2-src-adm-q2",
+        "t2-src-gold-macro"
+      ],
       "relations": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
@@ -278,7 +304,9 @@
       "mixUpWhy": "Consensus blends everyone; an estimate is one analyst's number.",
       "mixUpType": "hierarchy",
       "sourceIds": [
-        "t2-src-bp-q2"
+        "t2-src-bp-q2",
+        "t2-src-gold-macro",
+        "t2-src-mmg-deal"
       ],
       "relations": [],
       "risk": "evergreen",
@@ -294,7 +322,11 @@
       "mixUp": "consensus",
       "mixUpWhy": "An estimate can be one person's; consensus is the average of many.",
       "mixUpType": "hierarchy",
-      "sourceIds": [],
+      "sourceIds": [
+        "t2-src-adm-q2",
+        "t2-src-gold-macro",
+        "t2-src-mmg-deal"
+      ],
       "relations": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
@@ -311,7 +343,10 @@
       "mixUpType": "opposite",
       "sourceIds": [
         "t2-src-bp-q2",
-        "t2-src-chevron-q2"
+        "t2-src-chevron-q2",
+        "t2-src-adm-q2",
+        "t2-src-gold-macro",
+        "t2-src-mmg-deal"
       ],
       "relations": [],
       "risk": "evergreen",
@@ -327,7 +362,10 @@
       "mixUp": "beat",
       "mixUpWhy": "A miss falls short; a beat clears the bar.",
       "mixUpType": "opposite",
-      "sourceIds": [],
+      "sourceIds": [
+        "t2-src-gold-macro",
+        "t2-src-mmg-deal"
+      ],
       "relations": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
@@ -344,7 +382,9 @@
       "mixUpType": "hierarchy",
       "sourceIds": [
         "t2-src-bp-q2",
-        "t2-src-chevron-q2"
+        "t2-src-chevron-q2",
+        "t2-src-gold-macro",
+        "t2-src-mmg-deal"
       ],
       "relations": [],
       "risk": "evergreen",
@@ -362,7 +402,10 @@
       "mixUpType": "hierarchy",
       "sourceIds": [
         "t2-src-bp-q2",
-        "t2-src-chevron-q2"
+        "t2-src-chevron-q2",
+        "t2-src-adm-q2",
+        "t2-src-gold-macro",
+        "t2-src-mmg-deal"
       ],
       "relations": [],
       "risk": "evergreen",
@@ -378,7 +421,10 @@
       "mixUp": "guidance",
       "mixUpWhy": "Outlook is qualitative — what conditions will be like; guidance is quantitative — what the numbers will be.",
       "mixUpType": "coexist",
-      "sourceIds": [],
+      "sourceIds": [
+        "t2-src-adm-q2",
+        "t2-src-gold-macro"
+      ],
       "relations": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
@@ -394,7 +440,9 @@
       "mixUpWhy": "Debt must be repaid with interest; equity is the owners' money, never repaid but it gives up ownership.",
       "mixUpType": "opposite",
       "sourceIds": [
-        "t2-src-bp-q2"
+        "t2-src-bp-q2",
+        "t2-src-adm-q2",
+        "t2-src-mmg-deal"
       ],
       "relations": [],
       "risk": "evergreen",
@@ -410,7 +458,9 @@
       "mixUp": "debt",
       "mixUpWhy": "Equity is the owners' residual claim; debt is a prior claim held by lenders.",
       "mixUpType": "opposite",
-      "sourceIds": [],
+      "sourceIds": [
+        "t2-src-adm-q2"
+      ],
       "relations": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
@@ -426,7 +476,9 @@
       "mixUpWhy": "Net debt is an amount; leverage is that amount divided by earnings or equity.",
       "mixUpType": "scope",
       "sourceIds": [
-        "t2-src-bp-q2"
+        "t2-src-bp-q2",
+        "t2-src-adm-q2",
+        "t2-src-mmg-deal"
       ],
       "relations": [],
       "risk": "evergreen",
@@ -443,7 +495,9 @@
       "mixUpWhy": "Capital expenditure creates an asset; opex is consumed in the period.",
       "mixUpType": "opposite",
       "sourceIds": [
-        "t2-src-bp-q2"
+        "t2-src-bp-q2",
+        "t2-src-adm-q2",
+        "t2-src-mmg-deal"
       ],
       "relations": [],
       "risk": "evergreen",
@@ -476,7 +530,8 @@
       "mixUpType": "coexist",
       "sourceIds": [
         "t2-src-bp-q2",
-        "t2-src-chevron-q2"
+        "t2-src-chevron-q2",
+        "t2-src-adm-q2"
       ],
       "relations": [],
       "risk": "evergreen",
@@ -509,7 +564,9 @@
       "mixUp": "dividend",
       "mixUpWhy": "Payout can be a ratio or a total; a dividend is the per-share amount.",
       "mixUpType": "scope",
-      "sourceIds": [],
+      "sourceIds": [
+        "t2-src-mmg-deal"
+      ],
       "relations": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
@@ -524,7 +581,9 @@
       "mixUp": "payout",
       "mixUpWhy": "Yield is relative to the share price; payout is relative to profit. The price falls, the yield rises.",
       "mixUpType": "scope",
-      "sourceIds": [],
+      "sourceIds": [
+        "t2-src-gold-macro"
+      ],
       "relations": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
@@ -541,7 +600,8 @@
       "mixUpType": "hierarchy",
       "sourceIds": [
         "t2-src-bp-q2",
-        "t2-src-chevron-q2"
+        "t2-src-chevron-q2",
+        "t2-src-mmg-deal"
       ],
       "relations": [],
       "risk": "evergreen",
@@ -557,7 +617,9 @@
       "mixUp": "buyback",
       "mixUpWhy": "Issuance adds shares and dilutes; a buyback removes shares and concentrates.",
       "mixUpType": "opposite",
-      "sourceIds": [],
+      "sourceIds": [
+        "t2-src-mmg-deal"
+      ],
       "relations": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
@@ -573,7 +635,8 @@
       "mixUpWhy": "An acquisition has a buyer and a target; a merger is framed as equals combining.",
       "mixUpType": "coexist",
       "sourceIds": [
-        "t2-src-chevron-q2"
+        "t2-src-chevron-q2",
+        "t2-src-mmg-deal"
       ],
       "relations": [],
       "risk": "evergreen",
@@ -589,7 +652,9 @@
       "mixUp": "acquisition",
       "mixUpWhy": "A merger stresses equals combining; an acquisition stresses one party taking control.",
       "mixUpType": "coexist",
-      "sourceIds": [],
+      "sourceIds": [
+        "t2-src-mmg-deal"
+      ],
       "relations": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
@@ -604,7 +669,9 @@
       "mixUp": "spin-off",
       "mixUpWhy": "A divestiture usually sells for cash; a spin-off hands shareholders shares in a new listed company.",
       "mixUpType": "coexist",
-      "sourceIds": [],
+      "sourceIds": [
+        "t2-src-mmg-deal"
+      ],
       "relations": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
@@ -619,7 +686,9 @@
       "mixUp": "divestiture",
       "mixUpWhy": "A spin-off distributes shares, not cash; a divestiture normally sells for cash.",
       "mixUpType": "coexist",
-      "sourceIds": [],
+      "sourceIds": [
+        "t2-src-mmg-deal"
+      ],
       "relations": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
@@ -634,7 +703,9 @@
       "mixUp": "impairment",
       "mixUpWhy": "A write-down is the action of marking it down; impairment is the underlying loss in value.",
       "mixUpType": "hierarchy",
-      "sourceIds": [],
+      "sourceIds": [
+        "t2-src-mmg-deal"
+      ],
       "relations": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
@@ -649,7 +720,9 @@
       "mixUp": "write-down",
       "mixUpWhy": "Impairment is the fact that value fell; a write-down is recording it.",
       "mixUpType": "hierarchy",
-      "sourceIds": [],
+      "sourceIds": [
+        "t2-src-mmg-deal"
+      ],
       "relations": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
@@ -664,7 +737,9 @@
       "mixUp": "divestiture",
       "mixUpWhy": "Restructuring changes the company from inside; a divestiture sells part of it. They often run together but are not the same.",
       "mixUpType": "coexist",
-      "sourceIds": [],
+      "sourceIds": [
+        "t2-src-mmg-deal"
+      ],
       "relations": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
@@ -679,7 +754,9 @@
       "mixUp": "listing",
       "mixUpWhy": "An IPO is the first share sale; a listing is the state of being traded, which can happen more than once.",
       "mixUpType": "timing",
-      "sourceIds": [],
+      "sourceIds": [
+        "t2-src-mmg-deal"
+      ],
       "relations": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
@@ -694,7 +771,9 @@
       "mixUp": "ipo",
       "mixUpWhy": "A listing is being traded on an exchange; an IPO is the first time shares are sold. A secondary listing is not an IPO.",
       "mixUpType": "timing",
-      "sourceIds": [],
+      "sourceIds": [
+        "t2-src-mmg-deal"
+      ],
       "relations": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
@@ -709,7 +788,9 @@
       "mixUp": "book value",
       "mixUpWhy": "Market cap is what the market pays; book value is what the accounts say the net assets are.",
       "mixUpType": "coexist",
-      "sourceIds": [],
+      "sourceIds": [
+        "t2-src-mmg-deal"
+      ],
       "relations": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
@@ -724,7 +805,9 @@
       "mixUp": "market cap",
       "mixUpWhy": "Valuation is a judgement; market cap is the price the market currently assigns.",
       "mixUpType": "coexist",
-      "sourceIds": [],
+      "sourceIds": [
+        "t2-src-mmg-deal"
+      ],
       "relations": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
@@ -739,7 +822,9 @@
       "mixUp": "p/b",
       "mixUpWhy": "P/E compares profit; P/B compares book equity. A loss-making company has no meaningful P/E but still has a P/B.",
       "mixUpType": "coexist",
-      "sourceIds": [],
+      "sourceIds": [
+        "t2-src-mmg-deal"
+      ],
       "relations": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
@@ -754,7 +839,9 @@
       "mixUp": "p/e",
       "mixUpWhy": "P/B compares book equity; P/E compares profit. Banks and miners are read on P/B, growth companies on P/E.",
       "mixUpType": "coexist",
-      "sourceIds": [],
+      "sourceIds": [
+        "t2-src-mmg-deal"
+      ],
       "relations": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
@@ -769,7 +856,9 @@
       "mixUp": "market cap",
       "mixUpWhy": "Book value is accounting net assets; market cap is the market's total price. A wide gap means the market disagrees with the books.",
       "mixUpType": "coexist",
-      "sourceIds": [],
+      "sourceIds": [
+        "t2-src-mmg-deal"
+      ],
       "relations": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
@@ -784,7 +873,9 @@
       "mixUp": "shareholder",
       "mixUpWhy": "Stakeholders include everyone with an interest; shareholders are only the owners.",
       "mixUpType": "hierarchy",
-      "sourceIds": [],
+      "sourceIds": [
+        "t2-src-mmg-deal"
+      ],
       "relations": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
@@ -799,7 +890,9 @@
       "mixUp": "payout",
       "mixUpWhy": "The payout ratio is a percentage; payout can also mean the total amount paid out.",
       "mixUpType": "hierarchy",
-      "sourceIds": [],
+      "sourceIds": [
+        "t2-src-mmg-deal"
+      ],
       "relations": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
@@ -814,7 +907,9 @@
       "mixUp": "impairment",
       "mixUpWhy": "A discount is the market pricing it lower, which can be an opportunity; an impairment is an accounting loss because value genuinely fell.",
       "mixUpType": "coexist",
-      "sourceIds": [],
+      "sourceIds": [
+        "t2-src-mmg-deal"
+      ],
       "relations": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
@@ -8629,6 +8724,30 @@
       "title": "Chevron Q2 adjusted profit $12bn beats estimates; buyback and dividend held",
       "publishedAt": "2026-07-31",
       "accessedAt": "2026-10-27",
+      "kind": "news",
+      "rightsBasis": "facts-only"
+    },
+    {
+      "id": "t2-src-adm-q2",
+      "title": "ADM lifts 2026 profit outlook after beating Q2 estimates on strong margins",
+      "publishedAt": "2026-08-04",
+      "accessedAt": "2026-10-28",
+      "kind": "news",
+      "rightsBasis": "facts-only"
+    },
+    {
+      "id": "t2-src-gold-macro",
+      "title": "Gold falls as oil-driven inflation talk keeps rates higher for longer",
+      "publishedAt": "2026-10-22",
+      "accessedAt": "2026-10-28",
+      "kind": "news",
+      "rightsBasis": "facts-only"
+    },
+    {
+      "id": "t2-src-mmg-deal",
+      "title": "MMG offers ferronickel supply guarantee to win EU approval for $500m nickel deal",
+      "publishedAt": "2026-10-23",
+      "accessedAt": "2026-10-28",
       "kind": "news",
       "rightsBasis": "facts-only"
     }

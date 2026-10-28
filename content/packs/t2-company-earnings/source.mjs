@@ -807,5 +807,8 @@ for (const concept of CONCEPTS) {
 export const SOURCES = [
   { file: "t2-earnings/1.txt", id: "t2-src-bp-q2", title: "BP Q2 profit more than doubles to $5.73bn; write-downs tied to Archaea", publishedAt: "2026-08-04", accessedAt: "2026-10-27", kind: "news", rightsBasis: "facts-only" },
   { file: "t2-earnings/2.txt", id: "t2-src-chevron-q2", title: "Chevron Q2 adjusted profit $12bn beats estimates; buyback and dividend held", publishedAt: "2026-07-31", accessedAt: "2026-10-27", kind: "news", rightsBasis: "facts-only" },
+  { file: "t2-earnings/4.txt", id: "t2-src-adm-q2", title: "ADM lifts 2026 profit outlook after beating Q2 estimates on strong margins", publishedAt: "2026-08-04", accessedAt: "2026-10-28", kind: "news", rightsBasis: "facts-only" },
+  { file: "t2-earnings/5.txt", id: "t2-src-gold-macro", title: "Gold falls as oil-driven inflation talk keeps rates higher for longer", publishedAt: "2026-10-22", accessedAt: "2026-10-28", kind: "news", rightsBasis: "facts-only" },
+  { file: "t2-earnings/6.txt", id: "t2-src-mmg-deal", title: "MMG offers ferronickel supply guarantee to win EU approval for $500m nickel deal", publishedAt: "2026-10-23", accessedAt: "2026-10-28", kind: "news", rightsBasis: "facts-only" },
   // t2-earnings/3.txt 是原创综合稿（交易/减值语境示例），不是来源。
 ];
