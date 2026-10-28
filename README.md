@@ -10,6 +10,11 @@ Content lives in `content/` and is validated at build time.
   <img src="docs/images/home.png" width="880" alt="Kachi home: lesson view on the left, course progress and learning path on the right">
 </p>
 
+The home screen pairs the current contrast pair (hedge vs. pledge) with a
+resume button and course progress on the left, and the learning path on the
+right — 40 concepts grouped into units, each showing its lesson range. Every
+number here comes from `content/`; nothing is fetched at runtime.
+
 ## Commands
 
 ```bash
