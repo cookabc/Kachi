@@ -3475,3 +3475,15 @@ button.lab-unit-head {
   line-height: 1.5;
   color: var(--ink-soft);
 }
+
+/* Pronunciation on the teach card. Rendered in a system serif rather than the
+   display face: IPA glyphs (ˈ ˌ ɝ ə ʃ ʒ ŋ θ ð) are missing from many display
+   fonts and would fall back mid-string, which reads as a rendering bug. */
+.teach-ipa {
+  margin: -2px 0 10px;
+  font-family: "Charis SIL", "Doulos SIL", "Gentium", "Times New Roman", serif;
+  font-size: 15px;
+  letter-spacing: 0.02em;
+  color: var(--muted);
+  text-align: center;
+}

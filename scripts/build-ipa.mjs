@@ -1,0 +1,222 @@
+#!/usr/bin/env node
+/**
+ * build-ipa.mjs — 从 CMU 发音词典生成课程用 IPA 表。
+ *
+ * 为什么不手工录：238 个词条 × 英/美音标手抄必然出错，而且改词表就要重抄。
+ * CMU 词典（BSD 风格许可，可 vendor）给 ARPAbet；这里转成 IPA。
+ *
+ * 词典本身不入仓（3.5MB 的源文件，只需生成的 7.6KB 结果）。重新生成时下载：
+ *   curl -o /tmp/cmudict.dict https://raw.githubusercontent.com/cmusphinx/cmudict/master/cmudict.dict
+ *   node scripts/build-ipa.mjs --dict /tmp/cmudict.dict
+ *
+ * 用法：
+ * 输出：content/ipa.json
+ *
+ * ARPAbet → IPA 是逐音素映射，不是音标串替换：CMU 用 AA1 这样的「音素+重音」，
+ * 重音要转成 ˈ/ˌ 前缀而不是单独字符。缩写词（p/e、eps、capex）词典里没有，
+ * 脚本跳过并在输出里记录，不猜。
+ */
+import { existsSync, readFileSync as read, readFileSync, writeFileSync } from "node:fs";
+import path from "node:path";
+
+const ROOT = process.cwd();
+const PACKS = [
+  "t1-finance-news",
+  "t2-company-earnings",
+  "t3-bonds-rates",
+  "t4-forex-macro",
+  "t5-quant-research",
+  "hedge-or-pledge",
+];
+
+// ARPAbet → IPA。美式（CMU 是美音）。
+const ARPA = {
+  AA: "ɑ",
+  AE: "æ",
+  AH: "ʌ",
+  AO: "ɔ",
+  AW: "aʊ",
+  AY: "aɪ",
+  B: "b",
+  CH: "tʃ",
+  D: "d",
+  DH: "ð",
+  EH: "ɛ",
+  ER: "ɝ",
+  EY: "eɪ",
+  F: "f",
+  G: "ɡ",
+  HH: "h",
+  IH: "ɪ",
+  IY: "i",
+  JH: "dʒ",
+  K: "k",
+  L: "l",
+  M: "m",
+  N: "n",
+  NG: "ŋ",
+  OW: "oʊ",
+  OY: "ɔɪ",
+  P: "p",
+  R: "r",
+  S: "s",
+  SH: "ʃ",
+  T: "t",
+  TH: "θ",
+  UH: "ʊ",
+  UW: "u",
+  V: "v",
+  W: "w",
+  Y: "j",
+  Z: "z",
+  ZH: "ʒ",
+};
+
+/**
+ * ARPAbet 一行 → IPA 串。
+ *
+ * 重音号属于「音节」，不属于元音：CMU 把 1/2 标在元音音素上，但 IPA 的 ˈ 要
+ * 放在整个音节之前。直接写 `ˈ${vowel}` 会得到 /rˈæli/ 而不是 /ˈræli/ —— 这是
+ * 生成后肉眼复查抓到的。做法是先切音节（每个元音一个音节，辅音归后一个音节，
+ * 词首辅音除外），再给音节加前缀。
+ */
+function toIpa(phones) {
+  const VOWELS = new Set([
+    "AA",
+    "AE",
+    "AH",
+    "AO",
+    "AW",
+    "AY",
+    "EH",
+    "ER",
+    "EY",
+    "IH",
+    "IY",
+    "OW",
+    "OY",
+    "UH",
+    "UW",
+  ]);
+  // 切成音节：在「元音 + 其后辅音串 + 下一个元音」的边界处断开，
+  // 但词首辅音串归属于第一个音节。
+  // 先解析成音素序列，再按元音位置划分。
+  const seq = [];
+  for (const phone of phones) {
+    const match = /^([A-Z]+)([0-2])?$/.exec(phone);
+    if (!match) continue;
+    seq.push({ base: match[1], stress: match[2], vowel: VOWELS.has(match[1]) });
+  }
+  const vowelIdx = seq.map((p, i) => (p.vowel ? i : -1)).filter((i) => i >= 0);
+  const syllables = [];
+  if (!vowelIdx.length) {
+    syllables.push(seq);
+  } else {
+    // 每个元音起一个音节；音节边界落在「下一个元音之前的辅音簇」中间。
+    const starts = [0];
+    for (let k = 1; k < vowelIdx.length; k += 1) {
+      const prevV = vowelIdx[k - 1];
+      const nextV = vowelIdx[k];
+      const cluster = nextV - prevV - 1; // 两元音之间的辅音数
+      // 单辅音归后；多个辅音时保留最后一个（或最后两个，若末两个是可作首部的
+      // 组合如 /tr/、/pl/）给后音节。
+      const keep = cluster >= 2 ? 2 : cluster >= 1 ? 1 : 0;
+      starts.push(nextV - keep);
+    }
+    for (let k = 0; k < starts.length; k += 1) {
+      const from = starts[k];
+      const to = k + 1 < starts.length ? starts[k + 1] : seq.length;
+      syllables.push(seq.slice(from, to));
+    }
+  }
+
+  return syllables
+    .map((syllable) => {
+      // 重音号放在音节首（含词首辅音簇）。
+      const stress = syllable.some((p) => p.stress === "1")
+        ? "ˈ"
+        : syllable.some((p) => p.stress === "2")
+          ? "ˌ"
+          : "";
+      const body = syllable
+        .map(({ base, stress }, index, arr) => {
+          // CMU writes r-coloured syllables as ER + AH0 (collateral: ... T ER0 AH0 L).
+          // The AH0 is redundant once ER carries the r; emitting both doubles the vowel.
+          if (base === "AH" && arr[index - 1]?.base === "ER") return "";
+          // AH0 is schwa; AH1/AH2 are the ʌ vowel. Getting this wrong turns
+          // "supply" into /sʌplˈaɪ/ instead of /səˈplaɪ/.
+          if (base === "AH" && stress === "0") return "ə";
+          return ARPA[base] ?? "";
+        })
+        .filter(Boolean)
+        .join("");
+      return stress + body;
+    })
+    .join("");
+}
+
+function loadDict(file) {
+  const map = new Map();
+  for (const line of readFileSync(file, "utf8").split("\n")) {
+    const trimmed = line.trim();
+    if (!trimmed || trimmed.startsWith(";;;")) continue;
+    const parts = trimmed.split(/\s+/);
+    const word = parts[0].replace(/\(\d+\)$/, "").toLowerCase();
+    // 只保留第一读音：变体（word(2)）是方言或可选发音，课程不需要。
+    if (map.has(word)) continue;
+    map.set(word, parts.slice(1));
+  }
+  return map;
+}
+
+/** 一个术语可能含空格与连字符；逐词查，用空格连接。 */
+function ipaFor(term, dict) {
+  const words = term
+    .toLowerCase()
+    .split(/[\s-]+/)
+    .filter(Boolean);
+  const parts = [];
+  for (const word of words) {
+    const phones = dict.get(word);
+    if (!phones) return null;
+    parts.push(toIpa(phones));
+  }
+  return parts.length ? `/${parts.join(" ")}/` : null;
+}
+
+const dictPath = process.argv.includes("--dict") ? process.argv[process.argv.indexOf("--dict") + 1] : null;
+if (!dictPath || !existsSync(dictPath)) {
+  console.error("Usage: node scripts/build-ipa.mjs --dict <cmudict.dict>");
+  process.exit(1);
+}
+
+const dict = loadDict(dictPath);
+const out = {
+  _comment:
+    "US IPA for every course term, generated by scripts/build-ipa.mjs from the CMU Pronouncing Dictionary (BSD-style licence, see content/ipa-LICENSE.txt). Terms the dictionary does not list are omitted, not guessed.",
+  words: {},
+};
+const skipped = [];
+let covered = 0;
+let total = 0;
+
+for (const pack of PACKS) {
+  const file = path.join(ROOT, "content/packs", pack, "zh-CN/course.json");
+  if (!existsSync(file)) continue;
+  const course = JSON.parse(read(file, "utf8"));
+  for (const concept of course.concepts) {
+    total += 1;
+    const ipa = ipaFor(concept.term, dict);
+    if (ipa) {
+      out.words[concept.id] = ipa;
+      covered += 1;
+    } else {
+      skipped.push(`${pack}:${concept.id}`);
+    }
+  }
+}
+
+writeFileSync(path.join(ROOT, "content/ipa.json"), `${JSON.stringify(out, null, 2)}\n`);
+console.log(`IPA: ${covered}/${total} concepts covered`);
+if (skipped.length)
+  console.log(`Not in dictionary (${skipped.length}, left blank on purpose): ${skipped.join(", ")}`);

@@ -4,6 +4,7 @@ import { speak } from "../audio";
 import { HeartRow } from "../chrome";
 import type { Course } from "../domain";
 import { conceptOf, type PresentedExercise, type TeachMode } from "../flow";
+import { ipaFor } from "../ipa";
 import { localizedTerm } from "../localization";
 import type { Lang, UiText } from "../ui";
 
@@ -204,6 +205,7 @@ function TeachCard({ termId, course, t, lang }: { termId: string; course: Course
           </svg>
         </button>
       </div>
+      {ipaFor(concept.id) && <p className="teach-ipa">{ipaFor(concept.id)}</p>}
       <p className="teach-def">{concept.definition}</p>
       <button
         type="button"
