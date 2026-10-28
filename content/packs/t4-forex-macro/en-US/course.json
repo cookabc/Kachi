@@ -52,8 +52,10 @@
       "mixUp": "exchange rate",
       "mixUpWhy": "Currency is the money itself; the exchange rate is the ratio between two of them.",
       "mixUpType": "coexist",
+      "sourceIds": [
+        "t4-src-forex-weekly"
+      ],
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -67,8 +69,8 @@
       "mixUp": "currency",
       "mixUpWhy": "The exchange rate is the ratio; currency is the thing being exchanged.",
       "mixUpType": "coexist",
-      "relations": [],
       "sourceIds": [],
+      "relations": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -82,8 +84,10 @@
       "mixUp": "euro",
       "mixUpWhy": "The dollar is the US currency and the global funding currency; the euro is the shared currency of the euro area.",
       "mixUpType": "coexist",
+      "sourceIds": [
+        "t4-src-forex-weekly"
+      ],
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -97,8 +101,10 @@
       "mixUp": "dollar",
       "mixUpWhy": "The euro is the euro area's; the dollar is the US's. They form the most-traded pair.",
       "mixUpType": "coexist",
+      "sourceIds": [
+        "t4-src-forex-weekly"
+      ],
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -112,8 +118,10 @@
       "mixUp": "yuan",
       "mixUpWhy": "Yen is Japanese; yuan is Chinese. They even share the ¥ symbol, so read the code (JPY vs CNY).",
       "mixUpType": "form",
+      "sourceIds": [
+        "t4-src-forex-weekly"
+      ],
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -127,8 +135,10 @@
       "mixUp": "yen",
       "mixUpWhy": "Yuan is Chinese; yen is Japanese. Both use ¥, so only context or the code separates them.",
       "mixUpType": "form",
+      "sourceIds": [
+        "t4-src-forex-weekly"
+      ],
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -142,8 +152,10 @@
       "mixUp": "peso",
       "mixUpWhy": "Sterling is Britain's; peso is the name several Latin American and Asian countries use.",
       "mixUpType": "coexist",
+      "sourceIds": [
+        "t4-src-forex-weekly"
+      ],
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -157,8 +169,10 @@
       "mixUp": "rupiah",
       "mixUpWhy": "Peso is used by several countries (MXN/PHP/ARS); the rupiah belongs only to Indonesia.",
       "mixUpType": "coexist",
+      "sourceIds": [
+        "t4-src-forex-weekly"
+      ],
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -172,8 +186,10 @@
       "mixUp": "peso",
       "mixUpWhy": "The rupiah is Indonesia's alone; peso is a shared name.",
       "mixUpType": "coexist",
+      "sourceIds": [
+        "t4-src-forex-weekly"
+      ],
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -187,8 +203,8 @@
       "mixUp": "depreciate",
       "mixUpWhy": "Appreciate means more valuable; depreciate means cheaper.",
       "mixUpType": "direction",
-      "relations": [],
       "sourceIds": [],
+      "relations": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -202,8 +218,8 @@
       "mixUp": "appreciate",
       "mixUpWhy": "Depreciate means cheaper; appreciate means more valuable.",
       "mixUpType": "direction",
-      "relations": [],
       "sourceIds": [],
+      "relations": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -217,8 +233,10 @@
       "mixUp": "weaken",
       "mixUpWhy": "Strengthen goes up; weaken goes down. Both are plainer than appreciate and depreciate, and more common in copy.",
       "mixUpType": "direction",
+      "sourceIds": [
+        "t4-src-forex-weekly"
+      ],
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -232,8 +250,10 @@
       "mixUp": "strengthen",
       "mixUpWhy": "Weaken goes down; strengthen goes up.",
       "mixUpType": "direction",
+      "sourceIds": [
+        "t4-src-forex-weekly"
+      ],
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -247,8 +267,10 @@
       "mixUp": "monetary policy",
       "mixUpWhy": "The central bank is the institution; monetary policy is what it does.",
       "mixUpType": "hierarchy",
+      "sourceIds": [
+        "t4-src-forex-weekly"
+      ],
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -262,8 +284,10 @@
       "mixUp": "rate cut",
       "mixUpWhy": "A hike moves rates up; a cut moves them down.",
       "mixUpType": "direction",
+      "sourceIds": [
+        "t4-src-forex-weekly"
+      ],
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -277,8 +301,8 @@
       "mixUp": "rate hike",
       "mixUpWhy": "A cut moves rates down; a hike moves them up.",
       "mixUpType": "direction",
-      "relations": [],
       "sourceIds": [],
+      "relations": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -292,8 +316,10 @@
       "mixUp": "dovish",
       "mixUpWhy": "Hawkish leans tight and lifts the currency; dovish leans loose and weighs on it.",
       "mixUpType": "opposite",
+      "sourceIds": [
+        "t4-src-forex-weekly"
+      ],
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -307,8 +333,10 @@
       "mixUp": "hawkish",
       "mixUpWhy": "Dovish leans loose and usually weakens the currency; hawkish leans tight.",
       "mixUpType": "opposite",
+      "sourceIds": [
+        "t4-src-forex-weekly"
+      ],
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -322,8 +350,10 @@
       "mixUp": "tapering",
       "mixUpWhy": "Forward guidance is talk about what will happen; tapering is actually buying less.",
       "mixUpType": "coexist",
+      "sourceIds": [
+        "t4-src-forex-weekly"
+      ],
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -337,8 +367,10 @@
       "mixUp": "tightening",
       "mixUpWhy": "Tapering reduces the addition (buying less); tightening is the actual squeeze. Tapering is not the same as tightening right away.",
       "mixUpType": "hierarchy",
+      "sourceIds": [
+        "t4-src-forex-weekly"
+      ],
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -352,8 +384,10 @@
       "mixUp": "fiscal policy",
       "mixUpWhy": "Monetary policy is the central bank's lever on money; fiscal policy is the government's lever on tax and spending.",
       "mixUpType": "coexist",
+      "sourceIds": [
+        "t4-src-forex-weekly"
+      ],
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -367,8 +401,10 @@
       "mixUp": "monetary policy",
       "mixUpWhy": "Fiscal is decided by government and parliament; monetary by the central bank. They can pull in opposite directions.",
       "mixUpType": "coexist",
+      "sourceIds": [
+        "t4-src-forex-weekly"
+      ],
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -382,8 +418,10 @@
       "mixUp": "tightening",
       "mixUpWhy": "QE injects liquidity; tightening withdraws it.",
       "mixUpType": "opposite",
+      "sourceIds": [
+        "t4-src-forex-weekly"
+      ],
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -397,8 +435,8 @@
       "mixUp": "easing",
       "mixUpWhy": "Tightening squeezes; easing loosens.",
       "mixUpType": "opposite",
-      "relations": [],
       "sourceIds": [],
+      "relations": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -412,8 +450,10 @@
       "mixUp": "tightening",
       "mixUpWhy": "Easing loosens; tightening squeezes.",
       "mixUpType": "opposite",
+      "sourceIds": [
+        "t4-src-forex-weekly"
+      ],
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -427,8 +467,10 @@
       "mixUp": "deflation",
       "mixUpWhy": "Inflation is prices rising; deflation is prices falling.",
       "mixUpType": "opposite",
+      "sourceIds": [
+        "t4-src-forex-weekly"
+      ],
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -442,8 +484,10 @@
       "mixUp": "inflation",
       "mixUpWhy": "Deflation is prices falling, which makes debt heavier in real terms; inflation is prices rising.",
       "mixUpType": "opposite",
+      "sourceIds": [
+        "t4-src-forex-weekly"
+      ],
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -457,8 +501,10 @@
       "mixUp": "soft landing",
       "mixUpWhy": "Stagflation is stalled growth with high inflation; a soft landing is inflation cooling without a recession. Opposite outcomes.",
       "mixUpType": "opposite",
+      "sourceIds": [
+        "t4-src-forex-weekly"
+      ],
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -472,8 +518,10 @@
       "mixUp": "stagflation",
       "mixUpWhy": "A soft landing keeps growth while inflation falls; stagflation loses growth while inflation stays.",
       "mixUpType": "opposite",
+      "sourceIds": [
+        "t4-src-forex-weekly"
+      ],
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -487,8 +535,10 @@
       "mixUp": "trade balance",
       "mixUpWhy": "The current account is the wider measure (goods, services, income); the trade balance counts goods only.",
       "mixUpType": "hierarchy",
+      "sourceIds": [
+        "t4-src-forex-weekly"
+      ],
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -502,8 +552,10 @@
       "mixUp": "current account",
       "mixUpWhy": "The trade balance counts goods only; the current account adds services, investment income and transfers.",
       "mixUpType": "hierarchy",
+      "sourceIds": [
+        "t4-src-forex-weekly"
+      ],
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -517,8 +569,10 @@
       "mixUp": "tightening",
       "mixUpWhy": "Intervention is direct buying and selling of currency; tightening is a policy stance on rates and liquidity. Intervention can leave rates untouched.",
       "mixUpType": "coexist",
+      "sourceIds": [
+        "t4-src-forex-weekly"
+      ],
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -532,8 +586,10 @@
       "mixUp": "current account",
       "mixUpWhy": "Capital flows are the financing side (money moving); the current account is the real side (trade and income). They mirror each other.",
       "mixUpType": "coexist",
+      "sourceIds": [
+        "t4-src-forex-weekly"
+      ],
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -547,8 +603,10 @@
       "mixUp": "risk-off",
       "mixUpWhy": "Risk appetite is the willingness (can be high or low); risk-off is one specific state where it has collapsed.",
       "mixUpType": "coexist",
+      "sourceIds": [
+        "t4-src-forex-weekly"
+      ],
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -562,8 +620,10 @@
       "mixUp": "safe-haven",
       "mixUpWhy": "Risk-off is the market state (everyone leaving); a safe haven is where the money goes.",
       "mixUpType": "coexist",
+      "sourceIds": [
+        "t4-src-forex-weekly"
+      ],
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -577,8 +637,10 @@
       "mixUp": "risk-off",
       "mixUpWhy": "A safe haven is the asset being bought; risk-off is the state that causes the buying.",
       "mixUpType": "coexist",
+      "sourceIds": [
+        "t4-src-forex-weekly"
+      ],
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -592,8 +654,10 @@
       "mixUp": "intervention",
       "mixUpWhy": "A carry trade is a market participant's strategy; intervention is a central bank's operation.",
       "mixUpType": "coexist",
+      "sourceIds": [
+        "t4-src-forex-weekly"
+      ],
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     }
@@ -6648,5 +6712,14 @@
       ]
     }
   ],
-  "sources": []
+  "sources": [
+    {
+      "id": "t4-src-forex-weekly",
+      "title": "Euro slumps on French debt worries; yen gains as safe-haven demand builds",
+      "publishedAt": "2026-10-23",
+      "accessedAt": "2026-10-27",
+      "kind": "news",
+      "rightsBasis": "facts-only"
+    }
+  ]
 }

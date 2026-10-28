@@ -624,3 +624,7 @@ for (const concept of CONCEPTS) {
   const en = EN_TABLE[concept.id];
   if (en) concept.en = en;
 }
+
+export const SOURCES = [
+  { file: "t4-forex/1.txt", id: "t4-src-forex-weekly", title: "Euro slumps on French debt worries; yen gains as safe-haven demand builds", publishedAt: "2026-10-23", accessedAt: "2026-10-27", kind: "news", rightsBasis: "facts-only" },
+];

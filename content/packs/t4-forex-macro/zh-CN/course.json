@@ -52,9 +52,11 @@
       "mixUp": "exchange rate",
       "mixUpWhy": "currency 是那种钱本身；exchange rate 是两种钱之间的兑换比例。",
       "mixUpType": "coexist",
+      "sourceIds": [
+        "t4-src-forex-weekly"
+      ],
       "termZh": "货币",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -68,9 +70,9 @@
       "mixUp": "currency",
       "mixUpWhy": "exchange rate 是比例；currency 是被兑换的那种钱。",
       "mixUpType": "coexist",
+      "sourceIds": [],
       "termZh": "汇率",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -84,9 +86,11 @@
       "mixUp": "euro",
       "mixUpWhy": "dollar 是美元、全球融资货币；euro 是欧元区共同货币。新闻里「美元走强」通常指美元对一篮子货币。",
       "mixUpType": "coexist",
+      "sourceIds": [
+        "t4-src-forex-weekly"
+      ],
       "termZh": "美元",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -100,9 +104,11 @@
       "mixUp": "dollar",
       "mixUpWhy": "euro 是欧元区的；dollar 是美国的。两者是外汇市场最大的一对。",
       "mixUpType": "coexist",
+      "sourceIds": [
+        "t4-src-forex-weekly"
+      ],
       "termZh": "欧元",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -116,9 +122,11 @@
       "mixUp": "yuan",
       "mixUpWhy": "yen 是日本的（¥ 同符号）；yuan 是中国的人民币。两者常被搞混，符号甚至一样。",
       "mixUpType": "form",
+      "sourceIds": [
+        "t4-src-forex-weekly"
+      ],
       "termZh": "日元",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -132,9 +140,11 @@
       "mixUp": "yen",
       "mixUpWhy": "yuan 是中国的；yen 是日本的。两者符号都是 ¥，只能靠上下文和代码（CNY vs JPY）分辨。",
       "mixUpType": "form",
+      "sourceIds": [
+        "t4-src-forex-weekly"
+      ],
       "termZh": "人民币（元）",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -148,9 +158,11 @@
       "mixUp": "peso",
       "mixUpWhy": "sterling 是英国的；peso 是多个拉美和亚洲国家的。名字不同但都是「某国的钱」。",
       "mixUpType": "coexist",
+      "sourceIds": [
+        "t4-src-forex-weekly"
+      ],
       "termZh": "英镑",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -164,9 +176,11 @@
       "mixUp": "rupiah",
       "mixUpWhy": "peso 被多国使用（MXN/PHP/ARS）；rupiah 只有印尼用。看到 peso 要先确认是哪一国。",
       "mixUpType": "coexist",
+      "sourceIds": [
+        "t4-src-forex-weekly"
+      ],
       "termZh": "比索",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -180,9 +194,11 @@
       "mixUp": "peso",
       "mixUpWhy": "rupiah 专属印尼；peso 是多个国家的通名。",
       "mixUpType": "coexist",
+      "sourceIds": [
+        "t4-src-forex-weekly"
+      ],
       "termZh": "印尼盾",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -196,9 +212,9 @@
       "mixUp": "depreciate",
       "mixUpWhy": "appreciate 变值钱；depreciate 变便宜。",
       "mixUpType": "direction",
+      "sourceIds": [],
       "termZh": "升值",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -212,9 +228,9 @@
       "mixUp": "appreciate",
       "mixUpWhy": "depreciate 变便宜；appreciate 变值钱。",
       "mixUpType": "direction",
+      "sourceIds": [],
       "termZh": "贬值",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -228,9 +244,11 @@
       "mixUp": "weaken",
       "mixUpWhy": "strengthen 走强；weaken 走弱。这两个词比 appreciate/depreciate 更口语，新闻里更常见。",
       "mixUpType": "direction",
+      "sourceIds": [
+        "t4-src-forex-weekly"
+      ],
       "termZh": "走强",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -244,9 +262,11 @@
       "mixUp": "strengthen",
       "mixUpWhy": "weaken 走弱；strengthen 走强。",
       "mixUpType": "direction",
+      "sourceIds": [
+        "t4-src-forex-weekly"
+      ],
       "termZh": "走弱",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -260,9 +280,11 @@
       "mixUp": "monetary policy",
       "mixUpWhy": "central bank 是机构；monetary policy 是它做的事。",
       "mixUpType": "hierarchy",
+      "sourceIds": [
+        "t4-src-forex-weekly"
+      ],
       "termZh": "央行",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -276,9 +298,11 @@
       "mixUp": "rate cut",
       "mixUpWhy": "rate hike 往上调；rate cut 往下调。",
       "mixUpType": "direction",
+      "sourceIds": [
+        "t4-src-forex-weekly"
+      ],
       "termZh": "加息",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -292,9 +316,9 @@
       "mixUp": "rate hike",
       "mixUpWhy": "rate cut 往下调；rate hike 往上调。",
       "mixUpType": "direction",
+      "sourceIds": [],
       "termZh": "降息",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -308,9 +332,11 @@
       "mixUp": "dovish",
       "mixUpWhy": "hawkish 偏收紧、利好该货币；dovish 偏宽松、利空该货币。",
       "mixUpType": "opposite",
+      "sourceIds": [
+        "t4-src-forex-weekly"
+      ],
       "termZh": "鹰派",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -324,9 +350,11 @@
       "mixUp": "hawkish",
       "mixUpWhy": "dovish 偏宽松、通常利空该货币；hawkish 偏收紧。",
       "mixUpType": "opposite",
+      "sourceIds": [
+        "t4-src-forex-weekly"
+      ],
       "termZh": "鸽派",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -340,9 +368,11 @@
       "mixUp": "tapering",
       "mixUpWhy": "forward guidance 是口头指引（说什么）；tapering 是实际减少购债（做什么）。",
       "mixUpType": "coexist",
+      "sourceIds": [
+        "t4-src-forex-weekly"
+      ],
       "termZh": "前瞻指引",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -356,9 +386,11 @@
       "mixUp": "tightening",
       "mixUpWhy": "tapering 是减少「增量」（买得少了）；tightening 是真正收紧（可能还在买但速度慢，也可能是加息）。taper 不等于立刻收紧。",
       "mixUpType": "hierarchy",
+      "sourceIds": [
+        "t4-src-forex-weekly"
+      ],
       "termZh": "缩减购债",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -372,9 +404,11 @@
       "mixUp": "fiscal policy",
       "mixUpWhy": "monetary policy 管钱的价格和量（央行）；fiscal policy 管税收和政府支出（政府）。",
       "mixUpType": "coexist",
+      "sourceIds": [
+        "t4-src-forex-weekly"
+      ],
       "termZh": "货币政策",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -388,9 +422,11 @@
       "mixUp": "monetary policy",
       "mixUpWhy": "fiscal policy 由政府和议会决定；monetary policy 由央行决定。两者可以方向相反。",
       "mixUpType": "coexist",
+      "sourceIds": [
+        "t4-src-forex-weekly"
+      ],
       "termZh": "财政政策",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -404,9 +440,11 @@
       "mixUp": "tightening",
       "mixUpWhy": "QE 是注入流动性（宽松）；tightening 是收回流动性。方向相反。",
       "mixUpType": "opposite",
+      "sourceIds": [
+        "t4-src-forex-weekly"
+      ],
       "termZh": "量化宽松",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -420,9 +458,9 @@
       "mixUp": "easing",
       "mixUpWhy": "tightening 收紧；easing 放松。",
       "mixUpType": "opposite",
+      "sourceIds": [],
       "termZh": "收紧",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -436,9 +474,11 @@
       "mixUp": "tightening",
       "mixUpWhy": "easing 放松；tightening 收紧。",
       "mixUpType": "opposite",
+      "sourceIds": [
+        "t4-src-forex-weekly"
+      ],
       "termZh": "放松",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -452,9 +492,11 @@
       "mixUp": "deflation",
       "mixUpWhy": "inflation 是物价上涨；deflation 是物价下跌。",
       "mixUpType": "opposite",
+      "sourceIds": [
+        "t4-src-forex-weekly"
+      ],
       "termZh": "通胀",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -468,9 +510,11 @@
       "mixUp": "inflation",
       "mixUpWhy": "deflation 是物价下跌（债务实际变重）；inflation 是物价上涨。",
       "mixUpType": "opposite",
+      "sourceIds": [
+        "t4-src-forex-weekly"
+      ],
       "termZh": "通缩",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -484,9 +528,11 @@
       "mixUp": "soft landing",
       "mixUpWhy": "stagflation 是增长停滞加通胀高企；soft landing 是通胀回落而经济不衰退。完全相反的两种结局。",
       "mixUpType": "opposite",
+      "sourceIds": [
+        "t4-src-forex-weekly"
+      ],
       "termZh": "滞胀",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -500,9 +546,11 @@
       "mixUp": "stagflation",
       "mixUpWhy": "soft landing 是通胀降、增长保住；stagflation 是增长停、通胀还在。",
       "mixUpType": "opposite",
+      "sourceIds": [
+        "t4-src-forex-weekly"
+      ],
       "termZh": "软着陆",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -516,9 +564,11 @@
       "mixUp": "trade balance",
       "mixUpWhy": "current account 范围更宽（含服务与收入转移）；trade balance 只算货物贸易。",
       "mixUpType": "hierarchy",
+      "sourceIds": [
+        "t4-src-forex-weekly"
+      ],
       "termZh": "经常账户",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -532,9 +582,11 @@
       "mixUp": "current account",
       "mixUpWhy": "trade balance 只算货物；current account 还包括服务、投资收益和转移支付。",
       "mixUpType": "hierarchy",
+      "sourceIds": [
+        "t4-src-forex-weekly"
+      ],
       "termZh": "贸易差额",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -548,9 +600,11 @@
       "mixUp": "tightening",
       "mixUpWhy": "intervention 是直接买卖货币（动作）；tightening 是调整利率与流动性（政策取向）。干预可以不改变利率。",
       "mixUpType": "coexist",
+      "sourceIds": [
+        "t4-src-forex-weekly"
+      ],
       "termZh": "干预（汇市）",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -564,9 +618,11 @@
       "mixUp": "current account",
       "mixUpWhy": "capital flow 是资金的进出（融资侧）；current account 是贸易与收入的差额（实体侧）。两者互为镜像。",
       "mixUpType": "coexist",
+      "sourceIds": [
+        "t4-src-forex-weekly"
+      ],
       "termZh": "资本流动",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -580,9 +636,11 @@
       "mixUp": "risk-off",
       "mixUpWhy": "risk appetite 是意愿（可以高可以低）；risk-off 是一种具体状态（意愿低、撤出风险资产）。",
       "mixUpType": "coexist",
+      "sourceIds": [
+        "t4-src-forex-weekly"
+      ],
       "termZh": "风险偏好",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -596,9 +654,11 @@
       "mixUp": "safe-haven",
       "mixUpWhy": "risk-off 是市场的状态（大家在撤）；safe-haven 是资金撤向的那个去处（日元、黄金、美债）。",
       "mixUpType": "coexist",
+      "sourceIds": [
+        "t4-src-forex-weekly"
+      ],
       "termZh": "避险情绪",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -612,9 +672,11 @@
       "mixUp": "risk-off",
       "mixUpWhy": "safe-haven 是被买入的资产；risk-off 是导致它被买入的那种市场状态。",
       "mixUpType": "coexist",
+      "sourceIds": [
+        "t4-src-forex-weekly"
+      ],
       "termZh": "避险资产",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -628,9 +690,11 @@
       "mixUp": "intervention",
       "mixUpWhy": "carry trade 是市场参与者的策略（赚利差）；intervention 是央行的操作（影响汇率）。",
       "mixUpType": "coexist",
+      "sourceIds": [
+        "t4-src-forex-weekly"
+      ],
       "termZh": "套息交易",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     }
@@ -6685,5 +6749,14 @@
       ]
     }
   ],
-  "sources": []
+  "sources": [
+    {
+      "id": "t4-src-forex-weekly",
+      "title": "Euro slumps on French debt worries; yen gains as safe-haven demand builds",
+      "publishedAt": "2026-10-23",
+      "accessedAt": "2026-10-27",
+      "kind": "news",
+      "rightsBasis": "facts-only"
+    }
+  ]
 }

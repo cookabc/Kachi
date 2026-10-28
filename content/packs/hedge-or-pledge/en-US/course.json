@@ -80,7 +80,9 @@
           "with": "collateral"
         }
       ],
-      "sourceIds": [],
+      "sourceIds": [
+        "finra-sec-sbloc-2015"
+      ],
       "risk": "evergreen",
       "reviewStatus": "legacy"
     },
@@ -93,7 +95,9 @@
       "example": "The pledged stock is the collateral. Miss the loan, the bank takes the shares.",
       "mixUp": "haircut",
       "mixUpWhy": "Collateral is the asset. The haircut is how much they knock off its value before lending.",
-      "sourceIds": [],
+      "sourceIds": [
+        "finra-sec-sbloc-2015"
+      ],
       "risk": "evergreen",
       "reviewStatus": "legacy"
     },
@@ -106,7 +110,9 @@
       "example": "$1M stock, 30% haircut → they treat it as $700k. That's the max loan.",
       "mixUp": "margin",
       "mixUpWhy": "Haircut is the discount on collateral. Margin is the cash cushion you must keep.",
-      "sourceIds": [],
+      "sourceIds": [
+        "finra-sec-sbloc-2015"
+      ],
       "risk": "evergreen",
       "reviewStatus": "legacy"
     },
@@ -125,7 +131,9 @@
           "with": "margin call"
         }
       ],
-      "sourceIds": [],
+      "sourceIds": [
+        "finra-sec-sbloc-2015"
+      ],
       "risk": "evergreen",
       "reviewStatus": "legacy"
     },
@@ -148,7 +156,9 @@
           "with": "mark-to-market"
         }
       ],
-      "sourceIds": [],
+      "sourceIds": [
+        "finra-sec-sbloc-2015"
+      ],
       "risk": "evergreen",
       "reviewStatus": "legacy"
     },
@@ -161,7 +171,9 @@
       "example": "$10k of yours plus $40k borrowed = 5× leverage. A 10% drop wipes half your cash.",
       "mixUp": "margin",
       "mixUpWhy": "Leverage is the multiplier. Margin is the cushion that makes the multiplier possible.",
-      "sourceIds": [],
+      "sourceIds": [
+        "finra-sec-sbloc-2015"
+      ],
       "risk": "evergreen",
       "reviewStatus": "legacy"
     },
@@ -259,7 +271,9 @@
       "example": "Apple stock is liquid — dump $1M and the price barely budges. Your cousin's startup is not.",
       "mixUp": "notional",
       "mixUpWhy": "Liquidity is ease of exit. Notional is the face size of a contract.",
-      "sourceIds": [],
+      "sourceIds": [
+        "finra-sec-sbloc-2015"
+      ],
       "risk": "evergreen",
       "reviewStatus": "legacy"
     },
@@ -452,7 +466,8 @@
       "mixUp": "buy-borrow-die",
       "mixUpWhy": "Capital gains hit when you sell. Buy-borrow-die is the pattern of never selling so the tax doesn't trigger.",
       "sourceIds": [
-        "irs-topic-409"
+        "irs-topic-409",
+        "finra-sec-sbloc-2015"
       ],
       "risk": "jurisdictional",
       "jurisdiction": "US",
@@ -471,7 +486,8 @@
       "mixUpWhy": "A securities-backed loan is the borrowing tool. Buy-borrow-die is the whole life-cycle pattern that uses that tool.",
       "sourceIds": [
         "irs-pub-551",
-        "mccaffery-fair-not-flat-2002"
+        "mccaffery-fair-not-flat-2002",
+        "finra-sec-sbloc-2015"
       ],
       "risk": "jurisdictional",
       "jurisdiction": "US",
@@ -526,7 +542,7 @@
       ],
       "sourceIds": [],
       "risk": "evergreen",
-      "reviewStatus": "reviewed"
+      "reviewStatus": "legacy"
     },
     {
       "id": "inflation",
@@ -539,7 +555,7 @@
       "mixUpWhy": "Inflation is the problem — prices climbing. The interest rate is the central bank's brake pedal against it.",
       "sourceIds": [],
       "risk": "evergreen",
-      "reviewStatus": "reviewed"
+      "reviewStatus": "legacy"
     },
     {
       "id": "real rate",
@@ -562,7 +578,7 @@
       ],
       "sourceIds": [],
       "risk": "evergreen",
-      "reviewStatus": "reviewed"
+      "reviewStatus": "legacy"
     },
     {
       "id": "bond",
@@ -585,7 +601,7 @@
       ],
       "sourceIds": [],
       "risk": "evergreen",
-      "reviewStatus": "reviewed"
+      "reviewStatus": "legacy"
     },
     {
       "id": "yield curve",
@@ -608,7 +624,7 @@
       ],
       "sourceIds": [],
       "risk": "evergreen",
-      "reviewStatus": "reviewed"
+      "reviewStatus": "legacy"
     },
     {
       "id": "quantitative easing",
@@ -631,7 +647,7 @@
       ],
       "sourceIds": [],
       "risk": "evergreen",
-      "reviewStatus": "reviewed"
+      "reviewStatus": "legacy"
     },
     {
       "id": "spot",
@@ -644,7 +660,7 @@
       "mixUpWhy": "Spot is the price for here-and-now delivery. Futures lock a price for a date later — the gap between them is where the curve lives.",
       "sourceIds": [],
       "risk": "evergreen",
-      "reviewStatus": "reviewed"
+      "reviewStatus": "legacy"
     },
     {
       "id": "basis",
@@ -667,7 +683,7 @@
       ],
       "sourceIds": [],
       "risk": "evergreen",
-      "reviewStatus": "reviewed"
+      "reviewStatus": "legacy"
     },
     {
       "id": "contango",
@@ -690,7 +706,7 @@
       ],
       "sourceIds": [],
       "risk": "evergreen",
-      "reviewStatus": "reviewed"
+      "reviewStatus": "legacy"
     },
     {
       "id": "backwardation",
@@ -709,7 +725,7 @@
       ],
       "sourceIds": [],
       "risk": "evergreen",
-      "reviewStatus": "reviewed"
+      "reviewStatus": "legacy"
     },
     {
       "id": "cost of carry",
@@ -728,7 +744,7 @@
       ],
       "sourceIds": [],
       "risk": "evergreen",
-      "reviewStatus": "reviewed"
+      "reviewStatus": "legacy"
     }
   ],
   "lessons": [

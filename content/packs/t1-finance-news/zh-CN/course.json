@@ -52,6 +52,10 @@
       "mixUp": "selloff",
       "mixUpWhy": "rally 是买盘涌入把价格推高；selloff 是卖盘涌出把价格砸低。方向相反。",
       "mixUpType": "opposite",
+      "sourceIds": [
+        "t1-src-results-roundup",
+        "t1-src-headlines-172"
+      ],
       "termZh": "反弹、上涨",
       "relations": [
         {
@@ -59,7 +63,6 @@
           "with": "rebound"
         }
       ],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -73,9 +76,13 @@
       "mixUp": "rally",
       "mixUpWhy": "selloff 是抛售压低价格，rally 是买盘推高价格。",
       "mixUpType": "opposite",
+      "sourceIds": [
+        "t1-src-banks-2026",
+        "t1-src-forex-weekly",
+        "t1-src-headlines-172"
+      ],
       "termZh": "抛售",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -89,6 +96,10 @@
       "mixUp": "rebound",
       "mixUpWhy": "slump 是持续走低；rebound 是触底之后弹回来。",
       "mixUpType": "opposite",
+      "sourceIds": [
+        "t1-src-results-roundup",
+        "t1-src-headlines-172"
+      ],
       "termZh": "暴跌、低迷",
       "relations": [
         {
@@ -96,7 +107,6 @@
           "with": "rout"
         }
       ],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -110,9 +120,11 @@
       "mixUp": "slump",
       "mixUpWhy": "rebound 是跌完回升；slump 是还在往下走。",
       "mixUpType": "opposite",
+      "sourceIds": [
+        "t1-src-headlines-172"
+      ],
       "termZh": "回升、反弹",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -126,9 +138,12 @@
       "mixUp": "selloff",
       "mixUpWhy": "rout 比 selloff 更剧烈，带恐慌和失序；selloff 只是有大量卖盘。",
       "mixUpType": "hierarchy",
+      "sourceIds": [
+        "t1-src-banks-2026",
+        "t1-src-headlines-172"
+      ],
       "termZh": "溃败式下跌",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -142,9 +157,11 @@
       "mixUp": "selloff",
       "mixUpWhy": "profit-taking 是赚钱后主动兑现；selloff 是恐慌或被动的抛售。",
       "mixUpType": "opposite",
+      "sourceIds": [
+        "t1-src-headlines-172"
+      ],
       "termZh": "获利了结",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -158,6 +175,12 @@
       "mixUp": "demand",
       "mixUpWhy": "supply 是卖方提供的量；demand 是买方想买的量。同一根轴的两端。",
       "mixUpType": "opposite",
+      "sourceIds": [
+        "t1-src-india-bonds",
+        "t1-src-refining",
+        "t1-src-results-roundup",
+        "t1-src-headlines-172"
+      ],
       "termZh": "供给",
       "relations": [
         {
@@ -165,7 +188,6 @@
           "with": "inventory"
         }
       ],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -179,9 +201,15 @@
       "mixUp": "supply",
       "mixUpWhy": "demand 是买方想买；supply 是卖方能卖。",
       "mixUpType": "opposite",
+      "sourceIds": [
+        "t1-src-forex-weekly",
+        "t1-src-refining",
+        "t1-src-bhp-fy26",
+        "t1-src-results-roundup",
+        "t1-src-headlines-172"
+      ],
       "termZh": "需求",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -195,9 +223,12 @@
       "mixUp": "output",
       "mixUpWhy": "capacity 是上限；output 是实际产出。产能闲置时两者不相等。",
       "mixUpType": "coexist",
+      "sourceIds": [
+        "t1-src-banks-2026",
+        "t1-src-refining"
+      ],
       "termZh": "产能",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -211,9 +242,12 @@
       "mixUp": "capacity",
       "mixUpWhy": "output 是实际产出；capacity 是产能上限。",
       "mixUpType": "coexist",
+      "sourceIds": [
+        "t1-src-bhp-fy26",
+        "t1-src-headlines-172"
+      ],
       "termZh": "产量",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -227,9 +261,11 @@
       "mixUp": "output",
       "mixUpWhy": "inventory 是造好没卖的存量；output 是这一期造出来的量。库存会累积，产量不会。",
       "mixUpType": "coexist",
+      "sourceIds": [
+        "t1-src-results-roundup"
+      ],
       "termZh": "库存",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -243,9 +279,11 @@
       "mixUp": "deficit",
       "mixUpWhy": "surplus 是多出来；deficit 是缺一块。同一杆秤的两端。",
       "mixUpType": "opposite",
+      "sourceIds": [
+        "t1-src-headlines-172"
+      ],
       "termZh": "过剩、顺差",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -259,9 +297,9 @@
       "mixUp": "surplus",
       "mixUpWhy": "deficit 是缺口；surplus 是盈余。",
       "mixUpType": "opposite",
+      "sourceIds": [],
       "termZh": "赤字、缺口",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -275,6 +313,12 @@
       "mixUp": "revenue",
       "mixUpWhy": "earnings 是扣完成本剩下的；revenue 是还没扣成本的销售总额。",
       "mixUpType": "coexist",
+      "sourceIds": [
+        "t1-src-banks-2026",
+        "t1-src-bhp-fy26",
+        "t1-src-results-roundup",
+        "t1-src-headlines-172"
+      ],
       "termZh": "盈利、业绩",
       "relations": [
         {
@@ -282,7 +326,6 @@
           "with": "profit"
         }
       ],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -296,9 +339,11 @@
       "mixUp": "earnings",
       "mixUpWhy": "revenue 是收入总额；earnings 是扣完成本后的利润。",
       "mixUpType": "coexist",
+      "sourceIds": [
+        "t1-src-headlines-172"
+      ],
       "termZh": "营收",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -312,6 +357,13 @@
       "mixUp": "margin",
       "mixUpWhy": "profit 是绝对金额；margin 是利润占收入的比例。",
       "mixUpType": "coexist",
+      "sourceIds": [
+        "t1-src-banks-2026",
+        "t1-src-refining",
+        "t1-src-bhp-fy26",
+        "t1-src-results-roundup",
+        "t1-src-headlines-172"
+      ],
       "termZh": "利润",
       "relations": [
         {
@@ -319,7 +371,6 @@
           "with": "revenue"
         }
       ],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -333,6 +384,12 @@
       "mixUp": "profit",
       "mixUpWhy": "margin 是比率；profit 是金额。营收小的公司也可能利润率很高。",
       "mixUpType": "coexist",
+      "sourceIds": [
+        "t1-src-banks-2026",
+        "t1-src-refining",
+        "t1-src-results-roundup",
+        "t1-src-headlines-172"
+      ],
       "termZh": "利润率",
       "relations": [
         {
@@ -340,7 +397,6 @@
           "with": "revenue"
         }
       ],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -354,6 +410,11 @@
       "mixUp": "earnings",
       "mixUpWhy": "earnings 是公司赚到的；dividend 是从利润里分给股东的那部分。不是所有盈利都发股息。",
       "mixUpType": "hierarchy",
+      "sourceIds": [
+        "t1-src-banks-2026",
+        "t1-src-bhp-fy26",
+        "t1-src-headlines-172"
+      ],
       "termZh": "股息",
       "relations": [
         {
@@ -361,7 +422,6 @@
           "with": "profit"
         }
       ],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -375,9 +435,12 @@
       "mixUp": "forecast",
       "mixUpWhy": "guidance 专指公司自己给的官方预期；forecast 可以是任何人对任何事的预测。",
       "mixUpType": "hierarchy",
+      "sourceIds": [
+        "t1-src-results-roundup",
+        "t1-src-headlines-172"
+      ],
       "termZh": "业绩指引",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -391,9 +454,13 @@
       "mixUp": "guidance",
       "mixUpWhy": "forecast 范围更广；guidance 特指公司官方给的业绩指引。",
       "mixUpType": "hierarchy",
+      "sourceIds": [
+        "t1-src-banks-2026",
+        "t1-src-results-roundup",
+        "t1-src-headlines-172"
+      ],
       "termZh": "预测",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -407,9 +474,12 @@
       "mixUp": "estimate",
       "mixUpWhy": "consensus 是所有人预测的合体；estimate 是单个人给出的一个数。",
       "mixUpType": "hierarchy",
+      "sourceIds": [
+        "t1-src-bhp-fy26",
+        "t1-src-headlines-172"
+      ],
       "termZh": "市场一致预期",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -423,9 +493,13 @@
       "mixUp": "consensus",
       "mixUpWhy": "estimate 是一个人的数；consensus 是许多人的平均数。",
       "mixUpType": "hierarchy",
+      "sourceIds": [
+        "t1-src-refining",
+        "t1-src-bhp-fy26",
+        "t1-src-headlines-172"
+      ],
       "termZh": "预估、估计值",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -439,9 +513,14 @@
       "mixUp": "yield",
       "mixUpWhy": "bond 是那张凭证本身；yield 是这张凭证按你买入价格算出的回报率。",
       "mixUpType": "coexist",
+      "sourceIds": [
+        "t1-src-banks-2026",
+        "t1-src-forex-weekly",
+        "t1-src-india-bonds",
+        "t1-src-headlines-172"
+      ],
       "termZh": "债券",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -455,9 +534,13 @@
       "mixUp": "bond",
       "mixUpWhy": "yield 是回报率，bond 是凭证。债券价格跌，yield 反而升。",
       "mixUpType": "coexist",
+      "sourceIds": [
+        "t1-src-banks-2026",
+        "t1-src-india-bonds",
+        "t1-src-headlines-172"
+      ],
       "termZh": "收益率",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -471,9 +554,14 @@
       "mixUp": "interest rate",
       "mixUpWhy": "inflation 是问题本身——物价在涨；interest rate 是央行用来压它的工具。",
       "mixUpType": "coexist",
+      "sourceIds": [
+        "t1-src-banks-2026",
+        "t1-src-forex-weekly",
+        "t1-src-india-bonds",
+        "t1-src-headlines-172"
+      ],
       "termZh": "通胀",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -487,9 +575,12 @@
       "mixUp": "yield",
       "mixUpWhy": "interest rate 是借钱的价格；yield 是你买入投资后拿到的回报率。",
       "mixUpType": "coexist",
+      "sourceIds": [
+        "t1-src-banks-2026",
+        "t1-src-headlines-172"
+      ],
       "termZh": "利率",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -503,6 +594,10 @@
       "mixUp": "rate cut",
       "mixUpWhy": "rate hike 往上调；rate cut 往下调。",
       "mixUpType": "opposite",
+      "sourceIds": [
+        "t1-src-forex-weekly",
+        "t1-src-headlines-172"
+      ],
       "termZh": "加息",
       "relations": [
         {
@@ -510,7 +605,6 @@
           "with": "interest rate"
         }
       ],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -524,6 +618,7 @@
       "mixUp": "rate hike",
       "mixUpWhy": "rate cut 往下调；rate hike 往上调。",
       "mixUpType": "opposite",
+      "sourceIds": [],
       "termZh": "降息",
       "relations": [
         {
@@ -531,7 +626,6 @@
           "with": "interest rate"
         }
       ],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -545,9 +639,13 @@
       "mixUp": "interest rate",
       "mixUpWhy": "central bank 是机构；interest rate 是它调整的工具。",
       "mixUpType": "coexist",
+      "sourceIds": [
+        "t1-src-forex-weekly",
+        "t1-src-india-bonds",
+        "t1-src-headlines-172"
+      ],
       "termZh": "央行",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -561,9 +659,11 @@
       "mixUp": "exchange rate",
       "mixUpWhy": "currency 是那种钱本身；exchange rate 是两种钱之间的兑换比例。",
       "mixUpType": "coexist",
+      "sourceIds": [
+        "t1-src-headlines-172"
+      ],
       "termZh": "货币",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -577,9 +677,9 @@
       "mixUp": "currency",
       "mixUpWhy": "exchange rate 是比例；currency 是被兑换的那种钱。",
       "mixUpType": "coexist",
+      "sourceIds": [],
       "termZh": "汇率",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -593,6 +693,9 @@
       "mixUp": "appreciate",
       "mixUpWhy": "depreciate 是变便宜；appreciate 是变值钱。",
       "mixUpType": "opposite",
+      "sourceIds": [
+        "t1-src-headlines-172"
+      ],
       "termZh": "贬值",
       "relations": [
         {
@@ -600,7 +703,6 @@
           "with": "exchange rate"
         }
       ],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -614,6 +716,7 @@
       "mixUp": "depreciate",
       "mixUpWhy": "appreciate 是变值钱；depreciate 是变便宜。",
       "mixUpType": "opposite",
+      "sourceIds": [],
       "termZh": "升值",
       "relations": [
         {
@@ -621,7 +724,6 @@
           "with": "exchange rate"
         }
       ],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -635,9 +737,9 @@
       "mixUp": "valuation",
       "mixUpWhy": "market cap 是市场价格算出的总价值；valuation 是对它值多少的判断或估算。",
       "mixUpType": "coexist",
+      "sourceIds": [],
       "termZh": "市值",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -651,9 +753,12 @@
       "mixUp": "market cap",
       "mixUpWhy": "valuation 是判断出来的价值；market cap 是市场当下给出的价格总和。",
       "mixUpType": "coexist",
+      "sourceIds": [
+        "t1-src-banks-2026",
+        "t1-src-results-roundup"
+      ],
       "termZh": "估值",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -667,6 +772,7 @@
       "mixUp": "market cap",
       "mixUpWhy": "P/E 是倍数、和盈利挂钩；market cap 是总市值、和股本挂钩。",
       "mixUpType": "coexist",
+      "sourceIds": [],
       "termZh": "市盈率",
       "relations": [
         {
@@ -674,7 +780,6 @@
           "with": "earnings"
         }
       ],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -688,9 +793,13 @@
       "mixUp": "blue chip",
       "mixUpWhy": "index 是把一篮子股票算成一个数；blue chip 是其中某一类公司本身。",
       "mixUpType": "coexist",
+      "sourceIds": [
+        "t1-src-forex-weekly",
+        "t1-src-india-bonds",
+        "t1-src-headlines-172"
+      ],
       "termZh": "指数",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -704,9 +813,11 @@
       "mixUp": "index",
       "mixUpWhy": "blue chip 是一类公司；index 是把很多公司算成一个数。",
       "mixUpType": "coexist",
+      "sourceIds": [
+        "t1-src-headlines-172"
+      ],
       "termZh": "蓝筹股",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -720,9 +831,11 @@
       "mixUp": "issuance",
       "mixUpWhy": "auction 是发行时用的竞价方式；issuance 是发行这件事本身。",
       "mixUpType": "coexist",
+      "sourceIds": [
+        "t1-src-headlines-172"
+      ],
       "termZh": "拍卖（发行）",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -736,9 +849,11 @@
       "mixUp": "auction",
       "mixUpWhy": "issuance 是发行本身；auction 是发行时常用的竞价方式。",
       "mixUpType": "coexist",
+      "sourceIds": [
+        "t1-src-headlines-172"
+      ],
       "termZh": "发行（量）",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -752,9 +867,12 @@
       "mixUp": "supply",
       "mixUpWhy": "tariff 是给进口商品加成本，间接压缩供给；supply 是能拿出来的量本身。",
       "mixUpType": "coexist",
+      "sourceIds": [
+        "t1-src-results-roundup",
+        "t1-src-headlines-172"
+      ],
       "termZh": "关税",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -768,9 +886,12 @@
       "mixUp": "selloff",
       "mixUpWhy": "volatility 是摆动的剧烈程度，可以涨也可以跌；selloff 是单向的下跌。",
       "mixUpType": "coexist",
+      "sourceIds": [
+        "t1-src-banks-2026",
+        "t1-src-headlines-172"
+      ],
       "termZh": "波动率",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     }
@@ -8074,5 +8195,62 @@
       ]
     }
   ],
-  "sources": []
+  "sources": [
+    {
+      "id": "t1-src-banks-2026",
+      "title": "Asia-focused banks face capital squeeze due to inflation and bond market turbulence",
+      "publishedAt": "2026-10-26",
+      "accessedAt": "2026-10-26",
+      "kind": "news",
+      "rightsBasis": "facts-only"
+    },
+    {
+      "id": "t1-src-forex-weekly",
+      "title": "Euro slumps on French debt worries as yen set for weekly gain amid AI rout",
+      "publishedAt": "2026-10-23",
+      "accessedAt": "2026-10-26",
+      "kind": "news",
+      "rightsBasis": "facts-only"
+    },
+    {
+      "id": "t1-src-india-bonds",
+      "title": "Oil shock weighs on India bonds ahead of policy minutes; 10-year yield at highest in over three years",
+      "publishedAt": "2026-10-21",
+      "accessedAt": "2026-10-26",
+      "kind": "news",
+      "rightsBasis": "facts-only"
+    },
+    {
+      "id": "t1-src-refining",
+      "title": "Brent crude near $88 as fuel prices fall less than crude, boosting refiner margins",
+      "publishedAt": "2026-08-17",
+      "accessedAt": "2026-10-26",
+      "kind": "news",
+      "rightsBasis": "facts-only"
+    },
+    {
+      "id": "t1-src-bhp-fy26",
+      "title": "BHP FY2026 results: underlying profit $13.20bn, dividend highest in four years",
+      "publishedAt": "2026-08-18",
+      "accessedAt": "2026-10-26",
+      "kind": "news",
+      "rightsBasis": "facts-only"
+    },
+    {
+      "id": "t1-src-results-roundup",
+      "title": "Company results roundup: Santos, Whitehaven, BHP, Glencore, ADM, Chevron",
+      "publishedAt": "2026-08-18",
+      "accessedAt": "2026-10-26",
+      "kind": "news",
+      "rightsBasis": "facts-only"
+    },
+    {
+      "id": "t1-src-headlines-172",
+      "title": "Real financial headlines, 172 items (Aug–Oct 2026, commodities/forex/economics feed)",
+      "publishedAt": "2026-10-26",
+      "accessedAt": "2026-10-26",
+      "kind": "news",
+      "rightsBasis": "facts-only"
+    }
+  ]
 }

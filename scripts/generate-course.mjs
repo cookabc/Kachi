@@ -17,10 +17,11 @@
  * 用法：node scripts/generate-course.mjs [--pack t2-company-earnings]
  *       不带 --pack 时生成全部有 source.mjs 的 pack。
  */
-import { existsSync, readdirSync, writeFileSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
 import { blankTerm, fillLeaksAnswer } from "../src/fill.ts";
+import { corpusHasTerm } from "./validate-content.mjs";
 
 const ROOT = process.cwd();
 const PACKS_DIR = path.join(ROOT, "content/packs");
@@ -32,6 +33,7 @@ const PACKS_DIR = path.join(ROOT, "content/packs");
 let CONCEPTS = [];
 let UNITS = [];
 let PACK = {};
+let SOURCES = [];
 let HEADLINE_DRILLS = [];
 let OUT_DIR = "";
 
@@ -274,6 +276,11 @@ function buildCourse(locale) {
     title: locale === "en-US" ? (u.titleEn ?? u.title) : u.title,
     blurb: locale === "en-US" ? (u.blurbEn ?? u.blurb) : u.blurb,
   }));
+  // Provenance: a concept cites the corpus articles that actually use its
+  // term — the same evidence the corpus gate checks, wired into the record.
+  // Concepts no article covers keep legacy status; an invented source would be
+  // worse than an empty field.
+  const provenance = provenanceFor(CONCEPTS);
   const concepts = CONCEPTS.map((c) => ({
     id: c.id,
     unit: c.unit,
@@ -284,12 +291,12 @@ function buildCourse(locale) {
     mixUp: c.mixUp,
     mixUpWhy: text(c, "mixUpWhy", locale),
     mixUpType: c.mixUpType,
+    sourceIds: provenance.get(c.id) ?? [],
     // The zh pack carries the Chinese term name natively so the teach card
     // and graph card show 「反弹」 instead of falling back to the English
     // term; the en pack has no use for it and omits the field.
     ...(locale === "zh-CN" && c.zh ? { termZh: c.zh } : {}),
     relations: c.relations ?? [],
-    sourceIds: [],
     risk: "evergreen",
     // Generated content has not been through review. "legacy" is reserved
     // for the hand-written pack that predates the review process.
@@ -358,8 +365,34 @@ function buildCourse(locale) {
     units,
     concepts,
     lessons,
-    sources: [],
+    sources: SOURCES.map(({ file, ...rest }) => rest),
   };
+}
+
+/**
+ * Map each concept to the corpus articles that use its term.
+ *
+ * SOURCES in the pack source declares the real articles (file + metadata);
+ * this reads those files and does the term match, so the citation and the
+ * corpus gate can never disagree about whether a source covers a term.
+ */
+function provenanceFor(concepts) {
+  const map = new Map();
+  const sources = SOURCES;
+  if (!sources.length) return map;
+  const texts = new Map();
+  for (const entry of sources) {
+    const file = path.join(ROOT, "content/corpus", entry.file);
+    if (!existsSync(file)) continue;
+    texts.set(entry.file, readFileSync(file, "utf8").toLowerCase());
+  }
+  for (const concept of concepts) {
+    const ids = sources
+      .filter((entry) => texts.has(entry.file) && corpusHasTerm(texts.get(entry.file), concept.term))
+      .map((entry) => entry.id);
+    if (ids.length) map.set(concept.id, ids);
+  }
+  return map;
 }
 
 async function generatePack(packId) {
@@ -367,6 +400,7 @@ async function generatePack(packId) {
   CONCEPTS = source.CONCEPTS;
   UNITS = source.UNITS;
   PACK = source.PACK;
+  SOURCES = source.SOURCES ?? [];
   HEADLINE_DRILLS = drills;
   OUT_DIR = path.join(ROOT, "content/packs", PACK.packId);
 

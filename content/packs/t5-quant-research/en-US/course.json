@@ -47,8 +47,8 @@
       "mixUp": "overfitting",
       "mixUpWhy": "A backtest is the experiment; overfitting is a disease the experiment can catch.",
       "mixUpType": "coexist",
-      "relations": [],
       "sourceIds": [],
+      "relations": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -62,8 +62,8 @@
       "mixUp": "out-of-sample",
       "mixUpWhy": "In-sample is the data you tuned on, so it flatters; out-of-sample is untouched and shows what generalises.",
       "mixUpType": "opposite",
-      "relations": [],
       "sourceIds": [],
+      "relations": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -77,8 +77,8 @@
       "mixUp": "in-sample",
       "mixUpWhy": "Out-of-sample is untouched and tests generalisation; in-sample was tuned and tests fit.",
       "mixUpType": "opposite",
-      "relations": [],
       "sourceIds": [],
+      "relations": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -92,8 +92,8 @@
       "mixUp": "backtest",
       "mixUpWhy": "Walk-forward is a backtest with time discipline (only past data each step); a plain backtest can peek at the future.",
       "mixUpType": "hierarchy",
-      "relations": [],
       "sourceIds": [],
+      "relations": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -107,8 +107,8 @@
       "mixUp": "universe",
       "mixUpWhy": "A benchmark is what you are compared to; a universe is what you pick from.",
       "mixUpType": "coexist",
-      "relations": [],
       "sourceIds": [],
+      "relations": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -122,8 +122,8 @@
       "mixUp": "data snooping",
       "mixUpWhy": "Overfitting is the model hugging noise (the result); data snooping is the repeated searching that gets you there (the cause).",
       "mixUpType": "coexist",
-      "relations": [],
       "sourceIds": [],
+      "relations": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -137,8 +137,8 @@
       "mixUp": "survivorship bias",
       "mixUpWhy": "Look-ahead bias cheats on time; survivorship bias cheats on the sample.",
       "mixUpType": "coexist",
-      "relations": [],
       "sourceIds": [],
+      "relations": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -152,8 +152,8 @@
       "mixUp": "look-ahead bias",
       "mixUpWhy": "Survivorship bias is the wrong sample (only survivors); look-ahead bias is the wrong time (the future).",
       "mixUpType": "coexist",
-      "relations": [],
       "sourceIds": [],
+      "relations": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -167,8 +167,8 @@
       "mixUp": "multiple testing",
       "mixUpWhy": "Data snooping is the habit of hunting; multiple testing is the statistical consequence that produces the false positives.",
       "mixUpType": "coexist",
-      "relations": [],
       "sourceIds": [],
+      "relations": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -182,8 +182,8 @@
       "mixUp": "data snooping",
       "mixUpWhy": "Multiple testing is the statistical fact; data snooping is how that fact gets exploited.",
       "mixUpType": "hierarchy",
-      "relations": [],
       "sourceIds": [],
+      "relations": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -197,8 +197,8 @@
       "mixUp": "max drawdown",
       "mixUpWhy": "Sharpe looks at average volatility (how smooth the ride was); max drawdown looks at the single worst fall. A high Sharpe can still hide a deep drawdown.",
       "mixUpType": "coexist",
-      "relations": [],
       "sourceIds": [],
+      "relations": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -212,8 +212,8 @@
       "mixUp": "value at risk",
       "mixUpWhy": "Max drawdown is the deepest fall that actually happened; VaR is an estimated threshold from a distribution.",
       "mixUpType": "coexist",
-      "relations": [],
       "sourceIds": [],
+      "relations": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -227,8 +227,8 @@
       "mixUp": "expectancy",
       "mixUpWhy": "Hit rate counts trades; expectancy weighs how much each win and loss was worth. A high hit rate with negative expectancy is common.",
       "mixUpType": "coexist",
-      "relations": [],
       "sourceIds": [],
+      "relations": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -242,8 +242,8 @@
       "mixUp": "hit rate",
       "mixUpWhy": "Expectancy is weighted by size; hit rate only counts frequency.",
       "mixUpType": "coexist",
-      "relations": [],
       "sourceIds": [],
+      "relations": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -257,8 +257,8 @@
       "mixUp": "beta",
       "mixUpWhy": "Alpha is the excess over the benchmark (skill); beta is how much of the market you carry (exposure).",
       "mixUpType": "coexist",
-      "relations": [],
       "sourceIds": [],
+      "relations": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -272,8 +272,8 @@
       "mixUp": "alpha",
       "mixUpWhy": "Beta is exposure (how much you ride the market); alpha is what is left after that exposure is accounted for.",
       "mixUpType": "coexist",
-      "relations": [],
       "sourceIds": [],
+      "relations": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -287,8 +287,8 @@
       "mixUp": "alpha",
       "mixUpWhy": "Tracking error measures deviation regardless of direction; alpha measures the directional part you keep.",
       "mixUpType": "coexist",
-      "relations": [],
       "sourceIds": [],
+      "relations": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -302,8 +302,8 @@
       "mixUp": "benchmark",
       "mixUpWhy": "The universe is where you pick from; the benchmark is what you are compared to.",
       "mixUpType": "coexist",
-      "relations": [],
       "sourceIds": [],
+      "relations": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -317,8 +317,8 @@
       "mixUp": "turnover",
       "mixUpWhy": "Rebalancing is the act of restoring weights; turnover is how much trading that act required.",
       "mixUpType": "coexist",
-      "relations": [],
       "sourceIds": [],
+      "relations": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -332,8 +332,8 @@
       "mixUp": "exposure",
       "mixUpWhy": "Position sizing is the decision of how much to put on; exposure is what you actually ended up carrying. Sizing at 10% can still expose you to more or less than 10% depending on volatility.",
       "mixUpType": "coexist",
-      "relations": [],
       "sourceIds": [],
+      "relations": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -347,8 +347,8 @@
       "mixUp": "transaction cost",
       "mixUpWhy": "Turnover is how much is traded; transaction cost is what that trading costs.",
       "mixUpType": "coexist",
-      "relations": [],
       "sourceIds": [],
+      "relations": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -362,8 +362,8 @@
       "mixUp": "exposure",
       "mixUpWhy": "Correlation is how much two assets move together; exposure is how much risk you carry in one.",
       "mixUpType": "coexist",
-      "relations": [],
       "sourceIds": [],
+      "relations": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -377,8 +377,8 @@
       "mixUp": "position sizing",
       "mixUpWhy": "Exposure is what you ended up carrying; position sizing is the decision that produced it.",
       "mixUpType": "coexist",
-      "relations": [],
       "sourceIds": [],
+      "relations": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -392,8 +392,8 @@
       "mixUp": "slippage",
       "mixUpWhy": "Transaction cost is the visible fee (commission, spread); slippage is the gap between the price you wanted and the price you got.",
       "mixUpType": "hierarchy",
-      "relations": [],
       "sourceIds": [],
+      "relations": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -407,8 +407,8 @@
       "mixUp": "transaction cost",
       "mixUpWhy": "Slippage is a price gap (implicit); transaction cost is the explicit fee.",
       "mixUpType": "hierarchy",
-      "relations": [],
       "sourceIds": [],
+      "relations": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -422,8 +422,8 @@
       "mixUp": "liquidity constraint",
       "mixUpWhy": "Capacity is how much the strategy can hold; the liquidity constraint is how much the market can trade. The second causes the first.",
       "mixUpType": "hierarchy",
-      "relations": [],
       "sourceIds": [],
+      "relations": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -437,8 +437,8 @@
       "mixUp": "capacity constraint",
       "mixUpWhy": "The liquidity constraint is a property of the market's depth; the capacity constraint is the strategy-level ceiling it produces.",
       "mixUpType": "hierarchy",
-      "relations": [],
       "sourceIds": [],
+      "relations": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -452,8 +452,8 @@
       "mixUp": "scenario analysis",
       "mixUpWhy": "A stress test is one extreme scenario (often a real past one); scenario analysis compares several hypothetical paths.",
       "mixUpType": "coexist",
-      "relations": [],
       "sourceIds": [],
+      "relations": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -467,8 +467,8 @@
       "mixUp": "stress test",
       "mixUpWhy": "Scenario analysis compares several hypothetical paths; a stress test is a single extreme shock.",
       "mixUpType": "coexist",
-      "relations": [],
       "sourceIds": [],
+      "relations": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -482,8 +482,8 @@
       "mixUp": "max drawdown",
       "mixUpWhy": "VaR is a threshold not exceeded 95% of the time; max drawdown is the deepest fall that actually happened. VaR routinely understates tail risk.",
       "mixUpType": "coexist",
-      "relations": [],
       "sourceIds": [],
+      "relations": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -497,8 +497,8 @@
       "mixUp": "robustness",
       "mixUpWhy": "Sensitivity measures 'what if this changes'; robustness is the conclusion about whether the result still stands.",
       "mixUpType": "coexist",
-      "relations": [],
       "sourceIds": [],
+      "relations": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -512,8 +512,8 @@
       "mixUp": "sensitivity",
       "mixUpWhy": "Robustness is the overall verdict (does it hold); sensitivity is the measurement that gets you there.",
       "mixUpType": "coexist",
-      "relations": [],
       "sourceIds": [],
+      "relations": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     }

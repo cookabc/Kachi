@@ -52,13 +52,16 @@
       "mixUp": "selloff",
       "mixUpWhy": "A rally is buyers pushing prices up; a selloff is sellers pushing them down.",
       "mixUpType": "opposite",
+      "sourceIds": [
+        "t1-src-results-roundup",
+        "t1-src-headlines-172"
+      ],
       "relations": [
         {
           "type": "sibling",
           "with": "rebound"
         }
       ],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -72,8 +75,12 @@
       "mixUp": "rally",
       "mixUpWhy": "A selloff drives prices down; a rally drives them up.",
       "mixUpType": "opposite",
+      "sourceIds": [
+        "t1-src-banks-2026",
+        "t1-src-forex-weekly",
+        "t1-src-headlines-172"
+      ],
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -87,13 +94,16 @@
       "mixUp": "rebound",
       "mixUpWhy": "A slump keeps going down; a rebound bounces back up.",
       "mixUpType": "opposite",
+      "sourceIds": [
+        "t1-src-results-roundup",
+        "t1-src-headlines-172"
+      ],
       "relations": [
         {
           "type": "sibling",
           "with": "rout"
         }
       ],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -107,8 +117,10 @@
       "mixUp": "slump",
       "mixUpWhy": "A rebound comes after a fall; a slump is still falling.",
       "mixUpType": "opposite",
+      "sourceIds": [
+        "t1-src-headlines-172"
+      ],
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -122,8 +134,11 @@
       "mixUp": "selloff",
       "mixUpWhy": "A rout is more violent than a selloff: it carries panic and disorder.",
       "mixUpType": "hierarchy",
+      "sourceIds": [
+        "t1-src-banks-2026",
+        "t1-src-headlines-172"
+      ],
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -137,8 +152,10 @@
       "mixUp": "selloff",
       "mixUpWhy": "Profit-taking is voluntary cashing out; a selloff is panic or forced selling.",
       "mixUpType": "opposite",
+      "sourceIds": [
+        "t1-src-headlines-172"
+      ],
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -152,13 +169,18 @@
       "mixUp": "demand",
       "mixUpWhy": "Supply is what sellers bring; demand is what buyers want. Opposite ends of one axis.",
       "mixUpType": "opposite",
+      "sourceIds": [
+        "t1-src-india-bonds",
+        "t1-src-refining",
+        "t1-src-results-roundup",
+        "t1-src-headlines-172"
+      ],
       "relations": [
         {
           "type": "sibling",
           "with": "inventory"
         }
       ],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -172,8 +194,14 @@
       "mixUp": "supply",
       "mixUpWhy": "Demand is buyers wanting in; supply is sellers offering out.",
       "mixUpType": "opposite",
+      "sourceIds": [
+        "t1-src-forex-weekly",
+        "t1-src-refining",
+        "t1-src-bhp-fy26",
+        "t1-src-results-roundup",
+        "t1-src-headlines-172"
+      ],
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -187,8 +215,11 @@
       "mixUp": "output",
       "mixUpWhy": "Capacity is the ceiling; output is what actually came out. They differ when plants sit idle.",
       "mixUpType": "coexist",
+      "sourceIds": [
+        "t1-src-banks-2026",
+        "t1-src-refining"
+      ],
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -202,8 +233,11 @@
       "mixUp": "capacity",
       "mixUpWhy": "Output is actual production; capacity is the maximum possible.",
       "mixUpType": "coexist",
+      "sourceIds": [
+        "t1-src-bhp-fy26",
+        "t1-src-headlines-172"
+      ],
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -217,8 +251,10 @@
       "mixUp": "output",
       "mixUpWhy": "Inventory is accumulated stock; output is what a period produced. Stock builds up, output does not.",
       "mixUpType": "coexist",
+      "sourceIds": [
+        "t1-src-results-roundup"
+      ],
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -232,8 +268,10 @@
       "mixUp": "deficit",
       "mixUpWhy": "A surplus is extra; a deficit is a shortfall. Two ends of one scale.",
       "mixUpType": "opposite",
+      "sourceIds": [
+        "t1-src-headlines-172"
+      ],
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -247,8 +285,8 @@
       "mixUp": "surplus",
       "mixUpWhy": "A deficit is the gap; a surplus is the leftover.",
       "mixUpType": "opposite",
-      "relations": [],
       "sourceIds": [],
+      "relations": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -262,13 +300,18 @@
       "mixUp": "revenue",
       "mixUpWhy": "Earnings are what is left after costs; revenue is the top line before costs.",
       "mixUpType": "coexist",
+      "sourceIds": [
+        "t1-src-banks-2026",
+        "t1-src-bhp-fy26",
+        "t1-src-results-roundup",
+        "t1-src-headlines-172"
+      ],
       "relations": [
         {
           "type": "sibling",
           "with": "profit"
         }
       ],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -282,8 +325,10 @@
       "mixUp": "earnings",
       "mixUpWhy": "Revenue is the gross take; earnings are what survives the costs.",
       "mixUpType": "coexist",
+      "sourceIds": [
+        "t1-src-headlines-172"
+      ],
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -297,13 +342,19 @@
       "mixUp": "margin",
       "mixUpWhy": "Profit is an amount; margin is the share of revenue that profit represents.",
       "mixUpType": "coexist",
+      "sourceIds": [
+        "t1-src-banks-2026",
+        "t1-src-refining",
+        "t1-src-bhp-fy26",
+        "t1-src-results-roundup",
+        "t1-src-headlines-172"
+      ],
       "relations": [
         {
           "type": "prereq",
           "with": "revenue"
         }
       ],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -317,13 +368,18 @@
       "mixUp": "profit",
       "mixUpWhy": "Margin is a ratio; profit is an amount. A small company can have a fat margin.",
       "mixUpType": "coexist",
+      "sourceIds": [
+        "t1-src-banks-2026",
+        "t1-src-refining",
+        "t1-src-results-roundup",
+        "t1-src-headlines-172"
+      ],
       "relations": [
         {
           "type": "prereq",
           "with": "revenue"
         }
       ],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -337,13 +393,17 @@
       "mixUp": "earnings",
       "mixUpWhy": "Earnings are what the company made; a dividend is the slice handed to shareholders.",
       "mixUpType": "hierarchy",
+      "sourceIds": [
+        "t1-src-banks-2026",
+        "t1-src-bhp-fy26",
+        "t1-src-headlines-172"
+      ],
       "relations": [
         {
           "type": "prereq",
           "with": "profit"
         }
       ],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -357,8 +417,11 @@
       "mixUp": "forecast",
       "mixUpWhy": "Guidance is the company's own official number; a forecast can come from anyone about anything.",
       "mixUpType": "hierarchy",
+      "sourceIds": [
+        "t1-src-results-roundup",
+        "t1-src-headlines-172"
+      ],
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -372,8 +435,12 @@
       "mixUp": "guidance",
       "mixUpWhy": "A forecast is the broader idea; guidance is specifically the company's own official outlook.",
       "mixUpType": "hierarchy",
+      "sourceIds": [
+        "t1-src-banks-2026",
+        "t1-src-results-roundup",
+        "t1-src-headlines-172"
+      ],
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -387,8 +454,11 @@
       "mixUp": "estimate",
       "mixUpWhy": "Consensus is everyone blended together; an estimate is one person's number.",
       "mixUpType": "hierarchy",
+      "sourceIds": [
+        "t1-src-bhp-fy26",
+        "t1-src-headlines-172"
+      ],
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -402,8 +472,12 @@
       "mixUp": "consensus",
       "mixUpWhy": "An estimate is one number; consensus is the average of many.",
       "mixUpType": "hierarchy",
+      "sourceIds": [
+        "t1-src-refining",
+        "t1-src-bhp-fy26",
+        "t1-src-headlines-172"
+      ],
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -417,8 +491,13 @@
       "mixUp": "yield",
       "mixUpWhy": "A bond is the certificate; yield is the return it pays at the price you bought it.",
       "mixUpType": "coexist",
+      "sourceIds": [
+        "t1-src-banks-2026",
+        "t1-src-forex-weekly",
+        "t1-src-india-bonds",
+        "t1-src-headlines-172"
+      ],
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -432,8 +511,12 @@
       "mixUp": "bond",
       "mixUpWhy": "Yield is a return rate; a bond is the instrument. Prices fall, yields rise.",
       "mixUpType": "coexist",
+      "sourceIds": [
+        "t1-src-banks-2026",
+        "t1-src-india-bonds",
+        "t1-src-headlines-172"
+      ],
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -447,8 +530,13 @@
       "mixUp": "interest rate",
       "mixUpWhy": "Inflation is the problem itself — prices climbing; the interest rate is the tool used against it.",
       "mixUpType": "coexist",
+      "sourceIds": [
+        "t1-src-banks-2026",
+        "t1-src-forex-weekly",
+        "t1-src-india-bonds",
+        "t1-src-headlines-172"
+      ],
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -462,8 +550,11 @@
       "mixUp": "yield",
       "mixUpWhy": "An interest rate is the price of borrowing; a yield is what you earn by holding an investment.",
       "mixUpType": "coexist",
+      "sourceIds": [
+        "t1-src-banks-2026",
+        "t1-src-headlines-172"
+      ],
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -477,13 +568,16 @@
       "mixUp": "rate cut",
       "mixUpWhy": "A hike moves rates up; a cut moves them down.",
       "mixUpType": "opposite",
+      "sourceIds": [
+        "t1-src-forex-weekly",
+        "t1-src-headlines-172"
+      ],
       "relations": [
         {
           "type": "prereq",
           "with": "interest rate"
         }
       ],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -497,13 +591,13 @@
       "mixUp": "rate hike",
       "mixUpWhy": "A cut moves rates down; a hike moves them up.",
       "mixUpType": "opposite",
+      "sourceIds": [],
       "relations": [
         {
           "type": "prereq",
           "with": "interest rate"
         }
       ],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -517,8 +611,12 @@
       "mixUp": "interest rate",
       "mixUpWhy": "The central bank is the institution; the interest rate is the dial it turns.",
       "mixUpType": "coexist",
+      "sourceIds": [
+        "t1-src-forex-weekly",
+        "t1-src-india-bonds",
+        "t1-src-headlines-172"
+      ],
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -532,8 +630,10 @@
       "mixUp": "exchange rate",
       "mixUpWhy": "Currency is the money itself; the exchange rate is the ratio between two of them.",
       "mixUpType": "coexist",
+      "sourceIds": [
+        "t1-src-headlines-172"
+      ],
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -547,8 +647,8 @@
       "mixUp": "currency",
       "mixUpWhy": "The exchange rate is the ratio; currency is the thing being exchanged.",
       "mixUpType": "coexist",
-      "relations": [],
       "sourceIds": [],
+      "relations": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -562,13 +662,15 @@
       "mixUp": "appreciate",
       "mixUpWhy": "Depreciate means cheaper; appreciate means more valuable.",
       "mixUpType": "opposite",
+      "sourceIds": [
+        "t1-src-headlines-172"
+      ],
       "relations": [
         {
           "type": "prereq",
           "with": "exchange rate"
         }
       ],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -582,13 +684,13 @@
       "mixUp": "depreciate",
       "mixUpWhy": "Appreciate means more valuable; depreciate means cheaper.",
       "mixUpType": "opposite",
+      "sourceIds": [],
       "relations": [
         {
           "type": "prereq",
           "with": "exchange rate"
         }
       ],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -602,8 +704,8 @@
       "mixUp": "valuation",
       "mixUpWhy": "Market cap is the price the market sets; valuation is the judgment of what it should be worth.",
       "mixUpType": "coexist",
-      "relations": [],
       "sourceIds": [],
+      "relations": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -617,8 +719,11 @@
       "mixUp": "market cap",
       "mixUpWhy": "Valuation is a judgement of worth; market cap is the total price the market currently assigns.",
       "mixUpType": "coexist",
+      "sourceIds": [
+        "t1-src-banks-2026",
+        "t1-src-results-roundup"
+      ],
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -632,13 +737,13 @@
       "mixUp": "market cap",
       "mixUpWhy": "P/E is a multiple tied to profit; market cap is a total tied to share count.",
       "mixUpType": "coexist",
+      "sourceIds": [],
       "relations": [
         {
           "type": "prereq",
           "with": "earnings"
         }
       ],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -652,8 +757,12 @@
       "mixUp": "blue chip",
       "mixUpWhy": "An index is a computed number; a blue chip is one of the companies inside it.",
       "mixUpType": "coexist",
+      "sourceIds": [
+        "t1-src-forex-weekly",
+        "t1-src-india-bonds",
+        "t1-src-headlines-172"
+      ],
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -667,8 +776,10 @@
       "mixUp": "index",
       "mixUpWhy": "A blue chip is a company; an index is many companies combined into a figure.",
       "mixUpType": "coexist",
+      "sourceIds": [
+        "t1-src-headlines-172"
+      ],
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -682,8 +793,10 @@
       "mixUp": "issuance",
       "mixUpWhy": "An auction is the bidding process; issuance is the act of bringing the securities out.",
       "mixUpType": "coexist",
+      "sourceIds": [
+        "t1-src-headlines-172"
+      ],
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -697,8 +810,10 @@
       "mixUp": "auction",
       "mixUpWhy": "Issuance is bringing securities out; an auction is one way to price them.",
       "mixUpType": "coexist",
+      "sourceIds": [
+        "t1-src-headlines-172"
+      ],
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -712,8 +827,11 @@
       "mixUp": "supply",
       "mixUpWhy": "A tariff adds cost to imports, which squeezes supply; supply is the quantity available itself.",
       "mixUpType": "coexist",
+      "sourceIds": [
+        "t1-src-results-roundup",
+        "t1-src-headlines-172"
+      ],
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -727,8 +845,11 @@
       "mixUp": "selloff",
       "mixUpWhy": "Volatility is how much price swings either way; a selloff is a one-way fall.",
       "mixUpType": "coexist",
+      "sourceIds": [
+        "t1-src-banks-2026",
+        "t1-src-headlines-172"
+      ],
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     }
@@ -8032,5 +8153,62 @@
       ]
     }
   ],
-  "sources": []
+  "sources": [
+    {
+      "id": "t1-src-banks-2026",
+      "title": "Asia-focused banks face capital squeeze due to inflation and bond market turbulence",
+      "publishedAt": "2026-10-26",
+      "accessedAt": "2026-10-26",
+      "kind": "news",
+      "rightsBasis": "facts-only"
+    },
+    {
+      "id": "t1-src-forex-weekly",
+      "title": "Euro slumps on French debt worries as yen set for weekly gain amid AI rout",
+      "publishedAt": "2026-10-23",
+      "accessedAt": "2026-10-26",
+      "kind": "news",
+      "rightsBasis": "facts-only"
+    },
+    {
+      "id": "t1-src-india-bonds",
+      "title": "Oil shock weighs on India bonds ahead of policy minutes; 10-year yield at highest in over three years",
+      "publishedAt": "2026-10-21",
+      "accessedAt": "2026-10-26",
+      "kind": "news",
+      "rightsBasis": "facts-only"
+    },
+    {
+      "id": "t1-src-refining",
+      "title": "Brent crude near $88 as fuel prices fall less than crude, boosting refiner margins",
+      "publishedAt": "2026-08-17",
+      "accessedAt": "2026-10-26",
+      "kind": "news",
+      "rightsBasis": "facts-only"
+    },
+    {
+      "id": "t1-src-bhp-fy26",
+      "title": "BHP FY2026 results: underlying profit $13.20bn, dividend highest in four years",
+      "publishedAt": "2026-08-18",
+      "accessedAt": "2026-10-26",
+      "kind": "news",
+      "rightsBasis": "facts-only"
+    },
+    {
+      "id": "t1-src-results-roundup",
+      "title": "Company results roundup: Santos, Whitehaven, BHP, Glencore, ADM, Chevron",
+      "publishedAt": "2026-08-18",
+      "accessedAt": "2026-10-26",
+      "kind": "news",
+      "rightsBasis": "facts-only"
+    },
+    {
+      "id": "t1-src-headlines-172",
+      "title": "Real financial headlines, 172 items (Aug–Oct 2026, commodities/forex/economics feed)",
+      "publishedAt": "2026-10-26",
+      "accessedAt": "2026-10-26",
+      "kind": "news",
+      "rightsBasis": "facts-only"
+    }
+  ]
 }

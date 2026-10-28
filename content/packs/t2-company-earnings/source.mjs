@@ -803,3 +803,9 @@ for (const concept of CONCEPTS) {
   const en = EN_TABLE[concept.id];
   if (en) concept.en = en;
 }
+
+export const SOURCES = [
+  { file: "t2-earnings/1.txt", id: "t2-src-bp-q2", title: "BP Q2 profit more than doubles to $5.73bn; write-downs tied to Archaea", publishedAt: "2026-08-04", accessedAt: "2026-10-27", kind: "news", rightsBasis: "facts-only" },
+  { file: "t2-earnings/2.txt", id: "t2-src-chevron-q2", title: "Chevron Q2 adjusted profit $12bn beats estimates; buyback and dividend held", publishedAt: "2026-07-31", accessedAt: "2026-10-27", kind: "news", rightsBasis: "facts-only" },
+  // t2-earnings/3.txt 是原创综合稿（交易/减值语境示例），不是来源。
+];

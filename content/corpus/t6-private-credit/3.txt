@@ -1,0 +1,9 @@
+What the private-credit desk actually sells. The loan against your securities is the simple leg. The structured leg is a derivative: a note whose payoff is engineered from options, swaps and forwards — an instrument that has no price of its own outside the reference it derives from.
+
+Two options matter here. A call gives its holder the right to buy; a put gives the right to sell. The note might buy you the upside of a call while selling the downside protection of a put, and the prospectus calls the combination "enhanced yield": the premium you receive is the fee you charge the issuer for accepting risk you did not know you were holding.
+
+The desk will also offer index-linked notes that short selling cannot save, because the hedge is static. If the market drops and recovers between observation dates, the note bleeds on both legs.
+
+And every one of these positions is subject to mark-to-market: the contract value is reset to the current market price each day, which determines your collateral, your margin, and whether the call notice goes out at 4pm.
+
+The buy-borrow-die pitch depends on exactly this machinery. Its lawyers call it an estate plan; its critics call it a securities-backed loan with better marketing — because every step of it runs on borrowed money secured by assets never sold, marked to market daily, wrapped in derivative pricing no client reads. The wealth is real as long as the curve stays friendly. Read the mark-to-market clause before you believe the brochure.

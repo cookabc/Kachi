@@ -712,3 +712,7 @@ for (const concept of CONCEPTS) {
   const en = EN_TABLE[concept.id];
   if (en) concept.en = en;
 }
+
+// T5 的语料是一篇原创回测示范稿，不是来源。量化概念的溯源应当指向教材
+// 与统计文献，没有可核的真实文献就不造——全部概念保持 legacy。
+export const SOURCES = [];

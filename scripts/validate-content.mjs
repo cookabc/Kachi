@@ -134,7 +134,7 @@ const corpusText = () => {
  *    written across a line break or with different spacing).
  * The term is matched word-by-word, with the final word allowed to inflect.
  */
-function corpusHasTerm(corpus, term) {
+export function corpusHasTerm(corpus, term) {
   const words = term
     .toLowerCase()
     .split(/[\s-]+/)

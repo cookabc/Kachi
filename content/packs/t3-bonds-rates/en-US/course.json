@@ -52,8 +52,10 @@
       "mixUp": "yield",
       "mixUpWhy": "A bond is the certificate; yield is the return it pays at the price you paid.",
       "mixUpType": "coexist",
+      "sourceIds": [
+        "t3-src-india-bonds"
+      ],
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -67,8 +69,10 @@
       "mixUp": "yield",
       "mixUpWhy": "The coupon is fixed on face value; yield moves with the price you paid. Buy at a discount and the yield exceeds the coupon.",
       "mixUpType": "scope",
+      "sourceIds": [
+        "t3-src-india-bonds"
+      ],
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -82,8 +86,10 @@
       "mixUp": "duration",
       "mixUpWhy": "Maturity is a date on the calendar; duration is how sensitive the price is to rates, usually shorter than maturity.",
       "mixUpType": "coexist",
+      "sourceIds": [
+        "t3-src-india-bonds"
+      ],
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -97,8 +103,10 @@
       "mixUp": "coupon",
       "mixUpWhy": "Principal is the amount returned; the coupon is the interest paid along the way.",
       "mixUpType": "coexist",
+      "sourceIds": [
+        "t3-src-india-bonds"
+      ],
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -112,8 +120,10 @@
       "mixUp": "coupon",
       "mixUpWhy": "Yield floats with price; the coupon is fixed on the certificate.",
       "mixUpType": "scope",
+      "sourceIds": [
+        "t3-src-india-bonds"
+      ],
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -127,8 +137,10 @@
       "mixUp": "yield",
       "mixUpWhy": "Price and yield move in opposite directions. See one and you should already know which way the other went.",
       "mixUpType": "opposite",
+      "sourceIds": [
+        "t3-src-india-bonds"
+      ],
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -142,8 +154,10 @@
       "mixUp": "maturity",
       "mixUpWhy": "Duration is sensitivity; maturity is a date. They are equal only for zero-coupon bonds.",
       "mixUpType": "coexist",
+      "sourceIds": [
+        "t3-src-india-bonds"
+      ],
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -157,8 +171,10 @@
       "mixUp": "bond",
       "mixUpWhy": "A benchmark is the one chosen as the reference; a bond is any issue.",
       "mixUpType": "hierarchy",
+      "sourceIds": [
+        "t3-src-india-bonds"
+      ],
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -172,8 +188,10 @@
       "mixUp": "policy rate",
       "mixUpWhy": "A basis point is a unit of measurement; the policy rate is the level being measured.",
       "mixUpType": "coexist",
+      "sourceIds": [
+        "t3-src-india-bonds"
+      ],
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -187,8 +205,10 @@
       "mixUp": "yield",
       "mixUpWhy": "The cut-off yield is the result of one auction; yield is the market level at any moment.",
       "mixUpType": "hierarchy",
+      "sourceIds": [
+        "t3-src-india-bonds"
+      ],
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -202,8 +222,10 @@
       "mixUp": "fixed-rate",
       "mixUpWhy": "Inflation-linked principal moves with prices; a fixed-rate bond pins both coupon and principal.",
       "mixUpType": "opposite",
+      "sourceIds": [
+        "t3-src-india-bonds"
+      ],
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -217,8 +239,10 @@
       "mixUp": "floating-rate",
       "mixUpWhy": "Fixed-rate is locked; floating-rate resets against a benchmark.",
       "mixUpType": "opposite",
+      "sourceIds": [
+        "t3-src-india-bonds"
+      ],
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -232,8 +256,10 @@
       "mixUp": "fixed-rate",
       "mixUpWhy": "Floating-rate moves with the benchmark; fixed-rate never changes.",
       "mixUpType": "opposite",
+      "sourceIds": [
+        "t3-src-india-bonds"
+      ],
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -247,8 +273,10 @@
       "mixUp": "issuance",
       "mixUpWhy": "An auction is the bidding process; issuance is the act of bringing the bonds out.",
       "mixUpType": "coexist",
+      "sourceIds": [
+        "t3-src-india-bonds"
+      ],
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -262,8 +290,10 @@
       "mixUp": "auction",
       "mixUpWhy": "Issuance is the volume; an auction is the event where it gets priced.",
       "mixUpType": "coexist",
+      "sourceIds": [
+        "t3-src-india-bonds"
+      ],
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -277,8 +307,10 @@
       "mixUp": "cut-off yield",
       "mixUpWhy": "Bid-to-cover measures how hot demand was; the cut-off yield is what that demand cost the issuer.",
       "mixUpType": "coexist",
+      "sourceIds": [
+        "t3-src-india-bonds"
+      ],
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -292,8 +324,10 @@
       "mixUp": "bid-to-cover",
       "mixUpWhy": "A primary dealer is a participant; bid-to-cover is the outcome of the auction.",
       "mixUpType": "coexist",
+      "sourceIds": [
+        "t3-src-india-bonds"
+      ],
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -307,8 +341,10 @@
       "mixUp": "gilt",
       "mixUpWhy": "Treasury usually means US government debt; a gilt is specifically British.",
       "mixUpType": "coexist",
+      "sourceIds": [
+        "t3-src-india-bonds"
+      ],
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -322,8 +358,8 @@
       "mixUp": "treasury",
       "mixUpWhy": "Gilts are specifically British; treasury is the general term for central-government debt.",
       "mixUpType": "hierarchy",
-      "relations": [],
       "sourceIds": [],
+      "relations": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -337,8 +373,10 @@
       "mixUp": "treasury",
       "mixUpWhy": "Sovereign is the category — backed by state credit; treasury and gilt name particular countries' versions.",
       "mixUpType": "hierarchy",
+      "sourceIds": [
+        "t3-src-india-bonds"
+      ],
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -352,8 +390,10 @@
       "mixUp": "sovereign",
       "mixUpWhy": "Corporate bonds carry company credit; sovereigns carry state credit. The company pays more.",
       "mixUpType": "opposite",
+      "sourceIds": [
+        "t3-src-india-bonds"
+      ],
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -367,8 +407,8 @@
       "mixUp": "corporate bond",
       "mixUpWhy": "Commercial paper is short (under a year) and usually unsecured; corporate bonds are long and may be secured.",
       "mixUpType": "coexist",
-      "relations": [],
       "sourceIds": [],
+      "relations": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -382,8 +422,10 @@
       "mixUp": "investment grade",
       "mixUpWhy": "Junk sits below the ratings line; investment grade sits above it.",
       "mixUpType": "opposite",
+      "sourceIds": [
+        "t3-src-india-bonds"
+      ],
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -397,8 +439,10 @@
       "mixUp": "junk bond",
       "mixUpWhy": "Investment grade is above the line; junk is below it.",
       "mixUpType": "opposite",
+      "sourceIds": [
+        "t3-src-india-bonds"
+      ],
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -412,8 +456,10 @@
       "mixUp": "yield",
       "mixUpWhy": "A yield is one point at one maturity; the yield curve is the shape of all of them.",
       "mixUpType": "hierarchy",
+      "sourceIds": [
+        "t3-src-india-bonds"
+      ],
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -427,8 +473,10 @@
       "mixUp": "term premium",
       "mixUpWhy": "A credit spread pays for credit risk; a term premium pays for time. Both lift long yields, separately.",
       "mixUpType": "coexist",
+      "sourceIds": [
+        "t3-src-india-bonds"
+      ],
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -442,8 +490,10 @@
       "mixUp": "spread tightening",
       "mixUpWhy": "Widening means more worry; tightening means less.",
       "mixUpType": "opposite",
+      "sourceIds": [
+        "t3-src-india-bonds"
+      ],
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -457,8 +507,10 @@
       "mixUp": "spread widening",
       "mixUpWhy": "Tightening means less worry; widening means more.",
       "mixUpType": "opposite",
+      "sourceIds": [
+        "t3-src-india-bonds"
+      ],
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -472,8 +524,10 @@
       "mixUp": "credit spread",
       "mixUpWhy": "The term premium pays for time; a credit spread pays for credit risk. Both lift long yields, for different reasons.",
       "mixUpType": "coexist",
+      "sourceIds": [
+        "t3-src-india-bonds"
+      ],
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -487,8 +541,10 @@
       "mixUp": "yield curve",
       "mixUpWhy": "Inversion is one specific shape of the curve; the yield curve is the curve itself.",
       "mixUpType": "hierarchy",
+      "sourceIds": [
+        "t3-src-india-bonds"
+      ],
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -502,8 +558,10 @@
       "mixUp": "credit rating",
       "mixUpWhy": "Default risk is the actual likelihood; a credit rating is an agency's score for it.",
       "mixUpType": "coexist",
+      "sourceIds": [
+        "t3-src-india-bonds"
+      ],
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -517,8 +575,10 @@
       "mixUp": "default risk",
       "mixUpWhy": "A rating is the score; default risk is the thing being scored.",
       "mixUpType": "coexist",
+      "sourceIds": [
+        "t3-src-india-bonds"
+      ],
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -532,8 +592,10 @@
       "mixUp": "upgrade",
       "mixUpWhy": "A downgrade moves down; an upgrade moves up.",
       "mixUpType": "opposite",
+      "sourceIds": [
+        "t3-src-india-bonds"
+      ],
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -547,8 +609,8 @@
       "mixUp": "downgrade",
       "mixUpWhy": "An upgrade moves up; a downgrade moves down.",
       "mixUpType": "opposite",
-      "relations": [],
       "sourceIds": [],
+      "relations": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -562,8 +624,10 @@
       "mixUp": "refinancing",
       "mixUpWhy": "A covenant restricts what the borrower does; refinancing replaces old debt with new. Covenants often get renegotiated during refinancing.",
       "mixUpType": "coexist",
+      "sourceIds": [
+        "t3-src-india-bonds"
+      ],
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -577,8 +641,10 @@
       "mixUp": "issuance",
       "mixUpWhy": "Refinancing is the purpose (replace old debt); issuance is the act. Refinancing always involves issuance, but not the reverse.",
       "mixUpType": "coexist",
+      "sourceIds": [
+        "t3-src-india-bonds"
+      ],
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -592,8 +658,10 @@
       "mixUp": "basis point",
       "mixUpWhy": "The policy rate is the level; a basis point is the unit used to measure moves in it.",
       "mixUpType": "coexist",
+      "sourceIds": [
+        "t3-src-india-bonds"
+      ],
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -607,8 +675,10 @@
       "mixUp": "policy rate",
       "mixUpWhy": "A benchmark rate is the market's pricing reference (like SOFR); the policy rate is what the central bank targets. The first follows the second but is not the same thing.",
       "mixUpType": "coexist",
+      "sourceIds": [
+        "t3-src-india-bonds"
+      ],
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     }
@@ -6808,5 +6878,14 @@
       ]
     }
   ],
-  "sources": []
+  "sources": [
+    {
+      "id": "t3-src-india-bonds",
+      "title": "India bonds: benchmark yield near three-year high as oil stokes inflation worries",
+      "publishedAt": "2026-10-21",
+      "accessedAt": "2026-10-27",
+      "kind": "news",
+      "rightsBasis": "facts-only"
+    }
+  ]
 }

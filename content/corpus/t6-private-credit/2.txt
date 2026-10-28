@@ -1,0 +1,9 @@
+A structured note tied to commodities reads differently from an equity note, and the difference starts with the curve. The reference index tracks the spot price — the price for immediate delivery — but the note itself earns the return of a futures position, and futures trade at prices that already embed the cost of carry: storage, insurance, and the financing of the position until delivery.
+
+When the curve slopes upward — near-month contracts cheaper than distant ones — the market is in contango. A position that rolls future by future must sell the expiring cheap contract and buy the more expensive next one, paying that gap every roll. Over a year of steep contango the roll can consume several percent, which is why the note's prospectus shows the spot price rising while the index it tracks barely moves. The reverse shape, backwardation — near contracts dearer than distant ones — pays the roller instead, and commodity notes outperform the spot market in exactly those periods.
+
+The gap between the spot and the futures price is the basis. A hedger who owns the physical commodity and sells futures is not immune to price moves; he is exposed to basis risk — the basis itself can widen or narrow against him before he closes the position. Basis risk is why a producer hedged with futures can still lose money on a fully hedged book.
+
+The note's marketing materials quote the real rate — the nominal yield minus inflation — when they compare commodity exposure with holding cash, because commodities are pitched as an inflation hedge. Whether they hedge realized inflation depends on the period: oil outpaced inflation in the 2021-2022 run and lagged it badly in the 2014-2015 collapse.
+
+None of this appears in the one-page term sheet. It appears in the prospectus, in the section on roll mechanics, and it is the section to read before signing.

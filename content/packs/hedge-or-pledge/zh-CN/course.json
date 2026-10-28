@@ -80,7 +80,9 @@
           "with": "collateral"
         }
       ],
-      "sourceIds": [],
+      "sourceIds": [
+        "finra-sec-sbloc-2015"
+      ],
       "risk": "evergreen",
       "reviewStatus": "legacy"
     },
@@ -93,7 +95,9 @@
       "example": "被押出去的股票就是 collateral。还不上贷款，银行就把股票收走。",
       "mixUp": "haircut",
       "mixUpWhy": "collateral 是资产本身；haircut 是放款前对它打的折扣。",
-      "sourceIds": [],
+      "sourceIds": [
+        "finra-sec-sbloc-2015"
+      ],
       "risk": "evergreen",
       "reviewStatus": "legacy"
     },
@@ -106,7 +110,9 @@
       "example": "$1M 的股票，30% 的 haircut → 按 $700k 计价。这就是贷款上限。",
       "mixUp": "margin",
       "mixUpWhy": "haircut 是对抵押品的折扣；margin 是你必须留着的现金缓冲。",
-      "sourceIds": [],
+      "sourceIds": [
+        "finra-sec-sbloc-2015"
+      ],
       "risk": "evergreen",
       "reviewStatus": "legacy"
     },
@@ -125,7 +131,9 @@
           "with": "margin call"
         }
       ],
-      "sourceIds": [],
+      "sourceIds": [
+        "finra-sec-sbloc-2015"
+      ],
       "risk": "evergreen",
       "reviewStatus": "legacy"
     },
@@ -148,7 +156,9 @@
           "with": "mark-to-market"
         }
       ],
-      "sourceIds": [],
+      "sourceIds": [
+        "finra-sec-sbloc-2015"
+      ],
       "risk": "evergreen",
       "reviewStatus": "legacy"
     },
@@ -161,7 +171,9 @@
       "example": "$10k 自己的加 $40k 借的 = 5× 杠杆。跌 10% 就抹掉你一半现金。",
       "mixUp": "margin",
       "mixUpWhy": "leverage 是倍数；margin 是让这个倍数成为可能的缓冲。",
-      "sourceIds": [],
+      "sourceIds": [
+        "finra-sec-sbloc-2015"
+      ],
       "risk": "evergreen",
       "reviewStatus": "legacy"
     },
@@ -259,7 +271,9 @@
       "example": "苹果股票是流动的——砸 $1M 出去价格几乎不动。你表弟的创业公司股票就不是了。",
       "mixUp": "notional",
       "mixUpWhy": "liquidity 是退出难易；notional 是合约面值规模。",
-      "sourceIds": [],
+      "sourceIds": [
+        "finra-sec-sbloc-2015"
+      ],
       "risk": "evergreen",
       "reviewStatus": "legacy"
     },
@@ -452,7 +466,8 @@
       "mixUp": "buy-borrow-die",
       "mixUpWhy": "capital gains 在卖出时触发。buy-borrow-die 描述的正是『永不卖出』来避开它的模式。",
       "sourceIds": [
-        "irs-topic-409"
+        "irs-topic-409",
+        "finra-sec-sbloc-2015"
       ],
       "risk": "jurisdictional",
       "jurisdiction": "US",
@@ -471,7 +486,8 @@
       "mixUpWhy": "securities-backed loan 是借钱工具；buy-borrow-die 是使用这套工具的整个人生周期模式。",
       "sourceIds": [
         "irs-pub-551",
-        "mccaffery-fair-not-flat-2002"
+        "mccaffery-fair-not-flat-2002",
+        "finra-sec-sbloc-2015"
       ],
       "risk": "jurisdictional",
       "jurisdiction": "US",
@@ -526,7 +542,7 @@
       ],
       "sourceIds": [],
       "risk": "evergreen",
-      "reviewStatus": "reviewed"
+      "reviewStatus": "legacy"
     },
     {
       "id": "inflation",
@@ -539,7 +555,7 @@
       "mixUpWhy": "inflation 是问题本身——物价在涨；interest rate 是央行踩下的刹车。",
       "sourceIds": [],
       "risk": "evergreen",
-      "reviewStatus": "reviewed"
+      "reviewStatus": "legacy"
     },
     {
       "id": "real rate",
@@ -562,7 +578,7 @@
       ],
       "sourceIds": [],
       "risk": "evergreen",
-      "reviewStatus": "reviewed"
+      "reviewStatus": "legacy"
     },
     {
       "id": "bond",
@@ -585,7 +601,7 @@
       ],
       "sourceIds": [],
       "risk": "evergreen",
-      "reviewStatus": "reviewed"
+      "reviewStatus": "legacy"
     },
     {
       "id": "yield curve",
@@ -608,7 +624,7 @@
       ],
       "sourceIds": [],
       "risk": "evergreen",
-      "reviewStatus": "reviewed"
+      "reviewStatus": "legacy"
     },
     {
       "id": "quantitative easing",
@@ -631,7 +647,7 @@
       ],
       "sourceIds": [],
       "risk": "evergreen",
-      "reviewStatus": "reviewed"
+      "reviewStatus": "legacy"
     },
     {
       "id": "spot",
@@ -644,7 +660,7 @@
       "mixUpWhy": "spot 是当下交货的价格；futures 把价格锁在未来某一天——两者的缺口就是曲线所在。",
       "sourceIds": [],
       "risk": "evergreen",
-      "reviewStatus": "reviewed"
+      "reviewStatus": "legacy"
     },
     {
       "id": "basis",
@@ -667,7 +683,7 @@
       ],
       "sourceIds": [],
       "risk": "evergreen",
-      "reviewStatus": "reviewed"
+      "reviewStatus": "legacy"
     },
     {
       "id": "contango",
@@ -690,7 +706,7 @@
       ],
       "sourceIds": [],
       "risk": "evergreen",
-      "reviewStatus": "reviewed"
+      "reviewStatus": "legacy"
     },
     {
       "id": "backwardation",
@@ -709,7 +725,7 @@
       ],
       "sourceIds": [],
       "risk": "evergreen",
-      "reviewStatus": "reviewed"
+      "reviewStatus": "legacy"
     },
     {
       "id": "cost of carry",
@@ -728,7 +744,7 @@
       ],
       "sourceIds": [],
       "risk": "evergreen",
-      "reviewStatus": "reviewed"
+      "reviewStatus": "legacy"
     }
   ],
   "lessons": [

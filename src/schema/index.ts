@@ -199,6 +199,16 @@ export function validateCourse(
       if (!sourceIds.has(id)) issues.push({ path: concept.id, message: `Unknown source: ${id}` });
     });
     issues.push(...conceptProvenanceIssues(concept));
+    // Review is the act of standing behind a term, and standing behind it
+    // means naming where it comes from. A reviewed concept with no sourceIds
+    // would make the word "reviewed" mean nothing, so it fails here rather
+    // than at the settings screen's promise.
+    if (concept.reviewStatus === "reviewed" && concept.sourceIds.length === 0) {
+      issues.push({
+        path: concept.id,
+        message: "reviewed concepts must cite at least one source (sourceIds is empty)",
+      });
+    }
     issues.push(...validateRelations(concept, conceptIds));
   });
   allExercises.forEach((exercise) => {

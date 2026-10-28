@@ -52,9 +52,12 @@
       "mixUp": "revenue",
       "mixUpWhy": "earnings 是扣完成本剩下的；revenue 是还没扣成本的销售总额。",
       "mixUpType": "coexist",
+      "sourceIds": [
+        "t2-src-bp-q2",
+        "t2-src-chevron-q2"
+      ],
       "termZh": "盈利、净利润",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -68,9 +71,9 @@
       "mixUp": "earnings",
       "mixUpWhy": "revenue 是收入总额；earnings 是扣完成本后的利润。",
       "mixUpType": "coexist",
+      "sourceIds": [],
       "termZh": "营收",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -84,9 +87,12 @@
       "mixUp": "margin",
       "mixUpWhy": "profit 是绝对金额；margin 是利润占收入的比例。营收翻倍但利润率跌一半，利润也可能没涨。",
       "mixUpType": "scope",
+      "sourceIds": [
+        "t2-src-bp-q2",
+        "t2-src-chevron-q2"
+      ],
       "termZh": "利润",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -100,9 +106,9 @@
       "mixUp": "net",
       "mixUpWhy": "gross 只扣直接成本；net 把管理费、利息、税全部扣完。",
       "mixUpType": "hierarchy",
+      "sourceIds": [],
       "termZh": "毛（利润/利润率）",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -116,9 +122,11 @@
       "mixUp": "gross",
       "mixUpWhy": "net 是最后剩下的；gross 只扣了第一层。",
       "mixUpType": "hierarchy",
+      "sourceIds": [
+        "t2-src-bp-q2"
+      ],
       "termZh": "净（利润/额）",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -132,9 +140,9 @@
       "mixUp": "earnings",
       "mixUpWhy": "EPS 是除以股数后的每股值；earnings 是公司总利润。利润相同但股本不同，EPS 可以差很远。",
       "mixUpType": "scope",
+      "sourceIds": [],
       "termZh": "每股收益",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -148,9 +156,12 @@
       "mixUp": "profit",
       "mixUpWhy": "margin 是比率；profit 是金额。营收翻倍而利润率减半时，利润可能原地不动。",
       "mixUpType": "scope",
+      "sourceIds": [
+        "t2-src-bp-q2",
+        "t2-src-chevron-q2"
+      ],
       "termZh": "利润率",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -164,9 +175,9 @@
       "mixUp": "tailwinds",
       "mixUpWhy": "headwinds 是阻力；tailwinds 是助力。同一份财报里两者常常同时出现。",
       "mixUpType": "opposite",
+      "sourceIds": [],
       "termZh": "逆风（不利因素）",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -180,9 +191,9 @@
       "mixUp": "headwinds",
       "mixUpWhy": "tailwinds 是助力；headwinds 是阻力。",
       "mixUpType": "opposite",
+      "sourceIds": [],
       "termZh": "顺风（有利因素）",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -196,9 +207,11 @@
       "mixUp": "free cash flow",
       "mixUpWhy": "working capital 是被占用在运营里的钱；free cash flow 是扣完资本开支后真正空出来的钱。",
       "mixUpType": "coexist",
+      "sourceIds": [
+        "t2-src-chevron-q2"
+      ],
       "termZh": "营运资本",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -212,9 +225,11 @@
       "mixUp": "working capital",
       "mixUpWhy": "free cash flow 是能自由支配的现金；working capital 是被运营占住的资金。",
       "mixUpType": "coexist",
+      "sourceIds": [
+        "t2-src-chevron-q2"
+      ],
       "termZh": "自由现金流",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -228,9 +243,9 @@
       "mixUp": "capex",
       "mixUpWhy": "opex 花掉就没了，计入当期费用；capex 变成资产，分摊到未来几年。",
       "mixUpType": "opposite",
+      "sourceIds": [],
       "termZh": "运营费用",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -244,9 +259,9 @@
       "mixUp": "opex",
       "mixUpWhy": "capex 形成资产、逐年折旧；opex 当期就计入费用。",
       "mixUpType": "opposite",
+      "sourceIds": [],
       "termZh": "资本开支",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -260,9 +275,9 @@
       "mixUp": "net debt",
       "mixUpWhy": "leverage 是比率（债务相对盈利或权益）；net debt 是绝对金额。",
       "mixUpType": "scope",
+      "sourceIds": [],
       "termZh": "杠杆（负债程度）",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -276,9 +291,11 @@
       "mixUp": "estimate",
       "mixUpWhy": "consensus 是所有人合起来的平均数；estimate 是单个分析师给出的一个数。",
       "mixUpType": "hierarchy",
+      "sourceIds": [
+        "t2-src-bp-q2"
+      ],
       "termZh": "市场一致预期",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -292,9 +309,9 @@
       "mixUp": "consensus",
       "mixUpWhy": "estimate 可以是一个人的；consensus 是许多人的平均。",
       "mixUpType": "hierarchy",
+      "sourceIds": [],
       "termZh": "预估、估计值",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -308,9 +325,12 @@
       "mixUp": "miss",
       "mixUpWhy": "beat 是超过预期；miss 是没达到预期。财报日的股价多半由这两个词决定。",
       "mixUpType": "opposite",
+      "sourceIds": [
+        "t2-src-bp-q2",
+        "t2-src-chevron-q2"
+      ],
       "termZh": "超预期",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -324,9 +344,9 @@
       "mixUp": "beat",
       "mixUpWhy": "miss 是没够着；beat 是超过了。",
       "mixUpType": "opposite",
+      "sourceIds": [],
       "termZh": "不及预期",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -340,9 +360,12 @@
       "mixUp": "forecast",
       "mixUpWhy": "guidance 特指公司自己给的官方口径；forecast 可以是任何人对任何事的预测。",
       "mixUpType": "hierarchy",
+      "sourceIds": [
+        "t2-src-bp-q2",
+        "t2-src-chevron-q2"
+      ],
       "termZh": "业绩指引",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -356,9 +379,12 @@
       "mixUp": "guidance",
       "mixUpWhy": "forecast 范围更广；guidance 是公司官方给的经营预期。",
       "mixUpType": "hierarchy",
+      "sourceIds": [
+        "t2-src-bp-q2",
+        "t2-src-chevron-q2"
+      ],
       "termZh": "预测",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -372,9 +398,9 @@
       "mixUp": "guidance",
       "mixUpWhy": "outlook 是定性判断（环境会怎样）；guidance 是定量承诺（数字会是多少）。",
       "mixUpType": "coexist",
+      "sourceIds": [],
       "termZh": "展望",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -388,9 +414,11 @@
       "mixUp": "equity",
       "mixUpWhy": "debt 要还本付息；equity 是股东的钱，不用还但让出了所有权。",
       "mixUpType": "opposite",
+      "sourceIds": [
+        "t2-src-bp-q2"
+      ],
       "termZh": "债务",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -404,9 +432,9 @@
       "mixUp": "debt",
       "mixUpWhy": "equity 是股东的所有权剩余；debt 是债权人的优先索取权。",
       "mixUpType": "opposite",
+      "sourceIds": [],
       "termZh": "权益、股东权益",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -420,9 +448,11 @@
       "mixUp": "leverage",
       "mixUpWhy": "net debt 是金额；leverage 是把这个金额除以盈利或权益后的比率。",
       "mixUpType": "scope",
+      "sourceIds": [
+        "t2-src-bp-q2"
+      ],
       "termZh": "净负债",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -436,9 +466,11 @@
       "mixUp": "opex",
       "mixUpWhy": "capital expenditure 形成资产；opex 是当期消耗掉的费用。",
       "mixUpType": "opposite",
+      "sourceIds": [
+        "t2-src-bp-q2"
+      ],
       "termZh": "资本支出",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -452,9 +484,9 @@
       "mixUp": "write-down",
       "mixUpWhy": "margin call 是要求补钱的通知；write-down 是公司主动把资产账面价值下调。",
       "mixUpType": "coexist",
+      "sourceIds": [],
       "termZh": "追加保证金通知",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -468,9 +500,12 @@
       "mixUp": "buyback",
       "mixUpWhy": "dividend 把现金发给股东；buyback 用现金买回股票，剩下的股东持股比例上升。",
       "mixUpType": "coexist",
+      "sourceIds": [
+        "t2-src-bp-q2",
+        "t2-src-chevron-q2"
+      ],
       "termZh": "股息",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -484,9 +519,11 @@
       "mixUp": "dividend",
       "mixUpWhy": "buyback 减少股本、抬高每股价值；dividend 直接发现金。",
       "mixUpType": "coexist",
+      "sourceIds": [
+        "t2-src-chevron-q2"
+      ],
       "termZh": "回购",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -500,9 +537,9 @@
       "mixUp": "dividend",
       "mixUpWhy": "payout 可以是比例（payout ratio）或总额；dividend 是每股具体分多少。",
       "mixUpType": "scope",
+      "sourceIds": [],
       "termZh": "派息、派息率",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -516,9 +553,9 @@
       "mixUp": "payout",
       "mixUpWhy": "yield 是相对股价的回报率；payout 是相对利润的分红比例。股价跌，yield 反而升。",
       "mixUpType": "scope",
+      "sourceIds": [],
       "termZh": "收益率（股息率）",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -532,9 +569,12 @@
       "mixUp": "stakeholder",
       "mixUpWhy": "shareholder 是持股者；stakeholder 包括员工、客户、债权人等所有利益相关方。",
       "mixUpType": "hierarchy",
+      "sourceIds": [
+        "t2-src-bp-q2",
+        "t2-src-chevron-q2"
+      ],
       "termZh": "股东",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -548,9 +588,9 @@
       "mixUp": "buyback",
       "mixUpWhy": "share issuance 增加股本、稀释每股；buyback 减少股本、抬高每股。方向相反。",
       "mixUpType": "opposite",
+      "sourceIds": [],
       "termZh": "发行新股",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -564,9 +604,11 @@
       "mixUp": "merger",
       "mixUpWhy": "acquisition 是一方买下另一方（有主有次）；merger 是两家并成一家（相对平等）。",
       "mixUpType": "coexist",
+      "sourceIds": [
+        "t2-src-chevron-q2"
+      ],
       "termZh": "收购",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -580,9 +622,9 @@
       "mixUp": "acquisition",
       "mixUpWhy": "merger 强调对等合并；acquisition 强调一方取得控制权。",
       "mixUpType": "coexist",
+      "sourceIds": [],
       "termZh": "合并",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -596,9 +638,9 @@
       "mixUp": "spin-off",
       "mixUpWhy": "divestiture 通常是卖掉换现金；spin-off 是把业务分拆成独立上市公司给股东。",
       "mixUpType": "coexist",
+      "sourceIds": [],
       "termZh": "资产出售、剥离",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -612,9 +654,9 @@
       "mixUp": "divestiture",
       "mixUpWhy": "spin-off 分出的是股票、不给现金；divestiture 通常卖掉换现金。",
       "mixUpType": "coexist",
+      "sourceIds": [],
       "termZh": "分拆",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -628,9 +670,9 @@
       "mixUp": "impairment",
       "mixUpWhy": "write-down 是动作（下调账面值）；impairment 是原因（资产确实减值了）。财报里常写成 impairment charge。",
       "mixUpType": "hierarchy",
+      "sourceIds": [],
       "termZh": "减值、账面下调",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -644,9 +686,9 @@
       "mixUp": "write-down",
       "mixUpWhy": "impairment 是价值确实下降这个事实；write-down 是把它记到账上的动作。",
       "mixUpType": "hierarchy",
+      "sourceIds": [],
       "termZh": "资产减值",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -660,9 +702,9 @@
       "mixUp": "divestiture",
       "mixUpWhy": "restructuring 是内部改造；divestiture 是把资产卖出去。可以同时进行但不是一回事。",
       "mixUpType": "coexist",
+      "sourceIds": [],
       "termZh": "重组",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -676,9 +718,9 @@
       "mixUp": "listing",
       "mixUpWhy": "IPO 是第一次公开发行股票；listing 是挂牌上市这个状态，可以不是第一次。",
       "mixUpType": "timing",
+      "sourceIds": [],
       "termZh": "首次公开发行",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -692,9 +734,9 @@
       "mixUp": "ipo",
       "mixUpWhy": "listing 是挂牌状态；IPO 是首次发行那一次动作。二次上市是 listing 但不是 IPO。",
       "mixUpType": "timing",
+      "sourceIds": [],
       "termZh": "上市（挂牌）",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -708,9 +750,9 @@
       "mixUp": "book value",
       "mixUpWhy": "market cap 是市场愿意付的价；book value 是账面上净资产是多少。",
       "mixUpType": "coexist",
+      "sourceIds": [],
       "termZh": "市值",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -724,9 +766,9 @@
       "mixUp": "market cap",
       "mixUpWhy": "valuation 是对值多少的判断；market cap 是市场当下给出的价格总和。",
       "mixUpType": "coexist",
+      "sourceIds": [],
       "termZh": "估值",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -740,9 +782,9 @@
       "mixUp": "p/b",
       "mixUpWhy": "P/E 比的是利润；P/B 比的是账面净资产。亏损公司没有有意义的 P/E，但有 P/B。",
       "mixUpType": "coexist",
+      "sourceIds": [],
       "termZh": "市盈率",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -756,9 +798,9 @@
       "mixUp": "p/e",
       "mixUpWhy": "P/B 比的是账面净资产；P/E 比的是利润。银行、矿业常用 P/B，成长股常用 P/E。",
       "mixUpType": "coexist",
+      "sourceIds": [],
       "termZh": "市净率",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -772,9 +814,9 @@
       "mixUp": "market cap",
       "mixUpWhy": "book value 是会计上的净资产；market cap 是市场上的总价。两者差距大说明市场看法与账面不同。",
       "mixUpType": "coexist",
+      "sourceIds": [],
       "termZh": "账面价值",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -788,9 +830,9 @@
       "mixUp": "shareholder",
       "mixUpWhy": "stakeholder 是所有相关方；shareholder 只是持股者。",
       "mixUpType": "hierarchy",
+      "sourceIds": [],
       "termZh": "利益相关方",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -804,9 +846,9 @@
       "mixUp": "payout",
       "mixUpWhy": "payout ratio 是比例；payout 也可以指派出去的总额。写全 ratio 时才明确是百分比。",
       "mixUpType": "hierarchy",
+      "sourceIds": [],
       "termZh": "派息率",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -820,9 +862,9 @@
       "mixUp": "impairment",
       "mixUpWhy": "discount 是市场给的低价（可以是机会）；impairment 是资产真的不值账面值（会计损失）。",
       "mixUpType": "coexist",
+      "sourceIds": [],
       "termZh": "折价、折扣",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     }
@@ -8622,5 +8664,22 @@
       ]
     }
   ],
-  "sources": []
+  "sources": [
+    {
+      "id": "t2-src-bp-q2",
+      "title": "BP Q2 profit more than doubles to $5.73bn; write-downs tied to Archaea",
+      "publishedAt": "2026-08-04",
+      "accessedAt": "2026-10-27",
+      "kind": "news",
+      "rightsBasis": "facts-only"
+    },
+    {
+      "id": "t2-src-chevron-q2",
+      "title": "Chevron Q2 adjusted profit $12bn beats estimates; buyback and dividend held",
+      "publishedAt": "2026-07-31",
+      "accessedAt": "2026-10-27",
+      "kind": "news",
+      "rightsBasis": "facts-only"
+    }
+  ]
 }

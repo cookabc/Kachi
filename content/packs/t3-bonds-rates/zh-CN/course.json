@@ -52,9 +52,11 @@
       "mixUp": "yield",
       "mixUpWhy": "bond 是那张凭证；yield 是这张凭证按你买入价格算出的回报率。",
       "mixUpType": "coexist",
+      "sourceIds": [
+        "t3-src-india-bonds"
+      ],
       "termZh": "债券",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -68,9 +70,11 @@
       "mixUp": "yield",
       "mixUpWhy": "coupon 按面值算、写死在票上；yield 按你实际买入的价格算。折价买入时 yield 高于 coupon。",
       "mixUpType": "scope",
+      "sourceIds": [
+        "t3-src-india-bonds"
+      ],
       "termZh": "票息",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -84,9 +88,11 @@
       "mixUp": "duration",
       "mixUpWhy": "maturity 是日历上的那一天；duration 是价格对利率变化的敏感度，通常短于 maturity。",
       "mixUpType": "coexist",
+      "sourceIds": [
+        "t3-src-india-bonds"
+      ],
       "termZh": "到期日",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -100,9 +106,11 @@
       "mixUp": "coupon",
       "mixUpWhy": "principal 是还回来的本金；coupon 是期间付的利息。",
       "mixUpType": "coexist",
+      "sourceIds": [
+        "t3-src-india-bonds"
+      ],
       "termZh": "本金",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -116,9 +124,11 @@
       "mixUp": "coupon",
       "mixUpWhy": "yield 随价格浮动；coupon 写死在票面上。",
       "mixUpType": "scope",
+      "sourceIds": [
+        "t3-src-india-bonds"
+      ],
       "termZh": "收益率",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -132,9 +142,11 @@
       "mixUp": "yield",
       "mixUpWhy": "价格和收益率反向：价格跌，收益率升。看到其中一个就该想到另一个的方向。",
       "mixUpType": "opposite",
+      "sourceIds": [
+        "t3-src-india-bonds"
+      ],
       "termZh": "价格（债券报价）",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -148,9 +160,11 @@
       "mixUp": "maturity",
       "mixUpWhy": "duration 是敏感度（可短于 maturity）；maturity 是到期时间。零息债两者相等，付息债 duration 更短。",
       "mixUpType": "coexist",
+      "sourceIds": [
+        "t3-src-india-bonds"
+      ],
       "termZh": "久期",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -164,9 +178,11 @@
       "mixUp": "bond",
       "mixUpWhy": "benchmark 是被选作参照的那一只；bond 是任何一只债券。",
       "mixUpType": "hierarchy",
+      "sourceIds": [
+        "t3-src-india-bonds"
+      ],
       "termZh": "基准（券）",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -180,9 +196,11 @@
       "mixUp": "policy rate",
       "mixUpWhy": "basis point 是计量单位（0.01%）；policy rate 是央行设定的那个具体利率。",
       "mixUpType": "coexist",
+      "sourceIds": [
+        "t3-src-india-bonds"
+      ],
       "termZh": "基点",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -196,9 +214,11 @@
       "mixUp": "yield",
       "mixUpWhy": "cut-off yield 是拍卖这一场的结果；yield 是任何时点的市场收益率。",
       "mixUpType": "hierarchy",
+      "sourceIds": [
+        "t3-src-india-bonds"
+      ],
       "termZh": "中标收益率",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -212,9 +232,11 @@
       "mixUp": "fixed-rate",
       "mixUpWhy": "inflation-linked 的本金随物价变；fixed-rate 的票息和本金都写死。",
       "mixUpType": "opposite",
+      "sourceIds": [
+        "t3-src-india-bonds"
+      ],
       "termZh": "通胀挂钩",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -228,9 +250,11 @@
       "mixUp": "floating-rate",
       "mixUpWhy": "fixed-rate 锁死不变；floating-rate 跟着基准利率浮动。",
       "mixUpType": "opposite",
+      "sourceIds": [
+        "t3-src-india-bonds"
+      ],
       "termZh": "固定利率",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -244,9 +268,11 @@
       "mixUp": "fixed-rate",
       "mixUpWhy": "floating-rate 随基准变动；fixed-rate 从头到尾不变。",
       "mixUpType": "opposite",
+      "sourceIds": [
+        "t3-src-india-bonds"
+      ],
       "termZh": "浮动利率",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -260,9 +286,11 @@
       "mixUp": "issuance",
       "mixUpWhy": "auction 是发行时用的竞价方式；issuance 是发行这件事本身。",
       "mixUpType": "coexist",
+      "sourceIds": [
+        "t3-src-india-bonds"
+      ],
       "termZh": "拍卖（发行）",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -276,9 +304,11 @@
       "mixUp": "auction",
       "mixUpWhy": "issuance 是发行的量或行为；auction 是发行时的一个具体环节。",
       "mixUpType": "coexist",
+      "sourceIds": [
+        "t3-src-india-bonds"
+      ],
       "termZh": "发行（量）",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -292,9 +322,11 @@
       "mixUp": "cut-off yield",
       "mixUpWhy": "bid-to-cover 衡量需求有多热；cut-off yield 是这个需求水平换来的发行成本。",
       "mixUpType": "coexist",
+      "sourceIds": [
+        "t3-src-india-bonds"
+      ],
       "termZh": "投标倍数",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -308,9 +340,11 @@
       "mixUp": "bid-to-cover",
       "mixUpWhy": "primary dealer 是参与的人；bid-to-cover 是这场拍卖的结果指标。",
       "mixUpType": "coexist",
+      "sourceIds": [
+        "t3-src-india-bonds"
+      ],
       "termZh": "一级交易商",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -324,9 +358,11 @@
       "mixUp": "gilt",
       "mixUpWhy": "treasury 通指中央政府债（美债语境）；gilt 特指英国国债。",
       "mixUpType": "coexist",
+      "sourceIds": [
+        "t3-src-india-bonds"
+      ],
       "termZh": "国债（美债）",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -340,9 +376,9 @@
       "mixUp": "treasury",
       "mixUpWhy": "gilt 专指英国的；treasury 是各国中央政府债的通称，美债最常见。",
       "mixUpType": "hierarchy",
+      "sourceIds": [],
       "termZh": "金边债（英国国债）",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -356,9 +392,11 @@
       "mixUp": "treasury",
       "mixUpWhy": "sovereign 是「国家信用」这个类别；treasury 通常指美国的、gilt 指英国的。",
       "mixUpType": "hierarchy",
+      "sourceIds": [
+        "t3-src-india-bonds"
+      ],
       "termZh": "主权债",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -372,9 +410,11 @@
       "mixUp": "sovereign",
       "mixUpWhy": "corporate bond 背后是企业信用；sovereign 背后是国家信用。前者利率更高。",
       "mixUpType": "opposite",
+      "sourceIds": [
+        "t3-src-india-bonds"
+      ],
       "termZh": "公司债",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -388,9 +428,9 @@
       "mixUp": "corporate bond",
       "mixUpWhy": "commercial paper 是短期（一年内）、常无担保；corporate bond 是长期、可有担保。",
       "mixUpType": "coexist",
+      "sourceIds": [],
       "termZh": "商业票据",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -404,9 +444,11 @@
       "mixUp": "investment grade",
       "mixUpWhy": "junk bond 评级低、利率高；investment grade 评级高、利率低。两者是评级分界线的两侧。",
       "mixUpType": "opposite",
+      "sourceIds": [
+        "t3-src-india-bonds"
+      ],
       "termZh": "垃圾债",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -420,9 +462,11 @@
       "mixUp": "junk bond",
       "mixUpWhy": "investment grade 是门槛以上；junk bond 是门槛以下。",
       "mixUpType": "opposite",
+      "sourceIds": [
+        "t3-src-india-bonds"
+      ],
       "termZh": "投资级",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -436,9 +480,11 @@
       "mixUp": "yield",
       "mixUpWhy": "yield 是一个点（某个期限的收益率）；yield curve 是把所有期限连起来的形状。",
       "mixUpType": "hierarchy",
+      "sourceIds": [
+        "t3-src-india-bonds"
+      ],
       "termZh": "收益率曲线",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -452,9 +498,11 @@
       "mixUp": "term premium",
       "mixUpWhy": "credit spread 是信用风险的价格；term premium 是拉长期限要的补偿。两者都会推高长期利率但不是一回事。",
       "mixUpType": "coexist",
+      "sourceIds": [
+        "t3-src-india-bonds"
+      ],
       "termZh": "信用利差",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -468,9 +516,11 @@
       "mixUp": "spread tightening",
       "mixUpWhy": "widening 是市场更担心、要求更多补偿；tightening 是担忧减轻。方向相反。",
       "mixUpType": "opposite",
+      "sourceIds": [
+        "t3-src-india-bonds"
+      ],
       "termZh": "利差走阔",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -484,9 +534,11 @@
       "mixUp": "spread widening",
       "mixUpWhy": "tightening 是担忧减轻；widening 是担忧加重。",
       "mixUpType": "opposite",
+      "sourceIds": [
+        "t3-src-india-bonds"
+      ],
       "termZh": "利差收窄",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -500,9 +552,11 @@
       "mixUp": "credit spread",
       "mixUpWhy": "term premium 是期限的代价（与信用无关）；credit spread 是信用风险的代价（与期限无关）。",
       "mixUpType": "coexist",
+      "sourceIds": [
+        "t3-src-india-bonds"
+      ],
       "termZh": "期限溢价",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -516,9 +570,11 @@
       "mixUp": "yield curve",
       "mixUpWhy": "inversion 是曲线的一种特定形状（短高于长）；yield curve 是曲线本身。",
       "mixUpType": "hierarchy",
+      "sourceIds": [
+        "t3-src-india-bonds"
+      ],
       "termZh": "倒挂",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -532,9 +588,11 @@
       "mixUp": "credit rating",
       "mixUpWhy": "default risk 是真实存在的可能性；credit rating 是评级机构对这个可能性的打分。",
       "mixUpType": "coexist",
+      "sourceIds": [
+        "t3-src-india-bonds"
+      ],
       "termZh": "违约风险",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -548,9 +606,11 @@
       "mixUp": "default risk",
       "mixUpWhy": "credit rating 是打出来的等级；default risk 是被评估的那个可能性本身。",
       "mixUpType": "coexist",
+      "sourceIds": [
+        "t3-src-india-bonds"
+      ],
       "termZh": "信用评级",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -564,9 +624,11 @@
       "mixUp": "upgrade",
       "mixUpWhy": "downgrade 往下调；upgrade 往上调。",
       "mixUpType": "opposite",
+      "sourceIds": [
+        "t3-src-india-bonds"
+      ],
       "termZh": "评级下调",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -580,9 +642,9 @@
       "mixUp": "downgrade",
       "mixUpWhy": "upgrade 往上调；downgrade 往下调。",
       "mixUpType": "opposite",
+      "sourceIds": [],
       "termZh": "评级上调",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -596,9 +658,11 @@
       "mixUp": "refinancing",
       "mixUpWhy": "covenant 限制借款人做什么；refinancing 是换一笔新债还旧债。条款常在再融资时被重新谈。",
       "mixUpType": "coexist",
+      "sourceIds": [
+        "t3-src-india-bonds"
+      ],
       "termZh": "契约条款",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -612,9 +676,11 @@
       "mixUp": "issuance",
       "mixUpWhy": "refinancing 是用途（还旧债）；issuance 是动作（发新债）。再融资一定涉及发行，但发行不一定为了再融资。",
       "mixUpType": "coexist",
+      "sourceIds": [
+        "t3-src-india-bonds"
+      ],
       "termZh": "再融资",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -628,9 +694,11 @@
       "mixUp": "basis point",
       "mixUpWhy": "policy rate 是被设定的那个利率水平；basis point 是衡量它变了多少的单位。",
       "mixUpType": "coexist",
+      "sourceIds": [
+        "t3-src-india-bonds"
+      ],
       "termZh": "政策利率",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     },
@@ -644,9 +712,11 @@
       "mixUp": "policy rate",
       "mixUpWhy": "benchmark rate 是市场定价的参照（如 SOFR）；policy rate 是央行设定的政策目标。前者跟随后者但不等于后者。",
       "mixUpType": "coexist",
+      "sourceIds": [
+        "t3-src-india-bonds"
+      ],
       "termZh": "基准利率",
       "relations": [],
-      "sourceIds": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
     }
@@ -6846,5 +6916,14 @@
       ]
     }
   ],
-  "sources": []
+  "sources": [
+    {
+      "id": "t3-src-india-bonds",
+      "title": "India bonds: benchmark yield near three-year high as oil stokes inflation worries",
+      "publishedAt": "2026-10-21",
+      "accessedAt": "2026-10-27",
+      "kind": "news",
+      "rightsBasis": "facts-only"
+    }
+  ]
 }
