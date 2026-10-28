@@ -34,6 +34,7 @@ let CONCEPTS = [];
 let UNITS = [];
 let PACK = {};
 let SOURCES = [];
+let CERTIFIES = {};
 let HEADLINE_DRILLS = [];
 let OUT_DIR = "";
 
@@ -382,14 +383,26 @@ function provenanceFor(concepts) {
   if (!sources.length) return map;
   const texts = new Map();
   for (const entry of sources) {
+    if (!entry.file) continue; // 文献来源没有语料文件，走 CITES
     const file = path.join(ROOT, "content/corpus", entry.file);
     if (!existsSync(file)) continue;
     texts.set(entry.file, readFileSync(file, "utf8").toLowerCase());
   }
+  // Articles that carry the term, plus citations declared explicitly for
+  // sources with no corpus file (textbooks and papers). A textbook defines a
+  // term without being a news article, so it cannot be matched by reading a
+  // corpus file — but it is a stronger source than a headline, not a weaker one.
+  const cites = CERTIFIES;
   for (const concept of concepts) {
-    const ids = sources
-      .filter((entry) => texts.has(entry.file) && corpusHasTerm(texts.get(entry.file), concept.term))
+    const fromCorpus = sources
+      .filter(
+        (entry) => entry.file && texts.has(entry.file) && corpusHasTerm(texts.get(entry.file), concept.term),
+      )
       .map((entry) => entry.id);
+    const fromCites = Object.entries(cites)
+      .filter(([, terms]) => terms.includes(concept.id))
+      .map(([sourceId]) => sourceId);
+    const ids = [...new Set([...fromCorpus, ...fromCites])];
     if (ids.length) map.set(concept.id, ids);
   }
   return map;
@@ -401,6 +414,7 @@ async function generatePack(packId) {
   UNITS = source.UNITS;
   PACK = source.PACK;
   SOURCES = source.SOURCES ?? [];
+  CERTIFIES = source.CITES ?? {};
   HEADLINE_DRILLS = drills;
   OUT_DIR = path.join(ROOT, "content/packs", PACK.packId);
 

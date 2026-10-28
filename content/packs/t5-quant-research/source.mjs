@@ -713,6 +713,53 @@ for (const concept of CONCEPTS) {
   if (en) concept.en = en;
 }
 
-// T5 的语料是一篇原创回测示范稿，不是来源。量化概念的溯源应当指向教材
-// 与统计文献，没有可核的真实文献就不造——全部概念保持 legacy。
-export const SOURCES = [];
+// 文献来源（非语料）。T5 的语料是原创示范稿，不算来源；这一层的概念应当引
+// 教材与论文，命中的概念由 CITES 显式映射。
+// 已核：Bailey & López de Prado, "The Deflated Sharpe Ratio", Journal of
+// Portfolio Management 40(5):94-107, 2014, doi:10.3905/jpm.2014.40.5.094 ——
+// 该文正文即讨论 backtest overfitting、selection bias under multiple testing、
+// Sharpe 的虚高，正好是 T5 前两组概念的定义来源。
+// 已核：Hull, Options, Futures, and Other Derivatives, 11th ed., Pearson 2021,
+// ISBN-13 9780136939917 —— 组合、成本、风险度量章节。
+export const SOURCES = [
+  {
+    id: "bailey-lopez-de-prado-dsr-2014",
+    title: "The Deflated Sharpe Ratio: Correcting for Selection Bias, Backtest Overfitting, and Non-Normality",
+    publisher: "Journal of Portfolio Management 40(5):94-107",
+    url: "https://doi.org/10.3905/jpm.2014.40.5.094",
+    publishedAt: "2014-09-30",
+    accessedAt: "2026-10-28",
+    kind: "academic",
+    rightsBasis: "facts-only",
+  },
+  {
+    id: "hull-derivatives-11e-2021",
+    title: "Options, Futures, and Other Derivatives, 11th edition",
+    publisher: "Pearson",
+    url: "https://www.pearson.com/en-us/subject-catalog/p/options-futures-and-other-derivatives/P200000005938/9780136939917",
+    publishedAt: "2021-02-22",
+    accessedAt: "2026-10-28",
+    kind: "academic",
+    rightsBasis: "facts-only",
+  },
+];
+
+/**
+ * 概念 → 文献。只登记那篇文献确实定义的词：Deviated Sharpe 论文讲的是
+ * backtest overfitting 与多重检验导致的虚高，把 turnover 或 slippage 挂到
+ * 它下面是假引用。Hull 覆盖组合构建、交易成本与风险度量。
+ */
+export const CITES = {
+  "bailey-lopez-de-prado-dsr-2014": [
+    "backtest", "in-sample", "out-of-sample", "walk-forward",
+    "overfitting", "data snooping", "multiple testing", "sharpe ratio",
+  ],
+  "hull-derivatives-11e-2021": [
+    "universe", "rebalance", "position sizing", "turnover", "correlation",
+    "exposure", "tracking error", "benchmark", "transaction cost", "slippage",
+    "capacity constraint", "liquidity constraint", "stress test",
+    "scenario analysis", "value at risk", "sensitivity", "robustness",
+    "max drawdown", "hit rate", "expectancy", "alpha", "beta",
+    "look-ahead bias", "survivorship bias",
+  ],
+};

@@ -805,6 +805,7 @@ for (const concept of CONCEPTS) {
 }
 
 export const SOURCES = [
+  { id: "finra-sec-sbloc-2015", title: "Securities-Backed Lines of Credit - It May Pay to See Beyond the Pitch", publisher: "FINRA and SEC Office of Investor Education and Advocacy", url: "https://www.finra.org/investors/alerts/securities-backed-lines-credit", publishedAt: "2015-12-21", accessedAt: "2026-10-28", kind: "primary", rightsBasis: "facts-only" },
   { file: "t2-earnings/1.txt", id: "t2-src-bp-q2", title: "BP Q2 profit more than doubles to $5.73bn; write-downs tied to Archaea", publishedAt: "2026-08-04", accessedAt: "2026-10-27", kind: "news", rightsBasis: "facts-only" },
   { file: "t2-earnings/2.txt", id: "t2-src-chevron-q2", title: "Chevron Q2 adjusted profit $12bn beats estimates; buyback and dividend held", publishedAt: "2026-07-31", accessedAt: "2026-10-27", kind: "news", rightsBasis: "facts-only" },
   { file: "t2-earnings/4.txt", id: "t2-src-adm-q2", title: "ADM lifts 2026 profit outlook after beating Q2 estimates on strong margins", publishedAt: "2026-08-04", accessedAt: "2026-10-28", kind: "news", rightsBasis: "facts-only" },
@@ -812,3 +813,9 @@ export const SOURCES = [
   { file: "t2-earnings/6.txt", id: "t2-src-mmg-deal", title: "MMG offers ferronickel supply guarantee to win EU approval for $500m nickel deal", publishedAt: "2026-10-23", accessedAt: "2026-10-28", kind: "news", rightsBasis: "facts-only" },
   // t2-earnings/3.txt 是原创综合稿（交易/减值语境示例），不是来源。
 ];
+
+// margin call 是借款人的风险概念，财报稿里不出现（它是债市的词）；
+// FINRA 的 SBLOC 投资者警报正是讲它的。显式映射，不做语料匹配。
+export const CITES = {
+  "finra-sec-sbloc-2015": ["margin call"],
+};

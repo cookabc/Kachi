@@ -53,6 +53,7 @@
       "mixUpWhy": "bond 是那张凭证；yield 是这张凭证按你买入价格算出的回报率。",
       "mixUpType": "coexist",
       "sourceIds": [
+        "t3-src-headlines",
         "t3-src-india-bonds"
       ],
       "termZh": "债券",
@@ -125,6 +126,7 @@
       "mixUpWhy": "yield 随价格浮动；coupon 写死在票面上。",
       "mixUpType": "scope",
       "sourceIds": [
+        "t3-src-headlines",
         "t3-src-india-bonds"
       ],
       "termZh": "收益率",
@@ -143,6 +145,7 @@
       "mixUpWhy": "价格和收益率反向：价格跌，收益率升。看到其中一个就该想到另一个的方向。",
       "mixUpType": "opposite",
       "sourceIds": [
+        "t3-src-headlines",
         "t3-src-india-bonds"
       ],
       "termZh": "价格（债券报价）",
@@ -215,6 +218,7 @@
       "mixUpWhy": "cut-off yield 是拍卖这一场的结果；yield 是任何时点的市场收益率。",
       "mixUpType": "hierarchy",
       "sourceIds": [
+        "t3-src-headlines",
         "t3-src-india-bonds"
       ],
       "termZh": "中标收益率",
@@ -233,6 +237,7 @@
       "mixUpWhy": "inflation-linked 的本金随物价变；fixed-rate 的票息和本金都写死。",
       "mixUpType": "opposite",
       "sourceIds": [
+        "t3-src-headlines",
         "t3-src-india-bonds"
       ],
       "termZh": "通胀挂钩",
@@ -251,6 +256,7 @@
       "mixUpWhy": "fixed-rate 锁死不变；floating-rate 跟着基准利率浮动。",
       "mixUpType": "opposite",
       "sourceIds": [
+        "t3-src-headlines",
         "t3-src-india-bonds"
       ],
       "termZh": "固定利率",
@@ -287,6 +293,7 @@
       "mixUpWhy": "auction 是发行时用的竞价方式；issuance 是发行这件事本身。",
       "mixUpType": "coexist",
       "sourceIds": [
+        "t3-src-headlines",
         "t3-src-india-bonds"
       ],
       "termZh": "拍卖（发行）",
@@ -305,6 +312,7 @@
       "mixUpWhy": "issuance 是发行的量或行为；auction 是发行时的一个具体环节。",
       "mixUpType": "coexist",
       "sourceIds": [
+        "t3-src-headlines",
         "t3-src-india-bonds"
       ],
       "termZh": "发行（量）",
@@ -359,6 +367,7 @@
       "mixUpWhy": "treasury 通指中央政府债（美债语境）；gilt 特指英国国债。",
       "mixUpType": "coexist",
       "sourceIds": [
+        "t3-src-headlines",
         "t3-src-india-bonds"
       ],
       "termZh": "国债（美债）",
@@ -376,7 +385,9 @@
       "mixUp": "treasury",
       "mixUpWhy": "gilt 专指英国的；treasury 是各国中央政府债的通称，美债最常见。",
       "mixUpType": "hierarchy",
-      "sourceIds": [],
+      "sourceIds": [
+        "t3-src-headlines"
+      ],
       "termZh": "金边债（英国国债）",
       "relations": [],
       "risk": "evergreen",
@@ -393,6 +404,7 @@
       "mixUpWhy": "sovereign 是「国家信用」这个类别；treasury 通常指美国的、gilt 指英国的。",
       "mixUpType": "hierarchy",
       "sourceIds": [
+        "t3-src-headlines",
         "t3-src-india-bonds"
       ],
       "termZh": "主权债",
@@ -411,6 +423,7 @@
       "mixUpWhy": "corporate bond 背后是企业信用；sovereign 背后是国家信用。前者利率更高。",
       "mixUpType": "opposite",
       "sourceIds": [
+        "t3-src-headlines",
         "t3-src-india-bonds"
       ],
       "termZh": "公司债",
@@ -428,7 +441,9 @@
       "mixUp": "corporate bond",
       "mixUpWhy": "commercial paper 是短期（一年内）、常无担保；corporate bond 是长期、可有担保。",
       "mixUpType": "coexist",
-      "sourceIds": [],
+      "sourceIds": [
+        "t3-src-headlines"
+      ],
       "termZh": "商业票据",
       "relations": [],
       "risk": "evergreen",
@@ -642,7 +657,9 @@
       "mixUp": "downgrade",
       "mixUpWhy": "upgrade 往上调；downgrade 往下调。",
       "mixUpType": "opposite",
-      "sourceIds": [],
+      "sourceIds": [
+        "t3-src-headlines"
+      ],
       "termZh": "评级上调",
       "relations": [],
       "risk": "evergreen",
@@ -6917,6 +6934,14 @@
     }
   ],
   "sources": [
+    {
+      "id": "t3-src-headlines",
+      "title": "Real financial headlines, 172 items (Aug-Oct 2026, commodities/forex/economics feed)",
+      "publishedAt": "2026-10-26",
+      "accessedAt": "2026-10-26",
+      "kind": "news",
+      "rightsBasis": "facts-only"
+    },
     {
       "id": "t3-src-india-bonds",
       "title": "India bonds: benchmark yield near three-year high as oil stokes inflation worries",

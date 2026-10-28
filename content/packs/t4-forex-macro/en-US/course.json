@@ -53,6 +53,8 @@
       "mixUpWhy": "Currency is the money itself; the exchange rate is the ratio between two of them.",
       "mixUpType": "coexist",
       "sourceIds": [
+        "t4-src-headlines",
+        "t4-src-yuan-2026",
         "t4-src-forex-weekly"
       ],
       "relations": [],
@@ -69,7 +71,9 @@
       "mixUp": "currency",
       "mixUpWhy": "The exchange rate is the ratio; currency is the thing being exchanged.",
       "mixUpType": "coexist",
-      "sourceIds": [],
+      "sourceIds": [
+        "t4-src-yuan-2026"
+      ],
       "relations": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
@@ -85,6 +89,8 @@
       "mixUpWhy": "The dollar is the US currency and the global funding currency; the euro is the shared currency of the euro area.",
       "mixUpType": "coexist",
       "sourceIds": [
+        "t4-src-headlines",
+        "t4-src-yuan-2026",
         "t4-src-forex-weekly"
       ],
       "relations": [],
@@ -102,6 +108,7 @@
       "mixUpWhy": "The euro is the euro area's; the dollar is the US's. They form the most-traded pair.",
       "mixUpType": "coexist",
       "sourceIds": [
+        "t4-src-headlines",
         "t4-src-forex-weekly"
       ],
       "relations": [],
@@ -119,6 +126,7 @@
       "mixUpWhy": "Yen is Japanese; yuan is Chinese. They even share the ¥ symbol, so read the code (JPY vs CNY).",
       "mixUpType": "form",
       "sourceIds": [
+        "t4-src-headlines",
         "t4-src-forex-weekly"
       ],
       "relations": [],
@@ -136,6 +144,8 @@
       "mixUpWhy": "Yuan is Chinese; yen is Japanese. Both use ¥, so only context or the code separates them.",
       "mixUpType": "form",
       "sourceIds": [
+        "t4-src-headlines",
+        "t4-src-yuan-2026",
         "t4-src-forex-weekly"
       ],
       "relations": [],
@@ -153,6 +163,7 @@
       "mixUpWhy": "Sterling is Britain's; peso is the name several Latin American and Asian countries use.",
       "mixUpType": "coexist",
       "sourceIds": [
+        "t4-src-headlines",
         "t4-src-forex-weekly"
       ],
       "relations": [],
@@ -170,6 +181,7 @@
       "mixUpWhy": "Peso is used by several countries (MXN/PHP/ARS); the rupiah belongs only to Indonesia.",
       "mixUpType": "coexist",
       "sourceIds": [
+        "t4-src-headlines",
         "t4-src-forex-weekly"
       ],
       "relations": [],
@@ -187,6 +199,7 @@
       "mixUpWhy": "The rupiah is Indonesia's alone; peso is a shared name.",
       "mixUpType": "coexist",
       "sourceIds": [
+        "t4-src-headlines",
         "t4-src-forex-weekly"
       ],
       "relations": [],
@@ -203,7 +216,9 @@
       "mixUp": "depreciate",
       "mixUpWhy": "Appreciate means more valuable; depreciate means cheaper.",
       "mixUpType": "direction",
-      "sourceIds": [],
+      "sourceIds": [
+        "t4-src-yuan-2026"
+      ],
       "relations": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
@@ -218,7 +233,9 @@
       "mixUp": "appreciate",
       "mixUpWhy": "Depreciate means cheaper; appreciate means more valuable.",
       "mixUpType": "direction",
-      "sourceIds": [],
+      "sourceIds": [
+        "t4-src-headlines"
+      ],
       "relations": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
@@ -234,6 +251,7 @@
       "mixUpWhy": "Strengthen goes up; weaken goes down. Both are plainer than appreciate and depreciate, and more common in copy.",
       "mixUpType": "direction",
       "sourceIds": [
+        "t4-src-yuan-2026",
         "t4-src-forex-weekly"
       ],
       "relations": [],
@@ -251,6 +269,8 @@
       "mixUpWhy": "Weaken goes down; strengthen goes up.",
       "mixUpType": "direction",
       "sourceIds": [
+        "t4-src-headlines",
+        "t4-src-yuan-2026",
         "t4-src-forex-weekly"
       ],
       "relations": [],
@@ -268,6 +288,8 @@
       "mixUpWhy": "The central bank is the institution; monetary policy is what it does.",
       "mixUpType": "hierarchy",
       "sourceIds": [
+        "t4-src-headlines",
+        "t4-src-yuan-2026",
         "t4-src-forex-weekly"
       ],
       "relations": [],
@@ -285,6 +307,7 @@
       "mixUpWhy": "A hike moves rates up; a cut moves them down.",
       "mixUpType": "direction",
       "sourceIds": [
+        "t4-src-headlines",
         "t4-src-forex-weekly"
       ],
       "relations": [],
@@ -301,7 +324,9 @@
       "mixUp": "rate hike",
       "mixUpWhy": "A cut moves rates down; a hike moves them up.",
       "mixUpType": "direction",
-      "sourceIds": [],
+      "sourceIds": [
+        "t4-src-yuan-2026"
+      ],
       "relations": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
@@ -317,6 +342,7 @@
       "mixUpWhy": "Hawkish leans tight and lifts the currency; dovish leans loose and weighs on it.",
       "mixUpType": "opposite",
       "sourceIds": [
+        "t4-src-headlines",
         "t4-src-forex-weekly"
       ],
       "relations": [],
@@ -435,7 +461,9 @@
       "mixUp": "easing",
       "mixUpWhy": "Tightening squeezes; easing loosens.",
       "mixUpType": "opposite",
-      "sourceIds": [],
+      "sourceIds": [
+        "t4-src-yuan-2026"
+      ],
       "relations": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
@@ -451,6 +479,7 @@
       "mixUpWhy": "Easing loosens; tightening squeezes.",
       "mixUpType": "opposite",
       "sourceIds": [
+        "t4-src-headlines",
         "t4-src-forex-weekly"
       ],
       "relations": [],
@@ -468,6 +497,8 @@
       "mixUpWhy": "Inflation is prices rising; deflation is prices falling.",
       "mixUpType": "opposite",
       "sourceIds": [
+        "t4-src-headlines",
+        "t4-src-yuan-2026",
         "t4-src-forex-weekly"
       ],
       "relations": [],
@@ -604,6 +635,7 @@
       "mixUpWhy": "Risk appetite is the willingness (can be high or low); risk-off is one specific state where it has collapsed.",
       "mixUpType": "coexist",
       "sourceIds": [
+        "t4-src-headlines",
         "t4-src-forex-weekly"
       ],
       "relations": [],
@@ -638,6 +670,7 @@
       "mixUpWhy": "A safe haven is the asset being bought; risk-off is the state that causes the buying.",
       "mixUpType": "coexist",
       "sourceIds": [
+        "t4-src-headlines",
         "t4-src-forex-weekly"
       ],
       "relations": [],
@@ -6713,6 +6746,22 @@
     }
   ],
   "sources": [
+    {
+      "id": "t4-src-headlines",
+      "title": "Real financial headlines, 172 items (Aug-Oct 2026, commodities/forex/economics feed)",
+      "publishedAt": "2026-10-26",
+      "accessedAt": "2026-10-26",
+      "kind": "news",
+      "rightsBasis": "facts-only"
+    },
+    {
+      "id": "t4-src-yuan-2026",
+      "title": "Yuan hits four-year high on export growth and a softer dollar",
+      "publishedAt": "2026-10-21",
+      "accessedAt": "2026-10-28",
+      "kind": "news",
+      "rightsBasis": "facts-only"
+    },
     {
       "id": "t4-src-forex-weekly",
       "title": "Euro slumps on French debt worries; yen gains as safe-haven demand builds",

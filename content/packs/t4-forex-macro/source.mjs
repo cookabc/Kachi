@@ -626,5 +626,7 @@ for (const concept of CONCEPTS) {
 }
 
 export const SOURCES = [
+  {file: "headlines.json",id: "t4-src-headlines",title: "Real financial headlines, 172 items (Aug-Oct 2026, commodities/forex/economics feed)",publishedAt: "2026-10-26",accessedAt: "2026-10-26",kind: "news",rightsBasis: "facts-only"},
+  { file: "t4-forex/2.txt", id: "t4-src-yuan-2026", title: "Yuan hits four-year high on export growth and a softer dollar", publishedAt: "2026-10-21", accessedAt: "2026-10-28", kind: "news", rightsBasis: "facts-only" },
   { file: "t4-forex/1.txt", id: "t4-src-forex-weekly", title: "Euro slumps on French debt worries; yen gains as safe-haven demand builds", publishedAt: "2026-10-23", accessedAt: "2026-10-27", kind: "news", rightsBasis: "facts-only" },
 ];

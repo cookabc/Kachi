@@ -173,6 +173,7 @@
         "t1-src-india-bonds",
         "t1-src-refining",
         "t1-src-results-roundup",
+        "t1-src-aramco-q2",
         "t1-src-headlines-172"
       ],
       "relations": [
@@ -199,6 +200,7 @@
         "t1-src-refining",
         "t1-src-bhp-fy26",
         "t1-src-results-roundup",
+        "t1-src-aramco-q2",
         "t1-src-headlines-172"
       ],
       "relations": [],
@@ -217,7 +219,8 @@
       "mixUpType": "coexist",
       "sourceIds": [
         "t1-src-banks-2026",
-        "t1-src-refining"
+        "t1-src-refining",
+        "t1-src-aramco-q2"
       ],
       "relations": [],
       "risk": "evergreen",
@@ -235,6 +238,7 @@
       "mixUpType": "coexist",
       "sourceIds": [
         "t1-src-bhp-fy26",
+        "t1-src-aramco-q2",
         "t1-src-headlines-172"
       ],
       "relations": [],
@@ -252,7 +256,8 @@
       "mixUpWhy": "Inventory is accumulated stock; output is what a period produced. Stock builds up, output does not.",
       "mixUpType": "coexist",
       "sourceIds": [
-        "t1-src-results-roundup"
+        "t1-src-results-roundup",
+        "t1-src-aramco-q2"
       ],
       "relations": [],
       "risk": "evergreen",
@@ -285,7 +290,9 @@
       "mixUp": "surplus",
       "mixUpWhy": "A deficit is the gap; a surplus is the leftover.",
       "mixUpType": "opposite",
-      "sourceIds": [],
+      "sourceIds": [
+        "t1-src-aramco-q2"
+      ],
       "relations": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
@@ -304,6 +311,7 @@
         "t1-src-banks-2026",
         "t1-src-bhp-fy26",
         "t1-src-results-roundup",
+        "t1-src-aramco-q2",
         "t1-src-headlines-172"
       ],
       "relations": [
@@ -347,6 +355,7 @@
         "t1-src-refining",
         "t1-src-bhp-fy26",
         "t1-src-results-roundup",
+        "t1-src-aramco-q2",
         "t1-src-headlines-172"
       ],
       "relations": [
@@ -372,6 +381,7 @@
         "t1-src-banks-2026",
         "t1-src-refining",
         "t1-src-results-roundup",
+        "t1-src-aramco-q2",
         "t1-src-headlines-172"
       ],
       "relations": [
@@ -591,7 +601,9 @@
       "mixUp": "rate hike",
       "mixUpWhy": "A cut moves rates down; a hike moves them up.",
       "mixUpType": "opposite",
-      "sourceIds": [],
+      "sourceIds": [
+        "t1-src-aramco-q2"
+      ],
       "relations": [
         {
           "type": "prereq",
@@ -614,6 +626,7 @@
       "sourceIds": [
         "t1-src-forex-weekly",
         "t1-src-india-bonds",
+        "t1-src-aramco-q2",
         "t1-src-headlines-172"
       ],
       "relations": [],
@@ -631,6 +644,7 @@
       "mixUpWhy": "Currency is the money itself; the exchange rate is the ratio between two of them.",
       "mixUpType": "coexist",
       "sourceIds": [
+        "t1-src-aramco-q2",
         "t1-src-headlines-172"
       ],
       "relations": [],
@@ -647,7 +661,9 @@
       "mixUp": "currency",
       "mixUpWhy": "The exchange rate is the ratio; currency is the thing being exchanged.",
       "mixUpType": "coexist",
-      "sourceIds": [],
+      "sourceIds": [
+        "t1-src-aramco-q2"
+      ],
       "relations": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
@@ -684,7 +700,9 @@
       "mixUp": "depreciate",
       "mixUpWhy": "Appreciate means more valuable; depreciate means cheaper.",
       "mixUpType": "opposite",
-      "sourceIds": [],
+      "sourceIds": [
+        "t1-src-aramco-q2"
+      ],
       "relations": [
         {
           "type": "prereq",
@@ -704,7 +722,9 @@
       "mixUp": "valuation",
       "mixUpWhy": "Market cap is the price the market sets; valuation is the judgment of what it should be worth.",
       "mixUpType": "coexist",
-      "sourceIds": [],
+      "sourceIds": [
+        "t1-src-aramco-q2"
+      ],
       "relations": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
@@ -721,7 +741,8 @@
       "mixUpType": "coexist",
       "sourceIds": [
         "t1-src-banks-2026",
-        "t1-src-results-roundup"
+        "t1-src-results-roundup",
+        "t1-src-aramco-q2"
       ],
       "relations": [],
       "risk": "evergreen",
@@ -737,7 +758,9 @@
       "mixUp": "market cap",
       "mixUpWhy": "P/E is a multiple tied to profit; market cap is a total tied to share count.",
       "mixUpType": "coexist",
-      "sourceIds": [],
+      "sourceIds": [
+        "t1-src-aramco-q2"
+      ],
       "relations": [
         {
           "type": "prereq",
@@ -8199,6 +8222,14 @@
       "title": "Company results roundup: Santos, Whitehaven, BHP, Glencore, ADM, Chevron",
       "publishedAt": "2026-08-18",
       "accessedAt": "2026-10-26",
+      "kind": "news",
+      "rightsBasis": "facts-only"
+    },
+    {
+      "id": "t1-src-aramco-q2",
+      "title": "Aramco Q2 profit jumps 44% as inventories run critically low",
+      "publishedAt": "2026-08-04",
+      "accessedAt": "2026-10-28",
       "kind": "news",
       "rightsBasis": "facts-only"
     },

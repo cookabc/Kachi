@@ -61,7 +61,9 @@
           "with": "put"
         }
       ],
-      "sourceIds": [],
+      "sourceIds": [
+        "hull-derivatives-11e-2021"
+      ],
       "risk": "evergreen",
       "reviewStatus": "legacy"
     },
@@ -196,7 +198,9 @@
           "with": "swap"
         }
       ],
-      "sourceIds": [],
+      "sourceIds": [
+        "hull-derivatives-11e-2021"
+      ],
       "risk": "evergreen",
       "reviewStatus": "legacy"
     },
@@ -219,7 +223,9 @@
           "with": "call"
         }
       ],
-      "sourceIds": [],
+      "sourceIds": [
+        "hull-derivatives-11e-2021"
+      ],
       "risk": "evergreen",
       "reviewStatus": "legacy"
     },
@@ -232,7 +238,9 @@
       "example": "Stock at $100. A $90 put pays if it drops below $90. Crash insurance if you own it.",
       "mixUp": "call",
       "mixUpWhy": "Put = right to sell (you want it down). Call = right to buy (you want it up).",
-      "sourceIds": [],
+      "sourceIds": [
+        "hull-derivatives-11e-2021"
+      ],
       "risk": "evergreen",
       "reviewStatus": "legacy"
     },
@@ -245,7 +253,9 @@
       "example": "Stock at $100. A $110 call pays if it rips above $110. That's a bullish bet.",
       "mixUp": "put",
       "mixUpWhy": "Call = right to buy (up). Put = right to sell (down).",
-      "sourceIds": [],
+      "sourceIds": [
+        "hull-derivatives-11e-2021"
+      ],
       "risk": "evergreen",
       "reviewStatus": "legacy"
     },
@@ -258,7 +268,9 @@
       "example": "Borrow 100 shares, sell at $50, buy back at $30, return them. You keep $20. If it goes to $80, you owe.",
       "mixUp": "put",
       "mixUpWhy": "A put is a limited-loss down bet. A short can lose without a ceiling if the stock rips.",
-      "sourceIds": [],
+      "sourceIds": [
+        "hull-derivatives-11e-2021"
+      ],
       "risk": "evergreen",
       "reviewStatus": "legacy"
     },
@@ -292,7 +304,9 @@
           "with": "swap"
         }
       ],
-      "sourceIds": [],
+      "sourceIds": [
+        "hull-derivatives-11e-2021"
+      ],
       "risk": "evergreen",
       "reviewStatus": "legacy"
     },
@@ -311,7 +325,9 @@
           "with": "option"
         }
       ],
-      "sourceIds": [],
+      "sourceIds": [
+        "hull-derivatives-11e-2021"
+      ],
       "risk": "evergreen",
       "reviewStatus": "legacy"
     },
@@ -324,7 +340,9 @@
       "example": "A $100 bond that pays $5 a year yields 5%. Price falls to $50, yield is 10%.",
       "mixUp": "duration",
       "mixUpWhy": "Yield is the income rate. Duration is how much the price jumps when rates move.",
-      "sourceIds": [],
+      "sourceIds": [
+        "hull-derivatives-11e-2021"
+      ],
       "risk": "evergreen",
       "reviewStatus": "legacy"
     },
@@ -337,7 +355,9 @@
       "example": "A 10-year duration bond drops about 10% if rates rise 1%. That's the rate bruise.",
       "mixUp": "yield",
       "mixUpWhy": "Duration is the bruise from rate moves. Yield is the coupon you collect.",
-      "sourceIds": [],
+      "sourceIds": [
+        "hull-derivatives-11e-2021"
+      ],
       "risk": "evergreen",
       "reviewStatus": "legacy"
     },
@@ -350,7 +370,9 @@
       "example": "You hedge airline stock with an oil future. Oil falls, the stock doesn't. The hedge missed.",
       "mixUp": "hedge",
       "mixUpWhy": "A hedge is the protection. Basis risk is the gap when that protection doesn't track.",
-      "sourceIds": [],
+      "sourceIds": [
+        "hull-derivatives-11e-2021"
+      ],
       "risk": "evergreen",
       "reviewStatus": "legacy"
     },
@@ -363,7 +385,9 @@
       "example": "You bought 50 shares. You're long. You want the price higher.",
       "mixUp": "short selling",
       "mixUpWhy": "Long = you want it up. Short = you want it down.",
-      "sourceIds": [],
+      "sourceIds": [
+        "hull-derivatives-11e-2021"
+      ],
       "risk": "evergreen",
       "reviewStatus": "legacy"
     },
@@ -376,7 +400,9 @@
       "example": "A stock that rips 8% some days is more volatile than a utility that moves 0.3%.",
       "mixUp": "diversification",
       "mixUpWhy": "Volatility is how hard one thing swings. Diversification is owning several so one swing doesn't sink you.",
-      "sourceIds": [],
+      "sourceIds": [
+        "hull-derivatives-11e-2021"
+      ],
       "risk": "evergreen",
       "reviewStatus": "legacy"
     },
@@ -389,7 +415,9 @@
       "example": "20 stocks across 5 industries vs. your whole net worth in one employer.",
       "mixUp": "hedge",
       "mixUpWhy": "Diversification spreads bets. A hedge is insurance on a bet you already have.",
-      "sourceIds": [],
+      "sourceIds": [
+        "hull-derivatives-11e-2021"
+      ],
       "risk": "evergreen",
       "reviewStatus": "legacy"
     },
@@ -402,7 +430,9 @@
       "example": "You bought a put from Bank X. Bank X is your counterparty. If they fail, the put is a napkin.",
       "mixUp": "default",
       "mixUpWhy": "Counterparty is who sits across from you. Default is them failing to pay.",
-      "sourceIds": [],
+      "sourceIds": [
+        "hull-derivatives-11e-2021"
+      ],
       "risk": "evergreen",
       "reviewStatus": "legacy"
     },
@@ -421,7 +451,9 @@
           "with": "margin call"
         }
       ],
-      "sourceIds": [],
+      "sourceIds": [
+        "hull-derivatives-11e-2021"
+      ],
       "risk": "evergreen",
       "reviewStatus": "legacy"
     },
@@ -434,7 +466,9 @@
       "example": "Your $1M pledge is now worth $600k. The loan is marked to market. That's when the call comes.",
       "mixUp": "default",
       "mixUpWhy": "Mark-to-market is a re-price. Default is a broken promise. You can be marked down and still paying.",
-      "sourceIds": [],
+      "sourceIds": [
+        "hull-derivatives-11e-2021"
+      ],
       "risk": "evergreen",
       "reviewStatus": "legacy"
     },
@@ -504,7 +538,9 @@
       "example": "Agree now to buy 1,000 barrels at $80 in December. Come December, you settle. You cannot walk away like an option.",
       "mixUp": "option",
       "mixUpWhy": "Futures are a promise you must keep. An option is a right you can abandon.",
-      "sourceIds": [],
+      "sourceIds": [
+        "hull-derivatives-11e-2021"
+      ],
       "risk": "evergreen",
       "reviewStatus": "legacy"
     },
@@ -517,7 +553,9 @@
       "example": "You pay 4% fixed, receive SOFR. If rates jump, the swap pays you. That's a rate hedge, not a loan.",
       "mixUp": "futures",
       "mixUpWhy": "A swap is an ongoing exchange of payments. A future is one settlement on one date.",
-      "sourceIds": [],
+      "sourceIds": [
+        "hull-derivatives-11e-2021"
+      ],
       "risk": "evergreen",
       "reviewStatus": "legacy"
     },
@@ -540,7 +578,9 @@
           "with": "bond"
         }
       ],
-      "sourceIds": [],
+      "sourceIds": [
+        "hull-derivatives-11e-2021"
+      ],
       "risk": "evergreen",
       "reviewStatus": "legacy"
     },
@@ -553,7 +593,9 @@
       "example": "At 6% inflation, a $100 grocery run costs $106 a year later. Your salary didn't move — you got poorer standing still.",
       "mixUp": "interest rate",
       "mixUpWhy": "Inflation is the problem — prices climbing. The interest rate is the central bank's brake pedal against it.",
-      "sourceIds": [],
+      "sourceIds": [
+        "imf-monetary-policy-basics"
+      ],
       "risk": "evergreen",
       "reviewStatus": "legacy"
     },
@@ -576,7 +618,9 @@
           "with": "inflation"
         }
       ],
-      "sourceIds": [],
+      "sourceIds": [
+        "hull-derivatives-11e-2021"
+      ],
       "risk": "evergreen",
       "reviewStatus": "legacy"
     },
@@ -599,7 +643,9 @@
           "with": "yield curve"
         }
       ],
-      "sourceIds": [],
+      "sourceIds": [
+        "hull-derivatives-11e-2021"
+      ],
       "risk": "evergreen",
       "reviewStatus": "legacy"
     },
@@ -622,7 +668,9 @@
           "with": "duration"
         }
       ],
-      "sourceIds": [],
+      "sourceIds": [
+        "hull-derivatives-11e-2021"
+      ],
       "risk": "evergreen",
       "reviewStatus": "legacy"
     },
@@ -645,7 +693,9 @@
           "with": "liquidity"
         }
       ],
-      "sourceIds": [],
+      "sourceIds": [
+        "imf-monetary-policy-basics"
+      ],
       "risk": "evergreen",
       "reviewStatus": "legacy"
     },
@@ -658,7 +708,9 @@
       "example": "You need actual copper next week, so you buy it spot and take delivery. No contract, no future date — just the metal.",
       "mixUp": "futures",
       "mixUpWhy": "Spot is the price for here-and-now delivery. Futures lock a price for a date later — the gap between them is where the curve lives.",
-      "sourceIds": [],
+      "sourceIds": [
+        "hull-derivatives-11e-2021"
+      ],
       "risk": "evergreen",
       "reviewStatus": "legacy"
     },
@@ -681,7 +733,9 @@
           "with": "basis risk"
         }
       ],
-      "sourceIds": [],
+      "sourceIds": [
+        "hull-derivatives-11e-2021"
+      ],
       "risk": "evergreen",
       "reviewStatus": "legacy"
     },
@@ -704,7 +758,9 @@
           "with": "cost of carry"
         }
       ],
-      "sourceIds": [],
+      "sourceIds": [
+        "hull-derivatives-11e-2021"
+      ],
       "risk": "evergreen",
       "reviewStatus": "legacy"
     },
@@ -723,7 +779,9 @@
           "with": "contango"
         }
       ],
-      "sourceIds": [],
+      "sourceIds": [
+        "hull-derivatives-11e-2021"
+      ],
       "risk": "evergreen",
       "reviewStatus": "legacy"
     },
@@ -742,7 +800,9 @@
           "with": "interest rate"
         }
       ],
-      "sourceIds": [],
+      "sourceIds": [
+        "hull-derivatives-11e-2021"
+      ],
       "risk": "evergreen",
       "reviewStatus": "legacy"
     }
@@ -5971,6 +6031,25 @@
       "publishedAt": "2002",
       "accessedAt": "2026-09-10",
       "kind": "academic",
+      "rightsBasis": "facts-only"
+    },
+    {
+      "id": "hull-derivatives-11e-2021",
+      "title": "Options, Futures, and Other Derivatives, 11th edition",
+      "publisher": "Pearson",
+      "url": "https://www.pearson.com/en-us/subject-catalog/p/options-futures-and-other-derivatives/P200000005938/9780136939917",
+      "publishedAt": "2021-02-22",
+      "accessedAt": "2026-10-28",
+      "kind": "academic",
+      "rightsBasis": "facts-only"
+    },
+    {
+      "id": "imf-monetary-policy-basics",
+      "title": "Monetary Policy: Stabilizing Prices and Output",
+      "publisher": "International Monetary Fund, Finance & Development",
+      "url": "https://www.imf.org/en/Publications/fandd/issues/Series/Back-to-Basics/Monetary-Policy",
+      "accessedAt": "2026-10-28",
+      "kind": "primary",
       "rightsBasis": "facts-only"
     }
   ]

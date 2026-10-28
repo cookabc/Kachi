@@ -179,6 +179,7 @@
         "t1-src-india-bonds",
         "t1-src-refining",
         "t1-src-results-roundup",
+        "t1-src-aramco-q2",
         "t1-src-headlines-172"
       ],
       "termZh": "供给",
@@ -206,6 +207,7 @@
         "t1-src-refining",
         "t1-src-bhp-fy26",
         "t1-src-results-roundup",
+        "t1-src-aramco-q2",
         "t1-src-headlines-172"
       ],
       "termZh": "需求",
@@ -225,7 +227,8 @@
       "mixUpType": "coexist",
       "sourceIds": [
         "t1-src-banks-2026",
-        "t1-src-refining"
+        "t1-src-refining",
+        "t1-src-aramco-q2"
       ],
       "termZh": "产能",
       "relations": [],
@@ -244,6 +247,7 @@
       "mixUpType": "coexist",
       "sourceIds": [
         "t1-src-bhp-fy26",
+        "t1-src-aramco-q2",
         "t1-src-headlines-172"
       ],
       "termZh": "产量",
@@ -262,7 +266,8 @@
       "mixUpWhy": "inventory 是造好没卖的存量；output 是这一期造出来的量。库存会累积，产量不会。",
       "mixUpType": "coexist",
       "sourceIds": [
-        "t1-src-results-roundup"
+        "t1-src-results-roundup",
+        "t1-src-aramco-q2"
       ],
       "termZh": "库存",
       "relations": [],
@@ -297,7 +302,9 @@
       "mixUp": "surplus",
       "mixUpWhy": "deficit 是缺口；surplus 是盈余。",
       "mixUpType": "opposite",
-      "sourceIds": [],
+      "sourceIds": [
+        "t1-src-aramco-q2"
+      ],
       "termZh": "赤字、缺口",
       "relations": [],
       "risk": "evergreen",
@@ -317,6 +324,7 @@
         "t1-src-banks-2026",
         "t1-src-bhp-fy26",
         "t1-src-results-roundup",
+        "t1-src-aramco-q2",
         "t1-src-headlines-172"
       ],
       "termZh": "盈利、业绩",
@@ -362,6 +370,7 @@
         "t1-src-refining",
         "t1-src-bhp-fy26",
         "t1-src-results-roundup",
+        "t1-src-aramco-q2",
         "t1-src-headlines-172"
       ],
       "termZh": "利润",
@@ -388,6 +397,7 @@
         "t1-src-banks-2026",
         "t1-src-refining",
         "t1-src-results-roundup",
+        "t1-src-aramco-q2",
         "t1-src-headlines-172"
       ],
       "termZh": "利润率",
@@ -618,7 +628,9 @@
       "mixUp": "rate hike",
       "mixUpWhy": "rate cut 往下调；rate hike 往上调。",
       "mixUpType": "opposite",
-      "sourceIds": [],
+      "sourceIds": [
+        "t1-src-aramco-q2"
+      ],
       "termZh": "降息",
       "relations": [
         {
@@ -642,6 +654,7 @@
       "sourceIds": [
         "t1-src-forex-weekly",
         "t1-src-india-bonds",
+        "t1-src-aramco-q2",
         "t1-src-headlines-172"
       ],
       "termZh": "央行",
@@ -660,6 +673,7 @@
       "mixUpWhy": "currency 是那种钱本身；exchange rate 是两种钱之间的兑换比例。",
       "mixUpType": "coexist",
       "sourceIds": [
+        "t1-src-aramco-q2",
         "t1-src-headlines-172"
       ],
       "termZh": "货币",
@@ -677,7 +691,9 @@
       "mixUp": "currency",
       "mixUpWhy": "exchange rate 是比例；currency 是被兑换的那种钱。",
       "mixUpType": "coexist",
-      "sourceIds": [],
+      "sourceIds": [
+        "t1-src-aramco-q2"
+      ],
       "termZh": "汇率",
       "relations": [],
       "risk": "evergreen",
@@ -716,7 +732,9 @@
       "mixUp": "depreciate",
       "mixUpWhy": "appreciate 是变值钱；depreciate 是变便宜。",
       "mixUpType": "opposite",
-      "sourceIds": [],
+      "sourceIds": [
+        "t1-src-aramco-q2"
+      ],
       "termZh": "升值",
       "relations": [
         {
@@ -737,7 +755,9 @@
       "mixUp": "valuation",
       "mixUpWhy": "market cap 是市场价格算出的总价值；valuation 是对它值多少的判断或估算。",
       "mixUpType": "coexist",
-      "sourceIds": [],
+      "sourceIds": [
+        "t1-src-aramco-q2"
+      ],
       "termZh": "市值",
       "relations": [],
       "risk": "evergreen",
@@ -755,7 +775,8 @@
       "mixUpType": "coexist",
       "sourceIds": [
         "t1-src-banks-2026",
-        "t1-src-results-roundup"
+        "t1-src-results-roundup",
+        "t1-src-aramco-q2"
       ],
       "termZh": "估值",
       "relations": [],
@@ -772,7 +793,9 @@
       "mixUp": "market cap",
       "mixUpWhy": "P/E 是倍数、和盈利挂钩；market cap 是总市值、和股本挂钩。",
       "mixUpType": "coexist",
-      "sourceIds": [],
+      "sourceIds": [
+        "t1-src-aramco-q2"
+      ],
       "termZh": "市盈率",
       "relations": [
         {
@@ -8241,6 +8264,14 @@
       "title": "Company results roundup: Santos, Whitehaven, BHP, Glencore, ADM, Chevron",
       "publishedAt": "2026-08-18",
       "accessedAt": "2026-10-26",
+      "kind": "news",
+      "rightsBasis": "facts-only"
+    },
+    {
+      "id": "t1-src-aramco-q2",
+      "title": "Aramco Q2 profit jumps 44% as inventories run critically low",
+      "publishedAt": "2026-08-04",
+      "accessedAt": "2026-10-28",
       "kind": "news",
       "rightsBasis": "facts-only"
     },

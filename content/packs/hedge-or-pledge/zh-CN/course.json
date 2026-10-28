@@ -61,7 +61,9 @@
           "with": "put"
         }
       ],
-      "sourceIds": [],
+      "sourceIds": [
+        "hull-derivatives-11e-2021"
+      ],
       "risk": "evergreen",
       "reviewStatus": "legacy"
     },
@@ -196,7 +198,9 @@
           "with": "swap"
         }
       ],
-      "sourceIds": [],
+      "sourceIds": [
+        "hull-derivatives-11e-2021"
+      ],
       "risk": "evergreen",
       "reviewStatus": "legacy"
     },
@@ -219,7 +223,9 @@
           "with": "call"
         }
       ],
-      "sourceIds": [],
+      "sourceIds": [
+        "hull-derivatives-11e-2021"
+      ],
       "risk": "evergreen",
       "reviewStatus": "legacy"
     },
@@ -232,7 +238,9 @@
       "example": "股票 $100。一张 $90 的 put 在跌破 $90 后开始赔付。对持有者来说就是崩盘保险。",
       "mixUp": "call",
       "mixUpWhy": "put 是卖出权（你希望它跌）；call 是买入权（你希望它涨）。",
-      "sourceIds": [],
+      "sourceIds": [
+        "hull-derivatives-11e-2021"
+      ],
       "risk": "evergreen",
       "reviewStatus": "legacy"
     },
@@ -245,7 +253,9 @@
       "example": "股票 $100。一张 $110 的 call 在冲破 $110 后开始赔付。那是看涨的赌注。",
       "mixUp": "put",
       "mixUpWhy": "call 是买入权（涨）；put 是卖出权（跌）。",
-      "sourceIds": [],
+      "sourceIds": [
+        "hull-derivatives-11e-2021"
+      ],
       "risk": "evergreen",
       "reviewStatus": "legacy"
     },
@@ -258,7 +268,9 @@
       "example": "借 100 股，$50 卖出，$30 买回归还，赚 $20。涨到 $80 的话，亏的是你。",
       "mixUp": "put",
       "mixUpWhy": "put 是损失有上限的看跌赌注；卖空的亏损没有天花板。",
-      "sourceIds": [],
+      "sourceIds": [
+        "hull-derivatives-11e-2021"
+      ],
       "risk": "evergreen",
       "reviewStatus": "legacy"
     },
@@ -292,7 +304,9 @@
           "with": "swap"
         }
       ],
-      "sourceIds": [],
+      "sourceIds": [
+        "hull-derivatives-11e-2021"
+      ],
       "risk": "evergreen",
       "reviewStatus": "legacy"
     },
@@ -311,7 +325,9 @@
           "with": "option"
         }
       ],
-      "sourceIds": [],
+      "sourceIds": [
+        "hull-derivatives-11e-2021"
+      ],
       "risk": "evergreen",
       "reviewStatus": "legacy"
     },
@@ -324,7 +340,9 @@
       "example": "$100 的债券每年付 $5，yield 是 5%。价格跌到 $50，yield 变成 10%。",
       "mixUp": "duration",
       "mixUpWhy": "yield 是收益率；duration 是利率变化时价格的敏感度。",
-      "sourceIds": [],
+      "sourceIds": [
+        "hull-derivatives-11e-2021"
+      ],
       "risk": "evergreen",
       "reviewStatus": "legacy"
     },
@@ -337,7 +355,9 @@
       "example": "久期 10 年的债券，利率升 1% 价格大约跌 10%。这就是利率淤青。",
       "mixUp": "yield",
       "mixUpWhy": "duration 关心利率冲击下的价格变化；yield 关心你收到的票息。",
-      "sourceIds": [],
+      "sourceIds": [
+        "hull-derivatives-11e-2021"
+      ],
       "risk": "evergreen",
       "reviewStatus": "legacy"
     },
@@ -350,7 +370,9 @@
       "example": "你用石油期货对冲航空公司股票。油价崩了，票价没动。对冲落空了。",
       "mixUp": "hedge",
       "mixUpWhy": "hedge 是保护动作；basis risk 是保护没有贴合的那道缝。",
-      "sourceIds": [],
+      "sourceIds": [
+        "hull-derivatives-11e-2021"
+      ],
       "risk": "evergreen",
       "reviewStatus": "legacy"
     },
@@ -363,7 +385,9 @@
       "example": "你买了 50 股。你是 long。你希望价格更高。",
       "mixUp": "short selling",
       "mixUpWhy": "long 希望上涨；short 通常希望下跌。",
-      "sourceIds": [],
+      "sourceIds": [
+        "hull-derivatives-11e-2021"
+      ],
       "risk": "evergreen",
       "reviewStatus": "legacy"
     },
@@ -376,7 +400,9 @@
       "example": "有些日子暴涨 8% 的股票，比每天只动 0.3% 的公用事业股波动大得多。",
       "mixUp": "diversification",
       "mixUpWhy": "volatility 描述单一资产怎么摆；diversification 是组合层面的风险管理。",
-      "sourceIds": [],
+      "sourceIds": [
+        "hull-derivatives-11e-2021"
+      ],
       "risk": "evergreen",
       "reviewStatus": "legacy"
     },
@@ -389,7 +415,9 @@
       "example": "20 只股票横跨 5 个行业，对比全部身家压在一家雇主的股票上。",
       "mixUp": "hedge",
       "mixUpWhy": "diversification 是分散下注；hedge 是给你已有的某一注买保险。",
-      "sourceIds": [],
+      "sourceIds": [
+        "hull-derivatives-11e-2021"
+      ],
       "risk": "evergreen",
       "reviewStatus": "legacy"
     },
@@ -402,7 +430,9 @@
       "example": "你的 put 是从 X 银行买的。X 银行就是你的 counterparty。它倒了，那张 put 就是一张餐巾纸。",
       "mixUp": "default",
       "mixUpWhy": "counterparty 是『是谁』；default 是『它没履约』。",
-      "sourceIds": [],
+      "sourceIds": [
+        "hull-derivatives-11e-2021"
+      ],
       "risk": "evergreen",
       "reviewStatus": "legacy"
     },
@@ -421,7 +451,9 @@
           "with": "margin call"
         }
       ],
-      "sourceIds": [],
+      "sourceIds": [
+        "hull-derivatives-11e-2021"
+      ],
       "risk": "evergreen",
       "reviewStatus": "legacy"
     },
@@ -434,7 +466,9 @@
       "example": "你 $1M 的质押股票现在值 $600k。贷款被 mark-to-market。追缴就是从这里来的。",
       "mixUp": "default",
       "mixUpWhy": "mark-to-market 只是重新定价；default 是真的没履约。被减记不代表违约。",
-      "sourceIds": [],
+      "sourceIds": [
+        "hull-derivatives-11e-2021"
+      ],
       "risk": "evergreen",
       "reviewStatus": "legacy"
     },
@@ -504,7 +538,9 @@
       "example": "现在约定十二月以 $80 买 1,000 桶油。到了十二月就结算。你不能像 option 那样走开。",
       "mixUp": "option",
       "mixUpWhy": "futures 是必须履行的承诺；option 是可以放弃的权利。",
-      "sourceIds": [],
+      "sourceIds": [
+        "hull-derivatives-11e-2021"
+      ],
       "risk": "evergreen",
       "reviewStatus": "legacy"
     },
@@ -517,7 +553,9 @@
       "example": "你付 4% 固定，收 SOFR 浮动。利率暴涨时这份合约赔你。那是利率 hedge，不是贷款。",
       "mixUp": "futures",
       "mixUpWhy": "swap 是持续的现金流交换；future 是某一日的单次结算。",
-      "sourceIds": [],
+      "sourceIds": [
+        "hull-derivatives-11e-2021"
+      ],
       "risk": "evergreen",
       "reviewStatus": "legacy"
     },
@@ -540,7 +578,9 @@
           "with": "bond"
         }
       ],
-      "sourceIds": [],
+      "sourceIds": [
+        "hull-derivatives-11e-2021"
+      ],
       "risk": "evergreen",
       "reviewStatus": "legacy"
     },
@@ -553,7 +593,9 @@
       "example": "通胀 6% 时，$100 的菜钱一年后要 $106。工资没动，站着不动也算变穷。",
       "mixUp": "interest rate",
       "mixUpWhy": "inflation 是问题本身——物价在涨；interest rate 是央行踩下的刹车。",
-      "sourceIds": [],
+      "sourceIds": [
+        "imf-monetary-policy-basics"
+      ],
       "risk": "evergreen",
       "reviewStatus": "legacy"
     },
@@ -576,7 +618,9 @@
           "with": "inflation"
         }
       ],
-      "sourceIds": [],
+      "sourceIds": [
+        "hull-derivatives-11e-2021"
+      ],
       "risk": "evergreen",
       "reviewStatus": "legacy"
     },
@@ -599,7 +643,9 @@
           "with": "yield curve"
         }
       ],
-      "sourceIds": [],
+      "sourceIds": [
+        "hull-derivatives-11e-2021"
+      ],
       "risk": "evergreen",
       "reviewStatus": "legacy"
     },
@@ -622,7 +668,9 @@
           "with": "duration"
         }
       ],
-      "sourceIds": [],
+      "sourceIds": [
+        "hull-derivatives-11e-2021"
+      ],
       "risk": "evergreen",
       "reviewStatus": "legacy"
     },
@@ -645,7 +693,9 @@
           "with": "liquidity"
         }
       ],
-      "sourceIds": [],
+      "sourceIds": [
+        "imf-monetary-policy-basics"
+      ],
       "risk": "evergreen",
       "reviewStatus": "legacy"
     },
@@ -658,7 +708,9 @@
       "example": "下周就要真的铜，那就按现货买下、拿货。没有合约、没有远期日期——就是那批金属。",
       "mixUp": "futures",
       "mixUpWhy": "spot 是当下交货的价格；futures 把价格锁在未来某一天——两者的缺口就是曲线所在。",
-      "sourceIds": [],
+      "sourceIds": [
+        "hull-derivatives-11e-2021"
+      ],
       "risk": "evergreen",
       "reviewStatus": "legacy"
     },
@@ -681,7 +733,9 @@
           "with": "basis risk"
         }
       ],
-      "sourceIds": [],
+      "sourceIds": [
+        "hull-derivatives-11e-2021"
+      ],
       "risk": "evergreen",
       "reviewStatus": "legacy"
     },
@@ -704,7 +758,9 @@
           "with": "cost of carry"
         }
       ],
-      "sourceIds": [],
+      "sourceIds": [
+        "hull-derivatives-11e-2021"
+      ],
       "risk": "evergreen",
       "reviewStatus": "legacy"
     },
@@ -723,7 +779,9 @@
           "with": "contango"
         }
       ],
-      "sourceIds": [],
+      "sourceIds": [
+        "hull-derivatives-11e-2021"
+      ],
       "risk": "evergreen",
       "reviewStatus": "legacy"
     },
@@ -742,7 +800,9 @@
           "with": "interest rate"
         }
       ],
-      "sourceIds": [],
+      "sourceIds": [
+        "hull-derivatives-11e-2021"
+      ],
       "risk": "evergreen",
       "reviewStatus": "legacy"
     }
@@ -5971,6 +6031,25 @@
       "publishedAt": "2002",
       "accessedAt": "2026-09-10",
       "kind": "academic",
+      "rightsBasis": "facts-only"
+    },
+    {
+      "id": "hull-derivatives-11e-2021",
+      "title": "Options, Futures, and Other Derivatives, 11th edition",
+      "publisher": "Pearson",
+      "url": "https://www.pearson.com/en-us/subject-catalog/p/options-futures-and-other-derivatives/P200000005938/9780136939917",
+      "publishedAt": "2021-02-22",
+      "accessedAt": "2026-10-28",
+      "kind": "academic",
+      "rightsBasis": "facts-only"
+    },
+    {
+      "id": "imf-monetary-policy-basics",
+      "title": "Monetary Policy: Stabilizing Prices and Output",
+      "publisher": "International Monetary Fund, Finance & Development",
+      "url": "https://www.imf.org/en/Publications/fandd/issues/Series/Back-to-Basics/Monetary-Policy",
+      "accessedAt": "2026-10-28",
+      "kind": "primary",
       "rightsBasis": "facts-only"
     }
   ]

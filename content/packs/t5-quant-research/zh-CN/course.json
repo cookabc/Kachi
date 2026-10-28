@@ -47,7 +47,9 @@
       "mixUp": "overfitting",
       "mixUpWhy": "backtest 是实验本身；overfitting 是这个实验可能得的一种病。",
       "mixUpType": "coexist",
-      "sourceIds": [],
+      "sourceIds": [
+        "bailey-lopez-de-prado-dsr-2014"
+      ],
       "termZh": "回测",
       "relations": [],
       "risk": "evergreen",
@@ -63,7 +65,9 @@
       "mixUp": "out-of-sample",
       "mixUpWhy": "in-sample 是你调过参数的数据，表现天生好看；out-of-sample 是没碰过的数据，才测得出真本事。",
       "mixUpType": "opposite",
-      "sourceIds": [],
+      "sourceIds": [
+        "bailey-lopez-de-prado-dsr-2014"
+      ],
       "termZh": "样本内",
       "relations": [],
       "risk": "evergreen",
@@ -79,7 +83,9 @@
       "mixUp": "in-sample",
       "mixUpWhy": "out-of-sample 没碰过，测的是泛化；in-sample 调过，测的是拟合。",
       "mixUpType": "opposite",
-      "sourceIds": [],
+      "sourceIds": [
+        "bailey-lopez-de-prado-dsr-2014"
+      ],
       "termZh": "样本外",
       "relations": [],
       "risk": "evergreen",
@@ -95,7 +101,9 @@
       "mixUp": "backtest",
       "mixUpWhy": "walk-forward 是带时间约束的回测（每次只用当时已知的数据）；backtest 可以是全样本一次性跑完，容易偷看未来。",
       "mixUpType": "hierarchy",
-      "sourceIds": [],
+      "sourceIds": [
+        "bailey-lopez-de-prado-dsr-2014"
+      ],
       "termZh": "滚动验证",
       "relations": [],
       "risk": "evergreen",
@@ -111,7 +119,9 @@
       "mixUp": "universe",
       "mixUpWhy": "benchmark 是用来比成绩的参照；universe 是你可以从中挑选标的的范围。",
       "mixUpType": "coexist",
-      "sourceIds": [],
+      "sourceIds": [
+        "hull-derivatives-11e-2021"
+      ],
       "termZh": "基准",
       "relations": [],
       "risk": "evergreen",
@@ -127,7 +137,9 @@
       "mixUp": "data snooping",
       "mixUpWhy": "overfitting 是模型本身贴合了噪声（结果）；data snooping 是反复试参数这个过程（原因）。",
       "mixUpType": "coexist",
-      "sourceIds": [],
+      "sourceIds": [
+        "bailey-lopez-de-prado-dsr-2014"
+      ],
       "termZh": "过拟合",
       "relations": [],
       "risk": "evergreen",
@@ -143,7 +155,9 @@
       "mixUp": "survivorship bias",
       "mixUpWhy": "look-ahead bias 是偷看了未来（时间维度）；survivorship bias 是只看活下来的（样本维度）。",
       "mixUpType": "coexist",
-      "sourceIds": [],
+      "sourceIds": [
+        "hull-derivatives-11e-2021"
+      ],
       "termZh": "未来函数",
       "relations": [],
       "risk": "evergreen",
@@ -159,7 +173,9 @@
       "mixUp": "look-ahead bias",
       "mixUpWhy": "survivorship bias 是样本选错了（只留下活着的）；look-ahead bias 是时间用错了（看了未来）。",
       "mixUpType": "coexist",
-      "sourceIds": [],
+      "sourceIds": [
+        "hull-derivatives-11e-2021"
+      ],
       "termZh": "幸存者偏差",
       "relations": [],
       "risk": "evergreen",
@@ -175,7 +191,9 @@
       "mixUp": "multiple testing",
       "mixUpWhy": "data snooping 是反复翻找这个习惯；multiple testing 是它带来的统计后果（多重比较）。",
       "mixUpType": "coexist",
-      "sourceIds": [],
+      "sourceIds": [
+        "bailey-lopez-de-prado-dsr-2014"
+      ],
       "termZh": "数据挖掘（诱导）",
       "relations": [],
       "risk": "evergreen",
@@ -191,7 +209,9 @@
       "mixUp": "data snooping",
       "mixUpWhy": "multiple testing 是统计事实（检验多了必有假阳性）；data snooping 是这个事实被利用的方式。",
       "mixUpType": "hierarchy",
-      "sourceIds": [],
+      "sourceIds": [
+        "bailey-lopez-de-prado-dsr-2014"
+      ],
       "termZh": "多重检验",
       "relations": [],
       "risk": "evergreen",
@@ -207,7 +227,9 @@
       "mixUp": "max drawdown",
       "mixUpWhy": "sharpe ratio 看的是平均波动（收益的平滑程度）；max drawdown 看的是最坏那一跌。高夏普也可能有极深回撤。",
       "mixUpType": "coexist",
-      "sourceIds": [],
+      "sourceIds": [
+        "bailey-lopez-de-prado-dsr-2014"
+      ],
       "termZh": "夏普比",
       "relations": [],
       "risk": "evergreen",
@@ -223,7 +245,9 @@
       "mixUp": "value at risk",
       "mixUpWhy": "max drawdown 是历史上真正发生过的最深一跌；value at risk 是基于分布估计的单日损失阈值。",
       "mixUpType": "coexist",
-      "sourceIds": [],
+      "sourceIds": [
+        "hull-derivatives-11e-2021"
+      ],
       "termZh": "最大回撤",
       "relations": [],
       "risk": "evergreen",
@@ -239,7 +263,9 @@
       "mixUp": "expectancy",
       "mixUpWhy": "hit rate 只数次数；expectancy 把每次赚亏多少也算进去。胜率高而期望为负是常有的事。",
       "mixUpType": "coexist",
-      "sourceIds": [],
+      "sourceIds": [
+        "hull-derivatives-11e-2021"
+      ],
       "termZh": "胜率",
       "relations": [],
       "risk": "evergreen",
@@ -255,7 +281,9 @@
       "mixUp": "hit rate",
       "mixUpWhy": "expectancy 是金额加权后的平均；hit rate 只数次数。",
       "mixUpType": "coexist",
-      "sourceIds": [],
+      "sourceIds": [
+        "hull-derivatives-11e-2021"
+      ],
       "termZh": "期望收益",
       "relations": [],
       "risk": "evergreen",
@@ -271,7 +299,9 @@
       "mixUp": "beta",
       "mixUpWhy": "alpha 是超出基准的部分（本事）；beta 是跟着市场涨跌的幅度（暴露）。",
       "mixUpType": "coexist",
-      "sourceIds": [],
+      "sourceIds": [
+        "hull-derivatives-11e-2021"
+      ],
       "termZh": "阿尔法（超额收益）",
       "relations": [],
       "risk": "evergreen",
@@ -287,7 +317,9 @@
       "mixUp": "alpha",
       "mixUpWhy": "beta 是暴露（跟涨跟跌的幅度）；alpha 是扣掉这份暴露后剩下的。",
       "mixUpType": "coexist",
-      "sourceIds": [],
+      "sourceIds": [
+        "hull-derivatives-11e-2021"
+      ],
       "termZh": "贝塔（市场敏感度）",
       "relations": [],
       "risk": "evergreen",
@@ -303,7 +335,9 @@
       "mixUp": "alpha",
       "mixUpWhy": "tracking error 是偏离的幅度（不管好坏方向）；alpha 是偏离的方向性收益。",
       "mixUpType": "coexist",
-      "sourceIds": [],
+      "sourceIds": [
+        "hull-derivatives-11e-2021"
+      ],
       "termZh": "跟踪误差",
       "relations": [],
       "risk": "evergreen",
@@ -319,7 +353,9 @@
       "mixUp": "benchmark",
       "mixUpWhy": "universe 是挑选范围（从哪选）；benchmark 是比较对象（和什么比）。",
       "mixUpType": "coexist",
-      "sourceIds": [],
+      "sourceIds": [
+        "hull-derivatives-11e-2021"
+      ],
       "termZh": "标的池",
       "relations": [],
       "risk": "evergreen",
@@ -335,7 +371,9 @@
       "mixUp": "turnover",
       "mixUpWhy": "rebalance 是调回权重的动作；turnover 是这个动作带来了多少交易量。",
       "mixUpType": "coexist",
-      "sourceIds": [],
+      "sourceIds": [
+        "hull-derivatives-11e-2021"
+      ],
       "termZh": "再平衡",
       "relations": [],
       "risk": "evergreen",
@@ -351,7 +389,9 @@
       "mixUp": "exposure",
       "mixUpWhy": "position sizing 是决定放多少（决策）；exposure 是实际暴露了多少（结果）。放 10% 的仓位，可能因为波动率不同而暴露得更多或更少。",
       "mixUpType": "coexist",
-      "sourceIds": [],
+      "sourceIds": [
+        "hull-derivatives-11e-2021"
+      ],
       "termZh": "仓位管理",
       "relations": [],
       "risk": "evergreen",
@@ -367,7 +407,9 @@
       "mixUp": "transaction cost",
       "mixUpWhy": "turnover 是换了多少（量）；transaction cost 是换这些要付多少钱。",
       "mixUpType": "coexist",
-      "sourceIds": [],
+      "sourceIds": [
+        "hull-derivatives-11e-2021"
+      ],
       "termZh": "换手率",
       "relations": [],
       "risk": "evergreen",
@@ -383,7 +425,9 @@
       "mixUp": "exposure",
       "mixUpWhy": "correlation 是资产之间一起动的程度；exposure 是你在某个风险上暴露了多少。",
       "mixUpType": "coexist",
-      "sourceIds": [],
+      "sourceIds": [
+        "hull-derivatives-11e-2021"
+      ],
       "termZh": "相关性",
       "relations": [],
       "risk": "evergreen",
@@ -399,7 +443,9 @@
       "mixUp": "position sizing",
       "mixUpWhy": "exposure 是实际的暴露（结果）；position sizing 是决定放多少（过程）。",
       "mixUpType": "coexist",
-      "sourceIds": [],
+      "sourceIds": [
+        "hull-derivatives-11e-2021"
+      ],
       "termZh": "敞口",
       "relations": [],
       "risk": "evergreen",
@@ -415,7 +461,9 @@
       "mixUp": "slippage",
       "mixUpWhy": "transaction cost 是明面上的费用（佣金、价差）；slippage 是你的成交价不如预期的那部分。",
       "mixUpType": "hierarchy",
-      "sourceIds": [],
+      "sourceIds": [
+        "hull-derivatives-11e-2021"
+      ],
       "termZh": "交易成本",
       "relations": [],
       "risk": "evergreen",
@@ -431,7 +479,9 @@
       "mixUp": "transaction cost",
       "mixUpWhy": "slippage 是价格偏离（隐性）；transaction cost 是明确的费用。",
       "mixUpType": "hierarchy",
-      "sourceIds": [],
+      "sourceIds": [
+        "hull-derivatives-11e-2021"
+      ],
       "termZh": "滑点",
       "relations": [],
       "risk": "evergreen",
@@ -447,7 +497,9 @@
       "mixUp": "liquidity constraint",
       "mixUpWhy": "capacity constraint 是策略能装多少资金；liquidity constraint 是市场有多少量可成交。后者是因，前者是果。",
       "mixUpType": "hierarchy",
-      "sourceIds": [],
+      "sourceIds": [
+        "hull-derivatives-11e-2021"
+      ],
       "termZh": "容量约束",
       "relations": [],
       "risk": "evergreen",
@@ -463,7 +515,9 @@
       "mixUp": "capacity constraint",
       "mixUpWhy": "liquidity constraint 是市场层面的量；capacity constraint 是策略层面的上限。",
       "mixUpType": "hierarchy",
-      "sourceIds": [],
+      "sourceIds": [
+        "hull-derivatives-11e-2021"
+      ],
       "termZh": "流动性约束",
       "relations": [],
       "risk": "evergreen",
@@ -479,7 +533,9 @@
       "mixUp": "scenario analysis",
       "mixUpWhy": "stress test 是单一极端情形（历史上真的发生过）；scenario analysis 是多个假设路径的比较。",
       "mixUpType": "coexist",
-      "sourceIds": [],
+      "sourceIds": [
+        "hull-derivatives-11e-2021"
+      ],
       "termZh": "压力测试",
       "relations": [],
       "risk": "evergreen",
@@ -495,7 +551,9 @@
       "mixUp": "stress test",
       "mixUpWhy": "scenario analysis 是多情景比较；stress test 是单点极端冲击。",
       "mixUpType": "coexist",
-      "sourceIds": [],
+      "sourceIds": [
+        "hull-derivatives-11e-2021"
+      ],
       "termZh": "情景分析",
       "relations": [],
       "risk": "evergreen",
@@ -511,7 +569,9 @@
       "mixUp": "max drawdown",
       "mixUpWhy": "VaR 是概率意义上的单期限额（95% 情况下不超过）；max drawdown 是历史上真实发生的最深一跌。VaR 常低估尾部风险。",
       "mixUpType": "coexist",
-      "sourceIds": [],
+      "sourceIds": [
+        "hull-derivatives-11e-2021"
+      ],
       "termZh": "风险价值（VaR）",
       "relations": [],
       "risk": "evergreen",
@@ -527,7 +587,9 @@
       "mixUp": "robustness",
       "mixUpWhy": "sensitivity 是「变一点会怎样」的测量；robustness 是「变了很多还稳不稳」的结论。",
       "mixUpType": "coexist",
-      "sourceIds": [],
+      "sourceIds": [
+        "hull-derivatives-11e-2021"
+      ],
       "termZh": "敏感性",
       "relations": [],
       "risk": "evergreen",
@@ -543,7 +605,9 @@
       "mixUp": "sensitivity",
       "mixUpWhy": "robustness 是整体结论（稳不稳）；sensitivity 是达到这个结论的测量手段。",
       "mixUpType": "coexist",
-      "sourceIds": [],
+      "sourceIds": [
+        "hull-derivatives-11e-2021"
+      ],
       "termZh": "稳健性",
       "relations": [],
       "risk": "evergreen",
@@ -5958,5 +6022,26 @@
       ]
     }
   ],
-  "sources": []
+  "sources": [
+    {
+      "id": "bailey-lopez-de-prado-dsr-2014",
+      "title": "The Deflated Sharpe Ratio: Correcting for Selection Bias, Backtest Overfitting, and Non-Normality",
+      "publisher": "Journal of Portfolio Management 40(5):94-107",
+      "url": "https://doi.org/10.3905/jpm.2014.40.5.094",
+      "publishedAt": "2014-09-30",
+      "accessedAt": "2026-10-28",
+      "kind": "academic",
+      "rightsBasis": "facts-only"
+    },
+    {
+      "id": "hull-derivatives-11e-2021",
+      "title": "Options, Futures, and Other Derivatives, 11th edition",
+      "publisher": "Pearson",
+      "url": "https://www.pearson.com/en-us/subject-catalog/p/options-futures-and-other-derivatives/P200000005938/9780136939917",
+      "publishedAt": "2021-02-22",
+      "accessedAt": "2026-10-28",
+      "kind": "academic",
+      "rightsBasis": "facts-only"
+    }
+  ]
 }

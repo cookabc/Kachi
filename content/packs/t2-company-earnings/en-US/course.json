@@ -513,7 +513,9 @@
       "mixUp": "write-down",
       "mixUpWhy": "A margin call demands cash; a write-down is the company marking its own asset values down.",
       "mixUpType": "coexist",
-      "sourceIds": [],
+      "sourceIds": [
+        "finra-sec-sbloc-2015"
+      ],
       "relations": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
@@ -8711,6 +8713,16 @@
     }
   ],
   "sources": [
+    {
+      "id": "finra-sec-sbloc-2015",
+      "title": "Securities-Backed Lines of Credit - It May Pay to See Beyond the Pitch",
+      "publisher": "FINRA and SEC Office of Investor Education and Advocacy",
+      "url": "https://www.finra.org/investors/alerts/securities-backed-lines-credit",
+      "publishedAt": "2015-12-21",
+      "accessedAt": "2026-10-28",
+      "kind": "primary",
+      "rightsBasis": "facts-only"
+    },
     {
       "id": "t2-src-bp-q2",
       "title": "BP Q2 profit more than doubles to $5.73bn; write-downs tied to Archaea",

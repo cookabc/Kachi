@@ -971,5 +971,6 @@ export const SOURCES = [
   { file: "4.txt", id: "t1-src-refining", title: "Brent crude near $88 as fuel prices fall less than crude, boosting refiner margins", publishedAt: "2026-08-17", accessedAt: "2026-10-26", kind: "news", rightsBasis: "facts-only" },
   { file: "5.txt", id: "t1-src-bhp-fy26", title: "BHP FY2026 results: underlying profit $13.20bn, dividend highest in four years", publishedAt: "2026-08-18", accessedAt: "2026-10-26", kind: "news", rightsBasis: "facts-only" },
   { file: "6.txt", id: "t1-src-results-roundup", title: "Company results roundup: Santos, Whitehaven, BHP, Glencore, ADM, Chevron", publishedAt: "2026-08-18", accessedAt: "2026-10-26", kind: "news", rightsBasis: "facts-only" },
+  { file: "8.txt", id: "t1-src-aramco-q2", title: "Aramco Q2 profit jumps 44% as inventories run critically low", publishedAt: "2026-08-04", accessedAt: "2026-10-28", kind: "news", rightsBasis: "facts-only" },
   { file: "headlines.json", id: "t1-src-headlines-172", title: "Real financial headlines, 172 items (Aug–Oct 2026, commodities/forex/economics feed)", publishedAt: "2026-10-26", accessedAt: "2026-10-26", kind: "news", rightsBasis: "facts-only" },
 ];

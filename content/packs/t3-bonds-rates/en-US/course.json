@@ -53,6 +53,7 @@
       "mixUpWhy": "A bond is the certificate; yield is the return it pays at the price you paid.",
       "mixUpType": "coexist",
       "sourceIds": [
+        "t3-src-headlines",
         "t3-src-india-bonds"
       ],
       "relations": [],
@@ -121,6 +122,7 @@
       "mixUpWhy": "Yield floats with price; the coupon is fixed on the certificate.",
       "mixUpType": "scope",
       "sourceIds": [
+        "t3-src-headlines",
         "t3-src-india-bonds"
       ],
       "relations": [],
@@ -138,6 +140,7 @@
       "mixUpWhy": "Price and yield move in opposite directions. See one and you should already know which way the other went.",
       "mixUpType": "opposite",
       "sourceIds": [
+        "t3-src-headlines",
         "t3-src-india-bonds"
       ],
       "relations": [],
@@ -206,6 +209,7 @@
       "mixUpWhy": "The cut-off yield is the result of one auction; yield is the market level at any moment.",
       "mixUpType": "hierarchy",
       "sourceIds": [
+        "t3-src-headlines",
         "t3-src-india-bonds"
       ],
       "relations": [],
@@ -223,6 +227,7 @@
       "mixUpWhy": "Inflation-linked principal moves with prices; a fixed-rate bond pins both coupon and principal.",
       "mixUpType": "opposite",
       "sourceIds": [
+        "t3-src-headlines",
         "t3-src-india-bonds"
       ],
       "relations": [],
@@ -240,6 +245,7 @@
       "mixUpWhy": "Fixed-rate is locked; floating-rate resets against a benchmark.",
       "mixUpType": "opposite",
       "sourceIds": [
+        "t3-src-headlines",
         "t3-src-india-bonds"
       ],
       "relations": [],
@@ -274,6 +280,7 @@
       "mixUpWhy": "An auction is the bidding process; issuance is the act of bringing the bonds out.",
       "mixUpType": "coexist",
       "sourceIds": [
+        "t3-src-headlines",
         "t3-src-india-bonds"
       ],
       "relations": [],
@@ -291,6 +298,7 @@
       "mixUpWhy": "Issuance is the volume; an auction is the event where it gets priced.",
       "mixUpType": "coexist",
       "sourceIds": [
+        "t3-src-headlines",
         "t3-src-india-bonds"
       ],
       "relations": [],
@@ -342,6 +350,7 @@
       "mixUpWhy": "Treasury usually means US government debt; a gilt is specifically British.",
       "mixUpType": "coexist",
       "sourceIds": [
+        "t3-src-headlines",
         "t3-src-india-bonds"
       ],
       "relations": [],
@@ -358,7 +367,9 @@
       "mixUp": "treasury",
       "mixUpWhy": "Gilts are specifically British; treasury is the general term for central-government debt.",
       "mixUpType": "hierarchy",
-      "sourceIds": [],
+      "sourceIds": [
+        "t3-src-headlines"
+      ],
       "relations": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
@@ -374,6 +385,7 @@
       "mixUpWhy": "Sovereign is the category — backed by state credit; treasury and gilt name particular countries' versions.",
       "mixUpType": "hierarchy",
       "sourceIds": [
+        "t3-src-headlines",
         "t3-src-india-bonds"
       ],
       "relations": [],
@@ -391,6 +403,7 @@
       "mixUpWhy": "Corporate bonds carry company credit; sovereigns carry state credit. The company pays more.",
       "mixUpType": "opposite",
       "sourceIds": [
+        "t3-src-headlines",
         "t3-src-india-bonds"
       ],
       "relations": [],
@@ -407,7 +420,9 @@
       "mixUp": "corporate bond",
       "mixUpWhy": "Commercial paper is short (under a year) and usually unsecured; corporate bonds are long and may be secured.",
       "mixUpType": "coexist",
-      "sourceIds": [],
+      "sourceIds": [
+        "t3-src-headlines"
+      ],
       "relations": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
@@ -609,7 +624,9 @@
       "mixUp": "downgrade",
       "mixUpWhy": "An upgrade moves up; a downgrade moves down.",
       "mixUpType": "opposite",
-      "sourceIds": [],
+      "sourceIds": [
+        "t3-src-headlines"
+      ],
       "relations": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
@@ -6879,6 +6896,14 @@
     }
   ],
   "sources": [
+    {
+      "id": "t3-src-headlines",
+      "title": "Real financial headlines, 172 items (Aug-Oct 2026, commodities/forex/economics feed)",
+      "publishedAt": "2026-10-26",
+      "accessedAt": "2026-10-26",
+      "kind": "news",
+      "rightsBasis": "facts-only"
+    },
     {
       "id": "t3-src-india-bonds",
       "title": "India bonds: benchmark yield near three-year high as oil stokes inflation worries",
