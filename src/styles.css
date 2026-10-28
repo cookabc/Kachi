@@ -1136,6 +1136,7 @@ input {
   padding: 0 16px 12px;
 }
 .g-card {
+  position: relative;
   background: #fff;
   border: 0.5px solid var(--line);
   border-radius: 24px;
@@ -1885,7 +1886,10 @@ svg.icon {
   color: var(--muted);
 }
 .g-share {
-  margin-left: auto;
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  z-index: 1;
   flex-shrink: 0;
   width: 34px;
   height: 34px;
@@ -3339,4 +3343,51 @@ svg.icon {
 .speak-ex svg {
   flex-shrink: 0;
   margin-top: 3px;
+}
+
+/* Collapsed glossary rows. The default view is a scan-friendly index; the
+   contrast bench only mounts for the card the reader opens. The row is a real
+   button so keyboard and screen-reader users get the same expand affordance. */
+.g-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 10px 12px;
+  border: 0;
+  background: none;
+  font-family: inherit;
+  text-align: left;
+  color: var(--ink);
+  cursor: pointer;
+}
+.g-row h3 {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin: 0;
+  font-size: 15px;
+}
+.g-row-twin {
+  flex: 1;
+  font-size: 12.5px;
+  color: var(--muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.g-row-chevron {
+  color: var(--muted);
+  font-size: 12px;
+}
+.g-card.open .g-row {
+  padding-bottom: 6px;
+}
+/* The share button sits at the card level (a button cannot nest inside the
+   row button), absolutely positioned over the row's right side. */
+
+/* Folded row needs right padding so the twin label ellipses before the
+   share button rather than running under it. */
+.g-row {
+  padding-right: 56px;
 }
