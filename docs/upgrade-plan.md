@@ -2,43 +2,7 @@
 
 > 只列**还没做**的。已完成项不在此处留痕——它们要么在代码里，要么在 git 历史里。
 
-## 一、内容可信度
-
-### T5 / T6 的溯源缺口
-
-当前覆盖面：T1 36/42、T2 48/49、T3 35/38、T4 32/37、T5 0/32、T6 10/40（合计 161/238）。
-
-不是漏填，是**没有可引的真实来源**：
-
-- **T5（0/32）**：语料 `content/corpus/t5-quant/1.txt` 是原创的回测示范稿，按
-  `content/corpus/README.md` 的规则不算来源。量化概念应当引教材与统计文献
-  （Lo 的 *Adaptive Markets*、Bailey & López de Prado 的 deflated Sharpe 论文、
-  CFA 教材的 risk 章节），这些不在本仓语料里。**没有可核文献就不造**——
-  凭空写一个 `id` 让门禁通过，比留空更坏。
-- **T6（10/40）**：只有 FINRA/SEC 的 SBLOC 投资者警报确实讲解的 9 个概念挂了引用。
-  其余 30 个是衍生品与期限结构概念（`option`、`swap`、`contango`、`backwardation`、
-  `cost of carry`），监管投资者公告不覆盖，需要教材级来源。
-
-补齐方式：把相应文献的事实要点写进 `content/corpus/`，在 pack source 的 `SOURCES`
-登记（id/title/publisher/publishedAt/rightsBasis），generator 会自动匹配挂载。
-**综合稿与原创示范稿不要登记为来源**——它们会制造「有出处」的假象。
-
-### legacy → reviewed 的升级路径
-
-`reviewed` 现在门禁要求非空 `sourceIds`（`src/schema/index.ts`）。升级一个概念需要：
-挂上来源 → 人工核对定义与例句确实被来源支持 → 改 `reviewStatus` 为 `reviewed`。
-T6 有 11 个概念曾标 reviewed 却无来源，已按此标准降回 legacy。
-
-## 二、题库密度（T6 only）
-
-五个生成的 pack 已均衡：每词中位 8–9 次、最少 8 次、最多 10–12 次，题/课 12.6–16.0。
-
-T6 仍不均：`hedge` 15 次、`pledge` 14、`short selling` 11，中位 6，最少 1。
-这是**有意保留**而非欠账——T6 是手写的进阶层，208 道题与 40 个概念的教学节奏
-是手工编排的；按密度重排会打断现有课程结构，且没有对应的学习收益。
-若将来重做 T6（例如按 T1–T5 的生成流程重建），届时一并均衡。
-
-## 三、产品差异化
+## 一、产品差异化
 
 ### 预生成音频（可选升级）
 
@@ -52,6 +16,30 @@ voice 列表。代价是音质随设备而异。
 
 `src/audio.ts` 的 `speak()` 签名就是替换点，前端调用不需要动。
 
+### IPA 音标
+
+概念数据里没有音标字段。运行时合成不需要它，但词条卡片上标注英/美音标对学习
+读音有帮助。数据源可用 CMU Pronouncing Dictionary（BSD 风格许可，可 vendor）
+或 Wiktionary 的音标。量级：238 个词条。
+
+## 二、内容
+
+### 新增 pack
+
+六层规划已全部落地（T1 42 / T2 49 / T3 38 / T4 37 / T5 32 / T6 40，共 238 词条）。
+继续扩内容时的流程：
+
+1. 词表先过语料验证——每个词必须在目标语料里出现（`scripts/validate-content.mjs`
+   的语料门禁会拦）
+2. `content/packs/<id>/source.mjs` 写 UNITS/CONCEPTS/EN + SOURCES
+3. `pnpm generate:course --pack <id>` 生成双语 course.json
+4. `pnpm generate:art --pack <id>` 生成插画（约 2–4 分钟/张）
+5. 在 `content/packs/index.json` 注册，`src/course.ts` 的 LOADERS 加 chunk
+
+**溯源会自动挂**：SOURCES 登记真实文章（file 指向语料），generator 用同一个
+`corpusHasTerm` 匹配。教材与论文用 `CITES` 显式映射（无 file 也行）。
+综合稿与原创示范稿不要登记为来源——它们会制造「有出处」的假象。
+
 ## 明确不做
 
 | 不做                | 理由                                                                                        |
@@ -61,3 +49,4 @@ voice 列表。代价是音质随设备而异。
 | 弦图改星图          | 弦图表达「词与词的混淆关系」，是差异化；星图只表达掌握度，两者并存不替换                    |
 | AI 插画替换手绘 SVG | 现有 172 张生成插画与 40 张手绘共存（手绘优先生效）；`art.tsx` 的双色板纪律是品牌本体        |
 | 加原生壳            | Web Push 才是第一个真实后端需求                                                             |
+| T6 题库重排         | 已复核：每课 ≥3 题型、9.0 题/课、每词中位 6 次，结构合规。`hedge` 15 次是课程主线所致，不是缺陷 |
