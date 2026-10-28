@@ -37,7 +37,8 @@
     "format": "biome check --write .",
     "prepare": "lefthook install",
     "generate:course": "node scripts/generate-course.mjs",
-    "generate:art": "node scripts/generate-art.mjs"
+    "generate:art": "node scripts/generate-art.mjs",
+    "generate:audio": "node scripts/generate-audio.mjs"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.6.3",

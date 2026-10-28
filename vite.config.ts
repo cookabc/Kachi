@@ -46,7 +46,9 @@ export default defineConfig({
       workbox: {
         // Art is 42+ generated images per pack; without webp here they would be
         // fetched on every cold start instead of living in the offline bundle.
-        globPatterns: ["**/*.{js,css,html,svg,json,woff2,webp,png}"],
+        // Audio is 402 term clips (6MB). Without mp3 here the clips would be
+        // re-fetched on every cold start instead of living in the offline bundle.
+        globPatterns: ["**/*.{js,css,html,svg,json,woff2,webp,png,mp3}"],
         maximumFileSizeToCacheInBytes: 3 * 1024 * 1024,
       },
     }),

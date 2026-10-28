@@ -185,7 +185,7 @@ function TeachCard({ termId, course, t, lang }: { termId: string; course: Course
           className="speak-btn"
           aria-label={t.lesson.speakTermAria}
           onClick={() => {
-            void speak(concept.term);
+            void speak(concept.term, { conceptId: concept.id });
           }}
         >
           <svg
@@ -304,7 +304,7 @@ function PromptBody(props: {
   // so a fast advance cannot stack overlapping audio.
   useEffect(() => {
     if (presented.type !== "listen" || locked) return;
-    void speak(presented.correctText ?? "");
+    void speak(presented.correctText ?? "", { conceptId: presented.termId });
   }, [presented, locked]);
   return (
     <>
@@ -334,7 +334,7 @@ function PromptBody(props: {
             type="button"
             className="listen-replay"
             onClick={() => {
-              void speak(presented.correctText ?? "", { rate: 0.75 });
+              void speak(presented.correctText ?? "", { rate: 0.75, conceptId: presented.termId });
             }}
             aria-label={t.lesson.replayAria}
           >

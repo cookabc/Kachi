@@ -19,7 +19,53 @@
  * wrapper below is the only part that touches speechSynthesis.
  */
 
+import audioManifest from "../content/audio-manifest.json";
+
 export type Accent = "en-US" | "en-GB";
+
+/**
+ * Pre-generated term audio, keyed by concept id.
+ *
+ * Recorded speech exists for terms only — 201 words × two accents, 6.0MB. The
+ * example sentences still go through synthesis: they are roughly eight times
+ * longer, and shipping them would take the offline bundle from ~9MB to ~26MB
+ * for content whose exact voice matters far less.
+ *
+ * Why bother with files at all: device voices vary wildly in quality, and a
+ * learner drilling a word's pronunciation deserves a consistent voice. Where a
+ * file is missing (a new term before regeneration) synthesis is the fallback.
+ */
+const TERM_AUDIO = (audioManifest as { words: Record<string, { us: string; gb: string }> }).words;
+
+/** The recorded clip for a term, or undefined when none was generated. */
+export function termAudioUrl(conceptId: string, accent: Accent): string | undefined {
+  const entry = TERM_AUDIO[conceptId];
+  if (!entry) return undefined;
+  return accent === "en-GB" ? entry.gb : entry.us;
+}
+
+let current: HTMLAudioElement | undefined;
+
+/** Play a recorded clip. Resolves true when it finished, false on any failure. */
+export function playClip(url: string): Promise<boolean> {
+  if (typeof Audio === "undefined") return Promise.resolve(false);
+  // One clip at a time: tapping the speaker twice should restart, not overlap.
+  current?.pause();
+  const element = new Audio(url);
+  current = element;
+  return new Promise((resolve) => {
+    const settle = (ok: boolean) => {
+      element.onended = null;
+      element.onerror = null;
+      clearTimeout(guard);
+      resolve(ok);
+    };
+    element.onended = () => settle(true);
+    element.onerror = () => settle(false);
+    const guard = setTimeout(() => settle(false), 15_000);
+    void element.play().catch(() => settle(false));
+  });
+}
 
 export interface VoiceInfo {
   name: string;
@@ -97,6 +143,8 @@ export interface SpeakOptions {
   accent?: Accent;
   /** 1 is normal; slightly slow helps learners parse a word's syllables. */
   rate?: number;
+  /** When set, a pre-generated clip for this term is preferred over synthesis. */
+  conceptId?: string;
 }
 
 /**
@@ -105,7 +153,13 @@ export interface SpeakOptions {
  * rather than leave a control that does nothing.
  */
 export async function speak(text: string, options: SpeakOptions = {}): Promise<boolean> {
-  if (typeof window === "undefined" || !("speechSynthesis" in window)) return false;
+  if (typeof window === "undefined") return false;
+  // A recorded clip wins when one exists; synthesis is the fallback.
+  if (options.conceptId) {
+    const url = termAudioUrl(options.conceptId, options.accent ?? "en-US");
+    if (url && (await playClip(url))) return true;
+  }
+  if (!("speechSynthesis" in window)) return false;
   const synth = window.speechSynthesis;
   const voice = await voiceFor(options.accent ?? "en-US");
   if (!voice) return false;

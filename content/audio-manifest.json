@@ -1,0 +1,811 @@
+{
+  "_comment": "Pre-generated term audio (fish.audio). Example sentences stay on runtime synthesis: they are ~8x longer and would take the offline bundle from 7.5MB to 25MB.",
+  "voice": "bc9e47fd83a04010ad6617ed54b92ee3",
+  "model": "s2.1-pro-free",
+  "words": {
+    "in-sample": {
+      "us": "/audio/in-sample-us.mp3",
+      "gb": "/audio/in-sample-gb.mp3"
+    },
+    "out-of-sample": {
+      "us": "/audio/out-of-sample-us.mp3",
+      "gb": "/audio/out-of-sample-gb.mp3"
+    },
+    "walk-forward": {
+      "us": "/audio/walk-forward-us.mp3",
+      "gb": "/audio/walk-forward-gb.mp3"
+    },
+    "benchmark": {
+      "us": "/audio/benchmark-us.mp3",
+      "gb": "/audio/benchmark-gb.mp3"
+    },
+    "overfitting": {
+      "us": "/audio/overfitting-us.mp3",
+      "gb": "/audio/overfitting-gb.mp3"
+    },
+    "look-ahead bias": {
+      "us": "/audio/look-ahead-bias-us.mp3",
+      "gb": "/audio/look-ahead-bias-gb.mp3"
+    },
+    "survivorship bias": {
+      "us": "/audio/survivorship-bias-us.mp3",
+      "gb": "/audio/survivorship-bias-gb.mp3"
+    },
+    "data snooping": {
+      "us": "/audio/data-snooping-us.mp3",
+      "gb": "/audio/data-snooping-gb.mp3"
+    },
+    "multiple testing": {
+      "us": "/audio/multiple-testing-us.mp3",
+      "gb": "/audio/multiple-testing-gb.mp3"
+    },
+    "sharpe ratio": {
+      "us": "/audio/sharpe-ratio-us.mp3",
+      "gb": "/audio/sharpe-ratio-gb.mp3"
+    },
+    "max drawdown": {
+      "us": "/audio/max-drawdown-us.mp3",
+      "gb": "/audio/max-drawdown-gb.mp3"
+    },
+    "hit rate": {
+      "us": "/audio/hit-rate-us.mp3",
+      "gb": "/audio/hit-rate-gb.mp3"
+    },
+    "expectancy": {
+      "us": "/audio/expectancy-us.mp3",
+      "gb": "/audio/expectancy-gb.mp3"
+    },
+    "alpha": {
+      "us": "/audio/alpha-us.mp3",
+      "gb": "/audio/alpha-gb.mp3"
+    },
+    "beta": {
+      "us": "/audio/beta-us.mp3",
+      "gb": "/audio/beta-gb.mp3"
+    },
+    "tracking error": {
+      "us": "/audio/tracking-error-us.mp3",
+      "gb": "/audio/tracking-error-gb.mp3"
+    },
+    "universe": {
+      "us": "/audio/universe-us.mp3",
+      "gb": "/audio/universe-gb.mp3"
+    },
+    "rebalance": {
+      "us": "/audio/rebalance-us.mp3",
+      "gb": "/audio/rebalance-gb.mp3"
+    },
+    "position sizing": {
+      "us": "/audio/position-sizing-us.mp3",
+      "gb": "/audio/position-sizing-gb.mp3"
+    },
+    "turnover": {
+      "us": "/audio/turnover-us.mp3",
+      "gb": "/audio/turnover-gb.mp3"
+    },
+    "correlation": {
+      "us": "/audio/correlation-us.mp3",
+      "gb": "/audio/correlation-gb.mp3"
+    },
+    "exposure": {
+      "us": "/audio/exposure-us.mp3",
+      "gb": "/audio/exposure-gb.mp3"
+    },
+    "transaction cost": {
+      "us": "/audio/transaction-cost-us.mp3",
+      "gb": "/audio/transaction-cost-gb.mp3"
+    },
+    "slippage": {
+      "us": "/audio/slippage-us.mp3",
+      "gb": "/audio/slippage-gb.mp3"
+    },
+    "capacity constraint": {
+      "us": "/audio/capacity-constraint-us.mp3",
+      "gb": "/audio/capacity-constraint-gb.mp3"
+    },
+    "liquidity constraint": {
+      "us": "/audio/liquidity-constraint-us.mp3",
+      "gb": "/audio/liquidity-constraint-gb.mp3"
+    },
+    "stress test": {
+      "us": "/audio/stress-test-us.mp3",
+      "gb": "/audio/stress-test-gb.mp3"
+    },
+    "scenario analysis": {
+      "us": "/audio/scenario-analysis-us.mp3",
+      "gb": "/audio/scenario-analysis-gb.mp3"
+    },
+    "value at risk": {
+      "us": "/audio/value-at-risk-us.mp3",
+      "gb": "/audio/value-at-risk-gb.mp3"
+    },
+    "sensitivity": {
+      "us": "/audio/sensitivity-us.mp3",
+      "gb": "/audio/sensitivity-gb.mp3"
+    },
+    "robustness": {
+      "us": "/audio/robustness-us.mp3",
+      "gb": "/audio/robustness-gb.mp3"
+    },
+    "rally": {
+      "us": "/audio/rally-us.mp3",
+      "gb": "/audio/rally-gb.mp3"
+    },
+    "selloff": {
+      "us": "/audio/selloff-us.mp3",
+      "gb": "/audio/selloff-gb.mp3"
+    },
+    "slump": {
+      "us": "/audio/slump-us.mp3",
+      "gb": "/audio/slump-gb.mp3"
+    },
+    "rebound": {
+      "us": "/audio/rebound-us.mp3",
+      "gb": "/audio/rebound-gb.mp3"
+    },
+    "rout": {
+      "us": "/audio/rout-us.mp3",
+      "gb": "/audio/rout-gb.mp3"
+    },
+    "profit-taking": {
+      "us": "/audio/profit-taking-us.mp3",
+      "gb": "/audio/profit-taking-gb.mp3"
+    },
+    "supply": {
+      "us": "/audio/supply-us.mp3",
+      "gb": "/audio/supply-gb.mp3"
+    },
+    "demand": {
+      "us": "/audio/demand-us.mp3",
+      "gb": "/audio/demand-gb.mp3"
+    },
+    "capacity": {
+      "us": "/audio/capacity-us.mp3",
+      "gb": "/audio/capacity-gb.mp3"
+    },
+    "output": {
+      "us": "/audio/output-us.mp3",
+      "gb": "/audio/output-gb.mp3"
+    },
+    "inventory": {
+      "us": "/audio/inventory-us.mp3",
+      "gb": "/audio/inventory-gb.mp3"
+    },
+    "surplus": {
+      "us": "/audio/surplus-us.mp3",
+      "gb": "/audio/surplus-gb.mp3"
+    },
+    "deficit": {
+      "us": "/audio/deficit-us.mp3",
+      "gb": "/audio/deficit-gb.mp3"
+    },
+    "earnings": {
+      "us": "/audio/earnings-us.mp3",
+      "gb": "/audio/earnings-gb.mp3"
+    },
+    "revenue": {
+      "us": "/audio/revenue-us.mp3",
+      "gb": "/audio/revenue-gb.mp3"
+    },
+    "profit": {
+      "us": "/audio/profit-us.mp3",
+      "gb": "/audio/profit-gb.mp3"
+    },
+    "margin": {
+      "us": "/audio/margin-us.mp3",
+      "gb": "/audio/margin-gb.mp3"
+    },
+    "dividend": {
+      "us": "/audio/dividend-us.mp3",
+      "gb": "/audio/dividend-gb.mp3"
+    },
+    "guidance": {
+      "us": "/audio/guidance-us.mp3",
+      "gb": "/audio/guidance-gb.mp3"
+    },
+    "forecast": {
+      "us": "/audio/forecast-us.mp3",
+      "gb": "/audio/forecast-gb.mp3"
+    },
+    "consensus": {
+      "us": "/audio/consensus-us.mp3",
+      "gb": "/audio/consensus-gb.mp3"
+    },
+    "estimate": {
+      "us": "/audio/estimate-us.mp3",
+      "gb": "/audio/estimate-gb.mp3"
+    },
+    "bond": {
+      "us": "/audio/bond-us.mp3",
+      "gb": "/audio/bond-gb.mp3"
+    },
+    "yield": {
+      "us": "/audio/yield-us.mp3",
+      "gb": "/audio/yield-gb.mp3"
+    },
+    "inflation": {
+      "us": "/audio/inflation-us.mp3",
+      "gb": "/audio/inflation-gb.mp3"
+    },
+    "interest rate": {
+      "us": "/audio/interest-rate-us.mp3",
+      "gb": "/audio/interest-rate-gb.mp3"
+    },
+    "rate hike": {
+      "us": "/audio/rate-hike-us.mp3",
+      "gb": "/audio/rate-hike-gb.mp3"
+    },
+    "rate cut": {
+      "us": "/audio/rate-cut-us.mp3",
+      "gb": "/audio/rate-cut-gb.mp3"
+    },
+    "central bank": {
+      "us": "/audio/central-bank-us.mp3",
+      "gb": "/audio/central-bank-gb.mp3"
+    },
+    "currency": {
+      "us": "/audio/currency-us.mp3",
+      "gb": "/audio/currency-gb.mp3"
+    },
+    "exchange rate": {
+      "us": "/audio/exchange-rate-us.mp3",
+      "gb": "/audio/exchange-rate-gb.mp3"
+    },
+    "depreciate": {
+      "us": "/audio/depreciate-us.mp3",
+      "gb": "/audio/depreciate-gb.mp3"
+    },
+    "appreciate": {
+      "us": "/audio/appreciate-us.mp3",
+      "gb": "/audio/appreciate-gb.mp3"
+    },
+    "market cap": {
+      "us": "/audio/market-cap-us.mp3",
+      "gb": "/audio/market-cap-gb.mp3"
+    },
+    "valuation": {
+      "us": "/audio/valuation-us.mp3",
+      "gb": "/audio/valuation-gb.mp3"
+    },
+    "p/e": {
+      "us": "/audio/p-e-us.mp3",
+      "gb": "/audio/p-e-gb.mp3"
+    },
+    "index": {
+      "us": "/audio/index-us.mp3",
+      "gb": "/audio/index-gb.mp3"
+    },
+    "blue chip": {
+      "us": "/audio/blue-chip-us.mp3",
+      "gb": "/audio/blue-chip-gb.mp3"
+    },
+    "auction": {
+      "us": "/audio/auction-us.mp3",
+      "gb": "/audio/auction-gb.mp3"
+    },
+    "issuance": {
+      "us": "/audio/issuance-us.mp3",
+      "gb": "/audio/issuance-gb.mp3"
+    },
+    "tariff": {
+      "us": "/audio/tariff-us.mp3",
+      "gb": "/audio/tariff-gb.mp3"
+    },
+    "volatility": {
+      "us": "/audio/volatility-us.mp3",
+      "gb": "/audio/volatility-gb.mp3"
+    },
+    "gross": {
+      "us": "/audio/gross-us.mp3",
+      "gb": "/audio/gross-gb.mp3"
+    },
+    "net": {
+      "us": "/audio/net-us.mp3",
+      "gb": "/audio/net-gb.mp3"
+    },
+    "eps": {
+      "us": "/audio/eps-us.mp3",
+      "gb": "/audio/eps-gb.mp3"
+    },
+    "headwinds": {
+      "us": "/audio/headwinds-us.mp3",
+      "gb": "/audio/headwinds-gb.mp3"
+    },
+    "tailwinds": {
+      "us": "/audio/tailwinds-us.mp3",
+      "gb": "/audio/tailwinds-gb.mp3"
+    },
+    "working capital": {
+      "us": "/audio/working-capital-us.mp3",
+      "gb": "/audio/working-capital-gb.mp3"
+    },
+    "free cash flow": {
+      "us": "/audio/free-cash-flow-us.mp3",
+      "gb": "/audio/free-cash-flow-gb.mp3"
+    },
+    "opex": {
+      "us": "/audio/opex-us.mp3",
+      "gb": "/audio/opex-gb.mp3"
+    },
+    "capex": {
+      "us": "/audio/capex-us.mp3",
+      "gb": "/audio/capex-gb.mp3"
+    },
+    "leverage": {
+      "us": "/audio/leverage-us.mp3",
+      "gb": "/audio/leverage-gb.mp3"
+    },
+    "beat": {
+      "us": "/audio/beat-us.mp3",
+      "gb": "/audio/beat-gb.mp3"
+    },
+    "miss": {
+      "us": "/audio/miss-us.mp3",
+      "gb": "/audio/miss-gb.mp3"
+    },
+    "outlook": {
+      "us": "/audio/outlook-us.mp3",
+      "gb": "/audio/outlook-gb.mp3"
+    },
+    "debt": {
+      "us": "/audio/debt-us.mp3",
+      "gb": "/audio/debt-gb.mp3"
+    },
+    "equity": {
+      "us": "/audio/equity-us.mp3",
+      "gb": "/audio/equity-gb.mp3"
+    },
+    "net debt": {
+      "us": "/audio/net-debt-us.mp3",
+      "gb": "/audio/net-debt-gb.mp3"
+    },
+    "capital expenditure": {
+      "us": "/audio/capital-expenditure-us.mp3",
+      "gb": "/audio/capital-expenditure-gb.mp3"
+    },
+    "margin call": {
+      "us": "/audio/margin-call-us.mp3",
+      "gb": "/audio/margin-call-gb.mp3"
+    },
+    "buyback": {
+      "us": "/audio/buyback-us.mp3",
+      "gb": "/audio/buyback-gb.mp3"
+    },
+    "payout": {
+      "us": "/audio/payout-us.mp3",
+      "gb": "/audio/payout-gb.mp3"
+    },
+    "shareholder": {
+      "us": "/audio/shareholder-us.mp3",
+      "gb": "/audio/shareholder-gb.mp3"
+    },
+    "share issuance": {
+      "us": "/audio/share-issuance-us.mp3",
+      "gb": "/audio/share-issuance-gb.mp3"
+    },
+    "acquisition": {
+      "us": "/audio/acquisition-us.mp3",
+      "gb": "/audio/acquisition-gb.mp3"
+    },
+    "merger": {
+      "us": "/audio/merger-us.mp3",
+      "gb": "/audio/merger-gb.mp3"
+    },
+    "divestiture": {
+      "us": "/audio/divestiture-us.mp3",
+      "gb": "/audio/divestiture-gb.mp3"
+    },
+    "spin-off": {
+      "us": "/audio/spin-off-us.mp3",
+      "gb": "/audio/spin-off-gb.mp3"
+    },
+    "write-down": {
+      "us": "/audio/write-down-us.mp3",
+      "gb": "/audio/write-down-gb.mp3"
+    },
+    "impairment": {
+      "us": "/audio/impairment-us.mp3",
+      "gb": "/audio/impairment-gb.mp3"
+    },
+    "restructuring": {
+      "us": "/audio/restructuring-us.mp3",
+      "gb": "/audio/restructuring-gb.mp3"
+    },
+    "ipo": {
+      "us": "/audio/ipo-us.mp3",
+      "gb": "/audio/ipo-gb.mp3"
+    },
+    "listing": {
+      "us": "/audio/listing-us.mp3",
+      "gb": "/audio/listing-gb.mp3"
+    },
+    "p/b": {
+      "us": "/audio/p-b-us.mp3",
+      "gb": "/audio/p-b-gb.mp3"
+    },
+    "book value": {
+      "us": "/audio/book-value-us.mp3",
+      "gb": "/audio/book-value-gb.mp3"
+    },
+    "stakeholder": {
+      "us": "/audio/stakeholder-us.mp3",
+      "gb": "/audio/stakeholder-gb.mp3"
+    },
+    "payout ratio": {
+      "us": "/audio/payout-ratio-us.mp3",
+      "gb": "/audio/payout-ratio-gb.mp3"
+    },
+    "discount": {
+      "us": "/audio/discount-us.mp3",
+      "gb": "/audio/discount-gb.mp3"
+    },
+    "coupon": {
+      "us": "/audio/coupon-us.mp3",
+      "gb": "/audio/coupon-gb.mp3"
+    },
+    "maturity": {
+      "us": "/audio/maturity-us.mp3",
+      "gb": "/audio/maturity-gb.mp3"
+    },
+    "principal": {
+      "us": "/audio/principal-us.mp3",
+      "gb": "/audio/principal-gb.mp3"
+    },
+    "price": {
+      "us": "/audio/price-us.mp3",
+      "gb": "/audio/price-gb.mp3"
+    },
+    "duration": {
+      "us": "/audio/duration-us.mp3",
+      "gb": "/audio/duration-gb.mp3"
+    },
+    "basis point": {
+      "us": "/audio/basis-point-us.mp3",
+      "gb": "/audio/basis-point-gb.mp3"
+    },
+    "cut-off yield": {
+      "us": "/audio/cut-off-yield-us.mp3",
+      "gb": "/audio/cut-off-yield-gb.mp3"
+    },
+    "inflation-linked": {
+      "us": "/audio/inflation-linked-us.mp3",
+      "gb": "/audio/inflation-linked-gb.mp3"
+    },
+    "fixed-rate": {
+      "us": "/audio/fixed-rate-us.mp3",
+      "gb": "/audio/fixed-rate-gb.mp3"
+    },
+    "floating-rate": {
+      "us": "/audio/floating-rate-us.mp3",
+      "gb": "/audio/floating-rate-gb.mp3"
+    },
+    "bid-to-cover": {
+      "us": "/audio/bid-to-cover-us.mp3",
+      "gb": "/audio/bid-to-cover-gb.mp3"
+    },
+    "primary dealer": {
+      "us": "/audio/primary-dealer-us.mp3",
+      "gb": "/audio/primary-dealer-gb.mp3"
+    },
+    "treasury": {
+      "us": "/audio/treasury-us.mp3",
+      "gb": "/audio/treasury-gb.mp3"
+    },
+    "gilt": {
+      "us": "/audio/gilt-us.mp3",
+      "gb": "/audio/gilt-gb.mp3"
+    },
+    "sovereign": {
+      "us": "/audio/sovereign-us.mp3",
+      "gb": "/audio/sovereign-gb.mp3"
+    },
+    "corporate bond": {
+      "us": "/audio/corporate-bond-us.mp3",
+      "gb": "/audio/corporate-bond-gb.mp3"
+    },
+    "commercial paper": {
+      "us": "/audio/commercial-paper-us.mp3",
+      "gb": "/audio/commercial-paper-gb.mp3"
+    },
+    "junk bond": {
+      "us": "/audio/junk-bond-us.mp3",
+      "gb": "/audio/junk-bond-gb.mp3"
+    },
+    "investment grade": {
+      "us": "/audio/investment-grade-us.mp3",
+      "gb": "/audio/investment-grade-gb.mp3"
+    },
+    "yield curve": {
+      "us": "/audio/yield-curve-us.mp3",
+      "gb": "/audio/yield-curve-gb.mp3"
+    },
+    "credit spread": {
+      "us": "/audio/credit-spread-us.mp3",
+      "gb": "/audio/credit-spread-gb.mp3"
+    },
+    "spread widening": {
+      "us": "/audio/spread-widening-us.mp3",
+      "gb": "/audio/spread-widening-gb.mp3"
+    },
+    "spread tightening": {
+      "us": "/audio/spread-tightening-us.mp3",
+      "gb": "/audio/spread-tightening-gb.mp3"
+    },
+    "term premium": {
+      "us": "/audio/term-premium-us.mp3",
+      "gb": "/audio/term-premium-gb.mp3"
+    },
+    "inversion": {
+      "us": "/audio/inversion-us.mp3",
+      "gb": "/audio/inversion-gb.mp3"
+    },
+    "default risk": {
+      "us": "/audio/default-risk-us.mp3",
+      "gb": "/audio/default-risk-gb.mp3"
+    },
+    "credit rating": {
+      "us": "/audio/credit-rating-us.mp3",
+      "gb": "/audio/credit-rating-gb.mp3"
+    },
+    "downgrade": {
+      "us": "/audio/downgrade-us.mp3",
+      "gb": "/audio/downgrade-gb.mp3"
+    },
+    "upgrade": {
+      "us": "/audio/upgrade-us.mp3",
+      "gb": "/audio/upgrade-gb.mp3"
+    },
+    "covenant": {
+      "us": "/audio/covenant-us.mp3",
+      "gb": "/audio/covenant-gb.mp3"
+    },
+    "refinancing": {
+      "us": "/audio/refinancing-us.mp3",
+      "gb": "/audio/refinancing-gb.mp3"
+    },
+    "policy rate": {
+      "us": "/audio/policy-rate-us.mp3",
+      "gb": "/audio/policy-rate-gb.mp3"
+    },
+    "benchmark rate": {
+      "us": "/audio/benchmark-rate-us.mp3",
+      "gb": "/audio/benchmark-rate-gb.mp3"
+    },
+    "dollar": {
+      "us": "/audio/dollar-us.mp3",
+      "gb": "/audio/dollar-gb.mp3"
+    },
+    "euro": {
+      "us": "/audio/euro-us.mp3",
+      "gb": "/audio/euro-gb.mp3"
+    },
+    "yen": {
+      "us": "/audio/yen-us.mp3",
+      "gb": "/audio/yen-gb.mp3"
+    },
+    "yuan": {
+      "us": "/audio/yuan-us.mp3",
+      "gb": "/audio/yuan-gb.mp3"
+    },
+    "sterling": {
+      "us": "/audio/sterling-us.mp3",
+      "gb": "/audio/sterling-gb.mp3"
+    },
+    "peso": {
+      "us": "/audio/peso-us.mp3",
+      "gb": "/audio/peso-gb.mp3"
+    },
+    "rupiah": {
+      "us": "/audio/rupiah-us.mp3",
+      "gb": "/audio/rupiah-gb.mp3"
+    },
+    "strengthen": {
+      "us": "/audio/strengthen-us.mp3",
+      "gb": "/audio/strengthen-gb.mp3"
+    },
+    "weaken": {
+      "us": "/audio/weaken-us.mp3",
+      "gb": "/audio/weaken-gb.mp3"
+    },
+    "hawkish": {
+      "us": "/audio/hawkish-us.mp3",
+      "gb": "/audio/hawkish-gb.mp3"
+    },
+    "dovish": {
+      "us": "/audio/dovish-us.mp3",
+      "gb": "/audio/dovish-gb.mp3"
+    },
+    "forward guidance": {
+      "us": "/audio/forward-guidance-us.mp3",
+      "gb": "/audio/forward-guidance-gb.mp3"
+    },
+    "tapering": {
+      "us": "/audio/tapering-us.mp3",
+      "gb": "/audio/tapering-gb.mp3"
+    },
+    "monetary policy": {
+      "us": "/audio/monetary-policy-us.mp3",
+      "gb": "/audio/monetary-policy-gb.mp3"
+    },
+    "fiscal policy": {
+      "us": "/audio/fiscal-policy-us.mp3",
+      "gb": "/audio/fiscal-policy-gb.mp3"
+    },
+    "quantitative easing": {
+      "us": "/audio/quantitative-easing-us.mp3",
+      "gb": "/audio/quantitative-easing-gb.mp3"
+    },
+    "tightening": {
+      "us": "/audio/tightening-us.mp3",
+      "gb": "/audio/tightening-gb.mp3"
+    },
+    "easing": {
+      "us": "/audio/easing-us.mp3",
+      "gb": "/audio/easing-gb.mp3"
+    },
+    "deflation": {
+      "us": "/audio/deflation-us.mp3",
+      "gb": "/audio/deflation-gb.mp3"
+    },
+    "stagflation": {
+      "us": "/audio/stagflation-us.mp3",
+      "gb": "/audio/stagflation-gb.mp3"
+    },
+    "soft landing": {
+      "us": "/audio/soft-landing-us.mp3",
+      "gb": "/audio/soft-landing-gb.mp3"
+    },
+    "current account": {
+      "us": "/audio/current-account-us.mp3",
+      "gb": "/audio/current-account-gb.mp3"
+    },
+    "trade balance": {
+      "us": "/audio/trade-balance-us.mp3",
+      "gb": "/audio/trade-balance-gb.mp3"
+    },
+    "intervention": {
+      "us": "/audio/intervention-us.mp3",
+      "gb": "/audio/intervention-gb.mp3"
+    },
+    "capital flow": {
+      "us": "/audio/capital-flow-us.mp3",
+      "gb": "/audio/capital-flow-gb.mp3"
+    },
+    "risk appetite": {
+      "us": "/audio/risk-appetite-us.mp3",
+      "gb": "/audio/risk-appetite-gb.mp3"
+    },
+    "risk-off": {
+      "us": "/audio/risk-off-us.mp3",
+      "gb": "/audio/risk-off-gb.mp3"
+    },
+    "safe-haven": {
+      "us": "/audio/safe-haven-us.mp3",
+      "gb": "/audio/safe-haven-gb.mp3"
+    },
+    "carry trade": {
+      "us": "/audio/carry-trade-us.mp3",
+      "gb": "/audio/carry-trade-gb.mp3"
+    },
+    "hedge": {
+      "us": "/audio/hedge-us.mp3",
+      "gb": "/audio/hedge-gb.mp3"
+    },
+    "pledge": {
+      "us": "/audio/pledge-us.mp3",
+      "gb": "/audio/pledge-gb.mp3"
+    },
+    "collateral": {
+      "us": "/audio/collateral-us.mp3",
+      "gb": "/audio/collateral-gb.mp3"
+    },
+    "haircut": {
+      "us": "/audio/haircut-us.mp3",
+      "gb": "/audio/haircut-gb.mp3"
+    },
+    "derivative": {
+      "us": "/audio/derivative-us.mp3",
+      "gb": "/audio/derivative-gb.mp3"
+    },
+    "option": {
+      "us": "/audio/option-us.mp3",
+      "gb": "/audio/option-gb.mp3"
+    },
+    "put": {
+      "us": "/audio/put-us.mp3",
+      "gb": "/audio/put-gb.mp3"
+    },
+    "call": {
+      "us": "/audio/call-us.mp3",
+      "gb": "/audio/call-gb.mp3"
+    },
+    "short selling": {
+      "us": "/audio/short-selling-us.mp3",
+      "gb": "/audio/short-selling-gb.mp3"
+    },
+    "liquidity": {
+      "us": "/audio/liquidity-us.mp3",
+      "gb": "/audio/liquidity-gb.mp3"
+    },
+    "notional": {
+      "us": "/audio/notional-us.mp3",
+      "gb": "/audio/notional-gb.mp3"
+    },
+    "premium": {
+      "us": "/audio/premium-us.mp3",
+      "gb": "/audio/premium-gb.mp3"
+    },
+    "basis risk": {
+      "us": "/audio/basis-risk-us.mp3",
+      "gb": "/audio/basis-risk-gb.mp3"
+    },
+    "long": {
+      "us": "/audio/long-us.mp3",
+      "gb": "/audio/long-gb.mp3"
+    },
+    "diversification": {
+      "us": "/audio/diversification-us.mp3",
+      "gb": "/audio/diversification-gb.mp3"
+    },
+    "counterparty": {
+      "us": "/audio/counterparty-us.mp3",
+      "gb": "/audio/counterparty-gb.mp3"
+    },
+    "default": {
+      "us": "/audio/default-us.mp3",
+      "gb": "/audio/default-gb.mp3"
+    },
+    "mark-to-market": {
+      "us": "/audio/mark-to-market-us.mp3",
+      "gb": "/audio/mark-to-market-gb.mp3"
+    },
+    "securities-backed loan": {
+      "us": "/audio/securities-backed-loan-us.mp3",
+      "gb": "/audio/securities-backed-loan-gb.mp3"
+    },
+    "capital gains": {
+      "us": "/audio/capital-gains-us.mp3",
+      "gb": "/audio/capital-gains-gb.mp3"
+    },
+    "buy-borrow-die": {
+      "us": "/audio/buy-borrow-die-us.mp3",
+      "gb": "/audio/buy-borrow-die-gb.mp3"
+    },
+    "futures": {
+      "us": "/audio/futures-us.mp3",
+      "gb": "/audio/futures-gb.mp3"
+    },
+    "swap": {
+      "us": "/audio/swap-us.mp3",
+      "gb": "/audio/swap-gb.mp3"
+    },
+    "real rate": {
+      "us": "/audio/real-rate-us.mp3",
+      "gb": "/audio/real-rate-gb.mp3"
+    },
+    "spot": {
+      "us": "/audio/spot-us.mp3",
+      "gb": "/audio/spot-gb.mp3"
+    },
+    "basis": {
+      "us": "/audio/basis-us.mp3",
+      "gb": "/audio/basis-gb.mp3"
+    },
+    "contango": {
+      "us": "/audio/contango-us.mp3",
+      "gb": "/audio/contango-gb.mp3"
+    },
+    "backwardation": {
+      "us": "/audio/backwardation-us.mp3",
+      "gb": "/audio/backwardation-gb.mp3"
+    },
+    "cost of carry": {
+      "us": "/audio/cost-of-carry-us.mp3",
+      "gb": "/audio/cost-of-carry-gb.mp3"
+    },
+    "backtest": {
+      "us": "/audio/backtest-us.mp3",
+      "gb": "/audio/backtest-gb.mp3"
+    }
+  }
+}

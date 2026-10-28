@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { pickVoice, type VoiceInfo } from "./audio";
+import { pickVoice, termAudioUrl, type VoiceInfo } from "./audio";
 
 // Voice picking is pure so it can be tested without a browser. The ranking
 // encodes one product decision: the platform-default voice beats third-party
@@ -47,5 +47,19 @@ describe("pickVoice", () => {
   it("is deterministic for equal-ranked voices", () => {
     const tied = [voice("B", "en-US"), voice("A", "en-US")];
     expect(pickVoice(tied, "en-US")?.name).toBe("A");
+  });
+});
+
+describe("pre-generated term audio", () => {
+  // Recorded clips exist for terms only. speak() prefers them and falls back to
+  // synthesis, so a new term without a clip still speaks rather than going mute.
+  it("returns a URL for a term that has a recording", () => {
+    // "rally" is in every generated pack, so a clip is guaranteed to exist.
+    expect(termAudioUrl("rally", "en-US")).toBe("/audio/rally-us.mp3");
+    expect(termAudioUrl("rally", "en-GB")).toBe("/audio/rally-gb.mp3");
+  });
+
+  it("returns undefined for a term with no clip, leaving synthesis to handle it", () => {
+    expect(termAudioUrl("not-a-real-term", "en-US")).toBeUndefined();
   });
 });
