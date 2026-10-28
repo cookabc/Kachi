@@ -3487,3 +3487,56 @@ button.lab-unit-head {
   color: var(--muted);
   text-align: center;
 }
+
+/* Course pack picker. A pack is a course, not a setting — but this is the only
+   surface with room to list them, so it lives here.
+   These rules were lost once (styles.css was rewritten wholesale during the
+   art work, dropping the tail). The picker then rendered as a wall of plain
+   text: six packs, no cards, no hit areas. Kept here with the reason so the
+   next wholesale edit does not repeat it. */
+.pack-switch {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  max-width: 420px;
+  margin: 0 auto 20px;
+  border: 0;
+  padding: 0;
+}
+.pack-choice {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  border: 0.5px solid #dad9d6;
+  border-radius: 14px;
+  background: var(--card);
+  font-family: inherit;
+  text-align: left;
+  cursor: pointer;
+  color: var(--ink);
+}
+.pack-choice.on {
+  border-color: var(--ink);
+  box-shadow: 0 0 0 1.5px var(--ink);
+}
+.pack-choice.is-pending {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+.pack-level {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 12px;
+  font-weight: 700;
+  color: #d13415;
+}
+.pack-title {
+  font-weight: 700;
+  font-size: 14px;
+}
+.pack-count {
+  font-size: 12px;
+  color: var(--muted);
+}
