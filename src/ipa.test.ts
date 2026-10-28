@@ -23,10 +23,16 @@ describe("IPA transcription", () => {
     expect(ipaFor("collateral")).toBe("/kəˈlætɝəl/");
   });
 
-  it("returns undefined for terms the dictionary does not list", () => {
-    // Abbreviations are absent on purpose — a guessed transcription is worse
-    // than none. Callers must render nothing rather than an invented string.
-    expect(ipaFor("p/e")).toBeUndefined();
+  it("covers abbreviations from the manual table, not by guessing", () => {
+    // The dictionary has no p/e; the script adds it from a table where every
+    // entry is verifiable from the word itself (letter names, compounds).
+    expect(ipaFor("p/e")).toBe("/ˌpi ˈi/");
+    expect(ipaFor("capex")).toBe("/ˈkæpɛks/");
+    expect(ipaFor("backtest")).toBe("/ˈbæktɛst/");
+  });
+
+  it("returns undefined for ids that are not in the table at all", () => {
+    // Callers must render nothing rather than invent a transcription.
     expect(ipaFor("not-a-concept")).toBeUndefined();
   });
 });

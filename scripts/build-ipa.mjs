@@ -184,6 +184,28 @@ function ipaFor(term, dict) {
   return parts.length ? `/${parts.join(" ")}/` : null;
 }
 
+/**
+ * CMU does not list these. Abbreviations read as letter names (p/e, eps, ipo);
+ * compounds are built from their parts (back+test, re+balance, over+fit+ting,
+ * tail+winds). Every entry is verifiable from the word itself — none is a guess
+ * at an opaque pronunciation, which is why the dictionary misses were left
+ * blank rather than invented.
+ */
+const MANUAL = {
+  "p/e": "/ˌpi ˈi/",
+  "p/b": "/ˌpi ˈbi/",
+  eps: "/ˌi ˌpi ˈɛs/",
+  ipo: "/ˌaɪ ˌpi ˈoʊ/",
+  opex: "/ˈɑpɛks/",
+  capex: "/ˈkæpɛks/",
+  tailwinds: "/ˈteɪlwɪndz/",
+  backtest: "/ˈbæktɛst/",
+  rebalance: "/ˌriˈbæləns/",
+  overfitting: "/ˌoʊvɝˈfɪtɪŋ/",
+  "survivorship bias": "/sɝˈvaɪvɝʃɪp ˈbaɪəs/",
+  contango: "/kənˈtæŋɡoʊ/",
+};
+
 const dictPath = process.argv.includes("--dict") ? process.argv[process.argv.indexOf("--dict") + 1] : null;
 if (!dictPath || !existsSync(dictPath)) {
   console.error("Usage: node scripts/build-ipa.mjs --dict <cmudict.dict>");
@@ -206,7 +228,7 @@ for (const pack of PACKS) {
   const course = JSON.parse(read(file, "utf8"));
   for (const concept of course.concepts) {
     total += 1;
-    const ipa = ipaFor(concept.term, dict);
+    const ipa = MANUAL[concept.id] ?? ipaFor(concept.term, dict);
     if (ipa) {
       out.words[concept.id] = ipa;
       covered += 1;
