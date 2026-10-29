@@ -162,8 +162,11 @@ function App() {
       ALL_PACKS.map((pack) => ({
         id: pack.id,
         level: pack.level,
-        title: pack.title,
-        goal: pack.goal,
+        // The picker must follow the interface language; the registry carries
+        // both names. Rendering pack.title unconditionally showed a Chinese
+        // course list inside the English UI.
+        title: lang === "zh-CN" ? pack.title : pack.titleEn,
+        goal: lang === "zh-CN" ? pack.goal : pack.goalEn,
         conceptCount: pack.conceptCount,
         ready: Boolean(courseFor(pack.id, lang)) || pack.status === "ready" || pack.status === "building",
         legacy: pack.legacy,

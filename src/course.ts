@@ -16,7 +16,9 @@ interface PackMeta {
   id: string;
   level: number;
   title: string;
+  titleEn: string;
   goal: string;
+  goalEn: string;
   conceptCount: number;
   status: string;
   legacy?: boolean;
