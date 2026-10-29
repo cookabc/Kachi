@@ -12,6 +12,9 @@ The interface defaults to English; 中文 is one tap away. Content lives in
   <img src="docs/images/home.png" width="880" alt="Kachi home: lesson view on the left, course progress and learning path on the right">
 </p>
 
+The screenshot above shows the default pack (40 concepts) — the home screen always
+reports the pack you are currently in, not the combined total.
+
 ## Courses
 
 Packs unlock in level order; each pairs confusable terms so the distinction is
