@@ -2,7 +2,7 @@ import { Hedgehog } from "../art";
 import type { Course, LearnerState } from "../domain";
 import { duePairIds, missHistory } from "../engine";
 import { conceptOf, PRACTICE_ROUND } from "../flow";
-import { localizedTerm } from "../localization";
+import { zhTermFor } from "../localization";
 import type { Lang, UiText } from "../ui";
 
 /** The terms due for practice, grouped by the unit they live in.
@@ -27,8 +27,7 @@ export function practiceTargets(
   for (const id of focus) {
     const concept = conceptOf(course, id)!;
     const list = byUnit.get(concept.unit) ?? [];
-    const label =
-      lang === "zh-CN" ? concept.termZh || localizedTerm(id).termZh || concept.term : concept.term;
+    const label = lang === "zh-CN" ? (zhTermFor(concept) ?? concept.term) : concept.term;
     list.push(label);
     byUnit.set(concept.unit, list);
   }

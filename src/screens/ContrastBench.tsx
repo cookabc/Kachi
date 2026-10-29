@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { artIdForLabel, TermArt } from "../art";
+import { artIdForLabel, prefersGeneratedArt, TermArt } from "../art";
 import type { Concept, Course } from "../domain";
 import { conceptOf } from "../flow";
-import { localizedTerm } from "../localization";
+import { zhTermFor } from "../localization";
 import type { Lang, UiText } from "../ui";
 
 /**
@@ -34,13 +34,20 @@ export function ContrastBench({
   t: UiText;
 }) {
   const twin = conceptOf(course, concept.mixUp);
+  const gen = prefersGeneratedArt(course);
   const [split, setSplit] = useState(50);
   const track = useRef<HTMLDivElement>(null);
   const dragging = useRef(false);
 
   const isZh = lang === "zh-CN";
-  const zh = isZh ? localizedTerm(concept.id) : null;
-  const twinZh = twin && isZh ? localizedTerm(twin.id) : null;
+  // Same rule as the glossary: a gloss equal to the English term is not a
+  // translation, so it is not printed.
+  const gloss = (item: { id: string; term: string; termZh?: string }) => {
+    const value = zhTermFor(item);
+    return value && value.toLowerCase() !== item.term.toLowerCase() ? { termZh: value } : null;
+  };
+  const zh = isZh ? gloss(concept) : null;
+  const twinZh = twin && isZh ? gloss(twin) : null;
 
   const setFromClientX = useCallback((clientX: number) => {
     const element = track.current;
@@ -123,7 +130,7 @@ export function ContrastBench({
       >
         <div className="bench__side bench__side--a" style={{ width: `${split}%` }} aria-hidden={split < 22}>
           <div className="bench__term">
-            <TermArt id={artIdForLabel(concept.term)} size="sm" />
+            <TermArt id={artIdForLabel(concept.term)} size="sm" preferGenerated={gen} />
             <div>
               <strong>{concept.term}</strong>
               {zh && <span className="bench__zh">{zh.termZh}</span>}
@@ -142,7 +149,7 @@ export function ContrastBench({
           aria-hidden={split > 78}
         >
           <div className="bench__term">
-            <TermArt id={artIdForLabel(twin.term)} size="sm" />
+            <TermArt id={artIdForLabel(twin.term)} size="sm" preferGenerated={gen} />
             <div>
               <strong>{twin.term}</strong>
               {twinZh && <span className="bench__zh">{twinZh.termZh}</span>}

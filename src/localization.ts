@@ -46,3 +46,18 @@ export const termLocalization: Record<string, { termZh: string }> = {
 export function localizedTerm(id: string) {
   return termLocalization[id] ?? { termZh: id };
 }
+
+/**
+ * The Chinese name to show for a concept.
+ *
+ * Generated packs carry it on the concept itself (`termZh`); the hand-written
+ * pack keeps its glosses in the table above. Reading only the table made every
+ * T1-T5 term render its English name as the "Chinese" gloss — the glossary
+ * showed `indexindex`, `auctionauction` — because the fallback is the id.
+ */
+export function zhTermFor(concept: { id: string; term: string; termZh?: string }): string | undefined {
+  const value = concept.termZh ?? termLocalization[concept.id]?.termZh;
+  if (!value) return undefined;
+  // A gloss identical to the English term is not a translation.
+  return value.toLowerCase() === concept.term.toLowerCase() ? undefined : value;
+}

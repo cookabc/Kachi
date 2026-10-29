@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { artForSize } from "./art";
+import { artForSize, prefersGeneratedArt } from "./art";
 import { artAssetElement, hasAsset } from "./art-assets";
 import { course } from "./course";
 
@@ -30,5 +30,27 @@ describe("generated art assets", () => {
       })
       .map((concept) => concept.id);
     expect(placeholders).toEqual([]);
+  });
+});
+
+describe("one art language per pack", () => {
+  // Eleven ids exist in both systems (hand-drawn SVG and generated raster).
+  // Before this rule, a generated pack rendered those eleven in the old style
+  // and everything else in the new one — two visual languages inside one pack.
+  it("generated packs draw raster even for ids that also have hand-drawn art", () => {
+    // "margin" is one of the eleven.
+    const html = artForSize("margin", "hero", true);
+    expect(html).toContain("<img");
+  });
+
+  it("the legacy pack keeps hand-drawn art even for ids that also have a raster file", () => {
+    const html = artForSize("margin", "hero", false);
+    expect(html.startsWith("<svg")).toBe(true);
+  });
+
+  it("flags exactly the legacy pack as hand-drawn", () => {
+    expect(prefersGeneratedArt({ packId: "hedge-or-pledge" } as never)).toBe(false);
+    expect(prefersGeneratedArt({ packId: "t1-finance-news" } as never)).toBe(true);
+    expect(prefersGeneratedArt({ packId: "t5-quant-research" } as never)).toBe(true);
   });
 });

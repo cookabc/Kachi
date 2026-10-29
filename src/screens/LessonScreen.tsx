@@ -1,11 +1,11 @@
 import { useEffect } from "react";
-import { artIdForLabel, TermArt } from "../art";
+import { artIdForLabel, prefersGeneratedArt, TermArt } from "../art";
 import { speak } from "../audio";
 import { HeartRow } from "../chrome";
 import type { Course } from "../domain";
 import { conceptOf, type PresentedExercise, type TeachMode } from "../flow";
 import { ipaFor } from "../ipa";
-import { localizedTerm } from "../localization";
+import { zhTermFor } from "../localization";
 import type { Lang, UiText } from "../ui";
 
 export type Phase = "teach" | "question" | "feedback" | "complete" | "fail";
@@ -101,6 +101,7 @@ export function LessonScreen(props: {
         {presented && (
           <PromptBody
             presented={presented}
+            generated={prefersGeneratedArt(props.course)}
             t={t}
             selection={props.selection}
             locked={phase === "feedback"}
@@ -164,18 +165,19 @@ export function LessonScreen(props: {
 }
 
 function TeachCard({ termId, course, t, lang }: { termId: string; course: Course; t: UiText; lang: Lang }) {
+  const gen = prefersGeneratedArt(course);
   const concept = conceptOf(course, termId);
   if (!concept) return null;
   const sibling = conceptOf(course, concept.mixUp);
   // Generated packs carry the Chinese name natively; the legacy pack falls
   // back to its gloss map. The en UI never shows it.
-  const termZh = lang === "zh-CN" ? (concept.termZh ?? localizedTerm(termId).termZh) : null;
+  const termZh = lang === "zh-CN" ? (zhTermFor(concept) ?? null) : null;
   const mixLabel = concept.mixUpType ? t.lesson.mixTypes[concept.mixUpType] : null;
   return (
     <>
       <div className="kicker2">{t.lesson.teachKicker(termZh)}</div>
       <div className="teach-art">
-        <TermArt id={concept.id} size="hero" />
+        <TermArt id={concept.id} size="hero" preferGenerated={gen} />
       </div>
       {concept.caption && <p className="teach-cap">{concept.caption}</p>}
       <div className="teach-term">
@@ -232,7 +234,7 @@ function TeachCard({ termId, course, t, lang }: { termId: string; course: Course
         <span>{concept.example}</span>
       </button>
       <div className="teach-mix">
-        <TermArt id={sibling ? sibling.id : concept.mixUp} size="xs" />
+        <TermArt id={sibling ? sibling.id : concept.mixUp} size="xs" preferGenerated={gen} />
         <div>
           <strong>{t.lesson.mixCue(mixLabel)}</strong>
           {t.lesson.mixColon}
@@ -246,6 +248,7 @@ function TeachCard({ termId, course, t, lang }: { termId: string; course: Course
 }
 
 function RecapCard({ terms, course, t }: { terms: string[]; course: Course; t: UiText }) {
+  const gen = prefersGeneratedArt(course);
   return (
     <>
       <div className="kicker2">{t.lesson.recapKicker}</div>
@@ -258,7 +261,7 @@ function RecapCard({ terms, course, t }: { terms: string[]; course: Course; t: U
           if (!concept) return null;
           return (
             <div className="recap-item" key={id}>
-              <TermArt id={id} size="sm" />
+              <TermArt id={id} size="sm" preferGenerated={gen} />
               <span>{concept.term}</span>
             </div>
           );
@@ -288,6 +291,8 @@ function HintCard({ presented, course, t }: { presented: PresentedExercise; cour
 
 function PromptBody(props: {
   presented: PresentedExercise;
+  /** Generated packs draw raster art; see prefersGeneratedArt. */
+  generated: boolean;
   t: UiText;
   selection: string | boolean | null;
   locked: boolean;
@@ -297,7 +302,7 @@ function PromptBody(props: {
   onPick: (value: string | boolean) => void;
   onMatch: (side: "left" | "right", id: string) => void;
 }) {
-  const { presented, selection, locked, t } = props;
+  const { presented, selection, locked, t, generated } = props;
   // A listen question speaks its answer on arrival. The user activated the page
   // by starting the lesson, so synthesis is allowed; if it is still blocked the
   // replay button below is the fallback. speak() cancels the previous utterance,
@@ -399,7 +404,11 @@ function PromptBody(props: {
                 disabled={locked}
                 onClick={() => props.onPick(option.text)}
               >
-                <TermArt id={option.art || artIdForLabel(option.text)} size="lg" />
+                <TermArt
+                  id={option.art || artIdForLabel(option.text)}
+                  size="lg"
+                  preferGenerated={generated}
+                />
                 <span className="cap">{option.text}</span>
               </button>
             );
@@ -424,7 +433,7 @@ function PromptBody(props: {
                 disabled={locked}
                 onClick={() => props.onPick(value)}
               >
-                <TermArt id={value ? "true" : "false"} size="lg" />
+                <TermArt id={value ? "true" : "false"} size="lg" preferGenerated={generated} />
                 <span className="cap">{value ? t.lesson.tfLabels.true : t.lesson.tfLabels.false}</span>
               </button>
             );
@@ -453,7 +462,7 @@ function PromptBody(props: {
                 disabled={locked}
                 onClick={() => props.onPick(word)}
               >
-                <TermArt id={artIdForLabel(word)} size="sm" />
+                <TermArt id={artIdForLabel(word)} size="sm" preferGenerated={generated} />
                 <span>{word}</span>
               </button>
             );
@@ -471,6 +480,7 @@ function PromptBody(props: {
                   key={chip.id}
                   chip={chip}
                   side="left"
+                  generated={generated}
                   lockedIds={props.lockedIds}
                   selected={props.selL === chip.id}
                   disabled={locked}
@@ -484,6 +494,7 @@ function PromptBody(props: {
                   key={chip.id}
                   chip={chip}
                   side="right"
+                  generated={generated}
                   lockedIds={props.lockedIds}
                   selected={props.selR === chip.id}
                   disabled={locked}
@@ -594,6 +605,7 @@ function FillStory({
 
 function MatchChip(props: {
   chip: { id: string; text: string };
+  generated: boolean;
   side: "left" | "right";
   lockedIds: string[];
   selected: boolean;
@@ -609,7 +621,7 @@ function MatchChip(props: {
       disabled={props.disabled || isLocked}
       onClick={() => props.onMatch(props.side, props.chip.id)}
     >
-      {props.side === "left" && <TermArt id={props.chip.id} size="xs" />}
+      {props.side === "left" && <TermArt id={props.chip.id} size="xs" preferGenerated={props.generated} />}
       {props.chip.text}
     </button>
   );

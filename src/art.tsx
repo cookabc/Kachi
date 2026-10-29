@@ -6,6 +6,7 @@
 // styles.css. Never share hex values across the two — recolor scenes here,
 // recolor chrome there.
 import { artAssetElement } from "./art-assets";
+import type { Course } from "./domain";
 import { OUT_OF_SYLLABUS_ART } from "./out-of-syllabus";
 
 export const HEDGEHOG_PATHS =
@@ -398,18 +399,45 @@ export const HERO_ART: Record<string, string> = {
   ),
 };
 
-export function artForSize(id: string, size: ArtSize): string {
+/**
+ * Resolve art for an id.
+ *
+ * Two systems coexist: hand-drawn inline SVG (the original pack) and generated
+ * raster images (every pack since T1). Eleven ids exist in both, which used to
+ * make a single pack render in two art styles side by side.
+ *
+ * The rule is per pack, not per id: a pack presents one visual language.
+ * `preferGenerated` is set by callers that know which pack they are drawing
+ * for, so the generated packs stay entirely raster and the legacy pack stays
+ * entirely hand-drawn — including the eleven ids the generator also covers.
+ */
+/** The one pack whose concepts predate generated art. */
+const LEGACY_PACK = "hedge-or-pledge";
+
+/**
+ * Whether this pack should draw generated raster art.
+ *
+ * Eleven ids exist in both systems. Choosing per pack keeps each pack in one
+ * visual language; choosing per id made a single pack show two.
+ */
+export function prefersGeneratedArt(course: Course): boolean {
+  return course.packId !== LEGACY_PACK;
+}
+
+export function artForSize(id: string, size: ArtSize, preferGenerated = false): string {
   const base = id.replace(/_u1intro$/, "");
-  // Generated assets (content/art-manifest.json) take priority: the rebuild
-  // ships 231 concepts, past the hand-drawing scale. Concepts still covered by
-  // the legacy inline SVGs keep those, so the current pack's look is unchanged.
+  const legacyHero = size === "hero" ? (HERO_ART[id] ?? HERO_ART[base]) : undefined;
+  const legacy = TERM_ART[id] ?? TERM_ART[base];
+
+  if (preferGenerated) {
+    const asset = artAssetElement(id, size) ?? artAssetElement(base, size);
+    if (asset) return asset;
+  }
+  if (legacyHero) return legacyHero;
+  if (legacy) return legacy;
   const asset = artAssetElement(id, size) ?? artAssetElement(base, size);
   if (asset) return asset;
-  if (size === "hero") {
-    const scene = HERO_ART[id] ?? HERO_ART[base];
-    if (scene) return scene;
-  }
-  return TERM_ART[id] ?? TERM_ART[base] ?? TERM_ART.joke;
+  return TERM_ART.joke;
 }
 
 // Raw scene markup (svg shell stripped) for embedding into the share card's
@@ -420,10 +448,23 @@ export function heroSceneInner(id: string): string | null {
   return svg.replace(/^<svg[^>]*>/, "").replace(/<\/svg>$/, "");
 }
 
-export function TermArt({ id, size }: { id: string; size: ArtSize }) {
+export function TermArt({
+  id,
+  size,
+  preferGenerated = false,
+}: {
+  id: string;
+  size: ArtSize;
+  /** Generated raster over hand-drawn SVG. Callers that know the pack set this
+   *  so a pack never mixes the two art systems. */
+  preferGenerated?: boolean;
+}) {
   return (
-    /* biome-ignore lint/security/noDangerouslySetInnerHtml: static, code-owned SVG art markup */
-    <span className={`term-art ${size}`} dangerouslySetInnerHTML={{ __html: artForSize(id, size) }} />
+    <span
+      className={`term-art ${size}`}
+      /* biome-ignore lint/security/noDangerouslySetInnerHtml: static, code-owned SVG art markup */
+      dangerouslySetInnerHTML={{ __html: artForSize(id, size, preferGenerated) }}
+    />
   );
 }
 

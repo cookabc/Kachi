@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { ShareIcon } from "../chrome";
 import type { Concept, Course, LearnerState } from "../domain";
-import { localizedTerm } from "../localization";
+import { zhTermFor } from "../localization";
 import type { Lang, UiText } from "../ui";
 import { ContrastBench } from "./ContrastBench";
 
@@ -34,7 +34,7 @@ export function Glossary({
   const q = query.trim().toLowerCase();
   const matches = (concept: Concept) =>
     !q ||
-    `${concept.term} ${concept.definition} ${concept.mixUp} ${localizedTerm(concept.id).termZh}`
+    `${concept.term} ${concept.definition} ${concept.mixUp} ${zhTermFor(concept) ?? ""}`
       .toLowerCase()
       .includes(q);
   // Cards collapse to one line by default: 40 expanded benches were 21.6
@@ -82,6 +82,10 @@ export function Glossary({
                 const seen = state.seenConceptIds.includes(concept.id);
                 const twin = course.concepts.find((item) => item.id === concept.mixUp);
                 const open = isOpen(concept.id);
+                // A gloss identical to the English term is not a translation —
+                // printing both produced "indexindex".
+                const zhRaw = zhTermFor(concept);
+                const zh = zhRaw && zhRaw.toLowerCase() !== concept.term.toLowerCase() ? zhRaw : undefined;
                 return (
                   <article className={`g-card${open ? " open" : ""}`} key={concept.id}>
                     {seen && (
@@ -103,7 +107,7 @@ export function Glossary({
                     >
                       <h3>
                         {concept.term}
-                        {lang === "zh-CN" && <span className="zh">{localizedTerm(concept.id).termZh}</span>}
+                        {lang === "zh-CN" && zh && <span className="zh">{zh}</span>}
                         {seen && (
                           <span className="seen" title={t.glossary.seenTitle}>
                             ✓
