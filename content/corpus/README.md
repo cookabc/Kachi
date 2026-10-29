@@ -1,39 +1,32 @@
-# 语料说明 / Corpus
+# Corpus notes / 语料说明
 
-这里的文件是**词库分层的证据**，不是课程内容。`docs/vocabulary-system.zh-CN.md` 里每一条
-「这个词该教」的判断都应该能在这里找到出处。
+The files here are **evidence for how the word list was tiered**, not course content. Every "this word should be taught" judgement in `docs/vocabulary-system.md` should be traceable to something in this directory.
 
-## 文件
+## Files
 
-| 文件 | 内容 | 用途 |
-|---|---|---|
-| `headlines.json` | 172 条真实财经新闻标题（`econ` / `metal` / `company` / `forex` 四域） | 校验 T1 层：学完能否读懂首屏标题 |
-| `1.txt`–`6.txt` | 6 篇完整正文（约 2,300 词）：银行财报、外汇宏观、印度债券、炼油利润、矿业财报、公司快讯 | 校验 T2–T5 层：正文里的术语密度远高于标题 |
+| File | Contents | Purpose |
+| --- | --- | --- |
+| `headlines.json` | 172 real finance headlines (`econ` / `metal` / `company` / `forex` domains) | Validates tier T1: can you read a front page after finishing it |
+| `1.txt`–`6.txt` | 6 full articles (about 2,300 words): bank earnings, FX macro, Indian bonds, refining margins, mining results, company bulletins | Validates tiers T2–T5: terminology density in body text is far higher than in headlines |
 
-## 为什么用正文而不只是标题
+## Why body text, not just headlines
 
-标题是压缩过的。实测同一批新闻：
+Headlines are compressed. Measured on the same batch of news:
 
-- 标题里出现 `bond`/`yield`/`inflation` 这类宏观词，但几乎没有 `earnings-per-share`、
-  `funding costs`、`credit quality`、`capital ratios`、`book values`、`unrealised losses`；
-- 正文一篇就带出这六七个术语。
+- Headlines carry macro words such as `bond` / `yield` / `inflation`, but almost never `earnings-per-share`, `funding costs`, `credit quality`, `capital ratios`, `book values` or `unrealised losses`;
+- A single article brings out six or seven of those terms.
 
-**只用标题做语料，会把词库做成「宏观新闻词表」。**
+**Building the word list from headlines alone would turn it into a macro-news glossary.**
 
-## 采集方式
+## How it was collected
 
-- 标题：商品资讯 MCP 的 `search_news`，分类 `Economics` / `Metal` / `TopNews` / `Forex`，
-  时间 2026-08 至 2026-10。
-- 正文：同源 `get_news_detail`，挑的是术语密度高的几类（银行财报、外汇周评、债市、
-  炼油利润、矿业财报）。
+- Headlines: the commodity-news MCP's `search_news`, categories `Economics` / `Metal` / `TopNews` / `Forex`, covering 2026-08 to 2026-10.
+- Articles: the same source's `get_news_detail`, choosing the high-density categories (bank earnings, weekly FX commentary, bond markets, refining margins, mining results).
 
-## 授权
+## Licensing
 
-标题与正文均来自公开新闻，**只用于词频统计与验证，不进入课程内容**。
-课程里的例句一律原创（见 `content/packs/*/course.json` 的 `sources` 字段），
-不复用这里的原文。保留本目录是为了让「为什么教这个词」可复核。
+Both headlines and articles come from public news and are **used only for word-frequency measurement and validation; they do not enter the course content**. Example sentences in the course are all original (see the `sources` field of `content/packs/*/course.json`) and never reuse the text here. This directory is kept so that "why is this word taught" can be re-checked.
 
-## 校验用法
+## How the check uses it
 
-`scripts/validate-content.mjs` 会读这里的文件，检查每个 pack 的 `concept.term`
-在对应语料里至少出现过一次。新增 pack 时，先补语料，再写词表。
+`scripts/validate-content.mjs` reads these files and checks that every pack's `concept.term` appears at least once in the corresponding corpus. When adding a pack, add the corpus first, then write the word list.
