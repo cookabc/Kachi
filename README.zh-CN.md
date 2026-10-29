@@ -45,6 +45,15 @@ pnpm run generate:icons   # 由 public/icon.svg 重建 PNG 图标（需要 rsvg-
 - `public/icon.svg` 是图标唯一出处；生成的 PNG 变体要提交，和 `og-image.png` 一样。
 - 深色模式有意不做：墨纸「笔记本」就是品牌。除非有真实夜间阅读场景，不要因为「缺了」而加。
 
+## 文档
+
+每份文档以英文为主，中文版并列放在旁边。
+
+| 英文 | 中文 | 内容 |
+| --- | --- | --- |
+| [docs/vocabulary-system.md](docs/vocabulary-system.md) | [docs/vocabulary-system.zh-CN.md](docs/vocabulary-system.zh-CN.md) | 词库为何重做、六个层级、混淆对规则、语料门禁 |
+| [docs/upgrade-plan.md](docs/upgrade-plan.md) | [docs/upgrade-plan.zh-CN.md](docs/upgrade-plan.zh-CN.md) | 还没做的，以及明确不做的 |
+
 ## 许可
 
 - 代码：[AGPL-3.0-only](LICENSE)。

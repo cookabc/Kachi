@@ -1,6 +1,6 @@
 # 语料说明 / Corpus
 
-这里的文件是**词库分层的证据**，不是课程内容。`docs/vocabulary-system.md` 里每一条
+这里的文件是**词库分层的证据**，不是课程内容。`docs/vocabulary-system.zh-CN.md` 里每一条
 「这个词该教」的判断都应该能在这里找到出处。
 
 ## 文件

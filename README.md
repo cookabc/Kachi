@@ -60,6 +60,15 @@ pnpm run generate:icons   # rebuild PNG icons from public/icon.svg (needs rsvg-c
   is the brand. Revisit only with a real night-reading use case, not "because
   it's missing".
 
+## Docs
+
+Every document leads in English, with a Chinese edition beside it.
+
+| English | 中文 | What it covers |
+| --- | --- | --- |
+| [docs/vocabulary-system.md](docs/vocabulary-system.md) | [docs/vocabulary-system.zh-CN.md](docs/vocabulary-system.zh-CN.md) | Why the word list was rebuilt, the six tiers, confusion-pair rules, the corpus gates |
+| [docs/upgrade-plan.md](docs/upgrade-plan.md) | [docs/upgrade-plan.zh-CN.md](docs/upgrade-plan.zh-CN.md) | What is not built yet, and what is deliberately not being built |
+
 ## License
 
 - Code: [AGPL-3.0-only](LICENSE).

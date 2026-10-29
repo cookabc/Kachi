@@ -1,50 +1,44 @@
-# Kachi 待办
+# Kachi backlog
 
-> 只列**还没做**的。已完成项不在此处留痕——它们要么在代码里，要么在 git 历史里。
+> Only lists what is **not done yet**. Finished work leaves no trace here — it lives in the code or in the git history.
 
-## 结构背景（一次性迁移，已落地）
+## Structural background (one-off migration, already landed)
 
-美术体系已从「内联 SVG 字符串」迁到「外部图片文件 + 清单」：`public/art/{id}.webp`
-加 `content/art-manifest.json`，`src/art-assets.ts` 负责尺寸映射，`art.test.ts`
-断言每个概念 id 都有对应文件。之所以是这条结构，是因为手绘不 scale——扩到 238 概念
-后有 172 张生成插画与 40 张手绘共存（手绘优先生效）。再改美术链路时保持这个形状。
+The art system moved from inline SVG strings to external image files plus a manifest: `public/art/{id}.webp` with `content/art-manifest.json`, where `src/art-assets.ts` owns the size mapping and `art.test.ts` asserts that every concept id has a file. That shape is deliberate, because hand-drawn art does not scale: after growing to 238 concepts, 172 generated illustrations coexist with 40 hand-drawn ones (hand-drawn wins where both exist). Keep this shape when changing the art pipeline again.
 
-## 一、产品差异化
+## 1. Product differentiation
 
-### 例句朗读预生成（可选）
+### Pre-generating example-sentence audio (optional)
 
-词头朗读已用 fish.audio 预生成（201 词 × 英/美 = 6MB，`scripts/generate-audio.mjs`）。
-例句仍走运行时合成：长约 8 倍，全量预生成会把离线包从 9MB 推到 26MB。
+Headword audio is already pre-generated with fish.audio (201 words × US/UK = 6MB, `scripts/generate-audio.mjs`). Example sentences still go through runtime synthesis: they are roughly 8× longer, so pre-generating everything would push the offline bundle from 9MB to 26MB.
 
-若要补，直接跑同一脚本扩展即可。网络前提：本机 DNS 对 api.fish.audio 返回
-被污染的地址，脚本自己走 Cloudflare DoH 解析后以 --resolve 请求，不要改成
-系统解析。免费模型只有 `s2.1-pro-free`。
+To add it, extend the same script. Network caveat: this machine's DNS returns a poisoned address for `api.fish.audio`, so the script resolves through Cloudflare DoH itself and issues requests with `--resolve`. Do not switch it to system resolution. The free model is only `s2.1-pro-free`.
 
-## 二、内容
+## 2. Content
 
-### 新增 pack
+### Adding a pack
 
-六层规划已全部落地（T1 42 / T2 49 / T3 38 / T4 37 / T5 32 / T6 40，共 238 词条）。
-继续扩内容时的流程：
+The six-tier plan is fully shipped (T1 42 / T2 49 / T3 38 / T4 37 / T5 32 / T6 40 — 238 concepts). To extend further:
 
-1. 词表先过语料验证——每个词必须在目标语料里出现（`scripts/validate-content.mjs`
-   的语料门禁会拦）
-2. `content/packs/<id>/source.mjs` 写 UNITS/CONCEPTS/EN + SOURCES
-3. `pnpm generate:course --pack <id>` 生成双语 course.json
-4. `pnpm generate:art --pack <id>` 生成插画（约 2–4 分钟/张）
-5. 在 `content/packs/index.json` 注册，`src/course.ts` 的 LOADERS 加 chunk
+1. Check the word list against a corpus first — every word must appear in its target corpus (the corpus gate in `scripts/validate-content.mjs` enforces this).
+2. Write `UNITS` / `CONCEPTS` / `EN` + `SOURCES` in `content/packs/<id>/source.mjs`.
+3. `pnpm generate:course --pack <id>` produces the bilingual `course.json`.
+4. `pnpm generate:art --pack <id>` produces the illustrations (about 2–4 minutes each).
+5. Register it in `content/packs/index.json` and add a chunk to `LOADERS` in `src/course.ts`.
 
-**溯源会自动挂**：SOURCES 登记真实文章（file 指向语料），generator 用同一个
-`corpusHasTerm` 匹配。教材与论文用 `CITES` 显式映射（无 file 也行）。
-综合稿与原创示范稿不要登记为来源——它们会制造「有出处」的假象。
+**Provenance attaches automatically**: `SOURCES` registers real articles (with `file` pointing at the corpus) and the generator matches with the same `corpusHasTerm`. Textbooks and papers map explicitly through `CITES` (no `file` needed). Do not register roundups or original demo copy as sources — they create a false impression of having a citation.
 
-## 明确不做
+## Explicitly not doing
 
-| 不做                | 理由                                                                                            |
-| ------------------- | ----------------------------------------------------------------------------------------------- |
-| 深色模式            | 墨纸「笔记本」就是品牌（2026-10-04 决策），需真实夜间阅读场景才重议                             |
-| FSRS 自适应         | 固定阶梯 [1,3,7,14,30,60] 与自适应在当前量级拉不开差距；扩到多 pack 再换                        |
-| 弦图改星图          | 弦图表达「词与词的混淆关系」，是差异化；星图只表达掌握度，两者并存不替换                        |
-| AI 插画替换手绘 SVG | 现有 172 张生成插画与 40 张手绘共存（手绘优先生效）；`art.tsx` 的双色板纪律是品牌本体           |
-| 加原生壳            | Web Push 才是第一个真实后端需求                                                                 |
-| T6 题库重排         | 已复核：每课 ≥3 题型、9.0 题/课、每词中位 6 次，结构合规。`hedge` 15 次是课程主线所致，不是缺陷 |
+| Not doing | Why |
+| --- | --- |
+| Dark mode | Ink-on-paper "notebook" *is* the brand (decision 2026-10-04). Revisit only with a real night-reading use case |
+| FSRS adaptive scheduling | The fixed ladder [1,3,7,14,30,60] and an adaptive system show no difference at this scale. Revisit when there are many more packs |
+| Replacing the chord diagram with a star graph | The chord diagram expresses word-to-word confusion, which is the differentiator. A star graph only expresses mastery. They coexist; neither replaces the other |
+| Replacing hand-drawn SVG with AI art | 172 generated illustrations currently coexist with 40 hand-drawn ones (hand-drawn wins). The two-palette discipline in `art.tsx` is the brand itself |
+| Adding a native shell | Web Push is the first genuine backend requirement |
+| Re-ordering the T6 question bank | Re-checked: every lesson has ≥3 question types, 9.0 questions per lesson, and a median of 6 exposures per word — structurally compliant. The 15 `hedge` occurrences come from the course throughline, not from a defect |
+
+---
+
+中文版见 [upgrade-plan.zh-CN.md](upgrade-plan.zh-CN.md)。
