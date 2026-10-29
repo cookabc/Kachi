@@ -586,7 +586,7 @@
     {
       "id": "u1l1",
       "unit": 1,
-      "title": "怎么验",
+      "title": "How You Test It",
       "icon": "📈",
       "review": false,
       "prompts": [
@@ -957,7 +957,7 @@
     {
       "id": "u1l2",
       "unit": 1,
-      "title": "怎么验（续）",
+      "title": "How You Test It, continued",
       "icon": "📈",
       "review": false,
       "prompts": [
@@ -1178,7 +1178,7 @@
     {
       "id": "u1r",
       "unit": 1,
-      "title": "怎么验 · 回顾",
+      "title": "How You Test It · review",
       "icon": "🏆",
       "review": true,
       "prompts": [
@@ -1460,7 +1460,7 @@
     {
       "id": "u2l1",
       "unit": 2,
-      "title": "怎么骗自己",
+      "title": "How You Fool Yourself",
       "icon": "📈",
       "review": false,
       "prompts": [
@@ -1857,7 +1857,7 @@
     {
       "id": "u2l2",
       "unit": 2,
-      "title": "怎么骗自己（续）",
+      "title": "How You Fool Yourself, continued",
       "icon": "📈",
       "review": false,
       "prompts": [
@@ -2104,7 +2104,7 @@
     {
       "id": "u2r",
       "unit": 2,
-      "title": "怎么骗自己 · 回顾",
+      "title": "How You Fool Yourself · review",
       "icon": "🏆",
       "review": true,
       "prompts": [
@@ -2386,7 +2386,7 @@
     {
       "id": "u3l1",
       "unit": 3,
-      "title": "绩效怎么读",
+      "title": "Reading the Numbers",
       "icon": "📈",
       "review": false,
       "prompts": [
@@ -2805,7 +2805,7 @@
     {
       "id": "u3l2",
       "unit": 3,
-      "title": "绩效怎么读（续）",
+      "title": "Reading the Numbers, continued",
       "icon": "📈",
       "review": false,
       "prompts": [
@@ -3124,7 +3124,7 @@
     {
       "id": "u3r",
       "unit": 3,
-      "title": "绩效怎么读 · 回顾",
+      "title": "Reading the Numbers · review",
       "icon": "🏆",
       "review": true,
       "prompts": [
@@ -3500,7 +3500,7 @@
     {
       "id": "u4l1",
       "unit": 4,
-      "title": "组合怎么搭",
+      "title": "Building the Portfolio",
       "icon": "📈",
       "review": false,
       "prompts": [
@@ -3819,7 +3819,7 @@
     {
       "id": "u4l2",
       "unit": 4,
-      "title": "组合怎么搭（续）",
+      "title": "Building the Portfolio, continued",
       "icon": "📈",
       "review": false,
       "prompts": [
@@ -4138,7 +4138,7 @@
     {
       "id": "u4r",
       "unit": 4,
-      "title": "组合怎么搭 · 回顾",
+      "title": "Building the Portfolio · review",
       "icon": "🏆",
       "review": true,
       "prompts": [
@@ -4467,7 +4467,7 @@
     {
       "id": "u5l1",
       "unit": 5,
-      "title": "成本吃多少",
+      "title": "What Costs Eat",
       "icon": "📈",
       "review": false,
       "prompts": [
@@ -4688,7 +4688,7 @@
     {
       "id": "u5l2",
       "unit": 5,
-      "title": "成本吃多少（续）",
+      "title": "What Costs Eat, continued",
       "icon": "📈",
       "review": false,
       "prompts": [
@@ -4909,7 +4909,7 @@
     {
       "id": "u5r",
       "unit": 5,
-      "title": "成本吃多少 · 回顾",
+      "title": "What Costs Eat · review",
       "icon": "🏆",
       "review": true,
       "prompts": [
@@ -5144,7 +5144,7 @@
     {
       "id": "u6l1",
       "unit": 6,
-      "title": "风险怎么量",
+      "title": "Measuring the Risk",
       "icon": "📈",
       "review": false,
       "prompts": [
@@ -5489,7 +5489,7 @@
     {
       "id": "u6l2",
       "unit": 6,
-      "title": "风险怎么量（续）",
+      "title": "Measuring the Risk, continued",
       "icon": "📈",
       "review": false,
       "prompts": [
@@ -5710,7 +5710,7 @@
     {
       "id": "u6r",
       "unit": 6,
-      "title": "风险怎么量 · 回顾",
+      "title": "Measuring the Risk · review",
       "icon": "🏆",
       "review": true,
       "prompts": [

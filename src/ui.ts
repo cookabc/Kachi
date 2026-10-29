@@ -8,9 +8,9 @@ const LANG_KEY = "kachi-lang";
 
 export function loadLang(): Lang {
   try {
-    return localStorage.getItem(LANG_KEY) === "en-US" ? "en-US" : "zh-CN";
+    return localStorage.getItem(LANG_KEY) === "zh-CN" ? "zh-CN" : "en-US";
   } catch {
-    return "zh-CN";
+    return "en-US";
   }
 }
 

@@ -704,7 +704,7 @@
     {
       "id": "u1l1",
       "unit": 1,
-      "title": "一张借条上有什么",
+      "title": "What's on the Certificate",
       "icon": "📈",
       "review": false,
       "prompts": [
@@ -1123,7 +1123,7 @@
     {
       "id": "u1l2",
       "unit": 1,
-      "title": "一张借条上有什么（续）",
+      "title": "What's on the Certificate, continued",
       "icon": "📈",
       "review": false,
       "prompts": [
@@ -1442,7 +1442,7 @@
     {
       "id": "u1r",
       "unit": 1,
-      "title": "一张借条上有什么 · 回顾",
+      "title": "What's on the Certificate · review",
       "icon": "🏆",
       "review": true,
       "prompts": [
@@ -1818,7 +1818,7 @@
     {
       "id": "u2l1",
       "unit": 2,
-      "title": "收益率与计量",
+      "title": "Yields and How They're Measured",
       "icon": "📈",
       "review": false,
       "prompts": [
@@ -2137,7 +2137,7 @@
     {
       "id": "u2l2",
       "unit": 2,
-      "title": "收益率与计量（续）",
+      "title": "Yields and How They're Measured, continued",
       "icon": "📈",
       "review": false,
       "prompts": [
@@ -2456,7 +2456,7 @@
     {
       "id": "u2r",
       "unit": 2,
-      "title": "收益率与计量 · 回顾",
+      "title": "Yields and How They're Measured · review",
       "icon": "🏆",
       "review": true,
       "prompts": [
@@ -2785,7 +2785,7 @@
     {
       "id": "u3l1",
       "unit": 3,
-      "title": "谁在发，发得动吗",
+      "title": "Who Issues, and Does It Sell",
       "icon": "📈",
       "review": false,
       "prompts": [
@@ -3104,7 +3104,7 @@
     {
       "id": "u3l2",
       "unit": 3,
-      "title": "谁在发，发得动吗（续）",
+      "title": "Who Issues, and Does It Sell, continued",
       "icon": "📈",
       "review": false,
       "prompts": [
@@ -3325,7 +3325,7 @@
     {
       "id": "u3r",
       "unit": 3,
-      "title": "谁在发，发得动吗 · 回顾",
+      "title": "Who Issues, and Does It Sell · review",
       "icon": "🏆",
       "review": true,
       "prompts": [
@@ -3607,7 +3607,7 @@
     {
       "id": "u4l1",
       "unit": 4,
-      "title": "发的都是什么债",
+      "title": "Kinds of Debt",
       "icon": "📈",
       "review": false,
       "prompts": [
@@ -4026,7 +4026,7 @@
     {
       "id": "u4l2",
       "unit": 4,
-      "title": "发的都是什么债（续）",
+      "title": "Kinds of Debt, continued",
       "icon": "📈",
       "review": false,
       "prompts": [
@@ -4345,7 +4345,7 @@
     {
       "id": "u4r",
       "unit": 4,
-      "title": "发的都是什么债 · 回顾",
+      "title": "Kinds of Debt · review",
       "icon": "🏆",
       "review": true,
       "prompts": [
@@ -4721,7 +4721,7 @@
     {
       "id": "u5l1",
       "unit": 5,
-      "title": "利率的两种写法",
+      "title": "Two Ways to Quote a Rate",
       "icon": "📈",
       "review": false,
       "prompts": [
@@ -5040,7 +5040,7 @@
     {
       "id": "u5l2",
       "unit": 5,
-      "title": "利率的两种写法（续）",
+      "title": "Two Ways to Quote a Rate, continued",
       "icon": "📈",
       "review": false,
       "prompts": [
@@ -5261,7 +5261,7 @@
     {
       "id": "u5r",
       "unit": 5,
-      "title": "利率的两种写法 · 回顾",
+      "title": "Two Ways to Quote a Rate · review",
       "icon": "🏆",
       "review": true,
       "prompts": [
@@ -5543,7 +5543,7 @@
     {
       "id": "u6l1",
       "unit": 6,
-      "title": "利差在说什么",
+      "title": "What the Spread Says",
       "icon": "📈",
       "review": false,
       "prompts": [
@@ -5764,7 +5764,7 @@
     {
       "id": "u6l2",
       "unit": 6,
-      "title": "利差在说什么（续）",
+      "title": "What the Spread Says, continued",
       "icon": "📈",
       "review": false,
       "prompts": [
@@ -5985,7 +5985,7 @@
     {
       "id": "u6r",
       "unit": 6,
-      "title": "利差在说什么 · 回顾",
+      "title": "What the Spread Says · review",
       "icon": "🏆",
       "review": true,
       "prompts": [
@@ -6220,7 +6220,7 @@
     {
       "id": "u7l1",
       "unit": 7,
-      "title": "信用与条款",
+      "title": "Ratings and Covenants",
       "icon": "📈",
       "review": false,
       "prompts": [
@@ -6441,7 +6441,7 @@
     {
       "id": "u7l2",
       "unit": 7,
-      "title": "信用与条款（续）",
+      "title": "Ratings and Covenants, continued",
       "icon": "📈",
       "review": false,
       "prompts": [
@@ -6662,7 +6662,7 @@
     {
       "id": "u7r",
       "unit": 7,
-      "title": "信用与条款 · 回顾",
+      "title": "Ratings and Covenants · review",
       "icon": "🏆",
       "review": true,
       "prompts": [

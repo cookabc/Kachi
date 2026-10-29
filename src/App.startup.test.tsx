@@ -3,6 +3,7 @@ import { createRoot, type Root } from "react-dom/client";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import App from "./App";
 import type { Lang } from "./course";
+import { courseFor, DEFAULT_PACK } from "./course";
 import { loadLang } from "./ui";
 
 const { loadCourseMock } = vi.hoisted(() => ({
@@ -131,9 +132,11 @@ async function renderApp() {
   });
 }
 
+// Boot is done once the home tagline is on screen. The signal is the English
+// string because English is the default language now.
 async function waitForHome() {
   const started = Date.now();
-  while (!document.body.textContent?.includes("分清易混的财经英语")) {
+  while (!document.body.textContent?.includes("Tell the mix-ups apart")) {
     if (Date.now() - started > 2000) {
       throw new Error(`still booting: ${document.body.textContent}`);
     }
@@ -172,7 +175,7 @@ describe("startup failures", () => {
     await renderApp();
     await waitForHome();
     expect(document.querySelector(".loading")).toBeNull();
-    expect(document.querySelector("[role='alert']")?.textContent).toContain("暂时读不到学习记录");
+    expect(document.querySelector("[role='alert']")?.textContent).toContain("can't read saved progress");
   });
 
   it("shows the storage alert and logs when a save fails", async () => {
@@ -192,23 +195,22 @@ describe("startup failures", () => {
         await new Promise((resolve) => setTimeout(resolve, 10));
       });
     }
-    expect(document.querySelector("[role='alert']")?.textContent).toContain("暂时读不到学习记录");
+    expect(document.querySelector("[role='alert']")?.textContent).toContain("can't read saved progress");
     expect(errorSpy).toHaveBeenCalledWith("Failed to save learning progress", expect.any(Error));
     errorSpy.mockRestore();
   });
 
-  it("falls back to the bundled Chinese pack when the selected course fails to load", async () => {
+  it("boots the default pack offline, in the restored language", async () => {
+    // Both locales of the default pack ship in the main bundle, so `courseFor`
+    // answers for either one with no fetch. That is what lets the first screen
+    // render offline whatever language was restored.
+    expect(courseFor(DEFAULT_PACK, "en-US")).toBeDefined();
+    expect(courseFor(DEFAULT_PACK, "zh-CN")).toBeDefined();
+
     localStorage.setItem("kachi-lang", "en-US");
-    loadCourseMock.mockImplementation((packId, lang) => {
-      if (lang === "en-US") return Promise.reject(new Error("missing chunk"));
-      return vi
-        .importActual<typeof import("./course")>("./course")
-        .then((actual) => actual.loadCourse(packId, lang));
-    });
     await renderApp();
     await waitForHome();
     expect(document.querySelector(".loading")).toBeNull();
-    expect(document.body.textContent).not.toContain("Preparing your offline study space");
-    expect(loadLang()).toBe("zh-CN");
+    expect(loadLang()).toBe("en-US");
   });
 });

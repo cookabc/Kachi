@@ -2,7 +2,7 @@
 /**
  * generate-art.mjs — batch concept art via `codex exec` + built-in imagegen.
  *
- * Why this shape (see docs/art-pipeline.md for the F0 measurements):
+ * Why this shape:
  *  - codex writes each image to ~/.codex/generated_images/<uuid>/ and does NOT
  *    honor a target path, so this script finds the newest file and renames it.
  *  - The style paragraph is a single constant. Three-image batches proved that

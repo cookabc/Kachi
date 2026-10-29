@@ -123,7 +123,7 @@ treasury(3)  hike(3)  benchmark(3)  portfolio(3)
 > 注意：`interest rate` / `bond` / `yield` / `inflation` / `liquidity` 在 T1/T3 已出现。
 > 跨 pack 重复的词**不重复教学**，只作为该 pack 内的复习项（见第四节「跨 pack 去重」）。
 
-**总计 231 个词条 / 198 个唯一词 / 6 个 pack。** 现有 40 词全部保留在 T6，一个不丢。
+**总计 238 个词条 / 201 个唯一词 / 6 个 pack。** 现有 40 词全部保留在 T6，一个不丢。
 
 ## 三、混淆对必须重做：现有 33 对里只有 3 对是真易混
 
@@ -172,7 +172,7 @@ bond ↔ yield             （同场，bond 6 / yield 4，且方向相反——�
 
 ## 四、跨 pack 去重与复习
 
-231 个词条里有 28 个跨 pack 出现（对应 198 个唯一词），如 `bond`/`yield`/`inflation`/`interest rate`/
+238 个词条里有 32 个词跨 pack 出现（多出 37 个重复条目，对应 201 个唯一词），如 `bond`/`yield`/`inflation`/`interest rate`/
 `liquidity`/`premium`/`futures`/`swap`/`hedge`/`leverage`/`default`/`margin`。
 
 规则：
@@ -197,7 +197,7 @@ bond ↔ yield             （同场，bond 6 / yield 4，且方向相反——�
 1. **词表必须先过语料检验**：新增 pack 的每个词，必须在目标语料里出现过 ≥1 次。
    `scripts/validate-content.mjs` 加一条：读 `content/corpus/<pack>.txt`（该 pack 的目标语料），
    校验每个 `concept.term` 至少命中一次。没语料的词要么补语料，要么说明为什么教它。
-2. **混淆对必须有类型**：`mixUp` 加一个 `mixUpType` 字段（`form` / `opposite` / `cooccur` / `hypernym` / `timing`），
+2. **混淆对必须有类型**：`mixUp` 加一个 `mixUpType` 字段（`form` / `opposite` / `coexist` / `hierarchy` / `timing`），
    校验器拒绝空值。这强迫作者回答「这两个词为什么会混」，而不是「它们同属一个主题」。
 
 ## 七、执行顺序

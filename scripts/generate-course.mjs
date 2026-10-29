@@ -60,13 +60,19 @@ async function loadPack(packId) {
 }
 
 /** 每单元两课，第三课是复习。6 概念 → 每课 3 个。 */
-function lessonsFor(unit) {
+function lessonsFor(unit, locale) {
+  // Lesson titles derive from the unit title, so the suffix must be derived in
+  // the target language too — otherwise the English course renders Chinese unit
+  // names with a Chinese 「续 / 回顾」 tail on the learn screen.
+  const title = locale === "en-US" ? (unit.titleEn ?? unit.title) : unit.title;
+  const continued = locale === "en-US" ? `${title}, continued` : `${title}（续）`;
+  const review = locale === "en-US" ? `${title} · review` : `${title} · 回顾`;
   const concepts = CONCEPTS.filter((c) => c.unit === unit.id);
   const half = Math.ceil(concepts.length / 2);
   return [
-    { id: `u${unit.id}l1`, concepts: concepts.slice(0, half), review: false, title: unit.title },
-    { id: `u${unit.id}l2`, concepts: concepts.slice(half), review: false, title: `${unit.title}（续）` },
-    { id: `u${unit.id}r`, concepts, review: true, title: `${unit.title} · 回顾` },
+    { id: `u${unit.id}l1`, concepts: concepts.slice(0, half), review: false, title },
+    { id: `u${unit.id}l2`, concepts: concepts.slice(half), review: false, title: continued },
+    { id: `u${unit.id}r`, concepts, review: true, title: review },
   ];
 }
 
@@ -306,7 +312,7 @@ function buildCourse(locale) {
 
   const lessons = [];
   for (const unit of UNITS) {
-    for (const lesson of lessonsFor(unit)) {
+    for (const lesson of lessonsFor(unit, locale)) {
       const prompts = [];
       lesson.concepts.forEach((concept, i) => {
         const all = promptsFor(concept, i, lesson.concepts, lesson.id, locale);

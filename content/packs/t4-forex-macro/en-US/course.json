@@ -699,7 +699,7 @@
     {
       "id": "u1l1",
       "unit": 1,
-      "title": "谁对谁",
+      "title": "Which Pair",
       "icon": "📈",
       "review": false,
       "prompts": [
@@ -1018,7 +1018,7 @@
     {
       "id": "u1l2",
       "unit": 1,
-      "title": "谁对谁（续）",
+      "title": "Which Pair, continued",
       "icon": "📈",
       "review": false,
       "prompts": [
@@ -1337,7 +1337,7 @@
     {
       "id": "u1r",
       "unit": 1,
-      "title": "谁对谁 · 回顾",
+      "title": "Which Pair · review",
       "icon": "🏆",
       "review": true,
       "prompts": [
@@ -1666,7 +1666,7 @@
     {
       "id": "u2l1",
       "unit": 2,
-      "title": "往哪走",
+      "title": "Which Way",
       "icon": "📈",
       "review": false,
       "prompts": [
@@ -2085,7 +2085,7 @@
     {
       "id": "u2l2",
       "unit": 2,
-      "title": "往哪走（续）",
+      "title": "Which Way, continued",
       "icon": "📈",
       "review": false,
       "prompts": [
@@ -2404,7 +2404,7 @@
     {
       "id": "u2r",
       "unit": 2,
-      "title": "往哪走 · 回顾",
+      "title": "Which Way · review",
       "icon": "🏆",
       "review": true,
       "prompts": [
@@ -2780,7 +2780,7 @@
     {
       "id": "u3l1",
       "unit": 3,
-      "title": "央行在做什么",
+      "title": "What the Central Bank Is Doing",
       "icon": "📈",
       "review": false,
       "prompts": [
@@ -3199,7 +3199,7 @@
     {
       "id": "u3l2",
       "unit": 3,
-      "title": "央行在做什么（续）",
+      "title": "What the Central Bank Is Doing, continued",
       "icon": "📈",
       "review": false,
       "prompts": [
@@ -3518,7 +3518,7 @@
     {
       "id": "u3r",
       "unit": 3,
-      "title": "央行在做什么 · 回顾",
+      "title": "What the Central Bank Is Doing · review",
       "icon": "🏆",
       "review": true,
       "prompts": [
@@ -3894,7 +3894,7 @@
     {
       "id": "u4l1",
       "unit": 4,
-      "title": "政策的两只手",
+      "title": "Two Hands of Policy",
       "icon": "📈",
       "review": false,
       "prompts": [
@@ -4213,7 +4213,7 @@
     {
       "id": "u4l2",
       "unit": 4,
-      "title": "政策的两只手（续）",
+      "title": "Two Hands of Policy, continued",
       "icon": "📈",
       "review": false,
       "prompts": [
@@ -4434,7 +4434,7 @@
     {
       "id": "u4r",
       "unit": 4,
-      "title": "政策的两只手 · 回顾",
+      "title": "Two Hands of Policy · review",
       "icon": "🏆",
       "review": true,
       "prompts": [
@@ -4716,7 +4716,7 @@
     {
       "id": "u5l1",
       "unit": 5,
-      "title": "物价的四种剧本",
+      "title": "Four Inflation Stories",
       "icon": "📈",
       "review": false,
       "prompts": [
@@ -4937,7 +4937,7 @@
     {
       "id": "u5l2",
       "unit": 5,
-      "title": "物价的四种剧本（续）",
+      "title": "Four Inflation Stories, continued",
       "icon": "📈",
       "review": false,
       "prompts": [
@@ -5158,7 +5158,7 @@
     {
       "id": "u5r",
       "unit": 5,
-      "title": "物价的四种剧本 · 回顾",
+      "title": "Four Inflation Stories · review",
       "icon": "🏆",
       "review": true,
       "prompts": [
@@ -5393,7 +5393,7 @@
     {
       "id": "u6l1",
       "unit": 6,
-      "title": "一国的账本",
+      "title": "A Country's Ledger",
       "icon": "📈",
       "review": false,
       "prompts": [
@@ -5614,7 +5614,7 @@
     {
       "id": "u6l2",
       "unit": 6,
-      "title": "一国的账本（续）",
+      "title": "A Country's Ledger, continued",
       "icon": "📈",
       "review": false,
       "prompts": [
@@ -5835,7 +5835,7 @@
     {
       "id": "u6r",
       "unit": 6,
-      "title": "一国的账本 · 回顾",
+      "title": "A Country's Ledger · review",
       "icon": "🏆",
       "review": true,
       "prompts": [
@@ -6070,7 +6070,7 @@
     {
       "id": "u7l1",
       "unit": 7,
-      "title": "钱在往哪逃",
+      "title": "Where the Money Runs",
       "icon": "📈",
       "review": false,
       "prompts": [
@@ -6291,7 +6291,7 @@
     {
       "id": "u7l2",
       "unit": 7,
-      "title": "钱在往哪逃（续）",
+      "title": "Where the Money Runs, continued",
       "icon": "📈",
       "review": false,
       "prompts": [
@@ -6512,7 +6512,7 @@
     {
       "id": "u7r",
       "unit": 7,
-      "title": "钱在往哪逃 · 回顾",
+      "title": "Where the Money Runs · review",
       "icon": "🏆",
       "review": true,
       "prompts": [

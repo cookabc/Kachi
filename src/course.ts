@@ -1,12 +1,14 @@
+import hedgeEn from "../content/packs/hedge-or-pledge/en-US/course.json";
 import hedgeZh from "../content/packs/hedge-or-pledge/zh-CN/course.json";
 import registry from "../content/packs/index.json";
 import type { Course } from "./domain";
 
 export type Lang = "zh-CN" | "en-US";
 
-// A pack id names a course. The default pack ships in the main bundle; every
-// other pack (and every en-US locale) is a lazy chunk, so first paint never
-// parses a second course.
+// A pack id names a course. The default pack ships in the main bundle in both
+// locales so the first screen can always render — whatever language was
+// restored, and even when the network is gone. Every other pack is a lazy
+// chunk, so first paint never parses a second course.
 //
 // The service worker precaches the chunks, so all packs stay available offline
 // after the first online visit.
@@ -32,6 +34,7 @@ export const ALL_PACKS = registry.packs as PackMeta[];
 
 const cache: Partial<Record<string, Course>> = {
   [`${DEFAULT_PACK}/zh-CN`]: hedgeZh as Course,
+  [`${DEFAULT_PACK}/en-US`]: hedgeEn as Course,
 };
 
 const pending: Partial<Record<string, Promise<Course>>> = {};
@@ -51,7 +54,6 @@ type CourseModule = { default: unknown };
 const asCourse = (module: CourseModule): Course => module.default as Course;
 
 const LOADERS: Record<string, () => Promise<CourseModule>> = {
-  "hedge-or-pledge/en-US": () => import("../content/packs/hedge-or-pledge/en-US/course.json"),
   "t1-finance-news/zh-CN": () => import("../content/packs/t1-finance-news/zh-CN/course.json"),
   "t1-finance-news/en-US": () => import("../content/packs/t1-finance-news/en-US/course.json"),
   "t2-company-earnings/zh-CN": () => import("../content/packs/t2-company-earnings/zh-CN/course.json"),
@@ -64,7 +66,7 @@ const LOADERS: Record<string, () => Promise<CourseModule>> = {
   "t5-quant-research/en-US": () => import("../content/packs/t5-quant-research/en-US/course.json"),
 };
 
-/** Default pack — zh-CN. Tests and legacy call sites read this. */
+/** Default pack in the Chinese locale — tests and legacy call sites read this. */
 export const course: Course = hedgeZh as Course;
 
 /** A pack already in memory, if any (no fetch). */

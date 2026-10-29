@@ -921,7 +921,7 @@
     {
       "id": "u1l1",
       "unit": 1,
-      "title": "先看赚了多少",
+      "title": "How Much Did It Make",
       "icon": "📈",
       "review": false,
       "prompts": [
@@ -1340,7 +1340,7 @@
     {
       "id": "u1l2",
       "unit": 1,
-      "title": "先看赚了多少（续）",
+      "title": "How Much Did It Make, continued",
       "icon": "📈",
       "review": false,
       "prompts": [
@@ -1659,7 +1659,7 @@
     {
       "id": "u1r",
       "unit": 1,
-      "title": "先看赚了多少 · 回顾",
+      "title": "How Much Did It Make · review",
       "icon": "🏆",
       "review": true,
       "prompts": [
@@ -2035,7 +2035,7 @@
     {
       "id": "u2l1",
       "unit": 2,
-      "title": "赚得好不好",
+      "title": "How Good Was It",
       "icon": "📈",
       "review": false,
       "prompts": [
@@ -2454,7 +2454,7 @@
     {
       "id": "u2l2",
       "unit": 2,
-      "title": "赚得好不好（续）",
+      "title": "How Good Was It, continued",
       "icon": "📈",
       "review": false,
       "prompts": [
@@ -2773,7 +2773,7 @@
     {
       "id": "u2r",
       "unit": 2,
-      "title": "赚得好不好 · 回顾",
+      "title": "How Good Was It · review",
       "icon": "🏆",
       "review": true,
       "prompts": [
@@ -3149,7 +3149,7 @@
     {
       "id": "u3l1",
       "unit": 3,
-      "title": "和预期比",
+      "title": "Against Expectations",
       "icon": "📈",
       "review": false,
       "prompts": [
@@ -3568,7 +3568,7 @@
     {
       "id": "u3l2",
       "unit": 3,
-      "title": "和预期比（续）",
+      "title": "Against Expectations, continued",
       "icon": "📈",
       "review": false,
       "prompts": [
@@ -3887,7 +3887,7 @@
     {
       "id": "u3r",
       "unit": 3,
-      "title": "和预期比 · 回顾",
+      "title": "Against Expectations · review",
       "icon": "🏆",
       "review": true,
       "prompts": [
@@ -4263,7 +4263,7 @@
     {
       "id": "u4l1",
       "unit": 4,
-      "title": "钱从哪来、往哪去",
+      "title": "Where the Money Goes",
       "icon": "📈",
       "review": false,
       "prompts": [
@@ -4582,7 +4582,7 @@
     {
       "id": "u4l2",
       "unit": 4,
-      "title": "钱从哪来、往哪去（续）",
+      "title": "Where the Money Goes, continued",
       "icon": "📈",
       "review": false,
       "prompts": [
@@ -4803,7 +4803,7 @@
     {
       "id": "u4r",
       "unit": 4,
-      "title": "钱从哪来、往哪去 · 回顾",
+      "title": "Where the Money Goes · review",
       "icon": "🏆",
       "review": true,
       "prompts": [
@@ -5085,7 +5085,7 @@
     {
       "id": "u5l1",
       "unit": 5,
-      "title": "股东拿回什么",
+      "title": "What Shareholders Get",
       "icon": "📈",
       "review": false,
       "prompts": [
@@ -5404,7 +5404,7 @@
     {
       "id": "u5l2",
       "unit": 5,
-      "title": "股东拿回什么（续）",
+      "title": "What Shareholders Get, continued",
       "icon": "📈",
       "review": false,
       "prompts": [
@@ -5723,7 +5723,7 @@
     {
       "id": "u5r",
       "unit": 5,
-      "title": "股东拿回什么 · 回顾",
+      "title": "What Shareholders Get · review",
       "icon": "🏆",
       "review": true,
       "prompts": [
@@ -6052,7 +6052,7 @@
     {
       "id": "u6l1",
       "unit": 6,
-      "title": "公司做了什么",
+      "title": "What the Company Did",
       "icon": "📈",
       "review": false,
       "prompts": [
@@ -6564,7 +6564,7 @@
     {
       "id": "u6l2",
       "unit": 6,
-      "title": "公司做了什么（续）",
+      "title": "What the Company Did, continued",
       "icon": "📈",
       "review": false,
       "prompts": [
@@ -6983,7 +6983,7 @@
     {
       "id": "u6r",
       "unit": 6,
-      "title": "公司做了什么 · 回顾",
+      "title": "What the Company Did · review",
       "icon": "🏆",
       "review": true,
       "prompts": [
@@ -7453,7 +7453,7 @@
     {
       "id": "u7l1",
       "unit": 7,
-      "title": "贵不贵",
+      "title": "Cheap or Dear",
       "icon": "📈",
       "review": false,
       "prompts": [
@@ -7872,7 +7872,7 @@
     {
       "id": "u7l2",
       "unit": 7,
-      "title": "贵不贵（续）",
+      "title": "Cheap or Dear, continued",
       "icon": "📈",
       "review": false,
       "prompts": [
@@ -8291,7 +8291,7 @@
     {
       "id": "u7r",
       "unit": 7,
-      "title": "贵不贵 · 回顾",
+      "title": "Cheap or Dear · review",
       "icon": "🏆",
       "review": true,
       "prompts": [

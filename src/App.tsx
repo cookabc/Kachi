@@ -104,10 +104,12 @@ function App() {
     const pack = loadCourse(DEFAULT_PACK, initialLang).then(
       (loadedCourse) => ({ loadedCourse, lang: initialLang }),
       () => {
-        // The lazy pack could not be fetched. The bundled zh pack is always
-        // renderable; keep the interface strings and the course together.
-        saveLang("zh-CN");
-        return { loadedCourse: defaultCourse, lang: "zh-CN" as const };
+        // The lazy pack could not be fetched. The default packs ship in the
+        // main bundle in both locales, so fall back to the bundled copy of the
+        // language that was asked for, and only then to English.
+        const fallback: Lang = initialLang === "zh-CN" ? "zh-CN" : "en-US";
+        saveLang(fallback);
+        return { loadedCourse: courseFor(DEFAULT_PACK, fallback) ?? defaultCourse, lang: fallback };
       },
     );
     void Promise.all([learner, pack]).then(([learnerResult, packResult]) => {
