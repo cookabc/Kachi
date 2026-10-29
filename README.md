@@ -63,3 +63,5 @@ pnpm run generate:icons   # rebuild PNG icons from public/icon.svg (needs rsvg-c
 - Original course and teaching content (`content/`): CC-BY-SA-4.0.
 - Third-party news quotations, links and brands keep their own rights and are
   not relicensed with the course pack.
+
+中文说明见 [README.zh-CN.md](README.zh-CN.md)。
