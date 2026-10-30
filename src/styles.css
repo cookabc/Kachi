@@ -792,6 +792,23 @@ input {
   border-radius: 14px;
   background: var(--mint-hint);
   border: 1.5px solid #d9d2f0;
+  /* The card is inserted the moment the learner asks for it, so this is its
+     one entrance. It tips up from the edge rather than sliding in: the hint is
+     a card being laid on the desk, not a panel pushing the layout down.
+     Rotating X keeps the top edge planted, so the text reads from the first
+     frame instead of sweeping past the eye. */
+  transform-origin: top center;
+  animation: hint-card-flip 260ms var(--ease-out) backwards;
+}
+@keyframes hint-card-flip {
+  from {
+    opacity: 0;
+    transform: perspective(900px) rotateX(-28deg);
+  }
+  to {
+    opacity: 1;
+    transform: perspective(900px) rotateX(0);
+  }
 }
 .hint-card p {
   margin: 0;
