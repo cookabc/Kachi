@@ -1,5 +1,6 @@
-import { type ChangeEvent, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { type ChangeEvent, lazy, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Nav, type Tab } from "./chrome";
+import { LazyPanel } from "./components/LazyPanel";
 import { ALL_PACKS, courseFor, DEFAULT_PACK, course as defaultCourse, loadCourse } from "./course";
 import type { Concept, Course, LearnerState, SessionState } from "./domain";
 import { emptyLearnerState, isLessonDone, isLessonUnlocked, recentMissTermIds } from "./engine";
@@ -10,13 +11,8 @@ import { applyMotion, clampLevel, effectiveLevel, loadMotionLevel, saveMotionLev
 import { activateUpdate } from "./pwa";
 import { CompleteScreen } from "./screens/CompleteScreen";
 import { FailScreen } from "./screens/FailScreen";
-import { Glossary } from "./screens/Glossary";
-import { GraphScreen } from "./screens/GraphScreen";
 import { LearnHome } from "./screens/LearnHome";
 import { LessonScreen } from "./screens/LessonScreen";
-import { PracticeHome } from "./screens/PracticeHome";
-import { Settings } from "./screens/Settings";
-import { ShareSheet } from "./screens/ShareSheet";
 import type { PairCardInput } from "./share-card";
 import {
   exportLearnerData,
@@ -26,6 +22,18 @@ import {
   saveLearnerState,
 } from "./storage";
 import { type Lang, loadLang, saveLang, UI, type UiText } from "./ui";
+
+const Settings = lazy(() => import("./screens/Settings").then((module) => ({ default: module.Settings })));
+const Glossary = lazy(() => import("./screens/Glossary").then((module) => ({ default: module.Glossary })));
+const GraphScreen = lazy(() =>
+  import("./screens/GraphScreen").then((module) => ({ default: module.GraphScreen })),
+);
+const PracticeHome = lazy(() =>
+  import("./screens/PracticeHome").then((module) => ({ default: module.PracticeHome })),
+);
+const ShareSheet = lazy(() =>
+  import("./screens/ShareSheet").then((module) => ({ default: module.ShareSheet })),
+);
 
 const deviceId = crypto.randomUUID();
 let eventCounter = 0;
@@ -382,9 +390,9 @@ function App() {
           onShare={() => openShare(shareConceptIds(flow.session!))}
         />
         {shareCards && (
-          <>
+          <LazyPanel t={t}>
             <ShareSheet cards={shareCards} t={t} onClose={() => setShareCards(null)} />
-          </>
+          </LazyPanel>
         )}
       </>
     );
@@ -516,7 +524,7 @@ function App() {
           <LearnHome state={state} course={course} t={t} missedCount={missedCount} onStart={beginLesson} />
         )}
         {tab === "practice" && (
-          <>
+          <LazyPanel t={t}>
             <PracticeHome
               state={state}
               course={course}
@@ -525,10 +533,10 @@ function App() {
               missedCount={missedCount}
               onStart={() => beginPractice()}
             />
-          </>
+          </LazyPanel>
         )}
         {tab === "glossary" && (
-          <>
+          <LazyPanel t={t}>
             <Glossary
               state={state}
               course={course}
@@ -538,10 +546,10 @@ function App() {
               onQuery={setGlossaryQuery}
               onShare={(conceptIds) => openShare(conceptIds)}
             />
-          </>
+          </LazyPanel>
         )}
         {tab === "graph" && (
-          <>
+          <LazyPanel t={t}>
             <GraphScreen
               state={state}
               course={course}
@@ -552,10 +560,10 @@ function App() {
                 setTab("glossary");
               }}
             />
-          </>
+          </LazyPanel>
         )}
         {tab === "settings" && (
-          <>
+          <LazyPanel t={t}>
             <Settings
               t={t}
               lang={lang}
@@ -568,13 +576,13 @@ function App() {
               onExport={downloadExport}
               onImport={onImport}
             />
-          </>
+          </LazyPanel>
         )}
 
         {shareCards && (
-          <>
+          <LazyPanel t={t}>
             <ShareSheet cards={shareCards} t={t} onClose={() => setShareCards(null)} />
-          </>
+          </LazyPanel>
         )}
 
         <Nav tab={tab} onTab={setTab} t={t} />

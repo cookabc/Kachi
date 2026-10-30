@@ -9,10 +9,10 @@ export default defineConfig({
       registerType: "prompt",
       manifest: {
         id: "/",
-        name: "Kachi — 财经英语学习",
+        name: "Kachi — Financial English",
         short_name: "Kachi",
-        description: "面向中文用户的财经英语学习应用。",
-        lang: "zh-CN",
+        description: "Offline financial English practice in English and Chinese.",
+        lang: "en-US",
         theme_color: "#fff8ec",
         background_color: "#fff8ec",
         display: "standalone",

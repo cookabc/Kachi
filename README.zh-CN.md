@@ -47,6 +47,12 @@ pnpm run generate:icons   # 由 public/icon.svg 重建 PNG 图标（需要 rsvg-
 - `public/icon.svg` 是图标唯一出处；生成的 PNG 变体要提交，和 `og-image.png` 一样。
 - 深色模式有意不做：墨纸「笔记本」就是品牌。除非有真实夜间阅读场景，不要因为「缺了」而加。
 
+## 加载、数据与离线检查
+
+课程加载成功后，课包、语言和内容一起切换。加载失败保留正在使用的课程并提供重试；较早请求的结果不能覆盖新选择。设置、词汇表、地图、练习和分享界面按需加载。导出使用当前内存中的学习进度，IndexedDB 不可用时也能保存本次进度。分享卡使用原生对话框，支持焦点约束、Escape 关闭和焦点返回。
+
+`scripts/verify-build.mjs` 检查初始 JavaScript 不超过 650 kB、CSS 不超过 100 kB，并核对额外课程分块数量及全部 JS/CSS 的离线预缓存。首次运行 `pnpm exec playwright install chromium`，再执行 `pnpm test:e2e`，验证生产构建的双语切换、失败重试、离线刷新、进度恢复与分享图片下载；CI 保存失败跟踪。
+
 ## 文档
 
 每份文档以英文为主，中文版并列放在旁边。

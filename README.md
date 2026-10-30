@@ -62,6 +62,12 @@ pnpm run generate:icons   # rebuild PNG icons from public/icon.svg (needs rsvg-c
   is the brand. Revisit only with a real night-reading use case, not "because
   it's missing".
 
+## Loading, data and offline checks
+
+Course, pack and language switch together only after loading succeeds. Failure retains the current course with a retry action; stale requests cannot overwrite a newer selection. Settings, glossary, map, practice and sharing load on demand. Export uses live learner state, including progress made while IndexedDB is unavailable. Sharing uses a native dialog with keyboard containment, Escape and focus restoration.
+
+`scripts/verify-build.mjs` limits initial JavaScript to 650 kB and CSS to 100 kB, and checks extra course chunks and offline precaching of every JS/CSS asset. Install Chromium once with `pnpm exec playwright install chromium`, then run `pnpm test:e2e` to verify the production build: bilingual switching, retry, offline reload, progress restoration and image download. CI retains failure traces.
+
 ## Docs
 
 Every document leads in English, with a Chinese edition beside it.
