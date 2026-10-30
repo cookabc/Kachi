@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { type KeyboardEvent, useEffect, useRef, useState } from "react";
 import { buildPairCardSvg, CARD_HEIGHT, CARD_WIDTH, type PairCardInput } from "../share-card";
 import type { UiText } from "../ui";
 
@@ -47,6 +47,7 @@ export function ShareSheet({
   const [png, setPng] = useState<{ url: string; blob: Blob } | null>(null);
   const [failed, setFailed] = useState(false);
   const sheetRef = useRef<HTMLDivElement>(null);
+  const dialogRef = useRef<HTMLDialogElement>(null);
   const card = cards[index];
   const fileName = cardFileName(card);
 
@@ -79,17 +80,29 @@ export function ShareSheet({
   useEffect(() => {
     // Move focus into the dialog while it is open and hand it back on close.
     const opener = document.activeElement as HTMLElement | null;
+    dialogRef.current?.showModal();
     sheetRef.current?.focus();
     return () => opener?.focus();
   }, []);
 
-  useEffect(() => {
-    const onKey = (event: KeyboardEvent) => {
-      if (event.key === "Escape") onClose();
-    };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [onClose]);
+  const cycleFocus = (event: KeyboardEvent<HTMLDialogElement>) => {
+    if (event.key !== "Tab") return;
+    const controls = Array.from(
+      event.currentTarget.querySelectorAll<HTMLElement>(
+        'button:not([disabled]), a[href], input:not([disabled]), [tabindex="0"]',
+      ),
+    ).filter((element) => element.getClientRects().length > 0);
+    const first = controls[0],
+      last = controls.at(-1);
+    if (!first || !last) return;
+    if (event.shiftKey && (document.activeElement === first || document.activeElement === sheetRef.current)) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first.focus();
+    }
+  };
 
   const save = () => {
     if (!png) return;
@@ -111,15 +124,17 @@ export function ShareSheet({
   };
 
   return (
-    <div className="share-backdrop">
-      <div
-        className="share-sheet"
-        role="dialog"
-        aria-modal="true"
-        aria-label={t.share.open}
-        ref={sheetRef}
-        tabIndex={-1}
-      >
+    <dialog
+      className="share-backdrop"
+      ref={dialogRef}
+      onKeyDown={cycleFocus}
+      aria-label={t.share.open}
+      onCancel={(event) => {
+        event.preventDefault();
+        onClose();
+      }}
+    >
+      <div className="share-sheet" ref={sheetRef} tabIndex={-1}>
         <div className="share-preview">
           {png ? <img src={png.url} alt={t.share.cardAlt(card.termA, card.termB)} /> : null}
         </div>
@@ -158,6 +173,6 @@ export function ShareSheet({
           {t.share.close}
         </button>
       </div>
-    </div>
+    </dialog>
   );
 }

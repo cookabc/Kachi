@@ -35,7 +35,7 @@
   --green-dark: #16433c;
   --green-soft: #ddf9f2;
   --coral: #e54666;
-  --coral-deep: #ca244d;
+  --coral-deep: #ba1b42;
   --sky-blue: #8dcae3;
   --sky-deep: #3e63dd;
   --heart: #e54666;
@@ -3442,7 +3442,7 @@ button.lab-unit-head {
   width: 100%;
   align-items: flex-start;
   gap: 14px;
-  padding: 0;
+  padding: 18px 17px;
   border: 0;
   background: none;
   font-family: inherit;
@@ -3455,9 +3455,6 @@ button.lab-unit-head {
   align-self: center;
   color: var(--muted);
   font-size: 13px;
-}
-.lab-unit:not(.lab-unit-current) button.lab-unit-head {
-  opacity: 0.72;
 }
 
 /* The mistake book: worst misses first, with the pair explanation inline so
@@ -3584,4 +3581,20 @@ button.lab-unit-head {
   border-radius: 8px;
   min-height: 44px;
   padding: 8px 16px;
+}
+
+dialog.share-backdrop {
+  margin: 0;
+  border: 0;
+  width: 100%;
+  max-width: none;
+  height: 100dvh;
+  max-height: none;
+  color: var(--ink);
+}
+dialog.share-backdrop:not([open]) {
+  display: none;
+}
+dialog.share-backdrop::backdrop {
+  background: transparent;
 }
