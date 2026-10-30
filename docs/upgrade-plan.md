@@ -2,9 +2,9 @@
 
 > Only lists what is **not done yet**. Finished work leaves no trace here — it lives in the code or in the git history.
 
-## Structural background (one-off migration, already landed)
+## Structural background
 
-The art system moved from inline SVG strings to external image files plus a manifest: `public/art/{id}.webp` with `content/art-manifest.json`, where `src/art-assets.ts` owns the size mapping and `art.test.ts` asserts that every concept id has a file. That shape is deliberate, because hand-drawn art does not scale: after growing to 238 concepts, 172 generated illustrations coexist with 40 hand-drawn ones (hand-drawn wins where both exist). Keep this shape when changing the art pipeline again.
+The art system uses external image files plus a manifest: `public/art/{id}.webp` with `content/art-manifest.json`, where `src/art-assets.ts` owns the size mapping and `art.test.ts` asserts that every concept id has a file. That shape is deliberate, because hand-drawn art does not scale: at 238 concepts, 172 generated illustrations coexist with 40 hand-drawn ones (hand-drawn wins where both exist). Keep this shape when changing the art pipeline again.
 
 ## 1. Product differentiation
 
@@ -30,14 +30,14 @@ The six-tier plan is fully shipped (T1 42 / T2 49 / T3 38 / T4 37 / T5 32 / T6 4
 
 ## Explicitly not doing
 
-| Not doing | Why |
-| --- | --- |
-| Dark mode | Ink-on-paper "notebook" *is* the brand (decision 2026-10-04). Revisit only with a real night-reading use case |
-| FSRS adaptive scheduling | The fixed ladder [1,3,7,14,30,60] and an adaptive system show no difference at this scale. Revisit when there are many more packs |
-| Replacing the chord diagram with a star graph | The chord diagram expresses word-to-word confusion, which is the differentiator. A star graph only expresses mastery. They coexist; neither replaces the other |
-| Replacing hand-drawn SVG with AI art | 172 generated illustrations currently coexist with 40 hand-drawn ones (hand-drawn wins). The two-palette discipline in `art.tsx` is the brand itself |
-| Adding a native shell | Web Push is the first genuine backend requirement |
-| Re-ordering the T6 question bank | Re-checked: every lesson has ≥3 question types, 9.0 questions per lesson, and a median of 6 exposures per word — structurally compliant. The 15 `hedge` occurrences come from the course throughline, not from a defect |
+| Not doing                                     | Why                                                                                                                                                                                                                     |
+| --------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Dark mode                                     | Ink-on-paper "notebook" _is_ the brand (decision 2026-10-04). Revisit only with a real night-reading use case                                                                                                           |
+| FSRS adaptive scheduling                      | The fixed ladder [1,3,7,14,30,60] and an adaptive system show no difference at this scale. Revisit when there are many more packs                                                                                       |
+| Replacing the chord diagram with a star graph | The chord diagram expresses word-to-word confusion, which is the differentiator. A star graph only expresses mastery. They coexist; neither replaces the other                                                          |
+| Replacing hand-drawn SVG with AI art          | 172 generated illustrations currently coexist with 40 hand-drawn ones (hand-drawn wins). The two-palette discipline in `art.tsx` is the brand itself                                                                    |
+| Adding a native shell                         | Web Push is the first genuine backend requirement                                                                                                                                                                       |
+| Re-ordering the T6 question bank              | Re-checked: every lesson has ≥3 question types, 9.0 questions per lesson, and a median of 6 exposures per word — structurally compliant. The 15 `hedge` occurrences come from the course throughline, not from a defect |
 
 ---
 

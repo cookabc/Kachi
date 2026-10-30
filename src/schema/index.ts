@@ -1,9 +1,19 @@
-import type { Concept, Course, Exercise, Lesson } from "../domain";
+import type { Concept, Course, Exercise, Lesson, MixUpType } from "../domain";
 
 export interface ValidationIssue {
   path: string;
   message: string;
 }
+
+const MIX_UP_TYPES: MixUpType[] = [
+  "opposite",
+  "coexist",
+  "hierarchy",
+  "form",
+  "timing",
+  "scope",
+  "direction",
+];
 
 function uniqueIssues(ids: string[], label: string): ValidationIssue[] {
   const seen = new Set<string>();
@@ -194,6 +204,11 @@ export function validateCourse(
   course.concepts.forEach((concept) => {
     if (!concept.mixUp || !conceptIds.has(concept.mixUp)) {
       issues.push({ path: concept.id, message: `Unknown mix-up concept: ${concept.mixUp}` });
+    }
+    // The teach card renders this label. An unlisted value used to pass
+    // validation and then render nothing, so every accepted type is named here.
+    if (concept.mixUpType && !MIX_UP_TYPES.includes(concept.mixUpType)) {
+      issues.push({ path: concept.id, message: `Unknown mix-up type: ${concept.mixUpType}` });
     }
     concept.sourceIds.forEach((id) => {
       if (!sourceIds.has(id)) issues.push({ path: concept.id, message: `Unknown source: ${id}` });

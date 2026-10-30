@@ -35,7 +35,7 @@ export type ReviewStatus = "legacy" | "draft" | "reviewed";
  * in the pack source (if you cannot name why two terms mix, the pair is
  * wrong); the teach card surfaces it so learners build the same schema.
  */
-export type MixUpType = "opposite" | "coexist" | "hierarchy" | "form" | "timing";
+export type MixUpType = "opposite" | "coexist" | "hierarchy" | "form" | "timing" | "scope" | "direction";
 
 export interface SourceReference {
   id: string;

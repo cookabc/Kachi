@@ -1,5 +1,7 @@
 # Kachi
 
+**English** · [简体中文](README.zh-CN.md)
+
 Finance-English learning PWA: an offline-capable course flow with vocabulary,
 quizzes and shareable progress cards. **6 packs, 238 concepts, 125 lessons and
 1,631 prompts** — no account, everything stays on device. Live at
@@ -20,14 +22,14 @@ reports the pack you are currently in, not the combined total.
 Packs unlock in level order; each pairs confusable terms so the distinction is
 the lesson. Read a pack's `source.mjs` for its corpus evidence.
 
-| Level | Pack | Focus | Concepts |
-| --- | --- | --- | --- |
-| 1 | `t1-finance-news` | Read the front page | 42 |
-| 2 | `t2-company-earnings` | Read an earnings report | 49 |
-| 3 | `t3-bonds-rates` | Bonds and rates | 38 |
-| 4 | `t4-forex-macro` | FX and macro | 37 |
-| 5 | `t5-quant-research` | Research and quant | 32 |
-| 6 | `hedge-or-pledge` | Borrow and hedge (hand-written) | 40 |
+| Level | Pack                  | Focus                           | Concepts |
+| ----- | --------------------- | ------------------------------- | -------- |
+| 1     | `t1-finance-news`     | Read the front page             | 42       |
+| 2     | `t2-company-earnings` | Read an earnings report         | 49       |
+| 3     | `t3-bonds-rates`      | Bonds and rates                 | 38       |
+| 4     | `t4-forex-macro`      | FX and macro                    | 37       |
+| 5     | `t5-quant-research`   | Research and quant              | 32       |
+| 6     | `hedge-or-pledge`     | Borrow and hedge (hand-written) | 40       |
 
 Every pack ships in both `zh-CN` and `en-US` as separate `course.json` files;
 the validator enforces structural parity between the two locales.
@@ -64,10 +66,10 @@ pnpm run generate:icons   # rebuild PNG icons from public/icon.svg (needs rsvg-c
 
 Every document leads in English, with a Chinese edition beside it.
 
-| English | 中文 | What it covers |
-| --- | --- | --- |
-| [docs/vocabulary-system.md](docs/vocabulary-system.md) | [docs/vocabulary-system.zh-CN.md](docs/vocabulary-system.zh-CN.md) | Why the word list was rebuilt, the six tiers, confusion-pair rules, the corpus gates |
-| [docs/upgrade-plan.md](docs/upgrade-plan.md) | [docs/upgrade-plan.zh-CN.md](docs/upgrade-plan.zh-CN.md) | What is not built yet, and what is deliberately not being built |
+| English                                                | 中文                                                               | What it covers                                                                         |
+| ------------------------------------------------------ | ------------------------------------------------------------------ | -------------------------------------------------------------------------------------- |
+| [docs/vocabulary-system.md](docs/vocabulary-system.md) | [docs/vocabulary-system.zh-CN.md](docs/vocabulary-system.zh-CN.md) | The six tiers, confusion-pair types, cross-pack deduplication, the two authoring gates |
+| [docs/upgrade-plan.md](docs/upgrade-plan.md)           | [docs/upgrade-plan.zh-CN.md](docs/upgrade-plan.zh-CN.md)           | What is not built yet, and what is deliberately not being built                        |
 
 ## License
 

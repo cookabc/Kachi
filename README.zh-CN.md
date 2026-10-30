@@ -1,5 +1,7 @@
 # Kachi
 
+[English](README.md) · **简体中文**
+
 财经英语学习 PWA：可离线使用的课程流程，含词汇、测验与可分享的进度卡片。**6 个课包、238 个概念、125 节课、1631 道题**，无需账号，全部保存在本机。线上站点：[kachi-game.vercel.app](https://kachi-game.vercel.app)。
 
 界面默认英文，一键切到中文。课程内容放在 `content/`，构建时校验。
@@ -14,14 +16,14 @@
 
 课包按层级解锁，每个课包都围绕「容易混淆的词对」组织——分辨本身就是课程。
 
-| 层级 | 课包 | 主题 | 概念数 |
-| --- | --- | --- | --- |
-| 1 | `t1-finance-news` | 读财经首页 | 42 |
-| 2 | `t2-company-earnings` | 读公司财报 | 49 |
-| 3 | `t3-bonds-rates` | 读债券与利率 | 38 |
-| 4 | `t4-forex-macro` | 读外汇与宏观 | 37 |
-| 5 | `t5-quant-research` | 读研报与量化 | 32 |
-| 6 | `hedge-or-pledge` | 借款与对冲（手写） | 40 |
+| 层级 | 课包                  | 主题               | 概念数 |
+| ---- | --------------------- | ------------------ | ------ |
+| 1    | `t1-finance-news`     | 读财经首页         | 42     |
+| 2    | `t2-company-earnings` | 读公司财报         | 49     |
+| 3    | `t3-bonds-rates`      | 读债券与利率       | 38     |
+| 4    | `t4-forex-macro`      | 读外汇与宏观       | 37     |
+| 5    | `t5-quant-research`   | 读研报与量化       | 32     |
+| 6    | `hedge-or-pledge`     | 借款与对冲（手写） | 40     |
 
 每个课包都有 `zh-CN` 与 `en-US` 两份 `course.json`；校验脚本强制两者结构对齐。
 
@@ -49,10 +51,10 @@ pnpm run generate:icons   # 由 public/icon.svg 重建 PNG 图标（需要 rsvg-
 
 每份文档以英文为主，中文版并列放在旁边。
 
-| 英文 | 中文 | 内容 |
-| --- | --- | --- |
-| [docs/vocabulary-system.md](docs/vocabulary-system.md) | [docs/vocabulary-system.zh-CN.md](docs/vocabulary-system.zh-CN.md) | 词库为何重做、六个层级、混淆对规则、语料门禁 |
-| [docs/upgrade-plan.md](docs/upgrade-plan.md) | [docs/upgrade-plan.zh-CN.md](docs/upgrade-plan.zh-CN.md) | 还没做的，以及明确不做的 |
+| 英文                                                   | 中文                                                               | 内容                                         |
+| ------------------------------------------------------ | ------------------------------------------------------------------ | -------------------------------------------- |
+| [docs/vocabulary-system.md](docs/vocabulary-system.md) | [docs/vocabulary-system.zh-CN.md](docs/vocabulary-system.zh-CN.md) | 六个层级、混淆对类型、跨包去重、两道作者门禁 |
+| [docs/upgrade-plan.md](docs/upgrade-plan.md)           | [docs/upgrade-plan.zh-CN.md](docs/upgrade-plan.zh-CN.md)           | 还没做的，以及明确不做的                     |
 
 ## 许可
 

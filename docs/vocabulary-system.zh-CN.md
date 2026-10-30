@@ -1,214 +1,75 @@
-# Kachi 词库系统设计
+# Kachi 词汇体系
 
-> 2026-10-26 制定。依据是 172 条真实财经标题 + 6 篇完整正文（约 2,300 词）的实测词频，
-> 不是凭感觉列词。每一条分层判断都能回溯到语料证据。
+[English](vocabulary-system.md) · **简体中文**
 
-## 一、为什么要重做词库
+Kachi 用**容易混淆的词对**教财经英语。本文说明词表怎么分层、内容怎么验证、以及怎么加一个课包。当前数字以 `content/packs/index.json` 为准，那份登记表是唯一事实来源。
 
-现有 40 个概念在真实语料里的表现：
+## 一、六个课包，按「你在读什么」分层
 
-| 语料                 | 现有 40 词命中     | 说明                                                    |
-| -------------------- | ------------------ | ------------------------------------------------------- |
-| 172 条标题           | **10 / 40（25%）** | 命中的是 `bond`(41)、`yield`(18)、`inflation`(8) 这几个 |
-| 6 篇正文（2,300 词） | **12 / 40（30%）** | 加上 `premium`、`liquidity`、`futures`、`swap`、`hedge` |
+分层依据是*你在读什么*，不是*词属于哪个学科*。每层给一句可验收的话：学完能读什么。
 
-剩下 28–30 个词在真实语料里**一次都没出现**：`pledge`、`haircut`、`notional`、`contango`、
-`backwardation`、`cost of carry`、`securities-backed loan`、`buy-borrow-die`、`mark-to-market`。
+| 课包              | 概念数 | 课数 | 验收                                |
+| ----------------- | -----: | ---: | ----------------------------------- |
+| T1 · 读财经首页   |     42 |   21 | 打开任何财经 App 首屏，标题全看得懂 |
+| T2 · 读公司财报   |     49 |   21 | 读一份季报快讯，知道在说好还是坏    |
+| T3 · 读债券与利率 |     38 |   21 | 读懂收益率、拍卖、期限这类债市新闻  |
+| T4 · 读外汇与宏观 |     37 |   21 | 看懂汇率、央行、政策这类新闻        |
+| T5 · 读研报与量化 |     32 |   18 | 判断一份回测结论哪里站不住          |
+| T6 · 借款与对冲   |     40 |   23 | 读私人银行、结构性产品这类专业材料  |
 
-反过来，语料里出现频率最高的词，一个都不在现有词表里：
+**238 个概念 / 201 个不重复词 / 6 个课包 / 125 节课。**
 
-```
-crude(11)  copper(11)  earnings(7)  capital(7)  profit(7)  demand(5)
-capacity(4)  selloff(4)  policy(4)  investor(3)  dividend(3)  debt(3)
-treasury(3)  hike(3)  benchmark(3)  portfolio(3)
-```
+词表存放在 `content/packs/<id>/source.mjs` 的 `UNITS` 与 `CONCEPTS` 里，请直接读那里——写一份在文档里迟早会与代码不一致。
 
-**结论：现有词表是一套「私人银行结构性产品」的术语，不是「财经英语」。**
-产品名和内容对不上。一个人学完 40 课，读不懂一条普通的 BHP 财报新闻。
+T5 把词和「审」题型绑在一起：它教的每个词都对应一种具体的自我欺骗方式，词汇与练习朝同一个方向使力。
 
-## 二、词库分三层，不是一堆词
+## 二、混淆对必须带类型
 
-按「读什么」而不是「属于哪个学科」分层。每层有明确的验收句：学完能读懂什么。
+`mixUp` 是核心机制——弦图、掌握度调度与练习池全建立在它之上。一对词只有真的会被混淆才配得上这个位置，所以每对都要说清混在哪里：
 
-### T1 · 读财经首页（42 词）
+| 类型        | 判据                           | 例子                                      |
+| ----------- | ------------------------------ | ----------------------------------------- |
+| `opposite`  | 同一维度上的两端               | `supply` / `demand`、`hike` / `cut`       |
+| `coexist`   | 同一句话里同时出现，容易互换   | `profit` / `revenue`、`margin` / `markup` |
+| `hierarchy` | 一个是另一个的子类             | `option` / `derivative`                   |
+| `form`      | 拼写相近或同词根               | `principal` / `principle`                 |
+| `timing`    | 同一动作在不同时点             | `ex-dividend` / `record date`             |
+| `scope`     | 一个是总额，一个是比率或单位量 | `profit` / `margin`                       |
+| `direction` | 同一动作的相反方向             | `appreciate` / `depreciate`               |
 
-**验收：打开任何财经 App 首屏，标题全看得懂。**
+这一点要紧，因为掌握度是按词对计的：`consecutiveCorrect` 记的是*这一对*连续答对多少次。如果两个词只是话题相邻，这个数字衡量的是「你记住了两个无关定义」，而不是「你不再把它们混」。
 
-语料验证：这 42 词在 172 条标题里命中 **344 次**，零命中率 **3%**（1/42）。
+`validateCourse` 会拒绝不在上表里的 `mixUpType`。教学卡片直接把标签渲染出来，未列出的值原本会渲染成空白。
 
-```
-股票与市场  stock  share  market  index  investor  blue chip  rally  selloff  slump  rebound  rout
-价格与供需  price  supply  demand  output  capacity  inventory  surplus  deficit  tariff
-公司与业绩  profit  revenue  earnings  margin  dividend  forecast  estimate  consensus  guidance
-债券与利率  bond  yield  treasury  auction  issuance  inflation  interest rate  rate hike  rate cut
-货币与宏观  dollar  currency  central bank  monetary policy
-```
+## 三、跨课包去重
 
-**这是重做的核心。** 现有 40 词里只有 `bond`/`yield`/`inflation`/`interest rate` 四个能进这一层。
-
-### T2 · 读公司财报（44 词）
-
-**验收：读一份季报快讯，知道在说好还是坏。**
-
-语料里 `earnings(7)` `profit(7)` `dividend(3)` `consensus(2)` `guidance(1)` 高频，而 `revenue`、
-`buyback`、`valuation` 虽然语料零命中，但财报是它们的主场——这一层的语料应该用财报稿而不是新闻标题。
-
-```
-业绩口径    earnings  revenue  profit  margin  gross  net  eps  consensus  beat  miss
-指引与预期  guidance  forecast  estimate  outlook  headwinds  tailwinds
-股东回报    dividend  buyback  payout  yield  shareholder  share issuance
-资本结构    capex  opex  debt  equity  leverage  net debt  working capital  free cash flow
-公司事件    ipo  listing  acquisition  merger  divestiture  spin-off  write-down  impairment  restructuring
-估值        valuation  p/e  p/b  market cap  book value
-```
-
-### T3 · 读债券与利率（37 词）
-
-**验收：读懂债市新闻——收益率、拍卖、期限。**
-
-这是现有内容最强的域（`bond` 41 次、`yield` 18 次、`auction` 8 次），保留并补全。
-
-```
-基础        bond  yield  price  coupon  maturity  duration  principal
-发行与交易  auction  issuance  bid-to-cover  cut-off yield  primary dealer  benchmark
-品种        treasury  gilt  sovereign  corporate bond  commercial paper  junk bond  investment grade
-利差与曲线  credit spread  spread widening  spread tightening  yield curve  term premium  inversion
-风险        default risk  credit rating  downgrade  upgrade  covenant  refinancing
-政策        policy rate  basis point  inflation-linked  fixed-rate  floating-rate
-```
-
-### T4 · 读外汇与宏观（36 词）
-
-**验收：看懂汇率、央行、政策这类新闻。**
-
-语料：`euro(6)` `yen(6)` `dollar(4)` `hike(3)` `policy(4)`。
-
-```
-汇率        currency  exchange rate  dollar  euro  yen  sterling  yuan  peso  rupiah
-方向        appreciate  depreciate  weaken  strengthen
-央行        central bank  rate hike  rate cut  hawkish  dovish  forward guidance  tapering
-政策        monetary policy  fiscal policy  quantitative easing  tightening  easing
-宏观        inflation  deflation  stagflation  soft landing  current account  trade balance
-市场情绪    risk appetite  risk-off  safe-haven  carry trade  intervention
-```
-
-### T5 · 读研报与量化（32 词）—— 配 audit 题型
-
-**验收：判断一份回测结论哪里站不住。**
-
-这一层的价值不在词本身，在于它天然要求「疑」：每个词都对应一种自欺方式。
-
-```
-回测        backtest  in-sample  out-of-sample  walk-forward  benchmark
-陷阱        overfitting  look-ahead bias  survivorship bias  data snooping  multiple testing
-绩效        sharpe ratio  max drawdown  hit rate  expectancy  alpha  beta  tracking error
-组合        universe  rebalance  position sizing  turnover  correlation  exposure
-成本        transaction cost  slippage  capacity constraint  liquidity constraint
-风险        stress test  scenario analysis  value at risk  sensitivity  robustness
-```
-
-### T6 · 借款与对冲（现有 pack 保留，40 词）
-
-**验收：读私人银行、结构性产品这类专业材料。**
-
-现有 40 词基本都在这一层，保留原样。它是真专业内容，只是不该当入门层。
-
-`hedge` `pledge` `collateral` `haircut` `margin` `margin call` `leverage` `derivative` `option`
-`put` `call` `short selling` `notional` `premium` `volatility` `diversification` `counterparty`
-`mark-to-market` `futures` `swap` `spot` `basis` `basis risk` `contango` `backwardation`
-`cost of carry` `real rate` `securities-backed loan` `capital gains` `buy-borrow-die`
-`duration` `yield curve` `quantitative easing` `default` `long` `interest rate` `bond`
-`inflation` `yield` `liquidity`
-
-> 注意：`interest rate` / `bond` / `yield` / `inflation` / `liquidity` 在 T1/T3 已出现。
-> 跨 pack 重复的词**不重复教学**，只作为该 pack 内的复习项（见第四节「跨 pack 去重」）。
-
-**总计 238 个词条 / 201 个唯一词 / 6 个 pack。** 现有 40 词全部保留在 T6，一个不丢。
-
-## 三、混淆对必须重做：现有 33 对里只有 3 对是真易混
-
-`mixUp` 是 Kachi 的核心机制（整个弦图、mastery 调度、练习池都建在它上面）。
-我把现有 33 对逐个检查了「两个词是否真的会混」：
-
-**真易混（同词根/同形/同场高频对立）只有 3 对：**
-```
-interest rate ↔ real rate      （名义 vs 实际）
-yield ↔ yield curve            （一个点 vs 一条线）
-basis ↔ basis risk             （缺口 vs 缺口造成的伤害）
-```
-
-**其余 30 对是「同主题的近邻概念」，不是「会混的词」：**
-```
-volatility ↔ diversification      ← 一个是单资产波动，一个是组合分散，没人会把它们看混
-counterparty ↔ default            ← 「是谁」vs「没履约」，语义正交
-liquidity ↔ notional              ← 毫无关系
-premium ↔ yield                   ← 一个是价格，一个是回报率
-```
-
-这不影响现有体验（作为「概念对照」依然有教学价值），但**它撑不起 mastery 的判据**：
-`consecutiveCorrect` 记的是「这个 pair 你连对了几次」，如果 pair 本身不是易混对，
-这个数字测的是「你记住了两个不相干的定义」，不是「你不再混淆」。
-
-**重做原则（新 pack 一律照此）：**
-
-| 混淆类型 | 判据                       | 例子                                                       |
-| -------- | -------------------------- | ---------------------------------------------------------- |
-| 形近     | 拼写相近或同词根           | `depreciate` / `appreciate`、`principal` / `principle`     |
-| 义反     | 同一维度上的两端           | `supply` / `demand`、`hike` / `cut`、`surplus` / `deficit` |
-| 同场高频 | 同一句话里同时出现且易互换 | `profit` / `revenue`、`margin` / `markup`                  |
-| 层级     | 一个是另一个的子类         | `option` / `derivative`、`gilt` / `treasury`               |
-| 时序     | 同一动作在不同时点         | `ex-dividend` / `record date`、`auction` / `issuance`      |
-
-T1 的混淆对举例（都是语料实证过的高频词）：
-```
-supply ↔ demand          （义反，语料 supply 3 / demand 5）
-profit ↔ revenue         （同场，profit 7）
-earnings ↔ profit        （同场，earnings 7）
-hike ↔ cut               （义反，hike 3 / cut 1）
-surplus ↔ deficit        （义反）
-rally ↔ selloff          （义反，selloff 4）
-bond ↔ yield             （同场，bond 6 / yield 4，且方向相反——最经典的财经误解）
-```
-
-## 四、跨 pack 去重与复习
-
-238 个词条里有 32 个词跨 pack 出现（多出 37 个重复条目，对应 201 个唯一词），如 `bond`/`yield`/`inflation`/`interest rate`/
-`liquidity`/`premium`/`futures`/`swap`/`hedge`/`leverage`/`default`/`margin`。
+238 个概念里有 201 个不重复词：37 条是在更早的课包里已经教过的词。
 
 规则：
-1. **首次出现处教学**，后续 pack 只作为「复习项」出现，`mastery` 跨 pack 共享（同一个 concept id）。
-2. `contentVersion` 按 pack 独立，但 `mastery` 的 key 是 `pairIdForConcepts`，天然跨 pack 可复用。
-3. pack 选择界面上标「含 N 个已学词」，让学习者知道不是全新的。
 
-## 五、数据结构改动（最小）
+1. **在第一次出现的地方教。** 后面的课包只把它当复习项，掌握度通过同一个概念 id 跨课包共享。
+2. `contentVersion` 是每个课包各一份，但掌握度的键是 `pairIdForConcepts`，天然可跨课包复用。
+3. 选课界面显示「已掌握 N 词」，让学习者知道这个课包不全是新词。
 
-现有 schema 已经支持多 pack（`packId` / `contentVersion` / `packs/` 目录），缺三样：
+## 四、两道作者门禁
 
-1. **pack 注册表**：`content/packs/index.json`，列出每个 pack 的 `id` / `title` / `level`（T1–T6）/ `prerequisite` / `conceptCount`。
-2. **`loadCourse` 支持指定 pack**：现在硬编码 `hedge-or-pledge`，改成按学习者选择的 pack 加载。
-3. **pack 进度隔离**：`completedLessonIds` 需要带 pack 前缀，否则 `u1l1` 在不同 pack 里会撞。
+两道都必要，因为真正的失败模式不是「词选错了」，而是「根本没人校验」。
 
-`localization.ts` 的 `termZh` 映射是全局的，多 pack 时需要合并成一张总表（按 concept id，天然唯一）。
+1. **每个词必须在目标语料里出现过。** `scripts/validate-content.mjs` 读 `content/corpus/<pack>.txt`，要求每个 `concept.term` 至少命中一次。没有语料的词，要么补语料，要么说明为什么仍然要教。
+2. **每对混淆词必须声明类型。** 空的 `mixUpType` 会被拒绝，逼作者回答「这两个词为什么会被混」，而不是「它们属于同一话题」。
 
-## 六、内容生产流程（防再走偏）
+`validate-content` 还要求两个语种在结构上完全一致——相同的 id、题型、答案、配对关系——这样一个语种没法悄悄偏离另一个。它复用应用自己的 `validateCourse` 规则，而不是另写一份子集，所以不会出现「CI 绿但运行时违反课程规则」的情况。
 
-这次的问题不是「词选错了」，是**没有验证环节**。加两条门禁：
+**验收标准：** T1 上线后，抽当天 20 条真实财经标题，让学完 T1 的人（或模型）逐条判断「看得懂 / 看不懂」，命中率应达到 90% 以上。
 
-1. **词表必须先过语料检验**：新增 pack 的每个词，必须在目标语料里出现过 ≥1 次。
-   `scripts/validate-content.mjs` 加一条：读 `content/corpus/<pack>.txt`（该 pack 的目标语料），
-   校验每个 `concept.term` 至少命中一次。没语料的词要么补语料，要么说明为什么教它。
-2. **混淆对必须有类型**：`mixUp` 加一个 `mixUpType` 字段（`form` / `opposite` / `coexist` / `hierarchy` / `timing`），
-   校验器拒绝空值。这强迫作者回答「这两个词为什么会混」，而不是「它们同属一个主题」。
+## 五、新增课包
 
-## 七、执行顺序
+1. 词表先过语料验证，从不出现的词会被拦下。
+2. 在 `content/packs/<id>/source.mjs` 写 `UNITS` / `CONCEPTS` / `EN` / `SOURCES`。
+3. `pnpm generate:course --pack <id>` 生成双语 `course.json`。
+4. `pnpm generate:art --pack <id>` 生成插画（每张约 2–4 分钟）。
+5. 在 `content/packs/index.json` 注册，并在 `src/course.ts` 的 `LOADERS` 加一个 chunk。
 
-```
-1. 语料固化   把 T1–T5 各自的目标语料存进 content/corpus/（新闻标题 + 正文，各 3–5 篇）
-2. T1 先做    40 词 + 混淆对 + 23 课，这是唯一能立刻验证「学完能读懂首页」的层
-3. 门禁先上   validate-content 加语料检验 + mixUpType 校验，再写 T2
-4. T2→T5     按语料密度顺序（T2 财报、T3 债券已有基础、T4 宏观、T5 量化配 audit 题型）
-5. T6 保留    现有 pack 改名并标为「进阶」，内容不动
-```
+溯源会自动挂上：`SOURCES` 登记真实文章，`file` 指向语料，生成器用同一个 `corpusHasTerm` 匹配。教材与论文用 `CITES` 显式映射。综合稿与原创示范稿不要登记为来源，那会制造「有出处」的假象。
 
-**验收标准（可测）**：T1 完成后，随机抽 20 条当天真实财经标题，
-让「学完 T1」的模型（或人）逐条判断「看懂了 / 看不懂」，命中率应 ≥90%。
+`localization.ts` 里的 `termZh` 是全局表，按概念 id 索引，而 id 天然唯一，所以新增课包不需要动它。

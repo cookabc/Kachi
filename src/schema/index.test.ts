@@ -170,6 +170,18 @@ describe("content validation", () => {
     expect(validateCourse(validCourse())).toEqual([]);
   });
 
+  it("flags a mix-up type the teach card cannot label", () => {
+    const course = validCourse();
+    // "scope" and "direction" are real types used by the shipped packs. A value
+    // outside the list used to pass validation and then render an empty label.
+    course.concepts[0].mixUpType = "scope";
+    expect(validateCourse(course)).toEqual([]);
+
+    course.concepts[0].mixUpType = "unlabelled" as never;
+    const issues = validateCourse(course);
+    expect(issues.some((issue) => issue.path === "a" && /mix-up type/.test(issue.message))).toBe(true);
+  });
+
   it("flags lessons that use fewer than three exercise types", () => {
     const course = validCourse();
     course.lessons[2].prompts = course.lessons[2].prompts.filter((prompt) => prompt.type === "meaning");
