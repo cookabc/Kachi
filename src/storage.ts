@@ -127,8 +127,8 @@ export async function saveLearnerState(state: LearnerState): Promise<void> {
   for (const event of fresh) writtenEventIds.add(event.eventId);
 }
 
-export async function exportLearnerData(): Promise<Blob> {
-  const state = await loadLearnerState();
+export async function exportLearnerData(snapshot?: LearnerState): Promise<Blob> {
+  const state = snapshot ?? (await loadLearnerState());
   return new Blob(
     [
       JSON.stringify(

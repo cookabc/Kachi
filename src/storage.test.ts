@@ -380,3 +380,28 @@ describe("learner storage", () => {
     expect(fakeDatabase.read("snapshots", REJECTED_PROFILE_KEY)).toBeUndefined();
   });
 });
+
+it("exports the live snapshot even when storage cannot be read", async () => {
+  const snapshot = { ...emptyLearnerState(), xp: 123 };
+  const previous = globalThis.indexedDB;
+  Object.defineProperty(globalThis, "indexedDB", {
+    configurable: true,
+    value: {
+      open() {
+        throw new Error("blocked");
+      },
+    },
+  });
+  try {
+    const blob = await exportLearnerData(snapshot);
+    const text = await new Promise<string>((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(String(reader.result));
+      reader.onerror = reject;
+      reader.readAsText(blob);
+    });
+    expect(JSON.parse(text).learnerState.xp).toBe(123);
+  } finally {
+    Object.defineProperty(globalThis, "indexedDB", { configurable: true, value: previous });
+  }
+});

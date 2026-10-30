@@ -218,6 +218,8 @@ export interface UiText {
   };
   updateBanner: string;
   loading: string;
+  courseLoadFailed: string;
+  retryLoad: string;
   /** Shown when IndexedDB could not be read at startup. */
   storageUnavailable: string;
   /** Document shell metadata — synced onto <html> whenever the language changes. */
@@ -435,6 +437,8 @@ export const UI: Record<Lang, UiText> = {
     },
     updateBanner: "新版本已准备好，完成当前学习后点击更新",
     loading: "正在准备离线学习空间…",
+    courseLoadFailed: "暂时无法载入所选课程。当前课程和学习记录已保留，请联网后重试。",
+    retryLoad: "重新载入",
     storageUnavailable: "这台设备暂时读不到学习记录，本次进度可能无法保存。",
     doc: {
       title: "Kachi — 财经英语学习",
@@ -656,6 +660,9 @@ export const UI: Record<Lang, UiText> = {
     },
     updateBanner: "A new version is ready — update after this session",
     loading: "Preparing your offline study space…",
+    courseLoadFailed:
+      "The selected course could not load. Your current course and progress are kept. Reconnect and try again.",
+    retryLoad: "Try again",
     storageUnavailable: "This device can't read saved progress right now. This visit may not be saved.",
     doc: {
       title: "Kachi — Finance English, without the mix-ups",

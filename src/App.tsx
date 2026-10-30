@@ -72,6 +72,8 @@ function App() {
   const setState = (next: LearnerState) => setFlowState((current) => ({ ...current, learner: next }));
   const [glossaryQuery, setGlossaryQuery] = useState("");
   const [updateReady, setUpdateReady] = useState(false);
+  const courseRequest = useRef(0);
+  const [courseFailure, setCourseFailure] = useState<{ packId: string; lang: Lang } | null>(null);
   const [shareCards, setShareCards] = useState<PairCardInput[] | null>(null);
   const [storageFailed, setStorageFailed] = useState(false);
   // null stored = untouched slider = follow the OS reduced-motion preference
@@ -124,6 +126,7 @@ function App() {
     window.addEventListener("kachi-update-ready", listener);
     return () => {
       alive = false;
+      ++courseRequest.current;
       window.removeEventListener("kachi-update-ready", listener);
     };
   }, []);
@@ -206,50 +209,34 @@ function App() {
     ];
   };
 
-  const setLang = (next: Lang) => {
-    setLangState(next);
-    saveLang(next);
-    const cached = courseFor(packId, next);
+  // Commit course identity and language together. A failed or obsolete request
+  // cannot replace a working course, reset the selected pack, or change locale.
+  const selectCourse = (nextPack: string, nextLang: Lang) => {
+    const revision = ++courseRequest.current;
+    setCourseFailure(null);
+    const commit = (loaded: Course) => {
+      if (revision !== courseRequest.current) return;
+      setCourse(loaded);
+      setPackIdState(nextPack);
+      setLangState(nextLang);
+      saveLang(nextLang);
+      setReady(true);
+    };
+    const cached = courseFor(nextPack, nextLang);
     if (cached) {
-      setCourse(cached);
+      commit(cached);
       return;
     }
     setReady(false);
-    void loadCourse(packId, next)
-      .then((loaded) => {
-        setCourse(loaded);
-        setReady(true);
-      })
-      .catch(() => {
-        // The lazy pack could not be fetched (offline before the service
-        // worker cached it): fall back to the zh pack so the interface
-        // strings and the course never disagree.
-        setCourse(defaultCourse);
-        setLangState("zh-CN");
-        saveLang("zh-CN");
-        setReady(true);
-      });
+    void loadCourse(nextPack, nextLang).then(commit, () => {
+      if (revision !== courseRequest.current) return;
+      setCourseFailure({ packId: nextPack, lang: nextLang });
+      setReady(true);
+    });
   };
-
+  const setLang = (next: Lang) => selectCourse(packId, next);
   const setPack = (next: string) => {
-    if (next === packId) return;
-    setPackIdState(next);
-    const cached = courseFor(next, lang);
-    if (cached) {
-      setCourse(cached);
-      return;
-    }
-    setReady(false);
-    void loadCourse(next, lang)
-      .then((loaded) => {
-        setCourse(loaded);
-        setReady(true);
-      })
-      .catch(() => {
-        // A pack with no chunk (planned but unwritten) keeps the current one.
-        setPackIdState(packId);
-        setReady(true);
-      });
+    if (next !== packId) selectCourse(next, lang);
   };
 
   // ---- lesson lifecycle ----------------------------------------------------
@@ -353,13 +340,13 @@ function App() {
   }, [flow, dispatch, answer, shareCards]);
 
   const downloadExport = async () => {
-    const blob = await exportLearnerData();
+    const blob = await exportLearnerData(state);
     const href = URL.createObjectURL(blob);
     const link = document.createElement("a");
     link.href = href;
     link.download = `kachi-learning-${new Date().toISOString().slice(0, 10)}.json`;
     link.click();
-    URL.revokeObjectURL(href);
+    setTimeout(() => URL.revokeObjectURL(href), 30_000);
   };
 
   const onImport = async (event: ChangeEvent<HTMLInputElement>) => {
@@ -394,7 +381,11 @@ function App() {
           onPath={closeLesson}
           onShare={() => openShare(shareConceptIds(flow.session!))}
         />
-        {shareCards && <ShareSheet cards={shareCards} t={t} onClose={() => setShareCards(null)} />}
+        {shareCards && (
+          <>
+            <ShareSheet cards={shareCards} t={t} onClose={() => setShareCards(null)} />
+          </>
+        )}
       </>
     );
   }
@@ -507,6 +498,14 @@ function App() {
             {t.updateBanner}
           </button>
         )}
+        {courseFailure && (
+          <div className="course-alert" role="alert">
+            <p>{t.courseLoadFailed}</p>
+            <button type="button" onClick={() => selectCourse(courseFailure.packId, courseFailure.lang)}>
+              {t.retryLoad}
+            </button>
+          </div>
+        )}
         {storageFailed && (
           <p className="fine" role="alert">
             {t.storageUnavailable}
@@ -517,54 +516,66 @@ function App() {
           <LearnHome state={state} course={course} t={t} missedCount={missedCount} onStart={beginLesson} />
         )}
         {tab === "practice" && (
-          <PracticeHome
-            state={state}
-            course={course}
-            t={t}
-            lang={lang}
-            missedCount={missedCount}
-            onStart={() => beginPractice()}
-          />
+          <>
+            <PracticeHome
+              state={state}
+              course={course}
+              t={t}
+              lang={lang}
+              missedCount={missedCount}
+              onStart={() => beginPractice()}
+            />
+          </>
         )}
         {tab === "glossary" && (
-          <Glossary
-            state={state}
-            course={course}
-            t={t}
-            lang={lang}
-            query={glossaryQuery}
-            onQuery={setGlossaryQuery}
-            onShare={(conceptIds) => openShare(conceptIds)}
-          />
+          <>
+            <Glossary
+              state={state}
+              course={course}
+              t={t}
+              lang={lang}
+              query={glossaryQuery}
+              onQuery={setGlossaryQuery}
+              onShare={(conceptIds) => openShare(conceptIds)}
+            />
+          </>
         )}
         {tab === "graph" && (
-          <GraphScreen
-            state={state}
-            course={course}
-            t={t}
-            lang={lang}
-            onOpenGlossary={(term) => {
-              setGlossaryQuery(term);
-              setTab("glossary");
-            }}
-          />
+          <>
+            <GraphScreen
+              state={state}
+              course={course}
+              t={t}
+              lang={lang}
+              onOpenGlossary={(term) => {
+                setGlossaryQuery(term);
+                setTab("glossary");
+              }}
+            />
+          </>
         )}
         {tab === "settings" && (
-          <Settings
-            t={t}
-            lang={lang}
-            motion={motion}
-            packs={packChoices}
-            packId={packId}
-            onLang={setLang}
-            onMotion={setMotion}
-            onPack={setPack}
-            onExport={downloadExport}
-            onImport={onImport}
-          />
+          <>
+            <Settings
+              t={t}
+              lang={lang}
+              motion={motion}
+              packs={packChoices}
+              packId={packId}
+              onLang={setLang}
+              onMotion={setMotion}
+              onPack={setPack}
+              onExport={downloadExport}
+              onImport={onImport}
+            />
+          </>
         )}
 
-        {shareCards && <ShareSheet cards={shareCards} t={t} onClose={() => setShareCards(null)} />}
+        {shareCards && (
+          <>
+            <ShareSheet cards={shareCards} t={t} onClose={() => setShareCards(null)} />
+          </>
+        )}
 
         <Nav tab={tab} onTab={setTab} t={t} />
       </div>

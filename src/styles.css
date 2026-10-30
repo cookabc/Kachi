@@ -3565,3 +3565,23 @@ button.lab-unit-head {
   font-size: 12px;
   color: var(--muted);
 }
+
+.course-alert {
+  margin: 16px;
+  padding: 16px;
+  border: 1px solid var(--ink);
+  border-radius: 12px;
+  line-height: 1.5;
+}
+.course-alert p {
+  margin: 0 0 12px;
+}
+.course-alert button {
+  font: inherit;
+  color: var(--ink);
+  background: transparent;
+  border: 1px solid currentColor;
+  border-radius: 8px;
+  min-height: 44px;
+  padding: 8px 16px;
+}

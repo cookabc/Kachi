@@ -147,6 +147,7 @@ async function waitForHome() {
 }
 
 beforeEach(async () => {
+  vi.stubGlobal("IS_REACT_ACT_ENVIRONMENT", true);
   localStorage.clear();
   failSnapshotPutsAfter = Number.POSITIVE_INFINITY;
   installMemoryIndexedDB();
@@ -213,4 +214,34 @@ describe("startup failures", () => {
     expect(document.querySelector(".loading")).toBeNull();
     expect(loadLang()).toBe("en-US");
   });
+});
+
+it("keeps the current pack and language after a failed switch, then retries the same request", async () => {
+  await renderApp();
+  await waitForHome();
+  const settings = document.querySelector<HTMLButtonElement>('.nav button[aria-label="Settings"]');
+  expect(settings).not.toBeNull();
+  await act(async () => {
+    settings!.click();
+    await import("./screens/Settings");
+  });
+  const firstPack = document.querySelector<HTMLButtonElement>(".pack-choice");
+  expect(firstPack).not.toBeNull();
+  loadCourseMock.mockRejectedValueOnce(new Error("offline"));
+  await act(async () => firstPack!.click());
+  expect(document.querySelector('[role="alert"]')?.textContent).toContain(
+    "current course and progress are kept",
+  );
+  expect(loadLang()).toBe("en-US");
+  expect(document.querySelector('.pack-choice[aria-pressed="true"]')?.textContent).toContain(
+    "Borrow and hedge",
+  );
+  const retry = document.querySelector<HTMLButtonElement>(".course-alert button");
+  await act(async () => {
+    retry!.click();
+    await loadCourseMock.mock.results.at(-1)?.value;
+  });
+  expect(document.querySelector(".course-alert")).toBeNull();
+  expect(document.querySelector('.pack-choice[aria-pressed="true"]')?.textContent).toContain("front page");
+  expect(loadLang()).toBe("en-US");
 });
