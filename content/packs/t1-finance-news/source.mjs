@@ -8,7 +8,7 @@
 
 export const PACK = {
   packId: "t1-finance-news",
-  contentVersion: "2026.10.27-t1.1",
+  contentVersion: "2026.11.01-t1.2",
   title: "读财经首页",
 };
 

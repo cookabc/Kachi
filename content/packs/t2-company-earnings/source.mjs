@@ -10,7 +10,7 @@
 
 export const PACK = {
   packId: "t2-company-earnings",
-  contentVersion: "2026.10.27-t2",
+  contentVersion: "2026.11.01-t2.2",
   title: "读公司财报",
 };
 
