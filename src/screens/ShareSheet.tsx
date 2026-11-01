@@ -1,5 +1,35 @@
 import { type KeyboardEvent, useEffect, useRef, useState } from "react";
+import { assetFor } from "../art-assets";
 import { buildPairCardSvg, CARD_HEIGHT, CARD_WIDTH, type PairCardInput } from "../share-card";
+
+/**
+ * The SVG is rasterized through an <img>, which cannot fetch external files,
+ * so the two illustrations are inlined as data URLs first. A missing image
+ * leaves the card on its hand-drawn or hairline fallback.
+ */
+async function dataUrl(path: string | undefined): Promise<string | undefined> {
+  if (!path) return undefined;
+  try {
+    const blob = await (await fetch(path)).blob();
+    return await new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(String(reader.result));
+      reader.onerror = () => reject(reader.error);
+      reader.readAsDataURL(blob);
+    });
+  } catch {
+    return undefined;
+  }
+}
+
+async function withImages(card: PairCardInput): Promise<PairCardInput> {
+  const [imageA, imageB] = await Promise.all([
+    dataUrl(card.artA ? assetFor(card.artA)?.file : undefined),
+    dataUrl(card.artB ? assetFor(card.artB)?.file : undefined),
+  ]);
+  return imageA && imageB ? { ...card, imageA, imageB } : card;
+}
+
 import type { UiText } from "../ui";
 
 function cardFileName(card: PairCardInput): string {
@@ -60,7 +90,8 @@ export function ShareSheet({
     // makes buildPairCardSvg throw, and a throw inside the effect body would
     // crash the whole screen instead of degrading to a failed export.
     Promise.resolve()
-      .then(() => svgToPngBlob(buildPairCardSvg(card)))
+      .then(() => withImages(card))
+      .then((full) => svgToPngBlob(buildPairCardSvg(full)))
       .then((blob) => {
         if (!alive) return;
         url = URL.createObjectURL(blob);
@@ -159,17 +190,22 @@ export function ShareSheet({
             </button>
           </div>
         )}
-        <button type="button" className="btn btn-gold" disabled={!png} onClick={save}>
+        <button type="button" className="btn btn-sun btn-block" disabled={!png} onClick={save}>
           {t.share.saveImage}
         </button>
         {"share" in navigator && (
-          <button type="button" className="btn btn-green" disabled={!png} onClick={() => void shareOut()}>
+          <button
+            type="button"
+            className="btn btn-mint btn-block"
+            disabled={!png}
+            onClick={() => void shareOut()}
+          >
             {t.share.shareBtn}
           </button>
         )}
         {failed && <p className="share-hint">{t.share.exportFailed}</p>}
         <p className="share-hint">{t.share.saveHint}</p>
-        <button type="button" className="btn btn-ghost" onClick={onClose}>
+        <button type="button" className="btn btn-white btn-block" onClick={onClose}>
           {t.share.close}
         </button>
       </div>

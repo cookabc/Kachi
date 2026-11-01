@@ -1,11 +1,25 @@
-import { Hedgehog } from "../art";
-import { Confetti } from "../chrome";
+import { prefersGeneratedArt, TermArt } from "../art";
+import { Confetti, Icon, Mascot } from "../chrome";
 import type { Course } from "../domain";
-import { conceptOf, lessonPair, type Summary } from "../flow";
+import { conceptOf, type Summary } from "../flow";
+import { lessonPairs } from "../pairs";
 import type { UiText } from "../ui";
+
+/** Missed concepts, one per pair: "rally / selloff" and "selloff / rally" are one thing to watch. */
+function watchList(course: Course, ids: string[]): string[] {
+  const seen = new Set<string>();
+  return ids.filter((id) => {
+    const concept = conceptOf(course, id);
+    const key = [id, concept?.mixUp ?? id].sort().join("|");
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+}
 
 export function CompleteScreen(props: {
   summary: Summary;
+  bestCombo: number;
   isPractice: boolean;
   lessonId: string;
   course: Course;
@@ -18,126 +32,127 @@ export function CompleteScreen(props: {
   /** Share sheet is open: keep this screen out of tab order and activation. */
   blocked?: boolean;
 }) {
-  const { summary, t } = props;
+  const { summary, t, course } = props;
+  const generated = prefersGeneratedArt(course);
   const acc = summary.total ? Math.round((summary.correct / summary.total) * 100) : 0;
-  const lessonIndex = props.course.lessons.findIndex((lesson) => lesson.id === props.lessonId);
-  const next = props.isPractice ? undefined : props.course.lessons[lessonIndex + 1];
-  const pair = props.isPractice ? null : lessonPair(props.course, props.lessonId);
-  const flawless = summary.xpPerfect > 0;
+  const lessonIndex = course.lessons.findIndex((lesson) => lesson.id === props.lessonId);
+  const next = props.isPractice ? undefined : course.lessons[lessonIndex + 1];
+  // A pair goes under "you can tell apart" only if neither word was missed in
+  // this run; the missed ones are listed under "keep an eye on" instead.
+  const missed = new Set(summary.mix);
+  const pairs = (props.isPractice ? [] : lessonPairs(course, props.lessonId)).filter(
+    (pair) => !missed.has(pair.a) && !missed.has(pair.b),
+  );
+  const title = props.isPractice
+    ? t.complete.practiceDone
+    : summary.xpPerfect > 0
+      ? t.complete.flawless
+      : acc >= 80
+        ? t.complete.great
+        : t.complete.done;
   return (
-    <main className="hero" inert={props.blocked ? true : undefined}>
+    <main className="done-screen" inert={props.blocked ? true : undefined}>
       <Confetti level={props.motion} />
-      {props.isPractice ? (
-        <div className="mascot">
-          <Hedgehog />
+      <div className="hero-mascot">
+        <Mascot mood="cheer" size={148} />
+      </div>
+      <h1 className="display">{title}</h1>
+      <div className="stat-row">
+        <div className="stat s-sun">
+          <b>{acc}%</b>
+          <small>{t.complete.firstTry}</small>
         </div>
-      ) : (
-        <div className={`hero-stage${flawless ? " flawless" : ""}`}>
-          <div className="mascot">
-            <Hedgehog />
-          </div>
-          {pair && (
-            <div className="pair-hero">
-              <div className="ph-term">{pair.a}</div>
-              <div className="stamp" aria-hidden="true">
-                ≠
-              </div>
-              <div className="ph-term">{pair.b}</div>
-            </div>
-          )}
+        <div className="stat s-mint">
+          <b>{props.bestCombo}</b>
+          <small>{t.complete.combo}</small>
         </div>
-      )}
-      <h1>
-        {summary.xpPerfect
-          ? t.complete.flawless
-          : props.isPractice
-            ? t.complete.practiceDone
-            : t.complete.done}
-      </h1>
-      <p className="sub">{t.complete.accuracy(acc, summary.correct, summary.total)}</p>
-      <div className="xp-card">
-        {props.isPractice ? (
-          <div className="xp-row">
-            <span>{t.complete.xpCorrect}</span>
-            <span>+{summary.xpHit} XP</span>
-          </div>
-        ) : (
-          <>
-            <div className="xp-row">
-              <span>{t.complete.xpCorrect}</span>
-              <span>+{summary.xpHit} XP</span>
-            </div>
-            <div className="xp-row">
-              <span>{t.complete.xpLesson}</span>
-              <span>+{summary.xpDone} XP</span>
-            </div>
-            {summary.xpPerfect > 0 && (
-              <div className="xp-row">
-                <span>{t.complete.xpPerfect}</span>
-                <span>+{summary.xpPerfect} XP</span>
-              </div>
-            )}
-          </>
-        )}
-        <div className="xp-row total">
-          <span>{t.complete.xpTotal}</span>
-          <span>+{summary.gained} XP</span>
+        <div className="stat s-lilac">
+          <b>+{summary.gained}</b>
+          <small>{t.complete.xp}</small>
         </div>
       </div>
-      {summary.mix.length > 0 && (
-        <>
-          <p className="sub mix-title">{t.complete.mixTitle}</p>
-          <div className="chips">
-            {summary.mix.map((id) => {
-              const concept = conceptOf(props.course, id);
-              if (!concept) return null;
+      {pairs.length > 0 && (
+        <section className="got">
+          <h2>{t.complete.pairsTitle}</h2>
+          <ul className="pair-chips big">
+            {pairs.map((pair) => {
+              const a = conceptOf(course, pair.a);
+              const b = conceptOf(course, pair.b);
+              if (!a || !b) return null;
               return (
-                <span className="chip" key={id}>
-                  {concept.term} vs {concept.mixUp}
-                </span>
+                <li key={pair.id} className="met">
+                  <TermArt id={a.id} size="xs" preferGenerated={generated} />
+                  {a.term}
+                  <i aria-hidden="true">/</i>
+                  {b.term}
+                </li>
               );
             })}
-          </div>
-        </>
+          </ul>
+        </section>
       )}
-      {props.isPractice ? (
-        <>
-          <button type="button" className="btn btn-gold" onClick={() => props.onPractice()}>
-            {t.complete.practiceAgain}
+      {summary.mix.length > 0 && (
+        <section className="got watch">
+          <h2>{t.complete.watch}</h2>
+          <ul className="pair-chips">
+            {watchList(course, summary.mix).map((id) => {
+              const concept = conceptOf(course, id);
+              if (!concept) return null;
+              const twin = conceptOf(course, concept.mixUp);
+              return (
+                <li key={id}>
+                  {concept.term}
+                  {twin && (
+                    <>
+                      <i aria-hidden="true">/</i>
+                      {twin.term}
+                    </>
+                  )}
+                </li>
+              );
+            })}
+          </ul>
+        </section>
+      )}
+      <div className="hero-actions">
+        {props.isPractice ? (
+          <button type="button" className="btn btn-sun btn-block" onClick={() => props.onPractice()}>
+            {t.complete.again}
           </button>
-          <button type="button" className="btn btn-ghost" onClick={props.onPath}>
-            {t.complete.backToPath}
+        ) : next ? (
+          <button type="button" className="btn btn-sun btn-block" onClick={() => props.onStart(next.id)}>
+            {t.complete.next}
+            <Icon name="arrow" size={18} />
           </button>
-        </>
-      ) : next ? (
-        <>
-          <button type="button" className="btn btn-gold" onClick={() => props.onStart(next.id)}>
-            {t.complete.nextLesson(next.title)}
+        ) : (
+          <button type="button" className="btn btn-sun btn-block" onClick={props.onPath}>
+            {t.complete.home}
           </button>
-          {summary.mix.length > 0 && (
-            <button type="button" className="btn btn-green" onClick={() => props.onPractice(summary.mix)}>
+        )}
+        <div className="foot-row">
+          {summary.mix.length > 0 ? (
+            <button
+              type="button"
+              className="btn btn-white btn-grow"
+              onClick={() => props.onPractice(summary.mix)}
+            >
               {t.complete.practiceThose}
             </button>
+          ) : (
+            !props.isPractice && (
+              <button type="button" className="btn btn-white btn-grow" onClick={props.onShare}>
+                <Icon name="share" size={18} />
+                {t.complete.share}
+              </button>
+            )
           )}
-          <button type="button" className="btn btn-ghost" onClick={props.onPath}>
-            {t.complete.backToPath}
-          </button>
-        </>
-      ) : (
-        <>
-          {summary.mix.length > 0 && (
-            <button type="button" className="btn btn-green" onClick={() => props.onPractice(summary.mix)}>
-              {t.complete.practiceThose}
+          {(next || props.isPractice) && (
+            <button type="button" className="btn btn-white btn-grow" onClick={props.onPath}>
+              {t.complete.home}
             </button>
           )}
-          <button type="button" className="btn btn-ghost" onClick={props.onPath}>
-            {t.complete.backToPath}
-          </button>
-        </>
-      )}
-      <button type="button" className="btn btn-ghost share-open" onClick={props.onShare}>
-        {t.share.open}
-      </button>
+        </div>
+      </div>
     </main>
   );
 }

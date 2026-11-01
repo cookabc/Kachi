@@ -510,6 +510,21 @@ export function requeuePrompt(session: SessionState, exerciseId: string): Sessio
 }
 
 /**
+ * Send a missed prompt to the back of the queue, once.
+ *
+ * Kachi has no hearts: a lesson cannot be failed. A miss instead comes back
+ * after everything else, so the learner meets the pair again once the right
+ * answer has had a moment to settle. The replay is a rehearsal (see
+ * isRequeuedPrompt) — it pays nothing and does not move the ladder — and a
+ * prompt that was already replayed is not queued a third time.
+ */
+export function requeueAtEnd(session: SessionState, exerciseId: string): SessionState {
+  const answered = session.results.filter((result) => result.exerciseId === exerciseId).length;
+  if (answered > 1) return session;
+  return { ...session, promptIds: [...session.promptIds, exerciseId] };
+}
+
+/**
  * Terms whose most recent *graded* attempt was wrong — the practice focus set.
  *
  * Rehearsals are ignored on purpose: a match mispair re-queues the prompt and

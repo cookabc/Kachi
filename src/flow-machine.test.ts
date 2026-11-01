@@ -7,13 +7,12 @@ import {
   type FlowState,
   idleFlow,
   idleState,
-  MAX_HEARTS,
   reduceFlow,
 } from "./flow-machine";
 
 /**
- * The lesson lifecycle is the riskiest logic in the app: hearts, failure,
- * re-queued matches, hints, and completion. These drive the reducer directly,
+ * The lesson lifecycle is the riskiest logic in the app: re-asked misses,
+ * combos, re-queued matches, hints, and completion. These drive the reducer directly,
  * so a regression fails here instead of in a browser.
  */
 
@@ -144,10 +143,10 @@ describe("lesson start", () => {
   it("teaches first, then asks", () => {
     const { flow, seen } = run([start]);
     expect(flow.phase).toBe("teach");
-    expect(flow.teachTerms).toEqual(["hedge", "pledge"]);
+    // One twin card: hedge leads, pledge stands beside it.
+    expect(flow.teachTerms).toEqual(["hedge"]);
     expect(flow.teachIndex).toBe(0);
-    expect(seen).toContain("hedge");
-    expect(flow.hearts).toBe(MAX_HEARTS);
+    expect(seen).toEqual(["hedge", "pledge"]);
   });
 
   it("refuses a locked lesson", () => {
@@ -175,17 +174,24 @@ describe("lesson start", () => {
 });
 
 describe("answering", () => {
-  it("shows feedback and keeps the heart on a correct answer", () => {
+  it("shows feedback and grows the combo on a correct answer", () => {
     const { flow } = teachThrough([start, correct()]);
     expect(flow.phase).toBe("feedback");
     expect(flow.lastCorrect).toBe(true);
-    expect(flow.hearts).toBe(MAX_HEARTS);
+    expect(flow.combo).toBe(1);
+    expect(flow.bestCombo).toBe(1);
   });
 
-  it("spends a heart on a wrong answer", () => {
-    const { flow } = teachThrough([start, wrong()]);
+  it("resets the combo on a wrong answer but keeps the best", () => {
+    const { flow } = teachThrough([
+      start,
+      correct(),
+      advancePast,
+      { type: "submit", answer: false, latencyMs: 9 },
+    ]);
     expect(flow.lastCorrect).toBe(false);
-    expect(flow.hearts).toBe(MAX_HEARTS - 1);
+    expect(flow.combo).toBe(0);
+    expect(flow.bestCombo).toBe(1);
   });
 
   it("ignores a submit with nothing selected", () => {
@@ -202,43 +208,66 @@ describe("answering", () => {
   });
 });
 
-describe("failure", () => {
-  // A three-prompt lesson with five hearts can never fail — hearts only end a
-  // run that runs out before the queue does. These tests start with one heart
-  // so the failure branch is reachable at all.
-  function oneHeart(events: FlowEvent[]) {
-    let state = stateOf();
-    const one = (next: FlowState): FlowState => ({ ...next, flow: { ...next.flow, hearts: 1 } });
-    const [first, ...rest] = events;
-    if (first) state = one(reduceFlow(state, first, context).state);
-    let guard = 0;
-    while (state.flow.phase === "teach" && guard < 10) {
-      state = one(reduceFlow(state, { type: "teachContinue" }, context).state);
-      guard += 1;
-    }
-    for (const event of rest) state = reduceFlow(state, event, context).state;
-    return { flow: state.flow, learner: state.learner };
-  }
-
-  it("fails when the last heart is spent on a wrong answer", () => {
-    const { flow } = oneHeart([start, wrong(), advancePast]);
-    expect(flow.hearts).toBe(0);
-    expect(flow.phase).toBe("fail");
-  });
-
-  it("does not complete the lesson on a failed finish", () => {
-    const { flow, learner } = oneHeart([start, wrong(), advancePast]);
-    expect(flow.phase).toBe("fail");
-    expect(learner.completedLessonIds).toEqual([]);
-    expect(learner.streak).toBe(0);
-  });
-
-  it("keeps going while hearts remain, even after mistakes", () => {
-    // Three prompts, five hearts: two wrong answers still leave a third to answer.
-    const { flow } = teachThrough([start, wrong(), advancePast, wrong(), advancePast]);
-    expect(flow.hearts).toBe(MAX_HEARTS - 2);
+describe("missed prompts", () => {
+  // There are no hearts: a lesson cannot be failed. A miss comes back once,
+  // at the end of the queue.
+  it("re-asks a missed prompt at the end of the lesson", () => {
+    const { flow } = teachThrough([start, wrong(), advancePast]);
     expect(flow.phase).toBe("question");
-    expect(flow.presented?.id).toBe("q3");
+    expect(flow.presented?.id).toBe("q2");
+    expect(flow.session?.promptIds).toEqual(["q1", "q2", "q3", "q1"]);
+  });
+
+  it("keeps going after any number of mistakes and still completes", () => {
+    const { flow, learner } = teachThrough([
+      start,
+      wrong(),
+      advancePast,
+      { type: "submit", answer: false, latencyMs: 9 },
+      advancePast,
+      { type: "submit", answer: "hedge", latencyMs: 9 },
+      advancePast,
+      wrong(),
+      advancePast,
+      { type: "submit", answer: false, latencyMs: 9 },
+      advancePast,
+      { type: "submit", answer: "hedge", latencyMs: 9 },
+      advancePast,
+    ]);
+    expect(flow.phase).toBe("complete");
+    expect(learner.completedLessonIds).toEqual([lessonKey(course, "l1")]);
+  });
+
+  it("queues a miss only once, so a second miss does not loop forever", () => {
+    const { flow } = teachThrough([
+      start,
+      wrong(),
+      advancePast,
+      { type: "submit", answer: true, latencyMs: 9 },
+      advancePast,
+      { type: "submit", answer: "pledge", latencyMs: 9 },
+      advancePast,
+      wrong(),
+      advancePast,
+    ]);
+    expect(flow.phase).toBe("complete");
+    expect(flow.session?.promptIds.filter((id) => id === "q1")).toHaveLength(2);
+  });
+
+  it("counts the replay as a rehearsal: no XP, no flawless bonus", () => {
+    const { flow } = teachThrough([
+      start,
+      wrong(),
+      advancePast,
+      { type: "submit", answer: true, latencyMs: 9 },
+      advancePast,
+      { type: "submit", answer: "pledge", latencyMs: 9 },
+      advancePast,
+      correct(),
+      advancePast,
+    ]);
+    expect(flow.phase).toBe("complete");
+    expect(flow.summary).toMatchObject({ xpHit: 20, xpDone: 20, xpPerfect: 0, correct: 2, total: 3 });
   });
 });
 

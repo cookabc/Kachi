@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { artForSize, prefersGeneratedArt } from "./art";
 import { artAssetElement, hasAsset } from "./art-assets";
-import { course } from "./course";
+import { legacyCourse as course } from "./test-fixtures/legacy-course";
 
 // The rebuild replaces hand-drawn inline SVG with generated image files once a
 // pack grows past the hand-drawing scale. Both systems must coexist: a concept

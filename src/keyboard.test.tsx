@@ -1,11 +1,10 @@
 import { act, useEffect, useState } from "react";
 import { createRoot, type Root } from "react-dom/client";
 import { afterEach, describe, expect, it } from "vitest";
-import { course } from "./course";
 import type { Summary } from "./flow";
 import { handleEnterShortcut, type ShortcutPhase } from "./keyboard";
 import { CompleteScreen } from "./screens/CompleteScreen";
-import { FailScreen } from "./screens/FailScreen";
+import { legacyCourse as course } from "./test-fixtures/legacy-course";
 import { UI } from "./ui";
 
 const summary: Summary = {
@@ -37,29 +36,19 @@ function Harness({ phase, shareOpen }: { phase: ShortcutPhase; shareOpen: boolea
   });
   return (
     <>
-      {phase === "complete" ? (
-        <CompleteScreen
-          summary={summary}
-          isPractice={false}
-          lessonId="u1l1"
-          course={course}
-          t={t}
-          blocked={shareOpen}
-          onStart={() => record("next")}
-          onPractice={() => record("practice")}
-          onPath={() => record("path")}
-          onShare={() => record("share")}
-        />
-      ) : (
-        <FailScreen
-          isPractice={false}
-          lessonId="u1l1"
-          t={t}
-          onRetryLesson={() => record("retry")}
-          onRetryPractice={() => record("retry-practice")}
-          onPath={() => record("path")}
-        />
-      )}
+      <CompleteScreen
+        summary={summary}
+        bestCombo={1}
+        isPractice={false}
+        lessonId="u1l1"
+        course={course}
+        t={t}
+        blocked={shareOpen}
+        onStart={() => record("next")}
+        onPractice={() => record("practice")}
+        onPath={() => record("path")}
+        onShare={() => record("share")}
+      />
       {shareOpen && (
         <div role="dialog" aria-modal="true">
           <button type="button" onClick={() => record("save")}>
@@ -111,10 +100,10 @@ afterEach(async () => {
   container = null;
 });
 
-describe("complete and fail Enter handling", () => {
+describe("completion Enter handling", () => {
   it("does not click the first hero button when Enter is pressed on another control", async () => {
     await renderHarness({ phase: "complete", shareOpen: false });
-    const back = buttonNamed("回到路径");
+    const back = buttonNamed("做成卡片");
     const event = await pressEnter(back);
     expect(event.defaultPrevented).toBe(false);
     expect(logText()).toBe("");
@@ -129,7 +118,7 @@ describe("complete and fail Enter handling", () => {
 
   it("leaves the hero buttons alone while the share dialog is open", async () => {
     await renderHarness({ phase: "complete", shareOpen: true });
-    expect(document.querySelector("main.hero")?.hasAttribute("inert")).toBe(true);
+    expect(document.querySelector("main.done-screen")?.hasAttribute("inert")).toBe(true);
     const save = buttonNamed("保存图片");
     const onSave = await pressEnter(save);
     expect(onSave.defaultPrevented).toBe(false);
@@ -137,14 +126,5 @@ describe("complete and fail Enter handling", () => {
     const onBody = await pressEnter(document.body);
     expect(onBody.defaultPrevented).toBe(false);
     expect(logText()).toBe("");
-  });
-
-  it("does not retry the lesson when Enter is pressed on the fail screen's back button", async () => {
-    await renderHarness({ phase: "fail", shareOpen: false });
-    const back = buttonNamed("回到路径");
-    await pressEnter(back);
-    expect(logText()).toBe("");
-    await pressEnter(document.body);
-    expect(logText()).toBe("retry");
   });
 });

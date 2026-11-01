@@ -132,8 +132,10 @@ function validateExercise(
     if (exercise.termIds?.length !== 2) {
       issues.push({ path: exercise.id, message: "Headline drill must reference exactly 2 terms" });
     }
-    const optionTexts = (exercise.options ?? []).map((option) => option.text);
-    if ([...(exercise.termIds ?? [])].sort().join("|") !== [...optionTexts].sort().join("|")) {
+    // Options carry the headword ("IPO"); termIds carry concept ids ("ipo").
+    // Compare through each option's art id, which is the concept id.
+    const optionIds = (exercise.options ?? []).map((option) => option.art ?? option.text);
+    if ([...(exercise.termIds ?? [])].sort().join("|") !== [...optionIds].sort().join("|")) {
       issues.push({
         path: exercise.id,
         message: "Headline drill options must be exactly its two termIds",

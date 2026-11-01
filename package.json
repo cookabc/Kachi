@@ -39,6 +39,7 @@
     "generate:course": "node scripts/generate-course.mjs",
     "generate:art": "node scripts/generate-art.mjs",
     "generate:audio": "node scripts/generate-audio.mjs",
+    "strip:art": "node scripts/strip-art-background.mjs",
     "test:e2e": "pnpm build && playwright test",
     "test:e2e:built": "playwright test"
   },

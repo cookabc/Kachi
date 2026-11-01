@@ -17,32 +17,48 @@ const hasRule = (selector: string) =>
   new RegExp(`(^|\\n)\\s*${selector.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\s*[,{]`).test(css);
 
 describe("styles for surfaces that stop working without them", () => {
-  it("keeps the course pack picker styled", () => {
-    // Without these the six packs collapse into one run of text and cannot be
+  it("keeps navigation and the level picker styled", () => {
+    // Without these the tab bar is a row of text and the six levels cannot be
     // tapped — the only way to change course.
-    for (const selector of [".pack-switch", ".pack-choice", ".pack-level", ".pack-title"]) {
+    for (const selector of [".tabbar", ".level-btn", ".level-item", ".level-badge", "dialog.sheet"]) {
       expect(hasRule(selector), `${selector} lost its rule`).toBe(true);
     }
   });
 
-  it("keeps the folded glossary row styled", () => {
-    // The row is the only control that opens a term's contrast bench.
-    for (const selector of [".g-row", ".g-row-twin", ".g-row-chevron"]) {
+  it("keeps the learning path and pair album styled", () => {
+    for (const selector of [".today", ".trail", ".node", ".pcard", ".album-grid"]) {
       expect(hasRule(selector), `${selector} lost its rule`).toBe(true);
     }
   });
 
-  it("keeps the unit toggle and its lesson list styled", () => {
-    for (const selector of ["button.lab-unit-head", ".lab-unit-chevron"]) {
+  it("keeps the twin teach card styled", () => {
+    // The side-by-side twins are the product's core moment.
+    for (const selector of [".twins", ".twin", ".twin-art", ".trick"]) {
       expect(hasRule(selector), `${selector} lost its rule`).toBe(true);
     }
   });
 
-  it("keeps the exercise surfaces styled", () => {
-    // audit and listen are the two exercise types with their own layout; losing
-    // either leaves an unstyled block of sentences or a bare speaker glyph.
-    for (const selector of [".audit-opt", ".claim", ".listen-replay", ".speak-btn"]) {
+  it("keeps every exercise surface styled", () => {
+    for (const selector of [
+      ".opt",
+      ".tf",
+      ".bank",
+      ".chip-btn",
+      ".match",
+      ".match-btn",
+      ".news",
+      ".blank",
+      ".claim",
+      ".listen",
+      ".feedback",
+    ]) {
       expect(hasRule(selector), `${selector} lost its rule`).toBe(true);
     }
+  });
+
+  it("does not let the image class 'hero' collide with a layout rule", () => {
+    // TermArt renders <img class="term-art-img hero">. A bare `.hero` layout
+    // rule once stretched every hero image to the full viewport height.
+    expect(hasRule(".hero")).toBe(false);
   });
 });

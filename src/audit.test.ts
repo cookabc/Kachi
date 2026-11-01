@@ -128,9 +128,10 @@ describe("audit feedback copy", () => {
   // the learner either caught a bad argument or let one through.
   it("has its own verdict lines in both locales", () => {
     for (const locale of ["zh-CN", "en-US"] as const) {
-      const v = UI[locale].verdicts;
+      const v = UI[locale].feedback;
       expect(v.auditNice.length).toBeGreaterThan(0);
       expect(v.auditNope.length).toBeGreaterThan(0);
+      expect(v.auditNope).not.toBe(v.nope);
     }
   });
 });

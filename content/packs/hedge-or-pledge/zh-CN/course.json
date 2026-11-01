@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "packId": "hedge-or-pledge",
-  "contentVersion": "2026.10.27-zh-u1",
+  "contentVersion": "2026.11.01-zh",
   "locale": "zh-CN",
   "generatedAt": "2026-10-27T07:00:00.000Z",
   "units": [
@@ -51,6 +51,7 @@
       "example": "你持有 $100,000 的股票，买入一张 put，崩盘时就不那么疼。",
       "mixUp": "pledge",
       "mixUpWhy": "hedge 保护你已有的仓位；pledge 把这个仓位押出去做担保。",
+      "mixUpType": "coexist",
       "relations": [
         {
           "type": "confusable",
@@ -76,6 +77,7 @@
       "example": "你把 $1M 的股票 pledge 出去借 $700k。股票还是你的——直到你还不上。",
       "mixUp": "hedge",
       "mixUpWhy": "股票还是你的。pledge = 押出担保；sell = 卖了就没了。",
+      "mixUpType": "coexist",
       "relations": [
         {
           "type": "confusable",
@@ -97,6 +99,7 @@
       "example": "被押出去的股票就是 collateral。还不上贷款，银行就把股票收走。",
       "mixUp": "haircut",
       "mixUpWhy": "collateral 是资产本身；haircut 是放款前对它打的折扣。",
+      "mixUpType": "scope",
       "sourceIds": [
         "finra-sec-sbloc-2015"
       ],
@@ -112,6 +115,7 @@
       "example": "$1M 的股票，30% 的 haircut → 按 $700k 计价。这就是贷款上限。",
       "mixUp": "margin",
       "mixUpWhy": "haircut 是对抵押品的折扣；margin 是你必须留着的现金缓冲。",
+      "mixUpType": "coexist",
       "sourceIds": [
         "finra-sec-sbloc-2015"
       ],
@@ -127,6 +131,7 @@
       "example": "券商允许你用 $5k 现金买 $10k 的股票。这 $5k 就是 margin。",
       "mixUp": "leverage",
       "mixUpWhy": "margin 是缓冲；leverage 是缓冲支撑的仓位大小。",
+      "mixUpType": "scope",
       "relations": [
         {
           "type": "sibling",
@@ -148,6 +153,7 @@
       "example": "股票跌 40%。抵押品只剩 $600k，贷款却是 $700k。银行的电话来了。",
       "mixUp": "haircut",
       "mixUpWhy": "haircut 通常在开始时设定；margin call 发生在价格变动之后。",
+      "mixUpType": "timing",
       "relations": [
         {
           "type": "prereq",
@@ -173,6 +179,7 @@
       "example": "$10k 自己的加 $40k 借的 = 5× 杠杆。跌 10% 就抹掉你一半现金。",
       "mixUp": "margin",
       "mixUpWhy": "leverage 是倍数；margin 是让这个倍数成为可能的缓冲。",
+      "mixUpType": "scope",
       "sourceIds": [
         "finra-sec-sbloc-2015"
       ],
@@ -188,6 +195,7 @@
       "example": "苹果股票的 put 是衍生品。put 不是苹果股票，它只是押注苹果的股价。",
       "mixUp": "option",
       "mixUpWhy": "option 只是衍生品的一种；futures 和 swap 也是。股票本身不是。",
+      "mixUpType": "hierarchy",
       "relations": [
         {
           "type": "sibling",
@@ -213,6 +221,7 @@
       "example": "花 $3 买下以 $90 卖出 $100 股票的权利。这就是 option，你可以反悔。",
       "mixUp": "futures",
       "mixUpWhy": "option 可以放弃；futures 通常必须结算。",
+      "mixUpType": "opposite",
       "relations": [
         {
           "type": "sibling",
@@ -238,6 +247,7 @@
       "example": "股票 $100。一张 $90 的 put 在跌破 $90 后开始赔付。对持有者来说就是崩盘保险。",
       "mixUp": "call",
       "mixUpWhy": "put 是卖出权（你希望它跌）；call 是买入权（你希望它涨）。",
+      "mixUpType": "direction",
       "sourceIds": [
         "hull-derivatives-11e-2021"
       ],
@@ -253,6 +263,7 @@
       "example": "股票 $100。一张 $110 的 call 在冲破 $110 后开始赔付。那是看涨的赌注。",
       "mixUp": "put",
       "mixUpWhy": "call 是买入权（涨）；put 是卖出权（跌）。",
+      "mixUpType": "direction",
       "sourceIds": [
         "hull-derivatives-11e-2021"
       ],
@@ -268,6 +279,7 @@
       "example": "借 100 股，$50 卖出，$30 买回归还，赚 $20。涨到 $80 的话，亏的是你。",
       "mixUp": "put",
       "mixUpWhy": "put 是损失有上限的看跌赌注；卖空的亏损没有天花板。",
+      "mixUpType": "coexist",
       "sourceIds": [
         "hull-derivatives-11e-2021"
       ],
@@ -283,6 +295,7 @@
       "example": "苹果股票是流动的——砸 $1M 出去价格几乎不动。你表弟的创业公司股票就不是了。",
       "mixUp": "notional",
       "mixUpWhy": "liquidity 是退出难易；notional 是合约面值规模。",
+      "mixUpType": "coexist",
       "sourceIds": [
         "finra-sec-sbloc-2015"
       ],
@@ -298,6 +311,7 @@
       "example": "一份关于 $100,000 股票的期权可能只花 $2,000。notional 是 $100k，premium 是 $2k。",
       "mixUp": "premium",
       "mixUpWhy": "notional 是标的规模；premium 是你为合约付出的价格。",
+      "mixUpType": "scope",
       "relations": [
         {
           "type": "sibling",
@@ -319,6 +333,7 @@
       "example": "那张 put 每股 $3。这 $3 就是 premium。",
       "mixUp": "yield",
       "mixUpWhy": "premium 是合约的价格；yield 是投资随时间付给你的收益率。",
+      "mixUpType": "coexist",
       "relations": [
         {
           "type": "sibling",
@@ -340,6 +355,7 @@
       "example": "$100 的债券每年付 $5，yield 是 5%。价格跌到 $50，yield 变成 10%。",
       "mixUp": "duration",
       "mixUpWhy": "yield 是收益率；duration 是利率变化时价格的敏感度。",
+      "mixUpType": "coexist",
       "sourceIds": [
         "hull-derivatives-11e-2021"
       ],
@@ -355,6 +371,7 @@
       "example": "久期 10 年的债券，利率升 1% 价格大约跌 10%。这就是利率淤青。",
       "mixUp": "yield",
       "mixUpWhy": "duration 关心利率冲击下的价格变化；yield 关心你收到的票息。",
+      "mixUpType": "coexist",
       "sourceIds": [
         "hull-derivatives-11e-2021"
       ],
@@ -370,6 +387,7 @@
       "example": "你用石油期货对冲航空公司股票。油价崩了，票价没动。对冲落空了。",
       "mixUp": "hedge",
       "mixUpWhy": "hedge 是保护动作；basis risk 是保护没有贴合的那道缝。",
+      "mixUpType": "hierarchy",
       "sourceIds": [
         "hull-derivatives-11e-2021"
       ],
@@ -385,6 +403,7 @@
       "example": "你买了 50 股。你是 long。你希望价格更高。",
       "mixUp": "short selling",
       "mixUpWhy": "long 希望上涨；short 通常希望下跌。",
+      "mixUpType": "direction",
       "sourceIds": [
         "hull-derivatives-11e-2021"
       ],
@@ -400,6 +419,7 @@
       "example": "有些日子暴涨 8% 的股票，比每天只动 0.3% 的公用事业股波动大得多。",
       "mixUp": "diversification",
       "mixUpWhy": "volatility 描述单一资产怎么摆；diversification 是组合层面的风险管理。",
+      "mixUpType": "coexist",
       "sourceIds": [
         "hull-derivatives-11e-2021"
       ],
@@ -415,6 +435,7 @@
       "example": "20 只股票横跨 5 个行业，对比全部身家压在一家雇主的股票上。",
       "mixUp": "hedge",
       "mixUpWhy": "diversification 是分散下注；hedge 是给你已有的某一注买保险。",
+      "mixUpType": "coexist",
       "sourceIds": [
         "hull-derivatives-11e-2021"
       ],
@@ -430,6 +451,7 @@
       "example": "你的 put 是从 X 银行买的。X 银行就是你的 counterparty。它倒了，那张 put 就是一张餐巾纸。",
       "mixUp": "default",
       "mixUpWhy": "counterparty 是『是谁』；default 是『它没履约』。",
+      "mixUpType": "coexist",
       "sourceIds": [
         "hull-derivatives-11e-2021"
       ],
@@ -445,6 +467,7 @@
       "example": "公司错过了一次债券付息。这就是 default。债券持有人可能接管资产。",
       "mixUp": "mark-to-market",
       "mixUpWhy": "default 是没履约；mark-to-market 只是给还活着的仓位重新定价。",
+      "mixUpType": "coexist",
       "relations": [
         {
           "type": "confusable",
@@ -466,6 +489,7 @@
       "example": "你 $1M 的质押股票现在值 $600k。贷款被 mark-to-market。追缴就是从这里来的。",
       "mixUp": "default",
       "mixUpWhy": "mark-to-market 只是重新定价；default 是真的没履约。被减记不代表违约。",
+      "mixUpType": "coexist",
       "sourceIds": [
         "hull-derivatives-11e-2021"
       ],
@@ -481,6 +505,7 @@
       "example": "$10M 的股票，30% 的 haircut，贷 $7M。你没卖，所以还没触发资本利得——目前。",
       "mixUp": "pledge",
       "mixUpWhy": "它就是把证券 pledge 出去的贷款。pledge 是动作，这个是给动作起了个更好听名字的产品。",
+      "mixUpType": "hierarchy",
       "sourceIds": [
         "finra-sec-sbloc-2015"
       ],
@@ -499,6 +524,7 @@
       "example": "$1M 买的，$4M 卖的。$3M 是 capital gain。贷款不是卖出。",
       "mixUp": "buy-borrow-die",
       "mixUpWhy": "capital gains 在卖出时触发。buy-borrow-die 描述的正是『永不卖出』来避开它的模式。",
+      "mixUpType": "coexist",
       "sourceIds": [
         "irs-topic-409",
         "finra-sec-sbloc-2015"
@@ -518,6 +544,7 @@
       "example": "某人持有几十亿的集中持仓，每年押着借 $20M 过日子，永不卖出。一次崩盘仍然可能强制卖出。",
       "mixUp": "securities-backed loan",
       "mixUpWhy": "securities-backed loan 是借钱工具；buy-borrow-die 是使用这套工具的整个人生周期模式。",
+      "mixUpType": "hierarchy",
       "sourceIds": [
         "irs-pub-551",
         "mccaffery-fair-not-flat-2002",
@@ -538,6 +565,7 @@
       "example": "现在约定十二月以 $80 买 1,000 桶油。到了十二月就结算。你不能像 option 那样走开。",
       "mixUp": "option",
       "mixUpWhy": "futures 是必须履行的承诺；option 是可以放弃的权利。",
+      "mixUpType": "opposite",
       "sourceIds": [
         "hull-derivatives-11e-2021"
       ],
@@ -553,6 +581,7 @@
       "example": "你付 4% 固定，收 SOFR 浮动。利率暴涨时这份合约赔你。那是利率 hedge，不是贷款。",
       "mixUp": "futures",
       "mixUpWhy": "swap 是持续的现金流交换；future 是某一日的单次结算。",
+      "mixUpType": "timing",
       "sourceIds": [
         "hull-derivatives-11e-2021"
       ],
@@ -568,6 +597,7 @@
       "example": "按 5% 的利率借 $10,000，一年光利息就欠 $500——这还没算你拿这笔钱去做什么。",
       "mixUp": "yield",
       "mixUpWhy": "interest rate 是你借钱要付的价；yield 是一笔投资按价格算付给你的回报。",
+      "mixUpType": "opposite",
       "relations": [
         {
           "type": "confusable",
@@ -593,6 +623,7 @@
       "example": "通胀 6% 时，$100 的菜钱一年后要 $106。工资没动，站着不动也算变穷。",
       "mixUp": "interest rate",
       "mixUpWhy": "inflation 是问题本身——物价在涨；interest rate 是央行踩下的刹车。",
+      "mixUpType": "coexist",
       "sourceIds": [
         "imf-monetary-policy-basics"
       ],
@@ -608,6 +639,7 @@
       "example": "存款利率 5%，通胀 6%。实际利率约 −1%：钱'变多'了，能买的东西却更少。",
       "mixUp": "interest rate",
       "mixUpWhy": "挂牌的那个数字是名义利率；real rate 是通胀咬过一口之后剩下的。",
+      "mixUpType": "scope",
       "relations": [
         {
           "type": "prereq",
@@ -633,6 +665,7 @@
       "example": "买一张 $1,000、票息 4% 的债券，每年收 $40，到期拿回 $1,000——前提是发行方还在。",
       "mixUp": "yield",
       "mixUpWhy": "bond 是那张借据本身；yield 是这张借据按你买入的价格算的回报——两者反向而动。",
+      "mixUpType": "coexist",
       "relations": [
         {
           "type": "prereq",
@@ -658,6 +691,7 @@
       "example": "短期债付 3%，长期债付 4.5%——曲线向上。当短期反而付得更多，曲线倒挂，衰退常常跟在后面。",
       "mixUp": "yield",
       "mixUpWhy": "yield 是一个点：这张债付多少；yield curve 把所有期限的点连成一条能读的线。",
+      "mixUpType": "scope",
       "relations": [
         {
           "type": "prereq",
@@ -683,6 +717,7 @@
       "example": "利率已经贴着零，央行造钱买下万亿级债券。卖方拿到现金转买更险的东西——一切都被买贵。",
       "mixUp": "liquidity",
       "mixUpWhy": "QE 创造流动性；liquidity 是一种状态——资产换成现金有多容易、多不掉价。",
+      "mixUpType": "coexist",
       "relations": [
         {
           "type": "prereq",
@@ -708,6 +743,7 @@
       "example": "下周就要真的铜，那就按现货买下、拿货。没有合约、没有远期日期——就是那批金属。",
       "mixUp": "futures",
       "mixUpWhy": "spot 是当下交货的价格；futures 把价格锁在未来某一天——两者的缺口就是曲线所在。",
+      "mixUpType": "timing",
       "sourceIds": [
         "hull-derivatives-11e-2021"
       ],
@@ -723,6 +759,7 @@
       "example": "铜现货 $9,500，三个月期货 $9,620，基差是 −$120。越临近交割，两个价被强行拉近。",
       "mixUp": "basis risk",
       "mixUpWhy": "basis 是缺口本身；basis risk 是这个缺口对你的伤害——对冲与被保护对象不再同步。",
+      "mixUpType": "form",
       "relations": [
         {
           "type": "prereq",
@@ -748,6 +785,7 @@
       "example": "石油现货 $70，一年后期货 $76。在升水里，曲线给仓库发工资：囤油、卖出远期、吃下价差。",
       "mixUp": "backwardation",
       "mixUpWhy": "contango 向上弯：明天更贵；backwardation 向下弯：今天更金贵。同一条曲线的两种相反姿态。",
+      "mixUpType": "opposite",
       "relations": [
         {
           "type": "prereq",
@@ -773,6 +811,7 @@
       "example": "天然气现货 $4.00，下月期货 $3.80。贴水说明有人今天就要货、愿意加价——常跟在供给冲击后面。",
       "mixUp": "contango",
       "mixUpWhy": "backwardation 向下弯：眼前的稀缺；contango 向上弯：仓库被付钱代持的充裕。",
+      "mixUpType": "opposite",
       "relations": [
         {
           "type": "prereq",
@@ -794,6 +833,7 @@
       "example": "拿一年 $1M 的铜：融资 $50k、仓储 $20k，借出去能收 $30k——carry 是 $40k。期货比现货贵的部分至少得付得起它。",
       "mixUp": "yield",
       "mixUpWhy": "yield 是仓位付给你的钱；carry 是扣除这些收入后你净付的账单。",
+      "mixUpType": "coexist",
       "relations": [
         {
           "type": "prereq",

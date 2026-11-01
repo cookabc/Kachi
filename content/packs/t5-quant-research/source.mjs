@@ -9,7 +9,7 @@
 
 export const PACK = {
   packId: "t5-quant-research",
-  contentVersion: "2026.10.28-t5",
+  contentVersion: "2026.11.01-t5.2",
   title: "读研报与量化",
 };
 

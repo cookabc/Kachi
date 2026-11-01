@@ -13,8 +13,9 @@ assert.ok(
 const courses = files.filter((file) => /^course-.*\.js$/.test(file));
 assert.equal(
   courses.length,
-  (registry.packs.filter((pack) => pack.status !== "planned").length - 1) * 2,
-  "Non-default packs must retain separate locale chunks.",
+  // Every edition is a lazy chunk except the bundled default (level 1, English).
+  registry.packs.filter((pack) => pack.status !== "planned").length * 2 - 1,
+  "Every course edition except the bundled default must be its own lazy chunk.",
 );
 for (const file of files.filter((file) => /\.(js|css)$/.test(file))) {
   assert.ok(worker.includes("assets/" + file), `Offline precache missing ${file}`);

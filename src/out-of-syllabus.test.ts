@@ -1,8 +1,8 @@
 import { describe, expect, it } from "vitest";
 import outOfSyllabus from "../content/out-of-syllabus.json";
-import { course } from "./course";
 import { OUT_OF_SYLLABUS_ART } from "./out-of-syllabus";
 import { validateCourse } from "./schema";
+import { legacyCourse as course } from "./test-fixtures/legacy-course";
 
 // The whitelist of "art but not a concept" ids exists twice on purpose: the app
 // imports a tiny leaf module (bundled), and the build-time validator reads JSON

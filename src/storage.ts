@@ -144,14 +144,20 @@ export async function exportLearnerData(snapshot?: LearnerState): Promise<Blob> 
 // An imported file is untrusted: it must carry a complete learner state.
 // Every field the engine touches is validated before any IndexedDB
 // transaction starts.
-const EXERCISE_TYPES: ReadonlySet<string> = new Set([
-  "meaning",
-  "truefalse",
-  "fill",
-  "scenario",
-  "match",
-  "headline",
-]);
+// Typed as a record so adding an ExerciseType without listing it here is a
+// compile error. A missing entry once silently rejected every saved profile
+// that had answered a listen or audit question, wiping progress on reload.
+const EXERCISE_TYPE_TABLE: Record<ExerciseType, true> = {
+  meaning: true,
+  truefalse: true,
+  fill: true,
+  scenario: true,
+  match: true,
+  headline: true,
+  audit: true,
+  listen: true,
+};
+const EXERCISE_TYPES: ReadonlySet<string> = new Set(Object.keys(EXERCISE_TYPE_TABLE));
 
 function isStringArray(value: unknown): value is string[] {
   return Array.isArray(value) && value.every((item) => typeof item === "string");

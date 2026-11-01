@@ -13,8 +13,8 @@ export default defineConfig({
         short_name: "Kachi",
         description: "Offline financial English practice in English and Chinese.",
         lang: "en-US",
-        theme_color: "#fff8ec",
-        background_color: "#fff8ec",
+        theme_color: "#fff6e9",
+        background_color: "#fff6e9",
         display: "standalone",
         icons: [
           {

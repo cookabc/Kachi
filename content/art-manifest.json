@@ -3,862 +3,862 @@
   "concepts": {
     "rally": {
       "file": "/art/rally.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t1-finance-news"
     },
     "selloff": {
       "file": "/art/selloff.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t1-finance-news"
     },
     "slump": {
       "file": "/art/slump.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t1-finance-news"
     },
     "rebound": {
       "file": "/art/rebound.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t1-finance-news"
     },
     "rout": {
       "file": "/art/rout.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t1-finance-news"
     },
     "profit-taking": {
       "file": "/art/profit-taking.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t1-finance-news"
     },
     "supply": {
       "file": "/art/supply.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t1-finance-news"
     },
     "demand": {
       "file": "/art/demand.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t1-finance-news"
     },
     "capacity": {
       "file": "/art/capacity.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t1-finance-news"
     },
     "output": {
       "file": "/art/output.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t1-finance-news"
     },
     "inventory": {
       "file": "/art/inventory.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t1-finance-news"
     },
     "surplus": {
       "file": "/art/surplus.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t1-finance-news"
     },
     "deficit": {
       "file": "/art/deficit.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t1-finance-news"
     },
     "earnings": {
       "file": "/art/earnings.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t1-finance-news"
     },
     "revenue": {
       "file": "/art/revenue.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t1-finance-news"
     },
     "profit": {
       "file": "/art/profit.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t1-finance-news"
     },
     "margin": {
       "file": "/art/margin.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t1-finance-news"
     },
     "dividend": {
       "file": "/art/dividend.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t1-finance-news"
     },
     "guidance": {
       "file": "/art/guidance.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t1-finance-news"
     },
     "forecast": {
       "file": "/art/forecast.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t1-finance-news"
     },
     "consensus": {
       "file": "/art/consensus.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t1-finance-news"
     },
     "estimate": {
       "file": "/art/estimate.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t1-finance-news"
     },
     "bond": {
       "file": "/art/bond.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t1-finance-news"
     },
     "yield": {
       "file": "/art/yield.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t1-finance-news"
     },
     "inflation": {
       "file": "/art/inflation.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t1-finance-news"
     },
     "interest rate": {
       "file": "/art/interest-rate.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t1-finance-news"
     },
     "rate hike": {
       "file": "/art/rate-hike.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t1-finance-news"
     },
     "rate cut": {
       "file": "/art/rate-cut.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t1-finance-news"
     },
     "central bank": {
       "file": "/art/central-bank.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t1-finance-news"
     },
     "currency": {
       "file": "/art/currency.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t1-finance-news"
     },
     "exchange rate": {
       "file": "/art/exchange-rate.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t1-finance-news"
     },
     "depreciate": {
       "file": "/art/depreciate.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t1-finance-news"
     },
     "appreciate": {
       "file": "/art/appreciate.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t1-finance-news"
     },
     "market cap": {
       "file": "/art/market-cap.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t1-finance-news"
     },
     "valuation": {
       "file": "/art/valuation.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t1-finance-news"
     },
     "index": {
       "file": "/art/index.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t1-finance-news"
     },
     "blue chip": {
       "file": "/art/blue-chip.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t1-finance-news"
     },
     "auction": {
       "file": "/art/auction.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t1-finance-news"
     },
     "issuance": {
       "file": "/art/issuance.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t1-finance-news"
     },
     "tariff": {
       "file": "/art/tariff.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t1-finance-news"
     },
     "volatility": {
       "file": "/art/volatility.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t1-finance-news"
     },
     "p/e": {
       "file": "/art/p-e.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t1-finance-news"
     },
     "gross": {
       "file": "/art/gross.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t2-company-earnings"
     },
     "net": {
       "file": "/art/net.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t2-company-earnings"
     },
     "eps": {
       "file": "/art/eps.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t2-company-earnings"
     },
     "headwinds": {
       "file": "/art/headwinds.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t2-company-earnings"
     },
     "tailwinds": {
       "file": "/art/tailwinds.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t2-company-earnings"
     },
     "working capital": {
       "file": "/art/working-capital.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t2-company-earnings"
     },
     "free cash flow": {
       "file": "/art/free-cash-flow.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t2-company-earnings"
     },
     "opex": {
       "file": "/art/opex.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t2-company-earnings"
     },
     "capex": {
       "file": "/art/capex.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t2-company-earnings"
     },
     "leverage": {
       "file": "/art/leverage.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t2-company-earnings"
     },
     "beat": {
       "file": "/art/beat.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t2-company-earnings"
     },
     "miss": {
       "file": "/art/miss.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t2-company-earnings"
     },
     "outlook": {
       "file": "/art/outlook.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t2-company-earnings"
     },
     "debt": {
       "file": "/art/debt.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t2-company-earnings"
     },
     "equity": {
       "file": "/art/equity.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t2-company-earnings"
     },
     "net debt": {
       "file": "/art/net-debt.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t2-company-earnings"
     },
     "capital expenditure": {
       "file": "/art/capital-expenditure.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t2-company-earnings"
     },
     "margin call": {
       "file": "/art/margin-call.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t2-company-earnings"
     },
     "buyback": {
       "file": "/art/buyback.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t2-company-earnings"
     },
     "payout": {
       "file": "/art/payout.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t2-company-earnings"
     },
     "shareholder": {
       "file": "/art/shareholder.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t2-company-earnings"
     },
     "share issuance": {
       "file": "/art/share-issuance.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t2-company-earnings"
     },
     "acquisition": {
       "file": "/art/acquisition.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t2-company-earnings"
     },
     "merger": {
       "file": "/art/merger.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t2-company-earnings"
     },
     "divestiture": {
       "file": "/art/divestiture.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t2-company-earnings"
     },
     "spin-off": {
       "file": "/art/spin-off.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t2-company-earnings"
     },
     "write-down": {
       "file": "/art/write-down.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t2-company-earnings"
     },
     "impairment": {
       "file": "/art/impairment.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t2-company-earnings"
     },
     "restructuring": {
       "file": "/art/restructuring.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t2-company-earnings"
     },
     "ipo": {
       "file": "/art/ipo.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t2-company-earnings"
     },
     "listing": {
       "file": "/art/listing.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t2-company-earnings"
     },
     "p/b": {
       "file": "/art/p-b.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t2-company-earnings"
     },
     "book value": {
       "file": "/art/book-value.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t2-company-earnings"
     },
     "stakeholder": {
       "file": "/art/stakeholder.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t2-company-earnings"
     },
     "payout ratio": {
       "file": "/art/payout-ratio.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t2-company-earnings"
     },
     "discount": {
       "file": "/art/discount.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t2-company-earnings"
     },
     "coupon": {
       "file": "/art/coupon.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t3-bonds-rates"
     },
     "maturity": {
       "file": "/art/maturity.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t3-bonds-rates"
     },
     "principal": {
       "file": "/art/principal.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t3-bonds-rates"
     },
     "price": {
       "file": "/art/price.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t3-bonds-rates"
     },
     "duration": {
       "file": "/art/duration.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t3-bonds-rates"
     },
     "benchmark": {
       "file": "/art/benchmark.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t3-bonds-rates"
     },
     "basis point": {
       "file": "/art/basis-point.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t3-bonds-rates"
     },
     "cut-off yield": {
       "file": "/art/cut-off-yield.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t3-bonds-rates"
     },
     "inflation-linked": {
       "file": "/art/inflation-linked.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t3-bonds-rates"
     },
     "fixed-rate": {
       "file": "/art/fixed-rate.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t3-bonds-rates"
     },
     "floating-rate": {
       "file": "/art/floating-rate.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t3-bonds-rates"
     },
     "bid-to-cover": {
       "file": "/art/bid-to-cover.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t3-bonds-rates"
     },
     "primary dealer": {
       "file": "/art/primary-dealer.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t3-bonds-rates"
     },
     "treasury": {
       "file": "/art/treasury.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t3-bonds-rates"
     },
     "gilt": {
       "file": "/art/gilt.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t3-bonds-rates"
     },
     "sovereign": {
       "file": "/art/sovereign.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t3-bonds-rates"
     },
     "corporate bond": {
       "file": "/art/corporate-bond.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t3-bonds-rates"
     },
     "commercial paper": {
       "file": "/art/commercial-paper.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t3-bonds-rates"
     },
     "junk bond": {
       "file": "/art/junk-bond.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t3-bonds-rates"
     },
     "investment grade": {
       "file": "/art/investment-grade.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t3-bonds-rates"
     },
     "yield curve": {
       "file": "/art/yield-curve.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t3-bonds-rates"
     },
     "credit spread": {
       "file": "/art/credit-spread.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t3-bonds-rates"
     },
     "spread widening": {
       "file": "/art/spread-widening.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t3-bonds-rates"
     },
     "spread tightening": {
       "file": "/art/spread-tightening.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t3-bonds-rates"
     },
     "term premium": {
       "file": "/art/term-premium.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t3-bonds-rates"
     },
     "inversion": {
       "file": "/art/inversion.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t3-bonds-rates"
     },
     "default risk": {
       "file": "/art/default-risk.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t3-bonds-rates"
     },
     "credit rating": {
       "file": "/art/credit-rating.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t3-bonds-rates"
     },
     "downgrade": {
       "file": "/art/downgrade.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t3-bonds-rates"
     },
     "upgrade": {
       "file": "/art/upgrade.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t3-bonds-rates"
     },
     "covenant": {
       "file": "/art/covenant.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t3-bonds-rates"
     },
     "refinancing": {
       "file": "/art/refinancing.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t3-bonds-rates"
     },
     "policy rate": {
       "file": "/art/policy-rate.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t3-bonds-rates"
     },
     "benchmark rate": {
       "file": "/art/benchmark-rate.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t3-bonds-rates"
     },
     "dollar": {
       "file": "/art/dollar.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t4-forex-macro"
     },
     "euro": {
       "file": "/art/euro.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t4-forex-macro"
     },
     "yen": {
       "file": "/art/yen.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t4-forex-macro"
     },
     "yuan": {
       "file": "/art/yuan.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t4-forex-macro"
     },
     "sterling": {
       "file": "/art/sterling.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t4-forex-macro"
     },
     "peso": {
       "file": "/art/peso.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t4-forex-macro"
     },
     "rupiah": {
       "file": "/art/rupiah.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t4-forex-macro"
     },
     "strengthen": {
       "file": "/art/strengthen.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t4-forex-macro"
     },
     "weaken": {
       "file": "/art/weaken.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t4-forex-macro"
     },
     "hawkish": {
       "file": "/art/hawkish.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t4-forex-macro"
     },
     "dovish": {
       "file": "/art/dovish.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t4-forex-macro"
     },
     "forward guidance": {
       "file": "/art/forward-guidance.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t4-forex-macro"
     },
     "tapering": {
       "file": "/art/tapering.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t4-forex-macro"
     },
     "monetary policy": {
       "file": "/art/monetary-policy.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t4-forex-macro"
     },
     "fiscal policy": {
       "file": "/art/fiscal-policy.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t4-forex-macro"
     },
     "quantitative easing": {
       "file": "/art/quantitative-easing.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t4-forex-macro"
     },
     "tightening": {
       "file": "/art/tightening.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t4-forex-macro"
     },
     "easing": {
       "file": "/art/easing.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t4-forex-macro"
     },
     "deflation": {
       "file": "/art/deflation.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t4-forex-macro"
     },
     "stagflation": {
       "file": "/art/stagflation.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t4-forex-macro"
     },
     "soft landing": {
       "file": "/art/soft-landing.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t4-forex-macro"
     },
     "current account": {
       "file": "/art/current-account.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t4-forex-macro"
     },
     "trade balance": {
       "file": "/art/trade-balance.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t4-forex-macro"
     },
     "intervention": {
       "file": "/art/intervention.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t4-forex-macro"
     },
     "capital flow": {
       "file": "/art/capital-flow.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t4-forex-macro"
     },
     "risk appetite": {
       "file": "/art/risk-appetite.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t4-forex-macro"
     },
     "risk-off": {
       "file": "/art/risk-off.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t4-forex-macro"
     },
     "safe-haven": {
       "file": "/art/safe-haven.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t4-forex-macro"
     },
     "carry trade": {
       "file": "/art/carry-trade.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t4-forex-macro"
     },
     "backtest": {
       "file": "/art/backtest.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t5-quant-research"
     },
     "in-sample": {
       "file": "/art/in-sample.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t5-quant-research"
     },
     "out-of-sample": {
       "file": "/art/out-of-sample.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t5-quant-research"
     },
     "walk-forward": {
       "file": "/art/walk-forward.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t5-quant-research"
     },
     "overfitting": {
       "file": "/art/overfitting.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t5-quant-research"
     },
     "look-ahead bias": {
       "file": "/art/look-ahead-bias.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t5-quant-research"
     },
     "survivorship bias": {
       "file": "/art/survivorship-bias.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t5-quant-research"
     },
     "data snooping": {
       "file": "/art/data-snooping.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t5-quant-research"
     },
     "multiple testing": {
       "file": "/art/multiple-testing.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t5-quant-research"
     },
     "sharpe ratio": {
       "file": "/art/sharpe-ratio.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t5-quant-research"
     },
     "max drawdown": {
       "file": "/art/max-drawdown.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t5-quant-research"
     },
     "hit rate": {
       "file": "/art/hit-rate.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t5-quant-research"
     },
     "expectancy": {
       "file": "/art/expectancy.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t5-quant-research"
     },
     "alpha": {
       "file": "/art/alpha.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t5-quant-research"
     },
     "beta": {
       "file": "/art/beta.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t5-quant-research"
     },
     "tracking error": {
       "file": "/art/tracking-error.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t5-quant-research"
     },
     "universe": {
       "file": "/art/universe.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t5-quant-research"
     },
     "rebalance": {
       "file": "/art/rebalance.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t5-quant-research"
     },
     "position sizing": {
       "file": "/art/position-sizing.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t5-quant-research"
     },
     "turnover": {
       "file": "/art/turnover.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t5-quant-research"
     },
     "correlation": {
       "file": "/art/correlation.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t5-quant-research"
     },
     "exposure": {
       "file": "/art/exposure.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t5-quant-research"
     },
     "transaction cost": {
       "file": "/art/transaction-cost.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t5-quant-research"
     },
     "slippage": {
       "file": "/art/slippage.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t5-quant-research"
     },
     "capacity constraint": {
       "file": "/art/capacity-constraint.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t5-quant-research"
     },
     "liquidity constraint": {
       "file": "/art/liquidity-constraint.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t5-quant-research"
     },
     "stress test": {
       "file": "/art/stress-test.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t5-quant-research"
     },
     "scenario analysis": {
       "file": "/art/scenario-analysis.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t5-quant-research"
     },
     "value at risk": {
       "file": "/art/value-at-risk.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t5-quant-research"
     },
     "sensitivity": {
       "file": "/art/sensitivity.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t5-quant-research"
     },
     "robustness": {
       "file": "/art/robustness.webp",
-      "bg": "#ffffff",
+      "bg": "transparent",
       "pack": "t5-quant-research"
     }
   }

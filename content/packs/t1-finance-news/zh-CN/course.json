@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
   "packId": "t1-finance-news",
-  "contentVersion": "2026.10.27-t1.1",
+  "contentVersion": "2026.11.01-t1.2",
   "locale": "zh-CN",
-  "generatedAt": "2026.10.27-t1.1",
+  "generatedAt": "2026.11.01-t1.2",
   "units": [
     {
       "id": 1,
@@ -957,63 +957,6 @@
           "why": "rally 是买盘涌入把价格推高；selloff 是卖盘涌出把价格砸低。方向相反。"
         },
         {
-          "id": "u1l1-rally-s",
-          "type": "scenario",
-          "termId": "rally",
-          "termIds": [
-            "rally"
-          ],
-          "story": "Oil prices rallied 4% after the supply cut was announced.",
-          "stem": "这句话里最关键的那个词是？",
-          "options": [
-            {
-              "text": "rally",
-              "art": "rally"
-            },
-            {
-              "text": "selloff",
-              "art": "selloff"
-            },
-            {
-              "text": "slump",
-              "art": "slump"
-            },
-            {
-              "text": "rebound",
-              "art": "rebound"
-            }
-          ],
-          "answer": 0,
-          "why": "rally：价格在一段时间下跌后出现的持续上涨。"
-        },
-        {
-          "id": "u1l1-rally-t",
-          "type": "truefalse",
-          "termId": "rally",
-          "termIds": [
-            "rally"
-          ],
-          "stem": "rally：反弹、上涨",
-          "answer": true,
-          "why": "rally 确实是「反弹、上涨」。"
-        },
-        {
-          "id": "u1l1-rally-f",
-          "type": "fill",
-          "termId": "rally",
-          "termIds": [
-            "rally"
-          ],
-          "story": "Oil prices ____ 4% after the supply cut was announced.",
-          "bank": [
-            "rally",
-            "selloff",
-            "slump"
-          ],
-          "answer": "rally",
-          "why": "rally 是买盘涌入把价格推高；selloff 是卖盘涌出把价格砸低。方向相反。"
-        },
-        {
           "id": "u1l1-selloff-m",
           "type": "meaning",
           "termId": "selloff",
@@ -1043,14 +986,73 @@
           "why": "selloff 是抛售压低价格，rally 是买盘推高价格。"
         },
         {
+          "id": "u1l1-slump-m",
+          "type": "meaning",
+          "termId": "slump",
+          "termIds": [
+            "slump"
+          ],
+          "stem": "slump 是什么意思？",
+          "options": [
+            {
+              "text": "价格或销量大幅下跌，通常持续一段时期。",
+              "art": "slump"
+            },
+            {
+              "text": "价格下跌后出现回升，通常指短期。",
+              "art": "rebound"
+            },
+            {
+              "text": "价格在一段时间下跌后出现的持续上涨。",
+              "art": "rally"
+            },
+            {
+              "text": "大量卖单在短时间内涌出，导致价格快速下跌。",
+              "art": "selloff"
+            }
+          ],
+          "answer": 0,
+          "why": "slump 是持续走低；rebound 是触底之后弹回来。"
+        },
+        {
+          "id": "u1l1-rally-s",
+          "type": "scenario",
+          "termId": "rally",
+          "termIds": [
+            "rally"
+          ],
+          "story": "价格跌了一段之后，突然被买起来。",
+          "stem": "这说的是哪个词？",
+          "options": [
+            {
+              "text": "rally",
+              "art": "rally"
+            },
+            {
+              "text": "selloff",
+              "art": "selloff"
+            },
+            {
+              "text": "slump",
+              "art": "slump"
+            },
+            {
+              "text": "rebound",
+              "art": "rebound"
+            }
+          ],
+          "answer": 0,
+          "why": "rally：价格在一段时间下跌后出现的持续上涨。"
+        },
+        {
           "id": "u1l1-selloff-s",
           "type": "scenario",
           "termId": "selloff",
           "termIds": [
             "selloff"
           ],
-          "story": "A global bond selloff pushed yields to a multi-year high.",
-          "stem": "这句话里最关键的那个词是？",
+          "story": "大家同时往外卖，价格被砸下去。",
+          "stem": "这说的是哪个词？",
           "options": [
             {
               "text": "selloff",
@@ -1073,6 +1075,47 @@
           "why": "selloff：大量卖单在短时间内涌出，导致价格快速下跌。"
         },
         {
+          "id": "u1l1-slump-s",
+          "type": "scenario",
+          "termId": "slump",
+          "termIds": [
+            "slump"
+          ],
+          "story": "跌得很重，而且不是一下就完。",
+          "stem": "这说的是哪个词？",
+          "options": [
+            {
+              "text": "slump",
+              "art": "slump"
+            },
+            {
+              "text": "rebound",
+              "art": "rebound"
+            },
+            {
+              "text": "rally",
+              "art": "rally"
+            },
+            {
+              "text": "selloff",
+              "art": "selloff"
+            }
+          ],
+          "answer": 0,
+          "why": "slump：价格或销量大幅下跌，通常持续一段时期。"
+        },
+        {
+          "id": "u1l1-rally-t",
+          "type": "truefalse",
+          "termId": "rally",
+          "termIds": [
+            "rally"
+          ],
+          "stem": "rally：反弹、上涨",
+          "answer": true,
+          "why": "rally 确实是「反弹、上涨」。"
+        },
+        {
           "id": "u1l1-selloff-t",
           "type": "truefalse",
           "termId": "selloff",
@@ -1082,6 +1125,33 @@
           "stem": "selloff 就是 反弹、上涨。",
           "answer": false,
           "why": "selloff 是「抛售」，不是「反弹、上涨」。"
+        },
+        {
+          "id": "u1l1-slump-t",
+          "type": "truefalse",
+          "termId": "slump",
+          "termIds": [
+            "slump"
+          ],
+          "stem": "slump：暴跌、低迷",
+          "answer": true,
+          "why": "slump 确实是「暴跌、低迷」。"
+        },
+        {
+          "id": "u1l1-rally-f",
+          "type": "fill",
+          "termId": "rally",
+          "termIds": [
+            "rally"
+          ],
+          "story": "Oil prices ____ 4% after the supply cut was announced.",
+          "bank": [
+            "rally",
+            "selloff",
+            "slump"
+          ],
+          "answer": "rally",
+          "why": "rally 是买盘涌入把价格推高；selloff 是卖盘涌出把价格砸低。方向相反。"
         },
         {
           "id": "u1l1-selloff-f",
@@ -1100,76 +1170,6 @@
           "why": "selloff 是抛售压低价格，rally 是买盘推高价格。"
         },
         {
-          "id": "u1l1-slump-m",
-          "type": "meaning",
-          "termId": "slump",
-          "termIds": [
-            "slump"
-          ],
-          "stem": "slump 是什么意思？",
-          "options": [
-            {
-              "text": "价格或销量大幅下跌，通常持续一段时期。",
-              "art": "slump"
-            },
-            {
-              "text": "价格在一段时间下跌后出现的持续上涨。",
-              "art": "rally"
-            },
-            {
-              "text": "大量卖单在短时间内涌出，导致价格快速下跌。",
-              "art": "selloff"
-            },
-            {
-              "text": "价格下跌后出现回升，通常指短期。",
-              "art": "rebound"
-            }
-          ],
-          "answer": 0,
-          "why": "slump 是持续走低；rebound 是触底之后弹回来。"
-        },
-        {
-          "id": "u1l1-slump-s",
-          "type": "scenario",
-          "termId": "slump",
-          "termIds": [
-            "slump"
-          ],
-          "story": "India's 10-year bond fell for the 10th consecutive week in a record slump.",
-          "stem": "这句话里最关键的那个词是？",
-          "options": [
-            {
-              "text": "slump",
-              "art": "slump"
-            },
-            {
-              "text": "rally",
-              "art": "rally"
-            },
-            {
-              "text": "selloff",
-              "art": "selloff"
-            },
-            {
-              "text": "rebound",
-              "art": "rebound"
-            }
-          ],
-          "answer": 0,
-          "why": "slump：价格或销量大幅下跌，通常持续一段时期。"
-        },
-        {
-          "id": "u1l1-slump-t",
-          "type": "truefalse",
-          "termId": "slump",
-          "termIds": [
-            "slump"
-          ],
-          "stem": "slump：暴跌、低迷",
-          "answer": true,
-          "why": "slump 确实是「暴跌、低迷」。"
-        },
-        {
           "id": "u1l1-slump-f",
           "type": "fill",
           "termId": "slump",
@@ -1179,6 +1179,7 @@
           "story": "India's 10-year bond fell for the 10th consecutive week in a record ____.",
           "bank": [
             "slump",
+            "rebound",
             "rally",
             "selloff"
           ],
@@ -1260,76 +1261,19 @@
               "art": "rebound"
             },
             {
+              "text": "价格或销量大幅下跌，通常持续一段时期。",
+              "art": "slump"
+            },
+            {
               "text": "价格在一段时间下跌后出现的持续上涨。",
               "art": "rally"
             },
             {
               "text": "大量卖单在短时间内涌出，导致价格快速下跌。",
               "art": "selloff"
-            },
-            {
-              "text": "价格或销量大幅下跌，通常持续一段时期。",
-              "art": "slump"
             }
           ],
           "answer": 0,
-          "why": "rebound 是跌完回升；slump 是还在往下走。"
-        },
-        {
-          "id": "u1l2-rebound-s",
-          "type": "scenario",
-          "termId": "rebound",
-          "termIds": [
-            "rebound"
-          ],
-          "story": "AI stocks rebounded after a bruising selloff.",
-          "stem": "这句话里最关键的那个词是？",
-          "options": [
-            {
-              "text": "rebound",
-              "art": "rebound"
-            },
-            {
-              "text": "rally",
-              "art": "rally"
-            },
-            {
-              "text": "selloff",
-              "art": "selloff"
-            },
-            {
-              "text": "slump",
-              "art": "slump"
-            }
-          ],
-          "answer": 0,
-          "why": "rebound：价格下跌后出现回升，通常指短期。"
-        },
-        {
-          "id": "u1l2-rebound-t",
-          "type": "truefalse",
-          "termId": "rebound",
-          "termIds": [
-            "rebound"
-          ],
-          "stem": "rebound：回升、反弹",
-          "answer": true,
-          "why": "rebound 确实是「回升、反弹」。"
-        },
-        {
-          "id": "u1l2-rebound-f",
-          "type": "fill",
-          "termId": "rebound",
-          "termIds": [
-            "rebound"
-          ],
-          "story": "AI stocks ____ after a bruising selloff.",
-          "bank": [
-            "rebound",
-            "rout",
-            "profit-taking"
-          ],
-          "answer": "rebound",
           "why": "rebound 是跌完回升；slump 是还在往下走。"
         },
         {
@@ -1346,12 +1290,12 @@
               "art": "rout"
             },
             {
-              "text": "价格在一段时间下跌后出现的持续上涨。",
-              "art": "rally"
-            },
-            {
               "text": "大量卖单在短时间内涌出，导致价格快速下跌。",
               "art": "selloff"
+            },
+            {
+              "text": "价格在一段时间下跌后出现的持续上涨。",
+              "art": "rally"
             },
             {
               "text": "价格或销量大幅下跌，通常持续一段时期。",
@@ -1359,63 +1303,6 @@
             }
           ],
           "answer": 0,
-          "why": "rout 比 selloff 更剧烈，带恐慌和失序；selloff 只是有大量卖盘。"
-        },
-        {
-          "id": "u1l2-rout-s",
-          "type": "scenario",
-          "termId": "rout",
-          "termIds": [
-            "rout"
-          ],
-          "story": "After this month's Treasury rout, bank shares fell sharply.",
-          "stem": "这句话里最关键的那个词是？",
-          "options": [
-            {
-              "text": "rout",
-              "art": "rout"
-            },
-            {
-              "text": "rally",
-              "art": "rally"
-            },
-            {
-              "text": "selloff",
-              "art": "selloff"
-            },
-            {
-              "text": "slump",
-              "art": "slump"
-            }
-          ],
-          "answer": 0,
-          "why": "rout：市场出现恐慌性的大幅下跌，交易混乱。"
-        },
-        {
-          "id": "u1l2-rout-t",
-          "type": "truefalse",
-          "termId": "rout",
-          "termIds": [
-            "rout"
-          ],
-          "stem": "rout 就是 反弹、上涨。",
-          "answer": false,
-          "why": "rout 是「溃败式下跌」，不是「反弹、上涨」。"
-        },
-        {
-          "id": "u1l2-rout-f",
-          "type": "fill",
-          "termId": "rout",
-          "termIds": [
-            "rout"
-          ],
-          "story": "After this month's Treasury ____, bank shares fell sharply.",
-          "bank": [
-            "rout",
-            "rebound",
-            "profit-taking"
-          ],
-          "answer": "rout",
           "why": "rout 比 selloff 更剧烈，带恐慌和失序；selloff 只是有大量卖盘。"
         },
         {
@@ -1432,12 +1319,12 @@
               "art": "profit-taking"
             },
             {
-              "text": "价格在一段时间下跌后出现的持续上涨。",
-              "art": "rally"
-            },
-            {
               "text": "大量卖单在短时间内涌出，导致价格快速下跌。",
               "art": "selloff"
+            },
+            {
+              "text": "价格在一段时间下跌后出现的持续上涨。",
+              "art": "rally"
             },
             {
               "text": "价格或销量大幅下跌，通常持续一段时期。",
@@ -1448,18 +1335,22 @@
           "why": "profit-taking 是赚钱后主动兑现；selloff 是恐慌或被动的抛售。"
         },
         {
-          "id": "u1l2-profit-taking-s",
+          "id": "u1l2-rebound-s",
           "type": "scenario",
-          "termId": "profit-taking",
+          "termId": "rebound",
           "termIds": [
-            "profit-taking"
+            "rebound"
           ],
-          "story": "Copper hit a two-week low on profit-taking as supply concerns eased.",
-          "stem": "这句话里最关键的那个词是？",
+          "story": "跌到底之后弹回来一点。",
+          "stem": "这说的是哪个词？",
           "options": [
             {
-              "text": "profit-taking",
-              "art": "profit-taking"
+              "text": "rebound",
+              "art": "rebound"
+            },
+            {
+              "text": "slump",
+              "art": "slump"
             },
             {
               "text": "rally",
@@ -1468,6 +1359,62 @@
             {
               "text": "selloff",
               "art": "selloff"
+            }
+          ],
+          "answer": 0,
+          "why": "rebound：价格下跌后出现回升，通常指短期。"
+        },
+        {
+          "id": "u1l2-rout-s",
+          "type": "scenario",
+          "termId": "rout",
+          "termIds": [
+            "rout"
+          ],
+          "story": "跌得比 selloff 更狠，几乎没人接盘。",
+          "stem": "这说的是哪个词？",
+          "options": [
+            {
+              "text": "rout",
+              "art": "rout"
+            },
+            {
+              "text": "selloff",
+              "art": "selloff"
+            },
+            {
+              "text": "rally",
+              "art": "rally"
+            },
+            {
+              "text": "slump",
+              "art": "slump"
+            }
+          ],
+          "answer": 0,
+          "why": "rout：市场出现恐慌性的大幅下跌，交易混乱。"
+        },
+        {
+          "id": "u1l2-profit-taking-s",
+          "type": "scenario",
+          "termId": "profit-taking",
+          "termIds": [
+            "profit-taking"
+          ],
+          "story": "赚了钱的人开始卖，价格因此回落。",
+          "stem": "这说的是哪个词？",
+          "options": [
+            {
+              "text": "profit-taking",
+              "art": "profit-taking"
+            },
+            {
+              "text": "selloff",
+              "art": "selloff"
+            },
+            {
+              "text": "rally",
+              "art": "rally"
             },
             {
               "text": "slump",
@@ -1476,6 +1423,28 @@
           ],
           "answer": 0,
           "why": "profit-taking：投资者卖出已获利头寸，导致价格从高位回落。"
+        },
+        {
+          "id": "u1l2-rebound-t",
+          "type": "truefalse",
+          "termId": "rebound",
+          "termIds": [
+            "rebound"
+          ],
+          "stem": "rebound：回升、反弹",
+          "answer": true,
+          "why": "rebound 确实是「回升、反弹」。"
+        },
+        {
+          "id": "u1l2-rout-t",
+          "type": "truefalse",
+          "termId": "rout",
+          "termIds": [
+            "rout"
+          ],
+          "stem": "rout 就是 抛售。",
+          "answer": false,
+          "why": "rout 是「溃败式下跌」，不是「抛售」。"
         },
         {
           "id": "u1l2-profit-taking-t",
@@ -1489,6 +1458,40 @@
           "why": "profit-taking 确实是「获利了结」。"
         },
         {
+          "id": "u1l2-rebound-f",
+          "type": "fill",
+          "termId": "rebound",
+          "termIds": [
+            "rebound"
+          ],
+          "story": "AI stocks ____ after a bruising selloff.",
+          "bank": [
+            "rebound",
+            "slump",
+            "rout",
+            "profit-taking"
+          ],
+          "answer": "rebound",
+          "why": "rebound 是跌完回升；slump 是还在往下走。"
+        },
+        {
+          "id": "u1l2-rout-f",
+          "type": "fill",
+          "termId": "rout",
+          "termIds": [
+            "rout"
+          ],
+          "story": "After this month's Treasury ____, bank shares fell sharply.",
+          "bank": [
+            "rout",
+            "selloff",
+            "rebound",
+            "profit-taking"
+          ],
+          "answer": "rout",
+          "why": "rout 比 selloff 更剧烈，带恐慌和失序；selloff 只是有大量卖盘。"
+        },
+        {
           "id": "u1l2-profit-taking-f",
           "type": "fill",
           "termId": "profit-taking",
@@ -1498,6 +1501,7 @@
           "story": "Copper hit a two-week low on ____ as supply concerns eased.",
           "bank": [
             "profit-taking",
+            "selloff",
             "rebound",
             "rout"
           ],
@@ -1682,8 +1686,8 @@
           "termIds": [
             "rally"
           ],
-          "story": "Oil prices rallied 4% after the supply cut was announced.",
-          "stem": "这句话里最关键的那个词是？",
+          "story": "价格跌了一段之后，突然被买起来。",
+          "stem": "这说的是哪个词？",
           "options": [
             {
               "text": "rally",
@@ -1706,25 +1710,14 @@
           "why": "rally：价格在一段时间下跌后出现的持续上涨。"
         },
         {
-          "id": "u1r-rally-t",
-          "type": "truefalse",
-          "termId": "rally",
-          "termIds": [
-            "rally"
-          ],
-          "stem": "rally：反弹、上涨",
-          "answer": true,
-          "why": "rally 确实是「反弹、上涨」。"
-        },
-        {
           "id": "u1r-selloff-s",
           "type": "scenario",
           "termId": "selloff",
           "termIds": [
             "selloff"
           ],
-          "story": "A global bond selloff pushed yields to a multi-year high.",
-          "stem": "这句话里最关键的那个词是？",
+          "story": "大家同时往外卖，价格被砸下去。",
+          "stem": "这说的是哪个词？",
           "options": [
             {
               "text": "selloff",
@@ -1747,26 +1740,49 @@
           "why": "selloff：大量卖单在短时间内涌出，导致价格快速下跌。"
         },
         {
-          "id": "u1r-selloff-t",
-          "type": "truefalse",
-          "termId": "selloff",
-          "termIds": [
-            "selloff"
-          ],
-          "stem": "selloff 就是 反弹、上涨。",
-          "answer": false,
-          "why": "selloff 是「抛售」，不是「反弹、上涨」。"
-        },
-        {
           "id": "u1r-slump-s",
           "type": "scenario",
           "termId": "slump",
           "termIds": [
             "slump"
           ],
-          "story": "India's 10-year bond fell for the 10th consecutive week in a record slump.",
-          "stem": "这句话里最关键的那个词是？",
+          "story": "跌得很重，而且不是一下就完。",
+          "stem": "这说的是哪个词？",
           "options": [
+            {
+              "text": "slump",
+              "art": "slump"
+            },
+            {
+              "text": "rebound",
+              "art": "rebound"
+            },
+            {
+              "text": "rally",
+              "art": "rally"
+            },
+            {
+              "text": "selloff",
+              "art": "selloff"
+            }
+          ],
+          "answer": 0,
+          "why": "slump：价格或销量大幅下跌，通常持续一段时期。"
+        },
+        {
+          "id": "u1r-rebound-s",
+          "type": "scenario",
+          "termId": "rebound",
+          "termIds": [
+            "rebound"
+          ],
+          "story": "跌到底之后弹回来一点。",
+          "stem": "这说的是哪个词？",
+          "options": [
+            {
+              "text": "rebound",
+              "art": "rebound"
+            },
             {
               "text": "slump",
               "art": "slump"
@@ -1778,14 +1794,92 @@
             {
               "text": "selloff",
               "art": "selloff"
-            },
-            {
-              "text": "rebound",
-              "art": "rebound"
             }
           ],
           "answer": 0,
-          "why": "slump：价格或销量大幅下跌，通常持续一段时期。"
+          "why": "rebound：价格下跌后出现回升，通常指短期。"
+        },
+        {
+          "id": "u1r-rout-s",
+          "type": "scenario",
+          "termId": "rout",
+          "termIds": [
+            "rout"
+          ],
+          "story": "跌得比 selloff 更狠，几乎没人接盘。",
+          "stem": "这说的是哪个词？",
+          "options": [
+            {
+              "text": "rout",
+              "art": "rout"
+            },
+            {
+              "text": "selloff",
+              "art": "selloff"
+            },
+            {
+              "text": "rally",
+              "art": "rally"
+            },
+            {
+              "text": "slump",
+              "art": "slump"
+            }
+          ],
+          "answer": 0,
+          "why": "rout：市场出现恐慌性的大幅下跌，交易混乱。"
+        },
+        {
+          "id": "u1r-profit-taking-s",
+          "type": "scenario",
+          "termId": "profit-taking",
+          "termIds": [
+            "profit-taking"
+          ],
+          "story": "赚了钱的人开始卖，价格因此回落。",
+          "stem": "这说的是哪个词？",
+          "options": [
+            {
+              "text": "profit-taking",
+              "art": "profit-taking"
+            },
+            {
+              "text": "selloff",
+              "art": "selloff"
+            },
+            {
+              "text": "rally",
+              "art": "rally"
+            },
+            {
+              "text": "slump",
+              "art": "slump"
+            }
+          ],
+          "answer": 0,
+          "why": "profit-taking：投资者卖出已获利头寸，导致价格从高位回落。"
+        },
+        {
+          "id": "u1r-rally-t",
+          "type": "truefalse",
+          "termId": "rally",
+          "termIds": [
+            "rally"
+          ],
+          "stem": "rally：反弹、上涨",
+          "answer": true,
+          "why": "rally 确实是「反弹、上涨」。"
+        },
+        {
+          "id": "u1r-selloff-t",
+          "type": "truefalse",
+          "termId": "selloff",
+          "termIds": [
+            "selloff"
+          ],
+          "stem": "selloff 就是 反弹、上涨。",
+          "answer": false,
+          "why": "selloff 是「抛售」，不是「反弹、上涨」。"
         },
         {
           "id": "u1r-slump-t",
@@ -1799,75 +1893,15 @@
           "why": "slump 确实是「暴跌、低迷」。"
         },
         {
-          "id": "u1r-rebound-s",
-          "type": "scenario",
-          "termId": "rebound",
-          "termIds": [
-            "rebound"
-          ],
-          "story": "AI stocks rebounded after a bruising selloff.",
-          "stem": "这句话里最关键的那个词是？",
-          "options": [
-            {
-              "text": "rebound",
-              "art": "rebound"
-            },
-            {
-              "text": "rally",
-              "art": "rally"
-            },
-            {
-              "text": "selloff",
-              "art": "selloff"
-            },
-            {
-              "text": "slump",
-              "art": "slump"
-            }
-          ],
-          "answer": 0,
-          "why": "rebound：价格下跌后出现回升，通常指短期。"
-        },
-        {
           "id": "u1r-rebound-t",
           "type": "truefalse",
           "termId": "rebound",
           "termIds": [
             "rebound"
           ],
-          "stem": "rebound 就是 反弹、上涨。",
+          "stem": "rebound 就是 暴跌、低迷。",
           "answer": false,
-          "why": "rebound 是「回升、反弹」，不是「反弹、上涨」。"
-        },
-        {
-          "id": "u1r-rout-s",
-          "type": "scenario",
-          "termId": "rout",
-          "termIds": [
-            "rout"
-          ],
-          "story": "After this month's Treasury rout, bank shares fell sharply.",
-          "stem": "这句话里最关键的那个词是？",
-          "options": [
-            {
-              "text": "rout",
-              "art": "rout"
-            },
-            {
-              "text": "rally",
-              "art": "rally"
-            },
-            {
-              "text": "selloff",
-              "art": "selloff"
-            },
-            {
-              "text": "slump",
-              "art": "slump"
-            }
-          ],
-          "answer": 0,
-          "why": "rout：市场出现恐慌性的大幅下跌，交易混乱。"
+          "why": "rebound 是「回升、反弹」，不是「暴跌、低迷」。"
         },
         {
           "id": "u1r-rout-t",
@@ -1881,45 +1915,15 @@
           "why": "rout 确实是「溃败式下跌」。"
         },
         {
-          "id": "u1r-profit-taking-s",
-          "type": "scenario",
-          "termId": "profit-taking",
-          "termIds": [
-            "profit-taking"
-          ],
-          "story": "Copper hit a two-week low on profit-taking as supply concerns eased.",
-          "stem": "这句话里最关键的那个词是？",
-          "options": [
-            {
-              "text": "profit-taking",
-              "art": "profit-taking"
-            },
-            {
-              "text": "rally",
-              "art": "rally"
-            },
-            {
-              "text": "selloff",
-              "art": "selloff"
-            },
-            {
-              "text": "slump",
-              "art": "slump"
-            }
-          ],
-          "answer": 0,
-          "why": "profit-taking：投资者卖出已获利头寸，导致价格从高位回落。"
-        },
-        {
           "id": "u1r-profit-taking-t",
           "type": "truefalse",
           "termId": "profit-taking",
           "termIds": [
             "profit-taking"
           ],
-          "stem": "profit-taking 就是 反弹、上涨。",
+          "stem": "profit-taking 就是 抛售。",
           "answer": false,
-          "why": "profit-taking 是「获利了结」，不是「反弹、上涨」。"
+          "why": "profit-taking 是「获利了结」，不是「抛售」。"
         },
         {
           "id": "u1r-match",
@@ -2034,63 +2038,6 @@
           "why": "supply 是卖方提供的量；demand 是买方想买的量。同一根轴的两端。"
         },
         {
-          "id": "u2l1-supply-s",
-          "type": "scenario",
-          "termId": "supply",
-          "termIds": [
-            "supply"
-          ],
-          "story": "Iron ore fell amid concerns over weak demand and rising supply.",
-          "stem": "这句话里最关键的那个词是？",
-          "options": [
-            {
-              "text": "supply",
-              "art": "supply"
-            },
-            {
-              "text": "demand",
-              "art": "demand"
-            },
-            {
-              "text": "capacity",
-              "art": "capacity"
-            },
-            {
-              "text": "output",
-              "art": "output"
-            }
-          ],
-          "answer": 0,
-          "why": "supply：生产者愿意并能够在特定价格下提供的商品或资产数量。"
-        },
-        {
-          "id": "u2l1-supply-t",
-          "type": "truefalse",
-          "termId": "supply",
-          "termIds": [
-            "supply"
-          ],
-          "stem": "supply：供给",
-          "answer": true,
-          "why": "supply 确实是「供给」。"
-        },
-        {
-          "id": "u2l1-supply-f",
-          "type": "fill",
-          "termId": "supply",
-          "termIds": [
-            "supply"
-          ],
-          "story": "Iron ore fell amid concerns over weak demand and rising ____.",
-          "bank": [
-            "supply",
-            "demand",
-            "capacity"
-          ],
-          "answer": "supply",
-          "why": "supply 是卖方提供的量；demand 是买方想买的量。同一根轴的两端。"
-        },
-        {
           "id": "u2l1-demand-m",
           "type": "meaning",
           "termId": "demand",
@@ -2120,14 +2067,73 @@
           "why": "demand 是买方想买；supply 是卖方能卖。"
         },
         {
+          "id": "u2l1-capacity-m",
+          "type": "meaning",
+          "termId": "capacity",
+          "termIds": [
+            "capacity"
+          ],
+          "stem": "capacity 是什么意思？",
+          "options": [
+            {
+              "text": "生产设施在满负荷状态下能够产出的最大数量。",
+              "art": "capacity"
+            },
+            {
+              "text": "在特定时期内实际生产出来的数量。",
+              "art": "output"
+            },
+            {
+              "text": "生产者愿意并能够在特定价格下提供的商品或资产数量。",
+              "art": "supply"
+            },
+            {
+              "text": "消费者愿意并能够在特定价格下购买的商品或资产数量。",
+              "art": "demand"
+            }
+          ],
+          "answer": 0,
+          "why": "capacity 是上限；output 是实际产出。产能闲置时两者不相等。"
+        },
+        {
+          "id": "u2l1-supply-s",
+          "type": "scenario",
+          "termId": "supply",
+          "termIds": [
+            "supply"
+          ],
+          "story": "市场上能拿出来卖的量。",
+          "stem": "这说的是哪个词？",
+          "options": [
+            {
+              "text": "supply",
+              "art": "supply"
+            },
+            {
+              "text": "demand",
+              "art": "demand"
+            },
+            {
+              "text": "capacity",
+              "art": "capacity"
+            },
+            {
+              "text": "output",
+              "art": "output"
+            }
+          ],
+          "answer": 0,
+          "why": "supply：生产者愿意并能够在特定价格下提供的商品或资产数量。"
+        },
+        {
           "id": "u2l1-demand-s",
           "type": "scenario",
           "termId": "demand",
           "termIds": [
             "demand"
           ],
-          "story": "Analysts expect refined fuel demand will rise 2.5 million bpd.",
-          "stem": "这句话里最关键的那个词是？",
+          "story": "买方愿意掏钱买的量。",
+          "stem": "这说的是哪个词？",
           "options": [
             {
               "text": "demand",
@@ -2150,6 +2156,47 @@
           "why": "demand：消费者愿意并能够在特定价格下购买的商品或资产数量。"
         },
         {
+          "id": "u2l1-capacity-s",
+          "type": "scenario",
+          "termId": "capacity",
+          "termIds": [
+            "capacity"
+          ],
+          "story": "最多能生产多少，不是实际生产了多少。",
+          "stem": "这说的是哪个词？",
+          "options": [
+            {
+              "text": "capacity",
+              "art": "capacity"
+            },
+            {
+              "text": "output",
+              "art": "output"
+            },
+            {
+              "text": "supply",
+              "art": "supply"
+            },
+            {
+              "text": "demand",
+              "art": "demand"
+            }
+          ],
+          "answer": 0,
+          "why": "capacity：生产设施在满负荷状态下能够产出的最大数量。"
+        },
+        {
+          "id": "u2l1-supply-t",
+          "type": "truefalse",
+          "termId": "supply",
+          "termIds": [
+            "supply"
+          ],
+          "stem": "supply：供给",
+          "answer": true,
+          "why": "supply 确实是「供给」。"
+        },
+        {
           "id": "u2l1-demand-t",
           "type": "truefalse",
           "termId": "demand",
@@ -2159,6 +2206,33 @@
           "stem": "demand 就是 供给。",
           "answer": false,
           "why": "demand 是「需求」，不是「供给」。"
+        },
+        {
+          "id": "u2l1-capacity-t",
+          "type": "truefalse",
+          "termId": "capacity",
+          "termIds": [
+            "capacity"
+          ],
+          "stem": "capacity：产能",
+          "answer": true,
+          "why": "capacity 确实是「产能」。"
+        },
+        {
+          "id": "u2l1-supply-f",
+          "type": "fill",
+          "termId": "supply",
+          "termIds": [
+            "supply"
+          ],
+          "story": "Iron ore fell amid concerns over weak demand and rising ____.",
+          "bank": [
+            "supply",
+            "demand",
+            "capacity"
+          ],
+          "answer": "supply",
+          "why": "supply 是卖方提供的量；demand 是买方想买的量。同一根轴的两端。"
         },
         {
           "id": "u2l1-demand-f",
@@ -2177,76 +2251,6 @@
           "why": "demand 是买方想买；supply 是卖方能卖。"
         },
         {
-          "id": "u2l1-capacity-m",
-          "type": "meaning",
-          "termId": "capacity",
-          "termIds": [
-            "capacity"
-          ],
-          "stem": "capacity 是什么意思？",
-          "options": [
-            {
-              "text": "生产设施在满负荷状态下能够产出的最大数量。",
-              "art": "capacity"
-            },
-            {
-              "text": "生产者愿意并能够在特定价格下提供的商品或资产数量。",
-              "art": "supply"
-            },
-            {
-              "text": "消费者愿意并能够在特定价格下购买的商品或资产数量。",
-              "art": "demand"
-            },
-            {
-              "text": "在特定时期内实际生产出来的数量。",
-              "art": "output"
-            }
-          ],
-          "answer": 0,
-          "why": "capacity 是上限；output 是实际产出。产能闲置时两者不相等。"
-        },
-        {
-          "id": "u2l1-capacity-s",
-          "type": "scenario",
-          "termId": "capacity",
-          "termIds": [
-            "capacity"
-          ],
-          "story": "Net capacity adds only 1.2 million bpd over three years.",
-          "stem": "这句话里最关键的那个词是？",
-          "options": [
-            {
-              "text": "capacity",
-              "art": "capacity"
-            },
-            {
-              "text": "supply",
-              "art": "supply"
-            },
-            {
-              "text": "demand",
-              "art": "demand"
-            },
-            {
-              "text": "output",
-              "art": "output"
-            }
-          ],
-          "answer": 0,
-          "why": "capacity：生产设施在满负荷状态下能够产出的最大数量。"
-        },
-        {
-          "id": "u2l1-capacity-t",
-          "type": "truefalse",
-          "termId": "capacity",
-          "termIds": [
-            "capacity"
-          ],
-          "stem": "capacity：产能",
-          "answer": true,
-          "why": "capacity 确实是「产能」。"
-        },
-        {
           "id": "u2l1-capacity-f",
           "type": "fill",
           "termId": "capacity",
@@ -2256,6 +2260,7 @@
           "story": "Net ____ adds only 1.2 million bpd over three years.",
           "bank": [
             "capacity",
+            "output",
             "supply",
             "demand"
           ],
@@ -2337,76 +2342,19 @@
               "art": "output"
             },
             {
+              "text": "生产设施在满负荷状态下能够产出的最大数量。",
+              "art": "capacity"
+            },
+            {
               "text": "生产者愿意并能够在特定价格下提供的商品或资产数量。",
               "art": "supply"
             },
             {
               "text": "消费者愿意并能够在特定价格下购买的商品或资产数量。",
               "art": "demand"
-            },
-            {
-              "text": "生产设施在满负荷状态下能够产出的最大数量。",
-              "art": "capacity"
             }
           ],
           "answer": 0,
-          "why": "output 是实际产出；capacity 是产能上限。"
-        },
-        {
-          "id": "u2l2-output-s",
-          "type": "scenario",
-          "termId": "output",
-          "termIds": [
-            "output"
-          ],
-          "story": "BHP could lift copper output by up to 40% by 2035.",
-          "stem": "这句话里最关键的那个词是？",
-          "options": [
-            {
-              "text": "output",
-              "art": "output"
-            },
-            {
-              "text": "supply",
-              "art": "supply"
-            },
-            {
-              "text": "demand",
-              "art": "demand"
-            },
-            {
-              "text": "capacity",
-              "art": "capacity"
-            }
-          ],
-          "answer": 0,
-          "why": "output：在特定时期内实际生产出来的数量。"
-        },
-        {
-          "id": "u2l2-output-t",
-          "type": "truefalse",
-          "termId": "output",
-          "termIds": [
-            "output"
-          ],
-          "stem": "output：产量",
-          "answer": true,
-          "why": "output 确实是「产量」。"
-        },
-        {
-          "id": "u2l2-output-f",
-          "type": "fill",
-          "termId": "output",
-          "termIds": [
-            "output"
-          ],
-          "story": "BHP could lift copper ____ by up to 40% by 2035.",
-          "bank": [
-            "output",
-            "inventory",
-            "surplus"
-          ],
-          "answer": "output",
           "why": "output 是实际产出；capacity 是产能上限。"
         },
         {
@@ -2423,34 +2371,67 @@
               "art": "inventory"
             },
             {
+              "text": "在特定时期内实际生产出来的数量。",
+              "art": "output"
+            },
+            {
               "text": "生产者愿意并能够在特定价格下提供的商品或资产数量。",
               "art": "supply"
             },
             {
               "text": "消费者愿意并能够在特定价格下购买的商品或资产数量。",
               "art": "demand"
-            },
-            {
-              "text": "生产设施在满负荷状态下能够产出的最大数量。",
-              "art": "capacity"
             }
           ],
           "answer": 0,
           "why": "inventory 是造好没卖的存量；output 是这一期造出来的量。库存会累积，产量不会。"
         },
         {
-          "id": "u2l2-inventory-s",
-          "type": "scenario",
-          "termId": "inventory",
+          "id": "u2l2-surplus-m",
+          "type": "meaning",
+          "termId": "surplus",
           "termIds": [
-            "inventory"
+            "surplus"
           ],
-          "story": "Copper falls as rising inventories ease supply concerns.",
-          "stem": "这句话里最关键的那个词是？",
+          "stem": "surplus 是什么意思？",
           "options": [
             {
-              "text": "inventory",
-              "art": "inventory"
+              "text": "供给超过需求的部分，或收入超过支出的部分。",
+              "art": "surplus"
+            },
+            {
+              "text": "支出超过收入的部分，或供给不足需求的部分。",
+              "art": "deficit"
+            },
+            {
+              "text": "生产者愿意并能够在特定价格下提供的商品或资产数量。",
+              "art": "supply"
+            },
+            {
+              "text": "消费者愿意并能够在特定价格下购买的商品或资产数量。",
+              "art": "demand"
+            }
+          ],
+          "answer": 0,
+          "why": "surplus 是多出来；deficit 是缺一块。同一杆秤的两端。"
+        },
+        {
+          "id": "u2l2-output-s",
+          "type": "scenario",
+          "termId": "output",
+          "termIds": [
+            "output"
+          ],
+          "story": "实际造出来多少。",
+          "stem": "这说的是哪个词？",
+          "options": [
+            {
+              "text": "output",
+              "art": "output"
+            },
+            {
+              "text": "capacity",
+              "art": "capacity"
             },
             {
               "text": "supply",
@@ -2459,14 +2440,81 @@
             {
               "text": "demand",
               "art": "demand"
+            }
+          ],
+          "answer": 0,
+          "why": "output：在特定时期内实际生产出来的数量。"
+        },
+        {
+          "id": "u2l2-inventory-s",
+          "type": "scenario",
+          "termId": "inventory",
+          "termIds": [
+            "inventory"
+          ],
+          "story": "造好但还没卖出去的存货。",
+          "stem": "这说的是哪个词？",
+          "options": [
+            {
+              "text": "inventory",
+              "art": "inventory"
             },
             {
-              "text": "capacity",
-              "art": "capacity"
+              "text": "output",
+              "art": "output"
+            },
+            {
+              "text": "supply",
+              "art": "supply"
+            },
+            {
+              "text": "demand",
+              "art": "demand"
             }
           ],
           "answer": 0,
           "why": "inventory：企业持有的原材料、在制品和成品的存量。"
+        },
+        {
+          "id": "u2l2-surplus-s",
+          "type": "scenario",
+          "termId": "surplus",
+          "termIds": [
+            "surplus"
+          ],
+          "story": "多出来的那部分。",
+          "stem": "这说的是哪个词？",
+          "options": [
+            {
+              "text": "surplus",
+              "art": "surplus"
+            },
+            {
+              "text": "deficit",
+              "art": "deficit"
+            },
+            {
+              "text": "supply",
+              "art": "supply"
+            },
+            {
+              "text": "demand",
+              "art": "demand"
+            }
+          ],
+          "answer": 0,
+          "why": "surplus：供给超过需求的部分，或收入超过支出的部分。"
+        },
+        {
+          "id": "u2l2-output-t",
+          "type": "truefalse",
+          "termId": "output",
+          "termIds": [
+            "output"
+          ],
+          "stem": "output：产量",
+          "answer": true,
+          "why": "output 确实是「产量」。"
         },
         {
           "id": "u2l2-inventory-t",
@@ -2475,9 +2523,37 @@
           "termIds": [
             "inventory"
           ],
-          "stem": "inventory 就是 供给。",
+          "stem": "inventory 就是 产量。",
           "answer": false,
-          "why": "inventory 是「库存」，不是「供给」。"
+          "why": "inventory 是「库存」，不是「产量」。"
+        },
+        {
+          "id": "u2l2-surplus-t",
+          "type": "truefalse",
+          "termId": "surplus",
+          "termIds": [
+            "surplus"
+          ],
+          "stem": "surplus：过剩、顺差",
+          "answer": true,
+          "why": "surplus 确实是「过剩、顺差」。"
+        },
+        {
+          "id": "u2l2-output-f",
+          "type": "fill",
+          "termId": "output",
+          "termIds": [
+            "output"
+          ],
+          "story": "BHP could lift copper ____ by up to 40% by 2035.",
+          "bank": [
+            "output",
+            "capacity",
+            "inventory",
+            "surplus"
+          ],
+          "answer": "output",
+          "why": "output 是实际产出；capacity 是产能上限。"
         },
         {
           "id": "u2l2-inventory-f",
@@ -2496,76 +2572,6 @@
           "why": "inventory 是造好没卖的存量；output 是这一期造出来的量。库存会累积，产量不会。"
         },
         {
-          "id": "u2l2-surplus-m",
-          "type": "meaning",
-          "termId": "surplus",
-          "termIds": [
-            "surplus"
-          ],
-          "stem": "surplus 是什么意思？",
-          "options": [
-            {
-              "text": "供给超过需求的部分，或收入超过支出的部分。",
-              "art": "surplus"
-            },
-            {
-              "text": "生产者愿意并能够在特定价格下提供的商品或资产数量。",
-              "art": "supply"
-            },
-            {
-              "text": "消费者愿意并能够在特定价格下购买的商品或资产数量。",
-              "art": "demand"
-            },
-            {
-              "text": "生产设施在满负荷状态下能够产出的最大数量。",
-              "art": "capacity"
-            }
-          ],
-          "answer": 0,
-          "why": "surplus 是多出来；deficit 是缺一块。同一杆秤的两端。"
-        },
-        {
-          "id": "u2l2-surplus-s",
-          "type": "scenario",
-          "termId": "surplus",
-          "termIds": [
-            "surplus"
-          ],
-          "story": "Aluminium is poised for a surplus in 2027 as supply shock fades.",
-          "stem": "这句话里最关键的那个词是？",
-          "options": [
-            {
-              "text": "surplus",
-              "art": "surplus"
-            },
-            {
-              "text": "supply",
-              "art": "supply"
-            },
-            {
-              "text": "demand",
-              "art": "demand"
-            },
-            {
-              "text": "capacity",
-              "art": "capacity"
-            }
-          ],
-          "answer": 0,
-          "why": "surplus：供给超过需求的部分，或收入超过支出的部分。"
-        },
-        {
-          "id": "u2l2-surplus-t",
-          "type": "truefalse",
-          "termId": "surplus",
-          "termIds": [
-            "surplus"
-          ],
-          "stem": "surplus：过剩、顺差",
-          "answer": true,
-          "why": "surplus 确实是「过剩、顺差」。"
-        },
-        {
           "id": "u2l2-surplus-f",
           "type": "fill",
           "termId": "surplus",
@@ -2575,6 +2581,7 @@
           "story": "Aluminium is poised for a ____ in 2027 as supply shock fades.",
           "bank": [
             "surplus",
+            "deficit",
             "output",
             "inventory"
           ],
@@ -2737,8 +2744,8 @@
           "termIds": [
             "supply"
           ],
-          "story": "Iron ore fell amid concerns over weak demand and rising supply.",
-          "stem": "这句话里最关键的那个词是？",
+          "story": "市场上能拿出来卖的量。",
+          "stem": "这说的是哪个词？",
           "options": [
             {
               "text": "supply",
@@ -2761,25 +2768,14 @@
           "why": "supply：生产者愿意并能够在特定价格下提供的商品或资产数量。"
         },
         {
-          "id": "u2r-supply-t",
-          "type": "truefalse",
-          "termId": "supply",
-          "termIds": [
-            "supply"
-          ],
-          "stem": "supply：供给",
-          "answer": true,
-          "why": "supply 确实是「供给」。"
-        },
-        {
           "id": "u2r-demand-s",
           "type": "scenario",
           "termId": "demand",
           "termIds": [
             "demand"
           ],
-          "story": "Analysts expect refined fuel demand will rise 2.5 million bpd.",
-          "stem": "这句话里最关键的那个词是？",
+          "story": "买方愿意掏钱买的量。",
+          "stem": "这说的是哪个词？",
           "options": [
             {
               "text": "demand",
@@ -2802,26 +2798,49 @@
           "why": "demand：消费者愿意并能够在特定价格下购买的商品或资产数量。"
         },
         {
-          "id": "u2r-demand-t",
-          "type": "truefalse",
-          "termId": "demand",
-          "termIds": [
-            "demand"
-          ],
-          "stem": "demand 就是 供给。",
-          "answer": false,
-          "why": "demand 是「需求」，不是「供给」。"
-        },
-        {
           "id": "u2r-capacity-s",
           "type": "scenario",
           "termId": "capacity",
           "termIds": [
             "capacity"
           ],
-          "story": "Net capacity adds only 1.2 million bpd over three years.",
-          "stem": "这句话里最关键的那个词是？",
+          "story": "最多能生产多少，不是实际生产了多少。",
+          "stem": "这说的是哪个词？",
           "options": [
+            {
+              "text": "capacity",
+              "art": "capacity"
+            },
+            {
+              "text": "output",
+              "art": "output"
+            },
+            {
+              "text": "supply",
+              "art": "supply"
+            },
+            {
+              "text": "demand",
+              "art": "demand"
+            }
+          ],
+          "answer": 0,
+          "why": "capacity：生产设施在满负荷状态下能够产出的最大数量。"
+        },
+        {
+          "id": "u2r-output-s",
+          "type": "scenario",
+          "termId": "output",
+          "termIds": [
+            "output"
+          ],
+          "story": "实际造出来多少。",
+          "stem": "这说的是哪个词？",
+          "options": [
+            {
+              "text": "output",
+              "art": "output"
+            },
             {
               "text": "capacity",
               "art": "capacity"
@@ -2833,14 +2852,92 @@
             {
               "text": "demand",
               "art": "demand"
+            }
+          ],
+          "answer": 0,
+          "why": "output：在特定时期内实际生产出来的数量。"
+        },
+        {
+          "id": "u2r-inventory-s",
+          "type": "scenario",
+          "termId": "inventory",
+          "termIds": [
+            "inventory"
+          ],
+          "story": "造好但还没卖出去的存货。",
+          "stem": "这说的是哪个词？",
+          "options": [
+            {
+              "text": "inventory",
+              "art": "inventory"
             },
             {
               "text": "output",
               "art": "output"
+            },
+            {
+              "text": "supply",
+              "art": "supply"
+            },
+            {
+              "text": "demand",
+              "art": "demand"
             }
           ],
           "answer": 0,
-          "why": "capacity：生产设施在满负荷状态下能够产出的最大数量。"
+          "why": "inventory：企业持有的原材料、在制品和成品的存量。"
+        },
+        {
+          "id": "u2r-surplus-s",
+          "type": "scenario",
+          "termId": "surplus",
+          "termIds": [
+            "surplus"
+          ],
+          "story": "多出来的那部分。",
+          "stem": "这说的是哪个词？",
+          "options": [
+            {
+              "text": "surplus",
+              "art": "surplus"
+            },
+            {
+              "text": "deficit",
+              "art": "deficit"
+            },
+            {
+              "text": "supply",
+              "art": "supply"
+            },
+            {
+              "text": "demand",
+              "art": "demand"
+            }
+          ],
+          "answer": 0,
+          "why": "surplus：供给超过需求的部分，或收入超过支出的部分。"
+        },
+        {
+          "id": "u2r-supply-t",
+          "type": "truefalse",
+          "termId": "supply",
+          "termIds": [
+            "supply"
+          ],
+          "stem": "supply：供给",
+          "answer": true,
+          "why": "supply 确实是「供给」。"
+        },
+        {
+          "id": "u2r-demand-t",
+          "type": "truefalse",
+          "termId": "demand",
+          "termIds": [
+            "demand"
+          ],
+          "stem": "demand 就是 供给。",
+          "answer": false,
+          "why": "demand 是「需求」，不是「供给」。"
         },
         {
           "id": "u2r-capacity-t",
@@ -2854,75 +2951,15 @@
           "why": "capacity 确实是「产能」。"
         },
         {
-          "id": "u2r-output-s",
-          "type": "scenario",
-          "termId": "output",
-          "termIds": [
-            "output"
-          ],
-          "story": "BHP could lift copper output by up to 40% by 2035.",
-          "stem": "这句话里最关键的那个词是？",
-          "options": [
-            {
-              "text": "output",
-              "art": "output"
-            },
-            {
-              "text": "supply",
-              "art": "supply"
-            },
-            {
-              "text": "demand",
-              "art": "demand"
-            },
-            {
-              "text": "capacity",
-              "art": "capacity"
-            }
-          ],
-          "answer": 0,
-          "why": "output：在特定时期内实际生产出来的数量。"
-        },
-        {
           "id": "u2r-output-t",
           "type": "truefalse",
           "termId": "output",
           "termIds": [
             "output"
           ],
-          "stem": "output 就是 供给。",
+          "stem": "output 就是 产能。",
           "answer": false,
-          "why": "output 是「产量」，不是「供给」。"
-        },
-        {
-          "id": "u2r-inventory-s",
-          "type": "scenario",
-          "termId": "inventory",
-          "termIds": [
-            "inventory"
-          ],
-          "story": "Copper falls as rising inventories ease supply concerns.",
-          "stem": "这句话里最关键的那个词是？",
-          "options": [
-            {
-              "text": "inventory",
-              "art": "inventory"
-            },
-            {
-              "text": "supply",
-              "art": "supply"
-            },
-            {
-              "text": "demand",
-              "art": "demand"
-            },
-            {
-              "text": "capacity",
-              "art": "capacity"
-            }
-          ],
-          "answer": 0,
-          "why": "inventory：企业持有的原材料、在制品和成品的存量。"
+          "why": "output 是「产量」，不是「产能」。"
         },
         {
           "id": "u2r-inventory-t",
@@ -2936,45 +2973,15 @@
           "why": "inventory 确实是「库存」。"
         },
         {
-          "id": "u2r-surplus-s",
-          "type": "scenario",
-          "termId": "surplus",
-          "termIds": [
-            "surplus"
-          ],
-          "story": "Aluminium is poised for a surplus in 2027 as supply shock fades.",
-          "stem": "这句话里最关键的那个词是？",
-          "options": [
-            {
-              "text": "surplus",
-              "art": "surplus"
-            },
-            {
-              "text": "supply",
-              "art": "supply"
-            },
-            {
-              "text": "demand",
-              "art": "demand"
-            },
-            {
-              "text": "capacity",
-              "art": "capacity"
-            }
-          ],
-          "answer": 0,
-          "why": "surplus：供给超过需求的部分，或收入超过支出的部分。"
-        },
-        {
           "id": "u2r-surplus-t",
           "type": "truefalse",
           "termId": "surplus",
           "termIds": [
             "surplus"
           ],
-          "stem": "surplus 就是 供给。",
+          "stem": "surplus 就是 赤字、缺口。",
           "answer": false,
-          "why": "surplus 是「过剩、顺差」，不是「供给」。"
+          "why": "surplus 是「过剩、顺差」，不是「赤字、缺口」。"
         },
         {
           "id": "u2r-match",
@@ -3073,76 +3080,19 @@
               "art": "deficit"
             },
             {
+              "text": "供给超过需求的部分，或收入超过支出的部分。",
+              "art": "surplus"
+            },
+            {
               "text": "公司在一定时期内扣除成本后的净利润，常按季度报告。",
               "art": "earnings"
             },
             {
               "text": "公司销售商品或服务获得的总收入，未扣除成本。",
               "art": "revenue"
-            },
-            {
-              "text": "收入扣除全部成本和费用后的剩余金额。",
-              "art": "profit"
             }
           ],
           "answer": 0,
-          "why": "deficit 是缺口；surplus 是盈余。"
-        },
-        {
-          "id": "u3l1-deficit-s",
-          "type": "scenario",
-          "termId": "deficit",
-          "termIds": [
-            "deficit"
-          ],
-          "story": "The country faces a widening fiscal deficit.",
-          "stem": "这句话里最关键的那个词是？",
-          "options": [
-            {
-              "text": "deficit",
-              "art": "deficit"
-            },
-            {
-              "text": "earnings",
-              "art": "earnings"
-            },
-            {
-              "text": "revenue",
-              "art": "revenue"
-            },
-            {
-              "text": "profit",
-              "art": "profit"
-            }
-          ],
-          "answer": 0,
-          "why": "deficit：支出超过收入的部分，或供给不足需求的部分。"
-        },
-        {
-          "id": "u3l1-deficit-t",
-          "type": "truefalse",
-          "termId": "deficit",
-          "termIds": [
-            "deficit"
-          ],
-          "stem": "deficit：赤字、缺口",
-          "answer": true,
-          "why": "deficit 确实是「赤字、缺口」。"
-        },
-        {
-          "id": "u3l1-deficit-f",
-          "type": "fill",
-          "termId": "deficit",
-          "termIds": [
-            "deficit"
-          ],
-          "story": "The country faces a widening fiscal ____.",
-          "bank": [
-            "deficit",
-            "earnings",
-            "revenue"
-          ],
-          "answer": "deficit",
           "why": "deficit 是缺口；surplus 是盈余。"
         },
         {
@@ -3159,12 +3109,12 @@
               "art": "earnings"
             },
             {
-              "text": "支出超过收入的部分，或供给不足需求的部分。",
-              "art": "deficit"
-            },
-            {
               "text": "公司销售商品或服务获得的总收入，未扣除成本。",
               "art": "revenue"
+            },
+            {
+              "text": "支出超过收入的部分，或供给不足需求的部分。",
+              "art": "deficit"
             },
             {
               "text": "收入扣除全部成本和费用后的剩余金额。",
@@ -3172,63 +3122,6 @@
             }
           ],
           "answer": 0,
-          "why": "earnings 是扣完成本剩下的；revenue 是还没扣成本的销售总额。"
-        },
-        {
-          "id": "u3l1-earnings-s",
-          "type": "scenario",
-          "termId": "earnings",
-          "termIds": [
-            "earnings"
-          ],
-          "story": "BHP posted better-than-expected annual earnings.",
-          "stem": "这句话里最关键的那个词是？",
-          "options": [
-            {
-              "text": "earnings",
-              "art": "earnings"
-            },
-            {
-              "text": "deficit",
-              "art": "deficit"
-            },
-            {
-              "text": "revenue",
-              "art": "revenue"
-            },
-            {
-              "text": "profit",
-              "art": "profit"
-            }
-          ],
-          "answer": 0,
-          "why": "earnings：公司在一定时期内扣除成本后的净利润，常按季度报告。"
-        },
-        {
-          "id": "u3l1-earnings-t",
-          "type": "truefalse",
-          "termId": "earnings",
-          "termIds": [
-            "earnings"
-          ],
-          "stem": "earnings 就是 赤字、缺口。",
-          "answer": false,
-          "why": "earnings 是「盈利、业绩」，不是「赤字、缺口」。"
-        },
-        {
-          "id": "u3l1-earnings-f",
-          "type": "fill",
-          "termId": "earnings",
-          "termIds": [
-            "earnings"
-          ],
-          "story": "BHP posted better-than-expected annual ____.",
-          "bank": [
-            "earnings",
-            "deficit",
-            "revenue"
-          ],
-          "answer": "earnings",
           "why": "earnings 是扣完成本剩下的；revenue 是还没扣成本的销售总额。"
         },
         {
@@ -3245,12 +3138,12 @@
               "art": "revenue"
             },
             {
-              "text": "支出超过收入的部分，或供给不足需求的部分。",
-              "art": "deficit"
-            },
-            {
               "text": "公司在一定时期内扣除成本后的净利润，常按季度报告。",
               "art": "earnings"
+            },
+            {
+              "text": "支出超过收入的部分，或供给不足需求的部分。",
+              "art": "deficit"
             },
             {
               "text": "收入扣除全部成本和费用后的剩余金额。",
@@ -3261,15 +3154,49 @@
           "why": "revenue 是收入总额；earnings 是扣完成本后的利润。"
         },
         {
-          "id": "u3l1-revenue-s",
+          "id": "u3l1-deficit-s",
           "type": "scenario",
-          "termId": "revenue",
+          "termId": "deficit",
           "termIds": [
-            "revenue"
+            "deficit"
           ],
-          "story": "Randstad revenue exceeded expectations as labour markets improved.",
-          "stem": "这句话里最关键的那个词是？",
+          "story": "少掉的那一块。",
+          "stem": "这说的是哪个词？",
           "options": [
+            {
+              "text": "deficit",
+              "art": "deficit"
+            },
+            {
+              "text": "surplus",
+              "art": "surplus"
+            },
+            {
+              "text": "earnings",
+              "art": "earnings"
+            },
+            {
+              "text": "revenue",
+              "art": "revenue"
+            }
+          ],
+          "answer": 0,
+          "why": "deficit：支出超过收入的部分，或供给不足需求的部分。"
+        },
+        {
+          "id": "u3l1-earnings-s",
+          "type": "scenario",
+          "termId": "earnings",
+          "termIds": [
+            "earnings"
+          ],
+          "story": "公司赚到的钱，通常按季度公布。",
+          "stem": "这说的是哪个词？",
+          "options": [
+            {
+              "text": "earnings",
+              "art": "earnings"
+            },
             {
               "text": "revenue",
               "art": "revenue"
@@ -3279,8 +3206,34 @@
               "art": "deficit"
             },
             {
+              "text": "profit",
+              "art": "profit"
+            }
+          ],
+          "answer": 0,
+          "why": "earnings：公司在一定时期内扣除成本后的净利润，常按季度报告。"
+        },
+        {
+          "id": "u3l1-revenue-s",
+          "type": "scenario",
+          "termId": "revenue",
+          "termIds": [
+            "revenue"
+          ],
+          "story": "卖东西收进来的钱，还没扣成本。",
+          "stem": "这说的是哪个词？",
+          "options": [
+            {
+              "text": "revenue",
+              "art": "revenue"
+            },
+            {
               "text": "earnings",
               "art": "earnings"
+            },
+            {
+              "text": "deficit",
+              "art": "deficit"
             },
             {
               "text": "profit",
@@ -3289,6 +3242,28 @@
           ],
           "answer": 0,
           "why": "revenue：公司销售商品或服务获得的总收入，未扣除成本。"
+        },
+        {
+          "id": "u3l1-deficit-t",
+          "type": "truefalse",
+          "termId": "deficit",
+          "termIds": [
+            "deficit"
+          ],
+          "stem": "deficit：赤字、缺口",
+          "answer": true,
+          "why": "deficit 确实是「赤字、缺口」。"
+        },
+        {
+          "id": "u3l1-earnings-t",
+          "type": "truefalse",
+          "termId": "earnings",
+          "termIds": [
+            "earnings"
+          ],
+          "stem": "earnings 就是 营收。",
+          "answer": false,
+          "why": "earnings 是「盈利、业绩」，不是「营收」。"
         },
         {
           "id": "u3l1-revenue-t",
@@ -3302,6 +3277,39 @@
           "why": "revenue 确实是「营收」。"
         },
         {
+          "id": "u3l1-deficit-f",
+          "type": "fill",
+          "termId": "deficit",
+          "termIds": [
+            "deficit"
+          ],
+          "story": "The country faces a widening fiscal ____.",
+          "bank": [
+            "deficit",
+            "surplus",
+            "earnings",
+            "revenue"
+          ],
+          "answer": "deficit",
+          "why": "deficit 是缺口；surplus 是盈余。"
+        },
+        {
+          "id": "u3l1-earnings-f",
+          "type": "fill",
+          "termId": "earnings",
+          "termIds": [
+            "earnings"
+          ],
+          "story": "BP's ____ more than doubled to $5.73 billion once all costs were deducted.",
+          "bank": [
+            "earnings",
+            "revenue",
+            "deficit"
+          ],
+          "answer": "earnings",
+          "why": "earnings 是扣完成本剩下的；revenue 是还没扣成本的销售总额。"
+        },
+        {
           "id": "u3l1-revenue-f",
           "type": "fill",
           "termId": "revenue",
@@ -3311,8 +3319,8 @@
           "story": "Randstad ____ exceeded expectations as labour markets improved.",
           "bank": [
             "revenue",
-            "deficit",
-            "earnings"
+            "earnings",
+            "deficit"
           ],
           "answer": "revenue",
           "why": "revenue 是收入总额；earnings 是扣完成本后的利润。"
@@ -3392,12 +3400,70 @@
               "art": "profit"
             },
             {
+              "text": "利润占收入的百分比，衡量盈利能力而非规模。",
+              "art": "margin"
+            },
+            {
               "text": "支出超过收入的部分，或供给不足需求的部分。",
               "art": "deficit"
             },
             {
               "text": "公司在一定时期内扣除成本后的净利润，常按季度报告。",
               "art": "earnings"
+            }
+          ],
+          "answer": 0,
+          "why": "profit 是绝对金额；margin 是利润占收入的比例。"
+        },
+        {
+          "id": "u3l2-margin-m",
+          "type": "meaning",
+          "termId": "margin",
+          "termIds": [
+            "margin"
+          ],
+          "stem": "margin 是什么意思？",
+          "options": [
+            {
+              "text": "利润占收入的百分比，衡量盈利能力而非规模。",
+              "art": "margin"
+            },
+            {
+              "text": "收入扣除全部成本和费用后的剩余金额。",
+              "art": "profit"
+            },
+            {
+              "text": "支出超过收入的部分，或供给不足需求的部分。",
+              "art": "deficit"
+            },
+            {
+              "text": "公司在一定时期内扣除成本后的净利润，常按季度报告。",
+              "art": "earnings"
+            }
+          ],
+          "answer": 0,
+          "why": "margin 是比率；profit 是金额。营收小的公司也可能利润率很高。"
+        },
+        {
+          "id": "u3l2-dividend-m",
+          "type": "meaning",
+          "termId": "dividend",
+          "termIds": [
+            "dividend"
+          ],
+          "stem": "dividend 是什么意思？",
+          "options": [
+            {
+              "text": "公司从利润中按股分配给股东的现金或股票。",
+              "art": "dividend"
+            },
+            {
+              "text": "公司在一定时期内扣除成本后的净利润，常按季度报告。",
+              "art": "earnings"
+            },
+            {
+              "text": "支出超过收入的部分，或供给不足需求的部分。",
+              "art": "deficit"
             },
             {
               "text": "公司销售商品或服务获得的总收入，未扣除成本。",
@@ -3405,7 +3471,7 @@
             }
           ],
           "answer": 0,
-          "why": "profit 是绝对金额；margin 是利润占收入的比例。"
+          "why": "earnings 是公司赚到的；dividend 是从利润里分给股东的那部分。不是所有盈利都发股息。"
         },
         {
           "id": "u3l2-profit-s",
@@ -3414,9 +3480,43 @@
           "termIds": [
             "profit"
           ],
-          "story": "Blackstone's profit fell as volatile markets curbed investment exits.",
-          "stem": "这句话里最关键的那个词是？",
+          "story": "收入减掉所有成本之后剩下的。",
+          "stem": "这说的是哪个词？",
           "options": [
+            {
+              "text": "profit",
+              "art": "profit"
+            },
+            {
+              "text": "margin",
+              "art": "margin"
+            },
+            {
+              "text": "deficit",
+              "art": "deficit"
+            },
+            {
+              "text": "earnings",
+              "art": "earnings"
+            }
+          ],
+          "answer": 0,
+          "why": "profit：收入扣除全部成本和费用后的剩余金额。"
+        },
+        {
+          "id": "u3l2-margin-s",
+          "type": "scenario",
+          "termId": "margin",
+          "termIds": [
+            "margin"
+          ],
+          "story": "每一块钱收入里剩下多少是利润。",
+          "stem": "这说的是哪个词？",
+          "options": [
+            {
+              "text": "margin",
+              "art": "margin"
+            },
             {
               "text": "profit",
               "art": "profit"
@@ -3428,6 +3528,32 @@
             {
               "text": "earnings",
               "art": "earnings"
+            }
+          ],
+          "answer": 0,
+          "why": "margin：利润占收入的百分比，衡量盈利能力而非规模。"
+        },
+        {
+          "id": "u3l2-dividend-s",
+          "type": "scenario",
+          "termId": "dividend",
+          "termIds": [
+            "dividend"
+          ],
+          "story": "公司把赚到的钱分一部分给股东。",
+          "stem": "这说的是哪个词？",
+          "options": [
+            {
+              "text": "dividend",
+              "art": "dividend"
+            },
+            {
+              "text": "earnings",
+              "art": "earnings"
+            },
+            {
+              "text": "deficit",
+              "art": "deficit"
             },
             {
               "text": "revenue",
@@ -3435,7 +3561,7 @@
             }
           ],
           "answer": 0,
-          "why": "profit：收入扣除全部成本和费用后的剩余金额。"
+          "why": "dividend：公司从利润中按股分配给股东的现金或股票。"
         },
         {
           "id": "u3l2-profit-t",
@@ -3447,6 +3573,28 @@
           "stem": "profit：利润",
           "answer": true,
           "why": "profit 确实是「利润」。"
+        },
+        {
+          "id": "u3l2-margin-t",
+          "type": "truefalse",
+          "termId": "margin",
+          "termIds": [
+            "margin"
+          ],
+          "stem": "margin 就是 利润。",
+          "answer": false,
+          "why": "margin 是「利润率」，不是「利润」。"
+        },
+        {
+          "id": "u3l2-dividend-t",
+          "type": "truefalse",
+          "termId": "dividend",
+          "termIds": [
+            "dividend"
+          ],
+          "stem": "dividend：股息",
+          "answer": true,
+          "why": "dividend 确实是「股息」。"
         },
         {
           "id": "u3l2-profit-f",
@@ -3465,76 +3613,6 @@
           "why": "profit 是绝对金额；margin 是利润占收入的比例。"
         },
         {
-          "id": "u3l2-margin-m",
-          "type": "meaning",
-          "termId": "margin",
-          "termIds": [
-            "margin"
-          ],
-          "stem": "margin 是什么意思？",
-          "options": [
-            {
-              "text": "利润占收入的百分比，衡量盈利能力而非规模。",
-              "art": "margin"
-            },
-            {
-              "text": "支出超过收入的部分，或供给不足需求的部分。",
-              "art": "deficit"
-            },
-            {
-              "text": "公司在一定时期内扣除成本后的净利润，常按季度报告。",
-              "art": "earnings"
-            },
-            {
-              "text": "公司销售商品或服务获得的总收入，未扣除成本。",
-              "art": "revenue"
-            }
-          ],
-          "answer": 0,
-          "why": "margin 是比率；profit 是金额。营收小的公司也可能利润率很高。"
-        },
-        {
-          "id": "u3l2-margin-s",
-          "type": "scenario",
-          "termId": "margin",
-          "termIds": [
-            "margin"
-          ],
-          "story": "Higher funding costs are starting to affect margins.",
-          "stem": "这句话里最关键的那个词是？",
-          "options": [
-            {
-              "text": "margin",
-              "art": "margin"
-            },
-            {
-              "text": "deficit",
-              "art": "deficit"
-            },
-            {
-              "text": "earnings",
-              "art": "earnings"
-            },
-            {
-              "text": "revenue",
-              "art": "revenue"
-            }
-          ],
-          "answer": 0,
-          "why": "margin：利润占收入的百分比，衡量盈利能力而非规模。"
-        },
-        {
-          "id": "u3l2-margin-t",
-          "type": "truefalse",
-          "termId": "margin",
-          "termIds": [
-            "margin"
-          ],
-          "stem": "margin 就是 赤字、缺口。",
-          "answer": false,
-          "why": "margin 是「利润率」，不是「赤字、缺口」。"
-        },
-        {
           "id": "u3l2-margin-f",
           "type": "fill",
           "termId": "margin",
@@ -3551,76 +3629,6 @@
           "why": "margin 是比率；profit 是金额。营收小的公司也可能利润率很高。"
         },
         {
-          "id": "u3l2-dividend-m",
-          "type": "meaning",
-          "termId": "dividend",
-          "termIds": [
-            "dividend"
-          ],
-          "stem": "dividend 是什么意思？",
-          "options": [
-            {
-              "text": "公司从利润中按股分配给股东的现金或股票。",
-              "art": "dividend"
-            },
-            {
-              "text": "支出超过收入的部分，或供给不足需求的部分。",
-              "art": "deficit"
-            },
-            {
-              "text": "公司在一定时期内扣除成本后的净利润，常按季度报告。",
-              "art": "earnings"
-            },
-            {
-              "text": "公司销售商品或服务获得的总收入，未扣除成本。",
-              "art": "revenue"
-            }
-          ],
-          "answer": 0,
-          "why": "earnings 是公司赚到的；dividend 是从利润里分给股东的那部分。不是所有盈利都发股息。"
-        },
-        {
-          "id": "u3l2-dividend-s",
-          "type": "scenario",
-          "termId": "dividend",
-          "termIds": [
-            "dividend"
-          ],
-          "story": "BHP declared a final dividend of 99 cents per share.",
-          "stem": "这句话里最关键的那个词是？",
-          "options": [
-            {
-              "text": "dividend",
-              "art": "dividend"
-            },
-            {
-              "text": "deficit",
-              "art": "deficit"
-            },
-            {
-              "text": "earnings",
-              "art": "earnings"
-            },
-            {
-              "text": "revenue",
-              "art": "revenue"
-            }
-          ],
-          "answer": 0,
-          "why": "dividend：公司从利润中按股分配给股东的现金或股票。"
-        },
-        {
-          "id": "u3l2-dividend-t",
-          "type": "truefalse",
-          "termId": "dividend",
-          "termIds": [
-            "dividend"
-          ],
-          "stem": "dividend：股息",
-          "answer": true,
-          "why": "dividend 确实是「股息」。"
-        },
-        {
           "id": "u3l2-dividend-f",
           "type": "fill",
           "termId": "dividend",
@@ -3630,6 +3638,7 @@
           "story": "BHP declared a final ____ of 99 cents per share.",
           "bank": [
             "dividend",
+            "earnings",
             "profit",
             "margin"
           ],
@@ -3814,13 +3823,39 @@
           "termIds": [
             "deficit"
           ],
-          "story": "The country faces a widening fiscal deficit.",
-          "stem": "这句话里最关键的那个词是？",
+          "story": "少掉的那一块。",
+          "stem": "这说的是哪个词？",
           "options": [
             {
               "text": "deficit",
               "art": "deficit"
             },
+            {
+              "text": "surplus",
+              "art": "surplus"
+            },
+            {
+              "text": "earnings",
+              "art": "earnings"
+            },
+            {
+              "text": "revenue",
+              "art": "revenue"
+            }
+          ],
+          "answer": 0,
+          "why": "deficit：支出超过收入的部分，或供给不足需求的部分。"
+        },
+        {
+          "id": "u3r-earnings-s",
+          "type": "scenario",
+          "termId": "earnings",
+          "termIds": [
+            "earnings"
+          ],
+          "story": "公司赚到的钱，通常按季度公布。",
+          "stem": "这说的是哪个词？",
+          "options": [
             {
               "text": "earnings",
               "art": "earnings"
@@ -3830,12 +3865,136 @@
               "art": "revenue"
             },
             {
+              "text": "deficit",
+              "art": "deficit"
+            },
+            {
               "text": "profit",
               "art": "profit"
             }
           ],
           "answer": 0,
-          "why": "deficit：支出超过收入的部分，或供给不足需求的部分。"
+          "why": "earnings：公司在一定时期内扣除成本后的净利润，常按季度报告。"
+        },
+        {
+          "id": "u3r-revenue-s",
+          "type": "scenario",
+          "termId": "revenue",
+          "termIds": [
+            "revenue"
+          ],
+          "story": "卖东西收进来的钱，还没扣成本。",
+          "stem": "这说的是哪个词？",
+          "options": [
+            {
+              "text": "revenue",
+              "art": "revenue"
+            },
+            {
+              "text": "earnings",
+              "art": "earnings"
+            },
+            {
+              "text": "deficit",
+              "art": "deficit"
+            },
+            {
+              "text": "profit",
+              "art": "profit"
+            }
+          ],
+          "answer": 0,
+          "why": "revenue：公司销售商品或服务获得的总收入，未扣除成本。"
+        },
+        {
+          "id": "u3r-profit-s",
+          "type": "scenario",
+          "termId": "profit",
+          "termIds": [
+            "profit"
+          ],
+          "story": "收入减掉所有成本之后剩下的。",
+          "stem": "这说的是哪个词？",
+          "options": [
+            {
+              "text": "profit",
+              "art": "profit"
+            },
+            {
+              "text": "margin",
+              "art": "margin"
+            },
+            {
+              "text": "deficit",
+              "art": "deficit"
+            },
+            {
+              "text": "earnings",
+              "art": "earnings"
+            }
+          ],
+          "answer": 0,
+          "why": "profit：收入扣除全部成本和费用后的剩余金额。"
+        },
+        {
+          "id": "u3r-margin-s",
+          "type": "scenario",
+          "termId": "margin",
+          "termIds": [
+            "margin"
+          ],
+          "story": "每一块钱收入里剩下多少是利润。",
+          "stem": "这说的是哪个词？",
+          "options": [
+            {
+              "text": "margin",
+              "art": "margin"
+            },
+            {
+              "text": "profit",
+              "art": "profit"
+            },
+            {
+              "text": "deficit",
+              "art": "deficit"
+            },
+            {
+              "text": "earnings",
+              "art": "earnings"
+            }
+          ],
+          "answer": 0,
+          "why": "margin：利润占收入的百分比，衡量盈利能力而非规模。"
+        },
+        {
+          "id": "u3r-dividend-s",
+          "type": "scenario",
+          "termId": "dividend",
+          "termIds": [
+            "dividend"
+          ],
+          "story": "公司把赚到的钱分一部分给股东。",
+          "stem": "这说的是哪个词？",
+          "options": [
+            {
+              "text": "dividend",
+              "art": "dividend"
+            },
+            {
+              "text": "earnings",
+              "art": "earnings"
+            },
+            {
+              "text": "deficit",
+              "art": "deficit"
+            },
+            {
+              "text": "revenue",
+              "art": "revenue"
+            }
+          ],
+          "answer": 0,
+          "why": "dividend：公司从利润中按股分配给股东的现金或股票。"
         },
         {
           "id": "u3r-deficit-t",
@@ -3849,75 +4008,15 @@
           "why": "deficit 确实是「赤字、缺口」。"
         },
         {
-          "id": "u3r-earnings-s",
-          "type": "scenario",
-          "termId": "earnings",
-          "termIds": [
-            "earnings"
-          ],
-          "story": "BHP posted better-than-expected annual earnings.",
-          "stem": "这句话里最关键的那个词是？",
-          "options": [
-            {
-              "text": "earnings",
-              "art": "earnings"
-            },
-            {
-              "text": "deficit",
-              "art": "deficit"
-            },
-            {
-              "text": "revenue",
-              "art": "revenue"
-            },
-            {
-              "text": "profit",
-              "art": "profit"
-            }
-          ],
-          "answer": 0,
-          "why": "earnings：公司在一定时期内扣除成本后的净利润，常按季度报告。"
-        },
-        {
           "id": "u3r-earnings-t",
           "type": "truefalse",
           "termId": "earnings",
           "termIds": [
             "earnings"
           ],
-          "stem": "earnings 就是 赤字、缺口。",
+          "stem": "earnings 就是 营收。",
           "answer": false,
-          "why": "earnings 是「盈利、业绩」，不是「赤字、缺口」。"
-        },
-        {
-          "id": "u3r-revenue-s",
-          "type": "scenario",
-          "termId": "revenue",
-          "termIds": [
-            "revenue"
-          ],
-          "story": "Randstad revenue exceeded expectations as labour markets improved.",
-          "stem": "这句话里最关键的那个词是？",
-          "options": [
-            {
-              "text": "revenue",
-              "art": "revenue"
-            },
-            {
-              "text": "deficit",
-              "art": "deficit"
-            },
-            {
-              "text": "earnings",
-              "art": "earnings"
-            },
-            {
-              "text": "profit",
-              "art": "profit"
-            }
-          ],
-          "answer": 0,
-          "why": "revenue：公司销售商品或服务获得的总收入，未扣除成本。"
+          "why": "earnings 是「盈利、业绩」，不是「营收」。"
         },
         {
           "id": "u3r-revenue-t",
@@ -3931,75 +4030,15 @@
           "why": "revenue 确实是「营收」。"
         },
         {
-          "id": "u3r-profit-s",
-          "type": "scenario",
-          "termId": "profit",
-          "termIds": [
-            "profit"
-          ],
-          "story": "Blackstone's profit fell as volatile markets curbed investment exits.",
-          "stem": "这句话里最关键的那个词是？",
-          "options": [
-            {
-              "text": "profit",
-              "art": "profit"
-            },
-            {
-              "text": "deficit",
-              "art": "deficit"
-            },
-            {
-              "text": "earnings",
-              "art": "earnings"
-            },
-            {
-              "text": "revenue",
-              "art": "revenue"
-            }
-          ],
-          "answer": 0,
-          "why": "profit：收入扣除全部成本和费用后的剩余金额。"
-        },
-        {
           "id": "u3r-profit-t",
           "type": "truefalse",
           "termId": "profit",
           "termIds": [
             "profit"
           ],
-          "stem": "profit 就是 赤字、缺口。",
+          "stem": "profit 就是 利润率。",
           "answer": false,
-          "why": "profit 是「利润」，不是「赤字、缺口」。"
-        },
-        {
-          "id": "u3r-margin-s",
-          "type": "scenario",
-          "termId": "margin",
-          "termIds": [
-            "margin"
-          ],
-          "story": "Higher funding costs are starting to affect margins.",
-          "stem": "这句话里最关键的那个词是？",
-          "options": [
-            {
-              "text": "margin",
-              "art": "margin"
-            },
-            {
-              "text": "deficit",
-              "art": "deficit"
-            },
-            {
-              "text": "earnings",
-              "art": "earnings"
-            },
-            {
-              "text": "revenue",
-              "art": "revenue"
-            }
-          ],
-          "answer": 0,
-          "why": "margin：利润占收入的百分比，衡量盈利能力而非规模。"
+          "why": "profit 是「利润」，不是「利润率」。"
         },
         {
           "id": "u3r-margin-t",
@@ -4013,45 +4052,15 @@
           "why": "margin 确实是「利润率」。"
         },
         {
-          "id": "u3r-dividend-s",
-          "type": "scenario",
-          "termId": "dividend",
-          "termIds": [
-            "dividend"
-          ],
-          "story": "BHP declared a final dividend of 99 cents per share.",
-          "stem": "这句话里最关键的那个词是？",
-          "options": [
-            {
-              "text": "dividend",
-              "art": "dividend"
-            },
-            {
-              "text": "deficit",
-              "art": "deficit"
-            },
-            {
-              "text": "earnings",
-              "art": "earnings"
-            },
-            {
-              "text": "revenue",
-              "art": "revenue"
-            }
-          ],
-          "answer": 0,
-          "why": "dividend：公司从利润中按股分配给股东的现金或股票。"
-        },
-        {
           "id": "u3r-dividend-t",
           "type": "truefalse",
           "termId": "dividend",
           "termIds": [
             "dividend"
           ],
-          "stem": "dividend 就是 赤字、缺口。",
+          "stem": "dividend 就是 盈利、业绩。",
           "answer": false,
-          "why": "dividend 是「股息」，不是「赤字、缺口」。"
+          "why": "dividend 是「股息」，不是「盈利、业绩」。"
         },
         {
           "id": "u3r-match",
@@ -4166,63 +4175,6 @@
           "why": "guidance 专指公司自己给的官方预期；forecast 可以是任何人对任何事的预测。"
         },
         {
-          "id": "u4l1-guidance-s",
-          "type": "scenario",
-          "termId": "guidance",
-          "termIds": [
-            "guidance"
-          ],
-          "story": "Santos trimmed the upper end of its production guidance.",
-          "stem": "这句话里最关键的那个词是？",
-          "options": [
-            {
-              "text": "guidance",
-              "art": "guidance"
-            },
-            {
-              "text": "forecast",
-              "art": "forecast"
-            },
-            {
-              "text": "consensus",
-              "art": "consensus"
-            },
-            {
-              "text": "estimate",
-              "art": "estimate"
-            }
-          ],
-          "answer": 0,
-          "why": "guidance：公司管理层对未来业绩给出的官方预期。"
-        },
-        {
-          "id": "u4l1-guidance-t",
-          "type": "truefalse",
-          "termId": "guidance",
-          "termIds": [
-            "guidance"
-          ],
-          "stem": "guidance：业绩指引",
-          "answer": true,
-          "why": "guidance 确实是「业绩指引」。"
-        },
-        {
-          "id": "u4l1-guidance-f",
-          "type": "fill",
-          "termId": "guidance",
-          "termIds": [
-            "guidance"
-          ],
-          "story": "Santos trimmed the upper end of its production ____.",
-          "bank": [
-            "guidance",
-            "forecast",
-            "consensus"
-          ],
-          "answer": "guidance",
-          "why": "guidance 专指公司自己给的官方预期；forecast 可以是任何人对任何事的预测。"
-        },
-        {
           "id": "u4l1-forecast-m",
           "type": "meaning",
           "termId": "forecast",
@@ -4252,14 +4204,73 @@
           "why": "forecast 范围更广；guidance 特指公司官方给的业绩指引。"
         },
         {
+          "id": "u4l1-consensus-m",
+          "type": "meaning",
+          "termId": "consensus",
+          "termIds": [
+            "consensus"
+          ],
+          "stem": "consensus 是什么意思？",
+          "options": [
+            {
+              "text": "多位分析师预测的平均值，作为衡量业绩是否超预期的基准。",
+              "art": "consensus"
+            },
+            {
+              "text": "对某个数值的个别估计。",
+              "art": "estimate"
+            },
+            {
+              "text": "公司管理层对未来业绩给出的官方预期。",
+              "art": "guidance"
+            },
+            {
+              "text": "基于现有信息对未来情况的估计。",
+              "art": "forecast"
+            }
+          ],
+          "answer": 0,
+          "why": "consensus 是所有人预测的合体；estimate 是单个人给出的一个数。"
+        },
+        {
+          "id": "u4l1-guidance-s",
+          "type": "scenario",
+          "termId": "guidance",
+          "termIds": [
+            "guidance"
+          ],
+          "story": "公司自己对未来的预测，不是已经发生的事。",
+          "stem": "这说的是哪个词？",
+          "options": [
+            {
+              "text": "guidance",
+              "art": "guidance"
+            },
+            {
+              "text": "forecast",
+              "art": "forecast"
+            },
+            {
+              "text": "consensus",
+              "art": "consensus"
+            },
+            {
+              "text": "estimate",
+              "art": "estimate"
+            }
+          ],
+          "answer": 0,
+          "why": "guidance：公司管理层对未来业绩给出的官方预期。"
+        },
+        {
           "id": "u4l1-forecast-s",
           "type": "scenario",
           "termId": "forecast",
           "termIds": [
             "forecast"
           ],
-          "story": "HSBC is forecast to show a 33% increase in pretax profit.",
-          "stem": "这句话里最关键的那个词是？",
+          "story": "对未来的估计，谁做的都算。",
+          "stem": "这说的是哪个词？",
           "options": [
             {
               "text": "forecast",
@@ -4282,6 +4293,47 @@
           "why": "forecast：基于现有信息对未来情况的估计。"
         },
         {
+          "id": "u4l1-consensus-s",
+          "type": "scenario",
+          "termId": "consensus",
+          "termIds": [
+            "consensus"
+          ],
+          "story": "一群分析师的预测取平均。",
+          "stem": "这说的是哪个词？",
+          "options": [
+            {
+              "text": "consensus",
+              "art": "consensus"
+            },
+            {
+              "text": "estimate",
+              "art": "estimate"
+            },
+            {
+              "text": "guidance",
+              "art": "guidance"
+            },
+            {
+              "text": "forecast",
+              "art": "forecast"
+            }
+          ],
+          "answer": 0,
+          "why": "consensus：多位分析师预测的平均值，作为衡量业绩是否超预期的基准。"
+        },
+        {
+          "id": "u4l1-guidance-t",
+          "type": "truefalse",
+          "termId": "guidance",
+          "termIds": [
+            "guidance"
+          ],
+          "stem": "guidance：业绩指引",
+          "answer": true,
+          "why": "guidance 确实是「业绩指引」。"
+        },
+        {
           "id": "u4l1-forecast-t",
           "type": "truefalse",
           "termId": "forecast",
@@ -4291,6 +4343,33 @@
           "stem": "forecast 就是 业绩指引。",
           "answer": false,
           "why": "forecast 是「预测」，不是「业绩指引」。"
+        },
+        {
+          "id": "u4l1-consensus-t",
+          "type": "truefalse",
+          "termId": "consensus",
+          "termIds": [
+            "consensus"
+          ],
+          "stem": "consensus：市场一致预期",
+          "answer": true,
+          "why": "consensus 确实是「市场一致预期」。"
+        },
+        {
+          "id": "u4l1-guidance-f",
+          "type": "fill",
+          "termId": "guidance",
+          "termIds": [
+            "guidance"
+          ],
+          "story": "Santos trimmed the upper end of its production ____.",
+          "bank": [
+            "guidance",
+            "forecast",
+            "consensus"
+          ],
+          "answer": "guidance",
+          "why": "guidance 专指公司自己给的官方预期；forecast 可以是任何人对任何事的预测。"
         },
         {
           "id": "u4l1-forecast-f",
@@ -4309,76 +4388,6 @@
           "why": "forecast 范围更广；guidance 特指公司官方给的业绩指引。"
         },
         {
-          "id": "u4l1-consensus-m",
-          "type": "meaning",
-          "termId": "consensus",
-          "termIds": [
-            "consensus"
-          ],
-          "stem": "consensus 是什么意思？",
-          "options": [
-            {
-              "text": "多位分析师预测的平均值，作为衡量业绩是否超预期的基准。",
-              "art": "consensus"
-            },
-            {
-              "text": "公司管理层对未来业绩给出的官方预期。",
-              "art": "guidance"
-            },
-            {
-              "text": "基于现有信息对未来情况的估计。",
-              "art": "forecast"
-            },
-            {
-              "text": "对某个数值的个别估计。",
-              "art": "estimate"
-            }
-          ],
-          "answer": 0,
-          "why": "consensus 是所有人预测的合体；estimate 是单个人给出的一个数。"
-        },
-        {
-          "id": "u4l1-consensus-s",
-          "type": "scenario",
-          "termId": "consensus",
-          "termIds": [
-            "consensus"
-          ],
-          "story": "BHP surpassed the consensus estimate of $12.66 billion.",
-          "stem": "这句话里最关键的那个词是？",
-          "options": [
-            {
-              "text": "consensus",
-              "art": "consensus"
-            },
-            {
-              "text": "guidance",
-              "art": "guidance"
-            },
-            {
-              "text": "forecast",
-              "art": "forecast"
-            },
-            {
-              "text": "estimate",
-              "art": "estimate"
-            }
-          ],
-          "answer": 0,
-          "why": "consensus：多位分析师预测的平均值，作为衡量业绩是否超预期的基准。"
-        },
-        {
-          "id": "u4l1-consensus-t",
-          "type": "truefalse",
-          "termId": "consensus",
-          "termIds": [
-            "consensus"
-          ],
-          "stem": "consensus：市场一致预期",
-          "answer": true,
-          "why": "consensus 确实是「市场一致预期」。"
-        },
-        {
           "id": "u4l1-consensus-f",
           "type": "fill",
           "termId": "consensus",
@@ -4388,6 +4397,7 @@
           "story": "BHP surpassed the ____ estimate of $12.66 billion.",
           "bank": [
             "consensus",
+            "estimate",
             "guidance",
             "forecast"
           ],
@@ -4469,76 +4479,19 @@
               "art": "estimate"
             },
             {
+              "text": "多位分析师预测的平均值，作为衡量业绩是否超预期的基准。",
+              "art": "consensus"
+            },
+            {
               "text": "公司管理层对未来业绩给出的官方预期。",
               "art": "guidance"
             },
             {
               "text": "基于现有信息对未来情况的估计。",
               "art": "forecast"
-            },
-            {
-              "text": "多位分析师预测的平均值，作为衡量业绩是否超预期的基准。",
-              "art": "consensus"
             }
           ],
           "answer": 0,
-          "why": "estimate 是一个人的数；consensus 是许多人的平均数。"
-        },
-        {
-          "id": "u4l2-estimate-s",
-          "type": "scenario",
-          "termId": "estimate",
-          "termIds": [
-            "estimate"
-          ],
-          "story": "The consensus estimate was $12.66 billion.",
-          "stem": "这句话里最关键的那个词是？",
-          "options": [
-            {
-              "text": "estimate",
-              "art": "estimate"
-            },
-            {
-              "text": "guidance",
-              "art": "guidance"
-            },
-            {
-              "text": "forecast",
-              "art": "forecast"
-            },
-            {
-              "text": "consensus",
-              "art": "consensus"
-            }
-          ],
-          "answer": 0,
-          "why": "estimate：对某个数值的个别估计。"
-        },
-        {
-          "id": "u4l2-estimate-t",
-          "type": "truefalse",
-          "termId": "estimate",
-          "termIds": [
-            "estimate"
-          ],
-          "stem": "estimate：预估、估计值",
-          "answer": true,
-          "why": "estimate 确实是「预估、估计值」。"
-        },
-        {
-          "id": "u4l2-estimate-f",
-          "type": "fill",
-          "termId": "estimate",
-          "termIds": [
-            "estimate"
-          ],
-          "story": "The consensus ____ was $12.66 billion.",
-          "bank": [
-            "estimate",
-            "bond",
-            "yield"
-          ],
-          "answer": "estimate",
           "why": "estimate 是一个人的数；consensus 是许多人的平均数。"
         },
         {
@@ -4555,76 +4508,19 @@
               "art": "bond"
             },
             {
+              "text": "投资收益相对于投入价格的比率，债券价格下跌时收益率上升。",
+              "art": "yield"
+            },
+            {
               "text": "公司管理层对未来业绩给出的官方预期。",
               "art": "guidance"
             },
             {
               "text": "基于现有信息对未来情况的估计。",
               "art": "forecast"
-            },
-            {
-              "text": "多位分析师预测的平均值，作为衡量业绩是否超预期的基准。",
-              "art": "consensus"
             }
           ],
           "answer": 0,
-          "why": "bond 是那张凭证本身；yield 是这张凭证按你买入价格算出的回报率。"
-        },
-        {
-          "id": "u4l2-bond-s",
-          "type": "scenario",
-          "termId": "bond",
-          "termIds": [
-            "bond"
-          ],
-          "story": "Bond yields and prices move in opposite directions.",
-          "stem": "这句话里最关键的那个词是？",
-          "options": [
-            {
-              "text": "bond",
-              "art": "bond"
-            },
-            {
-              "text": "guidance",
-              "art": "guidance"
-            },
-            {
-              "text": "forecast",
-              "art": "forecast"
-            },
-            {
-              "text": "consensus",
-              "art": "consensus"
-            }
-          ],
-          "answer": 0,
-          "why": "bond：政府或企业发行的债务凭证，承诺按期付息并在到期时偿还本金。"
-        },
-        {
-          "id": "u4l2-bond-t",
-          "type": "truefalse",
-          "termId": "bond",
-          "termIds": [
-            "bond"
-          ],
-          "stem": "bond 就是 业绩指引。",
-          "answer": false,
-          "why": "bond 是「债券」，不是「业绩指引」。"
-        },
-        {
-          "id": "u4l2-bond-f",
-          "type": "fill",
-          "termId": "bond",
-          "termIds": [
-            "bond"
-          ],
-          "story": "____ yields and prices move in opposite directions.",
-          "bank": [
-            "bond",
-            "estimate",
-            "yield"
-          ],
-          "answer": "bond",
           "why": "bond 是那张凭证本身；yield 是这张凭证按你买入价格算出的回报率。"
         },
         {
@@ -4641,31 +4537,65 @@
               "art": "yield"
             },
             {
+              "text": "政府或企业发行的债务凭证，承诺按期付息并在到期时偿还本金。",
+              "art": "bond"
+            },
+            {
               "text": "公司管理层对未来业绩给出的官方预期。",
               "art": "guidance"
             },
             {
               "text": "基于现有信息对未来情况的估计。",
               "art": "forecast"
-            },
-            {
-              "text": "多位分析师预测的平均值，作为衡量业绩是否超预期的基准。",
-              "art": "consensus"
             }
           ],
           "answer": 0,
           "why": "yield 是回报率，bond 是凭证。债券价格跌，yield 反而升。"
         },
         {
-          "id": "u4l2-yield-s",
+          "id": "u4l2-estimate-s",
           "type": "scenario",
-          "termId": "yield",
+          "termId": "estimate",
           "termIds": [
-            "yield"
+            "estimate"
           ],
-          "story": "The benchmark yield settled at 7.4427%.",
-          "stem": "这句话里最关键的那个词是？",
+          "story": "一个具体的数字，通常来自某个人或某个机构。",
+          "stem": "这说的是哪个词？",
           "options": [
+            {
+              "text": "estimate",
+              "art": "estimate"
+            },
+            {
+              "text": "consensus",
+              "art": "consensus"
+            },
+            {
+              "text": "guidance",
+              "art": "guidance"
+            },
+            {
+              "text": "forecast",
+              "art": "forecast"
+            }
+          ],
+          "answer": 0,
+          "why": "estimate：对某个数值的个别估计。"
+        },
+        {
+          "id": "u4l2-bond-s",
+          "type": "scenario",
+          "termId": "bond",
+          "termIds": [
+            "bond"
+          ],
+          "story": "一张借条：你把钱借出去，对方按期付息。",
+          "stem": "这说的是哪个词？",
+          "options": [
+            {
+              "text": "bond",
+              "art": "bond"
+            },
             {
               "text": "yield",
               "art": "yield"
@@ -4677,14 +4607,62 @@
             {
               "text": "forecast",
               "art": "forecast"
+            }
+          ],
+          "answer": 0,
+          "why": "bond：政府或企业发行的债务凭证，承诺按期付息并在到期时偿还本金。"
+        },
+        {
+          "id": "u4l2-yield-s",
+          "type": "scenario",
+          "termId": "yield",
+          "termIds": [
+            "yield"
+          ],
+          "story": "按你买入的价格算，这笔投资每年给你多少。",
+          "stem": "这说的是哪个词？",
+          "options": [
+            {
+              "text": "yield",
+              "art": "yield"
             },
             {
-              "text": "consensus",
-              "art": "consensus"
+              "text": "bond",
+              "art": "bond"
+            },
+            {
+              "text": "guidance",
+              "art": "guidance"
+            },
+            {
+              "text": "forecast",
+              "art": "forecast"
             }
           ],
           "answer": 0,
           "why": "yield：投资收益相对于投入价格的比率，债券价格下跌时收益率上升。"
+        },
+        {
+          "id": "u4l2-estimate-t",
+          "type": "truefalse",
+          "termId": "estimate",
+          "termIds": [
+            "estimate"
+          ],
+          "stem": "estimate：预估、估计值",
+          "answer": true,
+          "why": "estimate 确实是「预估、估计值」。"
+        },
+        {
+          "id": "u4l2-bond-t",
+          "type": "truefalse",
+          "termId": "bond",
+          "termIds": [
+            "bond"
+          ],
+          "stem": "bond 就是 收益率。",
+          "answer": false,
+          "why": "bond 是「债券」，不是「收益率」。"
         },
         {
           "id": "u4l2-yield-t",
@@ -4698,6 +4676,39 @@
           "why": "yield 确实是「收益率」。"
         },
         {
+          "id": "u4l2-estimate-f",
+          "type": "fill",
+          "termId": "estimate",
+          "termIds": [
+            "estimate"
+          ],
+          "story": "The consensus ____ was $12.66 billion.",
+          "bank": [
+            "estimate",
+            "consensus",
+            "bond",
+            "yield"
+          ],
+          "answer": "estimate",
+          "why": "estimate 是一个人的数；consensus 是许多人的平均数。"
+        },
+        {
+          "id": "u4l2-bond-f",
+          "type": "fill",
+          "termId": "bond",
+          "termIds": [
+            "bond"
+          ],
+          "story": "____ yields and prices move in opposite directions.",
+          "bank": [
+            "bond",
+            "yield",
+            "estimate"
+          ],
+          "answer": "bond",
+          "why": "bond 是那张凭证本身；yield 是这张凭证按你买入价格算出的回报率。"
+        },
+        {
           "id": "u4l2-yield-f",
           "type": "fill",
           "termId": "yield",
@@ -4707,8 +4718,8 @@
           "story": "The benchmark ____ settled at 7.4427%.",
           "bank": [
             "yield",
-            "estimate",
-            "bond"
+            "bond",
+            "estimate"
           ],
           "answer": "yield",
           "why": "yield 是回报率，bond 是凭证。债券价格跌，yield 反而升。"
@@ -4847,8 +4858,8 @@
           "termIds": [
             "guidance"
           ],
-          "story": "Santos trimmed the upper end of its production guidance.",
-          "stem": "这句话里最关键的那个词是？",
+          "story": "公司自己对未来的预测，不是已经发生的事。",
+          "stem": "这说的是哪个词？",
           "options": [
             {
               "text": "guidance",
@@ -4871,25 +4882,14 @@
           "why": "guidance：公司管理层对未来业绩给出的官方预期。"
         },
         {
-          "id": "u4r-guidance-t",
-          "type": "truefalse",
-          "termId": "guidance",
-          "termIds": [
-            "guidance"
-          ],
-          "stem": "guidance：业绩指引",
-          "answer": true,
-          "why": "guidance 确实是「业绩指引」。"
-        },
-        {
           "id": "u4r-forecast-s",
           "type": "scenario",
           "termId": "forecast",
           "termIds": [
             "forecast"
           ],
-          "story": "HSBC is forecast to show a 33% increase in pretax profit.",
-          "stem": "这句话里最关键的那个词是？",
+          "story": "对未来的估计，谁做的都算。",
+          "stem": "这说的是哪个词？",
           "options": [
             {
               "text": "forecast",
@@ -4912,26 +4912,49 @@
           "why": "forecast：基于现有信息对未来情况的估计。"
         },
         {
-          "id": "u4r-forecast-t",
-          "type": "truefalse",
-          "termId": "forecast",
-          "termIds": [
-            "forecast"
-          ],
-          "stem": "forecast 就是 业绩指引。",
-          "answer": false,
-          "why": "forecast 是「预测」，不是「业绩指引」。"
-        },
-        {
           "id": "u4r-consensus-s",
           "type": "scenario",
           "termId": "consensus",
           "termIds": [
             "consensus"
           ],
-          "story": "BHP surpassed the consensus estimate of $12.66 billion.",
-          "stem": "这句话里最关键的那个词是？",
+          "story": "一群分析师的预测取平均。",
+          "stem": "这说的是哪个词？",
           "options": [
+            {
+              "text": "consensus",
+              "art": "consensus"
+            },
+            {
+              "text": "estimate",
+              "art": "estimate"
+            },
+            {
+              "text": "guidance",
+              "art": "guidance"
+            },
+            {
+              "text": "forecast",
+              "art": "forecast"
+            }
+          ],
+          "answer": 0,
+          "why": "consensus：多位分析师预测的平均值，作为衡量业绩是否超预期的基准。"
+        },
+        {
+          "id": "u4r-estimate-s",
+          "type": "scenario",
+          "termId": "estimate",
+          "termIds": [
+            "estimate"
+          ],
+          "story": "一个具体的数字，通常来自某个人或某个机构。",
+          "stem": "这说的是哪个词？",
+          "options": [
+            {
+              "text": "estimate",
+              "art": "estimate"
+            },
             {
               "text": "consensus",
               "art": "consensus"
@@ -4943,14 +4966,92 @@
             {
               "text": "forecast",
               "art": "forecast"
-            },
-            {
-              "text": "estimate",
-              "art": "estimate"
             }
           ],
           "answer": 0,
-          "why": "consensus：多位分析师预测的平均值，作为衡量业绩是否超预期的基准。"
+          "why": "estimate：对某个数值的个别估计。"
+        },
+        {
+          "id": "u4r-bond-s",
+          "type": "scenario",
+          "termId": "bond",
+          "termIds": [
+            "bond"
+          ],
+          "story": "一张借条：你把钱借出去，对方按期付息。",
+          "stem": "这说的是哪个词？",
+          "options": [
+            {
+              "text": "bond",
+              "art": "bond"
+            },
+            {
+              "text": "yield",
+              "art": "yield"
+            },
+            {
+              "text": "guidance",
+              "art": "guidance"
+            },
+            {
+              "text": "forecast",
+              "art": "forecast"
+            }
+          ],
+          "answer": 0,
+          "why": "bond：政府或企业发行的债务凭证，承诺按期付息并在到期时偿还本金。"
+        },
+        {
+          "id": "u4r-yield-s",
+          "type": "scenario",
+          "termId": "yield",
+          "termIds": [
+            "yield"
+          ],
+          "story": "按你买入的价格算，这笔投资每年给你多少。",
+          "stem": "这说的是哪个词？",
+          "options": [
+            {
+              "text": "yield",
+              "art": "yield"
+            },
+            {
+              "text": "bond",
+              "art": "bond"
+            },
+            {
+              "text": "guidance",
+              "art": "guidance"
+            },
+            {
+              "text": "forecast",
+              "art": "forecast"
+            }
+          ],
+          "answer": 0,
+          "why": "yield：投资收益相对于投入价格的比率，债券价格下跌时收益率上升。"
+        },
+        {
+          "id": "u4r-guidance-t",
+          "type": "truefalse",
+          "termId": "guidance",
+          "termIds": [
+            "guidance"
+          ],
+          "stem": "guidance：业绩指引",
+          "answer": true,
+          "why": "guidance 确实是「业绩指引」。"
+        },
+        {
+          "id": "u4r-forecast-t",
+          "type": "truefalse",
+          "termId": "forecast",
+          "termIds": [
+            "forecast"
+          ],
+          "stem": "forecast 就是 业绩指引。",
+          "answer": false,
+          "why": "forecast 是「预测」，不是「业绩指引」。"
         },
         {
           "id": "u4r-consensus-t",
@@ -4964,75 +5065,15 @@
           "why": "consensus 确实是「市场一致预期」。"
         },
         {
-          "id": "u4r-estimate-s",
-          "type": "scenario",
-          "termId": "estimate",
-          "termIds": [
-            "estimate"
-          ],
-          "story": "The consensus estimate was $12.66 billion.",
-          "stem": "这句话里最关键的那个词是？",
-          "options": [
-            {
-              "text": "estimate",
-              "art": "estimate"
-            },
-            {
-              "text": "guidance",
-              "art": "guidance"
-            },
-            {
-              "text": "forecast",
-              "art": "forecast"
-            },
-            {
-              "text": "consensus",
-              "art": "consensus"
-            }
-          ],
-          "answer": 0,
-          "why": "estimate：对某个数值的个别估计。"
-        },
-        {
           "id": "u4r-estimate-t",
           "type": "truefalse",
           "termId": "estimate",
           "termIds": [
             "estimate"
           ],
-          "stem": "estimate 就是 业绩指引。",
+          "stem": "estimate 就是 市场一致预期。",
           "answer": false,
-          "why": "estimate 是「预估、估计值」，不是「业绩指引」。"
-        },
-        {
-          "id": "u4r-bond-s",
-          "type": "scenario",
-          "termId": "bond",
-          "termIds": [
-            "bond"
-          ],
-          "story": "Bond yields and prices move in opposite directions.",
-          "stem": "这句话里最关键的那个词是？",
-          "options": [
-            {
-              "text": "bond",
-              "art": "bond"
-            },
-            {
-              "text": "guidance",
-              "art": "guidance"
-            },
-            {
-              "text": "forecast",
-              "art": "forecast"
-            },
-            {
-              "text": "consensus",
-              "art": "consensus"
-            }
-          ],
-          "answer": 0,
-          "why": "bond：政府或企业发行的债务凭证，承诺按期付息并在到期时偿还本金。"
+          "why": "estimate 是「预估、估计值」，不是「市场一致预期」。"
         },
         {
           "id": "u4r-bond-t",
@@ -5046,45 +5087,15 @@
           "why": "bond 确实是「债券」。"
         },
         {
-          "id": "u4r-yield-s",
-          "type": "scenario",
-          "termId": "yield",
-          "termIds": [
-            "yield"
-          ],
-          "story": "The benchmark yield settled at 7.4427%.",
-          "stem": "这句话里最关键的那个词是？",
-          "options": [
-            {
-              "text": "yield",
-              "art": "yield"
-            },
-            {
-              "text": "guidance",
-              "art": "guidance"
-            },
-            {
-              "text": "forecast",
-              "art": "forecast"
-            },
-            {
-              "text": "consensus",
-              "art": "consensus"
-            }
-          ],
-          "answer": 0,
-          "why": "yield：投资收益相对于投入价格的比率，债券价格下跌时收益率上升。"
-        },
-        {
           "id": "u4r-yield-t",
           "type": "truefalse",
           "termId": "yield",
           "termIds": [
             "yield"
           ],
-          "stem": "yield 就是 业绩指引。",
+          "stem": "yield 就是 债券。",
           "answer": false,
-          "why": "yield 是「收益率」，不是「业绩指引」。"
+          "why": "yield 是「收益率」，不是「债券」。"
         },
         {
           "id": "u4r-match",
@@ -5199,14 +5210,72 @@
           "why": "inflation 是问题本身——物价在涨；interest rate 是央行用来压它的工具。"
         },
         {
+          "id": "u5l1-interest rate-m",
+          "type": "meaning",
+          "termId": "interest rate",
+          "termIds": [
+            "interest rate"
+          ],
+          "stem": "interest rate 是什么意思？",
+          "options": [
+            {
+              "text": "借款成本占本金的比率，由央行政策利率引导。",
+              "art": "interest rate"
+            },
+            {
+              "text": "投资收益相对于投入价格的比率，债券价格下跌时收益率上升。",
+              "art": "yield"
+            },
+            {
+              "text": "整体物价水平持续上涨，货币购买力下降。",
+              "art": "inflation"
+            },
+            {
+              "text": "中央银行提高政策利率的行为。",
+              "art": "rate hike"
+            }
+          ],
+          "answer": 0,
+          "why": "interest rate 是借钱的价格；yield 是你买入投资后拿到的回报率。"
+        },
+        {
+          "id": "u5l1-rate hike-m",
+          "type": "meaning",
+          "termId": "rate hike",
+          "termIds": [
+            "rate hike"
+          ],
+          "stem": "rate hike 是什么意思？",
+          "options": [
+            {
+              "text": "中央银行提高政策利率的行为。",
+              "art": "rate hike"
+            },
+            {
+              "text": "中央银行降低政策利率的行为。",
+              "art": "rate cut"
+            },
+            {
+              "text": "整体物价水平持续上涨，货币购买力下降。",
+              "art": "inflation"
+            },
+            {
+              "text": "借款成本占本金的比率，由央行政策利率引导。",
+              "art": "interest rate"
+            }
+          ],
+          "answer": 0,
+          "why": "rate hike 往上调；rate cut 往下调。"
+        },
+        {
           "id": "u5l1-inflation-s",
           "type": "scenario",
           "termId": "inflation",
           "termIds": [
             "inflation"
           ],
-          "story": "September consumer inflation quickened to 5.54%.",
-          "stem": "这句话里最关键的那个词是？",
+          "story": "同样的钱，买到的东西变少了。",
+          "stem": "这说的是哪个词？",
           "options": [
             {
               "text": "inflation",
@@ -5229,6 +5298,66 @@
           "why": "inflation：整体物价水平持续上涨，货币购买力下降。"
         },
         {
+          "id": "u5l1-interest rate-s",
+          "type": "scenario",
+          "termId": "interest rate",
+          "termIds": [
+            "interest rate"
+          ],
+          "story": "借钱要付的价，也是央行最常用的工具。",
+          "stem": "这说的是哪个词？",
+          "options": [
+            {
+              "text": "interest rate",
+              "art": "interest rate"
+            },
+            {
+              "text": "yield",
+              "art": "yield"
+            },
+            {
+              "text": "inflation",
+              "art": "inflation"
+            },
+            {
+              "text": "rate hike",
+              "art": "rate hike"
+            }
+          ],
+          "answer": 0,
+          "why": "interest rate：借款成本占本金的比率，由央行政策利率引导。"
+        },
+        {
+          "id": "u5l1-rate hike-s",
+          "type": "scenario",
+          "termId": "rate hike",
+          "termIds": [
+            "rate hike"
+          ],
+          "story": "央行把利率往上调。",
+          "stem": "这说的是哪个词？",
+          "options": [
+            {
+              "text": "rate hike",
+              "art": "rate hike"
+            },
+            {
+              "text": "rate cut",
+              "art": "rate cut"
+            },
+            {
+              "text": "inflation",
+              "art": "inflation"
+            },
+            {
+              "text": "interest rate",
+              "art": "interest rate"
+            }
+          ],
+          "answer": 0,
+          "why": "rate hike：中央银行提高政策利率的行为。"
+        },
+        {
           "id": "u5l1-inflation-t",
           "type": "truefalse",
           "termId": "inflation",
@@ -5238,6 +5367,28 @@
           "stem": "inflation：通胀",
           "answer": true,
           "why": "inflation 确实是「通胀」。"
+        },
+        {
+          "id": "u5l1-interest rate-t",
+          "type": "truefalse",
+          "termId": "interest rate",
+          "termIds": [
+            "interest rate"
+          ],
+          "stem": "interest rate 就是 收益率。",
+          "answer": false,
+          "why": "interest rate 是「利率」，不是「收益率」。"
+        },
+        {
+          "id": "u5l1-rate hike-t",
+          "type": "truefalse",
+          "termId": "rate hike",
+          "termIds": [
+            "rate hike"
+          ],
+          "stem": "rate hike：加息",
+          "answer": true,
+          "why": "rate hike 确实是「加息」。"
         },
         {
           "id": "u5l1-inflation-f",
@@ -5256,160 +5407,21 @@
           "why": "inflation 是问题本身——物价在涨；interest rate 是央行用来压它的工具。"
         },
         {
-          "id": "u5l1-interest rate-m",
-          "type": "meaning",
-          "termId": "interest rate",
-          "termIds": [
-            "interest rate"
-          ],
-          "stem": "interest rate 是什么意思？",
-          "options": [
-            {
-              "text": "借款成本占本金的比率，由央行政策利率引导。",
-              "art": "interest rate"
-            },
-            {
-              "text": "整体物价水平持续上涨，货币购买力下降。",
-              "art": "inflation"
-            },
-            {
-              "text": "中央银行提高政策利率的行为。",
-              "art": "rate hike"
-            },
-            {
-              "text": "中央银行降低政策利率的行为。",
-              "art": "rate cut"
-            }
-          ],
-          "answer": 0,
-          "why": "interest rate 是借钱的价格；yield 是你买入投资后拿到的回报率。"
-        },
-        {
-          "id": "u5l1-interest rate-s",
-          "type": "scenario",
-          "termId": "interest rate",
-          "termIds": [
-            "interest rate"
-          ],
-          "story": "All three central banks are expected to leave rates unchanged.",
-          "stem": "这句话里最关键的那个词是？",
-          "options": [
-            {
-              "text": "interest rate",
-              "art": "interest rate"
-            },
-            {
-              "text": "inflation",
-              "art": "inflation"
-            },
-            {
-              "text": "rate hike",
-              "art": "rate hike"
-            },
-            {
-              "text": "rate cut",
-              "art": "rate cut"
-            }
-          ],
-          "answer": 0,
-          "why": "interest rate：借款成本占本金的比率，由央行政策利率引导。"
-        },
-        {
-          "id": "u5l1-interest rate-t",
-          "type": "truefalse",
-          "termId": "interest rate",
-          "termIds": [
-            "interest rate"
-          ],
-          "stem": "interest rate 就是 通胀。",
-          "answer": false,
-          "why": "interest rate 是「利率」，不是「通胀」。"
-        },
-        {
           "id": "u5l1-interest rate-f",
           "type": "fill",
           "termId": "interest rate",
           "termIds": [
             "interest rate"
           ],
-          "story": "All three central banks are expected to leave rates unchanged. (这里的词是 ____)",
+          "story": "All three central banks are expected to leave the ____ unchanged at 4.25%.",
           "bank": [
             "interest rate",
+            "yield",
             "inflation",
             "rate hike"
           ],
           "answer": "interest rate",
           "why": "interest rate 是借钱的价格；yield 是你买入投资后拿到的回报率。"
-        },
-        {
-          "id": "u5l1-rate hike-m",
-          "type": "meaning",
-          "termId": "rate hike",
-          "termIds": [
-            "rate hike"
-          ],
-          "stem": "rate hike 是什么意思？",
-          "options": [
-            {
-              "text": "中央银行提高政策利率的行为。",
-              "art": "rate hike"
-            },
-            {
-              "text": "整体物价水平持续上涨，货币购买力下降。",
-              "art": "inflation"
-            },
-            {
-              "text": "借款成本占本金的比率，由央行政策利率引导。",
-              "art": "interest rate"
-            },
-            {
-              "text": "中央银行降低政策利率的行为。",
-              "art": "rate cut"
-            }
-          ],
-          "answer": 0,
-          "why": "rate hike 往上调；rate cut 往下调。"
-        },
-        {
-          "id": "u5l1-rate hike-s",
-          "type": "scenario",
-          "termId": "rate hike",
-          "termIds": [
-            "rate hike"
-          ],
-          "story": "Swap markets are pricing in about 100 basis points of rate hikes.",
-          "stem": "这句话里最关键的那个词是？",
-          "options": [
-            {
-              "text": "rate hike",
-              "art": "rate hike"
-            },
-            {
-              "text": "inflation",
-              "art": "inflation"
-            },
-            {
-              "text": "interest rate",
-              "art": "interest rate"
-            },
-            {
-              "text": "rate cut",
-              "art": "rate cut"
-            }
-          ],
-          "answer": 0,
-          "why": "rate hike：中央银行提高政策利率的行为。"
-        },
-        {
-          "id": "u5l1-rate hike-t",
-          "type": "truefalse",
-          "termId": "rate hike",
-          "termIds": [
-            "rate hike"
-          ],
-          "stem": "rate hike：加息",
-          "answer": true,
-          "why": "rate hike 确实是「加息」。"
         },
         {
           "id": "u5l1-rate hike-f",
@@ -5421,6 +5433,7 @@
           "story": "Swap markets are pricing in about 100 basis points of ____.",
           "bank": [
             "rate hike",
+            "rate cut",
             "inflation",
             "interest rate"
           ],
@@ -5502,76 +5515,19 @@
               "art": "rate cut"
             },
             {
+              "text": "中央银行提高政策利率的行为。",
+              "art": "rate hike"
+            },
+            {
               "text": "整体物价水平持续上涨，货币购买力下降。",
               "art": "inflation"
             },
             {
               "text": "借款成本占本金的比率，由央行政策利率引导。",
               "art": "interest rate"
-            },
-            {
-              "text": "中央银行提高政策利率的行为。",
-              "art": "rate hike"
             }
           ],
           "answer": 0,
-          "why": "rate cut 往下调；rate hike 往上调。"
-        },
-        {
-          "id": "u5l2-rate cut-s",
-          "type": "scenario",
-          "termId": "rate cut",
-          "termIds": [
-            "rate cut"
-          ],
-          "story": "Investors expect a rate cut next quarter.",
-          "stem": "这句话里最关键的那个词是？",
-          "options": [
-            {
-              "text": "rate cut",
-              "art": "rate cut"
-            },
-            {
-              "text": "inflation",
-              "art": "inflation"
-            },
-            {
-              "text": "interest rate",
-              "art": "interest rate"
-            },
-            {
-              "text": "rate hike",
-              "art": "rate hike"
-            }
-          ],
-          "answer": 0,
-          "why": "rate cut：中央银行降低政策利率的行为。"
-        },
-        {
-          "id": "u5l2-rate cut-t",
-          "type": "truefalse",
-          "termId": "rate cut",
-          "termIds": [
-            "rate cut"
-          ],
-          "stem": "rate cut：降息",
-          "answer": true,
-          "why": "rate cut 确实是「降息」。"
-        },
-        {
-          "id": "u5l2-rate cut-f",
-          "type": "fill",
-          "termId": "rate cut",
-          "termIds": [
-            "rate cut"
-          ],
-          "story": "Investors expect a ____ next quarter.",
-          "bank": [
-            "rate cut",
-            "central bank",
-            "currency"
-          ],
-          "answer": "rate cut",
           "why": "rate cut 往下调；rate hike 往上调。"
         },
         {
@@ -5588,12 +5544,12 @@
               "art": "central bank"
             },
             {
-              "text": "整体物价水平持续上涨，货币购买力下降。",
-              "art": "inflation"
-            },
-            {
               "text": "借款成本占本金的比率，由央行政策利率引导。",
               "art": "interest rate"
+            },
+            {
+              "text": "整体物价水平持续上涨，货币购买力下降。",
+              "art": "inflation"
             },
             {
               "text": "中央银行提高政策利率的行为。",
@@ -5601,63 +5557,6 @@
             }
           ],
           "answer": 0,
-          "why": "central bank 是机构；interest rate 是它调整的工具。"
-        },
-        {
-          "id": "u5l2-central bank-s",
-          "type": "scenario",
-          "termId": "central bank",
-          "termIds": [
-            "central bank"
-          ],
-          "story": "Traders awaited minutes from the central bank's latest meeting.",
-          "stem": "这句话里最关键的那个词是？",
-          "options": [
-            {
-              "text": "central bank",
-              "art": "central bank"
-            },
-            {
-              "text": "inflation",
-              "art": "inflation"
-            },
-            {
-              "text": "interest rate",
-              "art": "interest rate"
-            },
-            {
-              "text": "rate hike",
-              "art": "rate hike"
-            }
-          ],
-          "answer": 0,
-          "why": "central bank：负责制定货币政策、控制货币供应和利率的机构。"
-        },
-        {
-          "id": "u5l2-central bank-t",
-          "type": "truefalse",
-          "termId": "central bank",
-          "termIds": [
-            "central bank"
-          ],
-          "stem": "central bank 就是 通胀。",
-          "answer": false,
-          "why": "central bank 是「央行」，不是「通胀」。"
-        },
-        {
-          "id": "u5l2-central bank-f",
-          "type": "fill",
-          "termId": "central bank",
-          "termIds": [
-            "central bank"
-          ],
-          "story": "Traders awaited minutes from the ____'s latest meeting.",
-          "bank": [
-            "central bank",
-            "rate cut",
-            "currency"
-          ],
-          "answer": "central bank",
           "why": "central bank 是机构；interest rate 是它调整的工具。"
         },
         {
@@ -5674,34 +5573,38 @@
               "art": "currency"
             },
             {
+              "text": "两种货币之间的兑换比率。",
+              "art": "exchange rate"
+            },
+            {
               "text": "整体物价水平持续上涨，货币购买力下降。",
               "art": "inflation"
             },
             {
               "text": "借款成本占本金的比率，由央行政策利率引导。",
               "art": "interest rate"
-            },
-            {
-              "text": "中央银行提高政策利率的行为。",
-              "art": "rate hike"
             }
           ],
           "answer": 0,
           "why": "currency 是那种钱本身；exchange rate 是两种钱之间的兑换比例。"
         },
         {
-          "id": "u5l2-currency-s",
+          "id": "u5l2-rate cut-s",
           "type": "scenario",
-          "termId": "currency",
+          "termId": "rate cut",
           "termIds": [
-            "currency"
+            "rate cut"
           ],
-          "story": "The rupiah fell to a three-month low as Asian currencies struggled.",
-          "stem": "这句话里最关键的那个词是？",
+          "story": "央行把利率往下调。",
+          "stem": "这说的是哪个词？",
           "options": [
             {
-              "text": "currency",
-              "art": "currency"
+              "text": "rate cut",
+              "art": "rate cut"
+            },
+            {
+              "text": "rate hike",
+              "art": "rate hike"
             },
             {
               "text": "inflation",
@@ -5710,6 +5613,32 @@
             {
               "text": "interest rate",
               "art": "interest rate"
+            }
+          ],
+          "answer": 0,
+          "why": "rate cut：中央银行降低政策利率的行为。"
+        },
+        {
+          "id": "u5l2-central bank-s",
+          "type": "scenario",
+          "termId": "central bank",
+          "termIds": [
+            "central bank"
+          ],
+          "story": "管货币供应和利率的那个机构。",
+          "stem": "这说的是哪个词？",
+          "options": [
+            {
+              "text": "central bank",
+              "art": "central bank"
+            },
+            {
+              "text": "interest rate",
+              "art": "interest rate"
+            },
+            {
+              "text": "inflation",
+              "art": "inflation"
             },
             {
               "text": "rate hike",
@@ -5717,7 +5646,59 @@
             }
           ],
           "answer": 0,
+          "why": "central bank：负责制定货币政策、控制货币供应和利率的机构。"
+        },
+        {
+          "id": "u5l2-currency-s",
+          "type": "scenario",
+          "termId": "currency",
+          "termIds": [
+            "currency"
+          ],
+          "story": "一个国家或地区流通的钱。",
+          "stem": "这说的是哪个词？",
+          "options": [
+            {
+              "text": "currency",
+              "art": "currency"
+            },
+            {
+              "text": "exchange rate",
+              "art": "exchange rate"
+            },
+            {
+              "text": "inflation",
+              "art": "inflation"
+            },
+            {
+              "text": "interest rate",
+              "art": "interest rate"
+            }
+          ],
+          "answer": 0,
           "why": "currency：一国政府发行并强制流通的支付手段。"
+        },
+        {
+          "id": "u5l2-rate cut-t",
+          "type": "truefalse",
+          "termId": "rate cut",
+          "termIds": [
+            "rate cut"
+          ],
+          "stem": "rate cut：降息",
+          "answer": true,
+          "why": "rate cut 确实是「降息」。"
+        },
+        {
+          "id": "u5l2-central bank-t",
+          "type": "truefalse",
+          "termId": "central bank",
+          "termIds": [
+            "central bank"
+          ],
+          "stem": "central bank 就是 利率。",
+          "answer": false,
+          "why": "central bank 是「央行」，不是「利率」。"
         },
         {
           "id": "u5l2-currency-t",
@@ -5731,6 +5712,40 @@
           "why": "currency 确实是「货币」。"
         },
         {
+          "id": "u5l2-rate cut-f",
+          "type": "fill",
+          "termId": "rate cut",
+          "termIds": [
+            "rate cut"
+          ],
+          "story": "Investors expect a ____ next quarter.",
+          "bank": [
+            "rate cut",
+            "rate hike",
+            "central bank",
+            "currency"
+          ],
+          "answer": "rate cut",
+          "why": "rate cut 往下调；rate hike 往上调。"
+        },
+        {
+          "id": "u5l2-central bank-f",
+          "type": "fill",
+          "termId": "central bank",
+          "termIds": [
+            "central bank"
+          ],
+          "story": "Traders awaited minutes from the ____'s latest meeting.",
+          "bank": [
+            "central bank",
+            "interest rate",
+            "rate cut",
+            "currency"
+          ],
+          "answer": "central bank",
+          "why": "central bank 是机构；interest rate 是它调整的工具。"
+        },
+        {
           "id": "u5l2-currency-f",
           "type": "fill",
           "termId": "currency",
@@ -5740,6 +5755,7 @@
           "story": "The rupiah fell to a three-month low as Asian ____ struggled.",
           "bank": [
             "currency",
+            "exchange rate",
             "rate cut",
             "central bank"
           ],
@@ -5858,8 +5874,8 @@
           "termIds": [
             "inflation"
           ],
-          "story": "September consumer inflation quickened to 5.54%.",
-          "stem": "这句话里最关键的那个词是？",
+          "story": "同样的钱，买到的东西变少了。",
+          "stem": "这说的是哪个词？",
           "options": [
             {
               "text": "inflation",
@@ -5882,6 +5898,156 @@
           "why": "inflation：整体物价水平持续上涨，货币购买力下降。"
         },
         {
+          "id": "u5r-interest rate-s",
+          "type": "scenario",
+          "termId": "interest rate",
+          "termIds": [
+            "interest rate"
+          ],
+          "story": "借钱要付的价，也是央行最常用的工具。",
+          "stem": "这说的是哪个词？",
+          "options": [
+            {
+              "text": "interest rate",
+              "art": "interest rate"
+            },
+            {
+              "text": "yield",
+              "art": "yield"
+            },
+            {
+              "text": "inflation",
+              "art": "inflation"
+            },
+            {
+              "text": "rate hike",
+              "art": "rate hike"
+            }
+          ],
+          "answer": 0,
+          "why": "interest rate：借款成本占本金的比率，由央行政策利率引导。"
+        },
+        {
+          "id": "u5r-rate hike-s",
+          "type": "scenario",
+          "termId": "rate hike",
+          "termIds": [
+            "rate hike"
+          ],
+          "story": "央行把利率往上调。",
+          "stem": "这说的是哪个词？",
+          "options": [
+            {
+              "text": "rate hike",
+              "art": "rate hike"
+            },
+            {
+              "text": "rate cut",
+              "art": "rate cut"
+            },
+            {
+              "text": "inflation",
+              "art": "inflation"
+            },
+            {
+              "text": "interest rate",
+              "art": "interest rate"
+            }
+          ],
+          "answer": 0,
+          "why": "rate hike：中央银行提高政策利率的行为。"
+        },
+        {
+          "id": "u5r-rate cut-s",
+          "type": "scenario",
+          "termId": "rate cut",
+          "termIds": [
+            "rate cut"
+          ],
+          "story": "央行把利率往下调。",
+          "stem": "这说的是哪个词？",
+          "options": [
+            {
+              "text": "rate cut",
+              "art": "rate cut"
+            },
+            {
+              "text": "rate hike",
+              "art": "rate hike"
+            },
+            {
+              "text": "inflation",
+              "art": "inflation"
+            },
+            {
+              "text": "interest rate",
+              "art": "interest rate"
+            }
+          ],
+          "answer": 0,
+          "why": "rate cut：中央银行降低政策利率的行为。"
+        },
+        {
+          "id": "u5r-central bank-s",
+          "type": "scenario",
+          "termId": "central bank",
+          "termIds": [
+            "central bank"
+          ],
+          "story": "管货币供应和利率的那个机构。",
+          "stem": "这说的是哪个词？",
+          "options": [
+            {
+              "text": "central bank",
+              "art": "central bank"
+            },
+            {
+              "text": "interest rate",
+              "art": "interest rate"
+            },
+            {
+              "text": "inflation",
+              "art": "inflation"
+            },
+            {
+              "text": "rate hike",
+              "art": "rate hike"
+            }
+          ],
+          "answer": 0,
+          "why": "central bank：负责制定货币政策、控制货币供应和利率的机构。"
+        },
+        {
+          "id": "u5r-currency-s",
+          "type": "scenario",
+          "termId": "currency",
+          "termIds": [
+            "currency"
+          ],
+          "story": "一个国家或地区流通的钱。",
+          "stem": "这说的是哪个词？",
+          "options": [
+            {
+              "text": "currency",
+              "art": "currency"
+            },
+            {
+              "text": "exchange rate",
+              "art": "exchange rate"
+            },
+            {
+              "text": "inflation",
+              "art": "inflation"
+            },
+            {
+              "text": "interest rate",
+              "art": "interest rate"
+            }
+          ],
+          "answer": 0,
+          "why": "currency：一国政府发行并强制流通的支付手段。"
+        },
+        {
           "id": "u5r-inflation-t",
           "type": "truefalse",
           "termId": "inflation",
@@ -5893,75 +6059,15 @@
           "why": "inflation 确实是「通胀」。"
         },
         {
-          "id": "u5r-interest rate-s",
-          "type": "scenario",
-          "termId": "interest rate",
-          "termIds": [
-            "interest rate"
-          ],
-          "story": "All three central banks are expected to leave rates unchanged.",
-          "stem": "这句话里最关键的那个词是？",
-          "options": [
-            {
-              "text": "interest rate",
-              "art": "interest rate"
-            },
-            {
-              "text": "inflation",
-              "art": "inflation"
-            },
-            {
-              "text": "rate hike",
-              "art": "rate hike"
-            },
-            {
-              "text": "rate cut",
-              "art": "rate cut"
-            }
-          ],
-          "answer": 0,
-          "why": "interest rate：借款成本占本金的比率，由央行政策利率引导。"
-        },
-        {
           "id": "u5r-interest rate-t",
           "type": "truefalse",
           "termId": "interest rate",
           "termIds": [
             "interest rate"
           ],
-          "stem": "interest rate 就是 通胀。",
+          "stem": "interest rate 就是 收益率。",
           "answer": false,
-          "why": "interest rate 是「利率」，不是「通胀」。"
-        },
-        {
-          "id": "u5r-rate hike-s",
-          "type": "scenario",
-          "termId": "rate hike",
-          "termIds": [
-            "rate hike"
-          ],
-          "story": "Swap markets are pricing in about 100 basis points of rate hikes.",
-          "stem": "这句话里最关键的那个词是？",
-          "options": [
-            {
-              "text": "rate hike",
-              "art": "rate hike"
-            },
-            {
-              "text": "inflation",
-              "art": "inflation"
-            },
-            {
-              "text": "interest rate",
-              "art": "interest rate"
-            },
-            {
-              "text": "rate cut",
-              "art": "rate cut"
-            }
-          ],
-          "answer": 0,
-          "why": "rate hike：中央银行提高政策利率的行为。"
+          "why": "interest rate 是「利率」，不是「收益率」。"
         },
         {
           "id": "u5r-rate hike-t",
@@ -5975,75 +6081,15 @@
           "why": "rate hike 确实是「加息」。"
         },
         {
-          "id": "u5r-rate cut-s",
-          "type": "scenario",
-          "termId": "rate cut",
-          "termIds": [
-            "rate cut"
-          ],
-          "story": "Investors expect a rate cut next quarter.",
-          "stem": "这句话里最关键的那个词是？",
-          "options": [
-            {
-              "text": "rate cut",
-              "art": "rate cut"
-            },
-            {
-              "text": "inflation",
-              "art": "inflation"
-            },
-            {
-              "text": "interest rate",
-              "art": "interest rate"
-            },
-            {
-              "text": "rate hike",
-              "art": "rate hike"
-            }
-          ],
-          "answer": 0,
-          "why": "rate cut：中央银行降低政策利率的行为。"
-        },
-        {
           "id": "u5r-rate cut-t",
           "type": "truefalse",
           "termId": "rate cut",
           "termIds": [
             "rate cut"
           ],
-          "stem": "rate cut 就是 通胀。",
+          "stem": "rate cut 就是 加息。",
           "answer": false,
-          "why": "rate cut 是「降息」，不是「通胀」。"
-        },
-        {
-          "id": "u5r-central bank-s",
-          "type": "scenario",
-          "termId": "central bank",
-          "termIds": [
-            "central bank"
-          ],
-          "story": "Traders awaited minutes from the central bank's latest meeting.",
-          "stem": "这句话里最关键的那个词是？",
-          "options": [
-            {
-              "text": "central bank",
-              "art": "central bank"
-            },
-            {
-              "text": "inflation",
-              "art": "inflation"
-            },
-            {
-              "text": "interest rate",
-              "art": "interest rate"
-            },
-            {
-              "text": "rate hike",
-              "art": "rate hike"
-            }
-          ],
-          "answer": 0,
-          "why": "central bank：负责制定货币政策、控制货币供应和利率的机构。"
+          "why": "rate cut 是「降息」，不是「加息」。"
         },
         {
           "id": "u5r-central bank-t",
@@ -6057,45 +6103,15 @@
           "why": "central bank 确实是「央行」。"
         },
         {
-          "id": "u5r-currency-s",
-          "type": "scenario",
-          "termId": "currency",
-          "termIds": [
-            "currency"
-          ],
-          "story": "The rupiah fell to a three-month low as Asian currencies struggled.",
-          "stem": "这句话里最关键的那个词是？",
-          "options": [
-            {
-              "text": "currency",
-              "art": "currency"
-            },
-            {
-              "text": "inflation",
-              "art": "inflation"
-            },
-            {
-              "text": "interest rate",
-              "art": "interest rate"
-            },
-            {
-              "text": "rate hike",
-              "art": "rate hike"
-            }
-          ],
-          "answer": 0,
-          "why": "currency：一国政府发行并强制流通的支付手段。"
-        },
-        {
           "id": "u5r-currency-t",
           "type": "truefalse",
           "termId": "currency",
           "termIds": [
             "currency"
           ],
-          "stem": "currency 就是 通胀。",
+          "stem": "currency 就是 汇率。",
           "answer": false,
-          "why": "currency 是「货币」，不是「通胀」。"
+          "why": "currency 是「货币」，不是「汇率」。"
         },
         {
           "id": "u5r-match",
@@ -6194,76 +6210,19 @@
               "art": "exchange rate"
             },
             {
+              "text": "一国政府发行并强制流通的支付手段。",
+              "art": "currency"
+            },
+            {
               "text": "一种货币相对于另一种货币的价值下降。",
               "art": "depreciate"
             },
             {
               "text": "一种货币相对于另一种货币的价值上升。",
               "art": "appreciate"
-            },
-            {
-              "text": "公司股价乘以总股本，代表市场对公司的整体估值。",
-              "art": "market cap"
             }
           ],
           "answer": 0,
-          "why": "exchange rate 是比例；currency 是被兑换的那种钱。"
-        },
-        {
-          "id": "u6l1-exchange rate-s",
-          "type": "scenario",
-          "termId": "exchange rate",
-          "termIds": [
-            "exchange rate"
-          ],
-          "story": "Changing foreign-exchange conditions are putting earnings at risk.",
-          "stem": "这句话里最关键的那个词是？",
-          "options": [
-            {
-              "text": "exchange rate",
-              "art": "exchange rate"
-            },
-            {
-              "text": "depreciate",
-              "art": "depreciate"
-            },
-            {
-              "text": "appreciate",
-              "art": "appreciate"
-            },
-            {
-              "text": "market cap",
-              "art": "market cap"
-            }
-          ],
-          "answer": 0,
-          "why": "exchange rate：两种货币之间的兑换比率。"
-        },
-        {
-          "id": "u6l1-exchange rate-t",
-          "type": "truefalse",
-          "termId": "exchange rate",
-          "termIds": [
-            "exchange rate"
-          ],
-          "stem": "exchange rate：汇率",
-          "answer": true,
-          "why": "exchange rate 确实是「汇率」。"
-        },
-        {
-          "id": "u6l1-exchange rate-f",
-          "type": "fill",
-          "termId": "exchange rate",
-          "termIds": [
-            "exchange rate"
-          ],
-          "story": "Changing foreign-exchange conditions are putting earnings at risk. (这里的词是 ____)",
-          "bank": [
-            "exchange rate",
-            "depreciate",
-            "appreciate"
-          ],
-          "answer": "exchange rate",
           "why": "exchange rate 是比例；currency 是被兑换的那种钱。"
         },
         {
@@ -6280,12 +6239,12 @@
               "art": "depreciate"
             },
             {
-              "text": "两种货币之间的兑换比率。",
-              "art": "exchange rate"
-            },
-            {
               "text": "一种货币相对于另一种货币的价值上升。",
               "art": "appreciate"
+            },
+            {
+              "text": "两种货币之间的兑换比率。",
+              "art": "exchange rate"
             },
             {
               "text": "公司股价乘以总股本，代表市场对公司的整体估值。",
@@ -6293,63 +6252,6 @@
             }
           ],
           "answer": 0,
-          "why": "depreciate 是变便宜；appreciate 是变值钱。"
-        },
-        {
-          "id": "u6l1-depreciate-s",
-          "type": "scenario",
-          "termId": "depreciate",
-          "termIds": [
-            "depreciate"
-          ],
-          "story": "The Taiwan dollar depreciated against the US dollar.",
-          "stem": "这句话里最关键的那个词是？",
-          "options": [
-            {
-              "text": "depreciate",
-              "art": "depreciate"
-            },
-            {
-              "text": "exchange rate",
-              "art": "exchange rate"
-            },
-            {
-              "text": "appreciate",
-              "art": "appreciate"
-            },
-            {
-              "text": "market cap",
-              "art": "market cap"
-            }
-          ],
-          "answer": 0,
-          "why": "depreciate：一种货币相对于另一种货币的价值下降。"
-        },
-        {
-          "id": "u6l1-depreciate-t",
-          "type": "truefalse",
-          "termId": "depreciate",
-          "termIds": [
-            "depreciate"
-          ],
-          "stem": "depreciate 就是 汇率。",
-          "answer": false,
-          "why": "depreciate 是「贬值」，不是「汇率」。"
-        },
-        {
-          "id": "u6l1-depreciate-f",
-          "type": "fill",
-          "termId": "depreciate",
-          "termIds": [
-            "depreciate"
-          ],
-          "story": "The Taiwan dollar ____ against the US dollar.",
-          "bank": [
-            "depreciate",
-            "exchange rate",
-            "appreciate"
-          ],
-          "answer": "depreciate",
           "why": "depreciate 是变便宜；appreciate 是变值钱。"
         },
         {
@@ -6366,12 +6268,12 @@
               "art": "appreciate"
             },
             {
-              "text": "两种货币之间的兑换比率。",
-              "art": "exchange rate"
-            },
-            {
               "text": "一种货币相对于另一种货币的价值下降。",
               "art": "depreciate"
+            },
+            {
+              "text": "两种货币之间的兑换比率。",
+              "art": "exchange rate"
             },
             {
               "text": "公司股价乘以总股本，代表市场对公司的整体估值。",
@@ -6382,15 +6284,49 @@
           "why": "appreciate 是变值钱；depreciate 是变便宜。"
         },
         {
-          "id": "u6l1-appreciate-s",
+          "id": "u6l1-exchange rate-s",
           "type": "scenario",
-          "termId": "appreciate",
+          "termId": "exchange rate",
           "termIds": [
-            "appreciate"
+            "exchange rate"
           ],
-          "story": "China's yuan hit its highest level since 2022 on a weaker dollar.",
-          "stem": "这句话里最关键的那个词是？",
+          "story": "一种钱换另一种钱的比例。",
+          "stem": "这说的是哪个词？",
           "options": [
+            {
+              "text": "exchange rate",
+              "art": "exchange rate"
+            },
+            {
+              "text": "currency",
+              "art": "currency"
+            },
+            {
+              "text": "depreciate",
+              "art": "depreciate"
+            },
+            {
+              "text": "appreciate",
+              "art": "appreciate"
+            }
+          ],
+          "answer": 0,
+          "why": "exchange rate：两种货币之间的兑换比率。"
+        },
+        {
+          "id": "u6l1-depreciate-s",
+          "type": "scenario",
+          "termId": "depreciate",
+          "termIds": [
+            "depreciate"
+          ],
+          "story": "这种钱换到的外国钱变少了。",
+          "stem": "这说的是哪个词？",
+          "options": [
+            {
+              "text": "depreciate",
+              "art": "depreciate"
+            },
             {
               "text": "appreciate",
               "art": "appreciate"
@@ -6400,8 +6336,34 @@
               "art": "exchange rate"
             },
             {
+              "text": "market cap",
+              "art": "market cap"
+            }
+          ],
+          "answer": 0,
+          "why": "depreciate：一种货币相对于另一种货币的价值下降。"
+        },
+        {
+          "id": "u6l1-appreciate-s",
+          "type": "scenario",
+          "termId": "appreciate",
+          "termIds": [
+            "appreciate"
+          ],
+          "story": "这种钱换到的外国钱变多了。",
+          "stem": "这说的是哪个词？",
+          "options": [
+            {
+              "text": "appreciate",
+              "art": "appreciate"
+            },
+            {
               "text": "depreciate",
               "art": "depreciate"
+            },
+            {
+              "text": "exchange rate",
+              "art": "exchange rate"
             },
             {
               "text": "market cap",
@@ -6410,6 +6372,28 @@
           ],
           "answer": 0,
           "why": "appreciate：一种货币相对于另一种货币的价值上升。"
+        },
+        {
+          "id": "u6l1-exchange rate-t",
+          "type": "truefalse",
+          "termId": "exchange rate",
+          "termIds": [
+            "exchange rate"
+          ],
+          "stem": "exchange rate：汇率",
+          "answer": true,
+          "why": "exchange rate 确实是「汇率」。"
+        },
+        {
+          "id": "u6l1-depreciate-t",
+          "type": "truefalse",
+          "termId": "depreciate",
+          "termIds": [
+            "depreciate"
+          ],
+          "stem": "depreciate 就是 升值。",
+          "answer": false,
+          "why": "depreciate 是「贬值」，不是「升值」。"
         },
         {
           "id": "u6l1-appreciate-t",
@@ -6423,17 +6407,50 @@
           "why": "appreciate 确实是「升值」。"
         },
         {
+          "id": "u6l1-exchange rate-f",
+          "type": "fill",
+          "termId": "exchange rate",
+          "termIds": [
+            "exchange rate"
+          ],
+          "story": "The ____ slid past 160 yen per dollar, prompting a warning from Tokyo.",
+          "bank": [
+            "exchange rate",
+            "currency",
+            "depreciate",
+            "appreciate"
+          ],
+          "answer": "exchange rate",
+          "why": "exchange rate 是比例；currency 是被兑换的那种钱。"
+        },
+        {
+          "id": "u6l1-depreciate-f",
+          "type": "fill",
+          "termId": "depreciate",
+          "termIds": [
+            "depreciate"
+          ],
+          "story": "The Taiwan dollar ____ against the US dollar.",
+          "bank": [
+            "depreciate",
+            "appreciate",
+            "exchange rate"
+          ],
+          "answer": "depreciate",
+          "why": "depreciate 是变便宜；appreciate 是变值钱。"
+        },
+        {
           "id": "u6l1-appreciate-f",
           "type": "fill",
           "termId": "appreciate",
           "termIds": [
             "appreciate"
           ],
-          "story": "China's yuan hit its highest level since 2022 on a weaker dollar. (这里的词是 ____)",
+          "story": "The yuan could ____ further if the dollar keeps weakening.",
           "bank": [
             "appreciate",
-            "exchange rate",
-            "depreciate"
+            "depreciate",
+            "exchange rate"
           ],
           "answer": "appreciate",
           "why": "appreciate 是变值钱；depreciate 是变便宜。"
@@ -6513,20 +6530,78 @@
               "art": "market cap"
             },
             {
+              "text": "对资产或公司内在价值的判断与估算。",
+              "art": "valuation"
+            },
+            {
               "text": "两种货币之间的兑换比率。",
               "art": "exchange rate"
             },
             {
               "text": "一种货币相对于另一种货币的价值下降。",
               "art": "depreciate"
-            },
-            {
-              "text": "一种货币相对于另一种货币的价值上升。",
-              "art": "appreciate"
             }
           ],
           "answer": 0,
           "why": "market cap 是市场价格算出的总价值；valuation 是对它值多少的判断或估算。"
+        },
+        {
+          "id": "u6l2-valuation-m",
+          "type": "meaning",
+          "termId": "valuation",
+          "termIds": [
+            "valuation"
+          ],
+          "stem": "valuation 是什么意思？",
+          "options": [
+            {
+              "text": "对资产或公司内在价值的判断与估算。",
+              "art": "valuation"
+            },
+            {
+              "text": "公司股价乘以总股本，代表市场对公司的整体估值。",
+              "art": "market cap"
+            },
+            {
+              "text": "两种货币之间的兑换比率。",
+              "art": "exchange rate"
+            },
+            {
+              "text": "一种货币相对于另一种货币的价值下降。",
+              "art": "depreciate"
+            }
+          ],
+          "answer": 0,
+          "why": "valuation 是判断出来的价值；market cap 是市场当下给出的价格总和。"
+        },
+        {
+          "id": "u6l2-p/e-m",
+          "type": "meaning",
+          "termId": "p/e",
+          "termIds": [
+            "p/e"
+          ],
+          "stem": "P/E 是什么意思？",
+          "options": [
+            {
+              "text": "股价除以每股收益，衡量投资者愿意为每块钱利润付多少钱。",
+              "art": "p/e"
+            },
+            {
+              "text": "公司股价乘以总股本，代表市场对公司的整体估值。",
+              "art": "market cap"
+            },
+            {
+              "text": "两种货币之间的兑换比率。",
+              "art": "exchange rate"
+            },
+            {
+              "text": "一种货币相对于另一种货币的价值下降。",
+              "art": "depreciate"
+            }
+          ],
+          "answer": 0,
+          "why": "P/E 是倍数、和盈利挂钩；market cap 是总市值、和股本挂钩。"
         },
         {
           "id": "u6l2-market cap-s",
@@ -6535,9 +6610,43 @@
           "termIds": [
             "market cap"
           ],
-          "story": "Its market cap makes it the largest listed mining company.",
-          "stem": "这句话里最关键的那个词是？",
+          "story": "整个公司在股市里一共值多少钱。",
+          "stem": "这说的是哪个词？",
           "options": [
+            {
+              "text": "market cap",
+              "art": "market cap"
+            },
+            {
+              "text": "valuation",
+              "art": "valuation"
+            },
+            {
+              "text": "exchange rate",
+              "art": "exchange rate"
+            },
+            {
+              "text": "depreciate",
+              "art": "depreciate"
+            }
+          ],
+          "answer": 0,
+          "why": "market cap：公司股价乘以总股本，代表市场对公司的整体估值。"
+        },
+        {
+          "id": "u6l2-valuation-s",
+          "type": "scenario",
+          "termId": "valuation",
+          "termIds": [
+            "valuation"
+          ],
+          "story": "这东西值多少，可以是算出来的也可以是判断出来的。",
+          "stem": "这说的是哪个词？",
+          "options": [
+            {
+              "text": "valuation",
+              "art": "valuation"
+            },
             {
               "text": "market cap",
               "art": "market cap"
@@ -6549,14 +6658,40 @@
             {
               "text": "depreciate",
               "art": "depreciate"
-            },
-            {
-              "text": "appreciate",
-              "art": "appreciate"
             }
           ],
           "answer": 0,
-          "why": "market cap：公司股价乘以总股本，代表市场对公司的整体估值。"
+          "why": "valuation：对资产或公司内在价值的判断与估算。"
+        },
+        {
+          "id": "u6l2-p/e-s",
+          "type": "scenario",
+          "termId": "p/e",
+          "termIds": [
+            "p/e"
+          ],
+          "story": "股价是每股利润的多少倍。",
+          "stem": "这说的是哪个词？",
+          "options": [
+            {
+              "text": "P/E",
+              "art": "p/e"
+            },
+            {
+              "text": "market cap",
+              "art": "market cap"
+            },
+            {
+              "text": "exchange rate",
+              "art": "exchange rate"
+            },
+            {
+              "text": "depreciate",
+              "art": "depreciate"
+            }
+          ],
+          "answer": 0,
+          "why": "P/E：股价除以每股收益，衡量投资者愿意为每块钱利润付多少钱。"
         },
         {
           "id": "u6l2-market cap-t",
@@ -6568,6 +6703,28 @@
           "stem": "market cap：市值",
           "answer": true,
           "why": "market cap 确实是「市值」。"
+        },
+        {
+          "id": "u6l2-valuation-t",
+          "type": "truefalse",
+          "termId": "valuation",
+          "termIds": [
+            "valuation"
+          ],
+          "stem": "valuation 就是 市值。",
+          "answer": false,
+          "why": "valuation 是「估值」，不是「市值」。"
+        },
+        {
+          "id": "u6l2-p/e-t",
+          "type": "truefalse",
+          "termId": "p/e",
+          "termIds": [
+            "p/e"
+          ],
+          "stem": "P/E：市盈率",
+          "answer": true,
+          "why": "P/E 确实是「市盈率」。"
         },
         {
           "id": "u6l2-market cap-f",
@@ -6586,83 +6743,13 @@
           "why": "market cap 是市场价格算出的总价值；valuation 是对它值多少的判断或估算。"
         },
         {
-          "id": "u6l2-valuation-m",
-          "type": "meaning",
-          "termId": "valuation",
-          "termIds": [
-            "valuation"
-          ],
-          "stem": "valuation 是什么意思？",
-          "options": [
-            {
-              "text": "对资产或公司内在价值的判断与估算。",
-              "art": "valuation"
-            },
-            {
-              "text": "两种货币之间的兑换比率。",
-              "art": "exchange rate"
-            },
-            {
-              "text": "一种货币相对于另一种货币的价值下降。",
-              "art": "depreciate"
-            },
-            {
-              "text": "一种货币相对于另一种货币的价值上升。",
-              "art": "appreciate"
-            }
-          ],
-          "answer": 0,
-          "why": "valuation 是判断出来的价值；market cap 是市场当下给出的价格总和。"
-        },
-        {
-          "id": "u6l2-valuation-s",
-          "type": "scenario",
-          "termId": "valuation",
-          "termIds": [
-            "valuation"
-          ],
-          "story": "Analysts flagged stretched valuations in the energy sector.",
-          "stem": "这句话里最关键的那个词是？",
-          "options": [
-            {
-              "text": "valuation",
-              "art": "valuation"
-            },
-            {
-              "text": "exchange rate",
-              "art": "exchange rate"
-            },
-            {
-              "text": "depreciate",
-              "art": "depreciate"
-            },
-            {
-              "text": "appreciate",
-              "art": "appreciate"
-            }
-          ],
-          "answer": 0,
-          "why": "valuation：对资产或公司内在价值的判断与估算。"
-        },
-        {
-          "id": "u6l2-valuation-t",
-          "type": "truefalse",
-          "termId": "valuation",
-          "termIds": [
-            "valuation"
-          ],
-          "stem": "valuation 就是 汇率。",
-          "answer": false,
-          "why": "valuation 是「估值」，不是「汇率」。"
-        },
-        {
           "id": "u6l2-valuation-f",
           "type": "fill",
           "termId": "valuation",
           "termIds": [
             "valuation"
           ],
-          "story": "Analysts flagged stretched ____ in the energy sector.",
+          "story": "At 30 times earnings, the stock's ____ already prices in years of growth.",
           "bank": [
             "valuation",
             "market cap",
@@ -6670,76 +6757,6 @@
           ],
           "answer": "valuation",
           "why": "valuation 是判断出来的价值；market cap 是市场当下给出的价格总和。"
-        },
-        {
-          "id": "u6l2-p/e-m",
-          "type": "meaning",
-          "termId": "p/e",
-          "termIds": [
-            "p/e"
-          ],
-          "stem": "P/E 是什么意思？",
-          "options": [
-            {
-              "text": "股价除以每股收益，衡量投资者愿意为每块钱利润付多少钱。",
-              "art": "p/e"
-            },
-            {
-              "text": "两种货币之间的兑换比率。",
-              "art": "exchange rate"
-            },
-            {
-              "text": "一种货币相对于另一种货币的价值下降。",
-              "art": "depreciate"
-            },
-            {
-              "text": "一种货币相对于另一种货币的价值上升。",
-              "art": "appreciate"
-            }
-          ],
-          "answer": 0,
-          "why": "P/E 是倍数、和盈利挂钩；market cap 是总市值、和股本挂钩。"
-        },
-        {
-          "id": "u6l2-p/e-s",
-          "type": "scenario",
-          "termId": "p/e",
-          "termIds": [
-            "p/e"
-          ],
-          "story": "Its P/E ratio is well above the sector average.",
-          "stem": "这句话里最关键的那个词是？",
-          "options": [
-            {
-              "text": "P/E",
-              "art": "p/e"
-            },
-            {
-              "text": "exchange rate",
-              "art": "exchange rate"
-            },
-            {
-              "text": "depreciate",
-              "art": "depreciate"
-            },
-            {
-              "text": "appreciate",
-              "art": "appreciate"
-            }
-          ],
-          "answer": 0,
-          "why": "P/E：股价除以每股收益，衡量投资者愿意为每块钱利润付多少钱。"
-        },
-        {
-          "id": "u6l2-p/e-t",
-          "type": "truefalse",
-          "termId": "p/e",
-          "termIds": [
-            "p/e"
-          ],
-          "stem": "P/E：市盈率",
-          "answer": true,
-          "why": "P/E 确实是「市盈率」。"
         },
         {
           "id": "u6l2-p/e-f",
@@ -6891,13 +6908,39 @@
           "termIds": [
             "exchange rate"
           ],
-          "story": "Changing foreign-exchange conditions are putting earnings at risk.",
-          "stem": "这句话里最关键的那个词是？",
+          "story": "一种钱换另一种钱的比例。",
+          "stem": "这说的是哪个词？",
           "options": [
             {
               "text": "exchange rate",
               "art": "exchange rate"
             },
+            {
+              "text": "currency",
+              "art": "currency"
+            },
+            {
+              "text": "depreciate",
+              "art": "depreciate"
+            },
+            {
+              "text": "appreciate",
+              "art": "appreciate"
+            }
+          ],
+          "answer": 0,
+          "why": "exchange rate：两种货币之间的兑换比率。"
+        },
+        {
+          "id": "u6r-depreciate-s",
+          "type": "scenario",
+          "termId": "depreciate",
+          "termIds": [
+            "depreciate"
+          ],
+          "story": "这种钱换到的外国钱变少了。",
+          "stem": "这说的是哪个词？",
+          "options": [
             {
               "text": "depreciate",
               "art": "depreciate"
@@ -6907,12 +6950,136 @@
               "art": "appreciate"
             },
             {
+              "text": "exchange rate",
+              "art": "exchange rate"
+            },
+            {
               "text": "market cap",
               "art": "market cap"
             }
           ],
           "answer": 0,
-          "why": "exchange rate：两种货币之间的兑换比率。"
+          "why": "depreciate：一种货币相对于另一种货币的价值下降。"
+        },
+        {
+          "id": "u6r-appreciate-s",
+          "type": "scenario",
+          "termId": "appreciate",
+          "termIds": [
+            "appreciate"
+          ],
+          "story": "这种钱换到的外国钱变多了。",
+          "stem": "这说的是哪个词？",
+          "options": [
+            {
+              "text": "appreciate",
+              "art": "appreciate"
+            },
+            {
+              "text": "depreciate",
+              "art": "depreciate"
+            },
+            {
+              "text": "exchange rate",
+              "art": "exchange rate"
+            },
+            {
+              "text": "market cap",
+              "art": "market cap"
+            }
+          ],
+          "answer": 0,
+          "why": "appreciate：一种货币相对于另一种货币的价值上升。"
+        },
+        {
+          "id": "u6r-market cap-s",
+          "type": "scenario",
+          "termId": "market cap",
+          "termIds": [
+            "market cap"
+          ],
+          "story": "整个公司在股市里一共值多少钱。",
+          "stem": "这说的是哪个词？",
+          "options": [
+            {
+              "text": "market cap",
+              "art": "market cap"
+            },
+            {
+              "text": "valuation",
+              "art": "valuation"
+            },
+            {
+              "text": "exchange rate",
+              "art": "exchange rate"
+            },
+            {
+              "text": "depreciate",
+              "art": "depreciate"
+            }
+          ],
+          "answer": 0,
+          "why": "market cap：公司股价乘以总股本，代表市场对公司的整体估值。"
+        },
+        {
+          "id": "u6r-valuation-s",
+          "type": "scenario",
+          "termId": "valuation",
+          "termIds": [
+            "valuation"
+          ],
+          "story": "这东西值多少，可以是算出来的也可以是判断出来的。",
+          "stem": "这说的是哪个词？",
+          "options": [
+            {
+              "text": "valuation",
+              "art": "valuation"
+            },
+            {
+              "text": "market cap",
+              "art": "market cap"
+            },
+            {
+              "text": "exchange rate",
+              "art": "exchange rate"
+            },
+            {
+              "text": "depreciate",
+              "art": "depreciate"
+            }
+          ],
+          "answer": 0,
+          "why": "valuation：对资产或公司内在价值的判断与估算。"
+        },
+        {
+          "id": "u6r-p/e-s",
+          "type": "scenario",
+          "termId": "p/e",
+          "termIds": [
+            "p/e"
+          ],
+          "story": "股价是每股利润的多少倍。",
+          "stem": "这说的是哪个词？",
+          "options": [
+            {
+              "text": "P/E",
+              "art": "p/e"
+            },
+            {
+              "text": "market cap",
+              "art": "market cap"
+            },
+            {
+              "text": "exchange rate",
+              "art": "exchange rate"
+            },
+            {
+              "text": "depreciate",
+              "art": "depreciate"
+            }
+          ],
+          "answer": 0,
+          "why": "P/E：股价除以每股收益，衡量投资者愿意为每块钱利润付多少钱。"
         },
         {
           "id": "u6r-exchange rate-t",
@@ -6926,75 +7093,15 @@
           "why": "exchange rate 确实是「汇率」。"
         },
         {
-          "id": "u6r-depreciate-s",
-          "type": "scenario",
-          "termId": "depreciate",
-          "termIds": [
-            "depreciate"
-          ],
-          "story": "The Taiwan dollar depreciated against the US dollar.",
-          "stem": "这句话里最关键的那个词是？",
-          "options": [
-            {
-              "text": "depreciate",
-              "art": "depreciate"
-            },
-            {
-              "text": "exchange rate",
-              "art": "exchange rate"
-            },
-            {
-              "text": "appreciate",
-              "art": "appreciate"
-            },
-            {
-              "text": "market cap",
-              "art": "market cap"
-            }
-          ],
-          "answer": 0,
-          "why": "depreciate：一种货币相对于另一种货币的价值下降。"
-        },
-        {
           "id": "u6r-depreciate-t",
           "type": "truefalse",
           "termId": "depreciate",
           "termIds": [
             "depreciate"
           ],
-          "stem": "depreciate 就是 汇率。",
+          "stem": "depreciate 就是 升值。",
           "answer": false,
-          "why": "depreciate 是「贬值」，不是「汇率」。"
-        },
-        {
-          "id": "u6r-appreciate-s",
-          "type": "scenario",
-          "termId": "appreciate",
-          "termIds": [
-            "appreciate"
-          ],
-          "story": "China's yuan hit its highest level since 2022 on a weaker dollar.",
-          "stem": "这句话里最关键的那个词是？",
-          "options": [
-            {
-              "text": "appreciate",
-              "art": "appreciate"
-            },
-            {
-              "text": "exchange rate",
-              "art": "exchange rate"
-            },
-            {
-              "text": "depreciate",
-              "art": "depreciate"
-            },
-            {
-              "text": "market cap",
-              "art": "market cap"
-            }
-          ],
-          "answer": 0,
-          "why": "appreciate：一种货币相对于另一种货币的价值上升。"
+          "why": "depreciate 是「贬值」，不是「升值」。"
         },
         {
           "id": "u6r-appreciate-t",
@@ -7008,75 +7115,15 @@
           "why": "appreciate 确实是「升值」。"
         },
         {
-          "id": "u6r-market cap-s",
-          "type": "scenario",
-          "termId": "market cap",
-          "termIds": [
-            "market cap"
-          ],
-          "story": "Its market cap makes it the largest listed mining company.",
-          "stem": "这句话里最关键的那个词是？",
-          "options": [
-            {
-              "text": "market cap",
-              "art": "market cap"
-            },
-            {
-              "text": "exchange rate",
-              "art": "exchange rate"
-            },
-            {
-              "text": "depreciate",
-              "art": "depreciate"
-            },
-            {
-              "text": "appreciate",
-              "art": "appreciate"
-            }
-          ],
-          "answer": 0,
-          "why": "market cap：公司股价乘以总股本，代表市场对公司的整体估值。"
-        },
-        {
           "id": "u6r-market cap-t",
           "type": "truefalse",
           "termId": "market cap",
           "termIds": [
             "market cap"
           ],
-          "stem": "market cap 就是 汇率。",
+          "stem": "market cap 就是 估值。",
           "answer": false,
-          "why": "market cap 是「市值」，不是「汇率」。"
-        },
-        {
-          "id": "u6r-valuation-s",
-          "type": "scenario",
-          "termId": "valuation",
-          "termIds": [
-            "valuation"
-          ],
-          "story": "Analysts flagged stretched valuations in the energy sector.",
-          "stem": "这句话里最关键的那个词是？",
-          "options": [
-            {
-              "text": "valuation",
-              "art": "valuation"
-            },
-            {
-              "text": "exchange rate",
-              "art": "exchange rate"
-            },
-            {
-              "text": "depreciate",
-              "art": "depreciate"
-            },
-            {
-              "text": "appreciate",
-              "art": "appreciate"
-            }
-          ],
-          "answer": 0,
-          "why": "valuation：对资产或公司内在价值的判断与估算。"
+          "why": "market cap 是「市值」，不是「估值」。"
         },
         {
           "id": "u6r-valuation-t",
@@ -7090,45 +7137,15 @@
           "why": "valuation 确实是「估值」。"
         },
         {
-          "id": "u6r-p/e-s",
-          "type": "scenario",
-          "termId": "p/e",
-          "termIds": [
-            "p/e"
-          ],
-          "story": "Its P/E ratio is well above the sector average.",
-          "stem": "这句话里最关键的那个词是？",
-          "options": [
-            {
-              "text": "P/E",
-              "art": "p/e"
-            },
-            {
-              "text": "exchange rate",
-              "art": "exchange rate"
-            },
-            {
-              "text": "depreciate",
-              "art": "depreciate"
-            },
-            {
-              "text": "appreciate",
-              "art": "appreciate"
-            }
-          ],
-          "answer": 0,
-          "why": "P/E：股价除以每股收益，衡量投资者愿意为每块钱利润付多少钱。"
-        },
-        {
           "id": "u6r-p/e-t",
           "type": "truefalse",
           "termId": "p/e",
           "termIds": [
             "p/e"
           ],
-          "stem": "P/E 就是 汇率。",
+          "stem": "P/E 就是 市值。",
           "answer": false,
-          "why": "P/E 是「市盈率」，不是「汇率」。"
+          "why": "P/E 是「市盈率」，不是「市值」。"
         },
         {
           "id": "u6r-match",
@@ -7243,63 +7260,6 @@
           "why": "index 是把一篮子股票算成一个数；blue chip 是其中某一类公司本身。"
         },
         {
-          "id": "u7l1-index-s",
-          "type": "scenario",
-          "termId": "index",
-          "termIds": [
-            "index"
-          ],
-          "story": "Blue chips headed for the longest weekly losing streak.",
-          "stem": "这句话里最关键的那个词是？",
-          "options": [
-            {
-              "text": "index",
-              "art": "index"
-            },
-            {
-              "text": "blue chip",
-              "art": "blue chip"
-            },
-            {
-              "text": "auction",
-              "art": "auction"
-            },
-            {
-              "text": "issuance",
-              "art": "issuance"
-            }
-          ],
-          "answer": 0,
-          "why": "index：由一组资产按规则加权计算出的综合指标。"
-        },
-        {
-          "id": "u7l1-index-t",
-          "type": "truefalse",
-          "termId": "index",
-          "termIds": [
-            "index"
-          ],
-          "stem": "index：指数",
-          "answer": true,
-          "why": "index 确实是「指数」。"
-        },
-        {
-          "id": "u7l1-index-f",
-          "type": "fill",
-          "termId": "index",
-          "termIds": [
-            "index"
-          ],
-          "story": "Blue chips headed for the longest weekly losing streak. (这里的词是 ____)",
-          "bank": [
-            "index",
-            "blue chip",
-            "auction"
-          ],
-          "answer": "index",
-          "why": "index 是把一篮子股票算成一个数；blue chip 是其中某一类公司本身。"
-        },
-        {
           "id": "u7l1-blue chip-m",
           "type": "meaning",
           "termId": "blue chip",
@@ -7329,14 +7289,73 @@
           "why": "blue chip 是一类公司；index 是把很多公司算成一个数。"
         },
         {
+          "id": "u7l1-auction-m",
+          "type": "meaning",
+          "termId": "auction",
+          "termIds": [
+            "auction"
+          ],
+          "stem": "auction 是什么意思？",
+          "options": [
+            {
+              "text": "通过投标竞价方式发行或出售资产的过程。",
+              "art": "auction"
+            },
+            {
+              "text": "发行新证券的行为或其总量。",
+              "art": "issuance"
+            },
+            {
+              "text": "由一组资产按规则加权计算出的综合指标。",
+              "art": "index"
+            },
+            {
+              "text": "市值大、业绩稳定、信誉良好的知名公司股票。",
+              "art": "blue chip"
+            }
+          ],
+          "answer": 0,
+          "why": "auction 是发行时用的竞价方式；issuance 是发行这件事本身。"
+        },
+        {
+          "id": "u7l1-index-s",
+          "type": "scenario",
+          "termId": "index",
+          "termIds": [
+            "index"
+          ],
+          "story": "一篮子股票合起来的那个数。",
+          "stem": "这说的是哪个词？",
+          "options": [
+            {
+              "text": "index",
+              "art": "index"
+            },
+            {
+              "text": "blue chip",
+              "art": "blue chip"
+            },
+            {
+              "text": "auction",
+              "art": "auction"
+            },
+            {
+              "text": "issuance",
+              "art": "issuance"
+            }
+          ],
+          "answer": 0,
+          "why": "index：由一组资产按规则加权计算出的综合指标。"
+        },
+        {
           "id": "u7l1-blue chip-s",
           "type": "scenario",
           "termId": "blue chip",
           "termIds": [
             "blue chip"
           ],
-          "story": "Chinese stocks slid as blue chips set for the longest losing streak.",
-          "stem": "这句话里最关键的那个词是？",
+          "story": "规模大、经营稳的大公司股票。",
+          "stem": "这说的是哪个词？",
           "options": [
             {
               "text": "blue chip",
@@ -7359,6 +7378,47 @@
           "why": "blue chip：市值大、业绩稳定、信誉良好的知名公司股票。"
         },
         {
+          "id": "u7l1-auction-s",
+          "type": "scenario",
+          "termId": "auction",
+          "termIds": [
+            "auction"
+          ],
+          "story": "政府或公司按竞价方式卖债券。",
+          "stem": "这说的是哪个词？",
+          "options": [
+            {
+              "text": "auction",
+              "art": "auction"
+            },
+            {
+              "text": "issuance",
+              "art": "issuance"
+            },
+            {
+              "text": "index",
+              "art": "index"
+            },
+            {
+              "text": "blue chip",
+              "art": "blue chip"
+            }
+          ],
+          "answer": 0,
+          "why": "auction：通过投标竞价方式发行或出售资产的过程。"
+        },
+        {
+          "id": "u7l1-index-t",
+          "type": "truefalse",
+          "termId": "index",
+          "termIds": [
+            "index"
+          ],
+          "stem": "index：指数",
+          "answer": true,
+          "why": "index 确实是「指数」。"
+        },
+        {
           "id": "u7l1-blue chip-t",
           "type": "truefalse",
           "termId": "blue chip",
@@ -7368,6 +7428,33 @@
           "stem": "blue chip 就是 指数。",
           "answer": false,
           "why": "blue chip 是「蓝筹股」，不是「指数」。"
+        },
+        {
+          "id": "u7l1-auction-t",
+          "type": "truefalse",
+          "termId": "auction",
+          "termIds": [
+            "auction"
+          ],
+          "stem": "auction：拍卖（发行）",
+          "answer": true,
+          "why": "auction 确实是「拍卖（发行）」。"
+        },
+        {
+          "id": "u7l1-index-f",
+          "type": "fill",
+          "termId": "index",
+          "termIds": [
+            "index"
+          ],
+          "story": "The ____ fell 1.4%, dragged down by a handful of heavyweight chipmakers.",
+          "bank": [
+            "index",
+            "blue chip",
+            "auction"
+          ],
+          "answer": "index",
+          "why": "index 是把一篮子股票算成一个数；blue chip 是其中某一类公司本身。"
         },
         {
           "id": "u7l1-blue chip-f",
@@ -7386,76 +7473,6 @@
           "why": "blue chip 是一类公司；index 是把很多公司算成一个数。"
         },
         {
-          "id": "u7l1-auction-m",
-          "type": "meaning",
-          "termId": "auction",
-          "termIds": [
-            "auction"
-          ],
-          "stem": "auction 是什么意思？",
-          "options": [
-            {
-              "text": "通过投标竞价方式发行或出售资产的过程。",
-              "art": "auction"
-            },
-            {
-              "text": "由一组资产按规则加权计算出的综合指标。",
-              "art": "index"
-            },
-            {
-              "text": "市值大、业绩稳定、信誉良好的知名公司股票。",
-              "art": "blue chip"
-            },
-            {
-              "text": "发行新证券的行为或其总量。",
-              "art": "issuance"
-            }
-          ],
-          "answer": 0,
-          "why": "auction 是发行时用的竞价方式；issuance 是发行这件事本身。"
-        },
-        {
-          "id": "u7l1-auction-s",
-          "type": "scenario",
-          "termId": "auction",
-          "termIds": [
-            "auction"
-          ],
-          "story": "Vietnam raised $371 million in a government bond auction.",
-          "stem": "这句话里最关键的那个词是？",
-          "options": [
-            {
-              "text": "auction",
-              "art": "auction"
-            },
-            {
-              "text": "index",
-              "art": "index"
-            },
-            {
-              "text": "blue chip",
-              "art": "blue chip"
-            },
-            {
-              "text": "issuance",
-              "art": "issuance"
-            }
-          ],
-          "answer": 0,
-          "why": "auction：通过投标竞价方式发行或出售资产的过程。"
-        },
-        {
-          "id": "u7l1-auction-t",
-          "type": "truefalse",
-          "termId": "auction",
-          "termIds": [
-            "auction"
-          ],
-          "stem": "auction：拍卖（发行）",
-          "answer": true,
-          "why": "auction 确实是「拍卖（发行）」。"
-        },
-        {
           "id": "u7l1-auction-f",
           "type": "fill",
           "termId": "auction",
@@ -7465,6 +7482,7 @@
           "story": "Vietnam raised $371 million in a government bond ____.",
           "bank": [
             "auction",
+            "issuance",
             "index",
             "blue chip"
           ],
@@ -7546,76 +7564,19 @@
               "art": "issuance"
             },
             {
+              "text": "通过投标竞价方式发行或出售资产的过程。",
+              "art": "auction"
+            },
+            {
               "text": "由一组资产按规则加权计算出的综合指标。",
               "art": "index"
             },
             {
               "text": "市值大、业绩稳定、信誉良好的知名公司股票。",
               "art": "blue chip"
-            },
-            {
-              "text": "通过投标竞价方式发行或出售资产的过程。",
-              "art": "auction"
             }
           ],
           "answer": 0,
-          "why": "issuance 是发行本身；auction 是发行时常用的竞价方式。"
-        },
-        {
-          "id": "u7l2-issuance-s",
-          "type": "scenario",
-          "termId": "issuance",
-          "termIds": [
-            "issuance"
-          ],
-          "story": "Bond dealers expect a modest increase in UK debt issuance.",
-          "stem": "这句话里最关键的那个词是？",
-          "options": [
-            {
-              "text": "issuance",
-              "art": "issuance"
-            },
-            {
-              "text": "index",
-              "art": "index"
-            },
-            {
-              "text": "blue chip",
-              "art": "blue chip"
-            },
-            {
-              "text": "auction",
-              "art": "auction"
-            }
-          ],
-          "answer": 0,
-          "why": "issuance：发行新证券的行为或其总量。"
-        },
-        {
-          "id": "u7l2-issuance-t",
-          "type": "truefalse",
-          "termId": "issuance",
-          "termIds": [
-            "issuance"
-          ],
-          "stem": "issuance：发行（量）",
-          "answer": true,
-          "why": "issuance 确实是「发行（量）」。"
-        },
-        {
-          "id": "u7l2-issuance-f",
-          "type": "fill",
-          "termId": "issuance",
-          "termIds": [
-            "issuance"
-          ],
-          "story": "Bond dealers expect a modest increase in UK debt ____.",
-          "bank": [
-            "issuance",
-            "tariff",
-            "volatility"
-          ],
-          "answer": "issuance",
           "why": "issuance 是发行本身；auction 是发行时常用的竞价方式。"
         },
         {
@@ -7632,76 +7593,19 @@
               "art": "tariff"
             },
             {
+              "text": "生产者愿意并能够在特定价格下提供的商品或资产数量。",
+              "art": "supply"
+            },
+            {
               "text": "由一组资产按规则加权计算出的综合指标。",
               "art": "index"
             },
             {
               "text": "市值大、业绩稳定、信誉良好的知名公司股票。",
               "art": "blue chip"
-            },
-            {
-              "text": "通过投标竞价方式发行或出售资产的过程。",
-              "art": "auction"
             }
           ],
           "answer": 0,
-          "why": "tariff 是给进口商品加成本，间接压缩供给；supply 是能拿出来的量本身。"
-        },
-        {
-          "id": "u7l2-tariff-s",
-          "type": "scenario",
-          "termId": "tariff",
-          "termIds": [
-            "tariff"
-          ],
-          "story": "Canadian steelmakers offset some US tariff pain with domestic demand.",
-          "stem": "这句话里最关键的那个词是？",
-          "options": [
-            {
-              "text": "tariff",
-              "art": "tariff"
-            },
-            {
-              "text": "index",
-              "art": "index"
-            },
-            {
-              "text": "blue chip",
-              "art": "blue chip"
-            },
-            {
-              "text": "auction",
-              "art": "auction"
-            }
-          ],
-          "answer": 0,
-          "why": "tariff：对进口商品征收的税。"
-        },
-        {
-          "id": "u7l2-tariff-t",
-          "type": "truefalse",
-          "termId": "tariff",
-          "termIds": [
-            "tariff"
-          ],
-          "stem": "tariff 就是 指数。",
-          "answer": false,
-          "why": "tariff 是「关税」，不是「指数」。"
-        },
-        {
-          "id": "u7l2-tariff-f",
-          "type": "fill",
-          "termId": "tariff",
-          "termIds": [
-            "tariff"
-          ],
-          "story": "Canadian steelmakers offset some US ____ pain with domestic demand.",
-          "bank": [
-            "tariff",
-            "issuance",
-            "volatility"
-          ],
-          "answer": "tariff",
           "why": "tariff 是给进口商品加成本，间接压缩供给；supply 是能拿出来的量本身。"
         },
         {
@@ -7718,34 +7622,38 @@
               "art": "volatility"
             },
             {
+              "text": "大量卖单在短时间内涌出，导致价格快速下跌。",
+              "art": "selloff"
+            },
+            {
               "text": "由一组资产按规则加权计算出的综合指标。",
               "art": "index"
             },
             {
               "text": "市值大、业绩稳定、信誉良好的知名公司股票。",
               "art": "blue chip"
-            },
-            {
-              "text": "通过投标竞价方式发行或出售资产的过程。",
-              "art": "auction"
             }
           ],
           "answer": 0,
           "why": "volatility 是摆动的剧烈程度，可以涨也可以跌；selloff 是单向的下跌。"
         },
         {
-          "id": "u7l2-volatility-s",
+          "id": "u7l2-issuance-s",
           "type": "scenario",
-          "termId": "volatility",
+          "termId": "issuance",
           "termIds": [
-            "volatility"
+            "issuance"
           ],
-          "story": "Greater foreign-exchange volatility is beginning to affect asset quality.",
-          "stem": "这句话里最关键的那个词是？",
+          "story": "新债或新股被发出来的数量。",
+          "stem": "这说的是哪个词？",
           "options": [
             {
-              "text": "volatility",
-              "art": "volatility"
+              "text": "issuance",
+              "art": "issuance"
+            },
+            {
+              "text": "auction",
+              "art": "auction"
             },
             {
               "text": "index",
@@ -7754,14 +7662,92 @@
             {
               "text": "blue chip",
               "art": "blue chip"
+            }
+          ],
+          "answer": 0,
+          "why": "issuance：发行新证券的行为或其总量。"
+        },
+        {
+          "id": "u7l2-tariff-s",
+          "type": "scenario",
+          "termId": "tariff",
+          "termIds": [
+            "tariff"
+          ],
+          "story": "进口商品过关时要交的税。",
+          "stem": "这说的是哪个词？",
+          "options": [
+            {
+              "text": "tariff",
+              "art": "tariff"
             },
             {
-              "text": "auction",
-              "art": "auction"
+              "text": "supply",
+              "art": "supply"
+            },
+            {
+              "text": "index",
+              "art": "index"
+            },
+            {
+              "text": "blue chip",
+              "art": "blue chip"
+            }
+          ],
+          "answer": 0,
+          "why": "tariff：对进口商品征收的税。"
+        },
+        {
+          "id": "u7l2-volatility-s",
+          "type": "scenario",
+          "termId": "volatility",
+          "termIds": [
+            "volatility"
+          ],
+          "story": "价格上下摆动的剧烈程度。",
+          "stem": "这说的是哪个词？",
+          "options": [
+            {
+              "text": "volatility",
+              "art": "volatility"
+            },
+            {
+              "text": "selloff",
+              "art": "selloff"
+            },
+            {
+              "text": "index",
+              "art": "index"
+            },
+            {
+              "text": "blue chip",
+              "art": "blue chip"
             }
           ],
           "answer": 0,
           "why": "volatility：资产价格在一定时期内波动的幅度与频率。"
+        },
+        {
+          "id": "u7l2-issuance-t",
+          "type": "truefalse",
+          "termId": "issuance",
+          "termIds": [
+            "issuance"
+          ],
+          "stem": "issuance：发行（量）",
+          "answer": true,
+          "why": "issuance 确实是「发行（量）」。"
+        },
+        {
+          "id": "u7l2-tariff-t",
+          "type": "truefalse",
+          "termId": "tariff",
+          "termIds": [
+            "tariff"
+          ],
+          "stem": "tariff 就是 供给。",
+          "answer": false,
+          "why": "tariff 是「关税」，不是「供给」。"
         },
         {
           "id": "u7l2-volatility-t",
@@ -7775,6 +7761,40 @@
           "why": "volatility 确实是「波动率」。"
         },
         {
+          "id": "u7l2-issuance-f",
+          "type": "fill",
+          "termId": "issuance",
+          "termIds": [
+            "issuance"
+          ],
+          "story": "Bond dealers expect a modest increase in UK debt ____.",
+          "bank": [
+            "issuance",
+            "auction",
+            "tariff",
+            "volatility"
+          ],
+          "answer": "issuance",
+          "why": "issuance 是发行本身；auction 是发行时常用的竞价方式。"
+        },
+        {
+          "id": "u7l2-tariff-f",
+          "type": "fill",
+          "termId": "tariff",
+          "termIds": [
+            "tariff"
+          ],
+          "story": "Canadian steelmakers offset some US ____ pain with domestic demand.",
+          "bank": [
+            "tariff",
+            "supply",
+            "issuance",
+            "volatility"
+          ],
+          "answer": "tariff",
+          "why": "tariff 是给进口商品加成本，间接压缩供给；supply 是能拿出来的量本身。"
+        },
+        {
           "id": "u7l2-volatility-f",
           "type": "fill",
           "termId": "volatility",
@@ -7784,6 +7804,7 @@
           "story": "Greater foreign-exchange ____ is beginning to affect asset quality.",
           "bank": [
             "volatility",
+            "selloff",
             "issuance",
             "tariff"
           ],
@@ -7902,8 +7923,8 @@
           "termIds": [
             "index"
           ],
-          "story": "Blue chips headed for the longest weekly losing streak.",
-          "stem": "这句话里最关键的那个词是？",
+          "story": "一篮子股票合起来的那个数。",
+          "stem": "这说的是哪个词？",
           "options": [
             {
               "text": "index",
@@ -7926,25 +7947,14 @@
           "why": "index：由一组资产按规则加权计算出的综合指标。"
         },
         {
-          "id": "u7r-index-t",
-          "type": "truefalse",
-          "termId": "index",
-          "termIds": [
-            "index"
-          ],
-          "stem": "index：指数",
-          "answer": true,
-          "why": "index 确实是「指数」。"
-        },
-        {
           "id": "u7r-blue chip-s",
           "type": "scenario",
           "termId": "blue chip",
           "termIds": [
             "blue chip"
           ],
-          "story": "Chinese stocks slid as blue chips set for the longest losing streak.",
-          "stem": "这句话里最关键的那个词是？",
+          "story": "规模大、经营稳的大公司股票。",
+          "stem": "这说的是哪个词？",
           "options": [
             {
               "text": "blue chip",
@@ -7967,26 +7977,49 @@
           "why": "blue chip：市值大、业绩稳定、信誉良好的知名公司股票。"
         },
         {
-          "id": "u7r-blue chip-t",
-          "type": "truefalse",
-          "termId": "blue chip",
-          "termIds": [
-            "blue chip"
-          ],
-          "stem": "blue chip 就是 指数。",
-          "answer": false,
-          "why": "blue chip 是「蓝筹股」，不是「指数」。"
-        },
-        {
           "id": "u7r-auction-s",
           "type": "scenario",
           "termId": "auction",
           "termIds": [
             "auction"
           ],
-          "story": "Vietnam raised $371 million in a government bond auction.",
-          "stem": "这句话里最关键的那个词是？",
+          "story": "政府或公司按竞价方式卖债券。",
+          "stem": "这说的是哪个词？",
           "options": [
+            {
+              "text": "auction",
+              "art": "auction"
+            },
+            {
+              "text": "issuance",
+              "art": "issuance"
+            },
+            {
+              "text": "index",
+              "art": "index"
+            },
+            {
+              "text": "blue chip",
+              "art": "blue chip"
+            }
+          ],
+          "answer": 0,
+          "why": "auction：通过投标竞价方式发行或出售资产的过程。"
+        },
+        {
+          "id": "u7r-issuance-s",
+          "type": "scenario",
+          "termId": "issuance",
+          "termIds": [
+            "issuance"
+          ],
+          "story": "新债或新股被发出来的数量。",
+          "stem": "这说的是哪个词？",
+          "options": [
+            {
+              "text": "issuance",
+              "art": "issuance"
+            },
             {
               "text": "auction",
               "art": "auction"
@@ -7998,14 +8031,92 @@
             {
               "text": "blue chip",
               "art": "blue chip"
-            },
-            {
-              "text": "issuance",
-              "art": "issuance"
             }
           ],
           "answer": 0,
-          "why": "auction：通过投标竞价方式发行或出售资产的过程。"
+          "why": "issuance：发行新证券的行为或其总量。"
+        },
+        {
+          "id": "u7r-tariff-s",
+          "type": "scenario",
+          "termId": "tariff",
+          "termIds": [
+            "tariff"
+          ],
+          "story": "进口商品过关时要交的税。",
+          "stem": "这说的是哪个词？",
+          "options": [
+            {
+              "text": "tariff",
+              "art": "tariff"
+            },
+            {
+              "text": "supply",
+              "art": "supply"
+            },
+            {
+              "text": "index",
+              "art": "index"
+            },
+            {
+              "text": "blue chip",
+              "art": "blue chip"
+            }
+          ],
+          "answer": 0,
+          "why": "tariff：对进口商品征收的税。"
+        },
+        {
+          "id": "u7r-volatility-s",
+          "type": "scenario",
+          "termId": "volatility",
+          "termIds": [
+            "volatility"
+          ],
+          "story": "价格上下摆动的剧烈程度。",
+          "stem": "这说的是哪个词？",
+          "options": [
+            {
+              "text": "volatility",
+              "art": "volatility"
+            },
+            {
+              "text": "selloff",
+              "art": "selloff"
+            },
+            {
+              "text": "index",
+              "art": "index"
+            },
+            {
+              "text": "blue chip",
+              "art": "blue chip"
+            }
+          ],
+          "answer": 0,
+          "why": "volatility：资产价格在一定时期内波动的幅度与频率。"
+        },
+        {
+          "id": "u7r-index-t",
+          "type": "truefalse",
+          "termId": "index",
+          "termIds": [
+            "index"
+          ],
+          "stem": "index：指数",
+          "answer": true,
+          "why": "index 确实是「指数」。"
+        },
+        {
+          "id": "u7r-blue chip-t",
+          "type": "truefalse",
+          "termId": "blue chip",
+          "termIds": [
+            "blue chip"
+          ],
+          "stem": "blue chip 就是 指数。",
+          "answer": false,
+          "why": "blue chip 是「蓝筹股」，不是「指数」。"
         },
         {
           "id": "u7r-auction-t",
@@ -8019,75 +8130,15 @@
           "why": "auction 确实是「拍卖（发行）」。"
         },
         {
-          "id": "u7r-issuance-s",
-          "type": "scenario",
-          "termId": "issuance",
-          "termIds": [
-            "issuance"
-          ],
-          "story": "Bond dealers expect a modest increase in UK debt issuance.",
-          "stem": "这句话里最关键的那个词是？",
-          "options": [
-            {
-              "text": "issuance",
-              "art": "issuance"
-            },
-            {
-              "text": "index",
-              "art": "index"
-            },
-            {
-              "text": "blue chip",
-              "art": "blue chip"
-            },
-            {
-              "text": "auction",
-              "art": "auction"
-            }
-          ],
-          "answer": 0,
-          "why": "issuance：发行新证券的行为或其总量。"
-        },
-        {
           "id": "u7r-issuance-t",
           "type": "truefalse",
           "termId": "issuance",
           "termIds": [
             "issuance"
           ],
-          "stem": "issuance 就是 指数。",
+          "stem": "issuance 就是 拍卖（发行）。",
           "answer": false,
-          "why": "issuance 是「发行（量）」，不是「指数」。"
-        },
-        {
-          "id": "u7r-tariff-s",
-          "type": "scenario",
-          "termId": "tariff",
-          "termIds": [
-            "tariff"
-          ],
-          "story": "Canadian steelmakers offset some US tariff pain with domestic demand.",
-          "stem": "这句话里最关键的那个词是？",
-          "options": [
-            {
-              "text": "tariff",
-              "art": "tariff"
-            },
-            {
-              "text": "index",
-              "art": "index"
-            },
-            {
-              "text": "blue chip",
-              "art": "blue chip"
-            },
-            {
-              "text": "auction",
-              "art": "auction"
-            }
-          ],
-          "answer": 0,
-          "why": "tariff：对进口商品征收的税。"
+          "why": "issuance 是「发行（量）」，不是「拍卖（发行）」。"
         },
         {
           "id": "u7r-tariff-t",
@@ -8101,45 +8152,15 @@
           "why": "tariff 确实是「关税」。"
         },
         {
-          "id": "u7r-volatility-s",
-          "type": "scenario",
-          "termId": "volatility",
-          "termIds": [
-            "volatility"
-          ],
-          "story": "Greater foreign-exchange volatility is beginning to affect asset quality.",
-          "stem": "这句话里最关键的那个词是？",
-          "options": [
-            {
-              "text": "volatility",
-              "art": "volatility"
-            },
-            {
-              "text": "index",
-              "art": "index"
-            },
-            {
-              "text": "blue chip",
-              "art": "blue chip"
-            },
-            {
-              "text": "auction",
-              "art": "auction"
-            }
-          ],
-          "answer": 0,
-          "why": "volatility：资产价格在一定时期内波动的幅度与频率。"
-        },
-        {
           "id": "u7r-volatility-t",
           "type": "truefalse",
           "termId": "volatility",
           "termIds": [
             "volatility"
           ],
-          "stem": "volatility 就是 指数。",
+          "stem": "volatility 就是 抛售。",
           "answer": false,
-          "why": "volatility 是「波动率」，不是「指数」。"
+          "why": "volatility 是「波动率」，不是「抛售」。"
         },
         {
           "id": "u7r-match",

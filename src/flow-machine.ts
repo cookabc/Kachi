@@ -4,7 +4,7 @@ import {
   currentExercise,
   isLessonUnlocked,
   paidExerciseIds,
-  requeuePrompt,
+  requeueAtEnd,
   startPracticeSession,
   startSession,
 } from "./engine";
@@ -19,6 +19,7 @@ import {
   sessionSummary,
   type TeachMode,
   teachPlan,
+  withTwins,
 } from "./flow";
 
 /**
@@ -32,7 +33,7 @@ import {
  * on the answer event; saving the resulting LearnerState stays in the caller.
  */
 
-export type Phase = "teach" | "question" | "feedback" | "complete" | "fail";
+export type Phase = "teach" | "question" | "feedback" | "complete";
 
 /** Everything the lesson screens need to render, and nothing they don't. */
 export interface LessonFlow {
@@ -40,8 +41,11 @@ export interface LessonFlow {
   session: SessionState | null;
   presented: PresentedExercise | null;
   selection: string | boolean | null;
-  hearts: number;
   lastCorrect: boolean;
+  /** Correct answers in a row this session — the in-lesson combo. */
+  combo: number;
+  /** Longest combo this session, for the completion screen. */
+  bestCombo: number;
   teachMode: TeachMode;
   teachTerms: string[];
   teachIndex: number;
@@ -52,16 +56,15 @@ export interface LessonFlow {
   hintShown: boolean;
 }
 
-export const MAX_HEARTS = 5;
-
 export function idleFlow(): LessonFlow {
   return {
     phase: "teach",
     session: null,
     presented: null,
     selection: null,
-    hearts: MAX_HEARTS,
     lastCorrect: false,
+    combo: 0,
+    bestCombo: 0,
     teachMode: "first",
     teachTerms: [],
     teachIndex: 0,
@@ -170,7 +173,10 @@ export function reduceFlow(state: FlowState, event: FlowEvent, ctx: FlowContext)
         teachIndex: 0,
       };
       if (plan.terms.length) {
-        return keep({ ...base, phase: "teach" }, plan.mode === "recap" ? plan.terms : [plan.terms[0]]);
+        return keep(
+          { ...base, phase: "teach" },
+          withTwins(course, plan.mode === "recap" ? plan.terms : [plan.terms[0]]),
+        );
       }
       // Nothing to teach (a review whose unit has no terms): straight to the
       // first question, exactly as the old callback chain did.
@@ -263,18 +269,15 @@ export function reduceFlow(state: FlowState, event: FlowEvent, ctx: FlowContext)
         );
       }
       const nextIndex = flow.teachIndex + 1;
-      return keep({ ...flow, teachIndex: nextIndex }, [flow.teachTerms[nextIndex]]);
+      return keep({ ...flow, teachIndex: nextIndex }, withTwins(course, [flow.teachTerms[nextIndex]]));
     }
 
     case "continue": {
       if (!flow.session || !flow.presented || flow.phase !== "feedback") return keep(flow);
-      if (!flow.lastCorrect && flow.hearts <= 0) return keep({ ...flow, phase: "fail" });
       let working = flow.session;
-      // A failed match re-queues itself so the player can still finish the
-      // pairs they know; the failed attempt stays on record.
-      if (flow.presented.type === "match" && !flow.lastCorrect) {
-        working = requeuePrompt(flow.session, flow.presented.id);
-      }
+      // There are no hearts and no failing: a missed prompt comes back once at
+      // the end of the queue, after the right answer has had time to settle.
+      if (!flow.lastCorrect) working = requeueAtEnd(flow.session, flow.presented.id);
       const next = advance(flow, working, ctx);
       return keep(next.flow, next.seen);
     }
@@ -297,21 +300,21 @@ function applyAndFeedback(
 ): FlowOutcome {
   const { flow, learner } = state;
   if (!flow.session) return { state, seen: [] };
-  const heartsAfter = flow.hearts - 1;
   const result = applyAnswer(ctx.course, learner, flow.session, answer, ctx.environment, {
-    heartsAfter,
     confusionPair,
     latencyMs,
     hintUsed: flow.hintShown,
   });
-  const wrong = !result.attempt.correct;
+  const correct = result.attempt.correct;
+  const combo = correct ? flow.combo + 1 : 0;
   return {
     state: {
       flow: {
         ...flow,
         session: result.session,
-        hearts: wrong ? Math.max(heartsAfter, 0) : flow.hearts,
-        lastCorrect: result.attempt.correct,
+        combo,
+        bestCombo: Math.max(flow.bestCombo, combo),
+        lastCorrect: correct,
         hintShown: false,
         phase: "feedback",
       },

@@ -1,4 +1,4 @@
-export type ShortcutPhase = "teach" | "question" | "feedback" | "complete" | "fail";
+export type ShortcutPhase = "teach" | "question" | "feedback" | "complete";
 
 const FOCUSED_CONTROL = "button, a, input, textarea, select, [role='dialog']";
 
@@ -18,7 +18,7 @@ export function handleEnterShortcut(
     options.onLessonEnter();
     return;
   }
-  if (options.phase !== "complete" && options.phase !== "fail") return;
+  if (options.phase !== "complete") return;
   // A focused button, link, or the share dialog already has a job for Enter.
   // Clicking the first .hero .btn here starts the next lesson under the dialog
   // and under whichever control the learner actually focused.
@@ -26,5 +26,5 @@ export function handleEnterShortcut(
   const target = event.target;
   if (target instanceof Element && target.closest(FOCUSED_CONTROL)) return;
   event.preventDefault();
-  document.querySelector<HTMLElement>(".hero .btn")?.click();
+  document.querySelector<HTMLElement>(".done-screen .hero-actions .btn")?.click();
 }

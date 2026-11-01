@@ -1,8 +1,8 @@
 import { describe, expect, it } from "vitest";
 import t1 from "../content/packs/t1-finance-news/zh-CN/course.json";
-import { course as legacyCourse } from "./course";
 import type { Course } from "./domain";
 import { zhTermFor } from "./localization";
+import { legacyCourse } from "./test-fixtures/legacy-course";
 
 // The glossary rendered every generated-pack term twice — `indexindex`,
 // `auctionauction` — because the Chinese gloss fell back to the concept id.

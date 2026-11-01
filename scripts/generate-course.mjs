@@ -20,6 +20,7 @@
 import { existsSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
+import { FILL_OVERRIDES } from "../content/packs/fill-overrides.mjs";
 import { blankTerm, fillLeaksAnswer } from "../src/fill.ts";
 import { corpusHasTerm } from "./validate-content.mjs";
 
@@ -78,9 +79,18 @@ function lessonsFor(unit, locale) {
 
 /** 干扰项：同单元其他概念的释义，取 3 个；不够时用相邻单元补。 */
 function distractors(concept) {
+  // The confusable twin goes first: a meaning, scenario or true/false item
+  // that never offers the twin tests vocabulary, not the distinction the pack
+  // exists to teach. It also makes the "false" statement the twin's meaning.
+  const twin = CONCEPTS.find((c) => c.id === concept.mixUp && c.id !== concept.id);
   const sameUnit = CONCEPTS.filter((c) => c.unit === concept.unit && c.id !== concept.id);
   const neighbours = CONCEPTS.filter((c) => Math.abs(c.unit - concept.unit) === 1 && c.id !== concept.id);
-  const pool = [...sameUnit, ...neighbours, ...CONCEPTS.filter((c) => c.id !== concept.id)];
+  const pool = [
+    ...(twin ? [twin] : []),
+    ...sameUnit,
+    ...neighbours,
+    ...CONCEPTS.filter((c) => c.id !== concept.id),
+  ];
   const seen = new Set([concept.id]);
   const picked = [];
   for (const c of pool) {
@@ -130,8 +140,11 @@ function promptsFor(concept, index, lessonConcepts, lessonId, locale) {
     type: "scenario",
     termId: concept.id,
     termIds: [concept.id],
-    story: text(concept, "example", locale),
-    stem: locale === "en-US" ? "Which term does this describe?" : "这句话里最关键的那个词是？",
+    // The plain-language caption, not the example: the example names the term
+    // ("Oil prices rallied 4%…"), so asking which term it describes printed
+    // the answer in the question. The example sentence is the fill item's job.
+    story: text(concept, "caption", locale),
+    stem: locale === "en-US" ? "Which word is this?" : "这说的是哪个词？",
     options: scenarioOptions,
     answer: 0,
     why:
@@ -159,25 +172,31 @@ function promptsFor(concept, index, lessonConcepts, lessonId, locale) {
     why:
       locale === "en-US"
         ? isTrue
-          ? `Correct — ${text(concept, "definition", locale)}`
-          : `${concept.term} means ${text(concept, "definition", locale)}, not ${text(others[0], "definition", locale)}.`
+          ? `${concept.term}: ${text(concept, "definition", locale)}`
+          : others[0].id === concept.mixUp
+            ? text(concept, "mixUpWhy", locale)
+            : `${concept.term}: ${text(concept, "definition", locale)}`
         : isTrue
           ? `${concept.term} 确实是「${concept.zh}」。`
           : `${concept.term} 是「${concept.zh}」，不是「${others[0].zh}」。`,
   });
 
   // 4) fill：从本课词库里选
+  // The twin is always in the word bank, for the same reason it leads the
+  // distractors: the fill item should be decided by the distinction.
+  const twin = CONCEPTS.find((c) => c.id === concept.mixUp && c.id !== concept.id);
   const bank = [
     concept.term,
+    ...(twin ? [twin.term] : []),
     ...lessonConcepts
-      .filter((c) => c.id !== concept.id)
-      .slice(0, 3)
+      .filter((c) => c.id !== concept.id && c.id !== twin?.id)
+      .slice(0, twin ? 2 : 3)
       .map((c) => c.term),
   ];
   // blankTerm matches inflected forms ("rallied" for "rally"), so the whole
   // word leaves the sentence. When the term is absent entirely the stem keeps
   // the sentence and points at the blank — the answer is not printed there.
-  const example = text(concept, "example", locale);
+  const example = FILL_OVERRIDES[concept.id] ?? text(concept, "example", locale);
   const { story } = blankTerm(example, concept.term);
   const fillStory =
     story === example ? `${example} (${locale === "en-US" ? "the word here is" : "这里的词是"} ____)` : story;
@@ -263,14 +282,16 @@ function matchPrompt(lessonConcepts, lessonId, locale) {
  * learner what to do without hinting at the answer.
  */
 function headlinePrompt(drill, lessonId, locale) {
-  const [first, second] = locale === "en-US" ? [drill.a, drill.b] : [drill.a, drill.b];
+  const [first, second] = [drill.a, drill.b];
+  // Options show the headword as written ("IPO", "P/E"); ids are lowercase.
+  const termOf = (id) => CONCEPTS.find((c) => c.id === id)?.term ?? id;
   return {
     id: `${lessonId}-${drill.id}`,
     type: "headline",
     termIds: [first, second],
     story: drill.text,
     stem: locale === "en-US" ? "Which term fits the blank?" : "这句话里的空该填哪个词？",
-    options: [first, second].map((id) => ({ text: id, art: id })),
+    options: [first, second].map((id) => ({ text: termOf(id), art: id })),
     answer: drill.answer === first ? 0 : 1,
     why: locale === "en-US" ? (drill.whyEn ?? drill.why) : drill.why,
   };
@@ -313,14 +334,22 @@ function buildCourse(locale) {
   const lessons = [];
   for (const unit of UNITS) {
     for (const lesson of lessonsFor(unit, locale)) {
-      const prompts = [];
-      lesson.concepts.forEach((concept, i) => {
+      const perConcept = lesson.concepts.map((concept, i) => {
         const all = promptsFor(concept, i, lesson.concepts, lesson.id, locale);
         // A review lesson re-covers the whole unit, so it takes only the two
         // prompt types that test recall rather than re-teaching the format.
         const keep = lesson.review ? new Set(["-s", "-t"]) : null;
-        prompts.push(...(keep ? all.filter((prompt) => keep.has(`-${prompt.id.split("-").pop()}`)) : all));
+        return keep ? all.filter((prompt) => keep.has(`-${prompt.id.split("-").pop()}`)) : all;
       });
+      // Interleave: round-robin across concepts, one prompt type at a time.
+      // Asking rally four times in a row and then selloff four times let the
+      // learner answer from short-term memory; alternating the twins makes
+      // every question a real choice between them.
+      const prompts = [];
+      const depth = Math.max(0, ...perConcept.map((list) => list.length));
+      for (let round = 0; round < depth; round += 1) {
+        for (const list of perConcept) if (list[round]) prompts.push(list[round]);
+      }
       // The reading task goes FIRST in a review lesson.
       //
       // It used to go last, and that made it unreachable: a review runs ~16-18

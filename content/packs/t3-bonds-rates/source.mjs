@@ -8,7 +8,7 @@
 
 export const PACK = {
   packId: "t3-bonds-rates",
-  contentVersion: "2026.10.27-t3",
+  contentVersion: "2026.11.01-t3.2",
   title: "读债券与利率",
 };
 

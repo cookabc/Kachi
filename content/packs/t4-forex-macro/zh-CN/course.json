@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
   "packId": "t4-forex-macro",
-  "contentVersion": "2026.10.28-t4",
+  "contentVersion": "2026.11.01-t4.2",
   "locale": "zh-CN",
-  "generatedAt": "2026.10.28-t4",
+  "generatedAt": "2026.11.01-t4.2",
   "units": [
     {
       "id": 1,
@@ -770,63 +770,6 @@
           "why": "currency 是那种钱本身；exchange rate 是两种钱之间的兑换比例。"
         },
         {
-          "id": "u1l1-currency-s",
-          "type": "scenario",
-          "termId": "currency",
-          "termIds": [
-            "currency"
-          ],
-          "story": "The rupiah fell to a three-month low as Asian currencies struggled.",
-          "stem": "这句话里最关键的那个词是？",
-          "options": [
-            {
-              "text": "currency",
-              "art": "currency"
-            },
-            {
-              "text": "exchange rate",
-              "art": "exchange rate"
-            },
-            {
-              "text": "dollar",
-              "art": "dollar"
-            },
-            {
-              "text": "euro",
-              "art": "euro"
-            }
-          ],
-          "answer": 0,
-          "why": "currency：一国政府发行并强制流通的支付手段。"
-        },
-        {
-          "id": "u1l1-currency-t",
-          "type": "truefalse",
-          "termId": "currency",
-          "termIds": [
-            "currency"
-          ],
-          "stem": "currency：货币",
-          "answer": true,
-          "why": "currency 确实是「货币」。"
-        },
-        {
-          "id": "u1l1-currency-f",
-          "type": "fill",
-          "termId": "currency",
-          "termIds": [
-            "currency"
-          ],
-          "story": "The rupiah fell to a three-month low as Asian ____ struggled.",
-          "bank": [
-            "currency",
-            "exchange rate",
-            "dollar"
-          ],
-          "answer": "currency",
-          "why": "currency 是那种钱本身；exchange rate 是两种钱之间的兑换比例。"
-        },
-        {
           "id": "u1l1-exchange rate-m",
           "type": "meaning",
           "termId": "exchange rate",
@@ -856,14 +799,73 @@
           "why": "exchange rate 是比例；currency 是被兑换的那种钱。"
         },
         {
+          "id": "u1l1-dollar-m",
+          "type": "meaning",
+          "termId": "dollar",
+          "termIds": [
+            "dollar"
+          ],
+          "stem": "dollar 是什么意思？",
+          "options": [
+            {
+              "text": "美国货币，也是大多数大宗商品与跨境债务的计价货币。",
+              "art": "dollar"
+            },
+            {
+              "text": "欧元区成员国共同使用的货币，由欧洲央行统一制定政策。",
+              "art": "euro"
+            },
+            {
+              "text": "一国政府发行并强制流通的支付手段。",
+              "art": "currency"
+            },
+            {
+              "text": "两种货币之间的兑换比率。",
+              "art": "exchange rate"
+            }
+          ],
+          "answer": 0,
+          "why": "dollar 是美元、全球融资货币；euro 是欧元区共同货币。新闻里「美元走强」通常指美元对一篮子货币。"
+        },
+        {
+          "id": "u1l1-currency-s",
+          "type": "scenario",
+          "termId": "currency",
+          "termIds": [
+            "currency"
+          ],
+          "story": "一个国家或地区流通的钱。",
+          "stem": "这说的是哪个词？",
+          "options": [
+            {
+              "text": "currency",
+              "art": "currency"
+            },
+            {
+              "text": "exchange rate",
+              "art": "exchange rate"
+            },
+            {
+              "text": "dollar",
+              "art": "dollar"
+            },
+            {
+              "text": "euro",
+              "art": "euro"
+            }
+          ],
+          "answer": 0,
+          "why": "currency：一国政府发行并强制流通的支付手段。"
+        },
+        {
           "id": "u1l1-exchange rate-s",
           "type": "scenario",
           "termId": "exchange rate",
           "termIds": [
             "exchange rate"
           ],
-          "story": "The euro was down 0.21% at $1.1191 against the dollar.",
-          "stem": "这句话里最关键的那个词是？",
+          "story": "一种钱换另一种钱的比例。",
+          "stem": "这说的是哪个词？",
           "options": [
             {
               "text": "exchange rate",
@@ -886,6 +888,47 @@
           "why": "exchange rate：两种货币之间的兑换比率。"
         },
         {
+          "id": "u1l1-dollar-s",
+          "type": "scenario",
+          "termId": "dollar",
+          "termIds": [
+            "dollar"
+          ],
+          "story": "全球贸易和融资里最常用的那种钱。",
+          "stem": "这说的是哪个词？",
+          "options": [
+            {
+              "text": "dollar",
+              "art": "dollar"
+            },
+            {
+              "text": "euro",
+              "art": "euro"
+            },
+            {
+              "text": "currency",
+              "art": "currency"
+            },
+            {
+              "text": "exchange rate",
+              "art": "exchange rate"
+            }
+          ],
+          "answer": 0,
+          "why": "dollar：美国货币，也是大多数大宗商品与跨境债务的计价货币。"
+        },
+        {
+          "id": "u1l1-currency-t",
+          "type": "truefalse",
+          "termId": "currency",
+          "termIds": [
+            "currency"
+          ],
+          "stem": "currency：货币",
+          "answer": true,
+          "why": "currency 确实是「货币」。"
+        },
+        {
           "id": "u1l1-exchange rate-t",
           "type": "truefalse",
           "termId": "exchange rate",
@@ -895,81 +938,6 @@
           "stem": "exchange rate 就是 货币。",
           "answer": false,
           "why": "exchange rate 是「汇率」，不是「货币」。"
-        },
-        {
-          "id": "u1l1-exchange rate-f",
-          "type": "fill",
-          "termId": "exchange rate",
-          "termIds": [
-            "exchange rate"
-          ],
-          "story": "The euro was down 0.21% at $1.1191 against the dollar. (这里的词是 ____)",
-          "bank": [
-            "exchange rate",
-            "currency",
-            "dollar"
-          ],
-          "answer": "exchange rate",
-          "why": "exchange rate 是比例；currency 是被兑换的那种钱。"
-        },
-        {
-          "id": "u1l1-dollar-m",
-          "type": "meaning",
-          "termId": "dollar",
-          "termIds": [
-            "dollar"
-          ],
-          "stem": "dollar 是什么意思？",
-          "options": [
-            {
-              "text": "美国货币，也是大多数大宗商品与跨境债务的计价货币。",
-              "art": "dollar"
-            },
-            {
-              "text": "一国政府发行并强制流通的支付手段。",
-              "art": "currency"
-            },
-            {
-              "text": "两种货币之间的兑换比率。",
-              "art": "exchange rate"
-            },
-            {
-              "text": "欧元区成员国共同使用的货币，由欧洲央行统一制定政策。",
-              "art": "euro"
-            }
-          ],
-          "answer": 0,
-          "why": "dollar 是美元、全球融资货币；euro 是欧元区共同货币。新闻里「美元走强」通常指美元对一篮子货币。"
-        },
-        {
-          "id": "u1l1-dollar-s",
-          "type": "scenario",
-          "termId": "dollar",
-          "termIds": [
-            "dollar"
-          ],
-          "story": "The dollar index rose 0.25% to 101.82.",
-          "stem": "这句话里最关键的那个词是？",
-          "options": [
-            {
-              "text": "dollar",
-              "art": "dollar"
-            },
-            {
-              "text": "currency",
-              "art": "currency"
-            },
-            {
-              "text": "exchange rate",
-              "art": "exchange rate"
-            },
-            {
-              "text": "euro",
-              "art": "euro"
-            }
-          ],
-          "answer": 0,
-          "why": "dollar：美国货币，也是大多数大宗商品与跨境债务的计价货币。"
         },
         {
           "id": "u1l1-dollar-t",
@@ -983,6 +951,38 @@
           "why": "dollar 确实是「美元」。"
         },
         {
+          "id": "u1l1-currency-f",
+          "type": "fill",
+          "termId": "currency",
+          "termIds": [
+            "currency"
+          ],
+          "story": "The rupiah fell to a three-month low as Asian ____ struggled.",
+          "bank": [
+            "currency",
+            "exchange rate",
+            "dollar"
+          ],
+          "answer": "currency",
+          "why": "currency 是那种钱本身；exchange rate 是两种钱之间的兑换比例。"
+        },
+        {
+          "id": "u1l1-exchange rate-f",
+          "type": "fill",
+          "termId": "exchange rate",
+          "termIds": [
+            "exchange rate"
+          ],
+          "story": "The ____ slid past 160 yen per dollar, prompting a warning from Tokyo.",
+          "bank": [
+            "exchange rate",
+            "currency",
+            "dollar"
+          ],
+          "answer": "exchange rate",
+          "why": "exchange rate 是比例；currency 是被兑换的那种钱。"
+        },
+        {
           "id": "u1l1-dollar-f",
           "type": "fill",
           "termId": "dollar",
@@ -992,6 +992,7 @@
           "story": "The ____ index rose 0.25% to 101.82.",
           "bank": [
             "dollar",
+            "euro",
             "currency",
             "exchange rate"
           ],
@@ -1073,76 +1074,19 @@
               "art": "euro"
             },
             {
+              "text": "美国货币，也是大多数大宗商品与跨境债务的计价货币。",
+              "art": "dollar"
+            },
+            {
               "text": "一国政府发行并强制流通的支付手段。",
               "art": "currency"
             },
             {
               "text": "两种货币之间的兑换比率。",
               "art": "exchange rate"
-            },
-            {
-              "text": "美国货币，也是大多数大宗商品与跨境债务的计价货币。",
-              "art": "dollar"
             }
           ],
           "answer": 0,
-          "why": "euro 是欧元区的；dollar 是美国的。两者是外汇市场最大的一对。"
-        },
-        {
-          "id": "u1l2-euro-s",
-          "type": "scenario",
-          "termId": "euro",
-          "termIds": [
-            "euro"
-          ],
-          "story": "The euro declined and was headed for a weekly loss against the dollar.",
-          "stem": "这句话里最关键的那个词是？",
-          "options": [
-            {
-              "text": "euro",
-              "art": "euro"
-            },
-            {
-              "text": "currency",
-              "art": "currency"
-            },
-            {
-              "text": "exchange rate",
-              "art": "exchange rate"
-            },
-            {
-              "text": "dollar",
-              "art": "dollar"
-            }
-          ],
-          "answer": 0,
-          "why": "euro：欧元区成员国共同使用的货币，由欧洲央行统一制定政策。"
-        },
-        {
-          "id": "u1l2-euro-t",
-          "type": "truefalse",
-          "termId": "euro",
-          "termIds": [
-            "euro"
-          ],
-          "stem": "euro：欧元",
-          "answer": true,
-          "why": "euro 确实是「欧元」。"
-        },
-        {
-          "id": "u1l2-euro-f",
-          "type": "fill",
-          "termId": "euro",
-          "termIds": [
-            "euro"
-          ],
-          "story": "The ____ declined and was headed for a weekly loss against the dollar.",
-          "bank": [
-            "euro",
-            "yen",
-            "yuan"
-          ],
-          "answer": "euro",
           "why": "euro 是欧元区的；dollar 是美国的。两者是外汇市场最大的一对。"
         },
         {
@@ -1159,76 +1103,19 @@
               "art": "yen"
             },
             {
+              "text": "中国货币人民币的单位，国际代码 CNY。",
+              "art": "yuan"
+            },
+            {
               "text": "一国政府发行并强制流通的支付手段。",
               "art": "currency"
             },
             {
               "text": "两种货币之间的兑换比率。",
               "art": "exchange rate"
-            },
-            {
-              "text": "美国货币，也是大多数大宗商品与跨境债务的计价货币。",
-              "art": "dollar"
             }
           ],
           "answer": 0,
-          "why": "yen 是日本的（¥ 同符号）；yuan 是中国的人民币。两者常被搞混，符号甚至一样。"
-        },
-        {
-          "id": "u1l2-yen-s",
-          "type": "scenario",
-          "termId": "yen",
-          "termIds": [
-            "yen"
-          ],
-          "story": "The yen was set for a weekly gain against the dollar.",
-          "stem": "这句话里最关键的那个词是？",
-          "options": [
-            {
-              "text": "yen",
-              "art": "yen"
-            },
-            {
-              "text": "currency",
-              "art": "currency"
-            },
-            {
-              "text": "exchange rate",
-              "art": "exchange rate"
-            },
-            {
-              "text": "dollar",
-              "art": "dollar"
-            }
-          ],
-          "answer": 0,
-          "why": "yen：日本货币，因长期低利率而常被用作借入货币。"
-        },
-        {
-          "id": "u1l2-yen-t",
-          "type": "truefalse",
-          "termId": "yen",
-          "termIds": [
-            "yen"
-          ],
-          "stem": "yen 就是 货币。",
-          "answer": false,
-          "why": "yen 是「日元」，不是「货币」。"
-        },
-        {
-          "id": "u1l2-yen-f",
-          "type": "fill",
-          "termId": "yen",
-          "termIds": [
-            "yen"
-          ],
-          "story": "The ____ was set for a weekly gain against the dollar.",
-          "bank": [
-            "yen",
-            "euro",
-            "yuan"
-          ],
-          "answer": "yen",
           "why": "yen 是日本的（¥ 同符号）；yuan 是中国的人民币。两者常被搞混，符号甚至一样。"
         },
         {
@@ -1245,31 +1132,65 @@
               "art": "yuan"
             },
             {
+              "text": "日本货币，因长期低利率而常被用作借入货币。",
+              "art": "yen"
+            },
+            {
               "text": "一国政府发行并强制流通的支付手段。",
               "art": "currency"
             },
             {
               "text": "两种货币之间的兑换比率。",
               "art": "exchange rate"
-            },
-            {
-              "text": "美国货币，也是大多数大宗商品与跨境债务的计价货币。",
-              "art": "dollar"
             }
           ],
           "answer": 0,
           "why": "yuan 是中国的；yen 是日本的。两者符号都是 ¥，只能靠上下文和代码（CNY vs JPY）分辨。"
         },
         {
-          "id": "u1l2-yuan-s",
+          "id": "u1l2-euro-s",
           "type": "scenario",
-          "termId": "yuan",
+          "termId": "euro",
           "termIds": [
-            "yuan"
+            "euro"
           ],
-          "story": "The yuan hit its highest level since 2022 on a weaker dollar.",
-          "stem": "这句话里最关键的那个词是？",
+          "story": "欧元区多个国家共用的货币。",
+          "stem": "这说的是哪个词？",
           "options": [
+            {
+              "text": "euro",
+              "art": "euro"
+            },
+            {
+              "text": "dollar",
+              "art": "dollar"
+            },
+            {
+              "text": "currency",
+              "art": "currency"
+            },
+            {
+              "text": "exchange rate",
+              "art": "exchange rate"
+            }
+          ],
+          "answer": 0,
+          "why": "euro：欧元区成员国共同使用的货币，由欧洲央行统一制定政策。"
+        },
+        {
+          "id": "u1l2-yen-s",
+          "type": "scenario",
+          "termId": "yen",
+          "termIds": [
+            "yen"
+          ],
+          "story": "日本货币，长期是套息交易的融资货币。",
+          "stem": "这说的是哪个词？",
+          "options": [
+            {
+              "text": "yen",
+              "art": "yen"
+            },
             {
               "text": "yuan",
               "art": "yuan"
@@ -1281,14 +1202,62 @@
             {
               "text": "exchange rate",
               "art": "exchange rate"
+            }
+          ],
+          "answer": 0,
+          "why": "yen：日本货币，因长期低利率而常被用作借入货币。"
+        },
+        {
+          "id": "u1l2-yuan-s",
+          "type": "scenario",
+          "termId": "yuan",
+          "termIds": [
+            "yuan"
+          ],
+          "story": "中国货币，符号和日元一样但完全不同的东西。",
+          "stem": "这说的是哪个词？",
+          "options": [
+            {
+              "text": "yuan",
+              "art": "yuan"
             },
             {
-              "text": "dollar",
-              "art": "dollar"
+              "text": "yen",
+              "art": "yen"
+            },
+            {
+              "text": "currency",
+              "art": "currency"
+            },
+            {
+              "text": "exchange rate",
+              "art": "exchange rate"
             }
           ],
           "answer": 0,
           "why": "yuan：中国货币人民币的单位，国际代码 CNY。"
+        },
+        {
+          "id": "u1l2-euro-t",
+          "type": "truefalse",
+          "termId": "euro",
+          "termIds": [
+            "euro"
+          ],
+          "stem": "euro：欧元",
+          "answer": true,
+          "why": "euro 确实是「欧元」。"
+        },
+        {
+          "id": "u1l2-yen-t",
+          "type": "truefalse",
+          "termId": "yen",
+          "termIds": [
+            "yen"
+          ],
+          "stem": "yen 就是 人民币（元）。",
+          "answer": false,
+          "why": "yen 是「日元」，不是「人民币（元）」。"
         },
         {
           "id": "u1l2-yuan-t",
@@ -1302,6 +1271,39 @@
           "why": "yuan 确实是「人民币（元）」。"
         },
         {
+          "id": "u1l2-euro-f",
+          "type": "fill",
+          "termId": "euro",
+          "termIds": [
+            "euro"
+          ],
+          "story": "The ____ declined and was headed for a weekly loss against the dollar.",
+          "bank": [
+            "euro",
+            "dollar",
+            "yen",
+            "yuan"
+          ],
+          "answer": "euro",
+          "why": "euro 是欧元区的；dollar 是美国的。两者是外汇市场最大的一对。"
+        },
+        {
+          "id": "u1l2-yen-f",
+          "type": "fill",
+          "termId": "yen",
+          "termIds": [
+            "yen"
+          ],
+          "story": "The ____ was set for a weekly gain against the dollar.",
+          "bank": [
+            "yen",
+            "yuan",
+            "euro"
+          ],
+          "answer": "yen",
+          "why": "yen 是日本的（¥ 同符号）；yuan 是中国的人民币。两者常被搞混，符号甚至一样。"
+        },
+        {
           "id": "u1l2-yuan-f",
           "type": "fill",
           "termId": "yuan",
@@ -1311,8 +1313,8 @@
           "story": "The ____ hit its highest level since 2022 on a weaker dollar.",
           "bank": [
             "yuan",
-            "euro",
-            "yen"
+            "yen",
+            "euro"
           ],
           "answer": "yuan",
           "why": "yuan 是中国的；yen 是日本的。两者符号都是 ¥，只能靠上下文和代码（CNY vs JPY）分辨。"
@@ -1379,14 +1381,58 @@
       "review": true,
       "prompts": [
         {
+          "id": "u1r-h-currency-rate",
+          "type": "headline",
+          "termIds": [
+            "exchange rate",
+            "currency"
+          ],
+          "story": "The ____ slipped past 7.3 yuan per dollar as exporters sold dollars.",
+          "stem": "这句话里的空该填哪个词？",
+          "options": [
+            {
+              "text": "exchange rate",
+              "art": "exchange rate"
+            },
+            {
+              "text": "currency",
+              "art": "currency"
+            }
+          ],
+          "answer": 0,
+          "why": "「7.3 元兑 1 美元」是两种货币之间的比率，就是 exchange rate；currency 是货币本身。"
+        },
+        {
+          "id": "u1r-h-yen-yuan",
+          "type": "headline",
+          "termIds": [
+            "yen",
+            "yuan"
+          ],
+          "story": "Tokyo warns traders as the ____ weakens past 160 per dollar.",
+          "stem": "这句话里的空该填哪个词？",
+          "options": [
+            {
+              "text": "yen",
+              "art": "yen"
+            },
+            {
+              "text": "yuan",
+              "art": "yuan"
+            }
+          ],
+          "answer": 0,
+          "why": "东京出面喊话，说的是日本的货币 yen；yuan 是人民币，两者都写作 ¥。"
+        },
+        {
           "id": "u1r-currency-s",
           "type": "scenario",
           "termId": "currency",
           "termIds": [
             "currency"
           ],
-          "story": "The rupiah fell to a three-month low as Asian currencies struggled.",
-          "stem": "这句话里最关键的那个词是？",
+          "story": "一个国家或地区流通的钱。",
+          "stem": "这说的是哪个词？",
           "options": [
             {
               "text": "currency",
@@ -1409,25 +1455,14 @@
           "why": "currency：一国政府发行并强制流通的支付手段。"
         },
         {
-          "id": "u1r-currency-t",
-          "type": "truefalse",
-          "termId": "currency",
-          "termIds": [
-            "currency"
-          ],
-          "stem": "currency：货币",
-          "answer": true,
-          "why": "currency 确实是「货币」。"
-        },
-        {
           "id": "u1r-exchange rate-s",
           "type": "scenario",
           "termId": "exchange rate",
           "termIds": [
             "exchange rate"
           ],
-          "story": "The euro was down 0.21% at $1.1191 against the dollar.",
-          "stem": "这句话里最关键的那个词是？",
+          "story": "一种钱换另一种钱的比例。",
+          "stem": "这说的是哪个词？",
           "options": [
             {
               "text": "exchange rate",
@@ -1450,26 +1485,49 @@
           "why": "exchange rate：两种货币之间的兑换比率。"
         },
         {
-          "id": "u1r-exchange rate-t",
-          "type": "truefalse",
-          "termId": "exchange rate",
-          "termIds": [
-            "exchange rate"
-          ],
-          "stem": "exchange rate 就是 货币。",
-          "answer": false,
-          "why": "exchange rate 是「汇率」，不是「货币」。"
-        },
-        {
           "id": "u1r-dollar-s",
           "type": "scenario",
           "termId": "dollar",
           "termIds": [
             "dollar"
           ],
-          "story": "The dollar index rose 0.25% to 101.82.",
-          "stem": "这句话里最关键的那个词是？",
+          "story": "全球贸易和融资里最常用的那种钱。",
+          "stem": "这说的是哪个词？",
           "options": [
+            {
+              "text": "dollar",
+              "art": "dollar"
+            },
+            {
+              "text": "euro",
+              "art": "euro"
+            },
+            {
+              "text": "currency",
+              "art": "currency"
+            },
+            {
+              "text": "exchange rate",
+              "art": "exchange rate"
+            }
+          ],
+          "answer": 0,
+          "why": "dollar：美国货币，也是大多数大宗商品与跨境债务的计价货币。"
+        },
+        {
+          "id": "u1r-euro-s",
+          "type": "scenario",
+          "termId": "euro",
+          "termIds": [
+            "euro"
+          ],
+          "story": "欧元区多个国家共用的货币。",
+          "stem": "这说的是哪个词？",
+          "options": [
+            {
+              "text": "euro",
+              "art": "euro"
+            },
             {
               "text": "dollar",
               "art": "dollar"
@@ -1481,14 +1539,92 @@
             {
               "text": "exchange rate",
               "art": "exchange rate"
-            },
-            {
-              "text": "euro",
-              "art": "euro"
             }
           ],
           "answer": 0,
-          "why": "dollar：美国货币，也是大多数大宗商品与跨境债务的计价货币。"
+          "why": "euro：欧元区成员国共同使用的货币，由欧洲央行统一制定政策。"
+        },
+        {
+          "id": "u1r-yen-s",
+          "type": "scenario",
+          "termId": "yen",
+          "termIds": [
+            "yen"
+          ],
+          "story": "日本货币，长期是套息交易的融资货币。",
+          "stem": "这说的是哪个词？",
+          "options": [
+            {
+              "text": "yen",
+              "art": "yen"
+            },
+            {
+              "text": "yuan",
+              "art": "yuan"
+            },
+            {
+              "text": "currency",
+              "art": "currency"
+            },
+            {
+              "text": "exchange rate",
+              "art": "exchange rate"
+            }
+          ],
+          "answer": 0,
+          "why": "yen：日本货币，因长期低利率而常被用作借入货币。"
+        },
+        {
+          "id": "u1r-yuan-s",
+          "type": "scenario",
+          "termId": "yuan",
+          "termIds": [
+            "yuan"
+          ],
+          "story": "中国货币，符号和日元一样但完全不同的东西。",
+          "stem": "这说的是哪个词？",
+          "options": [
+            {
+              "text": "yuan",
+              "art": "yuan"
+            },
+            {
+              "text": "yen",
+              "art": "yen"
+            },
+            {
+              "text": "currency",
+              "art": "currency"
+            },
+            {
+              "text": "exchange rate",
+              "art": "exchange rate"
+            }
+          ],
+          "answer": 0,
+          "why": "yuan：中国货币人民币的单位，国际代码 CNY。"
+        },
+        {
+          "id": "u1r-currency-t",
+          "type": "truefalse",
+          "termId": "currency",
+          "termIds": [
+            "currency"
+          ],
+          "stem": "currency：货币",
+          "answer": true,
+          "why": "currency 确实是「货币」。"
+        },
+        {
+          "id": "u1r-exchange rate-t",
+          "type": "truefalse",
+          "termId": "exchange rate",
+          "termIds": [
+            "exchange rate"
+          ],
+          "stem": "exchange rate 就是 货币。",
+          "answer": false,
+          "why": "exchange rate 是「汇率」，不是「货币」。"
         },
         {
           "id": "u1r-dollar-t",
@@ -1502,75 +1638,15 @@
           "why": "dollar 确实是「美元」。"
         },
         {
-          "id": "u1r-euro-s",
-          "type": "scenario",
-          "termId": "euro",
-          "termIds": [
-            "euro"
-          ],
-          "story": "The euro declined and was headed for a weekly loss against the dollar.",
-          "stem": "这句话里最关键的那个词是？",
-          "options": [
-            {
-              "text": "euro",
-              "art": "euro"
-            },
-            {
-              "text": "currency",
-              "art": "currency"
-            },
-            {
-              "text": "exchange rate",
-              "art": "exchange rate"
-            },
-            {
-              "text": "dollar",
-              "art": "dollar"
-            }
-          ],
-          "answer": 0,
-          "why": "euro：欧元区成员国共同使用的货币，由欧洲央行统一制定政策。"
-        },
-        {
           "id": "u1r-euro-t",
           "type": "truefalse",
           "termId": "euro",
           "termIds": [
             "euro"
           ],
-          "stem": "euro 就是 货币。",
+          "stem": "euro 就是 美元。",
           "answer": false,
-          "why": "euro 是「欧元」，不是「货币」。"
-        },
-        {
-          "id": "u1r-yen-s",
-          "type": "scenario",
-          "termId": "yen",
-          "termIds": [
-            "yen"
-          ],
-          "story": "The yen was set for a weekly gain against the dollar.",
-          "stem": "这句话里最关键的那个词是？",
-          "options": [
-            {
-              "text": "yen",
-              "art": "yen"
-            },
-            {
-              "text": "currency",
-              "art": "currency"
-            },
-            {
-              "text": "exchange rate",
-              "art": "exchange rate"
-            },
-            {
-              "text": "dollar",
-              "art": "dollar"
-            }
-          ],
-          "answer": 0,
-          "why": "yen：日本货币，因长期低利率而常被用作借入货币。"
+          "why": "euro 是「欧元」，不是「美元」。"
         },
         {
           "id": "u1r-yen-t",
@@ -1584,45 +1660,15 @@
           "why": "yen 确实是「日元」。"
         },
         {
-          "id": "u1r-yuan-s",
-          "type": "scenario",
-          "termId": "yuan",
-          "termIds": [
-            "yuan"
-          ],
-          "story": "The yuan hit its highest level since 2022 on a weaker dollar.",
-          "stem": "这句话里最关键的那个词是？",
-          "options": [
-            {
-              "text": "yuan",
-              "art": "yuan"
-            },
-            {
-              "text": "currency",
-              "art": "currency"
-            },
-            {
-              "text": "exchange rate",
-              "art": "exchange rate"
-            },
-            {
-              "text": "dollar",
-              "art": "dollar"
-            }
-          ],
-          "answer": 0,
-          "why": "yuan：中国货币人民币的单位，国际代码 CNY。"
-        },
-        {
           "id": "u1r-yuan-t",
           "type": "truefalse",
           "termId": "yuan",
           "termIds": [
             "yuan"
           ],
-          "stem": "yuan 就是 货币。",
+          "stem": "yuan 就是 日元。",
           "answer": false,
-          "why": "yuan 是「人民币（元）」，不是「货币」。"
+          "why": "yuan 是「人民币（元）」，不是「日元」。"
         },
         {
           "id": "u1r-match",
@@ -1737,14 +1783,101 @@
           "why": "sterling 是英国的；peso 是多个拉美和亚洲国家的。名字不同但都是「某国的钱」。"
         },
         {
+          "id": "u2l1-peso-m",
+          "type": "meaning",
+          "termId": "peso",
+          "termIds": [
+            "peso"
+          ],
+          "stem": "peso 是什么意思？",
+          "options": [
+            {
+              "text": "墨西哥、菲律宾、阿根廷等国使用的货币名称，代码各不相同。",
+              "art": "peso"
+            },
+            {
+              "text": "印度尼西亚货币，国际代码 IDR。",
+              "art": "rupiah"
+            },
+            {
+              "text": "英国货币，国际代码 GBP，也称 pound sterling。",
+              "art": "sterling"
+            },
+            {
+              "text": "一种货币相对于另一种货币的价值上升。",
+              "art": "appreciate"
+            }
+          ],
+          "answer": 0,
+          "why": "peso 被多国使用（MXN/PHP/ARS）；rupiah 只有印尼用。看到 peso 要先确认是哪一国。"
+        },
+        {
+          "id": "u2l1-rupiah-m",
+          "type": "meaning",
+          "termId": "rupiah",
+          "termIds": [
+            "rupiah"
+          ],
+          "stem": "rupiah 是什么意思？",
+          "options": [
+            {
+              "text": "印度尼西亚货币，国际代码 IDR。",
+              "art": "rupiah"
+            },
+            {
+              "text": "墨西哥、菲律宾、阿根廷等国使用的货币名称，代码各不相同。",
+              "art": "peso"
+            },
+            {
+              "text": "英国货币，国际代码 GBP，也称 pound sterling。",
+              "art": "sterling"
+            },
+            {
+              "text": "一种货币相对于另一种货币的价值上升。",
+              "art": "appreciate"
+            }
+          ],
+          "answer": 0,
+          "why": "rupiah 专属印尼；peso 是多个国家的通名。"
+        },
+        {
+          "id": "u2l1-appreciate-m",
+          "type": "meaning",
+          "termId": "appreciate",
+          "termIds": [
+            "appreciate"
+          ],
+          "stem": "appreciate 是什么意思？",
+          "options": [
+            {
+              "text": "一种货币相对于另一种货币的价值上升。",
+              "art": "appreciate"
+            },
+            {
+              "text": "一种货币相对于另一种货币的价值下降。",
+              "art": "depreciate"
+            },
+            {
+              "text": "英国货币，国际代码 GBP，也称 pound sterling。",
+              "art": "sterling"
+            },
+            {
+              "text": "墨西哥、菲律宾、阿根廷等国使用的货币名称，代码各不相同。",
+              "art": "peso"
+            }
+          ],
+          "answer": 0,
+          "why": "appreciate 变值钱；depreciate 变便宜。"
+        },
+        {
           "id": "u2l1-sterling-s",
           "type": "scenario",
           "termId": "sterling",
           "termIds": [
             "sterling"
           ],
-          "story": "Sterling rose against the dollar and the euro after inflation data.",
-          "stem": "这句话里最关键的那个词是？",
+          "story": "英国货币，也叫 pound。",
+          "stem": "这说的是哪个词？",
           "options": [
             {
               "text": "sterling",
@@ -1767,6 +1900,96 @@
           "why": "sterling：英国货币，国际代码 GBP，也称 pound sterling。"
         },
         {
+          "id": "u2l1-peso-s",
+          "type": "scenario",
+          "termId": "peso",
+          "termIds": [
+            "peso"
+          ],
+          "story": "多个国家的货币名，需要看是哪一国。",
+          "stem": "这说的是哪个词？",
+          "options": [
+            {
+              "text": "peso",
+              "art": "peso"
+            },
+            {
+              "text": "rupiah",
+              "art": "rupiah"
+            },
+            {
+              "text": "sterling",
+              "art": "sterling"
+            },
+            {
+              "text": "appreciate",
+              "art": "appreciate"
+            }
+          ],
+          "answer": 0,
+          "why": "peso：墨西哥、菲律宾、阿根廷等国使用的货币名称，代码各不相同。"
+        },
+        {
+          "id": "u2l1-rupiah-s",
+          "type": "scenario",
+          "termId": "rupiah",
+          "termIds": [
+            "rupiah"
+          ],
+          "story": "印度尼西亚的货币。",
+          "stem": "这说的是哪个词？",
+          "options": [
+            {
+              "text": "rupiah",
+              "art": "rupiah"
+            },
+            {
+              "text": "peso",
+              "art": "peso"
+            },
+            {
+              "text": "sterling",
+              "art": "sterling"
+            },
+            {
+              "text": "appreciate",
+              "art": "appreciate"
+            }
+          ],
+          "answer": 0,
+          "why": "rupiah：印度尼西亚货币，国际代码 IDR。"
+        },
+        {
+          "id": "u2l1-appreciate-s",
+          "type": "scenario",
+          "termId": "appreciate",
+          "termIds": [
+            "appreciate"
+          ],
+          "story": "这种钱换到的外国钱变多了。",
+          "stem": "这说的是哪个词？",
+          "options": [
+            {
+              "text": "appreciate",
+              "art": "appreciate"
+            },
+            {
+              "text": "depreciate",
+              "art": "depreciate"
+            },
+            {
+              "text": "sterling",
+              "art": "sterling"
+            },
+            {
+              "text": "peso",
+              "art": "peso"
+            }
+          ],
+          "answer": 0,
+          "why": "appreciate：一种货币相对于另一种货币的价值上升。"
+        },
+        {
           "id": "u2l1-sterling-t",
           "type": "truefalse",
           "termId": "sterling",
@@ -1776,6 +1999,39 @@
           "stem": "sterling：英镑",
           "answer": true,
           "why": "sterling 确实是「英镑」。"
+        },
+        {
+          "id": "u2l1-peso-t",
+          "type": "truefalse",
+          "termId": "peso",
+          "termIds": [
+            "peso"
+          ],
+          "stem": "peso 就是 印尼盾。",
+          "answer": false,
+          "why": "peso 是「比索」，不是「印尼盾」。"
+        },
+        {
+          "id": "u2l1-rupiah-t",
+          "type": "truefalse",
+          "termId": "rupiah",
+          "termIds": [
+            "rupiah"
+          ],
+          "stem": "rupiah：印尼盾",
+          "answer": true,
+          "why": "rupiah 确实是「印尼盾」。"
+        },
+        {
+          "id": "u2l1-appreciate-t",
+          "type": "truefalse",
+          "termId": "appreciate",
+          "termIds": [
+            "appreciate"
+          ],
+          "stem": "appreciate 就是 贬值。",
+          "answer": false,
+          "why": "appreciate 是「升值」，不是「贬值」。"
         },
         {
           "id": "u2l1-sterling-f",
@@ -1795,76 +2051,6 @@
           "why": "sterling 是英国的；peso 是多个拉美和亚洲国家的。名字不同但都是「某国的钱」。"
         },
         {
-          "id": "u2l1-peso-m",
-          "type": "meaning",
-          "termId": "peso",
-          "termIds": [
-            "peso"
-          ],
-          "stem": "peso 是什么意思？",
-          "options": [
-            {
-              "text": "墨西哥、菲律宾、阿根廷等国使用的货币名称，代码各不相同。",
-              "art": "peso"
-            },
-            {
-              "text": "英国货币，国际代码 GBP，也称 pound sterling。",
-              "art": "sterling"
-            },
-            {
-              "text": "印度尼西亚货币，国际代码 IDR。",
-              "art": "rupiah"
-            },
-            {
-              "text": "一种货币相对于另一种货币的价值上升。",
-              "art": "appreciate"
-            }
-          ],
-          "answer": 0,
-          "why": "peso 被多国使用（MXN/PHP/ARS）；rupiah 只有印尼用。看到 peso 要先确认是哪一国。"
-        },
-        {
-          "id": "u2l1-peso-s",
-          "type": "scenario",
-          "termId": "peso",
-          "termIds": [
-            "peso"
-          ],
-          "story": "The rupiah and the peso weakened as the dollar firmed.",
-          "stem": "这句话里最关键的那个词是？",
-          "options": [
-            {
-              "text": "peso",
-              "art": "peso"
-            },
-            {
-              "text": "sterling",
-              "art": "sterling"
-            },
-            {
-              "text": "rupiah",
-              "art": "rupiah"
-            },
-            {
-              "text": "appreciate",
-              "art": "appreciate"
-            }
-          ],
-          "answer": 0,
-          "why": "peso：墨西哥、菲律宾、阿根廷等国使用的货币名称，代码各不相同。"
-        },
-        {
-          "id": "u2l1-peso-t",
-          "type": "truefalse",
-          "termId": "peso",
-          "termIds": [
-            "peso"
-          ],
-          "stem": "peso 就是 英镑。",
-          "answer": false,
-          "why": "peso 是「比索」，不是「英镑」。"
-        },
-        {
           "id": "u2l1-peso-f",
           "type": "fill",
           "termId": "peso",
@@ -1874,82 +2060,12 @@
           "story": "The rupiah and the ____ weakened as the dollar firmed.",
           "bank": [
             "peso",
-            "sterling",
             "rupiah",
+            "sterling",
             "appreciate"
           ],
           "answer": "peso",
           "why": "peso 被多国使用（MXN/PHP/ARS）；rupiah 只有印尼用。看到 peso 要先确认是哪一国。"
-        },
-        {
-          "id": "u2l1-rupiah-m",
-          "type": "meaning",
-          "termId": "rupiah",
-          "termIds": [
-            "rupiah"
-          ],
-          "stem": "rupiah 是什么意思？",
-          "options": [
-            {
-              "text": "印度尼西亚货币，国际代码 IDR。",
-              "art": "rupiah"
-            },
-            {
-              "text": "英国货币，国际代码 GBP，也称 pound sterling。",
-              "art": "sterling"
-            },
-            {
-              "text": "墨西哥、菲律宾、阿根廷等国使用的货币名称，代码各不相同。",
-              "art": "peso"
-            },
-            {
-              "text": "一种货币相对于另一种货币的价值上升。",
-              "art": "appreciate"
-            }
-          ],
-          "answer": 0,
-          "why": "rupiah 专属印尼；peso 是多个国家的通名。"
-        },
-        {
-          "id": "u2l1-rupiah-s",
-          "type": "scenario",
-          "termId": "rupiah",
-          "termIds": [
-            "rupiah"
-          ],
-          "story": "Indonesia's central bank intervened to slow the rupiah's slide.",
-          "stem": "这句话里最关键的那个词是？",
-          "options": [
-            {
-              "text": "rupiah",
-              "art": "rupiah"
-            },
-            {
-              "text": "sterling",
-              "art": "sterling"
-            },
-            {
-              "text": "peso",
-              "art": "peso"
-            },
-            {
-              "text": "appreciate",
-              "art": "appreciate"
-            }
-          ],
-          "answer": 0,
-          "why": "rupiah：印度尼西亚货币，国际代码 IDR。"
-        },
-        {
-          "id": "u2l1-rupiah-t",
-          "type": "truefalse",
-          "termId": "rupiah",
-          "termIds": [
-            "rupiah"
-          ],
-          "stem": "rupiah：印尼盾",
-          "answer": true,
-          "why": "rupiah 确实是「印尼盾」。"
         },
         {
           "id": "u2l1-rupiah-f",
@@ -1961,82 +2077,12 @@
           "story": "Indonesia's central bank intervened to slow the ____'s slide.",
           "bank": [
             "rupiah",
-            "sterling",
             "peso",
+            "sterling",
             "appreciate"
           ],
           "answer": "rupiah",
           "why": "rupiah 专属印尼；peso 是多个国家的通名。"
-        },
-        {
-          "id": "u2l1-appreciate-m",
-          "type": "meaning",
-          "termId": "appreciate",
-          "termIds": [
-            "appreciate"
-          ],
-          "stem": "appreciate 是什么意思？",
-          "options": [
-            {
-              "text": "一种货币相对于另一种货币的价值上升。",
-              "art": "appreciate"
-            },
-            {
-              "text": "英国货币，国际代码 GBP，也称 pound sterling。",
-              "art": "sterling"
-            },
-            {
-              "text": "墨西哥、菲律宾、阿根廷等国使用的货币名称，代码各不相同。",
-              "art": "peso"
-            },
-            {
-              "text": "印度尼西亚货币，国际代码 IDR。",
-              "art": "rupiah"
-            }
-          ],
-          "answer": 0,
-          "why": "appreciate 变值钱；depreciate 变便宜。"
-        },
-        {
-          "id": "u2l1-appreciate-s",
-          "type": "scenario",
-          "termId": "appreciate",
-          "termIds": [
-            "appreciate"
-          ],
-          "story": "The yuan appreciated to its highest level since 2022.",
-          "stem": "这句话里最关键的那个词是？",
-          "options": [
-            {
-              "text": "appreciate",
-              "art": "appreciate"
-            },
-            {
-              "text": "sterling",
-              "art": "sterling"
-            },
-            {
-              "text": "peso",
-              "art": "peso"
-            },
-            {
-              "text": "rupiah",
-              "art": "rupiah"
-            }
-          ],
-          "answer": 0,
-          "why": "appreciate：一种货币相对于另一种货币的价值上升。"
-        },
-        {
-          "id": "u2l1-appreciate-t",
-          "type": "truefalse",
-          "termId": "appreciate",
-          "termIds": [
-            "appreciate"
-          ],
-          "stem": "appreciate 就是 英镑。",
-          "answer": false,
-          "why": "appreciate 是「升值」，不是「英镑」。"
         },
         {
           "id": "u2l1-appreciate-f",
@@ -2045,12 +2091,12 @@
           "termIds": [
             "appreciate"
           ],
-          "story": "The yuan ____ to its highest level since 2022.",
+          "story": "The yuan could ____ further if the dollar keeps weakening.",
           "bank": [
             "appreciate",
+            "depreciate",
             "sterling",
-            "peso",
-            "rupiah"
+            "peso"
           ],
           "answer": "appreciate",
           "why": "appreciate 变值钱；depreciate 变便宜。"
@@ -2140,76 +2186,19 @@
               "art": "depreciate"
             },
             {
+              "text": "一种货币相对于另一种货币的价值上升。",
+              "art": "appreciate"
+            },
+            {
               "text": "英国货币，国际代码 GBP，也称 pound sterling。",
               "art": "sterling"
             },
             {
               "text": "墨西哥、菲律宾、阿根廷等国使用的货币名称，代码各不相同。",
               "art": "peso"
-            },
-            {
-              "text": "印度尼西亚货币，国际代码 IDR。",
-              "art": "rupiah"
             }
           ],
           "answer": 0,
-          "why": "depreciate 变便宜；appreciate 变值钱。"
-        },
-        {
-          "id": "u2l2-depreciate-s",
-          "type": "scenario",
-          "termId": "depreciate",
-          "termIds": [
-            "depreciate"
-          ],
-          "story": "The Taiwan dollar depreciated against the US dollar.",
-          "stem": "这句话里最关键的那个词是？",
-          "options": [
-            {
-              "text": "depreciate",
-              "art": "depreciate"
-            },
-            {
-              "text": "sterling",
-              "art": "sterling"
-            },
-            {
-              "text": "peso",
-              "art": "peso"
-            },
-            {
-              "text": "rupiah",
-              "art": "rupiah"
-            }
-          ],
-          "answer": 0,
-          "why": "depreciate：一种货币相对于另一种货币的价值下降。"
-        },
-        {
-          "id": "u2l2-depreciate-t",
-          "type": "truefalse",
-          "termId": "depreciate",
-          "termIds": [
-            "depreciate"
-          ],
-          "stem": "depreciate：贬值",
-          "answer": true,
-          "why": "depreciate 确实是「贬值」。"
-        },
-        {
-          "id": "u2l2-depreciate-f",
-          "type": "fill",
-          "termId": "depreciate",
-          "termIds": [
-            "depreciate"
-          ],
-          "story": "The Taiwan dollar ____ against the US dollar.",
-          "bank": [
-            "depreciate",
-            "strengthen",
-            "weaken"
-          ],
-          "answer": "depreciate",
           "why": "depreciate 变便宜；appreciate 变值钱。"
         },
         {
@@ -2226,76 +2215,19 @@
               "art": "strengthen"
             },
             {
+              "text": "货币价值下降的通俗说法，常与 depreciate 互换使用。",
+              "art": "weaken"
+            },
+            {
               "text": "英国货币，国际代码 GBP，也称 pound sterling。",
               "art": "sterling"
             },
             {
               "text": "墨西哥、菲律宾、阿根廷等国使用的货币名称，代码各不相同。",
               "art": "peso"
-            },
-            {
-              "text": "印度尼西亚货币，国际代码 IDR。",
-              "art": "rupiah"
             }
           ],
           "answer": 0,
-          "why": "strengthen 走强；weaken 走弱。这两个词比 appreciate/depreciate 更口语，新闻里更常见。"
-        },
-        {
-          "id": "u2l2-strengthen-s",
-          "type": "scenario",
-          "termId": "strengthen",
-          "termIds": [
-            "strengthen"
-          ],
-          "story": "The yen strengthened as risk appetite faded.",
-          "stem": "这句话里最关键的那个词是？",
-          "options": [
-            {
-              "text": "strengthen",
-              "art": "strengthen"
-            },
-            {
-              "text": "sterling",
-              "art": "sterling"
-            },
-            {
-              "text": "peso",
-              "art": "peso"
-            },
-            {
-              "text": "rupiah",
-              "art": "rupiah"
-            }
-          ],
-          "answer": 0,
-          "why": "strengthen：货币价值上升的通俗说法，常与 appreciate 互换使用。"
-        },
-        {
-          "id": "u2l2-strengthen-t",
-          "type": "truefalse",
-          "termId": "strengthen",
-          "termIds": [
-            "strengthen"
-          ],
-          "stem": "strengthen 就是 英镑。",
-          "answer": false,
-          "why": "strengthen 是「走强」，不是「英镑」。"
-        },
-        {
-          "id": "u2l2-strengthen-f",
-          "type": "fill",
-          "termId": "strengthen",
-          "termIds": [
-            "strengthen"
-          ],
-          "story": "The yen ____ as risk appetite faded.",
-          "bank": [
-            "strengthen",
-            "depreciate",
-            "weaken"
-          ],
-          "answer": "strengthen",
           "why": "strengthen 走强；weaken 走弱。这两个词比 appreciate/depreciate 更口语，新闻里更常见。"
         },
         {
@@ -2312,31 +2244,65 @@
               "art": "weaken"
             },
             {
+              "text": "货币价值上升的通俗说法，常与 appreciate 互换使用。",
+              "art": "strengthen"
+            },
+            {
               "text": "英国货币，国际代码 GBP，也称 pound sterling。",
               "art": "sterling"
             },
             {
               "text": "墨西哥、菲律宾、阿根廷等国使用的货币名称，代码各不相同。",
               "art": "peso"
-            },
-            {
-              "text": "印度尼西亚货币，国际代码 IDR。",
-              "art": "rupiah"
             }
           ],
           "answer": 0,
           "why": "weaken 走弱；strengthen 走强。"
         },
         {
-          "id": "u2l2-weaken-s",
+          "id": "u2l2-depreciate-s",
           "type": "scenario",
-          "termId": "weaken",
+          "termId": "depreciate",
           "termIds": [
-            "weaken"
+            "depreciate"
           ],
-          "story": "Asian currencies weakened as the dollar firmed.",
-          "stem": "这句话里最关键的那个词是？",
+          "story": "这种钱换到的外国钱变少了。",
+          "stem": "这说的是哪个词？",
           "options": [
+            {
+              "text": "depreciate",
+              "art": "depreciate"
+            },
+            {
+              "text": "appreciate",
+              "art": "appreciate"
+            },
+            {
+              "text": "sterling",
+              "art": "sterling"
+            },
+            {
+              "text": "peso",
+              "art": "peso"
+            }
+          ],
+          "answer": 0,
+          "why": "depreciate：一种货币相对于另一种货币的价值下降。"
+        },
+        {
+          "id": "u2l2-strengthen-s",
+          "type": "scenario",
+          "termId": "strengthen",
+          "termIds": [
+            "strengthen"
+          ],
+          "story": "新闻里说某货币「强了」，意思和升值差不多。",
+          "stem": "这说的是哪个词？",
+          "options": [
+            {
+              "text": "strengthen",
+              "art": "strengthen"
+            },
             {
               "text": "weaken",
               "art": "weaken"
@@ -2348,14 +2314,62 @@
             {
               "text": "peso",
               "art": "peso"
+            }
+          ],
+          "answer": 0,
+          "why": "strengthen：货币价值上升的通俗说法，常与 appreciate 互换使用。"
+        },
+        {
+          "id": "u2l2-weaken-s",
+          "type": "scenario",
+          "termId": "weaken",
+          "termIds": [
+            "weaken"
+          ],
+          "story": "新闻里说某货币「弱了」。",
+          "stem": "这说的是哪个词？",
+          "options": [
+            {
+              "text": "weaken",
+              "art": "weaken"
             },
             {
-              "text": "rupiah",
-              "art": "rupiah"
+              "text": "strengthen",
+              "art": "strengthen"
+            },
+            {
+              "text": "sterling",
+              "art": "sterling"
+            },
+            {
+              "text": "peso",
+              "art": "peso"
             }
           ],
           "answer": 0,
           "why": "weaken：货币价值下降的通俗说法，常与 depreciate 互换使用。"
+        },
+        {
+          "id": "u2l2-depreciate-t",
+          "type": "truefalse",
+          "termId": "depreciate",
+          "termIds": [
+            "depreciate"
+          ],
+          "stem": "depreciate：贬值",
+          "answer": true,
+          "why": "depreciate 确实是「贬值」。"
+        },
+        {
+          "id": "u2l2-strengthen-t",
+          "type": "truefalse",
+          "termId": "strengthen",
+          "termIds": [
+            "strengthen"
+          ],
+          "stem": "strengthen 就是 走弱。",
+          "answer": false,
+          "why": "strengthen 是「走强」，不是「走弱」。"
         },
         {
           "id": "u2l2-weaken-t",
@@ -2369,6 +2383,39 @@
           "why": "weaken 确实是「走弱」。"
         },
         {
+          "id": "u2l2-depreciate-f",
+          "type": "fill",
+          "termId": "depreciate",
+          "termIds": [
+            "depreciate"
+          ],
+          "story": "The Taiwan dollar ____ against the US dollar.",
+          "bank": [
+            "depreciate",
+            "appreciate",
+            "strengthen",
+            "weaken"
+          ],
+          "answer": "depreciate",
+          "why": "depreciate 变便宜；appreciate 变值钱。"
+        },
+        {
+          "id": "u2l2-strengthen-f",
+          "type": "fill",
+          "termId": "strengthen",
+          "termIds": [
+            "strengthen"
+          ],
+          "story": "The yen ____ as risk appetite faded.",
+          "bank": [
+            "strengthen",
+            "weaken",
+            "depreciate"
+          ],
+          "answer": "strengthen",
+          "why": "strengthen 走强；weaken 走弱。这两个词比 appreciate/depreciate 更口语，新闻里更常见。"
+        },
+        {
           "id": "u2l2-weaken-f",
           "type": "fill",
           "termId": "weaken",
@@ -2378,8 +2425,8 @@
           "story": "Asian currencies ____ as the dollar firmed.",
           "bank": [
             "weaken",
-            "depreciate",
-            "strengthen"
+            "strengthen",
+            "depreciate"
           ],
           "answer": "weaken",
           "why": "weaken 走弱；strengthen 走强。"
@@ -2446,14 +2493,58 @@
       "review": true,
       "prompts": [
         {
+          "id": "u2r-h-appreciate-depreciate",
+          "type": "headline",
+          "termIds": [
+            "depreciate",
+            "appreciate"
+          ],
+          "story": "The lira could ____ further as inflation stays above 40%, analysts say.",
+          "stem": "这句话里的空该填哪个词？",
+          "options": [
+            {
+              "text": "depreciate",
+              "art": "depreciate"
+            },
+            {
+              "text": "appreciate",
+              "art": "appreciate"
+            }
+          ],
+          "answer": 0,
+          "why": "高通胀会让货币越来越不值钱：depreciate 是贬值，appreciate 是升值。"
+        },
+        {
+          "id": "u2r-h-strengthen-weaken",
+          "type": "headline",
+          "termIds": [
+            "strengthen",
+            "weaken"
+          ],
+          "story": "The dollar is set to ____ for a fifth week as US data keeps surprising to the upside.",
+          "stem": "这句话里的空该填哪个词？",
+          "options": [
+            {
+              "text": "strengthen",
+              "art": "strengthen"
+            },
+            {
+              "text": "weaken",
+              "art": "weaken"
+            }
+          ],
+          "answer": 0,
+          "why": "数据好于预期、连涨五周，是 strengthen；weaken 是走弱。"
+        },
+        {
           "id": "u2r-sterling-s",
           "type": "scenario",
           "termId": "sterling",
           "termIds": [
             "sterling"
           ],
-          "story": "Sterling rose against the dollar and the euro after inflation data.",
-          "stem": "这句话里最关键的那个词是？",
+          "story": "英国货币，也叫 pound。",
+          "stem": "这说的是哪个词？",
           "options": [
             {
               "text": "sterling",
@@ -2476,6 +2567,186 @@
           "why": "sterling：英国货币，国际代码 GBP，也称 pound sterling。"
         },
         {
+          "id": "u2r-peso-s",
+          "type": "scenario",
+          "termId": "peso",
+          "termIds": [
+            "peso"
+          ],
+          "story": "多个国家的货币名，需要看是哪一国。",
+          "stem": "这说的是哪个词？",
+          "options": [
+            {
+              "text": "peso",
+              "art": "peso"
+            },
+            {
+              "text": "rupiah",
+              "art": "rupiah"
+            },
+            {
+              "text": "sterling",
+              "art": "sterling"
+            },
+            {
+              "text": "appreciate",
+              "art": "appreciate"
+            }
+          ],
+          "answer": 0,
+          "why": "peso：墨西哥、菲律宾、阿根廷等国使用的货币名称，代码各不相同。"
+        },
+        {
+          "id": "u2r-rupiah-s",
+          "type": "scenario",
+          "termId": "rupiah",
+          "termIds": [
+            "rupiah"
+          ],
+          "story": "印度尼西亚的货币。",
+          "stem": "这说的是哪个词？",
+          "options": [
+            {
+              "text": "rupiah",
+              "art": "rupiah"
+            },
+            {
+              "text": "peso",
+              "art": "peso"
+            },
+            {
+              "text": "sterling",
+              "art": "sterling"
+            },
+            {
+              "text": "appreciate",
+              "art": "appreciate"
+            }
+          ],
+          "answer": 0,
+          "why": "rupiah：印度尼西亚货币，国际代码 IDR。"
+        },
+        {
+          "id": "u2r-appreciate-s",
+          "type": "scenario",
+          "termId": "appreciate",
+          "termIds": [
+            "appreciate"
+          ],
+          "story": "这种钱换到的外国钱变多了。",
+          "stem": "这说的是哪个词？",
+          "options": [
+            {
+              "text": "appreciate",
+              "art": "appreciate"
+            },
+            {
+              "text": "depreciate",
+              "art": "depreciate"
+            },
+            {
+              "text": "sterling",
+              "art": "sterling"
+            },
+            {
+              "text": "peso",
+              "art": "peso"
+            }
+          ],
+          "answer": 0,
+          "why": "appreciate：一种货币相对于另一种货币的价值上升。"
+        },
+        {
+          "id": "u2r-depreciate-s",
+          "type": "scenario",
+          "termId": "depreciate",
+          "termIds": [
+            "depreciate"
+          ],
+          "story": "这种钱换到的外国钱变少了。",
+          "stem": "这说的是哪个词？",
+          "options": [
+            {
+              "text": "depreciate",
+              "art": "depreciate"
+            },
+            {
+              "text": "appreciate",
+              "art": "appreciate"
+            },
+            {
+              "text": "sterling",
+              "art": "sterling"
+            },
+            {
+              "text": "peso",
+              "art": "peso"
+            }
+          ],
+          "answer": 0,
+          "why": "depreciate：一种货币相对于另一种货币的价值下降。"
+        },
+        {
+          "id": "u2r-strengthen-s",
+          "type": "scenario",
+          "termId": "strengthen",
+          "termIds": [
+            "strengthen"
+          ],
+          "story": "新闻里说某货币「强了」，意思和升值差不多。",
+          "stem": "这说的是哪个词？",
+          "options": [
+            {
+              "text": "strengthen",
+              "art": "strengthen"
+            },
+            {
+              "text": "weaken",
+              "art": "weaken"
+            },
+            {
+              "text": "sterling",
+              "art": "sterling"
+            },
+            {
+              "text": "peso",
+              "art": "peso"
+            }
+          ],
+          "answer": 0,
+          "why": "strengthen：货币价值上升的通俗说法，常与 appreciate 互换使用。"
+        },
+        {
+          "id": "u2r-weaken-s",
+          "type": "scenario",
+          "termId": "weaken",
+          "termIds": [
+            "weaken"
+          ],
+          "story": "新闻里说某货币「弱了」。",
+          "stem": "这说的是哪个词？",
+          "options": [
+            {
+              "text": "weaken",
+              "art": "weaken"
+            },
+            {
+              "text": "strengthen",
+              "art": "strengthen"
+            },
+            {
+              "text": "sterling",
+              "art": "sterling"
+            },
+            {
+              "text": "peso",
+              "art": "peso"
+            }
+          ],
+          "answer": 0,
+          "why": "weaken：货币价值下降的通俗说法，常与 depreciate 互换使用。"
+        },
+        {
           "id": "u2r-sterling-t",
           "type": "truefalse",
           "termId": "sterling",
@@ -2487,75 +2758,15 @@
           "why": "sterling 确实是「英镑」。"
         },
         {
-          "id": "u2r-peso-s",
-          "type": "scenario",
-          "termId": "peso",
-          "termIds": [
-            "peso"
-          ],
-          "story": "The rupiah and the peso weakened as the dollar firmed.",
-          "stem": "这句话里最关键的那个词是？",
-          "options": [
-            {
-              "text": "peso",
-              "art": "peso"
-            },
-            {
-              "text": "sterling",
-              "art": "sterling"
-            },
-            {
-              "text": "rupiah",
-              "art": "rupiah"
-            },
-            {
-              "text": "appreciate",
-              "art": "appreciate"
-            }
-          ],
-          "answer": 0,
-          "why": "peso：墨西哥、菲律宾、阿根廷等国使用的货币名称，代码各不相同。"
-        },
-        {
           "id": "u2r-peso-t",
           "type": "truefalse",
           "termId": "peso",
           "termIds": [
             "peso"
           ],
-          "stem": "peso 就是 英镑。",
+          "stem": "peso 就是 印尼盾。",
           "answer": false,
-          "why": "peso 是「比索」，不是「英镑」。"
-        },
-        {
-          "id": "u2r-rupiah-s",
-          "type": "scenario",
-          "termId": "rupiah",
-          "termIds": [
-            "rupiah"
-          ],
-          "story": "Indonesia's central bank intervened to slow the rupiah's slide.",
-          "stem": "这句话里最关键的那个词是？",
-          "options": [
-            {
-              "text": "rupiah",
-              "art": "rupiah"
-            },
-            {
-              "text": "sterling",
-              "art": "sterling"
-            },
-            {
-              "text": "peso",
-              "art": "peso"
-            },
-            {
-              "text": "appreciate",
-              "art": "appreciate"
-            }
-          ],
-          "answer": 0,
-          "why": "rupiah：印度尼西亚货币，国际代码 IDR。"
+          "why": "peso 是「比索」，不是「印尼盾」。"
         },
         {
           "id": "u2r-rupiah-t",
@@ -2569,75 +2780,15 @@
           "why": "rupiah 确实是「印尼盾」。"
         },
         {
-          "id": "u2r-appreciate-s",
-          "type": "scenario",
-          "termId": "appreciate",
-          "termIds": [
-            "appreciate"
-          ],
-          "story": "The yuan appreciated to its highest level since 2022.",
-          "stem": "这句话里最关键的那个词是？",
-          "options": [
-            {
-              "text": "appreciate",
-              "art": "appreciate"
-            },
-            {
-              "text": "sterling",
-              "art": "sterling"
-            },
-            {
-              "text": "peso",
-              "art": "peso"
-            },
-            {
-              "text": "rupiah",
-              "art": "rupiah"
-            }
-          ],
-          "answer": 0,
-          "why": "appreciate：一种货币相对于另一种货币的价值上升。"
-        },
-        {
           "id": "u2r-appreciate-t",
           "type": "truefalse",
           "termId": "appreciate",
           "termIds": [
             "appreciate"
           ],
-          "stem": "appreciate 就是 英镑。",
+          "stem": "appreciate 就是 贬值。",
           "answer": false,
-          "why": "appreciate 是「升值」，不是「英镑」。"
-        },
-        {
-          "id": "u2r-depreciate-s",
-          "type": "scenario",
-          "termId": "depreciate",
-          "termIds": [
-            "depreciate"
-          ],
-          "story": "The Taiwan dollar depreciated against the US dollar.",
-          "stem": "这句话里最关键的那个词是？",
-          "options": [
-            {
-              "text": "depreciate",
-              "art": "depreciate"
-            },
-            {
-              "text": "sterling",
-              "art": "sterling"
-            },
-            {
-              "text": "peso",
-              "art": "peso"
-            },
-            {
-              "text": "rupiah",
-              "art": "rupiah"
-            }
-          ],
-          "answer": 0,
-          "why": "depreciate：一种货币相对于另一种货币的价值下降。"
+          "why": "appreciate 是「升值」，不是「贬值」。"
         },
         {
           "id": "u2r-depreciate-t",
@@ -2651,75 +2802,15 @@
           "why": "depreciate 确实是「贬值」。"
         },
         {
-          "id": "u2r-strengthen-s",
-          "type": "scenario",
-          "termId": "strengthen",
-          "termIds": [
-            "strengthen"
-          ],
-          "story": "The yen strengthened as risk appetite faded.",
-          "stem": "这句话里最关键的那个词是？",
-          "options": [
-            {
-              "text": "strengthen",
-              "art": "strengthen"
-            },
-            {
-              "text": "sterling",
-              "art": "sterling"
-            },
-            {
-              "text": "peso",
-              "art": "peso"
-            },
-            {
-              "text": "rupiah",
-              "art": "rupiah"
-            }
-          ],
-          "answer": 0,
-          "why": "strengthen：货币价值上升的通俗说法，常与 appreciate 互换使用。"
-        },
-        {
           "id": "u2r-strengthen-t",
           "type": "truefalse",
           "termId": "strengthen",
           "termIds": [
             "strengthen"
           ],
-          "stem": "strengthen 就是 英镑。",
+          "stem": "strengthen 就是 走弱。",
           "answer": false,
-          "why": "strengthen 是「走强」，不是「英镑」。"
-        },
-        {
-          "id": "u2r-weaken-s",
-          "type": "scenario",
-          "termId": "weaken",
-          "termIds": [
-            "weaken"
-          ],
-          "story": "Asian currencies weakened as the dollar firmed.",
-          "stem": "这句话里最关键的那个词是？",
-          "options": [
-            {
-              "text": "weaken",
-              "art": "weaken"
-            },
-            {
-              "text": "sterling",
-              "art": "sterling"
-            },
-            {
-              "text": "peso",
-              "art": "peso"
-            },
-            {
-              "text": "rupiah",
-              "art": "rupiah"
-            }
-          ],
-          "answer": 0,
-          "why": "weaken：货币价值下降的通俗说法，常与 depreciate 互换使用。"
+          "why": "strengthen 是「走强」，不是「走弱」。"
         },
         {
           "id": "u2r-weaken-t",
@@ -2835,77 +2926,19 @@
               "art": "central bank"
             },
             {
+              "text": "中央银行通过调节利率、货币供应和信贷条件来影响经济的政策。",
+              "art": "monetary policy"
+            },
+            {
               "text": "中央银行提高政策利率的行为。",
               "art": "rate hike"
             },
             {
               "text": "中央银行降低政策利率的行为。",
               "art": "rate cut"
-            },
-            {
-              "text": "货币政策取向上偏向收紧、优先压制通胀的立场。",
-              "art": "hawkish"
             }
           ],
           "answer": 0,
-          "why": "central bank 是机构；monetary policy 是它做的事。"
-        },
-        {
-          "id": "u3l1-central bank-s",
-          "type": "scenario",
-          "termId": "central bank",
-          "termIds": [
-            "central bank"
-          ],
-          "story": "Investors awaited minutes from the central bank's latest meeting.",
-          "stem": "这句话里最关键的那个词是？",
-          "options": [
-            {
-              "text": "central bank",
-              "art": "central bank"
-            },
-            {
-              "text": "rate hike",
-              "art": "rate hike"
-            },
-            {
-              "text": "rate cut",
-              "art": "rate cut"
-            },
-            {
-              "text": "hawkish",
-              "art": "hawkish"
-            }
-          ],
-          "answer": 0,
-          "why": "central bank：负责制定货币政策、控制货币供应和利率的机构。"
-        },
-        {
-          "id": "u3l1-central bank-t",
-          "type": "truefalse",
-          "termId": "central bank",
-          "termIds": [
-            "central bank"
-          ],
-          "stem": "central bank：央行",
-          "answer": true,
-          "why": "central bank 确实是「央行」。"
-        },
-        {
-          "id": "u3l1-central bank-f",
-          "type": "fill",
-          "termId": "central bank",
-          "termIds": [
-            "central bank"
-          ],
-          "story": "Investors awaited minutes from the ____'s latest meeting.",
-          "bank": [
-            "central bank",
-            "rate hike",
-            "rate cut",
-            "hawkish"
-          ],
-          "answer": "central bank",
           "why": "central bank 是机构；monetary policy 是它做的事。"
         },
         {
@@ -2922,12 +2955,12 @@
               "art": "rate hike"
             },
             {
-              "text": "负责制定货币政策、控制货币供应和利率的机构。",
-              "art": "central bank"
-            },
-            {
               "text": "中央银行降低政策利率的行为。",
               "art": "rate cut"
+            },
+            {
+              "text": "负责制定货币政策、控制货币供应和利率的机构。",
+              "art": "central bank"
             },
             {
               "text": "货币政策取向上偏向收紧、优先压制通胀的立场。",
@@ -2935,64 +2968,6 @@
             }
           ],
           "answer": 0,
-          "why": "rate hike 往上调；rate cut 往下调。"
-        },
-        {
-          "id": "u3l1-rate hike-s",
-          "type": "scenario",
-          "termId": "rate hike",
-          "termIds": [
-            "rate hike"
-          ],
-          "story": "Traders reduced bets on a December rate hike.",
-          "stem": "这句话里最关键的那个词是？",
-          "options": [
-            {
-              "text": "rate hike",
-              "art": "rate hike"
-            },
-            {
-              "text": "central bank",
-              "art": "central bank"
-            },
-            {
-              "text": "rate cut",
-              "art": "rate cut"
-            },
-            {
-              "text": "hawkish",
-              "art": "hawkish"
-            }
-          ],
-          "answer": 0,
-          "why": "rate hike：中央银行提高政策利率的行为。"
-        },
-        {
-          "id": "u3l1-rate hike-t",
-          "type": "truefalse",
-          "termId": "rate hike",
-          "termIds": [
-            "rate hike"
-          ],
-          "stem": "rate hike 就是 央行。",
-          "answer": false,
-          "why": "rate hike 是「加息」，不是「央行」。"
-        },
-        {
-          "id": "u3l1-rate hike-f",
-          "type": "fill",
-          "termId": "rate hike",
-          "termIds": [
-            "rate hike"
-          ],
-          "story": "Traders reduced bets on a December ____.",
-          "bank": [
-            "rate hike",
-            "central bank",
-            "rate cut",
-            "hawkish"
-          ],
-          "answer": "rate hike",
           "why": "rate hike 往上调；rate cut 往下调。"
         },
         {
@@ -3009,12 +2984,12 @@
               "art": "rate cut"
             },
             {
-              "text": "负责制定货币政策、控制货币供应和利率的机构。",
-              "art": "central bank"
-            },
-            {
               "text": "中央银行提高政策利率的行为。",
               "art": "rate hike"
+            },
+            {
+              "text": "负责制定货币政策、控制货币供应和利率的机构。",
+              "art": "central bank"
             },
             {
               "text": "货币政策取向上偏向收紧、优先压制通胀的立场。",
@@ -3022,64 +2997,6 @@
             }
           ],
           "answer": 0,
-          "why": "rate cut 往下调；rate hike 往上调。"
-        },
-        {
-          "id": "u3l1-rate cut-s",
-          "type": "scenario",
-          "termId": "rate cut",
-          "termIds": [
-            "rate cut"
-          ],
-          "story": "Markets priced a small chance of a rate cut before March.",
-          "stem": "这句话里最关键的那个词是？",
-          "options": [
-            {
-              "text": "rate cut",
-              "art": "rate cut"
-            },
-            {
-              "text": "central bank",
-              "art": "central bank"
-            },
-            {
-              "text": "rate hike",
-              "art": "rate hike"
-            },
-            {
-              "text": "hawkish",
-              "art": "hawkish"
-            }
-          ],
-          "answer": 0,
-          "why": "rate cut：中央银行降低政策利率的行为。"
-        },
-        {
-          "id": "u3l1-rate cut-t",
-          "type": "truefalse",
-          "termId": "rate cut",
-          "termIds": [
-            "rate cut"
-          ],
-          "stem": "rate cut：降息",
-          "answer": true,
-          "why": "rate cut 确实是「降息」。"
-        },
-        {
-          "id": "u3l1-rate cut-f",
-          "type": "fill",
-          "termId": "rate cut",
-          "termIds": [
-            "rate cut"
-          ],
-          "story": "Markets priced a small chance of a ____ before March.",
-          "bank": [
-            "rate cut",
-            "central bank",
-            "rate hike",
-            "hawkish"
-          ],
-          "answer": "rate cut",
           "why": "rate cut 往下调；rate hike 往上调。"
         },
         {
@@ -3096,38 +3013,38 @@
               "art": "hawkish"
             },
             {
+              "text": "货币政策取向上偏向宽松、优先支持增长的立场。",
+              "art": "dovish"
+            },
+            {
               "text": "负责制定货币政策、控制货币供应和利率的机构。",
               "art": "central bank"
             },
             {
               "text": "中央银行提高政策利率的行为。",
               "art": "rate hike"
-            },
-            {
-              "text": "中央银行降低政策利率的行为。",
-              "art": "rate cut"
             }
           ],
           "answer": 0,
           "why": "hawkish 偏收紧、利好该货币；dovish 偏宽松、利空该货币。"
         },
         {
-          "id": "u3l1-hawkish-s",
+          "id": "u3l1-central bank-s",
           "type": "scenario",
-          "termId": "hawkish",
+          "termId": "central bank",
           "termIds": [
-            "hawkish"
+            "central bank"
           ],
-          "story": "A hawkish surprise strengthens a currency.",
-          "stem": "这句话里最关键的那个词是？",
+          "story": "管货币供应和利率的那个机构。",
+          "stem": "这说的是哪个词？",
           "options": [
-            {
-              "text": "hawkish",
-              "art": "hawkish"
-            },
             {
               "text": "central bank",
               "art": "central bank"
+            },
+            {
+              "text": "monetary policy",
+              "art": "monetary policy"
             },
             {
               "text": "rate hike",
@@ -3139,7 +3056,130 @@
             }
           ],
           "answer": 0,
+          "why": "central bank：负责制定货币政策、控制货币供应和利率的机构。"
+        },
+        {
+          "id": "u3l1-rate hike-s",
+          "type": "scenario",
+          "termId": "rate hike",
+          "termIds": [
+            "rate hike"
+          ],
+          "story": "央行把利率往上调。",
+          "stem": "这说的是哪个词？",
+          "options": [
+            {
+              "text": "rate hike",
+              "art": "rate hike"
+            },
+            {
+              "text": "rate cut",
+              "art": "rate cut"
+            },
+            {
+              "text": "central bank",
+              "art": "central bank"
+            },
+            {
+              "text": "hawkish",
+              "art": "hawkish"
+            }
+          ],
+          "answer": 0,
+          "why": "rate hike：中央银行提高政策利率的行为。"
+        },
+        {
+          "id": "u3l1-rate cut-s",
+          "type": "scenario",
+          "termId": "rate cut",
+          "termIds": [
+            "rate cut"
+          ],
+          "story": "央行把利率往下调。",
+          "stem": "这说的是哪个词？",
+          "options": [
+            {
+              "text": "rate cut",
+              "art": "rate cut"
+            },
+            {
+              "text": "rate hike",
+              "art": "rate hike"
+            },
+            {
+              "text": "central bank",
+              "art": "central bank"
+            },
+            {
+              "text": "hawkish",
+              "art": "hawkish"
+            }
+          ],
+          "answer": 0,
+          "why": "rate cut：中央银行降低政策利率的行为。"
+        },
+        {
+          "id": "u3l1-hawkish-s",
+          "type": "scenario",
+          "termId": "hawkish",
+          "termIds": [
+            "hawkish"
+          ],
+          "story": "倾向收紧、更担心通胀的那种态度。",
+          "stem": "这说的是哪个词？",
+          "options": [
+            {
+              "text": "hawkish",
+              "art": "hawkish"
+            },
+            {
+              "text": "dovish",
+              "art": "dovish"
+            },
+            {
+              "text": "central bank",
+              "art": "central bank"
+            },
+            {
+              "text": "rate hike",
+              "art": "rate hike"
+            }
+          ],
+          "answer": 0,
           "why": "hawkish：货币政策取向上偏向收紧、优先压制通胀的立场。"
+        },
+        {
+          "id": "u3l1-central bank-t",
+          "type": "truefalse",
+          "termId": "central bank",
+          "termIds": [
+            "central bank"
+          ],
+          "stem": "central bank：央行",
+          "answer": true,
+          "why": "central bank 确实是「央行」。"
+        },
+        {
+          "id": "u3l1-rate hike-t",
+          "type": "truefalse",
+          "termId": "rate hike",
+          "termIds": [
+            "rate hike"
+          ],
+          "stem": "rate hike 就是 降息。",
+          "answer": false,
+          "why": "rate hike 是「加息」，不是「降息」。"
+        },
+        {
+          "id": "u3l1-rate cut-t",
+          "type": "truefalse",
+          "termId": "rate cut",
+          "termIds": [
+            "rate cut"
+          ],
+          "stem": "rate cut：降息",
+          "answer": true,
+          "why": "rate cut 确实是「降息」。"
         },
         {
           "id": "u3l1-hawkish-t",
@@ -3148,9 +3188,60 @@
           "termIds": [
             "hawkish"
           ],
-          "stem": "hawkish 就是 央行。",
+          "stem": "hawkish 就是 鸽派。",
           "answer": false,
-          "why": "hawkish 是「鹰派」，不是「央行」。"
+          "why": "hawkish 是「鹰派」，不是「鸽派」。"
+        },
+        {
+          "id": "u3l1-central bank-f",
+          "type": "fill",
+          "termId": "central bank",
+          "termIds": [
+            "central bank"
+          ],
+          "story": "Investors awaited minutes from the ____'s latest meeting.",
+          "bank": [
+            "central bank",
+            "monetary policy",
+            "rate hike",
+            "rate cut"
+          ],
+          "answer": "central bank",
+          "why": "central bank 是机构；monetary policy 是它做的事。"
+        },
+        {
+          "id": "u3l1-rate hike-f",
+          "type": "fill",
+          "termId": "rate hike",
+          "termIds": [
+            "rate hike"
+          ],
+          "story": "Traders reduced bets on a December ____.",
+          "bank": [
+            "rate hike",
+            "rate cut",
+            "central bank",
+            "hawkish"
+          ],
+          "answer": "rate hike",
+          "why": "rate hike 往上调；rate cut 往下调。"
+        },
+        {
+          "id": "u3l1-rate cut-f",
+          "type": "fill",
+          "termId": "rate cut",
+          "termIds": [
+            "rate cut"
+          ],
+          "story": "Markets priced a small chance of a ____ before March.",
+          "bank": [
+            "rate cut",
+            "rate hike",
+            "central bank",
+            "hawkish"
+          ],
+          "answer": "rate cut",
+          "why": "rate cut 往下调；rate hike 往上调。"
         },
         {
           "id": "u3l1-hawkish-f",
@@ -3162,9 +3253,9 @@
           "story": "A ____ surprise strengthens a currency.",
           "bank": [
             "hawkish",
+            "dovish",
             "central bank",
-            "rate hike",
-            "rate cut"
+            "rate hike"
           ],
           "answer": "hawkish",
           "why": "hawkish 偏收紧、利好该货币；dovish 偏宽松、利空该货币。"
@@ -3254,76 +3345,19 @@
               "art": "dovish"
             },
             {
+              "text": "货币政策取向上偏向收紧、优先压制通胀的立场。",
+              "art": "hawkish"
+            },
+            {
               "text": "负责制定货币政策、控制货币供应和利率的机构。",
               "art": "central bank"
             },
             {
               "text": "中央银行提高政策利率的行为。",
               "art": "rate hike"
-            },
-            {
-              "text": "中央银行降低政策利率的行为。",
-              "art": "rate cut"
             }
           ],
           "answer": 0,
-          "why": "dovish 偏宽松、通常利空该货币；hawkish 偏收紧。"
-        },
-        {
-          "id": "u3l2-dovish-s",
-          "type": "scenario",
-          "termId": "dovish",
-          "termIds": [
-            "dovish"
-          ],
-          "story": "A dovish surprise weakens a currency.",
-          "stem": "这句话里最关键的那个词是？",
-          "options": [
-            {
-              "text": "dovish",
-              "art": "dovish"
-            },
-            {
-              "text": "central bank",
-              "art": "central bank"
-            },
-            {
-              "text": "rate hike",
-              "art": "rate hike"
-            },
-            {
-              "text": "rate cut",
-              "art": "rate cut"
-            }
-          ],
-          "answer": 0,
-          "why": "dovish：货币政策取向上偏向宽松、优先支持增长的立场。"
-        },
-        {
-          "id": "u3l2-dovish-t",
-          "type": "truefalse",
-          "termId": "dovish",
-          "termIds": [
-            "dovish"
-          ],
-          "stem": "dovish：鸽派",
-          "answer": true,
-          "why": "dovish 确实是「鸽派」。"
-        },
-        {
-          "id": "u3l2-dovish-f",
-          "type": "fill",
-          "termId": "dovish",
-          "termIds": [
-            "dovish"
-          ],
-          "story": "A ____ surprise weakens a currency.",
-          "bank": [
-            "dovish",
-            "forward guidance",
-            "tapering"
-          ],
-          "answer": "dovish",
           "why": "dovish 偏宽松、通常利空该货币；hawkish 偏收紧。"
         },
         {
@@ -3340,76 +3374,19 @@
               "art": "forward guidance"
             },
             {
+              "text": "中央银行逐步削减资产购买规模的过程，是退出量化宽松的第一步。",
+              "art": "tapering"
+            },
+            {
               "text": "负责制定货币政策、控制货币供应和利率的机构。",
               "art": "central bank"
             },
             {
               "text": "中央银行提高政策利率的行为。",
               "art": "rate hike"
-            },
-            {
-              "text": "中央银行降低政策利率的行为。",
-              "art": "rate cut"
             }
           ],
           "answer": 0,
-          "why": "forward guidance 是口头指引（说什么）；tapering 是实际减少购债（做什么）。"
-        },
-        {
-          "id": "u3l2-forward guidance-s",
-          "type": "scenario",
-          "termId": "forward guidance",
-          "termIds": [
-            "forward guidance"
-          ],
-          "story": "Forward guidance from each central bank matters more than the decisions themselves.",
-          "stem": "这句话里最关键的那个词是？",
-          "options": [
-            {
-              "text": "forward guidance",
-              "art": "forward guidance"
-            },
-            {
-              "text": "central bank",
-              "art": "central bank"
-            },
-            {
-              "text": "rate hike",
-              "art": "rate hike"
-            },
-            {
-              "text": "rate cut",
-              "art": "rate cut"
-            }
-          ],
-          "answer": 0,
-          "why": "forward guidance：央行就未来政策路径给出的沟通，用于引导市场预期。"
-        },
-        {
-          "id": "u3l2-forward guidance-t",
-          "type": "truefalse",
-          "termId": "forward guidance",
-          "termIds": [
-            "forward guidance"
-          ],
-          "stem": "forward guidance 就是 央行。",
-          "answer": false,
-          "why": "forward guidance 是「前瞻指引」，不是「央行」。"
-        },
-        {
-          "id": "u3l2-forward guidance-f",
-          "type": "fill",
-          "termId": "forward guidance",
-          "termIds": [
-            "forward guidance"
-          ],
-          "story": "____ from each central bank matters more than the decisions themselves.",
-          "bank": [
-            "forward guidance",
-            "dovish",
-            "tapering"
-          ],
-          "answer": "forward guidance",
           "why": "forward guidance 是口头指引（说什么）；tapering 是实际减少购债（做什么）。"
         },
         {
@@ -3426,31 +3403,65 @@
               "art": "tapering"
             },
             {
+              "text": "减少货币供应或提高融资成本的政策取向，包括加息和缩减资产购买。",
+              "art": "tightening"
+            },
+            {
               "text": "负责制定货币政策、控制货币供应和利率的机构。",
               "art": "central bank"
             },
             {
               "text": "中央银行提高政策利率的行为。",
               "art": "rate hike"
-            },
-            {
-              "text": "中央银行降低政策利率的行为。",
-              "art": "rate cut"
             }
           ],
           "answer": 0,
           "why": "tapering 是减少「增量」（买得少了）；tightening 是真正收紧（可能还在买但速度慢，也可能是加息）。taper 不等于立刻收紧。"
         },
         {
-          "id": "u3l2-tapering-s",
+          "id": "u3l2-dovish-s",
           "type": "scenario",
-          "termId": "tapering",
+          "termId": "dovish",
           "termIds": [
-            "tapering"
+            "dovish"
           ],
-          "story": "The Bank of Japan has been tapering its bond purchases.",
-          "stem": "这句话里最关键的那个词是？",
+          "story": "倾向宽松、更担心增长的那种态度。",
+          "stem": "这说的是哪个词？",
           "options": [
+            {
+              "text": "dovish",
+              "art": "dovish"
+            },
+            {
+              "text": "hawkish",
+              "art": "hawkish"
+            },
+            {
+              "text": "central bank",
+              "art": "central bank"
+            },
+            {
+              "text": "rate hike",
+              "art": "rate hike"
+            }
+          ],
+          "answer": 0,
+          "why": "dovish：货币政策取向上偏向宽松、优先支持增长的立场。"
+        },
+        {
+          "id": "u3l2-forward guidance-s",
+          "type": "scenario",
+          "termId": "forward guidance",
+          "termIds": [
+            "forward guidance"
+          ],
+          "story": "央行提前告诉市场「接下来会怎么做」。",
+          "stem": "这说的是哪个词？",
+          "options": [
+            {
+              "text": "forward guidance",
+              "art": "forward guidance"
+            },
             {
               "text": "tapering",
               "art": "tapering"
@@ -3462,14 +3473,62 @@
             {
               "text": "rate hike",
               "art": "rate hike"
+            }
+          ],
+          "answer": 0,
+          "why": "forward guidance：央行就未来政策路径给出的沟通，用于引导市场预期。"
+        },
+        {
+          "id": "u3l2-tapering-s",
+          "type": "scenario",
+          "termId": "tapering",
+          "termIds": [
+            "tapering"
+          ],
+          "story": "央行逐步减少买债的规模。",
+          "stem": "这说的是哪个词？",
+          "options": [
+            {
+              "text": "tapering",
+              "art": "tapering"
             },
             {
-              "text": "rate cut",
-              "art": "rate cut"
+              "text": "tightening",
+              "art": "tightening"
+            },
+            {
+              "text": "central bank",
+              "art": "central bank"
+            },
+            {
+              "text": "rate hike",
+              "art": "rate hike"
             }
           ],
           "answer": 0,
           "why": "tapering：中央银行逐步削减资产购买规模的过程，是退出量化宽松的第一步。"
+        },
+        {
+          "id": "u3l2-dovish-t",
+          "type": "truefalse",
+          "termId": "dovish",
+          "termIds": [
+            "dovish"
+          ],
+          "stem": "dovish：鸽派",
+          "answer": true,
+          "why": "dovish 确实是「鸽派」。"
+        },
+        {
+          "id": "u3l2-forward guidance-t",
+          "type": "truefalse",
+          "termId": "forward guidance",
+          "termIds": [
+            "forward guidance"
+          ],
+          "stem": "forward guidance 就是 缩减购债。",
+          "answer": false,
+          "why": "forward guidance 是「前瞻指引」，不是「缩减购债」。"
         },
         {
           "id": "u3l2-tapering-t",
@@ -3483,6 +3542,39 @@
           "why": "tapering 确实是「缩减购债」。"
         },
         {
+          "id": "u3l2-dovish-f",
+          "type": "fill",
+          "termId": "dovish",
+          "termIds": [
+            "dovish"
+          ],
+          "story": "A ____ surprise weakens a currency.",
+          "bank": [
+            "dovish",
+            "hawkish",
+            "forward guidance",
+            "tapering"
+          ],
+          "answer": "dovish",
+          "why": "dovish 偏宽松、通常利空该货币；hawkish 偏收紧。"
+        },
+        {
+          "id": "u3l2-forward guidance-f",
+          "type": "fill",
+          "termId": "forward guidance",
+          "termIds": [
+            "forward guidance"
+          ],
+          "story": "____ from each central bank matters more than the decisions themselves.",
+          "bank": [
+            "forward guidance",
+            "tapering",
+            "dovish"
+          ],
+          "answer": "forward guidance",
+          "why": "forward guidance 是口头指引（说什么）；tapering 是实际减少购债（做什么）。"
+        },
+        {
           "id": "u3l2-tapering-f",
           "type": "fill",
           "termId": "tapering",
@@ -3492,6 +3584,7 @@
           "story": "The Bank of Japan has been ____ its bond purchases.",
           "bank": [
             "tapering",
+            "tightening",
             "dovish",
             "forward guidance"
           ],
@@ -3560,19 +3653,89 @@
       "review": true,
       "prompts": [
         {
+          "id": "u3r-h-hike-cut",
+          "type": "headline",
+          "termIds": [
+            "rate cut",
+            "rate hike"
+          ],
+          "story": "With inflation back at 2%, the central bank delivers a ____ to support growth.",
+          "stem": "这句话里的空该填哪个词？",
+          "options": [
+            {
+              "text": "rate cut",
+              "art": "rate cut"
+            },
+            {
+              "text": "rate hike",
+              "art": "rate hike"
+            }
+          ],
+          "answer": 0,
+          "why": "通胀回落、要支持增长，就是降息 rate cut；rate hike 是加息，用来压通胀。"
+        },
+        {
+          "id": "u3r-h-hawkish-dovish",
+          "type": "headline",
+          "termIds": [
+            "hawkish",
+            "dovish"
+          ],
+          "story": "Bond yields jump after a ____ governor says more hikes may be needed to tame prices.",
+          "stem": "这句话里的空该填哪个词？",
+          "options": [
+            {
+              "text": "hawkish",
+              "art": "hawkish"
+            },
+            {
+              "text": "dovish",
+              "art": "dovish"
+            }
+          ],
+          "answer": 0,
+          "why": "主张继续加息压物价是鹰派 hawkish；dovish 鸽派偏向放松、支持增长。"
+        },
+        {
           "id": "u3r-central bank-s",
           "type": "scenario",
           "termId": "central bank",
           "termIds": [
             "central bank"
           ],
-          "story": "Investors awaited minutes from the central bank's latest meeting.",
-          "stem": "这句话里最关键的那个词是？",
+          "story": "管货币供应和利率的那个机构。",
+          "stem": "这说的是哪个词？",
           "options": [
             {
               "text": "central bank",
               "art": "central bank"
             },
+            {
+              "text": "monetary policy",
+              "art": "monetary policy"
+            },
+            {
+              "text": "rate hike",
+              "art": "rate hike"
+            },
+            {
+              "text": "rate cut",
+              "art": "rate cut"
+            }
+          ],
+          "answer": 0,
+          "why": "central bank：负责制定货币政策、控制货币供应和利率的机构。"
+        },
+        {
+          "id": "u3r-rate hike-s",
+          "type": "scenario",
+          "termId": "rate hike",
+          "termIds": [
+            "rate hike"
+          ],
+          "story": "央行把利率往上调。",
+          "stem": "这说的是哪个词？",
+          "options": [
             {
               "text": "rate hike",
               "art": "rate hike"
@@ -3582,12 +3745,166 @@
               "art": "rate cut"
             },
             {
+              "text": "central bank",
+              "art": "central bank"
+            },
+            {
               "text": "hawkish",
               "art": "hawkish"
             }
           ],
           "answer": 0,
-          "why": "central bank：负责制定货币政策、控制货币供应和利率的机构。"
+          "why": "rate hike：中央银行提高政策利率的行为。"
+        },
+        {
+          "id": "u3r-rate cut-s",
+          "type": "scenario",
+          "termId": "rate cut",
+          "termIds": [
+            "rate cut"
+          ],
+          "story": "央行把利率往下调。",
+          "stem": "这说的是哪个词？",
+          "options": [
+            {
+              "text": "rate cut",
+              "art": "rate cut"
+            },
+            {
+              "text": "rate hike",
+              "art": "rate hike"
+            },
+            {
+              "text": "central bank",
+              "art": "central bank"
+            },
+            {
+              "text": "hawkish",
+              "art": "hawkish"
+            }
+          ],
+          "answer": 0,
+          "why": "rate cut：中央银行降低政策利率的行为。"
+        },
+        {
+          "id": "u3r-hawkish-s",
+          "type": "scenario",
+          "termId": "hawkish",
+          "termIds": [
+            "hawkish"
+          ],
+          "story": "倾向收紧、更担心通胀的那种态度。",
+          "stem": "这说的是哪个词？",
+          "options": [
+            {
+              "text": "hawkish",
+              "art": "hawkish"
+            },
+            {
+              "text": "dovish",
+              "art": "dovish"
+            },
+            {
+              "text": "central bank",
+              "art": "central bank"
+            },
+            {
+              "text": "rate hike",
+              "art": "rate hike"
+            }
+          ],
+          "answer": 0,
+          "why": "hawkish：货币政策取向上偏向收紧、优先压制通胀的立场。"
+        },
+        {
+          "id": "u3r-dovish-s",
+          "type": "scenario",
+          "termId": "dovish",
+          "termIds": [
+            "dovish"
+          ],
+          "story": "倾向宽松、更担心增长的那种态度。",
+          "stem": "这说的是哪个词？",
+          "options": [
+            {
+              "text": "dovish",
+              "art": "dovish"
+            },
+            {
+              "text": "hawkish",
+              "art": "hawkish"
+            },
+            {
+              "text": "central bank",
+              "art": "central bank"
+            },
+            {
+              "text": "rate hike",
+              "art": "rate hike"
+            }
+          ],
+          "answer": 0,
+          "why": "dovish：货币政策取向上偏向宽松、优先支持增长的立场。"
+        },
+        {
+          "id": "u3r-forward guidance-s",
+          "type": "scenario",
+          "termId": "forward guidance",
+          "termIds": [
+            "forward guidance"
+          ],
+          "story": "央行提前告诉市场「接下来会怎么做」。",
+          "stem": "这说的是哪个词？",
+          "options": [
+            {
+              "text": "forward guidance",
+              "art": "forward guidance"
+            },
+            {
+              "text": "tapering",
+              "art": "tapering"
+            },
+            {
+              "text": "central bank",
+              "art": "central bank"
+            },
+            {
+              "text": "rate hike",
+              "art": "rate hike"
+            }
+          ],
+          "answer": 0,
+          "why": "forward guidance：央行就未来政策路径给出的沟通，用于引导市场预期。"
+        },
+        {
+          "id": "u3r-tapering-s",
+          "type": "scenario",
+          "termId": "tapering",
+          "termIds": [
+            "tapering"
+          ],
+          "story": "央行逐步减少买债的规模。",
+          "stem": "这说的是哪个词？",
+          "options": [
+            {
+              "text": "tapering",
+              "art": "tapering"
+            },
+            {
+              "text": "tightening",
+              "art": "tightening"
+            },
+            {
+              "text": "central bank",
+              "art": "central bank"
+            },
+            {
+              "text": "rate hike",
+              "art": "rate hike"
+            }
+          ],
+          "answer": 0,
+          "why": "tapering：中央银行逐步削减资产购买规模的过程，是退出量化宽松的第一步。"
         },
         {
           "id": "u3r-central bank-t",
@@ -3601,75 +3918,15 @@
           "why": "central bank 确实是「央行」。"
         },
         {
-          "id": "u3r-rate hike-s",
-          "type": "scenario",
-          "termId": "rate hike",
-          "termIds": [
-            "rate hike"
-          ],
-          "story": "Traders reduced bets on a December rate hike.",
-          "stem": "这句话里最关键的那个词是？",
-          "options": [
-            {
-              "text": "rate hike",
-              "art": "rate hike"
-            },
-            {
-              "text": "central bank",
-              "art": "central bank"
-            },
-            {
-              "text": "rate cut",
-              "art": "rate cut"
-            },
-            {
-              "text": "hawkish",
-              "art": "hawkish"
-            }
-          ],
-          "answer": 0,
-          "why": "rate hike：中央银行提高政策利率的行为。"
-        },
-        {
           "id": "u3r-rate hike-t",
           "type": "truefalse",
           "termId": "rate hike",
           "termIds": [
             "rate hike"
           ],
-          "stem": "rate hike 就是 央行。",
+          "stem": "rate hike 就是 降息。",
           "answer": false,
-          "why": "rate hike 是「加息」，不是「央行」。"
-        },
-        {
-          "id": "u3r-rate cut-s",
-          "type": "scenario",
-          "termId": "rate cut",
-          "termIds": [
-            "rate cut"
-          ],
-          "story": "Markets priced a small chance of a rate cut before March.",
-          "stem": "这句话里最关键的那个词是？",
-          "options": [
-            {
-              "text": "rate cut",
-              "art": "rate cut"
-            },
-            {
-              "text": "central bank",
-              "art": "central bank"
-            },
-            {
-              "text": "rate hike",
-              "art": "rate hike"
-            },
-            {
-              "text": "hawkish",
-              "art": "hawkish"
-            }
-          ],
-          "answer": 0,
-          "why": "rate cut：中央银行降低政策利率的行为。"
+          "why": "rate hike 是「加息」，不是「降息」。"
         },
         {
           "id": "u3r-rate cut-t",
@@ -3683,75 +3940,15 @@
           "why": "rate cut 确实是「降息」。"
         },
         {
-          "id": "u3r-hawkish-s",
-          "type": "scenario",
-          "termId": "hawkish",
-          "termIds": [
-            "hawkish"
-          ],
-          "story": "A hawkish surprise strengthens a currency.",
-          "stem": "这句话里最关键的那个词是？",
-          "options": [
-            {
-              "text": "hawkish",
-              "art": "hawkish"
-            },
-            {
-              "text": "central bank",
-              "art": "central bank"
-            },
-            {
-              "text": "rate hike",
-              "art": "rate hike"
-            },
-            {
-              "text": "rate cut",
-              "art": "rate cut"
-            }
-          ],
-          "answer": 0,
-          "why": "hawkish：货币政策取向上偏向收紧、优先压制通胀的立场。"
-        },
-        {
           "id": "u3r-hawkish-t",
           "type": "truefalse",
           "termId": "hawkish",
           "termIds": [
             "hawkish"
           ],
-          "stem": "hawkish 就是 央行。",
+          "stem": "hawkish 就是 鸽派。",
           "answer": false,
-          "why": "hawkish 是「鹰派」，不是「央行」。"
-        },
-        {
-          "id": "u3r-dovish-s",
-          "type": "scenario",
-          "termId": "dovish",
-          "termIds": [
-            "dovish"
-          ],
-          "story": "A dovish surprise weakens a currency.",
-          "stem": "这句话里最关键的那个词是？",
-          "options": [
-            {
-              "text": "dovish",
-              "art": "dovish"
-            },
-            {
-              "text": "central bank",
-              "art": "central bank"
-            },
-            {
-              "text": "rate hike",
-              "art": "rate hike"
-            },
-            {
-              "text": "rate cut",
-              "art": "rate cut"
-            }
-          ],
-          "answer": 0,
-          "why": "dovish：货币政策取向上偏向宽松、优先支持增长的立场。"
+          "why": "hawkish 是「鹰派」，不是「鸽派」。"
         },
         {
           "id": "u3r-dovish-t",
@@ -3765,75 +3962,15 @@
           "why": "dovish 确实是「鸽派」。"
         },
         {
-          "id": "u3r-forward guidance-s",
-          "type": "scenario",
-          "termId": "forward guidance",
-          "termIds": [
-            "forward guidance"
-          ],
-          "story": "Forward guidance from each central bank matters more than the decisions themselves.",
-          "stem": "这句话里最关键的那个词是？",
-          "options": [
-            {
-              "text": "forward guidance",
-              "art": "forward guidance"
-            },
-            {
-              "text": "central bank",
-              "art": "central bank"
-            },
-            {
-              "text": "rate hike",
-              "art": "rate hike"
-            },
-            {
-              "text": "rate cut",
-              "art": "rate cut"
-            }
-          ],
-          "answer": 0,
-          "why": "forward guidance：央行就未来政策路径给出的沟通，用于引导市场预期。"
-        },
-        {
           "id": "u3r-forward guidance-t",
           "type": "truefalse",
           "termId": "forward guidance",
           "termIds": [
             "forward guidance"
           ],
-          "stem": "forward guidance 就是 央行。",
+          "stem": "forward guidance 就是 缩减购债。",
           "answer": false,
-          "why": "forward guidance 是「前瞻指引」，不是「央行」。"
-        },
-        {
-          "id": "u3r-tapering-s",
-          "type": "scenario",
-          "termId": "tapering",
-          "termIds": [
-            "tapering"
-          ],
-          "story": "The Bank of Japan has been tapering its bond purchases.",
-          "stem": "这句话里最关键的那个词是？",
-          "options": [
-            {
-              "text": "tapering",
-              "art": "tapering"
-            },
-            {
-              "text": "central bank",
-              "art": "central bank"
-            },
-            {
-              "text": "rate hike",
-              "art": "rate hike"
-            },
-            {
-              "text": "rate cut",
-              "art": "rate cut"
-            }
-          ],
-          "answer": 0,
-          "why": "tapering：中央银行逐步削减资产购买规模的过程，是退出量化宽松的第一步。"
+          "why": "forward guidance 是「前瞻指引」，不是「缩减购债」。"
         },
         {
           "id": "u3r-tapering-t",
@@ -3965,63 +4102,6 @@
           "why": "monetary policy 管钱的价格和量（央行）；fiscal policy 管税收和政府支出（政府）。"
         },
         {
-          "id": "u4l1-monetary policy-s",
-          "type": "scenario",
-          "termId": "monetary policy",
-          "termIds": [
-            "monetary policy"
-          ],
-          "story": "Monetary policy is now diverging across the major economies.",
-          "stem": "这句话里最关键的那个词是？",
-          "options": [
-            {
-              "text": "monetary policy",
-              "art": "monetary policy"
-            },
-            {
-              "text": "fiscal policy",
-              "art": "fiscal policy"
-            },
-            {
-              "text": "quantitative easing",
-              "art": "quantitative easing"
-            },
-            {
-              "text": "tightening",
-              "art": "tightening"
-            }
-          ],
-          "answer": 0,
-          "why": "monetary policy：中央银行通过调节利率、货币供应和信贷条件来影响经济的政策。"
-        },
-        {
-          "id": "u4l1-monetary policy-t",
-          "type": "truefalse",
-          "termId": "monetary policy",
-          "termIds": [
-            "monetary policy"
-          ],
-          "stem": "monetary policy：货币政策",
-          "answer": true,
-          "why": "monetary policy 确实是「货币政策」。"
-        },
-        {
-          "id": "u4l1-monetary policy-f",
-          "type": "fill",
-          "termId": "monetary policy",
-          "termIds": [
-            "monetary policy"
-          ],
-          "story": "____ is now diverging across the major economies.",
-          "bank": [
-            "monetary policy",
-            "fiscal policy",
-            "quantitative easing"
-          ],
-          "answer": "monetary policy",
-          "why": "monetary policy 管钱的价格和量（央行）；fiscal policy 管税收和政府支出（政府）。"
-        },
-        {
           "id": "u4l1-fiscal policy-m",
           "type": "meaning",
           "termId": "fiscal policy",
@@ -4051,14 +4131,73 @@
           "why": "fiscal policy 由政府和议会决定；monetary policy 由央行决定。两者可以方向相反。"
         },
         {
+          "id": "u4l1-quantitative easing-m",
+          "type": "meaning",
+          "termId": "quantitative easing",
+          "termIds": [
+            "quantitative easing"
+          ],
+          "stem": "quantitative easing 是什么意思？",
+          "options": [
+            {
+              "text": "央行通过大规模购买资产向金融体系注入流动性的非常规政策。",
+              "art": "quantitative easing"
+            },
+            {
+              "text": "减少货币供应或提高融资成本的政策取向，包括加息和缩减资产购买。",
+              "art": "tightening"
+            },
+            {
+              "text": "中央银行通过调节利率、货币供应和信贷条件来影响经济的政策。",
+              "art": "monetary policy"
+            },
+            {
+              "text": "政府通过调整税收和公共支出影响经济的政策。",
+              "art": "fiscal policy"
+            }
+          ],
+          "answer": 0,
+          "why": "QE 是注入流动性（宽松）；tightening 是收回流动性。方向相反。"
+        },
+        {
+          "id": "u4l1-monetary policy-s",
+          "type": "scenario",
+          "termId": "monetary policy",
+          "termIds": [
+            "monetary policy"
+          ],
+          "story": "央行通过利率和货币供应调节经济。",
+          "stem": "这说的是哪个词？",
+          "options": [
+            {
+              "text": "monetary policy",
+              "art": "monetary policy"
+            },
+            {
+              "text": "fiscal policy",
+              "art": "fiscal policy"
+            },
+            {
+              "text": "quantitative easing",
+              "art": "quantitative easing"
+            },
+            {
+              "text": "tightening",
+              "art": "tightening"
+            }
+          ],
+          "answer": 0,
+          "why": "monetary policy：中央银行通过调节利率、货币供应和信贷条件来影响经济的政策。"
+        },
+        {
           "id": "u4l1-fiscal policy-s",
           "type": "scenario",
           "termId": "fiscal policy",
           "termIds": [
             "fiscal policy"
           ],
-          "story": "France's fiscal policy is now working against monetary policy.",
-          "stem": "这句话里最关键的那个词是？",
+          "story": "政府通过税收和支出来调节经济。",
+          "stem": "这说的是哪个词？",
           "options": [
             {
               "text": "fiscal policy",
@@ -4081,6 +4220,47 @@
           "why": "fiscal policy：政府通过调整税收和公共支出影响经济的政策。"
         },
         {
+          "id": "u4l1-quantitative easing-s",
+          "type": "scenario",
+          "termId": "quantitative easing",
+          "termIds": [
+            "quantitative easing"
+          ],
+          "story": "央行大规模买债往市场里灌钱。",
+          "stem": "这说的是哪个词？",
+          "options": [
+            {
+              "text": "quantitative easing",
+              "art": "quantitative easing"
+            },
+            {
+              "text": "tightening",
+              "art": "tightening"
+            },
+            {
+              "text": "monetary policy",
+              "art": "monetary policy"
+            },
+            {
+              "text": "fiscal policy",
+              "art": "fiscal policy"
+            }
+          ],
+          "answer": 0,
+          "why": "quantitative easing：央行通过大规模购买资产向金融体系注入流动性的非常规政策。"
+        },
+        {
+          "id": "u4l1-monetary policy-t",
+          "type": "truefalse",
+          "termId": "monetary policy",
+          "termIds": [
+            "monetary policy"
+          ],
+          "stem": "monetary policy：货币政策",
+          "answer": true,
+          "why": "monetary policy 确实是「货币政策」。"
+        },
+        {
           "id": "u4l1-fiscal policy-t",
           "type": "truefalse",
           "termId": "fiscal policy",
@@ -4090,6 +4270,33 @@
           "stem": "fiscal policy 就是 货币政策。",
           "answer": false,
           "why": "fiscal policy 是「财政政策」，不是「货币政策」。"
+        },
+        {
+          "id": "u4l1-quantitative easing-t",
+          "type": "truefalse",
+          "termId": "quantitative easing",
+          "termIds": [
+            "quantitative easing"
+          ],
+          "stem": "quantitative easing：量化宽松",
+          "answer": true,
+          "why": "quantitative easing 确实是「量化宽松」。"
+        },
+        {
+          "id": "u4l1-monetary policy-f",
+          "type": "fill",
+          "termId": "monetary policy",
+          "termIds": [
+            "monetary policy"
+          ],
+          "story": "____ is now diverging across the major economies.",
+          "bank": [
+            "monetary policy",
+            "fiscal policy",
+            "quantitative easing"
+          ],
+          "answer": "monetary policy",
+          "why": "monetary policy 管钱的价格和量（央行）；fiscal policy 管税收和政府支出（政府）。"
         },
         {
           "id": "u4l1-fiscal policy-f",
@@ -4108,76 +4315,6 @@
           "why": "fiscal policy 由政府和议会决定；monetary policy 由央行决定。两者可以方向相反。"
         },
         {
-          "id": "u4l1-quantitative easing-m",
-          "type": "meaning",
-          "termId": "quantitative easing",
-          "termIds": [
-            "quantitative easing"
-          ],
-          "stem": "quantitative easing 是什么意思？",
-          "options": [
-            {
-              "text": "央行通过大规模购买资产向金融体系注入流动性的非常规政策。",
-              "art": "quantitative easing"
-            },
-            {
-              "text": "中央银行通过调节利率、货币供应和信贷条件来影响经济的政策。",
-              "art": "monetary policy"
-            },
-            {
-              "text": "政府通过调整税收和公共支出影响经济的政策。",
-              "art": "fiscal policy"
-            },
-            {
-              "text": "减少货币供应或提高融资成本的政策取向，包括加息和缩减资产购买。",
-              "art": "tightening"
-            }
-          ],
-          "answer": 0,
-          "why": "QE 是注入流动性（宽松）；tightening 是收回流动性。方向相反。"
-        },
-        {
-          "id": "u4l1-quantitative easing-s",
-          "type": "scenario",
-          "termId": "quantitative easing",
-          "termIds": [
-            "quantitative easing"
-          ],
-          "story": "Quantitative easing pushed yield-seeking capital into emerging markets.",
-          "stem": "这句话里最关键的那个词是？",
-          "options": [
-            {
-              "text": "quantitative easing",
-              "art": "quantitative easing"
-            },
-            {
-              "text": "monetary policy",
-              "art": "monetary policy"
-            },
-            {
-              "text": "fiscal policy",
-              "art": "fiscal policy"
-            },
-            {
-              "text": "tightening",
-              "art": "tightening"
-            }
-          ],
-          "answer": 0,
-          "why": "quantitative easing：央行通过大规模购买资产向金融体系注入流动性的非常规政策。"
-        },
-        {
-          "id": "u4l1-quantitative easing-t",
-          "type": "truefalse",
-          "termId": "quantitative easing",
-          "termIds": [
-            "quantitative easing"
-          ],
-          "stem": "quantitative easing：量化宽松",
-          "answer": true,
-          "why": "quantitative easing 确实是「量化宽松」。"
-        },
-        {
           "id": "u4l1-quantitative easing-f",
           "type": "fill",
           "termId": "quantitative easing",
@@ -4187,6 +4324,7 @@
           "story": "____ pushed yield-seeking capital into emerging markets.",
           "bank": [
             "quantitative easing",
+            "tightening",
             "monetary policy",
             "fiscal policy"
           ],
@@ -4268,75 +4406,19 @@
               "art": "tightening"
             },
             {
+              "text": "增加货币供应或降低融资成本的政策取向，包括降息和资产购买。",
+              "art": "easing"
+            },
+            {
               "text": "中央银行通过调节利率、货币供应和信贷条件来影响经济的政策。",
               "art": "monetary policy"
             },
             {
               "text": "政府通过调整税收和公共支出影响经济的政策。",
               "art": "fiscal policy"
-            },
-            {
-              "text": "央行通过大规模购买资产向金融体系注入流动性的非常规政策。",
-              "art": "quantitative easing"
             }
           ],
           "answer": 0,
-          "why": "tightening 收紧；easing 放松。"
-        },
-        {
-          "id": "u4l2-tightening-s",
-          "type": "scenario",
-          "termId": "tightening",
-          "termIds": [
-            "tightening"
-          ],
-          "story": "A further reduction would tighten global liquidity.",
-          "stem": "这句话里最关键的那个词是？",
-          "options": [
-            {
-              "text": "tightening",
-              "art": "tightening"
-            },
-            {
-              "text": "monetary policy",
-              "art": "monetary policy"
-            },
-            {
-              "text": "fiscal policy",
-              "art": "fiscal policy"
-            },
-            {
-              "text": "quantitative easing",
-              "art": "quantitative easing"
-            }
-          ],
-          "answer": 0,
-          "why": "tightening：减少货币供应或提高融资成本的政策取向，包括加息和缩减资产购买。"
-        },
-        {
-          "id": "u4l2-tightening-t",
-          "type": "truefalse",
-          "termId": "tightening",
-          "termIds": [
-            "tightening"
-          ],
-          "stem": "tightening：收紧",
-          "answer": true,
-          "why": "tightening 确实是「收紧」。"
-        },
-        {
-          "id": "u4l2-tightening-f",
-          "type": "fill",
-          "termId": "tightening",
-          "termIds": [
-            "tightening"
-          ],
-          "story": "A further reduction would tighten global liquidity. (这里的词是 ____)",
-          "bank": [
-            "tightening",
-            "easing"
-          ],
-          "answer": "tightening",
           "why": "tightening 收紧；easing 放松。"
         },
         {
@@ -4353,31 +4435,35 @@
               "art": "easing"
             },
             {
+              "text": "减少货币供应或提高融资成本的政策取向，包括加息和缩减资产购买。",
+              "art": "tightening"
+            },
+            {
               "text": "中央银行通过调节利率、货币供应和信贷条件来影响经济的政策。",
               "art": "monetary policy"
             },
             {
               "text": "政府通过调整税收和公共支出影响经济的政策。",
               "art": "fiscal policy"
-            },
-            {
-              "text": "央行通过大规模购买资产向金融体系注入流动性的非常规政策。",
-              "art": "quantitative easing"
             }
           ],
           "answer": 0,
           "why": "easing 放松；tightening 收紧。"
         },
         {
-          "id": "u4l2-easing-s",
+          "id": "u4l2-tightening-s",
           "type": "scenario",
-          "termId": "easing",
+          "termId": "tightening",
           "termIds": [
-            "easing"
+            "tightening"
           ],
-          "story": "The market expects easing next year if growth slows.",
-          "stem": "这句话里最关键的那个词是？",
+          "story": "让钱变贵、变少的那些动作。",
+          "stem": "这说的是哪个词？",
           "options": [
+            {
+              "text": "tightening",
+              "art": "tightening"
+            },
             {
               "text": "easing",
               "art": "easing"
@@ -4389,14 +4475,51 @@
             {
               "text": "fiscal policy",
               "art": "fiscal policy"
+            }
+          ],
+          "answer": 0,
+          "why": "tightening：减少货币供应或提高融资成本的政策取向，包括加息和缩减资产购买。"
+        },
+        {
+          "id": "u4l2-easing-s",
+          "type": "scenario",
+          "termId": "easing",
+          "termIds": [
+            "easing"
+          ],
+          "story": "让钱变便宜、变多的那些动作。",
+          "stem": "这说的是哪个词？",
+          "options": [
+            {
+              "text": "easing",
+              "art": "easing"
             },
             {
-              "text": "quantitative easing",
-              "art": "quantitative easing"
+              "text": "tightening",
+              "art": "tightening"
+            },
+            {
+              "text": "monetary policy",
+              "art": "monetary policy"
+            },
+            {
+              "text": "fiscal policy",
+              "art": "fiscal policy"
             }
           ],
           "answer": 0,
           "why": "easing：增加货币供应或降低融资成本的政策取向，包括降息和资产购买。"
+        },
+        {
+          "id": "u4l2-tightening-t",
+          "type": "truefalse",
+          "termId": "tightening",
+          "termIds": [
+            "tightening"
+          ],
+          "stem": "tightening：收紧",
+          "answer": true,
+          "why": "tightening 确实是「收紧」。"
         },
         {
           "id": "u4l2-easing-t",
@@ -4405,9 +4528,24 @@
           "termIds": [
             "easing"
           ],
-          "stem": "easing 就是 货币政策。",
+          "stem": "easing 就是 收紧。",
           "answer": false,
-          "why": "easing 是「放松」，不是「货币政策」。"
+          "why": "easing 是「放松」，不是「收紧」。"
+        },
+        {
+          "id": "u4l2-tightening-f",
+          "type": "fill",
+          "termId": "tightening",
+          "termIds": [
+            "tightening"
+          ],
+          "story": "Another rate hike would mark the third step of monetary ____ this year.",
+          "bank": [
+            "tightening",
+            "easing"
+          ],
+          "answer": "tightening",
+          "why": "tightening 收紧；easing 放松。"
         },
         {
           "id": "u4l2-easing-f",
@@ -4476,14 +4614,58 @@
       "review": true,
       "prompts": [
         {
+          "id": "u4r-h-monetary-fiscal",
+          "type": "headline",
+          "termIds": [
+            "fiscal policy",
+            "monetary policy"
+          ],
+          "story": "Parliament passes a $90 billion stimulus package, the largest ____ push in a decade.",
+          "stem": "这句话里的空该填哪个词？",
+          "options": [
+            {
+              "text": "fiscal policy",
+              "art": "fiscal policy"
+            },
+            {
+              "text": "monetary policy",
+              "art": "monetary policy"
+            }
+          ],
+          "answer": 0,
+          "why": "议会通过的财政刺激是 fiscal policy（政府花钱和税收）；monetary policy 是央行管的利率和货币。"
+        },
+        {
+          "id": "u4r-h-qe-tightening",
+          "type": "headline",
+          "termIds": [
+            "quantitative easing",
+            "tightening"
+          ],
+          "story": "The central bank restarts ____, buying $40 billion of bonds a month to pull long rates down.",
+          "stem": "这句话里的空该填哪个词？",
+          "options": [
+            {
+              "text": "quantitative easing",
+              "art": "quantitative easing"
+            },
+            {
+              "text": "tightening",
+              "art": "tightening"
+            }
+          ],
+          "answer": 0,
+          "why": "央行买债、压低长端利率，是量化宽松 quantitative easing；tightening 是收紧，方向相反。"
+        },
+        {
           "id": "u4r-monetary policy-s",
           "type": "scenario",
           "termId": "monetary policy",
           "termIds": [
             "monetary policy"
           ],
-          "story": "Monetary policy is now diverging across the major economies.",
-          "stem": "这句话里最关键的那个词是？",
+          "story": "央行通过利率和货币供应调节经济。",
+          "stem": "这说的是哪个词？",
           "options": [
             {
               "text": "monetary policy",
@@ -4506,25 +4688,14 @@
           "why": "monetary policy：中央银行通过调节利率、货币供应和信贷条件来影响经济的政策。"
         },
         {
-          "id": "u4r-monetary policy-t",
-          "type": "truefalse",
-          "termId": "monetary policy",
-          "termIds": [
-            "monetary policy"
-          ],
-          "stem": "monetary policy：货币政策",
-          "answer": true,
-          "why": "monetary policy 确实是「货币政策」。"
-        },
-        {
           "id": "u4r-fiscal policy-s",
           "type": "scenario",
           "termId": "fiscal policy",
           "termIds": [
             "fiscal policy"
           ],
-          "story": "France's fiscal policy is now working against monetary policy.",
-          "stem": "这句话里最关键的那个词是？",
+          "story": "政府通过税收和支出来调节经济。",
+          "stem": "这说的是哪个词？",
           "options": [
             {
               "text": "fiscal policy",
@@ -4547,6 +4718,107 @@
           "why": "fiscal policy：政府通过调整税收和公共支出影响经济的政策。"
         },
         {
+          "id": "u4r-quantitative easing-s",
+          "type": "scenario",
+          "termId": "quantitative easing",
+          "termIds": [
+            "quantitative easing"
+          ],
+          "story": "央行大规模买债往市场里灌钱。",
+          "stem": "这说的是哪个词？",
+          "options": [
+            {
+              "text": "quantitative easing",
+              "art": "quantitative easing"
+            },
+            {
+              "text": "tightening",
+              "art": "tightening"
+            },
+            {
+              "text": "monetary policy",
+              "art": "monetary policy"
+            },
+            {
+              "text": "fiscal policy",
+              "art": "fiscal policy"
+            }
+          ],
+          "answer": 0,
+          "why": "quantitative easing：央行通过大规模购买资产向金融体系注入流动性的非常规政策。"
+        },
+        {
+          "id": "u4r-tightening-s",
+          "type": "scenario",
+          "termId": "tightening",
+          "termIds": [
+            "tightening"
+          ],
+          "story": "让钱变贵、变少的那些动作。",
+          "stem": "这说的是哪个词？",
+          "options": [
+            {
+              "text": "tightening",
+              "art": "tightening"
+            },
+            {
+              "text": "easing",
+              "art": "easing"
+            },
+            {
+              "text": "monetary policy",
+              "art": "monetary policy"
+            },
+            {
+              "text": "fiscal policy",
+              "art": "fiscal policy"
+            }
+          ],
+          "answer": 0,
+          "why": "tightening：减少货币供应或提高融资成本的政策取向，包括加息和缩减资产购买。"
+        },
+        {
+          "id": "u4r-easing-s",
+          "type": "scenario",
+          "termId": "easing",
+          "termIds": [
+            "easing"
+          ],
+          "story": "让钱变便宜、变多的那些动作。",
+          "stem": "这说的是哪个词？",
+          "options": [
+            {
+              "text": "easing",
+              "art": "easing"
+            },
+            {
+              "text": "tightening",
+              "art": "tightening"
+            },
+            {
+              "text": "monetary policy",
+              "art": "monetary policy"
+            },
+            {
+              "text": "fiscal policy",
+              "art": "fiscal policy"
+            }
+          ],
+          "answer": 0,
+          "why": "easing：增加货币供应或降低融资成本的政策取向，包括降息和资产购买。"
+        },
+        {
+          "id": "u4r-monetary policy-t",
+          "type": "truefalse",
+          "termId": "monetary policy",
+          "termIds": [
+            "monetary policy"
+          ],
+          "stem": "monetary policy：货币政策",
+          "answer": true,
+          "why": "monetary policy 确实是「货币政策」。"
+        },
+        {
           "id": "u4r-fiscal policy-t",
           "type": "truefalse",
           "termId": "fiscal policy",
@@ -4556,36 +4828,6 @@
           "stem": "fiscal policy 就是 货币政策。",
           "answer": false,
           "why": "fiscal policy 是「财政政策」，不是「货币政策」。"
-        },
-        {
-          "id": "u4r-quantitative easing-s",
-          "type": "scenario",
-          "termId": "quantitative easing",
-          "termIds": [
-            "quantitative easing"
-          ],
-          "story": "Quantitative easing pushed yield-seeking capital into emerging markets.",
-          "stem": "这句话里最关键的那个词是？",
-          "options": [
-            {
-              "text": "quantitative easing",
-              "art": "quantitative easing"
-            },
-            {
-              "text": "monetary policy",
-              "art": "monetary policy"
-            },
-            {
-              "text": "fiscal policy",
-              "art": "fiscal policy"
-            },
-            {
-              "text": "tightening",
-              "art": "tightening"
-            }
-          ],
-          "answer": 0,
-          "why": "quantitative easing：央行通过大规模购买资产向金融体系注入流动性的非常规政策。"
         },
         {
           "id": "u4r-quantitative easing-t",
@@ -4599,75 +4841,15 @@
           "why": "quantitative easing 确实是「量化宽松」。"
         },
         {
-          "id": "u4r-tightening-s",
-          "type": "scenario",
-          "termId": "tightening",
-          "termIds": [
-            "tightening"
-          ],
-          "story": "A further reduction would tighten global liquidity.",
-          "stem": "这句话里最关键的那个词是？",
-          "options": [
-            {
-              "text": "tightening",
-              "art": "tightening"
-            },
-            {
-              "text": "monetary policy",
-              "art": "monetary policy"
-            },
-            {
-              "text": "fiscal policy",
-              "art": "fiscal policy"
-            },
-            {
-              "text": "quantitative easing",
-              "art": "quantitative easing"
-            }
-          ],
-          "answer": 0,
-          "why": "tightening：减少货币供应或提高融资成本的政策取向，包括加息和缩减资产购买。"
-        },
-        {
           "id": "u4r-tightening-t",
           "type": "truefalse",
           "termId": "tightening",
           "termIds": [
             "tightening"
           ],
-          "stem": "tightening 就是 货币政策。",
+          "stem": "tightening 就是 放松。",
           "answer": false,
-          "why": "tightening 是「收紧」，不是「货币政策」。"
-        },
-        {
-          "id": "u4r-easing-s",
-          "type": "scenario",
-          "termId": "easing",
-          "termIds": [
-            "easing"
-          ],
-          "story": "The market expects easing next year if growth slows.",
-          "stem": "这句话里最关键的那个词是？",
-          "options": [
-            {
-              "text": "easing",
-              "art": "easing"
-            },
-            {
-              "text": "monetary policy",
-              "art": "monetary policy"
-            },
-            {
-              "text": "fiscal policy",
-              "art": "fiscal policy"
-            },
-            {
-              "text": "quantitative easing",
-              "art": "quantitative easing"
-            }
-          ],
-          "answer": 0,
-          "why": "easing：增加货币供应或降低融资成本的政策取向，包括降息和资产购买。"
+          "why": "tightening 是「收紧」，不是「放松」。"
         },
         {
           "id": "u4r-easing-t",
@@ -4787,62 +4969,6 @@
           "why": "inflation 是物价上涨；deflation 是物价下跌。"
         },
         {
-          "id": "u5l1-inflation-s",
-          "type": "scenario",
-          "termId": "inflation",
-          "termIds": [
-            "inflation"
-          ],
-          "story": "Annual core consumer inflation exceeded the central bank's 2% target.",
-          "stem": "这句话里最关键的那个词是？",
-          "options": [
-            {
-              "text": "inflation",
-              "art": "inflation"
-            },
-            {
-              "text": "deflation",
-              "art": "deflation"
-            },
-            {
-              "text": "stagflation",
-              "art": "stagflation"
-            },
-            {
-              "text": "soft landing",
-              "art": "soft landing"
-            }
-          ],
-          "answer": 0,
-          "why": "inflation：整体物价水平持续上涨，货币购买力下降。"
-        },
-        {
-          "id": "u5l1-inflation-t",
-          "type": "truefalse",
-          "termId": "inflation",
-          "termIds": [
-            "inflation"
-          ],
-          "stem": "inflation：通胀",
-          "answer": true,
-          "why": "inflation 确实是「通胀」。"
-        },
-        {
-          "id": "u5l1-inflation-f",
-          "type": "fill",
-          "termId": "inflation",
-          "termIds": [
-            "inflation"
-          ],
-          "story": "Annual core consumer ____ exceeded the central bank's 2% target.",
-          "bank": [
-            "inflation",
-            "deflation"
-          ],
-          "answer": "inflation",
-          "why": "inflation 是物价上涨；deflation 是物价下跌。"
-        },
-        {
           "id": "u5l1-deflation-m",
           "type": "meaning",
           "termId": "deflation",
@@ -4872,14 +4998,44 @@
           "why": "deflation 是物价下跌（债务实际变重）；inflation 是物价上涨。"
         },
         {
+          "id": "u5l1-inflation-s",
+          "type": "scenario",
+          "termId": "inflation",
+          "termIds": [
+            "inflation"
+          ],
+          "story": "同样的钱，买到的东西变少了。",
+          "stem": "这说的是哪个词？",
+          "options": [
+            {
+              "text": "inflation",
+              "art": "inflation"
+            },
+            {
+              "text": "deflation",
+              "art": "deflation"
+            },
+            {
+              "text": "stagflation",
+              "art": "stagflation"
+            },
+            {
+              "text": "soft landing",
+              "art": "soft landing"
+            }
+          ],
+          "answer": 0,
+          "why": "inflation：整体物价水平持续上涨，货币购买力下降。"
+        },
+        {
           "id": "u5l1-deflation-s",
           "type": "scenario",
           "termId": "deflation",
           "termIds": [
             "deflation"
           ],
-          "story": "Some economists warned of deflation as goods prices fell.",
-          "stem": "这句话里最关键的那个词是？",
+          "story": "物价持续下跌，听起来好其实是麻烦。",
+          "stem": "这说的是哪个词？",
           "options": [
             {
               "text": "deflation",
@@ -4902,6 +5058,17 @@
           "why": "deflation：整体物价水平持续下降，通常伴随需求疲软与债务负担加重。"
         },
         {
+          "id": "u5l1-inflation-t",
+          "type": "truefalse",
+          "termId": "inflation",
+          "termIds": [
+            "inflation"
+          ],
+          "stem": "inflation：通胀",
+          "answer": true,
+          "why": "inflation 确实是「通胀」。"
+        },
+        {
           "id": "u5l1-deflation-t",
           "type": "truefalse",
           "termId": "deflation",
@@ -4911,6 +5078,21 @@
           "stem": "deflation 就是 通胀。",
           "answer": false,
           "why": "deflation 是「通缩」，不是「通胀」。"
+        },
+        {
+          "id": "u5l1-inflation-f",
+          "type": "fill",
+          "termId": "inflation",
+          "termIds": [
+            "inflation"
+          ],
+          "story": "Annual core consumer ____ exceeded the central bank's 2% target.",
+          "bank": [
+            "inflation",
+            "deflation"
+          ],
+          "answer": "inflation",
+          "why": "inflation 是物价上涨；deflation 是物价下跌。"
         },
         {
           "id": "u5l1-deflation-f",
@@ -4992,75 +5174,19 @@
               "art": "stagflation"
             },
             {
+              "text": "通胀回落至目标水平而经济未陷入衰退的理想结果。",
+              "art": "soft landing"
+            },
+            {
               "text": "整体物价水平持续上涨，货币购买力下降。",
               "art": "inflation"
             },
             {
               "text": "整体物价水平持续下降，通常伴随需求疲软与债务负担加重。",
               "art": "deflation"
-            },
-            {
-              "text": "通胀回落至目标水平而经济未陷入衰退的理想结果。",
-              "art": "soft landing"
             }
           ],
           "answer": 0,
-          "why": "stagflation 是增长停滞加通胀高企；soft landing 是通胀回落而经济不衰退。完全相反的两种结局。"
-        },
-        {
-          "id": "u5l2-stagflation-s",
-          "type": "scenario",
-          "termId": "stagflation",
-          "termIds": [
-            "stagflation"
-          ],
-          "story": "Economists debated whether the world is heading for stagflation.",
-          "stem": "这句话里最关键的那个词是？",
-          "options": [
-            {
-              "text": "stagflation",
-              "art": "stagflation"
-            },
-            {
-              "text": "inflation",
-              "art": "inflation"
-            },
-            {
-              "text": "deflation",
-              "art": "deflation"
-            },
-            {
-              "text": "soft landing",
-              "art": "soft landing"
-            }
-          ],
-          "answer": 0,
-          "why": "stagflation：经济增长停滞与高通胀同时出现的状态。"
-        },
-        {
-          "id": "u5l2-stagflation-t",
-          "type": "truefalse",
-          "termId": "stagflation",
-          "termIds": [
-            "stagflation"
-          ],
-          "stem": "stagflation：滞胀",
-          "answer": true,
-          "why": "stagflation 确实是「滞胀」。"
-        },
-        {
-          "id": "u5l2-stagflation-f",
-          "type": "fill",
-          "termId": "stagflation",
-          "termIds": [
-            "stagflation"
-          ],
-          "story": "Economists debated whether the world is heading for ____.",
-          "bank": [
-            "stagflation",
-            "soft landing"
-          ],
-          "answer": "stagflation",
           "why": "stagflation 是增长停滞加通胀高企；soft landing 是通胀回落而经济不衰退。完全相反的两种结局。"
         },
         {
@@ -5077,31 +5203,35 @@
               "art": "soft landing"
             },
             {
+              "text": "经济增长停滞与高通胀同时出现的状态。",
+              "art": "stagflation"
+            },
+            {
               "text": "整体物价水平持续上涨，货币购买力下降。",
               "art": "inflation"
             },
             {
               "text": "整体物价水平持续下降，通常伴随需求疲软与债务负担加重。",
               "art": "deflation"
-            },
-            {
-              "text": "经济增长停滞与高通胀同时出现的状态。",
-              "art": "stagflation"
             }
           ],
           "answer": 0,
           "why": "soft landing 是通胀降、增长保住；stagflation 是增长停、通胀还在。"
         },
         {
-          "id": "u5l2-soft landing-s",
+          "id": "u5l2-stagflation-s",
           "type": "scenario",
-          "termId": "soft landing",
+          "termId": "stagflation",
           "termIds": [
-            "soft landing"
+            "stagflation"
           ],
-          "story": "A soft landing remains the central case, but the probability has narrowed.",
-          "stem": "这句话里最关键的那个词是？",
+          "story": "经济不涨、物价却还在涨，最难受的组合。",
+          "stem": "这说的是哪个词？",
           "options": [
+            {
+              "text": "stagflation",
+              "art": "stagflation"
+            },
             {
               "text": "soft landing",
               "art": "soft landing"
@@ -5113,14 +5243,51 @@
             {
               "text": "deflation",
               "art": "deflation"
+            }
+          ],
+          "answer": 0,
+          "why": "stagflation：经济增长停滞与高通胀同时出现的状态。"
+        },
+        {
+          "id": "u5l2-soft landing-s",
+          "type": "scenario",
+          "termId": "soft landing",
+          "termIds": [
+            "soft landing"
+          ],
+          "story": "通胀降下来了，但经济没有衰退。",
+          "stem": "这说的是哪个词？",
+          "options": [
+            {
+              "text": "soft landing",
+              "art": "soft landing"
             },
             {
               "text": "stagflation",
               "art": "stagflation"
+            },
+            {
+              "text": "inflation",
+              "art": "inflation"
+            },
+            {
+              "text": "deflation",
+              "art": "deflation"
             }
           ],
           "answer": 0,
           "why": "soft landing：通胀回落至目标水平而经济未陷入衰退的理想结果。"
+        },
+        {
+          "id": "u5l2-stagflation-t",
+          "type": "truefalse",
+          "termId": "stagflation",
+          "termIds": [
+            "stagflation"
+          ],
+          "stem": "stagflation：滞胀",
+          "answer": true,
+          "why": "stagflation 确实是「滞胀」。"
         },
         {
           "id": "u5l2-soft landing-t",
@@ -5129,9 +5296,24 @@
           "termIds": [
             "soft landing"
           ],
-          "stem": "soft landing 就是 通胀。",
+          "stem": "soft landing 就是 滞胀。",
           "answer": false,
-          "why": "soft landing 是「软着陆」，不是「通胀」。"
+          "why": "soft landing 是「软着陆」，不是「滞胀」。"
+        },
+        {
+          "id": "u5l2-stagflation-f",
+          "type": "fill",
+          "termId": "stagflation",
+          "termIds": [
+            "stagflation"
+          ],
+          "story": "Economists debated whether the world is heading for ____.",
+          "bank": [
+            "stagflation",
+            "soft landing"
+          ],
+          "answer": "stagflation",
+          "why": "stagflation 是增长停滞加通胀高企；soft landing 是通胀回落而经济不衰退。完全相反的两种结局。"
         },
         {
           "id": "u5l2-soft landing-f",
@@ -5200,14 +5382,58 @@
       "review": true,
       "prompts": [
         {
+          "id": "u5r-h-inflation-deflation",
+          "type": "headline",
+          "termIds": [
+            "deflation",
+            "inflation"
+          ],
+          "story": "Consumer prices fell for a sixth month, deepening fears of ____.",
+          "stem": "这句话里的空该填哪个词？",
+          "options": [
+            {
+              "text": "deflation",
+              "art": "deflation"
+            },
+            {
+              "text": "inflation",
+              "art": "inflation"
+            }
+          ],
+          "answer": 0,
+          "why": "物价连续下跌是通缩 deflation；inflation 是物价上涨。"
+        },
+        {
+          "id": "u5r-h-stagflation-softlanding",
+          "type": "headline",
+          "termIds": [
+            "stagflation",
+            "soft landing"
+          ],
+          "story": "Economists warn of ____ as growth stalls while inflation stays near 6%.",
+          "stem": "这句话里的空该填哪个词？",
+          "options": [
+            {
+              "text": "stagflation",
+              "art": "stagflation"
+            },
+            {
+              "text": "soft landing",
+              "art": "soft landing"
+            }
+          ],
+          "answer": 0,
+          "why": "增长停滞、通胀还高，就是滞胀 stagflation；soft landing 是通胀回落而经济没有衰退。"
+        },
+        {
           "id": "u5r-inflation-s",
           "type": "scenario",
           "termId": "inflation",
           "termIds": [
             "inflation"
           ],
-          "story": "Annual core consumer inflation exceeded the central bank's 2% target.",
-          "stem": "这句话里最关键的那个词是？",
+          "story": "同样的钱，买到的东西变少了。",
+          "stem": "这说的是哪个词？",
           "options": [
             {
               "text": "inflation",
@@ -5230,25 +5456,14 @@
           "why": "inflation：整体物价水平持续上涨，货币购买力下降。"
         },
         {
-          "id": "u5r-inflation-t",
-          "type": "truefalse",
-          "termId": "inflation",
-          "termIds": [
-            "inflation"
-          ],
-          "stem": "inflation：通胀",
-          "answer": true,
-          "why": "inflation 确实是「通胀」。"
-        },
-        {
           "id": "u5r-deflation-s",
           "type": "scenario",
           "termId": "deflation",
           "termIds": [
             "deflation"
           ],
-          "story": "Some economists warned of deflation as goods prices fell.",
-          "stem": "这句话里最关键的那个词是？",
+          "story": "物价持续下跌，听起来好其实是麻烦。",
+          "stem": "这说的是哪个词？",
           "options": [
             {
               "text": "deflation",
@@ -5271,26 +5486,49 @@
           "why": "deflation：整体物价水平持续下降，通常伴随需求疲软与债务负担加重。"
         },
         {
-          "id": "u5r-deflation-t",
-          "type": "truefalse",
-          "termId": "deflation",
-          "termIds": [
-            "deflation"
-          ],
-          "stem": "deflation 就是 通胀。",
-          "answer": false,
-          "why": "deflation 是「通缩」，不是「通胀」。"
-        },
-        {
           "id": "u5r-stagflation-s",
           "type": "scenario",
           "termId": "stagflation",
           "termIds": [
             "stagflation"
           ],
-          "story": "Economists debated whether the world is heading for stagflation.",
-          "stem": "这句话里最关键的那个词是？",
+          "story": "经济不涨、物价却还在涨，最难受的组合。",
+          "stem": "这说的是哪个词？",
           "options": [
+            {
+              "text": "stagflation",
+              "art": "stagflation"
+            },
+            {
+              "text": "soft landing",
+              "art": "soft landing"
+            },
+            {
+              "text": "inflation",
+              "art": "inflation"
+            },
+            {
+              "text": "deflation",
+              "art": "deflation"
+            }
+          ],
+          "answer": 0,
+          "why": "stagflation：经济增长停滞与高通胀同时出现的状态。"
+        },
+        {
+          "id": "u5r-soft landing-s",
+          "type": "scenario",
+          "termId": "soft landing",
+          "termIds": [
+            "soft landing"
+          ],
+          "story": "通胀降下来了，但经济没有衰退。",
+          "stem": "这说的是哪个词？",
+          "options": [
+            {
+              "text": "soft landing",
+              "art": "soft landing"
+            },
             {
               "text": "stagflation",
               "art": "stagflation"
@@ -5302,14 +5540,32 @@
             {
               "text": "deflation",
               "art": "deflation"
-            },
-            {
-              "text": "soft landing",
-              "art": "soft landing"
             }
           ],
           "answer": 0,
-          "why": "stagflation：经济增长停滞与高通胀同时出现的状态。"
+          "why": "soft landing：通胀回落至目标水平而经济未陷入衰退的理想结果。"
+        },
+        {
+          "id": "u5r-inflation-t",
+          "type": "truefalse",
+          "termId": "inflation",
+          "termIds": [
+            "inflation"
+          ],
+          "stem": "inflation：通胀",
+          "answer": true,
+          "why": "inflation 确实是「通胀」。"
+        },
+        {
+          "id": "u5r-deflation-t",
+          "type": "truefalse",
+          "termId": "deflation",
+          "termIds": [
+            "deflation"
+          ],
+          "stem": "deflation 就是 通胀。",
+          "answer": false,
+          "why": "deflation 是「通缩」，不是「通胀」。"
         },
         {
           "id": "u5r-stagflation-t",
@@ -5323,45 +5579,15 @@
           "why": "stagflation 确实是「滞胀」。"
         },
         {
-          "id": "u5r-soft landing-s",
-          "type": "scenario",
-          "termId": "soft landing",
-          "termIds": [
-            "soft landing"
-          ],
-          "story": "A soft landing remains the central case, but the probability has narrowed.",
-          "stem": "这句话里最关键的那个词是？",
-          "options": [
-            {
-              "text": "soft landing",
-              "art": "soft landing"
-            },
-            {
-              "text": "inflation",
-              "art": "inflation"
-            },
-            {
-              "text": "deflation",
-              "art": "deflation"
-            },
-            {
-              "text": "stagflation",
-              "art": "stagflation"
-            }
-          ],
-          "answer": 0,
-          "why": "soft landing：通胀回落至目标水平而经济未陷入衰退的理想结果。"
-        },
-        {
           "id": "u5r-soft landing-t",
           "type": "truefalse",
           "termId": "soft landing",
           "termIds": [
             "soft landing"
           ],
-          "stem": "soft landing 就是 通胀。",
+          "stem": "soft landing 就是 滞胀。",
           "answer": false,
-          "why": "soft landing 是「软着陆」，不是「通胀」。"
+          "why": "soft landing 是「软着陆」，不是「滞胀」。"
         },
         {
           "id": "u5r-match",
@@ -5464,62 +5690,6 @@
           "why": "current account 范围更宽（含服务与收入转移）；trade balance 只算货物贸易。"
         },
         {
-          "id": "u6l1-current account-s",
-          "type": "scenario",
-          "termId": "current account",
-          "termIds": [
-            "current account"
-          ],
-          "story": "Countries running a current account deficit depend on capital inflows.",
-          "stem": "这句话里最关键的那个词是？",
-          "options": [
-            {
-              "text": "current account",
-              "art": "current account"
-            },
-            {
-              "text": "trade balance",
-              "art": "trade balance"
-            },
-            {
-              "text": "intervention",
-              "art": "intervention"
-            },
-            {
-              "text": "capital flow",
-              "art": "capital flow"
-            }
-          ],
-          "answer": 0,
-          "why": "current account：一国货物、服务和转移支付的净收支，广义上衡量对外部资金的依赖。"
-        },
-        {
-          "id": "u6l1-current account-t",
-          "type": "truefalse",
-          "termId": "current account",
-          "termIds": [
-            "current account"
-          ],
-          "stem": "current account：经常账户",
-          "answer": true,
-          "why": "current account 确实是「经常账户」。"
-        },
-        {
-          "id": "u6l1-current account-f",
-          "type": "fill",
-          "termId": "current account",
-          "termIds": [
-            "current account"
-          ],
-          "story": "Countries running a ____ deficit depend on capital inflows.",
-          "bank": [
-            "current account",
-            "trade balance"
-          ],
-          "answer": "current account",
-          "why": "current account 范围更宽（含服务与收入转移）；trade balance 只算货物贸易。"
-        },
-        {
           "id": "u6l1-trade balance-m",
           "type": "meaning",
           "termId": "trade balance",
@@ -5549,14 +5719,44 @@
           "why": "trade balance 只算货物；current account 还包括服务、投资收益和转移支付。"
         },
         {
+          "id": "u6l1-current account-s",
+          "type": "scenario",
+          "termId": "current account",
+          "termIds": [
+            "current account"
+          ],
+          "story": "货物、服务、收入加起来的对外收支。",
+          "stem": "这说的是哪个词？",
+          "options": [
+            {
+              "text": "current account",
+              "art": "current account"
+            },
+            {
+              "text": "trade balance",
+              "art": "trade balance"
+            },
+            {
+              "text": "intervention",
+              "art": "intervention"
+            },
+            {
+              "text": "capital flow",
+              "art": "capital flow"
+            }
+          ],
+          "answer": 0,
+          "why": "current account：一国货物、服务和转移支付的净收支，广义上衡量对外部资金的依赖。"
+        },
+        {
           "id": "u6l1-trade balance-s",
           "type": "scenario",
           "termId": "trade balance",
           "termIds": [
             "trade balance"
           ],
-          "story": "A trade balance that swings into deficit adds to the pressure.",
-          "stem": "这句话里最关键的那个词是？",
+          "story": "出口减进口，只算货物。",
+          "stem": "这说的是哪个词？",
           "options": [
             {
               "text": "trade balance",
@@ -5579,6 +5779,17 @@
           "why": "trade balance：一国货物出口与进口之差，是经常账户的一部分。"
         },
         {
+          "id": "u6l1-current account-t",
+          "type": "truefalse",
+          "termId": "current account",
+          "termIds": [
+            "current account"
+          ],
+          "stem": "current account：经常账户",
+          "answer": true,
+          "why": "current account 确实是「经常账户」。"
+        },
+        {
           "id": "u6l1-trade balance-t",
           "type": "truefalse",
           "termId": "trade balance",
@@ -5588,6 +5799,21 @@
           "stem": "trade balance 就是 经常账户。",
           "answer": false,
           "why": "trade balance 是「贸易差额」，不是「经常账户」。"
+        },
+        {
+          "id": "u6l1-current account-f",
+          "type": "fill",
+          "termId": "current account",
+          "termIds": [
+            "current account"
+          ],
+          "story": "Countries running a ____ deficit depend on capital inflows.",
+          "bank": [
+            "current account",
+            "trade balance"
+          ],
+          "answer": "current account",
+          "why": "current account 范围更宽（含服务与收入转移）；trade balance 只算货物贸易。"
         },
         {
           "id": "u6l1-trade balance-f",
@@ -5669,75 +5895,19 @@
               "art": "intervention"
             },
             {
+              "text": "减少货币供应或提高融资成本的政策取向，包括加息和缩减资产购买。",
+              "art": "tightening"
+            },
+            {
               "text": "一国货物、服务和转移支付的净收支，广义上衡量对外部资金的依赖。",
               "art": "current account"
             },
             {
               "text": "一国货物出口与进口之差，是经常账户的一部分。",
               "art": "trade balance"
-            },
-            {
-              "text": "投资者资金跨越国境的流入与流出，包括直接投资、证券投资与其他投资。",
-              "art": "capital flow"
             }
           ],
           "answer": 0,
-          "why": "intervention 是直接买卖货币（动作）；tightening 是调整利率与流动性（政策取向）。干预可以不改变利率。"
-        },
-        {
-          "id": "u6l2-intervention-s",
-          "type": "scenario",
-          "termId": "intervention",
-          "termIds": [
-            "intervention"
-          ],
-          "story": "Indonesia's central bank intervened to slow the rupiah's slide.",
-          "stem": "这句话里最关键的那个词是？",
-          "options": [
-            {
-              "text": "intervention",
-              "art": "intervention"
-            },
-            {
-              "text": "current account",
-              "art": "current account"
-            },
-            {
-              "text": "trade balance",
-              "art": "trade balance"
-            },
-            {
-              "text": "capital flow",
-              "art": "capital flow"
-            }
-          ],
-          "answer": 0,
-          "why": "intervention：中央银行在外汇市场买卖本币以影响汇率的操作。"
-        },
-        {
-          "id": "u6l2-intervention-t",
-          "type": "truefalse",
-          "termId": "intervention",
-          "termIds": [
-            "intervention"
-          ],
-          "stem": "intervention：干预（汇市）",
-          "answer": true,
-          "why": "intervention 确实是「干预（汇市）」。"
-        },
-        {
-          "id": "u6l2-intervention-f",
-          "type": "fill",
-          "termId": "intervention",
-          "termIds": [
-            "intervention"
-          ],
-          "story": "Indonesia's central bank intervened to slow the rupiah's slide. (这里的词是 ____)",
-          "bank": [
-            "intervention",
-            "capital flow"
-          ],
-          "answer": "intervention",
           "why": "intervention 是直接买卖货币（动作）；tightening 是调整利率与流动性（政策取向）。干预可以不改变利率。"
         },
         {
@@ -5770,14 +5940,44 @@
           "why": "capital flow 是资金的进出（融资侧）；current account 是贸易与收入的差额（实体侧）。两者互为镜像。"
         },
         {
+          "id": "u6l2-intervention-s",
+          "type": "scenario",
+          "termId": "intervention",
+          "termIds": [
+            "intervention"
+          ],
+          "story": "央行直接出手买卖本国货币。",
+          "stem": "这说的是哪个词？",
+          "options": [
+            {
+              "text": "intervention",
+              "art": "intervention"
+            },
+            {
+              "text": "tightening",
+              "art": "tightening"
+            },
+            {
+              "text": "current account",
+              "art": "current account"
+            },
+            {
+              "text": "trade balance",
+              "art": "trade balance"
+            }
+          ],
+          "answer": 0,
+          "why": "intervention：中央银行在外汇市场买卖本币以影响汇率的操作。"
+        },
+        {
           "id": "u6l2-capital flow-s",
           "type": "scenario",
           "termId": "capital flow",
           "termIds": [
             "capital flow"
           ],
-          "story": "Emerging markets depend on capital inflows to fund a current account deficit.",
-          "stem": "这句话里最关键的那个词是？",
+          "story": "资金跨境进出的方向和规模。",
+          "stem": "这说的是哪个词？",
           "options": [
             {
               "text": "capital flow",
@@ -5800,6 +6000,17 @@
           "why": "capital flow：投资者资金跨越国境的流入与流出，包括直接投资、证券投资与其他投资。"
         },
         {
+          "id": "u6l2-intervention-t",
+          "type": "truefalse",
+          "termId": "intervention",
+          "termIds": [
+            "intervention"
+          ],
+          "stem": "intervention：干预（汇市）",
+          "answer": true,
+          "why": "intervention 确实是「干预（汇市）」。"
+        },
+        {
           "id": "u6l2-capital flow-t",
           "type": "truefalse",
           "termId": "capital flow",
@@ -5811,15 +6022,32 @@
           "why": "capital flow 是「资本流动」，不是「经常账户」。"
         },
         {
+          "id": "u6l2-intervention-f",
+          "type": "fill",
+          "termId": "intervention",
+          "termIds": [
+            "intervention"
+          ],
+          "story": "Bank Indonesia's ____ in the currency market slowed the rupiah's slide.",
+          "bank": [
+            "intervention",
+            "tightening",
+            "capital flow"
+          ],
+          "answer": "intervention",
+          "why": "intervention 是直接买卖货币（动作）；tightening 是调整利率与流动性（政策取向）。干预可以不改变利率。"
+        },
+        {
           "id": "u6l2-capital flow-f",
           "type": "fill",
           "termId": "capital flow",
           "termIds": [
             "capital flow"
           ],
-          "story": "Emerging markets depend on capital inflows to fund a current account deficit. (这里的词是 ____)",
+          "story": "A sudden reversal in ____ left the country short of dollars.",
           "bank": [
             "capital flow",
+            "current account",
             "intervention"
           ],
           "answer": "capital flow",
@@ -5877,14 +6105,36 @@
       "review": true,
       "prompts": [
         {
+          "id": "u6r-h-current-trade",
+          "type": "headline",
+          "termIds": [
+            "trade balance",
+            "current account"
+          ],
+          "story": "Exports of goods outpaced imports by $8 billion, swinging the ____ into surplus.",
+          "stem": "这句话里的空该填哪个词？",
+          "options": [
+            {
+              "text": "trade balance",
+              "art": "trade balance"
+            },
+            {
+              "text": "current account",
+              "art": "current account"
+            }
+          ],
+          "answer": 0,
+          "why": "只算商品进出口的差额，是 trade balance；current account 范围更大，还包括服务、收入和转移。"
+        },
+        {
           "id": "u6r-current account-s",
           "type": "scenario",
           "termId": "current account",
           "termIds": [
             "current account"
           ],
-          "story": "Countries running a current account deficit depend on capital inflows.",
-          "stem": "这句话里最关键的那个词是？",
+          "story": "货物、服务、收入加起来的对外收支。",
+          "stem": "这说的是哪个词？",
           "options": [
             {
               "text": "current account",
@@ -5907,25 +6157,14 @@
           "why": "current account：一国货物、服务和转移支付的净收支，广义上衡量对外部资金的依赖。"
         },
         {
-          "id": "u6r-current account-t",
-          "type": "truefalse",
-          "termId": "current account",
-          "termIds": [
-            "current account"
-          ],
-          "stem": "current account：经常账户",
-          "answer": true,
-          "why": "current account 确实是「经常账户」。"
-        },
-        {
           "id": "u6r-trade balance-s",
           "type": "scenario",
           "termId": "trade balance",
           "termIds": [
             "trade balance"
           ],
-          "story": "A trade balance that swings into deficit adds to the pressure.",
-          "stem": "这句话里最关键的那个词是？",
+          "story": "出口减进口，只算货物。",
+          "stem": "这说的是哪个词？",
           "options": [
             {
               "text": "trade balance",
@@ -5948,29 +6187,22 @@
           "why": "trade balance：一国货物出口与进口之差，是经常账户的一部分。"
         },
         {
-          "id": "u6r-trade balance-t",
-          "type": "truefalse",
-          "termId": "trade balance",
-          "termIds": [
-            "trade balance"
-          ],
-          "stem": "trade balance 就是 经常账户。",
-          "answer": false,
-          "why": "trade balance 是「贸易差额」，不是「经常账户」。"
-        },
-        {
           "id": "u6r-intervention-s",
           "type": "scenario",
           "termId": "intervention",
           "termIds": [
             "intervention"
           ],
-          "story": "Indonesia's central bank intervened to slow the rupiah's slide.",
-          "stem": "这句话里最关键的那个词是？",
+          "story": "央行直接出手买卖本国货币。",
+          "stem": "这说的是哪个词？",
           "options": [
             {
               "text": "intervention",
               "art": "intervention"
+            },
+            {
+              "text": "tightening",
+              "art": "tightening"
             },
             {
               "text": "current account",
@@ -5979,25 +6211,10 @@
             {
               "text": "trade balance",
               "art": "trade balance"
-            },
-            {
-              "text": "capital flow",
-              "art": "capital flow"
             }
           ],
           "answer": 0,
           "why": "intervention：中央银行在外汇市场买卖本币以影响汇率的操作。"
-        },
-        {
-          "id": "u6r-intervention-t",
-          "type": "truefalse",
-          "termId": "intervention",
-          "termIds": [
-            "intervention"
-          ],
-          "stem": "intervention：干预（汇市）",
-          "answer": true,
-          "why": "intervention 确实是「干预（汇市）」。"
         },
         {
           "id": "u6r-capital flow-s",
@@ -6006,8 +6223,8 @@
           "termIds": [
             "capital flow"
           ],
-          "story": "Emerging markets depend on capital inflows to fund a current account deficit.",
-          "stem": "这句话里最关键的那个词是？",
+          "story": "资金跨境进出的方向和规模。",
+          "stem": "这说的是哪个词？",
           "options": [
             {
               "text": "capital flow",
@@ -6028,6 +6245,39 @@
           ],
           "answer": 0,
           "why": "capital flow：投资者资金跨越国境的流入与流出，包括直接投资、证券投资与其他投资。"
+        },
+        {
+          "id": "u6r-current account-t",
+          "type": "truefalse",
+          "termId": "current account",
+          "termIds": [
+            "current account"
+          ],
+          "stem": "current account：经常账户",
+          "answer": true,
+          "why": "current account 确实是「经常账户」。"
+        },
+        {
+          "id": "u6r-trade balance-t",
+          "type": "truefalse",
+          "termId": "trade balance",
+          "termIds": [
+            "trade balance"
+          ],
+          "stem": "trade balance 就是 经常账户。",
+          "answer": false,
+          "why": "trade balance 是「贸易差额」，不是「经常账户」。"
+        },
+        {
+          "id": "u6r-intervention-t",
+          "type": "truefalse",
+          "termId": "intervention",
+          "termIds": [
+            "intervention"
+          ],
+          "stem": "intervention：干预（汇市）",
+          "answer": true,
+          "why": "intervention 确实是「干预（汇市）」。"
         },
         {
           "id": "u6r-capital flow-t",
@@ -6141,14 +6391,43 @@
           "why": "risk appetite 是意愿（可以高可以低）；risk-off 是一种具体状态（意愿低、撤出风险资产）。"
         },
         {
+          "id": "u7l1-risk-off-m",
+          "type": "meaning",
+          "termId": "risk-off",
+          "termIds": [
+            "risk-off"
+          ],
+          "stem": "risk-off 是什么意思？",
+          "options": [
+            {
+              "text": "投资者集体撤出风险资产、转向避险资产的市场状态。",
+              "art": "risk-off"
+            },
+            {
+              "text": "在市场动荡时被视为保值去向的资产，如日元、瑞郎、黄金、美债。",
+              "art": "safe-haven"
+            },
+            {
+              "text": "投资者承担风险的意愿，高涨时资金流向高收益资产，低迷时涌向避险资产。",
+              "art": "risk appetite"
+            },
+            {
+              "text": "借入低利率货币并投资于高利率资产以赚取利差的交易策略。",
+              "art": "carry trade"
+            }
+          ],
+          "answer": 0,
+          "why": "risk-off 是市场的状态（大家在撤）；safe-haven 是资金撤向的那个去处（日元、黄金、美债）。"
+        },
+        {
           "id": "u7l1-risk appetite-s",
           "type": "scenario",
           "termId": "risk appetite",
           "termIds": [
             "risk appetite"
           ],
-          "story": "The yen strengthened as risk appetite faded.",
-          "stem": "这句话里最关键的那个词是？",
+          "story": "投资者愿不愿意承担风险。",
+          "stem": "这说的是哪个词？",
           "options": [
             {
               "text": "risk appetite",
@@ -6171,6 +6450,36 @@
           "why": "risk appetite：投资者承担风险的意愿，高涨时资金流向高收益资产，低迷时涌向避险资产。"
         },
         {
+          "id": "u7l1-risk-off-s",
+          "type": "scenario",
+          "termId": "risk-off",
+          "termIds": [
+            "risk-off"
+          ],
+          "story": "市场慌了，钱往安全的地方跑。",
+          "stem": "这说的是哪个词？",
+          "options": [
+            {
+              "text": "risk-off",
+              "art": "risk-off"
+            },
+            {
+              "text": "safe-haven",
+              "art": "safe-haven"
+            },
+            {
+              "text": "risk appetite",
+              "art": "risk appetite"
+            },
+            {
+              "text": "carry trade",
+              "art": "carry trade"
+            }
+          ],
+          "answer": 0,
+          "why": "risk-off：投资者集体撤出风险资产、转向避险资产的市场状态。"
+        },
+        {
           "id": "u7l1-risk appetite-t",
           "type": "truefalse",
           "termId": "risk appetite",
@@ -6180,6 +6489,17 @@
           "stem": "risk appetite：风险偏好",
           "answer": true,
           "why": "risk appetite 确实是「风险偏好」。"
+        },
+        {
+          "id": "u7l1-risk-off-t",
+          "type": "truefalse",
+          "termId": "risk-off",
+          "termIds": [
+            "risk-off"
+          ],
+          "stem": "risk-off 就是 避险资产。",
+          "answer": false,
+          "why": "risk-off 是「避险情绪」，不是「避险资产」。"
         },
         {
           "id": "u7l1-risk appetite-f",
@@ -6197,76 +6517,6 @@
           "why": "risk appetite 是意愿（可以高可以低）；risk-off 是一种具体状态（意愿低、撤出风险资产）。"
         },
         {
-          "id": "u7l1-risk-off-m",
-          "type": "meaning",
-          "termId": "risk-off",
-          "termIds": [
-            "risk-off"
-          ],
-          "stem": "risk-off 是什么意思？",
-          "options": [
-            {
-              "text": "投资者集体撤出风险资产、转向避险资产的市场状态。",
-              "art": "risk-off"
-            },
-            {
-              "text": "投资者承担风险的意愿，高涨时资金流向高收益资产，低迷时涌向避险资产。",
-              "art": "risk appetite"
-            },
-            {
-              "text": "在市场动荡时被视为保值去向的资产，如日元、瑞郎、黄金、美债。",
-              "art": "safe-haven"
-            },
-            {
-              "text": "借入低利率货币并投资于高利率资产以赚取利差的交易策略。",
-              "art": "carry trade"
-            }
-          ],
-          "answer": 0,
-          "why": "risk-off 是市场的状态（大家在撤）；safe-haven 是资金撤向的那个去处（日元、黄金、美债）。"
-        },
-        {
-          "id": "u7l1-risk-off-s",
-          "type": "scenario",
-          "termId": "risk-off",
-          "termIds": [
-            "risk-off"
-          ],
-          "story": "The yen traded at firmer levels, encouraged by more risk-off conditions.",
-          "stem": "这句话里最关键的那个词是？",
-          "options": [
-            {
-              "text": "risk-off",
-              "art": "risk-off"
-            },
-            {
-              "text": "risk appetite",
-              "art": "risk appetite"
-            },
-            {
-              "text": "safe-haven",
-              "art": "safe-haven"
-            },
-            {
-              "text": "carry trade",
-              "art": "carry trade"
-            }
-          ],
-          "answer": 0,
-          "why": "risk-off：投资者集体撤出风险资产、转向避险资产的市场状态。"
-        },
-        {
-          "id": "u7l1-risk-off-t",
-          "type": "truefalse",
-          "termId": "risk-off",
-          "termIds": [
-            "risk-off"
-          ],
-          "stem": "risk-off 就是 风险偏好。",
-          "answer": false,
-          "why": "risk-off 是「避险情绪」，不是「风险偏好」。"
-        },
-        {
           "id": "u7l1-risk-off-f",
           "type": "fill",
           "termId": "risk-off",
@@ -6276,6 +6526,7 @@
           "story": "The yen traded at firmer levels, encouraged by more ____ conditions.",
           "bank": [
             "risk-off",
+            "safe-haven",
             "risk appetite"
           ],
           "answer": "risk-off",
@@ -6346,12 +6597,12 @@
               "art": "safe-haven"
             },
             {
-              "text": "投资者承担风险的意愿，高涨时资金流向高收益资产，低迷时涌向避险资产。",
-              "art": "risk appetite"
-            },
-            {
               "text": "投资者集体撤出风险资产、转向避险资产的市场状态。",
               "art": "risk-off"
+            },
+            {
+              "text": "投资者承担风险的意愿，高涨时资金流向高收益资产，低迷时涌向避险资产。",
+              "art": "risk appetite"
             },
             {
               "text": "借入低利率货币并投资于高利率资产以赚取利差的交易策略。",
@@ -6359,62 +6610,6 @@
             }
           ],
           "answer": 0,
-          "why": "safe-haven 是被买入的资产；risk-off 是导致它被买入的那种市场状态。"
-        },
-        {
-          "id": "u7l2-safe-haven-s",
-          "type": "scenario",
-          "termId": "safe-haven",
-          "termIds": [
-            "safe-haven"
-          ],
-          "story": "The yen was supported by safe-haven demand after the selloff.",
-          "stem": "这句话里最关键的那个词是？",
-          "options": [
-            {
-              "text": "safe-haven",
-              "art": "safe-haven"
-            },
-            {
-              "text": "risk appetite",
-              "art": "risk appetite"
-            },
-            {
-              "text": "risk-off",
-              "art": "risk-off"
-            },
-            {
-              "text": "carry trade",
-              "art": "carry trade"
-            }
-          ],
-          "answer": 0,
-          "why": "safe-haven：在市场动荡时被视为保值去向的资产，如日元、瑞郎、黄金、美债。"
-        },
-        {
-          "id": "u7l2-safe-haven-t",
-          "type": "truefalse",
-          "termId": "safe-haven",
-          "termIds": [
-            "safe-haven"
-          ],
-          "stem": "safe-haven：避险资产",
-          "answer": true,
-          "why": "safe-haven 确实是「避险资产」。"
-        },
-        {
-          "id": "u7l2-safe-haven-f",
-          "type": "fill",
-          "termId": "safe-haven",
-          "termIds": [
-            "safe-haven"
-          ],
-          "story": "The yen was supported by ____ demand after the selloff.",
-          "bank": [
-            "safe-haven",
-            "carry trade"
-          ],
-          "answer": "safe-haven",
           "why": "safe-haven 是被买入的资产；risk-off 是导致它被买入的那种市场状态。"
         },
         {
@@ -6431,20 +6626,50 @@
               "art": "carry trade"
             },
             {
+              "text": "中央银行在外汇市场买卖本币以影响汇率的操作。",
+              "art": "intervention"
+            },
+            {
               "text": "投资者承担风险的意愿，高涨时资金流向高收益资产，低迷时涌向避险资产。",
               "art": "risk appetite"
             },
             {
               "text": "投资者集体撤出风险资产、转向避险资产的市场状态。",
               "art": "risk-off"
-            },
-            {
-              "text": "在市场动荡时被视为保值去向的资产，如日元、瑞郎、黄金、美债。",
-              "art": "safe-haven"
             }
           ],
           "answer": 0,
           "why": "carry trade 是市场参与者的策略（赚利差）；intervention 是央行的操作（影响汇率）。"
+        },
+        {
+          "id": "u7l2-safe-haven-s",
+          "type": "scenario",
+          "termId": "safe-haven",
+          "termIds": [
+            "safe-haven"
+          ],
+          "story": "恐慌时大家买的那种东西。",
+          "stem": "这说的是哪个词？",
+          "options": [
+            {
+              "text": "safe-haven",
+              "art": "safe-haven"
+            },
+            {
+              "text": "risk-off",
+              "art": "risk-off"
+            },
+            {
+              "text": "risk appetite",
+              "art": "risk appetite"
+            },
+            {
+              "text": "carry trade",
+              "art": "carry trade"
+            }
+          ],
+          "answer": 0,
+          "why": "safe-haven：在市场动荡时被视为保值去向的资产，如日元、瑞郎、黄金、美债。"
         },
         {
           "id": "u7l2-carry trade-s",
@@ -6453,12 +6678,16 @@
           "termIds": [
             "carry trade"
           ],
-          "story": "The carry trade has become less attractive as rate differentials narrow.",
-          "stem": "这句话里最关键的那个词是？",
+          "story": "借低息货币、买高息资产，赚利差。",
+          "stem": "这说的是哪个词？",
           "options": [
             {
               "text": "carry trade",
               "art": "carry trade"
+            },
+            {
+              "text": "intervention",
+              "art": "intervention"
             },
             {
               "text": "risk appetite",
@@ -6467,14 +6696,21 @@
             {
               "text": "risk-off",
               "art": "risk-off"
-            },
-            {
-              "text": "safe-haven",
-              "art": "safe-haven"
             }
           ],
           "answer": 0,
           "why": "carry trade：借入低利率货币并投资于高利率资产以赚取利差的交易策略。"
+        },
+        {
+          "id": "u7l2-safe-haven-t",
+          "type": "truefalse",
+          "termId": "safe-haven",
+          "termIds": [
+            "safe-haven"
+          ],
+          "stem": "safe-haven：避险资产",
+          "answer": true,
+          "why": "safe-haven 确实是「避险资产」。"
         },
         {
           "id": "u7l2-carry trade-t",
@@ -6483,9 +6719,25 @@
           "termIds": [
             "carry trade"
           ],
-          "stem": "carry trade 就是 风险偏好。",
+          "stem": "carry trade 就是 干预（汇市）。",
           "answer": false,
-          "why": "carry trade 是「套息交易」，不是「风险偏好」。"
+          "why": "carry trade 是「套息交易」，不是「干预（汇市）」。"
+        },
+        {
+          "id": "u7l2-safe-haven-f",
+          "type": "fill",
+          "termId": "safe-haven",
+          "termIds": [
+            "safe-haven"
+          ],
+          "story": "The yen was supported by ____ demand after the selloff.",
+          "bank": [
+            "safe-haven",
+            "risk-off",
+            "carry trade"
+          ],
+          "answer": "safe-haven",
+          "why": "safe-haven 是被买入的资产；risk-off 是导致它被买入的那种市场状态。"
         },
         {
           "id": "u7l2-carry trade-f",
@@ -6497,6 +6749,7 @@
           "story": "The ____ has become less attractive as rate differentials narrow.",
           "bank": [
             "carry trade",
+            "intervention",
             "safe-haven"
           ],
           "answer": "carry trade",
@@ -6554,14 +6807,36 @@
       "review": true,
       "prompts": [
         {
+          "id": "u7r-h-riskon-safehaven",
+          "type": "headline",
+          "termIds": [
+            "safe-haven",
+            "risk-off"
+          ],
+          "story": "Gold and the Swiss franc rally as investors rush into ____ assets.",
+          "stem": "这句话里的空该填哪个词？",
+          "options": [
+            {
+              "text": "safe-haven",
+              "art": "safe-haven"
+            },
+            {
+              "text": "risk-off",
+              "art": "risk-off"
+            }
+          ],
+          "answer": 0,
+          "why": "黄金和瑞郎是被追捧的资产本身，即 safe-haven；risk-off 是推动这股潮流的避险情绪。"
+        },
+        {
           "id": "u7r-risk appetite-s",
           "type": "scenario",
           "termId": "risk appetite",
           "termIds": [
             "risk appetite"
           ],
-          "story": "The yen strengthened as risk appetite faded.",
-          "stem": "这句话里最关键的那个词是？",
+          "story": "投资者愿不愿意承担风险。",
+          "stem": "这说的是哪个词？",
           "options": [
             {
               "text": "risk appetite",
@@ -6584,6 +6859,96 @@
           "why": "risk appetite：投资者承担风险的意愿，高涨时资金流向高收益资产，低迷时涌向避险资产。"
         },
         {
+          "id": "u7r-risk-off-s",
+          "type": "scenario",
+          "termId": "risk-off",
+          "termIds": [
+            "risk-off"
+          ],
+          "story": "市场慌了，钱往安全的地方跑。",
+          "stem": "这说的是哪个词？",
+          "options": [
+            {
+              "text": "risk-off",
+              "art": "risk-off"
+            },
+            {
+              "text": "safe-haven",
+              "art": "safe-haven"
+            },
+            {
+              "text": "risk appetite",
+              "art": "risk appetite"
+            },
+            {
+              "text": "carry trade",
+              "art": "carry trade"
+            }
+          ],
+          "answer": 0,
+          "why": "risk-off：投资者集体撤出风险资产、转向避险资产的市场状态。"
+        },
+        {
+          "id": "u7r-safe-haven-s",
+          "type": "scenario",
+          "termId": "safe-haven",
+          "termIds": [
+            "safe-haven"
+          ],
+          "story": "恐慌时大家买的那种东西。",
+          "stem": "这说的是哪个词？",
+          "options": [
+            {
+              "text": "safe-haven",
+              "art": "safe-haven"
+            },
+            {
+              "text": "risk-off",
+              "art": "risk-off"
+            },
+            {
+              "text": "risk appetite",
+              "art": "risk appetite"
+            },
+            {
+              "text": "carry trade",
+              "art": "carry trade"
+            }
+          ],
+          "answer": 0,
+          "why": "safe-haven：在市场动荡时被视为保值去向的资产，如日元、瑞郎、黄金、美债。"
+        },
+        {
+          "id": "u7r-carry trade-s",
+          "type": "scenario",
+          "termId": "carry trade",
+          "termIds": [
+            "carry trade"
+          ],
+          "story": "借低息货币、买高息资产，赚利差。",
+          "stem": "这说的是哪个词？",
+          "options": [
+            {
+              "text": "carry trade",
+              "art": "carry trade"
+            },
+            {
+              "text": "intervention",
+              "art": "intervention"
+            },
+            {
+              "text": "risk appetite",
+              "art": "risk appetite"
+            },
+            {
+              "text": "risk-off",
+              "art": "risk-off"
+            }
+          ],
+          "answer": 0,
+          "why": "carry trade：借入低利率货币并投资于高利率资产以赚取利差的交易策略。"
+        },
+        {
           "id": "u7r-risk appetite-t",
           "type": "truefalse",
           "termId": "risk appetite",
@@ -6595,75 +6960,15 @@
           "why": "risk appetite 确实是「风险偏好」。"
         },
         {
-          "id": "u7r-risk-off-s",
-          "type": "scenario",
-          "termId": "risk-off",
-          "termIds": [
-            "risk-off"
-          ],
-          "story": "The yen traded at firmer levels, encouraged by more risk-off conditions.",
-          "stem": "这句话里最关键的那个词是？",
-          "options": [
-            {
-              "text": "risk-off",
-              "art": "risk-off"
-            },
-            {
-              "text": "risk appetite",
-              "art": "risk appetite"
-            },
-            {
-              "text": "safe-haven",
-              "art": "safe-haven"
-            },
-            {
-              "text": "carry trade",
-              "art": "carry trade"
-            }
-          ],
-          "answer": 0,
-          "why": "risk-off：投资者集体撤出风险资产、转向避险资产的市场状态。"
-        },
-        {
           "id": "u7r-risk-off-t",
           "type": "truefalse",
           "termId": "risk-off",
           "termIds": [
             "risk-off"
           ],
-          "stem": "risk-off 就是 风险偏好。",
+          "stem": "risk-off 就是 避险资产。",
           "answer": false,
-          "why": "risk-off 是「避险情绪」，不是「风险偏好」。"
-        },
-        {
-          "id": "u7r-safe-haven-s",
-          "type": "scenario",
-          "termId": "safe-haven",
-          "termIds": [
-            "safe-haven"
-          ],
-          "story": "The yen was supported by safe-haven demand after the selloff.",
-          "stem": "这句话里最关键的那个词是？",
-          "options": [
-            {
-              "text": "safe-haven",
-              "art": "safe-haven"
-            },
-            {
-              "text": "risk appetite",
-              "art": "risk appetite"
-            },
-            {
-              "text": "risk-off",
-              "art": "risk-off"
-            },
-            {
-              "text": "carry trade",
-              "art": "carry trade"
-            }
-          ],
-          "answer": 0,
-          "why": "safe-haven：在市场动荡时被视为保值去向的资产，如日元、瑞郎、黄金、美债。"
+          "why": "risk-off 是「避险情绪」，不是「避险资产」。"
         },
         {
           "id": "u7r-safe-haven-t",
@@ -6677,45 +6982,15 @@
           "why": "safe-haven 确实是「避险资产」。"
         },
         {
-          "id": "u7r-carry trade-s",
-          "type": "scenario",
-          "termId": "carry trade",
-          "termIds": [
-            "carry trade"
-          ],
-          "story": "The carry trade has become less attractive as rate differentials narrow.",
-          "stem": "这句话里最关键的那个词是？",
-          "options": [
-            {
-              "text": "carry trade",
-              "art": "carry trade"
-            },
-            {
-              "text": "risk appetite",
-              "art": "risk appetite"
-            },
-            {
-              "text": "risk-off",
-              "art": "risk-off"
-            },
-            {
-              "text": "safe-haven",
-              "art": "safe-haven"
-            }
-          ],
-          "answer": 0,
-          "why": "carry trade：借入低利率货币并投资于高利率资产以赚取利差的交易策略。"
-        },
-        {
           "id": "u7r-carry trade-t",
           "type": "truefalse",
           "termId": "carry trade",
           "termIds": [
             "carry trade"
           ],
-          "stem": "carry trade 就是 风险偏好。",
+          "stem": "carry trade 就是 干预（汇市）。",
           "answer": false,
-          "why": "carry trade 是「套息交易」，不是「风险偏好」。"
+          "why": "carry trade 是「套息交易」，不是「干预（汇市）」。"
         },
         {
           "id": "u7r-match",

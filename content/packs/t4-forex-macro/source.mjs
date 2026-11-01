@@ -9,7 +9,7 @@
 
 export const PACK = {
   packId: "t4-forex-macro",
-  contentVersion: "2026.10.28-t4",
+  contentVersion: "2026.11.01-t4.2",
   title: "读外汇与宏观",
 };
 
