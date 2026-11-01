@@ -279,6 +279,24 @@ describe("learner storage", () => {
     }
   });
 
+  it("keeps progress that includes listen and audit answers", async () => {
+    // These two exercise types were missing from the validator's list, so any
+    // profile that had answered one was rejected and reset on the next load.
+    const state = sampleState();
+    state.attempts.push(
+      { ...state.attempts[0], eventId: "listen-1", exerciseType: "listen" },
+      { ...state.attempts[0], eventId: "audit-1", exerciseType: "audit" },
+    );
+    const pairId = Object.keys(state.mastery)[0];
+    if (pairId) state.mastery[pairId] = { ...state.mastery[pairId], evidenceTypes: ["listen", "audit"] };
+    await saveLearnerState(state);
+    const loaded = await loadLearnerState();
+    expect(loaded.attempts.map((attempt) => attempt.exerciseType)).toEqual(
+      expect.arrayContaining(["listen", "audit"]),
+    );
+    expect(loaded.attempts).toHaveLength(state.attempts.length);
+  });
+
   it("accepts records written before the retry flag existed", async () => {
     // Every saved attempt from engine 0.1.0 lacks isRetry. Rejecting them
     // would wipe the learner's history on the first load after the upgrade.
