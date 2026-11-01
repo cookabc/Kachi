@@ -37,6 +37,7 @@ let PACK = {};
 let SOURCES = [];
 let CERTIFIES = {};
 let HEADLINE_DRILLS = [];
+let AUDIT_REVIEWS = [];
 let OUT_DIR = "";
 
 function availablePacks() {
@@ -211,25 +212,28 @@ function promptsFor(concept, index, lessonConcepts, lessonId, locale) {
     why: text(concept, "mixUpWhy", locale),
   });
 
-  // 5) audit：只在概念自带 audit 数据时出。这是「疑」的题型——给一段回测
-  // 结论和几句关于它的话，挑出站不住的那一句。它不是每个词都该有：只有那些
-  // 天然对应一种自欺方式的词（过拟合、幸存者偏差、数据挖掘）才配得上。
+  // 5) audit：阅读研报片段，再诊断漏洞、核算数字或选择验证方法。
+  // 提问由内容指定，避免把「选错误结论」与「选正确解释」混为一谈。
   if (concept.audit) {
-    const audit = concept.audit[locale === "en-US" ? "en" : "zh"] ?? concept.audit.zh;
-    out.push({
-      id: pid("a"),
-      type: "audit",
-      termId: concept.id,
-      termIds: [concept.id],
-      story: audit.claim,
-      stem: locale === "en-US" ? "Which statement does not hold?" : "哪一句站不住？",
-      options: audit.options.map((text) => ({ text })),
-      answer: audit.answer,
-      why: audit.why,
-    });
+    out.push(auditPrompt(concept.audit, pid("a"), [concept.id], locale));
   }
 
   return out;
+}
+
+function auditPrompt(drill, id, termIds, locale) {
+  const audit = drill[locale === "en-US" ? "en" : "zh"] ?? drill.zh;
+  return {
+    id,
+    type: "audit",
+    termId: termIds[0],
+    termIds,
+    story: audit.claim,
+    stem: audit.stem ?? (locale === "en-US" ? "What is the main flaw?" : "这段结论的主要问题是什么？"),
+    options: audit.options.map((text) => ({ text })),
+    answer: audit.answer,
+    why: audit.why,
+  };
 }
 
 /**
@@ -350,19 +354,19 @@ function buildCourse(locale) {
       for (let round = 0; round < depth; round += 1) {
         for (const list of perConcept) if (list[round]) prompts.push(list[round]);
       }
-      // The reading task goes FIRST in a review lesson.
-      //
-      // It used to go last, and that made it unreachable: a review runs ~16-18
-      // prompts against five hearts, so a learner who stumbles a few times ends
-      // the lesson in the "out of hearts" screen without ever seeing the one
-      // exercise that uses the terms the way a headline does. Leading with it
-      // also makes pedagogic sense — read the real thing, then drill the pieces.
+      // Application cases lead a review, before isolated vocabulary recall.
+      // Audit reviews use fresh cases rather than repeating the lesson items;
+      // headline drills ask learners to read the terms in context.
       //
       // A drill belongs to the LATER of its two units: several pairs straddle a
       // unit boundary (surplus in u2, deficit in u3), and the earlier review
       // cannot use a term that has not been taught yet.
       const reviewPrompts = [];
       if (lesson.review) {
+        for (const drill of AUDIT_REVIEWS) {
+          if (drill.unit !== unit.id) continue;
+          reviewPrompts.push(auditPrompt(drill, `${lesson.id}-${drill.id}`, drill.termIds, locale));
+        }
         const unitConceptIds = new Set(lesson.concepts.map((c) => c.id));
         for (const drill of HEADLINE_DRILLS) {
           const a = conceptById.get(drill.a);
@@ -451,6 +455,7 @@ async function generatePack(packId) {
   SOURCES = source.SOURCES ?? [];
   CERTIFIES = source.CITES ?? {};
   HEADLINE_DRILLS = drills;
+  AUDIT_REVIEWS = source.AUDIT_REVIEWS ?? [];
   OUT_DIR = path.join(ROOT, "content/packs", PACK.packId);
 
   for (const locale of ["zh-CN", "en-US"]) {
