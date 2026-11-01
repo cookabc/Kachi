@@ -7,7 +7,7 @@ coupon / yield, hedge / pledge. In a headline, one wrong word flips the story,
 so every word arrives beside the twin it gets confused with, and every question
 is decided by the difference.
 
-**6 levels · 238 concepts · 145 confusion pairs · 125 lessons · 1,668 prompts.**
+**6 levels · 238 concepts · 145 confusion pairs · 125 lessons · 1,697 prompts.**
 Offline PWA, no account, progress stays on the device. English interface by
 default, 中文 one tap away. Live at [kachi-game.vercel.app](https://kachi-game.vercel.app).
 
@@ -32,6 +32,9 @@ default, 中文 one tap away. Live at [kachi-game.vercel.app](https://kachi-game
   only: a picture next to "rally" would give the answer away.
 - **Eight exercise types:** meaning, scenario, true/false, fill-in, match,
   listen, read-the-news headlines (levels 1–4) and spot-the-flaw audits (level 5).
+- **Research and quant practice.** Level 5 has 36 original English report cases: 24
+  in lessons and 12 fresh cases leading the six reviews. Diagnose flawed claims,
+  check calculations, choose validation methods and judge what the evidence supports.
 - **No hearts, no failing.** A miss comes back once at the end of the lesson as
   a rehearsal (no XP, no mastery credit). Combos reward runs; the hedgehog
   mascot, a soft chime and a short vibration give feedback. All motion, sound
@@ -62,7 +65,9 @@ Every word must appear in the level's real-news corpus before it is taught
 ships `zh-CN` and `en-US` `course.json` files, generated from `source.mjs` for
 levels 1–5 and hand-written for level 6. The validator keeps the two locales
 structurally identical. Original headline drills live in
-`content/packs/*/headlines.mjs`. Fill sentences for words whose corpus example
+`content/packs/*/headlines.mjs`; level 5's bilingual report cases live in
+`content/packs/t5-quant-research/audits.mjs`. Their figures are hypothetical,
+not quotations or actual fund results. Fill sentences for words whose corpus example
 never uses the term itself live in `content/packs/fill-overrides.mjs`.
 
 ## Commands

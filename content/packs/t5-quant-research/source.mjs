@@ -2,14 +2,15 @@
 //
 // 这一层的验收是「判断一份回测结论哪里站不住」。它和其他四层不同：词的
 // 价值不在定义，而在于每个词都对应一种自欺方式。所以核心概念带 audit 题——
-// 给一段回测结论和几句关于它的话，挑出站不住的那一句。
+// 读英文研报片段，诊断漏洞、核算数字、选择验证方法或判断结论边界。
 //
-// 只有真正对应自欺方式的词才配 audit；纯描述性的绩效指标（beta、exposure）
-// 不硬凑，否则题目会变成「这句话事实错了」，而不是「这个推论站不住」。
+// 单元练习覆盖六个主题；复习用新的跨概念案例，避免原题重复。
+import { AUDITS } from "./audits.mjs";
+export { AUDIT_REVIEWS } from "./audits.mjs";
 
 export const PACK = {
   packId: "t5-quant-research",
-  contentVersion: "2026.11.01-t5.2",
+  contentVersion: "2026.11.01-t5.3",
   title: "读研报与量化",
 };
 
@@ -82,32 +83,6 @@ export const CONCEPTS = [
     mixUpWhy: "backtest 是实验本身；overfitting 是这个实验可能得的一种病。",
     mixUpType: "coexist",
     tags: ["验证"],
-    audit: {
-      zh: {
-        claim:
-          "我们把策略在 2015–2024 年数据上跑了一遍，年化 18%，最大回撤 12%。所以它在实盘里应该也能做到这个水平。",
-        options: [
-          "回测结果直接外推到实盘，忽略了实盘的交易成本与滑点。",
-          "这个回测已经足够说明策略有效。",
-          "18% 的年化和 12% 的回撤看起来是合理的风险收益比。",
-          "十年样本区间不算太短。",
-        ],
-        answer: 0,
-        why: "回测到实盘之间隔着一层成本：手续费、滑点、成交价偏离。扣掉这些，18% 常常所剩无几。回测只能说明「过去这段数据上成立」，不能直接当作实盘预期。",
-      },
-      en: {
-        claim:
-          "We ran the strategy on 2015-2024 data: 18% a year, 12% max drawdown. So it should deliver about that live.",
-        options: [
-          "Carrying a backtest result straight into live trading ignores costs and slippage.",
-          "The backtest is enough evidence that the strategy works.",
-          "18% a year with 12% drawdown looks like a reasonable risk-return trade.",
-          "Ten years is not too short a sample.",
-        ],
-        answer: 0,
-        why: "Between a backtest and live trading sits a layer of cost — fees, slippage, worse fills. Deduct those and 18% often shrinks to very little. A backtest only says the idea held on that stretch of history.",
-      },
-    },
   },
   {
     id: "in-sample",
@@ -122,30 +97,6 @@ export const CONCEPTS = [
     mixUpWhy: "in-sample 是你调过参数的数据，表现天生好看；out-of-sample 是没碰过的数据，才测得出真本事。",
     mixUpType: "opposite",
     tags: ["验证"],
-    audit: {
-      zh: {
-        claim: "策略在样本内夏普 1.4，所以我们对外说它的夏普是 1.4。",
-        options: [
-          "样本内夏普是在调参用过的数据上算出来的，不能当作策略能力。",
-          "1.4 是一个不错的夏普，可以直接对外披露。",
-          "样本内表现好说明参数选得对。",
-          "夏普比只看收益不看回撤，所以还应该补充回撤数据。",
-        ],
-        answer: 0,
-        why: "参数是在样本内调的，指标自然被调高。对外报样本内夏普等于把「我试过的这些里最好的那个」当成「它的能力」。要报就报样本外或滚动验证的结果。",
-      },
-      en: {
-        claim: "The strategy has an in-sample Sharpe of 1.4, so we quote its Sharpe as 1.4.",
-        options: [
-          "An in-sample Sharpe is measured on the data the parameters were tuned on, so it is not a measure of skill.",
-          "1.4 is a respectable Sharpe and can be disclosed as is.",
-          "A good in-sample result means the parameters were chosen well.",
-          "Sharpe ignores drawdown, so drawdown data should be added too.",
-        ],
-        answer: 0,
-        why: "The parameters were fitted on that window, which lifts the number by construction. Quoting it turns 'the best of what I tried' into 'what it can do'. Report out-of-sample or walk-forward instead.",
-      },
-    },
   },
   {
     id: "out-of-sample",
@@ -205,32 +156,6 @@ export const CONCEPTS = [
     mixUpWhy: "overfitting 是模型本身贴合了噪声（结果）；data snooping 是反复试参数这个过程（原因）。",
     mixUpType: "coexist",
     tags: ["自欺"],
-    audit: {
-      zh: {
-        claim:
-          "我们试了 2,000 组参数，选了在 2015–2024 年表现最好的那一组，年化 41%。这说明找到了一个很强的规律。",
-        options: [
-          "2,000 次尝试本身就会从噪声里挑出一个漂亮的幸存者，这个 41% 不是规律的证据。",
-          "41% 的年化说明规律确实很强。",
-          "参数组合越多，找到的规律越可靠。",
-          "只要再换一段数据验证一下，就可以确认这个规律。",
-        ],
-        answer: 0,
-        why: "试得足够多次，纯噪声里也一定会出现一组看着很好的参数。2,000 次尝试选出的最优值，是这个搜索过程的最好结果，不是策略的能力。要证明规律，需要样本外验证，而不是在同一个窗口里挑最好。",
-      },
-      en: {
-        claim:
-          "We tried 2,000 parameter sets and kept the one that did best over 2015-2024: 41% a year. That shows we found a strong pattern.",
-        options: [
-          "Trying 2,000 sets will surface a lucky survivor from pure noise; the 41% is not evidence of a pattern.",
-          "41% a year shows the pattern really is strong.",
-          "The more parameter sets you try, the more reliable the pattern you find.",
-          "Testing on another period would confirm the pattern.",
-        ],
-        answer: 0,
-        why: "Try enough times and pure noise will produce a set that looks excellent. The best of 2,000 is the best result of a search, not a measure of skill. Evidence requires out-of-sample data, not picking the winner inside one window.",
-      },
-    },
   },
   {
     id: "look-ahead bias",
@@ -245,32 +170,6 @@ export const CONCEPTS = [
     mixUpWhy: "look-ahead bias 是偷看了未来（时间维度）；survivorship bias 是只看活下来的（样本维度）。",
     mixUpType: "coexist",
     tags: ["自欺"],
-    audit: {
-      zh: {
-        claim:
-          "我们的信号用每周三公布的库存数据来交易周二，回测显示年化 25%。这说明库存数据有很强的预测力。",
-        options: [
-          "用周三才公布的数据去交易周二，是未来函数，回测里的收益在实盘中拿不到。",
-          "25% 说明库存数据很有预测力。",
-          "库存数据本身是高频数据，所以效果好是合理的。",
-          "只要把库存数据换成月度数据，就没有这个问题了。",
-        ],
-        answer: 0,
-        why: "周二做决定时，周三的库存报告还不存在。回测里把它当作已知，等于用未来的信息交易，收益是虚构的。这类错误在回测里极常见，而且往往难以察觉——因为它不报错，只是把结果抬高。",
-      },
-      en: {
-        claim:
-          "Our signal trades on Tuesday using the inventory report published on Wednesday, and the backtest shows 25% a year. That means inventory data is highly predictive.",
-        options: [
-          "Using Wednesday's data to trade Tuesday is look-ahead bias; the return cannot be earned live.",
-          "25% a year shows inventory data is highly predictive.",
-          "Inventory data is high frequency, so a strong result is plausible.",
-          "Switching to monthly data would remove the problem.",
-        ],
-        answer: 0,
-        why: "On Tuesday the Wednesday report does not exist yet. Treating it as known means trading on future information, so the return is fabricated. This error is common and hard to spot because nothing breaks — it only lifts the result.",
-      },
-    },
   },
   {
     id: "survivorship bias",
@@ -285,32 +184,6 @@ export const CONCEPTS = [
     mixUpWhy: "survivorship bias 是样本选错了（只留下活着的）；look-ahead bias 是时间用错了（看了未来）。",
     mixUpType: "coexist",
     tags: ["自欺"],
-    audit: {
-      zh: {
-        claim:
-          "我们统计了目前还在运行的对冲基金过去十年的平均收益，年化 9%。所以对冲基金这个行业长期回报不错。",
-        options: [
-          "样本只包含活到今天的基金，期间清盘的那些不在其中，这个 9% 被系统性抬高。",
-          "9% 说明对冲基金行业长期回报不错。",
-          "十年是很长的样本，足以代表行业水平。",
-          "应该同时看这些基金的最大回撤。",
-        ],
-        answer: 0,
-        why: "失败清盘的基金从名单里消失了，你统计到的只是幸存者。真实行业回报必须包含那些死掉的——它们往往正是收益最差的。这是幸存者偏差最典型的用法。",
-      },
-      en: {
-        claim:
-          "We averaged the past decade's returns for hedge funds still running today: 9% a year. So the industry has delivered a solid long-run return.",
-        options: [
-          "The sample only includes funds that survived to today; those that closed are missing, which biases the 9% upward.",
-          "9% a year shows the industry has delivered well.",
-          "Ten years is a long enough sample to represent the industry.",
-          "The funds' maximum drawdowns should be examined as well.",
-        ],
-        answer: 0,
-        why: "Funds that blew up disappeared from the list, so what you measured is the survivors. A true industry return must include the dead — and they tend to be exactly the worst performers. This is the textbook survivorship trap.",
-      },
-    },
   },
   {
     id: "data snooping",
@@ -325,30 +198,6 @@ export const CONCEPTS = [
     mixUpWhy: "data snooping 是反复翻找这个习惯；multiple testing 是它带来的统计后果（多重比较）。",
     mixUpType: "coexist",
     tags: ["自欺"],
-    audit: {
-      zh: {
-        claim: "我们在一百个因子里找到了 5 个在 5% 水平上显著的。这说明这 5 个因子是真的有效。",
-        options: [
-          "在 5% 显著性水平下检验 100 次，纯噪声也会给出约 5 个「显著」结果，需要多重比较校正。",
-          "5 个显著因子说明它们确实有效。",
-          "5% 的显著性水平是学术标准，所以结论可靠。",
-          "应该把不显著的 95 个因子也报告出来。",
-        ],
-        answer: 0,
-        why: "5% 显著性的意思是「如果真实无效，有 5% 的概率被误判为显著」。检验 100 次，纯噪声下期望就有 5 个假阳性。你找到的 5 个恰好是这个数量，说明它们可能全是噪声。这正是 data snooping / multiple testing 的问题。",
-      },
-      en: {
-        claim: "We tested a hundred factors and found five significant at the 5% level. So those five are genuinely effective.",
-        options: [
-          "At a 5% level, a hundred tests on pure noise yield about five false positives by construction; multiple testing must be corrected for.",
-          "Five significant factors show they genuinely work.",
-          "5% is the academic standard, so the conclusion is sound.",
-          "The 95 insignificant factors should be reported as well.",
-        ],
-        answer: 0,
-        why: "A 5% level means a 5% chance of calling a truly useless factor significant. Run a hundred tests and pure noise produces about five false positives — exactly what was found. Data snooping is how those five get published as discoveries.",
-      },
-    },
   },
   {
     id: "multiple testing",
@@ -651,30 +500,6 @@ export const CONCEPTS = [
     mixUpWhy: "VaR 是概率意义上的单期限额（95% 情况下不超过）；max drawdown 是历史上真实发生的最深一跌。VaR 常低估尾部风险。",
     mixUpType: "coexist",
     tags: ["风险"],
-    audit: {
-      zh: {
-        claim: "策略的日 VaR 在 95% 水平下是 2.1%，所以一天最多亏 2.1%。",
-        options: [
-          "VaR 是「95% 的情况下不超过」的阈值，剩下 5% 的尾部可能亏得远多于 2.1%。",
-          "2.1% 就是一天的最大可能亏损。",
-          "95% 是高置信度，所以这个上限很可靠。",
-          "应该同时报告最大回撤。",
-        ],
-        answer: 0,
-        why: "VaR 从来不承诺「最多亏这么多」，它说的是「95% 的日子里不超过这个数」。剩下 5% 的尾部可以亏得深不见底——次贷危机里很多机构的实际亏损是 VaR 的许多倍。把 VaR 当成最大亏损是这类报告里最常见的误读。",
-      },
-      en: {
-        claim: "The strategy's daily VaR at 95% is 2.1%, so the most it can lose in a day is 2.1%.",
-        options: [
-          "VaR is a threshold not exceeded on 95% of days; the other 5% can lose far more than 2.1%.",
-          "2.1% is the maximum possible daily loss.",
-          "95% is a high confidence level, so the ceiling is reliable.",
-          "Maximum drawdown should be reported alongside it.",
-        ],
-        answer: 0,
-        why: "VaR never promises 'no more than this'; it says 'on 95% of days, no more than this'. The remaining 5% can be far deeper — in 2008 many firms lost many multiples of their VaR. Reading VaR as a maximum loss is the most common misreading in these reports.",
-      },
-    },
   },
   {
     id: "sensitivity",
@@ -706,11 +531,12 @@ export const CONCEPTS = [
   },
 ];
 
-// 英文文案合并进概念表。audit 的英文在概念里已经内联，这里只补概念文本。
+// 概念释义和案例题都保留双语，英文研报片段在两种语言下相同。
 import { EN as EN_TABLE } from "./en.mjs";
 for (const concept of CONCEPTS) {
   const en = EN_TABLE[concept.id];
   if (en) concept.en = en;
+  if (AUDITS[concept.id]) concept.audit = AUDITS[concept.id];
 }
 
 // 文献来源（非语料）。T5 的语料是原创示范稿，不算来源；这一层的概念应当引

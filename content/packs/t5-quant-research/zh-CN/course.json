@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
   "packId": "t5-quant-research",
-  "contentVersion": "2026.11.01-t5.2",
+  "contentVersion": "2026.11.01-t5.3",
   "locale": "zh-CN",
-  "generatedAt": "2026.11.01-t5.2",
+  "generatedAt": "2026.11.01-t5.3",
   "units": [
     {
       "id": 1,
@@ -888,24 +888,24 @@
           "termIds": [
             "backtest"
           ],
-          "story": "我们把策略在 2015–2024 年数据上跑了一遍，年化 18%，最大回撤 12%。所以它在实盘里应该也能做到这个水平。",
-          "stem": "哪一句站不住？",
+          "story": "Our backtest returned 18% a year before fees and slippage. Investors should expect 18% net in live trading.",
+          "stem": "从历史结果推到实盘预期，哪一步有问题？",
           "options": [
             {
-              "text": "回测结果直接外推到实盘，忽略了实盘的交易成本与滑点。"
+              "text": "年化收益应当改成各年收益的简单相加。"
             },
             {
-              "text": "这个回测已经足够说明策略有效。"
+              "text": "把未扣成本的模拟收益当成了实盘净收益预期。"
             },
             {
-              "text": "18% 的年化和 12% 的回撤看起来是合理的风险收益比。"
+              "text": "回测只要包含十年数据，就应当使用月收益。"
             },
             {
-              "text": "十年样本区间不算太短。"
+              "text": "只要补上最大回撤，就能确认实盘的净收益。"
             }
           ],
-          "answer": 0,
-          "why": "回测到实盘之间隔着一层成本：手续费、滑点、成交价偏离。扣掉这些，18% 常常所剩无几。回测只能说明「过去这段数据上成立」，不能直接当作实盘预期。"
+          "answer": 1,
+          "why": "before fees and slippage 表示尚未扣除费用与滑点，net 表示扣除成本之后。两种口径不能直接等同；即使补齐成本，历史回测也不保证未来收益。"
         },
         {
           "id": "u1l1-in-sample-a",
@@ -914,24 +914,50 @@
           "termIds": [
             "in-sample"
           ],
-          "story": "策略在样本内夏普 1.4，所以我们对外说它的夏普是 1.4。",
-          "stem": "哪一句站不住？",
+          "story": "We tuned the model on 2015-2024 data. Its Sharpe on that same period is 1.4, which we present as independent validation.",
+          "stem": "这里的 independent validation 为什么不成立？",
           "options": [
             {
-              "text": "样本内夏普是在调参用过的数据上算出来的，不能当作策略能力。"
+              "text": "夏普为正说明模型的参数数量一定过少。"
             },
             {
-              "text": "1.4 是一个不错的夏普，可以直接对外披露。"
+              "text": "十年数据不能用于任何形式的模型训练。"
             },
             {
-              "text": "样本内表现好说明参数选得对。"
+              "text": "评估与调参使用同一段数据，不是独立检验。"
             },
             {
-              "text": "夏普比只看收益不看回撤，所以还应该补充回撤数据。"
+              "text": "只有夏普超过 2，评估才算独立检验。"
+            }
+          ],
+          "answer": 2,
+          "why": "same period 是关键：样本内数据已用于选择参数，其表现不能再充当独立证据。可以如实报告样本内夏普，但应标明口径，并补充未参与选择的数据上的检验。"
+        },
+        {
+          "id": "u1l1-out-of-sample-a",
+          "type": "audit",
+          "termId": "out-of-sample",
+          "termIds": [
+            "out-of-sample"
+          ],
+          "story": "We checked the holdout every week and changed the model whenever its holdout Sharpe fell. The final holdout Sharpe is 1.2.",
+          "stem": "下一步怎样才能获得更独立的证据？",
+          "options": [
+            {
+              "text": "冻结模型，用尚未查看的新数据检验。"
+            },
+            {
+              "text": "继续修改模型，直到这段留出数据上的夏普更高。"
+            },
+            {
+              "text": "把这段留出数据重新命名为样本外即可。"
+            },
+            {
+              "text": "把每周查看改成每月查看，继续在原数据上调参。"
             }
           ],
           "answer": 0,
-          "why": "参数是在样本内调的，指标自然被调高。对外报样本内夏普等于把「我试过的这些里最好的那个」当成「它的能力」。要报就报样本外或滚动验证的结果。"
+          "why": "holdout 一旦反复指导改模型，就参与了选择，失去了原本的独立性。先冻结规则，再用新的未查看数据检验；改名或降低查看频率不能消除已经发生的信息泄漏。"
         },
         {
           "id": "u1l1-match",
@@ -1167,6 +1193,32 @@
           "why": "benchmark 是用来比成绩的参照；universe 是你可以从中挑选标的的范围。"
         },
         {
+          "id": "u1l2-walk-forward-a",
+          "type": "audit",
+          "termId": "walk-forward",
+          "termIds": [
+            "walk-forward"
+          ],
+          "story": "Our walk-forward test refits each January using the full 2010-2024 dataset, then simulates trades for that year, including 2018.",
+          "stem": "要符合滚动验证的时间约束，应改哪一步？",
+          "options": [
+            {
+              "text": "每次拟合改用更多未来年份，减少参数波动。"
+            },
+            {
+              "text": "只改成按月拟合，仍使用完整数据集。"
+            },
+            {
+              "text": "先把完整数据随机打乱，再模拟每年的交易。"
+            },
+            {
+              "text": "每次拟合只使用该交易时点之前已能获得的数据。"
+            }
+          ],
+          "answer": 3,
+          "why": "2018 年初无法知道 2019–2024 年的数据。walk-forward 的关键是按时间推进，每次只用当时已知的数据拟合，再评估随后一段，而不是仅仅定期重新拟合。"
+        },
+        {
           "id": "u1l2-match",
           "type": "match",
           "termIds": [
@@ -1217,6 +1269,61 @@
       "icon": "🏆",
       "review": true,
       "prompts": [
+        {
+          "id": "u1r-audit-benchmark-match",
+          "type": "audit",
+          "termId": "benchmark",
+          "termIds": [
+            "benchmark",
+            "backtest"
+          ],
+          "story": "An equity strategy reports total returns including dividends. Its benchmark uses the same index's price return, excluding dividends. The gap is called added value.",
+          "stem": "要公平比较，应先修正哪项口径？",
+          "options": [
+            {
+              "text": "把策略收益也改成不含股息，然后继续称为总收益。"
+            },
+            {
+              "text": "挑一个收益更低的指数，把差额放大。"
+            },
+            {
+              "text": "使用同期间、同含息口径的基准，明确成本处理。"
+            },
+            {
+              "text": "只比较表现最好的一年，避免股息的影响。"
+            }
+          ],
+          "answer": 2,
+          "why": "策略的 total return 包含股息，基准的 price return 不包含；差额可能只是口径差异。先统一期间与股息处理，再说明费用口径，才能讨论策略是否创造了额外价值。"
+        },
+        {
+          "id": "u1r-audit-test-design",
+          "type": "audit",
+          "termId": "walk-forward",
+          "termIds": [
+            "walk-forward",
+            "in-sample",
+            "out-of-sample"
+          ],
+          "story": "We need a historical test that refits annually while respecting what was known at each decision date. Which design should we use?",
+          "stem": "哪套流程最符合要求？",
+          "options": [
+            {
+              "text": "用全部历史选定参数，再把每一年都称为样本外。"
+            },
+            {
+              "text": "每年仅用此前已知的数据拟合，固定规则交易随后一年，并汇总结果。"
+            },
+            {
+              "text": "每年结束后用该年的收益挑参数，再回填该年的交易。"
+            },
+            {
+              "text": "随机打乱年份，把未来年份分进每次训练集。"
+            }
+          ],
+          "answer": 1,
+          "why": "walk-forward 的时间顺序是先用过去拟合，再检验随后一段。每段测试结果可以汇总，但不能用同段收益倒推当时的参数；这个流程也不保证未来一定盈利。"
+        },
         {
           "id": "u1r-backtest-s",
           "type": "scenario",
@@ -1765,24 +1872,24 @@
           "termIds": [
             "overfitting"
           ],
-          "story": "我们试了 2,000 组参数，选了在 2015–2024 年表现最好的那一组，年化 41%。这说明找到了一个很强的规律。",
-          "stem": "哪一句站不住？",
+          "story": "We tried 2,000 parameter sets on the same ten years and report only the winner: 41% a year. This proves a persistent edge.",
+          "stem": "这段结论缺少的关键证据是什么？",
           "options": [
             {
-              "text": "2,000 次尝试本身就会从噪声里挑出一个漂亮的幸存者，这个 41% 不是规律的证据。"
+              "text": "未参与挑选参数的数据上的表现。"
             },
             {
-              "text": "41% 的年化说明规律确实很强。"
+              "text": "同一段数据里排名第二的参数收益更低。"
             },
             {
-              "text": "参数组合越多，找到的规律越可靠。"
+              "text": "把 2,000 组参数扩到 4,000 组后，冠军收益更高。"
             },
             {
-              "text": "只要再换一段数据验证一下，就可以确认这个规律。"
+              "text": "冠军参数在相同数据上重复运行，仍得到 41%。"
             }
           ],
           "answer": 0,
-          "why": "试得足够多次，纯噪声里也一定会出现一组看着很好的参数。2,000 次尝试选出的最优值，是这个搜索过程的最好结果，不是策略的能力。要证明规律，需要样本外验证，而不是在同一个窗口里挑最好。"
+          "why": "从大量尝试中选出最好的一组，会产生选择偏差，可能把噪声当成规律。反复运行同一组数据不构成新证据；需要样本外检验，并考虑搜索次数带来的偏差。"
         },
         {
           "id": "u2l1-look-ahead bias-a",
@@ -1791,24 +1898,24 @@
           "termIds": [
             "look-ahead bias"
           ],
-          "story": "我们的信号用每周三公布的库存数据来交易周二，回测显示年化 25%。这说明库存数据有很强的预测力。",
-          "stem": "哪一句站不住？",
+          "story": "Our Tuesday trades use inventory figures first published on Wednesday. The backtest earns 25% a year.",
+          "stem": "即使不考虑交易成本，回测仍有什么关键错误？",
           "options": [
             {
-              "text": "用周三才公布的数据去交易周二，是未来函数，回测里的收益在实盘中拿不到。"
+              "text": "每周公布的数据不能用于任何交易策略。"
             },
             {
-              "text": "25% 说明库存数据很有预测力。"
+              "text": "年化收益超过 20% 的回测一律无效。"
             },
             {
-              "text": "库存数据本身是高频数据，所以效果好是合理的。"
+              "text": "周二决策使用了周三才公开的信息。"
             },
             {
-              "text": "只要把库存数据换成月度数据，就没有这个问题了。"
+              "text": "周二交易天然会产生幸存者偏差。"
             }
           ],
-          "answer": 0,
-          "why": "周二做决定时，周三的库存报告还不存在。回测里把它当作已知，等于用未来的信息交易，收益是虚构的。这类错误在回测里极常见，而且往往难以察觉——因为它不报错，只是把结果抬高。"
+          "answer": 2,
+          "why": "first published on Wednesday 限定了信息最早可用的时间。用它交易周二构成 look-ahead bias。必须按真实发布时间对齐信号与交易；改成月度数据也不能自动修复。"
         },
         {
           "id": "u2l1-survivorship bias-a",
@@ -1817,24 +1924,24 @@
           "termIds": [
             "survivorship bias"
           ],
-          "story": "我们统计了目前还在运行的对冲基金过去十年的平均收益，年化 9%。所以对冲基金这个行业长期回报不错。",
-          "stem": "哪一句站不住？",
+          "story": "Funds still operating today returned 9% a year over the last decade. We excluded funds that closed, so 9% represents the whole industry.",
+          "stem": "要检验行业整体回报，应怎样补样本？",
           "options": [
             {
-              "text": "样本只包含活到今天的基金，期间清盘的那些不在其中，这个 9% 被系统性抬高。"
+              "text": "只增加目前规模最大的存续基金。"
             },
             {
-              "text": "9% 说明对冲基金行业长期回报不错。"
+              "text": "纳入期间关闭基金的历史收益，尽量还原当时的完整样本。"
             },
             {
-              "text": "十年是很长的样本，足以代表行业水平。"
+              "text": "保留原名单，只把观察期缩短为一年。"
             },
             {
-              "text": "应该同时看这些基金的最大回撤。"
+              "text": "把原名单中收益为负的年份删除。"
             }
           ],
-          "answer": 0,
-          "why": "失败清盘的基金从名单里消失了，你统计到的只是幸存者。真实行业回报必须包含那些死掉的——它们往往正是收益最差的。这是幸存者偏差最典型的用法。"
+          "answer": 1,
+          "why": "still operating today 把今天是否存续当作入选条件。被排除的基金可能表现更差，行业估计因此可能偏高；应纳入关闭基金，而不是只扩充幸存者名单。"
         },
         {
           "id": "u2l1-match",
@@ -2074,24 +2181,24 @@
           "termIds": [
             "data snooping"
           ],
-          "story": "我们在一百个因子里找到了 5 个在 5% 水平上显著的。这说明这 5 个因子是真的有效。",
-          "stem": "哪一句站不住？",
+          "story": "We tested 100 ineffective factors, each with a correctly sized 5% significance test. Finding five significant results would establish five real effects.",
+          "stem": "在全部因子实际无效的假设下，假阳性数量的期望是多少？",
           "options": [
             {
-              "text": "在 5% 显著性水平下检验 100 次，纯噪声也会给出约 5 个「显著」结果，需要多重比较校正。"
+              "text": "0 个，因为真正无效就不可能显著。"
             },
             {
-              "text": "5 个显著因子说明它们确实有效。"
+              "text": "1 个，因为每次只能检验一个假设。"
             },
             {
-              "text": "5% 的显著性水平是学术标准，所以结论可靠。"
+              "text": "95 个，因为置信度是 95%。"
             },
             {
-              "text": "应该把不显著的 95 个因子也报告出来。"
+              "text": "5 个，但不是每次实验都恰好有 5 个。"
             }
           ],
-          "answer": 0,
-          "why": "5% 显著性的意思是「如果真实无效，有 5% 的概率被误判为显著」。检验 100 次，纯噪声下期望就有 5 个假阳性。你找到的 5 个恰好是这个数量，说明它们可能全是噪声。这正是 data snooping / multiple testing 的问题。"
+          "answer": 3,
+          "why": "100 × 5% = 5，是假阳性数量的期望，不是一次实验的固定结果。看到 5 个显著结果不能据此证明有效；需要考虑多重检验与独立验证。期望相加不要求各次检验独立。"
         },
         {
           "id": "u2l2-match",
@@ -2144,6 +2251,60 @@
       "icon": "🏆",
       "review": true,
       "prompts": [
+        {
+          "id": "u2r-audit-familywise-error",
+          "type": "audit",
+          "termId": "multiple testing",
+          "termIds": [
+            "multiple testing",
+            "data snooping"
+          ],
+          "story": "We run 20 independent tests. All null hypotheses are true and each test has a 5% false-positive rate. The chance of at least one false positive is still only 5%.",
+          "stem": "在这些明确假设下，至少出现一个假阳性的概率约是多少？",
+          "options": [
+            {
+              "text": "5%"
+            },
+            {
+              "text": "100%"
+            },
+            {
+              "text": "约 36%"
+            },
+            {
+              "text": "约 64%"
+            }
+          ],
+          "answer": 3,
+          "why": "20 次全部不误报的概率是 0.95²⁰ ≈ 35.85%，因此至少一次误报为 1 − 0.95²⁰ ≈ 64.15%。100% 是把概率直接相加的错误；这里的乘法依赖题中独立的假设。"
+        },
+        {
+          "id": "u2r-audit-repair-two-biases",
+          "type": "audit",
+          "termId": "look-ahead bias",
+          "termIds": [
+            "look-ahead bias",
+            "survivorship bias"
+          ],
+          "story": "A 2018 backtest selects stocks from today's surviving-company list and uses earnings data before their publication dates. We fix it by adding commissions.",
+          "stem": "哪项修复直接针对题中两种偏差？",
+          "options": [
+            {
+              "text": "还原各时点的标的池，纳入后来退市的公司，并按真实公布时间使用财报。"
+            },
+            {
+              "text": "保留当前标的池，只把佣金估计翻倍。"
+            },
+            {
+              "text": "保留财报时间错位，只增加股票数量。"
+            },
+            {
+              "text": "删除表现最差的股票，让回测更接近当前存续公司。"
+            }
+          ],
+          "answer": 0,
+          "why": "今天的存续名单遗漏后来退市的公司，是幸存者偏差；提前使用财报是未来函数。交易成本是另一项问题，补上佣金不能修复样本和信息时点错误。"
+        },
         {
           "id": "u2r-overfitting-s",
           "type": "scenario",
@@ -2775,6 +2936,84 @@
           "why": "expectancy 是金额加权后的平均；hit rate 只数次数。"
         },
         {
+          "id": "u3l1-sharpe ratio-a",
+          "type": "audit",
+          "termId": "sharpe ratio",
+          "termIds": [
+            "sharpe ratio"
+          ],
+          "story": "Annual mean return is 10%, the risk-free rate is 2%, and annual return volatility is 8%. We report a Sharpe ratio of 1.25.",
+          "stem": "按题中给定的年化口径，夏普比应是多少？",
+          "options": [
+            {
+              "text": "1.25"
+            },
+            {
+              "text": "1.00"
+            },
+            {
+              "text": "0.80"
+            },
+            {
+              "text": "1.50"
+            }
+          ],
+          "answer": 1,
+          "why": "Sharpe ratio 的分子是相对无风险利率的超额收益：(10% − 2%) ÷ 8% = 1。1.25 来自 10% ÷ 8%，漏减了无风险利率。这里收益与波动率均已按年给出，无需再次年化。"
+        },
+        {
+          "id": "u3l1-max drawdown-a",
+          "type": "audit",
+          "termId": "max drawdown",
+          "termIds": [
+            "max drawdown"
+          ],
+          "story": "The fund's only observed NAV path is 100, 120, 90, 108, with no cash flows. Since it finishes above 100, its maximum drawdown is zero.",
+          "stem": "根据这条净值路径，最大回撤是多少？",
+          "options": [
+            {
+              "text": "0%，因为最终净值高于起点。"
+            },
+            {
+              "text": "10%，因为最低净值比起点低 10%。"
+            },
+            {
+              "text": "25%，因为从 120 的峰值跌到了 90。"
+            },
+            {
+              "text": "30%，因为净值从峰值少了 30。"
+            }
+          ],
+          "answer": 2,
+          "why": "max drawdown 按峰值到随后谷值的比例算：(120 − 90) ÷ 120 = 25%。30 是净值点数，不能直接写成 30%；最终回升不抹掉曾经发生的回撤。"
+        },
+        {
+          "id": "u3l1-hit rate-a",
+          "type": "audit",
+          "termId": "hit rate",
+          "termIds": [
+            "hit rate"
+          ],
+          "story": "With equal stakes, 80% of trades win $1 and 20% lose $6, before costs. The 80% hit rate proves positive expectancy.",
+          "stem": "按给定胜率和盈亏金额，每笔交易的期望盈亏是多少？",
+          "options": [
+            {
+              "text": "−$0.40"
+            },
+            {
+              "text": "+$0.80"
+            },
+            {
+              "text": "+$0.40"
+            },
+            {
+              "text": "−$1.20"
+            }
+          ],
+          "answer": 0,
+          "why": "expectancy = 80% × $1 − 20% × $6 = −$0.40。hit rate 只数赢了多少次，不反映每次赚亏的金额；这组假设下，未扣成本的期望已经为负。"
+        },
+        {
           "id": "u3l1-match",
           "type": "match",
           "termIds": [
@@ -3104,6 +3343,32 @@
           "why": "tracking error 是偏离的幅度（不管好坏方向）；alpha 是偏离的方向性收益。"
         },
         {
+          "id": "u3l2-alpha-a",
+          "type": "audit",
+          "termId": "alpha",
+          "termIds": [
+            "alpha"
+          ],
+          "story": "The fund returned 12% while the market returned 10%. Without adjusting for beta or other risk exposures, we call the 2-point gap alpha.",
+          "stem": "目前的数据最能支持哪种表述？",
+          "options": [
+            {
+              "text": "已经确认有 2 个百分点的风险调整后收益。"
+            },
+            {
+              "text": "收益高于市场意味着 beta 一定小于 1。"
+            },
+            {
+              "text": "只需改用更低的基准，alpha 就更可信。"
+            },
+            {
+              "text": "原始收益领先 2 个百分点，尚未证明风险调整后的 alpha。"
+            }
+          ],
+          "answer": 3,
+          "why": "12% − 10% 是原始收益差。alpha 需要相对明确的风险模型或基准进行调整；更高的 beta 等风险暴露也可能解释这段差额，不能仅凭领先就认定为选股能力。"
+        },
+        {
           "id": "u3l2-match",
           "type": "match",
           "termIds": [
@@ -3164,6 +3429,60 @@
       "icon": "🏆",
       "review": true,
       "prompts": [
+        {
+          "id": "u3r-audit-beta-adjustment",
+          "type": "audit",
+          "termId": "beta",
+          "termIds": [
+            "beta",
+            "alpha"
+          ],
+          "story": "Assume a single-factor model: the risk-free rate is 2%, market excess return is 5%, and fund beta is 1.4. The fund returns 9%, which is presented as positive alpha.",
+          "stem": "按题中给定模型，这期的 alpha 是多少？",
+          "options": [
+            {
+              "text": "2 个百分点"
+            },
+            {
+              "text": "0 个百分点"
+            },
+            {
+              "text": "7 个百分点"
+            },
+            {
+              "text": "−2 个百分点"
+            }
+          ],
+          "answer": 1,
+          "why": "模型对应的收益是 2% + 1.4 × 5% = 9%；实际也是 9%，残差 alpha 为 0。这里的市场超额收益已经减去无风险利率，不应再减一次。结论只针对给定模型和这期数据。"
+        },
+        {
+          "id": "u3r-audit-positive-expectancy",
+          "type": "audit",
+          "termId": "expectancy",
+          "termIds": [
+            "expectancy",
+            "hit rate"
+          ],
+          "story": "Under a fixed equal-stake payoff model, 40% of trades win $3 and 60% lose $1, before costs. A hit rate below 50% means the strategy must lose money on average.",
+          "stem": "哪项结论符合给定的概率与盈亏金额？",
+          "options": [
+            {
+              "text": "胜率不足 50%，每笔期望必然为负。"
+            },
+            {
+              "text": "每笔期望是 $2，因为 $3 − $1 = $2。"
+            },
+            {
+              "text": "未扣成本的每笔期望是 +$0.60，但不保证每段实盘都盈利。"
+            },
+            {
+              "text": "每笔期望是 −$0.20，因为 40% − 60% = −20%。"
+            }
+          ],
+          "answer": 2,
+          "why": "expectancy = 40% × $3 − 60% × $1 = +$0.60。胜率低也可以有正期望，但交易成本可能侵蚀它；给定模型下的期望也不是每一段实际结果的保证。"
+        },
         {
           "id": "u3r-sharpe ratio-s",
           "type": "scenario",
@@ -3802,6 +4121,58 @@
           "why": "position sizing 是决定放多少（决策）；exposure 是实际暴露了多少（结果）。放 10% 的仓位，可能因为波动率不同而暴露得更多或更少。"
         },
         {
+          "id": "u4l1-rebalance-a",
+          "type": "audit",
+          "termId": "rebalance",
+          "termIds": [
+            "rebalance"
+          ],
+          "story": "Our 50/50 portfolio drifts to 70% stocks and 30% bonds. Rebalancing to 50/50 requires buying more stocks.",
+          "stem": "假设没有资金进出，恢复目标权重应怎样操作？",
+          "options": [
+            {
+              "text": "买股票、卖债券，进一步提高股票权重。"
+            },
+            {
+              "text": "卖股票、买债券，恢复 50/50。"
+            },
+            {
+              "text": "股票和债券都不动，当前权重就是目标权重。"
+            },
+            {
+              "text": "把目标改成 70/30，再称为已恢复原目标。"
+            }
+          ],
+          "answer": 1,
+          "why": "rebalance 是把实际权重调回目标。股票已超配，应卖出股票并买入债券。仅修改目标不等于恢复原来的配置；再平衡也不是对下一段涨跌的预测。"
+        },
+        {
+          "id": "u4l1-position sizing-a",
+          "type": "audit",
+          "termId": "position sizing",
+          "termIds": [
+            "position sizing"
+          ],
+          "story": "We put 10% of capital in each of ten positions. Their volatilities differ greatly, but equal cash weights guarantee equal risk contributions.",
+          "stem": "这个仓位结论忽略了什么？",
+          "options": [
+            {
+              "text": "风险贡献还取决于波动率及持仓之间的相关性。"
+            },
+            {
+              "text": "每个仓位只占 10%，因此各仓位造成的亏损都相同。"
+            },
+            {
+              "text": "等权配置可以自动消除共同因子带来的集中风险。"
+            },
+            {
+              "text": "只要历史收益率相同，各持仓的风险贡献就相同。"
+            }
+          ],
+          "answer": 0,
+          "why": "position sizing 给出资金如何分配；exposure 与风险贡献还受各资产波动率和协方差影响。等资金权重不能自动推出等风险贡献。"
+        },
+        {
           "id": "u4l1-match",
           "type": "match",
           "termIds": [
@@ -4123,6 +4494,58 @@
           "why": "exposure 是实际的暴露（结果）；position sizing 是决定放多少（过程）。"
         },
         {
+          "id": "u4l2-correlation-a",
+          "type": "audit",
+          "termId": "correlation",
+          "termIds": [
+            "correlation"
+          ],
+          "story": "We hold ten energy contracts with pairwise return correlations near 0.95. Ten holdings mean the portfolio is well diversified.",
+          "stem": "哪项判断最符合这段数据？",
+          "options": [
+            {
+              "text": "只要持仓名称不同，就能获得充分分散。"
+            },
+            {
+              "text": "相关性为 0.95，意味着每个合约上涨概率为 95%。"
+            },
+            {
+              "text": "持仓数量多，但高度同涨同跌，分散作用可能有限。"
+            },
+            {
+              "text": "相关性高说明这些合约之间一定有因果关系。"
+            }
+          ],
+          "answer": 2,
+          "why": "correlation 衡量共同变动，不是上涨概率，也不证明因果。接近 1 的相关性意味着这些持仓可能承受相似冲击，不能只数合约个数就宣布充分分散。"
+        },
+        {
+          "id": "u4l2-exposure-a",
+          "type": "audit",
+          "termId": "exposure",
+          "termIds": [
+            "exposure"
+          ],
+          "story": "The portfolio is long 100% of NAV in one stock basket and short 100% in another. Net exposure is zero, so there is no market or funding risk.",
+          "stem": "零净敞口为什么不足以支持这项结论？",
+          "options": [
+            {
+              "text": "零净敞口说明总敞口也必然为零。"
+            },
+            {
+              "text": "多空金额相等就能保证两个篮子的涨跌完全抵消。"
+            },
+            {
+              "text": "只要是空头，就不会产生融资或借券成本。"
+            },
+            {
+              "text": "总敞口仍为 200%，且多空风险可能不匹配。"
+            }
+          ],
+          "answer": 3,
+          "why": "net exposure = 100% − 100% = 0；gross exposure = 100% + 100% = 200%。金额相抵不表示 beta、行业等风险逐项相抵，也不消除借券、融资或被迫平仓的风险。"
+        },
+        {
           "id": "u4l2-match",
           "type": "match",
           "termIds": [
@@ -4183,6 +4606,60 @@
       "icon": "🏆",
       "review": true,
       "prompts": [
+        {
+          "id": "u4r-audit-net-vs-gross",
+          "type": "audit",
+          "termId": "exposure",
+          "termIds": [
+            "exposure",
+            "position sizing"
+          ],
+          "story": "A fund has long positions worth 80% of NAV and short positions worth 50%. The report calls 30% its gross exposure.",
+          "stem": "净敞口与总敞口应分别是多少？",
+          "options": [
+            {
+              "text": "净敞口 130%，总敞口 30%。"
+            },
+            {
+              "text": "净敞口 30%，总敞口 80%。"
+            },
+            {
+              "text": "净敞口 50%，总敞口 130%。"
+            },
+            {
+              "text": "净敞口 30%，总敞口 130%。"
+            }
+          ],
+          "answer": 3,
+          "why": "净敞口 net exposure 按多头减空头：80% − 50% = 30%；总敞口 gross exposure 按两侧绝对值相加：80% + 50% = 130%。它们描述不同维度，都不能单独完整衡量风险。"
+        },
+        {
+          "id": "u4r-audit-turnover-definition",
+          "type": "audit",
+          "termId": "turnover",
+          "termIds": [
+            "turnover",
+            "rebalance"
+          ],
+          "story": "At one rebalance, a $1 million portfolio buys $100,000 and sells $100,000. We define one-way turnover as (buys + sells) / (2 × NAV), then report 20% one-way turnover.",
+          "stem": "按题中明确给出的定义，单边换手率是多少？",
+          "options": [
+            {
+              "text": "10%"
+            },
+            {
+              "text": "20%"
+            },
+            {
+              "text": "0%"
+            },
+            {
+              "text": "40%"
+            }
+          ],
+          "answer": 0,
+          "why": "($100,000 + $100,000) ÷ (2 × $1,000,000) = 10%。20% 是买卖金额之和除以 NAV 的双边口径；不同报告可能采用不同定义，先看公式，不能只看 turnover 这个词。"
+        },
         {
           "id": "u4r-universe-s",
           "type": "scenario",
@@ -4683,6 +5160,58 @@
           "why": "slippage 是价格偏离（隐性）；transaction cost 是明确的费用。"
         },
         {
+          "id": "u5l1-transaction cost-a",
+          "type": "audit",
+          "termId": "transaction cost",
+          "termIds": [
+            "transaction cost"
+          ],
+          "story": "A single round trip earns 12 basis points before costs. Entry costs 4 basis points and exit costs 4 basis points. We report 8 basis points net.",
+          "stem": "没有其他成本时，这次往返交易的净收益是多少？",
+          "options": [
+            {
+              "text": "4 个基点"
+            },
+            {
+              "text": "8 个基点"
+            },
+            {
+              "text": "12 个基点"
+            },
+            {
+              "text": "−4 个基点"
+            }
+          ],
+          "answer": 0,
+          "why": "round trip 包含买入和卖出两边：12 − 4 − 4 = 4 个基点。8 个基点只扣了一边成本。1 个基点是 0.01 个百分点，题中全部按同一笔交易的名义金额计算。"
+        },
+        {
+          "id": "u5l1-slippage-a",
+          "type": "audit",
+          "termId": "slippage",
+          "termIds": [
+            "slippage"
+          ],
+          "story": "A buy signal occurs at $100, but the order fills at $100.30. The backtest books the buy at $100 because commissions are already included.",
+          "stem": "相对信号价，这笔买入遗漏了多少不利滑点？",
+          "options": [
+            {
+              "text": "0，因为佣金已计入。"
+            },
+            {
+              "text": "3 个基点，因为价格差是 $0.30。"
+            },
+            {
+              "text": "30 个基点，因为 $0.30 ÷ $100 = 0.30%。"
+            },
+            {
+              "text": "300 个基点，因为成交价超过了 $100。"
+            }
+          ],
+          "answer": 2,
+          "why": "买入成交价高于信号价，差额 $0.30 ÷ $100 = 0.003 = 0.30% = 30 个基点。佣金与这段成交价偏离是不同成本；计入佣金不能代替计入滑点。"
+        },
+        {
           "id": "u5l1-match",
           "type": "match",
           "termIds": [
@@ -4904,6 +5433,58 @@
           "why": "liquidity constraint 是市场层面的量；capacity constraint 是策略层面的上限。"
         },
         {
+          "id": "u5l2-capacity constraint-a",
+          "type": "audit",
+          "termId": "capacity constraint",
+          "termIds": [
+            "capacity constraint"
+          ],
+          "story": "The strategy earned 8% net at $10 million. We forecast the same percentage return at $1 billion, assuming unchanged market impact.",
+          "stem": "扩规模前最需要检验哪项假设？",
+          "options": [
+            {
+              "text": "只延长小规模回测区间，能否确认大规模实盘收益。"
+            },
+            {
+              "text": "更大订单的冲击与成交约束是否会侵蚀净收益。"
+            },
+            {
+              "text": "只把订单拆小，是否就能保证成交成本完全不变。"
+            },
+            {
+              "text": "只保持各标的资金比例，是否就能维持原来的冲击成本。"
+            }
+          ],
+          "answer": 1,
+          "why": "capacity constraint 关注策略能承载多少资金。资产规模扩大一百倍，订单规模和市场冲击可能随之变化；小规模净收益不能按相同比例无条件外推。"
+        },
+        {
+          "id": "u5l2-liquidity constraint-a",
+          "type": "audit",
+          "termId": "liquidity constraint",
+          "termIds": [
+            "liquidity constraint"
+          ],
+          "story": "The market trades $2 million per day. Our execution rule caps orders at 10% of daily volume, yet the plan buys $1 million in one day.",
+          "stem": "假设日成交额保持不变，按这条规则至少需要几个交易日？",
+          "options": [
+            {
+              "text": "1 天"
+            },
+            {
+              "text": "2 天"
+            },
+            {
+              "text": "10 天"
+            },
+            {
+              "text": "5 天"
+            }
+          ],
+          "answer": 3,
+          "why": "每天最多买入 $2 million × 10% = $0.2 million；$1 million ÷ $0.2 million = 5 天。这只是给定规则下的下限，不保证每天都能以预期价格成交。"
+        },
+        {
           "id": "u5l2-match",
           "type": "match",
           "termIds": [
@@ -4954,6 +5535,61 @@
       "icon": "🏆",
       "review": true,
       "prompts": [
+        {
+          "id": "u5r-audit-net-edge",
+          "type": "audit",
+          "termId": "transaction cost",
+          "termIds": [
+            "transaction cost",
+            "slippage"
+          ],
+          "story": "Gross return is 6% a year. Annual fees and spreads cost 1 percentage point; slippage costs another 2 points. All costs use the same capital base and do not overlap. We report 5% net.",
+          "stem": "按题中可直接相减的成本口径，年净收益是多少？",
+          "options": [
+            {
+              "text": "5%"
+            },
+            {
+              "text": "4%"
+            },
+            {
+              "text": "3%"
+            },
+            {
+              "text": "6%"
+            }
+          ],
+          "answer": 2,
+          "why": "费用与价差占 1 个百分点，另有不重叠的滑点 2 个百分点，所以净收益为 6% − 1% − 2% = 3%。只扣显性费用会漏掉滑点；这里已经说明成本基数相同、没有重复计入。"
+        },
+        {
+          "id": "u5r-audit-capacity-gate",
+          "type": "audit",
+          "termId": "capacity constraint",
+          "termIds": [
+            "capacity constraint",
+            "liquidity constraint",
+            "slippage"
+          ],
+          "story": "A strategy needs to deploy $5 million each day. The relevant market trades $20 million daily, and the strategy caps participation at 10%. It claims the planned size fits the rule.",
+          "stem": "在成交额不变的假设下，最直接的规模约束是什么？",
+          "options": [
+            {
+              "text": "$5 million 小于整个市场的成交额，因此符合规则。"
+            },
+            {
+              "text": "参与率上限只允许每天 $2 million，低于计划所需的 $5 million。"
+            },
+            {
+              "text": "市场日成交额就是策略每天可以无冲击交易的金额。"
+            },
+            {
+              "text": "把指令拆成更多小单，就能在同一天绕过总参与率上限。"
+            }
+          ],
+          "answer": 1,
+          "why": "$20 million × 10% = $2 million，是给定规则下的日上限。拆单不会改变当天累计参与率；若不改执行周期或市场范围，这个流动性约束会限制策略容量。"
+        },
         {
           "id": "u5r-transaction cost-s",
           "type": "scenario",
@@ -5449,30 +6085,82 @@
           "why": "VaR 是概率意义上的单期限额（95% 情况下不超过）；max drawdown 是历史上真实发生的最深一跌。VaR 常低估尾部风险。"
         },
         {
+          "id": "u6l1-stress test-a",
+          "type": "audit",
+          "termId": "stress test",
+          "termIds": [
+            "stress test"
+          ],
+          "story": "The portfolio survives a replay of the 2020 oil crash. We conclude that every future crisis is covered.",
+          "stem": "哪项结论仍在证据范围内？",
+          "options": [
+            {
+              "text": "以后任何危机都不会造成更大亏损。"
+            },
+            {
+              "text": "通过一个历史情景，就能省略流动性冲击测试。"
+            },
+            {
+              "text": "在设定的冲击与模型假设下，通过了这一次压力测试。"
+            },
+            {
+              "text": "历史危机已经发生过，所以重演结果没有任何参考价值。"
+            }
+          ],
+          "answer": 2,
+          "why": "stress test 检验的是指定情景下的表现。通过某次历史冲击有参考价值，但不能覆盖所有未来路径；新的相关性变化、流动性冲击或融资条件仍可能带来不同结果。"
+        },
+        {
+          "id": "u6l1-scenario analysis-a",
+          "type": "audit",
+          "termId": "scenario analysis",
+          "termIds": [
+            "scenario analysis"
+          ],
+          "story": "We model three scenarios with returns of +12%, +4%, and −8%. No probabilities are assigned. The expected return is therefore 2.67%.",
+          "stem": "把三种情景的平均值称为期望收益，缺少什么？",
+          "options": [
+            {
+              "text": "各情景的概率，以及对情景覆盖范围的说明。"
+            },
+            {
+              "text": "只需把负收益情景删掉，就能得到期望。"
+            },
+            {
+              "text": "只需把三个收益加起来，不必除以三。"
+            },
+            {
+              "text": "情景数量只要超过两个，就自动等概率。"
+            }
+          ],
+          "answer": 0,
+          "why": "(12% + 4% − 8%) ÷ 3 ≈ 2.67% 是等权情景平均值。期望需要概率权重；如果情景也没有覆盖全部可能结果，更不能把这个平均值直接称为整体期望收益。"
+        },
+        {
           "id": "u6l1-value at risk-a",
           "type": "audit",
           "termId": "value at risk",
           "termIds": [
             "value at risk"
           ],
-          "story": "策略的日 VaR 在 95% 水平下是 2.1%，所以一天最多亏 2.1%。",
-          "stem": "哪一句站不住？",
+          "story": "The model estimates one-day 95% VaR at 2.1% of NAV. Therefore, a daily loss greater than 2.1% is impossible.",
+          "stem": "哪种读法才符合这个 VaR 指标？",
           "options": [
             {
-              "text": "VaR 是「95% 的情况下不超过」的阈值，剩下 5% 的尾部可能亏得远多于 2.1%。"
+              "text": "2.1% 是任何情况下的最大日亏损。"
             },
             {
-              "text": "2.1% 就是一天的最大可能亏损。"
+              "text": "在模型假设下约 5% 的日子会超过该损失阈值，尾部损失大小未给出。"
             },
             {
-              "text": "95% 是高置信度，所以这个上限很可靠。"
+              "text": "未来每 20 个交易日必定有且只有一天亏损 2.1%。"
             },
             {
-              "text": "应该同时报告最大回撤。"
+              "text": "95% 表示未来有 95% 的概率盈利。"
             }
           ],
-          "answer": 0,
-          "why": "VaR 从来不承诺「最多亏这么多」，它说的是「95% 的日子里不超过这个数」。剩下 5% 的尾部可以亏得深不见底——次贷危机里很多机构的实际亏损是 VaR 的许多倍。把 VaR 当成最大亏损是这类报告里最常见的误读。"
+          "answer": 1,
+          "why": "95% VaR 是损失分布的分位数估计，不是亏损硬上限，也不规定超限日的固定时间表。它没有说明超过 2.1% 后会亏多少；实际超限频率也可能因模型失准而不同。"
         },
         {
           "id": "u6l1-match",
@@ -5706,6 +6394,32 @@
           "why": "robustness 是整体结论（稳不稳）；sensitivity 是达到这个结论的测量手段。"
         },
         {
+          "id": "u6l2-robustness-a",
+          "type": "audit",
+          "termId": "robustness",
+          "termIds": [
+            "robustness"
+          ],
+          "story": "The signal is profitable with a 12-month lookback, but loses money at 11 and 13 months. We describe the result as robust.",
+          "stem": "哪项评价最符合这些结果？",
+          "options": [
+            {
+              "text": "12 个月盈利就足以说明稳健。"
+            },
+            {
+              "text": "只要不披露 11 和 13 个月，稳健性就不受影响。"
+            },
+            {
+              "text": "参数有波动就能证明这三个结果都来自随机数。"
+            },
+            {
+              "text": "结果对邻近参数敏感，现有证据不足以支持稳健。"
+            }
+          ],
+          "answer": 3,
+          "why": "robustness 看的是合理改变参数或样本后，结论是否仍成立。只有一个窄参数点盈利、相邻点亏损，是需要继续调查的脆弱性信号；它既不能证明稳健，也不能单独证明策略必然无效。"
+        },
+        {
           "id": "u6l2-match",
           "type": "match",
           "termIds": [
@@ -5756,6 +6470,61 @@
       "icon": "🏆",
       "review": true,
       "prompts": [
+        {
+          "id": "u6r-audit-var-exceedances",
+          "type": "audit",
+          "termId": "value at risk",
+          "termIds": [
+            "value at risk",
+            "stress test"
+          ],
+          "story": "A correctly calibrated continuous-loss model estimates one-day 95% VaR. Over 250 trading days, no losses should exceed VaR because it is a risk limit.",
+          "stem": "按题中的模型假设，预期约有多少天超过 VaR 阈值？",
+          "options": [
+            {
+              "text": "12.5 天；这是期望值，不是必须出现的天数。"
+            },
+            {
+              "text": "0 天；VaR 是无法突破的硬上限。"
+            },
+            {
+              "text": "237.5 天；95% 的日子都会超限。"
+            },
+            {
+              "text": "5 天；95% 的置信水平就对应 5 天。"
+            }
+          ],
+          "answer": 0,
+          "why": "250 × (1 − 95%) = 12.5，是超限天数的期望，不要求实际出现半天，也不是固定日程。VaR 是分位数估计；超限并不自动代表模型出错，仍需结合频率、聚集性与尾部压力测试评估。"
+        },
+        {
+          "id": "u6r-audit-cost-sensitivity",
+          "type": "audit",
+          "termId": "sensitivity",
+          "termIds": [
+            "sensitivity",
+            "robustness",
+            "scenario analysis"
+          ],
+          "story": "Annual net return is +4% at 5 basis points of slippage per trade, +1% at 10, and −2% at 15, with everything else fixed. Only the 5-basis-point case is highlighted as robust.",
+          "stem": "在评价稳健性之前，最应该做什么？",
+          "options": [
+            {
+              "text": "只保留 5 个基点的假设，因为它的结果最好。"
+            },
+            {
+              "text": "把三个结果直接等权平均，就证明未来收益为正。"
+            },
+            {
+              "text": "换成月度收益展示，让负值看起来更小。"
+            },
+            {
+              "text": "核查可实现的成交成本范围，并如实报告结论在哪些假设下转负。"
+            }
+          ],
+          "answer": 3,
+          "why": "sensitivity 分析显示结论会随滑点假设变号。先核查真实执行成本是否落在这些范围内，再判断 robustness；只报最乐观的情景会隐藏策略对成本的依赖。"
+        },
         {
           "id": "u6r-stress test-s",
           "type": "scenario",
