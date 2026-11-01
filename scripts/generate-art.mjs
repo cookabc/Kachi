@@ -209,12 +209,14 @@ Subject: ${concept.scene}`;
   await run("cwebp", ["-quiet", "-q", "82", "-resize", "512", "0", produced, "-o", hero]);
   await run("cwebp", ["-quiet", "-q", "82", "-resize", "128", "0", produced, "-o", chip]);
   if (produced === pngTarget) rmSync(pngTarget, { force: true });
+  // The model paints on white; clear it so new art matches the rest.
+  await run("node", ["scripts/strip-art-background.mjs", hero, chip]);
   return "ok";
 }
 
 function record(id, packId) {
   const manifest = JSON.parse(readFileSync(MANIFEST, "utf8"));
-  manifest.concepts[id] = { file: `/art/${slug(id)}.webp`, bg: "#ffffff", pack: packId };
+  manifest.concepts[id] = { file: `/art/${slug(id)}.webp`, bg: "transparent", pack: packId };
   writeFileSync(MANIFEST, `${JSON.stringify(manifest, null, 2)}\n`);
 }
 
