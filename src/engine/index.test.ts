@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { course as publishedCourse } from "../course";
 import type { AttemptEvent, Course, Environment, Exercise, LearnerState } from "../domain";
+import { legacyCourse as publishedCourse } from "../test-fixtures/legacy-course";
 import {
   type ApplyOptions,
   applyAnswer,

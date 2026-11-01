@@ -132,11 +132,11 @@ async function renderApp() {
   });
 }
 
-// Boot is done once the home tagline is on screen. The signal is the English
+// Boot is done once the home card is on screen. The signal is the English
 // string because English is the default language now.
 async function waitForHome() {
   const started = Date.now();
-  while (!document.body.textContent?.includes("Tell the mix-ups apart")) {
+  while (!document.body.textContent?.includes("Let’s play")) {
     if (Date.now() - started > 2000) {
       throw new Error(`still booting: ${document.body.textContent}`);
     }
@@ -176,7 +176,7 @@ describe("startup failures", () => {
     await renderApp();
     await waitForHome();
     expect(document.querySelector(".loading")).toBeNull();
-    expect(document.querySelector("[role='alert']")?.textContent).toContain("can't read saved progress");
+    expect(document.querySelector("[role='alert']")?.textContent).toContain("read saved progress");
   });
 
   it("shows the storage alert and logs when a save fails", async () => {
@@ -196,17 +196,15 @@ describe("startup failures", () => {
         await new Promise((resolve) => setTimeout(resolve, 10));
       });
     }
-    expect(document.querySelector("[role='alert']")?.textContent).toContain("can't read saved progress");
+    expect(document.querySelector("[role='alert']")?.textContent).toContain("read saved progress");
     expect(errorSpy).toHaveBeenCalledWith("Failed to save learning progress", expect.any(Error));
     errorSpy.mockRestore();
   });
 
   it("boots the default pack offline, in the restored language", async () => {
-    // Both locales of the default pack ship in the main bundle, so `courseFor`
-    // answers for either one with no fetch. That is what lets the first screen
-    // render offline whatever language was restored.
+    // The English edition of the default level ships in the main bundle, so
+    // the first screen renders with no fetch at all.
     expect(courseFor(DEFAULT_PACK, "en-US")).toBeDefined();
-    expect(courseFor(DEFAULT_PACK, "zh-CN")).toBeDefined();
 
     localStorage.setItem("kachi-lang", "en-US");
     await renderApp();
@@ -216,32 +214,52 @@ describe("startup failures", () => {
   });
 });
 
-it("keeps the current pack and language after a failed switch, then retries the same request", async () => {
+it("falls back to the bundled English level when the stored Chinese edition cannot load", async () => {
+  localStorage.setItem("kachi-lang", "zh-CN");
+  loadCourseMock.mockRejectedValueOnce(new Error("offline"));
   await renderApp();
   await waitForHome();
-  const settings = document.querySelector<HTMLButtonElement>('.nav button[aria-label="Settings"]');
-  expect(settings).not.toBeNull();
+  expect(document.documentElement.lang).toBe("en-US");
+  expect(loadLang()).toBe("en-US");
+});
+
+it("keeps the current level and language after a failed switch, then retries the same request", async () => {
+  // jsdom has no <dialog>.showModal; the sheet falls back to the open attribute.
+  await renderApp();
+  await waitForHome();
+  const levelButton = document.querySelector<HTMLButtonElement>(".level-btn");
+  expect(levelButton?.textContent).toContain("Read the front page");
   await act(async () => {
-    settings!.click();
-    await import("./screens/Settings");
+    levelButton!.click();
+    await import("./screens/LevelsSheet");
   });
-  const firstPack = document.querySelector<HTMLButtonElement>(".pack-choice");
-  expect(firstPack).not.toBeNull();
+  const started = Date.now();
+  while (!document.querySelector(".level-item")) {
+    if (Date.now() - started > 2000) throw new Error("levels sheet did not open");
+    await act(async () => {
+      await new Promise((resolve) => setTimeout(resolve, 10));
+    });
+  }
+  const bonds = [...document.querySelectorAll<HTMLButtonElement>(".level-item")].find((item) =>
+    item.textContent?.includes("Bonds and rates"),
+  );
+  expect(bonds).toBeDefined();
   loadCourseMock.mockRejectedValueOnce(new Error("offline"));
-  await act(async () => firstPack!.click());
+  await act(async () => bonds!.click());
   expect(document.querySelector('[role="alert"]')?.textContent).toContain(
     "current course and progress are kept",
   );
   expect(loadLang()).toBe("en-US");
-  expect(document.querySelector('.pack-choice[aria-pressed="true"]')?.textContent).toContain(
-    "Borrow and hedge",
+  expect(document.querySelector('.level-item[aria-pressed="true"]')?.textContent).toContain(
+    "Read the front page",
   );
-  const retry = document.querySelector<HTMLButtonElement>(".course-alert button");
+  const retry = document.querySelector<HTMLButtonElement>(".banner.alert button");
   await act(async () => {
     retry!.click();
     await loadCourseMock.mock.results.at(-1)?.value;
   });
-  expect(document.querySelector(".course-alert")).toBeNull();
-  expect(document.querySelector('.pack-choice[aria-pressed="true"]')?.textContent).toContain("front page");
+  expect(document.querySelector(".banner.alert")).toBeNull();
+  expect(document.querySelector(".level-btn")?.textContent).toContain("Bonds and rates");
+  expect(localStorage.getItem("kachi-pack")).toBe("t3-bonds-rates");
   expect(loadLang()).toBe("en-US");
 });

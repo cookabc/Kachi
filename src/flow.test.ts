@@ -1,5 +1,4 @@
 import { describe, expect, it } from "vitest";
-import { course } from "./course";
 import type { Exercise, LearnerState, SessionState } from "./domain";
 import { emptyLearnerState, lessonKey } from "./engine";
 import {
@@ -10,7 +9,9 @@ import {
   resolveMatch,
   sessionSummary,
   teachPlan,
+  withTwins,
 } from "./flow";
+import { legacyCourse as course } from "./test-fixtures/legacy-course";
 
 const environmentNow = new Date("2026-08-29T08:00:00.000Z");
 
@@ -88,21 +89,29 @@ describe("present", () => {
 });
 
 describe("teachPlan", () => {
-  it("teaches the fresh terms of the first lesson, skipping pseudo-terms", () => {
+  // A teach card shows a word with its twin, so the plan lists pair leads: a
+  // term whose twin already led a card earlier gets no card of its own.
+  it("teaches each fresh pair once, led by its first term", () => {
     const plan = teachPlan(lessonById("u1l1"), course);
-    expect(plan).toEqual({ mode: "first", terms: ["hedge", "pledge"] });
+    expect(plan).toEqual({ mode: "first", terms: ["hedge"] });
+    expect(withTwins(course, plan.terms)).toEqual(["hedge", "pledge"]);
   });
 
-  it("skips terms already taught by earlier lessons of the same unit", () => {
+  it("skips pairs already shown by earlier lessons of the same unit", () => {
     const plan = teachPlan(lessonById("u1l2"), course);
-    expect(plan.terms).toEqual(["collateral", "haircut"]);
+    expect(plan.terms).toEqual(["collateral"]);
+    expect(withTwins(course, plan.terms)).toEqual(["collateral", "haircut"]);
     expect(plan.terms).not.toContain("hedge");
+    expect(plan.terms).not.toContain("pledge");
   });
 
-  it("turns a unit review into a recap of every unit term", () => {
+  it("turns a unit review into a recap of every pair in the unit", () => {
     const plan = teachPlan(lessonById("u1r"), course);
     expect(plan.mode).toBe("recap");
-    expect(plan.terms).toEqual(["hedge", "pledge", "collateral", "haircut", "margin", "margin call"]);
+    expect(plan.terms).toEqual(["hedge", "collateral", "margin", "margin call"]);
+    expect(new Set(withTwins(course, plan.terms))).toEqual(
+      new Set(["hedge", "pledge", "collateral", "haircut", "margin", "leverage", "margin call"]),
+    );
   });
 });
 

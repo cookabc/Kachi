@@ -248,6 +248,20 @@ describe("buildPairCardSvg", () => {
     expect(svg).not.toMatch(/XP|streak|accuracy|正确率/i);
   });
 
+  it("embeds the raster illustrations when the caller inlines them", () => {
+    const svg = buildPairCardSvg({
+      ...sample,
+      artA: "hedge",
+      artB: "pledge",
+      imageA: "data:image/webp;base64,AA",
+      imageB: "data:image/webp;base64,BB",
+    });
+    expect(svg.match(/<image /g)).toHaveLength(2);
+    expect(svg).toContain('href="data:image/webp;base64,AA"');
+    const parsed = new DOMParser().parseFromString(svg, "image/svg+xml");
+    expect(parsed.querySelector("parsererror")).toBeNull();
+  });
+
   it("embeds both duel scenes when art ids resolve", () => {
     const svg = buildPairCardSvg({ ...sample, artA: "hedge", artB: "pledge" });
     expect(svg.match(/class="duel-art"/g)).toHaveLength(2);

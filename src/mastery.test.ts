@@ -1,5 +1,4 @@
 import { describe, expect, it } from "vitest";
-import { course } from "./course";
 import type { AttemptEvent, Course, LearnerState } from "./domain";
 import {
   applyAnswer,
@@ -9,6 +8,7 @@ import {
   missHistory,
   startSession,
 } from "./engine";
+import { legacyCourse as course } from "./test-fixtures/legacy-course";
 
 // "Verified mastery" is a product promise: three correct answers in a row, in
 // at least two exercise formats, including a scenario the learner had never

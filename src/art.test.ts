@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { artForSize, artIdForLabel, HERO_ART, TERM_ART } from "./art";
-import { course } from "./course";
+import { legacyCourse as course } from "./test-fixtures/legacy-course";
 
 describe("artIdForLabel", () => {
   it("resolves exact term ids, case, articles, and trailing periods", () => {

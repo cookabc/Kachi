@@ -1,21 +1,27 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { artIdForLabel, prefersGeneratedArt, TermArt } from "../art";
 import { speak } from "../audio";
-import { HeartRow } from "../chrome";
-import type { Course } from "../domain";
-import { conceptOf, type PresentedExercise, type TeachMode } from "../flow";
+import { Icon, Mascot } from "../chrome";
+import type { Concept, Course } from "../domain";
+import { fillPattern } from "../fill";
+import { conceptOf, type PresentedExercise, type TeachMode, twinOf } from "../flow";
+import type { Phase } from "../flow-machine";
 import { ipaFor } from "../ipa";
 import { zhTermFor } from "../localization";
 import type { Lang, UiText } from "../ui";
 
-export type Phase = "teach" | "question" | "feedback" | "complete" | "fail";
-
-function pick<T>(arr: T[]): T {
-  return arr[Math.floor(Math.random() * arr.length)];
+function pick<T>(items: T[], seed: number): T {
+  return items[Math.abs(seed) % items.length];
 }
 
-export function LessonScreen(props: {
-  lessonTitle: string;
+function hash(text: string): number {
+  let value = 0;
+  for (let i = 0; i < text.length; i += 1) value = (value * 31 + text.charCodeAt(i)) | 0;
+  return value;
+}
+
+export interface LessonScreenProps {
+  title: string;
   phase: Phase;
   t: UiText;
   lang: Lang;
@@ -25,10 +31,10 @@ export function LessonScreen(props: {
   teachIndex: number;
   presented: PresentedExercise | null;
   selection: string | boolean | null;
-  hearts: number;
   lastCorrect: boolean;
+  combo: number;
+  answered: number;
   total: number;
-  questionIndex: number;
   selL: string | null;
   selR: string | null;
   locked: string[];
@@ -40,589 +46,627 @@ export function LessonScreen(props: {
   onTeachContinue: () => void;
   onContinue: () => void;
   onClose: () => void;
-}) {
+}
+
+export function LessonScreen(props: LessonScreenProps) {
   const { phase, presented, t } = props;
-  if (phase === "teach") {
-    const recap = props.teachMode === "recap";
-    const termId = props.teachTerms[props.teachIndex];
-    const last = recap || props.teachIndex >= props.teachTerms.length - 1;
-    return (
-      <main className="lesson">
-        <div className="l-top">
-          <button type="button" className="xbtn" aria-label={t.lesson.close} onClick={props.onClose}>
-            ×
-          </button>
-          <div className="learn-tag">{t.lesson.learnTag}</div>
-          {!recap && (
-            <div className="pips dim">
-              {props.teachTerms.map((term, index) => (
-                <div
-                  key={term}
-                  className={`pip${index < props.teachIndex ? " on" : index === props.teachIndex ? " now" : ""}`}
-                />
-              ))}
-            </div>
-          )}
-        </div>
-        <div className="prompt teach">
-          {recap ? (
-            <RecapCard terms={props.teachTerms} course={props.course} t={t} />
-          ) : (
-            termId && <TeachCard termId={termId} course={props.course} t={t} lang={props.lang} />
-          )}
-        </div>
-        <div className="foot">
-          <button type="button" className="btn btn-gold" onClick={props.onTeachContinue}>
-            {recap ? t.lesson.recapGo : last ? t.lesson.teachStart : t.lesson.teachContinue}
-          </button>
-        </div>
-      </main>
-    );
-  }
+  const pct = props.total ? Math.min(100, (props.answered / props.total) * 100) : 0;
+  const footRef = useRef<HTMLDivElement>(null);
+
+  // Move focus to the primary control whenever the step changes, so keyboard
+  // and screen-reader users land on what to do next. The step key is the
+  // trigger; the effect body only reads the ref.
+  const stepKey = `${phase}:${props.teachIndex}:${presented?.id ?? ""}`;
+  // biome-ignore lint/correctness/useExhaustiveDependencies: stepKey is the intended trigger
+  useEffect(() => {
+    const id = requestAnimationFrame(() => {
+      footRef.current
+        ?.querySelector<HTMLButtonElement>("button:not([disabled])")
+        ?.focus({ preventScroll: true });
+    });
+    return () => cancelAnimationFrame(id);
+  }, [stepKey]);
 
   return (
-    <main className="lesson">
-      <div className="l-top">
-        <button type="button" className="xbtn" aria-label={t.lesson.close} onClick={props.onClose}>
-          ×
+    <main className="lesson" aria-label={props.title}>
+      <div className="lesson-top">
+        <button
+          type="button"
+          className="icon-btn"
+          aria-label={t.lesson.close}
+          onClick={() => {
+            if (phase === "teach" || window.confirm(t.lesson.closeConfirm)) props.onClose();
+          }}
+        >
+          <Icon name="close" />
         </button>
-        <div className="pips">
-          {/* positional progress pips: index is the meaning, order is fixed */}
-          {Array.from({ length: props.total }, (_, index) => (
-            <div
-              key={index}
-              className={`pip${index < props.questionIndex ? " on" : index === props.questionIndex ? " now" : ""}`}
+        <div
+          className="lesson-bar"
+          role="progressbar"
+          aria-valuemin={0}
+          aria-valuemax={props.total}
+          aria-valuenow={props.answered}
+          aria-label={t.lesson.progressAria(props.answered, props.total)}
+        >
+          <i style={{ width: `${pct}%` }} />
+        </div>
+        <span className={`combo${props.combo >= 3 ? " on" : ""}`} key={props.combo} aria-live="polite">
+          {props.combo >= 3 ? t.lesson.combo(props.combo) : ""}
+        </span>
+      </div>
+
+      <div className="lesson-body">
+        {phase === "teach" ? (
+          props.teachMode === "recap" ? (
+            <Recap terms={props.teachTerms} course={props.course} t={t} />
+          ) : (
+            <TwinCard
+              key={props.teachTerms[props.teachIndex]}
+              lead={props.teachTerms[props.teachIndex]}
+              course={props.course}
+              t={t}
+              lang={props.lang}
             />
-          ))}
-        </div>
-        <HeartRow n={props.hearts} popped={phase === "feedback" && !props.lastCorrect} t={t} />
-      </div>
-      <div className="prompt">
-        {presented && (
-          <PromptBody
-            presented={presented}
-            generated={prefersGeneratedArt(props.course)}
-            t={t}
-            selection={props.selection}
-            locked={phase === "feedback"}
-            selL={props.selL}
-            selR={props.selR}
-            lockedIds={props.locked}
-            onPick={props.onPick}
-            onMatch={props.onMatch}
-          />
-        )}
-        {/* The hint names the confusable partner, never the answer. It is the
-            honest way to unstick someone without turning the drill into a
-            multiple-guess loop — and it costs mastery credit, which is why the
-            cost is stated up front rather than discovered afterwards. */}
-        {phase === "question" && props.hintShown && presented && (
-          <HintCard presented={presented} course={props.course} t={t} />
+          )
+        ) : (
+          presented && (
+            <Question
+              presented={presented}
+              course={props.course}
+              t={t}
+              selection={props.selection}
+              locked={phase === "feedback"}
+              lastCorrect={props.lastCorrect}
+              selL={props.selL}
+              selR={props.selR}
+              lockedIds={props.locked}
+              hintShown={props.hintShown}
+              onPick={props.onPick}
+              onMatch={props.onMatch}
+            />
+          )
         )}
       </div>
-      {phase === "question" && presented?.type !== "match" && (
-        <div className="foot">
-          {!props.hintShown && (
-            <button type="button" className="btn btn-ghost" onClick={props.onHint}>
-              {t.lesson.hint}
-            </button>
-          )}
-          <button
-            type="button"
-            className="btn btn-gold"
-            disabled={props.selection === null}
-            onClick={props.onSubmit}
-          >
-            {t.lesson.check}
+
+      <div className="lesson-foot" ref={footRef}>
+        {phase === "teach" && (
+          <button type="button" className="btn btn-sun btn-block" onClick={props.onTeachContinue}>
+            {props.teachMode === "recap" ? t.lesson.letsGo : t.lesson.gotIt}
           </button>
-        </div>
-      )}
-      {phase === "feedback" && presented && (
-        <div className={`sheet ${props.lastCorrect ? "ok" : "no"}`} role="status">
-          <h3>
-            {pick(
-              props.lastCorrect
-                ? presented.type === "audit"
-                  ? t.verdicts.auditNice
-                  : t.verdicts.nice
-                : presented.type === "audit"
-                  ? t.verdicts.auditNope
-                  : t.verdicts.nope,
+        )}
+        {phase === "question" && presented && presented.type !== "match" && (
+          <div className="foot-row">
+            {!props.hintShown && (
+              <button type="button" className="btn btn-white" onClick={props.onHint}>
+                <Icon name="bulb" size={20} />
+                {t.lesson.hint}
+              </button>
             )}
-          </h3>
-          <p>{presented.why}</p>
-          <button
-            type="button"
-            className={`btn ${props.lastCorrect ? "btn-green" : "btn-red"}`}
-            onClick={props.onContinue}
-          >
-            {t.lesson.continue}
-          </button>
-        </div>
+            <button
+              type="button"
+              className="btn btn-ink btn-grow"
+              disabled={props.selection === null}
+              onClick={props.onSubmit}
+            >
+              {t.lesson.check}
+            </button>
+          </div>
+        )}
+        {phase === "question" && presented?.type !== "match" && <p className="keys-hint">{t.lesson.keys}</p>}
+      </div>
+
+      {phase === "feedback" && presented && (
+        <Feedback
+          presented={presented}
+          course={props.course}
+          correct={props.lastCorrect}
+          t={t}
+          onContinue={props.onContinue}
+        />
       )}
     </main>
   );
 }
 
-function TeachCard({ termId, course, t, lang }: { termId: string; course: Course; t: UiText; lang: Lang }) {
-  const gen = prefersGeneratedArt(course);
-  const concept = conceptOf(course, termId);
-  if (!concept) return null;
-  const sibling = conceptOf(course, concept.mixUp);
-  // Generated packs carry the Chinese name natively; the legacy pack falls
-  // back to its gloss map. The en UI never shows it.
-  const termZh = lang === "zh-CN" ? (zhTermFor(concept) ?? null) : null;
-  const mixLabel = concept.mixUpType ? t.lesson.mixTypes[concept.mixUpType] : null;
+/* ───────────────────────── teach ───────────────────────── */
+
+function SpeakButton({ concept, t }: { concept: Concept; t: UiText }) {
   return (
-    <>
-      <div className="kicker2">{t.lesson.teachKicker(termZh)}</div>
-      <div className="teach-art">
-        <TermArt id={concept.id} size="hero" preferGenerated={gen} />
-      </div>
-      {concept.caption && <p className="teach-cap">{concept.caption}</p>}
-      <div className="teach-term">
-        {concept.term}
-        <button
-          type="button"
-          className="speak-btn"
-          aria-label={t.lesson.speakTermAria}
-          onClick={() => {
-            void speak(concept.term, { conceptId: concept.id });
-          }}
-        >
-          <svg
-            viewBox="0 0 24 24"
-            width="20"
-            height="20"
-            aria-hidden="true"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <path d="M11 5 6 9H3v6h3l5 4z" />
-            <path d="M15.5 8.5a5 5 0 0 1 0 7" />
-            <path d="M18.5 5.5a9 9 0 0 1 0 13" />
-          </svg>
-        </button>
-      </div>
-      {ipaFor(concept.id) && <p className="teach-ipa">{ipaFor(concept.id)}</p>}
-      <p className="teach-def">{concept.definition}</p>
-      <button
-        type="button"
-        className="speak-btn speak-ex"
-        aria-label={t.lesson.speakExampleAria}
-        onClick={() => {
-          void speak(concept.example);
-        }}
-      >
-        <svg
-          viewBox="0 0 24 24"
-          width="16"
-          height="16"
-          aria-hidden="true"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <path d="M11 5 6 9H3v6h3l5 4z" />
-          <path d="M15.5 8.5a5 5 0 0 1 0 7" />
-        </svg>
-        <span>{concept.example}</span>
-      </button>
-      <div className="teach-mix">
-        <TermArt id={sibling ? sibling.id : concept.mixUp} size="xs" preferGenerated={gen} />
-        <div>
-          <strong>{t.lesson.mixCue(mixLabel)}</strong>
-          {t.lesson.mixColon}
-          {sibling ? sibling.term : concept.mixUp}
-          {t.lesson.mixStop}
-          {concept.mixUpWhy}
-        </div>
-      </div>
-    </>
+    <button
+      type="button"
+      className="speak"
+      aria-label={t.lesson.speakAria(concept.term)}
+      onClick={() => void speak(concept.term, { conceptId: concept.id })}
+    >
+      <Icon name="speaker" size={16} />
+    </button>
   );
 }
 
-function RecapCard({ terms, course, t }: { terms: string[]; course: Course; t: UiText }) {
-  const gen = prefersGeneratedArt(course);
+function Twin({
+  concept,
+  side,
+  generated,
+  t,
+  lang,
+}: {
+  concept: Concept;
+  side: "a" | "b";
+  generated: boolean;
+  t: UiText;
+  lang: Lang;
+}) {
+  const ipa = ipaFor(concept.id);
+  const zh = lang === "zh-CN" ? zhTermFor(concept) : undefined;
   return (
-    <>
-      <div className="kicker2">{t.lesson.recapKicker}</div>
-      <div className="stem" style={{ textAlign: "center", marginBottom: 12 }}>
-        {t.lesson.recapTitle}
+    <div className={`twin twin-${side}`}>
+      <div className="twin-art">
+        <TermArt id={concept.id} size="hero" preferGenerated={generated} />
       </div>
-      <div className="recap-strip">
-        {terms.map((id) => {
-          const concept = conceptOf(course, id);
-          if (!concept) return null;
-          return (
-            <div className="recap-item" key={id}>
-              <TermArt id={id} size="sm" preferGenerated={gen} />
-              <span>{concept.term}</span>
-            </div>
-          );
-        })}
+      <div className="twin-term">{concept.term}</div>
+      <div className="twin-ipa">
+        {zh && <span className="twin-zh">{zh}</span>}
+        {ipa && <span>{ipa}</span>}
+        <SpeakButton concept={concept} t={t} />
       </div>
-      <p className="teach-def" style={{ marginTop: 16 }}>
-        {t.lesson.recapSub}
-      </p>
-    </>
-  );
-}
-
-function HintCard({ presented, course, t }: { presented: PresentedExercise; course: Course; t: UiText }) {
-  // Which concept this prompt is testing: the explicit termId, or the first
-  // published term reference. A match prompt has neither, so it falls back to
-  // the pair list rather than inventing a term.
-  const conceptId = presented.termId ?? presented.termIds?.find((id) => conceptOf(course, id));
-  const concept = conceptId ? conceptOf(course, conceptId) : undefined;
-  const mixUpTerm = concept ? (conceptOf(course, concept.mixUp)?.term ?? concept.mixUp) : undefined;
-  return (
-    <div className="hint-card" role="note">
-      {concept && mixUpTerm ? <p>{t.lesson.hintBody(concept.term, mixUpTerm)}</p> : <p>{t.lesson.hint}</p>}
-      <span className="hint-cost">{t.lesson.hintCost}</span>
+      <p className="twin-cap">{concept.caption}</p>
     </div>
   );
 }
 
-function PromptBody(props: {
+function highlight(sentence: string, term: string) {
+  const match = fillPattern(term).exec(sentence);
+  if (!match) return sentence;
+  return (
+    <>
+      {sentence.slice(0, match.index)}
+      <mark>{match[0]}</mark>
+      {sentence.slice(match.index + match[0].length)}
+    </>
+  );
+}
+
+/** Wrap the first whole-word occurrence of the term in <em>. */
+function emphasize(text: string, term: string | undefined) {
+  if (!term) return text;
+  const at = text.toLowerCase().indexOf(term.toLowerCase());
+  if (at < 0) return text;
+  return (
+    <>
+      {text.slice(0, at)}
+      <em>{text.slice(at, at + term.length)}</em>
+      {text.slice(at + term.length)}
+    </>
+  );
+}
+
+function TwinCard({ lead, course, t, lang }: { lead: string; course: Course; t: UiText; lang: Lang }) {
+  const generated = prefersGeneratedArt(course);
+  const a = conceptOf(course, lead);
+  const twinId = twinOf(course, lead);
+  const b = twinId ? conceptOf(course, twinId) : undefined;
+  useEffect(() => {
+    if (a) void speak(a.term, { conceptId: a.id });
+  }, [a]);
+  if (!a) return null;
+  const type = t.mixTypes[a.mixUpType ?? "coexist"];
+  return (
+    <section className="teach" aria-label={t.lesson.newPair}>
+      <span className="teach-tag">
+        <Icon name="star" size={16} fill />
+        {t.lesson.newPair}
+      </span>
+      <div className={`twins${b ? "" : " single"}`}>
+        <Twin concept={a} side="a" generated={generated} t={t} lang={lang} />
+        {b && (
+          <span className="vs" aria-hidden="true">
+            vs
+          </span>
+        )}
+        {b && <Twin concept={b} side="b" generated={generated} t={t} lang={lang} />}
+      </div>
+      <div className="trick">
+        <span className="trick-icon" aria-hidden="true">
+          <Icon name="bulb" size={22} />
+        </span>
+        <div>
+          <b className={`type-label type-${a.mixUpType ?? "coexist"}`}>
+            {type.name} · {t.lesson.trick}
+          </b>
+          <p>{a.mixUpWhy}</p>
+        </div>
+      </div>
+      {a.example && (
+        <button
+          type="button"
+          className="example"
+          aria-label={`${t.lesson.speakExampleAria}: ${a.example}`}
+          onClick={() => void speak(a.example)}
+        >
+          <span className="example-label">
+            <Icon name="speaker" size={14} />
+            {t.lesson.inContext}
+          </span>
+          <span>“{highlight(a.example, a.term)}”</span>
+        </button>
+      )}
+    </section>
+  );
+}
+
+function Recap({ terms, course, t }: { terms: string[]; course: Course; t: UiText }) {
+  const generated = prefersGeneratedArt(course);
+  return (
+    <section className="recap">
+      <Mascot mood="think" size={112} />
+      <span className="teach-tag">
+        <Icon name="trophy" size={16} />
+        {t.lesson.recap}
+      </span>
+      <h2 className="display">{t.lesson.recapTitle}</h2>
+      <ul className="recap-list">
+        {terms.map((id) => {
+          const a = conceptOf(course, id);
+          const twinId = twinOf(course, id);
+          const b = twinId ? conceptOf(course, twinId) : undefined;
+          if (!a) return null;
+          return (
+            <li key={id}>
+              <TermArt id={a.id} size="sm" preferGenerated={generated} />
+              <span>
+                {a.term}
+                {b && (
+                  <>
+                    <i aria-hidden="true">/</i>
+                    {b.term}
+                  </>
+                )}
+              </span>
+            </li>
+          );
+        })}
+      </ul>
+    </section>
+  );
+}
+
+/* ───────────────────────── questions ───────────────────────── */
+
+interface QuestionProps {
   presented: PresentedExercise;
-  /** Generated packs draw raster art; see prefersGeneratedArt. */
-  generated: boolean;
+  course: Course;
   t: UiText;
   selection: string | boolean | null;
   locked: boolean;
+  lastCorrect: boolean;
   selL: string | null;
   selR: string | null;
   lockedIds: string[];
+  hintShown: boolean;
   onPick: (value: string | boolean) => void;
   onMatch: (side: "left" | "right", id: string) => void;
-}) {
-  const { presented, selection, locked, t, generated } = props;
-  // A listen question speaks its answer on arrival. The user activated the page
-  // by starting the lesson, so synthesis is allowed; if it is still blocked the
-  // replay button below is the fallback. speak() cancels the previous utterance,
-  // so a fast advance cannot stack overlapping audio.
-  useEffect(() => {
-    if (presented.type !== "listen" || locked) return;
-    void speak(presented.correctText ?? "", { conceptId: presented.termId });
-  }, [presented, locked]);
+}
+
+function optionState(text: string | boolean, props: QuestionProps, correct: string | boolean | undefined) {
+  const classes: string[] = [];
+  if (props.selection === text) classes.push("sel");
+  if (props.locked) {
+    if (text === correct) classes.push("good");
+    else if (props.selection === text) classes.push("bad");
+    else classes.push("dim");
+  }
+  return classes.join(" ");
+}
+
+function Blank({ value, state }: { value: string | null; state: string }) {
+  return <span className={`blank${value ? " filled" : ""} ${state}`}>{value ?? "\u00a0"}</span>;
+}
+
+function withBlank(story: string, blank: React.ReactNode) {
+  const parts = story.split("____");
+  if (parts.length < 2) return story;
   return (
     <>
-      <div className="kicker2">{t.lesson.kickers[presented.type]}</div>
-      {presented.type === "scenario" && presented.story && <div className="story">{presented.story}</div>}
-      {presented.type === "audit" && presented.story && (
-        <blockquote className="claim">{presented.story}</blockquote>
-      )}
-      {presented.type === "listen" && (
-        <div className="listen-hint">
-          <span className="listen-dots" aria-hidden="true">
-            <i />
-            <i />
-            <i />
-          </span>
-        </div>
-      )}
-      {presented.type === "fill" && presented.story ? (
-        <FillStory presented={presented} selection={selection} />
-      ) : (
-        presented.stem && <div className="stem">{presented.stem}</div>
-      )}
+      {parts[0]}
+      {blank}
+      {parts.slice(1).join("____")}
+    </>
+  );
+}
 
-      {presented.type === "listen" && (
-        <div className="listen-row">
+function Question(props: QuestionProps) {
+  const { presented, t, course } = props;
+  const generated = prefersGeneratedArt(course);
+  const kind = t.lesson.kinds[presented.type];
+
+  useEffect(() => {
+    if (presented.type !== "listen" || props.locked) return;
+    const timer = setTimeout(
+      () => void speak(presented.correctText ?? "", { conceptId: presented.termId }),
+      250,
+    );
+    return () => clearTimeout(timer);
+  }, [presented, props.locked]);
+
+  const termId = presented.termId ?? presented.termIds?.find((id) => conceptOf(course, id));
+  const concept = termId ? conceptOf(course, termId) : undefined;
+  const twin = concept ? conceptOf(course, concept.mixUp) : undefined;
+
+  // Recall questions show words only. A picture on each answer option gives
+  // the answer away (an up-arrow tile next to "rally"), so art appears where
+  // the word itself is the subject — teach cards, true/false, matching — and
+  // never on the options the learner is choosing between.
+  const tiles = (options: NonNullable<PresentedExercise["options"]>, big: boolean, art = false) => (
+    <div className={`opts${big ? " tiles" : ""}`}>
+      {options.map((option, index) => (
+        <button
+          type="button"
+          key={option.text}
+          className={`opt ${optionState(option.text, props, presented.correctText)}`}
+          disabled={props.locked}
+          aria-pressed={props.selection === option.text}
+          onClick={() => props.onPick(option.text)}
+        >
+          {art && option.art && (
+            <TermArt
+              id={option.art || artIdForLabel(option.text)}
+              size={big ? "lg" : "sm"}
+              preferGenerated={generated}
+            />
+          )}
+          <span className="opt-text">{option.text}</span>
+          <span className="opt-key" aria-hidden="true">
+            {index + 1}
+          </span>
+        </button>
+      ))}
+    </div>
+  );
+
+  let body: React.ReactNode = null;
+  switch (presented.type) {
+    case "meaning":
+      body = (
+        <>
+          <h2 className="q-stem">{emphasize(presented.stem ?? "", concept?.term)}</h2>
+          {tiles(presented.options ?? [], false)}
+        </>
+      );
+      break;
+    case "scenario":
+      body = (
+        <>
+          <div className="bubble">“{presented.story}”</div>
+          <h2 className="q-stem small">{presented.stem}</h2>
+          {tiles(presented.options ?? [], true)}
+        </>
+      );
+      break;
+    case "headline": {
+      const picked = typeof props.selection === "string" ? props.selection : null;
+      const state = props.locked && picked ? (picked === presented.correctText ? "good" : "bad") : "";
+      body = (
+        <>
+          <div className="news">
+            <span className="news-tag">NEWS</span>
+            <p>{withBlank(presented.story ?? "", <Blank value={picked} state={state} />)}</p>
+          </div>
+          <h2 className="q-stem small">{t.lesson.headlineAsk}</h2>
+          {tiles(presented.options ?? [], true)}
+        </>
+      );
+      break;
+    }
+    case "listen":
+      body = (
+        <>
+          <h2 className="q-stem center">{t.lesson.listenAsk}</h2>
           <button
             type="button"
-            className="listen-replay"
-            onClick={() => {
-              void speak(presented.correctText ?? "", { rate: 0.75, conceptId: presented.termId });
-            }}
+            className="listen"
             aria-label={t.lesson.replayAria}
+            onClick={() =>
+              void speak(presented.correctText ?? "", { conceptId: presented.termId, rate: 0.75 })
+            }
           >
-            <svg
-              viewBox="0 0 24 24"
-              width="26"
-              height="26"
-              aria-hidden="true"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M11 5 6 9H3v6h3l5 4z" />
-              <path d="M15.5 8.5a5 5 0 0 1 0 7" />
-              <path d="M18.5 5.5a9 9 0 0 1 0 13" />
-            </svg>
+            <Icon name="speaker" size={56} />
           </button>
-        </div>
-      )}
-
-      {presented.type === "audit" && (
-        <div className="audit-opts">
-          {presented.options?.map((option) => {
-            let cls = "audit-opt";
-            if (selection === option.text) cls += " sel";
-            if (locked) {
-              if (option.text === presented.correctText) cls += " good";
-              else if (selection === option.text) cls += " bad";
-            }
-            return (
-              <button
-                type="button"
-                key={option.text}
-                className={cls}
-                disabled={locked}
-                onClick={() => props.onPick(option.text)}
-              >
-                <span className="audit-text">{option.text}</span>
-              </button>
-            );
-          })}
-        </div>
-      )}
-
-      {(presented.type === "meaning" || presented.type === "scenario" || presented.type === "listen") && (
-        <div className="opts">
-          {presented.options?.map((option) => {
-            let cls = "opt tile";
-            if (option.text.length > 42) cls += " longcap";
-            if (selection === option.text) cls += " sel";
-            if (locked) {
-              if (option.text === presented.correctText) cls += " good";
-              else if (selection === option.text) cls += " bad";
-            }
-            return (
-              <button
-                type="button"
-                key={option.text}
-                className={cls}
-                disabled={locked}
-                onClick={() => props.onPick(option.text)}
-              >
-                <TermArt
-                  id={option.art || artIdForLabel(option.text)}
-                  size="lg"
-                  preferGenerated={generated}
-                />
-                <span className="cap">{option.text}</span>
-              </button>
-            );
-          })}
-        </div>
-      )}
-
-      {presented.type === "truefalse" && (
-        <div className="tf">
-          {[true, false].map((value) => {
-            let cls = "opt tile";
-            if (selection === value) cls += " sel";
-            if (locked) {
-              if (value === presented.answer) cls += " good";
-              else if (selection === value) cls += " bad";
-            }
-            return (
+          {tiles(presented.options ?? [], true, false)}
+        </>
+      );
+      break;
+    case "truefalse": {
+      const statement = (presented.stem ?? "").replace(/^.+? means: /, "").replace(/^.+?[:：]\s*/, "");
+      const isZhStyle = !/ means: /.test(presented.stem ?? "");
+      body = (
+        <>
+          <div className="tf-head">
+            {concept && <TermArt id={concept.id} size="lg" preferGenerated={generated} />}
+            <div>
+              <b className="tf-term">{concept?.term}</b>
+              <span className="tf-means">{t.lesson.tf.means}</span>
+            </div>
+          </div>
+          <div className="bubble arrow">“{isZhStyle ? presented.stem : statement}”</div>
+          <div className="tf">
+            {[true, false].map((value, index) => (
               <button
                 type="button"
                 key={String(value)}
-                className={cls}
-                disabled={locked}
+                className={`opt tf-${value ? "yes" : "no"} ${optionState(value, props, presented.answer as boolean)}`}
+                disabled={props.locked}
+                aria-pressed={props.selection === value}
                 onClick={() => props.onPick(value)}
               >
-                <TermArt id={value ? "true" : "false"} size="lg" preferGenerated={generated} />
-                <span className="cap">{value ? t.lesson.tfLabels.true : t.lesson.tfLabels.false}</span>
+                <Icon name={value ? "check" : "cross"} size={30} />
+                <span>{value ? t.lesson.tf.true : t.lesson.tf.false}</span>
+                <span className="opt-key" aria-hidden="true">
+                  {index + 1}
+                </span>
               </button>
-            );
-          })}
-        </div>
-      )}
-
-      {presented.type === "headline" && (
-        <HeadlineBody presented={presented} selection={selection} locked={locked} onPick={props.onPick} />
-      )}
-
-      {presented.type === "fill" && (
-        <div className="bank">
-          {presented.bank?.map((word) => {
-            let cls = "bank-chip";
-            if (selection === word) cls += " sel";
-            if (locked) {
-              if (word === presented.answer) cls += " good";
-              else if (selection === word) cls += " bad";
-            }
-            return (
+            ))}
+          </div>
+        </>
+      );
+      break;
+    }
+    case "fill": {
+      const picked = typeof props.selection === "string" ? props.selection : null;
+      const state = props.locked && picked ? (picked === presented.answer ? "good" : "bad") : "";
+      body = (
+        <>
+          <h2 className="q-stem">{t.lesson.pickWord}</h2>
+          <div className="bubble">
+            {withBlank(presented.story ?? "", <Blank value={picked} state={state} />)}
+          </div>
+          <div className="bank">
+            {presented.bank?.map((word, index) => (
               <button
                 type="button"
                 key={word}
-                className={cls}
-                disabled={locked}
+                className={`chip-btn ${optionState(word, props, presented.answer as string)}`}
+                disabled={props.locked}
+                aria-pressed={props.selection === word}
                 onClick={() => props.onPick(word)}
               >
-                <TermArt id={artIdForLabel(word)} size="sm" preferGenerated={generated} />
-                <span>{word}</span>
+                {word}
+                <span className="opt-key" aria-hidden="true">
+                  {index + 1}
+                </span>
               </button>
-            );
-          })}
-        </div>
-      )}
-
-      {presented.type === "match" && (
+            ))}
+          </div>
+        </>
+      );
+      break;
+    }
+    case "audit":
+      body = (
         <>
-          <div className="stem">{t.lesson.matchHint}</div>
+          <blockquote className="claim">{presented.story}</blockquote>
+          <h2 className="q-stem small">{presented.stem}</h2>
+          {tiles(presented.options ?? [], false, false)}
+        </>
+      );
+      break;
+    case "match":
+      body = (
+        <>
+          <h2 className="q-stem">{t.lesson.matchAsk}</h2>
           <div className="match">
-            <div>
+            <div className="match-col">
               {presented.left.map((chip) => (
-                <MatchChip
+                <button
+                  type="button"
                   key={chip.id}
-                  chip={chip}
-                  side="left"
-                  generated={generated}
-                  lockedIds={props.lockedIds}
-                  selected={props.selL === chip.id}
-                  disabled={locked}
-                  onMatch={props.onMatch}
-                />
+                  className={`match-btn term${props.lockedIds.includes(chip.id) ? " done" : props.selL === chip.id ? " sel" : ""}`}
+                  disabled={props.locked || props.lockedIds.includes(chip.id)}
+                  aria-pressed={props.selL === chip.id}
+                  onClick={() => {
+                    if (conceptOf(course, chip.id)) void speak(chip.text, { conceptId: chip.id });
+                    props.onMatch("left", chip.id);
+                  }}
+                >
+                  <TermArt id={chip.id} size="xs" preferGenerated={generated} />
+                  {chip.text}
+                </button>
               ))}
             </div>
-            <div>
+            <div className="match-col">
               {presented.right.map((chip) => (
-                <MatchChip
+                <button
+                  type="button"
                   key={chip.id}
-                  chip={chip}
-                  side="right"
-                  generated={generated}
-                  lockedIds={props.lockedIds}
-                  selected={props.selR === chip.id}
-                  disabled={locked}
-                  onMatch={props.onMatch}
-                />
+                  className={`match-btn${props.lockedIds.includes(chip.id) ? " done" : props.selR === chip.id ? " sel" : ""}`}
+                  disabled={props.locked || props.lockedIds.includes(chip.id)}
+                  aria-pressed={props.selR === chip.id}
+                  onClick={() => props.onMatch("right", chip.id)}
+                >
+                  {chip.text}
+                </button>
               ))}
             </div>
           </div>
         </>
+      );
+      break;
+  }
+
+  return (
+    <section className={`question q-${presented.type}`}>
+      <span className={`q-kind kind-${presented.type}`}>
+        <i aria-hidden="true" />
+        {kind}
+      </span>
+      {body}
+      {props.hintShown && !props.locked && concept && twin && (
+        <div className="hint" role="note">
+          <Mascot mood="think" size={48} />
+          <div>
+            <p>{t.lesson.hintBody(concept.term, twin.term)}</p>
+            <small>{t.lesson.hintCost}</small>
+          </div>
+        </div>
       )}
-    </>
+    </section>
   );
 }
 
-/**
- * The headline drill: one real-syntax sentence with a blank, and the two terms
- * of the pair as the only options.
- *
- * Selecting a word drops it into the sentence in place, so the learner reads
- * the whole line rather than judging a word in isolation — which is exactly the
- * skill the product claims to teach. After checking, the sentence keeps the
- * chosen word and colours it, so a wrong choice leaves a visibly wrong headline
- * on screen instead of a bare "incorrect".
- */
-function HeadlineBody({
-  presented,
-  selection,
-  locked,
-  onPick,
-}: {
-  presented: PresentedExercise;
-  selection: string | boolean | null;
-  locked: boolean;
-  onPick: (value: string | boolean) => void;
-}) {
-  const picked = typeof selection === "string" ? selection : null;
-  const parts = (presented.story ?? "").split("____");
-  const correctText = presented.correctText;
-  return (
-    <>
-      <div className="headline">
-        {parts.length > 1 ? (
-          <>
-            {parts[0]}
-            <span
-              className={`hl-blank${picked ? " filled" : ""}${locked && picked ? (picked === correctText ? " good" : " bad") : ""}`}
-            >
-              {picked ?? "\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0"}
-            </span>
-            {parts.slice(1).join("____")}
-          </>
-        ) : (
-          presented.story
-        )}
-      </div>
-      <div className="hl-opts">
-        {presented.options?.map((option) => {
-          let cls = "hl-opt";
-          if (picked === option.text) cls += " sel";
-          if (locked) {
-            if (option.text === correctText) cls += " good";
-            else if (picked === option.text) cls += " bad";
-          }
-          return (
-            <button
-              type="button"
-              key={option.text}
-              className={cls}
-              disabled={locked}
-              onClick={() => onPick(option.text)}
-            >
-              {option.text}
-            </button>
-          );
-        })}
-      </div>
-    </>
-  );
-}
+/* ───────────────────────── feedback ───────────────────────── */
 
-function FillStory({
+function Feedback({
   presented,
-  selection,
+  course,
+  correct,
+  t,
+  onContinue,
 }: {
   presented: PresentedExercise;
-  selection: string | boolean | null;
+  course: Course;
+  correct: boolean;
+  t: UiText;
+  onContinue: () => void;
 }) {
-  const filled = typeof selection === "string" ? selection : "";
-  const story = presented.story ?? "";
-  const blank = <span className="blank">{filled || " "}</span>;
-  const parts = story.split("____");
+  const audit = presented.type === "audit";
+  const title = correct
+    ? pick(audit ? t.feedback.auditNice : t.feedback.nice, hash(presented.id))
+    : audit
+      ? t.feedback.auditNope
+      : t.feedback.nope;
+  const answer =
+    presented.type === "truefalse"
+      ? presented.answer
+        ? t.lesson.tf.true
+        : t.lesson.tf.false
+      : presented.type === "fill"
+        ? String(presented.answer)
+        : presented.correctText;
+  // A true/false item's own "why" restates the definition; the twin contrast
+  // is the thing worth reading after a miss.
+  const concept = presented.termId ? conceptOf(course, presented.termId) : undefined;
+  const why =
+    presented.type === "match" ? (correct ? "" : presented.why) : presented.why || concept?.mixUpWhy;
   return (
-    <div className="story">
-      {parts.length > 1 ? (
-        <>
-          {parts[0]}
-          {blank}
-          {parts.slice(1).join("____")}
-        </>
-      ) : (
-        <>
-          {story} {blank}
-        </>
-      )}
+    <div className={`feedback ${correct ? "ok" : "no"}`} role="status" aria-live="assertive">
+      <div className="feedback-row">
+        <Mascot mood={correct ? "cheer" : "oops"} size={72} />
+        <div>
+          <h3>{title}</h3>
+          {!correct && answer && presented.type !== "match" && (
+            <p className="feedback-answer">
+              {t.feedback.answer} <b>{answer}</b>
+            </p>
+          )}
+          {why && <p>{why}</p>}
+        </div>
+      </div>
+      <button
+        type="button"
+        className={`btn btn-block ${correct ? "btn-mint" : "btn-tomato"}`}
+        onClick={onContinue}
+      >
+        {correct ? t.feedback.continue : t.feedback.again}
+      </button>
     </div>
-  );
-}
-
-function MatchChip(props: {
-  chip: { id: string; text: string };
-  generated: boolean;
-  side: "left" | "right";
-  lockedIds: string[];
-  selected: boolean;
-  disabled: boolean;
-  onMatch: (side: "left" | "right", id: string) => void;
-}) {
-  const isLocked = props.lockedIds.includes(props.chip.id);
-  const cls = `mchip${isLocked ? " good" : props.selected ? " sel" : ""}`;
-  return (
-    <button
-      type="button"
-      className={cls}
-      disabled={props.disabled || isLocked}
-      onClick={() => props.onMatch(props.side, props.chip.id)}
-    >
-      {props.side === "left" && <TermArt id={props.chip.id} size="xs" preferGenerated={props.generated} />}
-      {props.chip.text}
-    </button>
   );
 }

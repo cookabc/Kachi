@@ -1,18 +1,29 @@
 import { type ChangeEvent, lazy, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { prefersGeneratedArt, TermArt } from "./art";
 import { Nav, type Tab } from "./chrome";
 import { LazyPanel } from "./components/LazyPanel";
-import { ALL_PACKS, courseFor, DEFAULT_PACK, course as defaultCourse, loadCourse } from "./course";
-import type { Concept, Course, LearnerState, SessionState } from "./domain";
-import { emptyLearnerState, isLessonDone, isLessonUnlocked, recentMissTermIds } from "./engine";
+import {
+  ALL_PACKS,
+  courseFor,
+  DEFAULT_PACK,
+  course as defaultCourse,
+  loadCourse,
+  loadPackId,
+  PACKS,
+  savePackId,
+} from "./course";
+import type { Concept, Course, LearnerState } from "./domain";
+import { emptyLearnerState } from "./engine";
 import { conceptOf } from "./flow";
 import { type FlowEvent, type FlowState, idleState, reduceFlow } from "./flow-machine";
 import { handleEnterShortcut } from "./keyboard";
 import { applyMotion, clampLevel, effectiveLevel, loadMotionLevel, saveMotionLevel } from "./motion";
+import { coursePairs, isPairMet } from "./pairs";
 import { activateUpdate } from "./pwa";
 import { CompleteScreen } from "./screens/CompleteScreen";
-import { FailScreen } from "./screens/FailScreen";
 import { LearnHome } from "./screens/LearnHome";
 import { LessonScreen } from "./screens/LessonScreen";
+import { playAnswerSound, playCompleteSound } from "./sfx";
 import type { PairCardInput } from "./share-card";
 import {
   exportLearnerData,
@@ -23,17 +34,10 @@ import {
 } from "./storage";
 import { type Lang, loadLang, saveLang, UI, type UiText } from "./ui";
 
-const Settings = lazy(() => import("./screens/Settings").then((module) => ({ default: module.Settings })));
-const Glossary = lazy(() => import("./screens/Glossary").then((module) => ({ default: module.Glossary })));
-const GraphScreen = lazy(() =>
-  import("./screens/GraphScreen").then((module) => ({ default: module.GraphScreen })),
-);
-const PracticeHome = lazy(() =>
-  import("./screens/PracticeHome").then((module) => ({ default: module.PracticeHome })),
-);
-const ShareSheet = lazy(() =>
-  import("./screens/ShareSheet").then((module) => ({ default: module.ShareSheet })),
-);
+const PairsScreen = lazy(() => import("./screens/PairsScreen").then((m) => ({ default: m.PairsScreen })));
+const MeScreen = lazy(() => import("./screens/MeScreen").then((m) => ({ default: m.MeScreen })));
+const LevelsSheet = lazy(() => import("./screens/LevelsSheet").then((m) => ({ default: m.LevelsSheet })));
+const ShareSheet = lazy(() => import("./screens/ShareSheet").then((m) => ({ default: m.ShareSheet })));
 
 const deviceId = crypto.randomUUID();
 let eventCounter = 0;
@@ -44,11 +48,15 @@ const environment = {
   eventId: () => `${deviceId}-${Date.now()}-${++eventCounter}`,
 };
 
+function packLevel(packId: string): number {
+  return ALL_PACKS.find((pack) => pack.id === packId)?.level ?? 1;
+}
+
 function pairCardInput(course: Course, concept: Concept, t: UiText): PairCardInput {
   const sibling = conceptOf(course, concept.mixUp);
   const unit = course.units.find((item) => item.id === concept.unit);
   return {
-    kicker: `Kachi, ${t.home.unit(concept.unit)}, ${unit?.title ?? ""}`,
+    kicker: t.share.kicker(packLevel(course.packId), unit?.title ?? ""),
     termA: concept.term,
     forkA: concept.definition,
     termB: sibling?.term ?? concept.mixUp,
@@ -63,63 +71,50 @@ function App() {
   const [ready, setReady] = useState(false);
   const [tab, setTab] = useState<Tab>("learn");
   const [lang, setLangState] = useState<Lang>(() => loadLang());
-  // Which course the learner is working through. Separate from language: the
-  // same pack exists in both locales, and switching pack must not switch locale.
   const [packId, setPackIdState] = useState<string>(DEFAULT_PACK);
-  // The zh pack is bundled and always renderable; a stored en-US preference
-  // swaps in the lazy en pack before the loading screen lifts.
   const [course, setCourse] = useState<Course>(defaultCourse);
-  // The whole lesson lifecycle is one value, owned by the pure reducer in
-  // flow-machine.ts. Nothing below reaches into its fields to mutate them.
   const [flowState, setFlowState] = useState<FlowState>(() => idleState(emptyLearnerState()));
   const flow = flowState.flow;
-  // The learner record lives inside flowState so a reducer transition can never
-  // leave the saved snapshot behind the visible flow. `state` is a readable
-  // alias for the many places that only need to read it.
   const state = flowState.learner;
   const setState = (next: LearnerState) => setFlowState((current) => ({ ...current, learner: next }));
-  const [glossaryQuery, setGlossaryQuery] = useState("");
   const [updateReady, setUpdateReady] = useState(false);
   const courseRequest = useRef(0);
   const [courseFailure, setCourseFailure] = useState<{ packId: string; lang: Lang } | null>(null);
+  const [loadingPack, setLoadingPack] = useState<string | null>(null);
+  const [levelsOpen, setLevelsOpen] = useState(false);
   const [shareCards, setShareCards] = useState<PairCardInput[] | null>(null);
   const [storageFailed, setStorageFailed] = useState(false);
-  // null stored = untouched slider = follow the OS reduced-motion preference
   const [motion, setMotionState] = useState<number>(() => effectiveLevel(loadMotionLevel()));
-  // When the prompt on screen was presented — feeds attempt.latencyMs. A ref,
-  // not state: resetting it must not re-render the question.
   const questionShownAt = useRef(0);
 
   const t = UI[lang];
 
-  // The document shell belongs to the UI language: screen readers pronounce it
-  // and search engines index it — React state alone never reaches them.
   useEffect(() => {
     document.documentElement.lang = lang;
     document.title = t.doc.title;
     document.querySelector('meta[name="description"]')?.setAttribute("content", t.doc.description);
   }, [lang, t]);
 
+  // Boot: learner record and course load independently, so one failing never
+  // keeps the loading screen up. The default level ships in the bundle; a
+  // stored other level is fetched, and falls back to the default if offline.
   useEffect(() => {
     let alive = true;
-    // Re-read the stored language here: this effect is mount-only, and a
-    // state variable would drag a later language change back into it.
     const initialLang = loadLang();
-    // Course and IndexedDB fail on their own. One shared promise used to reject
-    // the whole boot, and the loading screen never lifted.
+    const initialPack = loadPackId() ?? DEFAULT_PACK;
     const learner = loadLearnerState().then(
       (loaded) => ({ loaded, failed: false }),
       () => ({ loaded: emptyLearnerState(), failed: true }),
     );
-    const pack = loadCourse(DEFAULT_PACK, initialLang).then(
-      (loadedCourse) => ({ loadedCourse, lang: initialLang }),
+    const pack = loadCourse(initialPack, initialLang).then(
+      (loadedCourse) => ({ loadedCourse, lang: initialLang, packId: initialPack }),
+      // Offline on a first visit, or a chunk that failed: the bundled English
+      // level 1 always renders. The language follows the course that loaded.
       () => {
-        // The lazy pack could not be fetched. The default packs ship in the
-        // main bundle in both locales, so fall back to the bundled copy of the
-        // language that was asked for, and only then to English.
-        const fallback: Lang = initialLang === "zh-CN" ? "zh-CN" : "en-US";
-        saveLang(fallback);
-        return { loadedCourse: courseFor(DEFAULT_PACK, fallback) ?? defaultCourse, lang: fallback };
+        const fallback = courseFor(DEFAULT_PACK, initialLang);
+        return fallback
+          ? { loadedCourse: fallback, lang: initialLang, packId: DEFAULT_PACK }
+          : { loadedCourse: defaultCourse, lang: "en-US" as Lang, packId: DEFAULT_PACK };
       },
     );
     void Promise.all([learner, pack]).then(([learnerResult, packResult]) => {
@@ -127,7 +122,11 @@ function App() {
       setFlowState((current) => ({ ...current, learner: learnerResult.loaded }));
       setStorageFailed(learnerResult.failed);
       setCourse(packResult.loadedCourse);
-      if (packResult.lang !== initialLang) setLangState(packResult.lang);
+      setPackIdState(packResult.packId);
+      if (packResult.lang !== initialLang) {
+        setLangState(packResult.lang);
+        saveLang(packResult.lang);
+      }
       setReady(true);
     });
     const listener = () => setUpdateReady(true);
@@ -139,10 +138,6 @@ function App() {
     };
   }, []);
 
-  // Every committed state change is durable: one save path for answers, seen
-  // terms, and imports alike — updaters stay pure. A rejected write is shown
-  // on the same alert the startup path uses, and logged, without taking the
-  // UI down with it.
   useEffect(() => {
     if (!ready || storageFailed) return;
     let active = true;
@@ -155,10 +150,26 @@ function App() {
     };
   }, [state, ready, storageFailed]);
 
-  // Mirror the motion level onto <html data-motion> whenever it changes.
   useEffect(() => {
     applyMotion(motion);
   }, [motion]);
+
+  // Feedback cues: a chime and a short buzz on phones. Keyed on the session's
+  // result count so each graded answer fires exactly once.
+  const resultCount = flow.session?.results.length ?? 0;
+  const lastCue = useRef(0);
+  useEffect(() => {
+    if (flow.phase === "feedback" && resultCount > lastCue.current) {
+      playAnswerSound(flow.lastCorrect, motion);
+      if (motion > 0) navigator.vibrate?.(flow.lastCorrect ? 12 : [30, 40, 30]);
+    }
+    if (flow.phase === "complete" && lastCue.current !== -1) {
+      playCompleteSound(motion);
+      lastCue.current = -1;
+      return;
+    }
+    lastCue.current = flow.session ? resultCount : 0;
+  }, [flow.phase, flow.lastCorrect, flow.session, resultCount, motion]);
 
   const setMotion = (value: number) => {
     const level = clampLevel(value);
@@ -166,25 +177,74 @@ function App() {
     saveMotionLevel(level);
   };
 
-  const missedCount = useMemo(() => recentMissTermIds(state).length, [state]);
+  // Commit course identity and language together. A failed or obsolete request
+  // cannot replace a working course, reset the selected level, or change locale.
+  const selectCourse = (nextPack: string, nextLang: Lang, onDone?: () => void) => {
+    const revision = ++courseRequest.current;
+    setCourseFailure(null);
+    const commit = (loaded: Course) => {
+      if (revision !== courseRequest.current) return;
+      setCourse(loaded);
+      setPackIdState(nextPack);
+      savePackId(nextPack);
+      setLangState(nextLang);
+      saveLang(nextLang);
+      setLoadingPack(null);
+      onDone?.();
+    };
+    const cached = courseFor(nextPack, nextLang);
+    if (cached) {
+      commit(cached);
+      return;
+    }
+    setLoadingPack(nextPack);
+    void loadCourse(nextPack, nextLang).then(commit, () => {
+      if (revision !== courseRequest.current) return;
+      setLoadingPack(null);
+      setCourseFailure({ packId: nextPack, lang: nextLang });
+    });
+  };
+  const setLang = (next: Lang) => selectCourse(packId, next);
+  const pickLevel = (next: string) => {
+    if (next === packId) {
+      setLevelsOpen(false);
+      return;
+    }
+    selectCourse(next, lang, () => {
+      setLevelsOpen(false);
+      setTab("learn");
+      window.scrollTo({ top: 0 });
+    });
+  };
 
-  // Registry entries that have content versus ones still being written. A pack
-  // shows as selectable only when there is a chunk to load for this locale.
-  const packChoices = useMemo(
+  // The registry lists levels in reading order; counts of already-known words
+  // tell a learner how much of a level is genuinely new.
+  const levelChoices = useMemo(
     () =>
-      ALL_PACKS.map((pack) => ({
-        id: pack.id,
-        level: pack.level,
-        // The picker must follow the interface language; the registry carries
-        // both names. Rendering pack.title unconditionally showed a Chinese
-        // course list inside the English UI.
-        title: lang === "zh-CN" ? pack.title : pack.titleEn,
-        goal: lang === "zh-CN" ? pack.goal : pack.goalEn,
-        conceptCount: pack.conceptCount,
-        ready: Boolean(courseFor(pack.id, lang)) || pack.status === "ready" || pack.status === "building",
-        legacy: pack.legacy,
-      })),
-    [lang],
+      [...PACKS]
+        .sort((a, b) => a.level - b.level)
+        .map((pack) => {
+          const loaded = courseFor(pack.id, lang);
+          const known = loaded
+            ? loaded.concepts.filter((concept) => state.seenConceptIds.includes(concept.id)).length
+            : 0;
+          return {
+            id: pack.id,
+            level: pack.level,
+            title: lang === "zh-CN" ? pack.title : pack.titleEn,
+            goal: lang === "zh-CN" ? pack.goal : pack.goalEn,
+            conceptCount: pack.conceptCount,
+            known: pack.id === packId ? 0 : known,
+          };
+        }),
+    [lang, state.seenConceptIds, packId],
+  );
+  const currentLevel = levelChoices.find((item) => item.id === packId) ?? levelChoices[0];
+  const nextLevel = levelChoices.find((item) => item.level === currentLevel.level + 1);
+
+  const pairCount = useMemo(
+    () => coursePairs(course).filter((pair) => isPairMet(state, pair)).length,
+    [course, state],
   );
 
   const openShare = (conceptIds: string[]) => {
@@ -201,71 +261,19 @@ function App() {
     if (cards.length) setShareCards(cards);
   };
 
-  const shareConceptIds = (sess: SessionState): string[] => {
-    if (sess.mode !== "practice") {
-      const lesson = course.lessons.find((item) => item.id === sess.lessonId);
-      return lesson ? [...new Set(lesson.prompts.flatMap((prompt) => prompt.termIds ?? []))] : [];
-    }
-    const wanted = new Set(sess.promptIds);
-    return [
-      ...new Set(
-        course.lessons
-          .flatMap((lesson) => lesson.prompts)
-          .filter((prompt) => wanted.has(prompt.id))
-          .flatMap((prompt) => prompt.termIds ?? []),
-      ),
-    ];
-  };
-
-  // Commit course identity and language together. A failed or obsolete request
-  // cannot replace a working course, reset the selected pack, or change locale.
-  const selectCourse = (nextPack: string, nextLang: Lang) => {
-    const revision = ++courseRequest.current;
-    setCourseFailure(null);
-    const commit = (loaded: Course) => {
-      if (revision !== courseRequest.current) return;
-      setCourse(loaded);
-      setPackIdState(nextPack);
-      setLangState(nextLang);
-      saveLang(nextLang);
-      setReady(true);
-    };
-    const cached = courseFor(nextPack, nextLang);
-    if (cached) {
-      commit(cached);
-      return;
-    }
-    setReady(false);
-    void loadCourse(nextPack, nextLang).then(commit, () => {
-      if (revision !== courseRequest.current) return;
-      setCourseFailure({ packId: nextPack, lang: nextLang });
-      setReady(true);
-    });
-  };
-  const setLang = (next: Lang) => selectCourse(packId, next);
-  const setPack = (next: string) => {
-    if (next !== packId) selectCourse(next, lang);
-  };
-
-  // ---- lesson lifecycle ----------------------------------------------------
-  // All of it lives in one pure reducer (flow-machine.ts). This component only
-  // forwards events, records when the prompt appeared, and persists the result.
+  // ---- lesson lifecycle: one pure reducer (flow-machine.ts) -------------------
 
   const dispatch = useCallback(
     (event: FlowEvent) => {
       setFlowState((current) => {
         const out = reduceFlow(current, event, { course, environment });
-        // Fold newly met terms into the learner record here, inside the same
-        // update, so the saved snapshot and the flow never disagree.
         const learner = out.seen.length
           ? {
               ...out.state.learner,
               seenConceptIds: Array.from(new Set([...out.state.learner.seenConceptIds, ...out.seen])),
             }
           : out.state.learner;
-        if (out.state.flow.phase === "question") {
-          questionShownAt.current = environment.now().getTime();
-        }
+        if (out.state.flow.phase === "question") questionShownAt.current = environment.now().getTime();
         return { flow: out.state.flow, learner };
       });
     },
@@ -278,16 +286,12 @@ function App() {
     dispatch({ type: "startLesson", lessonId });
     setTab("learn");
   };
-
   const beginPractice = (focusIds?: string[]) => dispatch({ type: "startPractice", focusIds });
-
   const closeLesson = () => {
     dispatch({ type: "close" });
     setTab("learn");
   };
 
-  // A match is two clicks: pick a chip, then pick its partner. The first pick
-  // is selection state; a completed pair is the engine event.
   const onMatch = (side: "left" | "right", id: string) => {
     if (flow.phase !== "question" || !flow.presented?.pairs || flow.locked.includes(id)) return;
     if (side === "left" && flow.selR) {
@@ -301,21 +305,16 @@ function App() {
     dispatch({ type: "selectChip", side, id });
   };
 
-  // Stable so the keyboard effect below can list it without re-binding on
-  // every render; `latency()` reads a ref, so the identity is all that matters.
   const answer = useCallback(
     (value: string | boolean) => dispatch({ type: "submit", answer: value, latencyMs: latency() }),
     [dispatch, latency],
   );
 
-  // keyboard: Enter drives the lesson; 1-4 pick options. On complete/fail, Enter
-  // activates the primary action only when focus is not already on a control.
+  // Keyboard: Enter drives the lesson, 1–4 choose. On the completion screen
+  // Enter activates the primary action only when focus is not on a control.
   useEffect(() => {
     const onKey = (event: KeyboardEvent) => {
       if (event.key === "Enter") {
-        // Lesson phases dispatch into the flow machine. Complete/fail only
-        // activate the primary button when Enter was not already aimed at a
-        // control or the share dialog.
         handleEnterShortcut(event, {
           shareOpen: shareCards !== null,
           phase: flow.phase,
@@ -362,10 +361,10 @@ function App() {
     if (!file) return;
     try {
       setState(await importLearnerData(file));
-      alert(t.settings.imported);
+      alert(t.me.imported);
     } catch (error) {
       const incompatible = error instanceof Error && error.message === INCOMPATIBLE_LEARNER_FILE;
-      alert(incompatible ? t.settings.importInvalid : t.settings.importFailed);
+      alert(incompatible ? t.me.importInvalid : t.me.importFailed);
     } finally {
       event.target.value = "";
     }
@@ -373,13 +372,21 @@ function App() {
 
   if (!ready) return <main className="loading">{t.loading}</main>;
 
+  const shareLayer = shareCards && (
+    <LazyPanel t={t}>
+      <ShareSheet cards={shareCards} t={t} onClose={() => setShareCards(null)} />
+    </LazyPanel>
+  );
+
   if (flow.session && flow.phase === "complete" && flow.summary) {
+    const session = flow.session;
     return (
       <>
         <CompleteScreen
           summary={flow.summary}
-          isPractice={flow.session.mode === "practice"}
-          lessonId={flow.session.lessonId}
+          bestCombo={flow.bestCombo}
+          isPractice={session.mode === "practice"}
+          lessonId={session.lessonId}
           course={course}
           t={t}
           motion={motion}
@@ -387,33 +394,27 @@ function App() {
           onStart={beginLesson}
           onPractice={beginPractice}
           onPath={closeLesson}
-          onShare={() => openShare(shareConceptIds(flow.session!))}
+          onShare={() => {
+            const lesson = course.lessons.find((item) => item.id === session.lessonId);
+            openShare(lesson ? [...new Set(lesson.prompts.flatMap((prompt) => prompt.termIds ?? []))] : []);
+          }}
         />
-        {shareCards && (
-          <LazyPanel t={t}>
-            <ShareSheet cards={shareCards} t={t} onClose={() => setShareCards(null)} />
-          </LazyPanel>
-        )}
+        {shareLayer}
       </>
     );
   }
-  if (flow.session && flow.phase === "fail") {
-    return (
-      <FailScreen
-        isPractice={flow.session.mode === "practice"}
-        lessonId={flow.session.lessonId}
-        t={t}
-        onRetryLesson={beginLesson}
-        onRetryPractice={() => beginPractice()}
-        onPath={closeLesson}
-      />
-    );
-  }
+
   if (flow.session && (flow.phase === "teach" || flow.phase === "question" || flow.phase === "feedback")) {
-    const activeLesson = course.lessons.find((item) => item.id === flow.session?.lessonId);
+    const session = flow.session;
+    const activeLesson = course.lessons.find((item) => item.id === session.lessonId);
+    // Progress counts first-time prompts only: a replayed miss extends the run
+    // without moving the bar backwards.
+    const firstPass = new Set(session.promptIds).size;
+    const answered = new Set(session.results.filter((r) => r.correct || r.isRetry).map((r) => r.exerciseId))
+      .size;
     return (
       <LessonScreen
-        lessonTitle={flow.session.mode === "practice" ? t.lesson.practiceTitle : (activeLesson?.title ?? "")}
+        title={session.mode === "practice" ? t.lesson.practiceTitle : (activeLesson?.title ?? "")}
         phase={flow.phase}
         t={t}
         lang={lang}
@@ -423,10 +424,10 @@ function App() {
         teachIndex={flow.teachIndex}
         presented={flow.presented}
         selection={flow.selection}
-        hearts={flow.hearts}
         lastCorrect={flow.lastCorrect}
-        total={flow.session.promptIds.length}
-        questionIndex={flow.phase === "feedback" ? Math.max(flow.session.index - 1, 0) : flow.session.index}
+        combo={flow.combo}
+        answered={answered}
+        total={firstPass}
         selL={flow.selL}
         selR={flow.selR}
         locked={flow.locked}
@@ -442,152 +443,113 @@ function App() {
     );
   }
 
+  const stagePairs = coursePairs(course).slice(0, 6);
   return (
-    <main className="shell home-shell">
-      <aside className="desktop-story" aria-labelledby="desktop-story-title">
-        <div className="desktop-story-top">
-          <span className="desktop-wordmark">
-            Kachi<span aria-hidden="true">✳</span>
+    <div className="app">
+      <div className="stage" aria-hidden="true">
+        {stagePairs.map((pair) => (
+          <span className="sticker" key={pair.id}>
+            <TermArt id={pair.a} size="lg" preferGenerated={prefersGeneratedArt(course)} />
+            {conceptOf(course, pair.a)?.term}
+            <i>/</i>
+            {conceptOf(course, pair.b)?.term}
           </span>
-          <span className="desktop-edition">{t.desktop.edition}</span>
-        </div>
-        <div className="desktop-story-main">
-          <p className="desktop-eyebrow">{t.desktop.eyebrow}</p>
-          <p id="desktop-story-title" className="desktop-story-title">
-            {t.desktop.titleLead}
-            <br />
-            {t.desktop.titleBefore}
-            <span>{t.desktop.titleEm}</span>
-          </p>
-          <p className="desktop-story-copy">{t.desktop.copy}</p>
-          <div className="concept-pair">
-            <div>
-              <span>{t.desktop.hedgeMark}</span>
-              <strong>{t.desktop.hedge}</strong>
-            </div>
-            <span className="concept-pair-divider" aria-hidden="true">
-              ≠
-            </span>
-            <div>
-              <span>{t.desktop.pledgeMark}</span>
-              <strong>{t.desktop.pledge}</strong>
-            </div>
-          </div>
-          <button
-            type="button"
-            className="desktop-start"
-            onClick={() =>
-              beginLesson(
-                course.lessons.find(
-                  (lesson) =>
-                    isLessonUnlocked(state, course, lesson.id) && !isLessonDone(state, course, lesson.id),
-                )?.id ?? course.lessons[0].id,
-              )
-            }
-          >
-            {t.desktop.start}
-            <span aria-hidden="true">↗</span>
-          </button>
-        </div>
-        <div className="desktop-story-bottom">
-          <span>{t.desktop.footer}</span>
-          <span>
-            {course.lessons
-              .filter((lesson) => isLessonDone(state, course, lesson.id))
-              .length.toString()
-              .padStart(2, "0")}{" "}
-            / {course.lessons.length.toString().padStart(2, "0")}
-          </span>
-        </div>
-      </aside>
-      <div className="app-window">
+        ))}
+      </div>
+      <div className="app-col">
         {updateReady && (
-          <button type="button" className="update" onClick={activateUpdate}>
+          <button type="button" className="banner" onClick={activateUpdate}>
             {t.updateBanner}
           </button>
         )}
-        {courseFailure && (
-          <div className="course-alert" role="alert">
+        {courseFailure && !levelsOpen && (
+          <div className="banner alert" role="alert">
             <p>{t.courseLoadFailed}</p>
-            <button type="button" onClick={() => selectCourse(courseFailure.packId, courseFailure.lang)}>
+            <button
+              type="button"
+              className="btn btn-white btn-sm"
+              onClick={() =>
+                selectCourse(courseFailure.packId, courseFailure.lang, () => setLevelsOpen(false))
+              }
+            >
               {t.retryLoad}
             </button>
           </div>
         )}
         {storageFailed && (
-          <p className="fine" role="alert">
+          <p className="banner alert" role="alert">
             {t.storageUnavailable}
           </p>
         )}
 
         {tab === "learn" && (
-          <LearnHome state={state} course={course} t={t} missedCount={missedCount} onStart={beginLesson} />
+          <LearnHome
+            state={state}
+            course={course}
+            t={t}
+            level={currentLevel}
+            nextLevel={nextLevel}
+            now={environment.now()}
+            onStart={beginLesson}
+            onReview={() => beginPractice()}
+            onLevels={() => setLevelsOpen(true)}
+          />
         )}
-        {tab === "practice" && (
+        {tab === "pairs" && (
           <LazyPanel t={t}>
-            <PracticeHome
+            <PairsScreen
               state={state}
               course={course}
               t={t}
               lang={lang}
-              missedCount={missedCount}
-              onStart={() => beginPractice()}
+              onShare={openShare}
+              onPractice={(ids) => beginPractice(ids)}
             />
           </LazyPanel>
         )}
-        {tab === "glossary" && (
+        {tab === "me" && (
           <LazyPanel t={t}>
-            <Glossary
+            <MeScreen
               state={state}
               course={course}
-              t={t}
-              lang={lang}
-              query={glossaryQuery}
-              onQuery={setGlossaryQuery}
-              onShare={(conceptIds) => openShare(conceptIds)}
-            />
-          </LazyPanel>
-        )}
-        {tab === "graph" && (
-          <LazyPanel t={t}>
-            <GraphScreen
-              state={state}
-              course={course}
-              t={t}
-              lang={lang}
-              onOpenGlossary={(term) => {
-                setGlossaryQuery(term);
-                setTab("glossary");
-              }}
-            />
-          </LazyPanel>
-        )}
-        {tab === "settings" && (
-          <LazyPanel t={t}>
-            <Settings
               t={t}
               lang={lang}
               motion={motion}
-              packs={packChoices}
-              packId={packId}
               onLang={setLang}
               onMotion={setMotion}
-              onPack={setPack}
+              onPractice={(ids) => beginPractice(ids)}
               onExport={downloadExport}
               onImport={onImport}
             />
           </LazyPanel>
         )}
 
-        {shareCards && (
+        {levelsOpen && (
           <LazyPanel t={t}>
-            <ShareSheet cards={shareCards} t={t} onClose={() => setShareCards(null)} />
+            <LevelsSheet
+              levels={levelChoices}
+              current={packId}
+              loadingId={loadingPack}
+              failedId={courseFailure?.packId ?? null}
+              t={t}
+              onPick={pickLevel}
+              onRetry={() => courseFailure && pickLevel(courseFailure.packId)}
+              onClose={() => setLevelsOpen(false)}
+            />
           </LazyPanel>
         )}
-
-        <Nav tab={tab} onTab={setTab} t={t} />
+        {shareLayer}
       </div>
-    </main>
+      <Nav
+        tab={tab}
+        t={t}
+        pairCount={pairCount}
+        onTab={(next) => {
+          setTab(next);
+          window.scrollTo({ top: 0 });
+        }}
+      />
+    </div>
   );
 }
 

@@ -1,8 +1,8 @@
 import { describe, expect, it } from "vitest";
 import t1 from "../content/packs/t1-finance-news/zh-CN/course.json";
-import { course as legacyCourse } from "./course";
 import type { Course } from "./domain";
 import { emptyLearnerState, isLessonDone, isLessonUnlocked, lessonKey } from "./engine";
+import { legacyCourse } from "./test-fixtures/legacy-course";
 import { upgradeLearnerState } from "./upgrade";
 
 // Two packs both start at "u1l1". Before lesson ids were namespaced by pack,

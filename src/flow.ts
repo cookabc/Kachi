@@ -84,27 +84,65 @@ function unitTermIds(course: Course, unit: number): string[] {
   return ids;
 }
 
-function taughtInEarlierLessons(course: Course, lesson: Course["lessons"][number]): Set<string> {
-  const seen = new Set<string>();
+/** The published twin of a concept, if its declared mix-up resolves. */
+export function twinOf(course: Course, id: string): string | undefined {
+  const concept = conceptOf(course, id);
+  if (!concept || concept.mixUp === id) return undefined;
+  return conceptOf(course, concept.mixUp) ? concept.mixUp : undefined;
+}
+
+/**
+ * Pair leads, in order: the terms that open a teach card. Kachi teaches a word
+ * together with the word it gets confused with, so a term whose twin already
+ * appeared on an earlier card (selloff, after rally/selloff) needs no card of
+ * its own. `covered` carries what earlier lessons already showed.
+ */
+function pairLeads(course: Course, ids: string[], covered: Set<string>): string[] {
+  const leads: string[] = [];
+  for (const id of ids) {
+    if (covered.has(id)) continue;
+    leads.push(id);
+    covered.add(id);
+    const twin = twinOf(course, id);
+    if (twin) covered.add(twin);
+  }
+  return leads;
+}
+
+function coveredBefore(course: Course, lesson: Course["lessons"][number]): Set<string> {
+  const covered = new Set<string>();
   const here = course.lessons.findIndex((item) => item.id === lesson.id);
   course.lessons.forEach((item, index) => {
     if (item.unit !== lesson.unit || item.review || index >= here) return;
-    primaryTermIds(course, item).forEach((id) => {
-      seen.add(id);
-    });
+    pairLeads(course, primaryTermIds(course, item), covered);
   });
-  return seen;
+  return covered;
 }
 
-// A review recaps every unit term; a normal lesson teaches the terms that are
-// not already taught by earlier lessons of the same unit.
+// A review recaps every pair in the unit; a normal lesson introduces the pairs
+// not already shown by earlier lessons of the same unit. `terms` holds pair
+// leads — each one is rendered with its twin beside it.
 export function teachPlan(
   lesson: Course["lessons"][number],
   course: Course,
 ): { mode: TeachMode; terms: string[] } {
-  if (lesson.review) return { mode: "recap", terms: unitTermIds(course, lesson.unit) };
-  const seen = taughtInEarlierLessons(course, lesson);
-  return { mode: "first", terms: primaryTermIds(course, lesson).filter((id) => !seen.has(id)) };
+  if (lesson.review)
+    return { mode: "recap", terms: pairLeads(course, unitTermIds(course, lesson.unit), new Set()) };
+  return {
+    mode: "first",
+    terms: pairLeads(course, primaryTermIds(course, lesson), coveredBefore(course, lesson)),
+  };
+}
+
+/** Both halves of a teach card, for the "seen" bookkeeping. */
+export function withTwins(course: Course, leads: string[]): string[] {
+  const out: string[] = [];
+  for (const id of leads) {
+    out.push(id);
+    const twin = twinOf(course, id);
+    if (twin) out.push(twin);
+  }
+  return [...new Set(out)];
 }
 
 // The pair a lesson is "about": the first newly taught concept whose declared
@@ -244,6 +282,8 @@ export function sessionSummary(session: SessionState): Summary {
     xpPerfect,
     correct,
     total,
-    mix: mix.slice(0, 3),
+    // Every missed concept: the completion screen groups them by pair, and
+    // the "practice these" round needs all of them, not the first three.
+    mix,
   };
 }
