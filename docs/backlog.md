@@ -1,5 +1,7 @@
 # Kachi backlog
 
+**English** · [简体中文](backlog.zh-CN.md)
+
 > Only lists what is **not done yet**. Finished work leaves no trace here — it lives in the code or in the git history.
 
 ## Structural background
@@ -41,4 +43,4 @@ The six-tier plan is fully shipped (T1 42 / T2 49 / T3 38 / T4 37 / T5 32 / T6 4
 
 ---
 
-中文版见 [upgrade-plan.zh-CN.md](upgrade-plan.zh-CN.md)。
+中文版见 [backlog.zh-CN.md](backlog.zh-CN.md)。

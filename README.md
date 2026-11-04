@@ -113,7 +113,7 @@ Every document leads in English, with a Chinese edition beside it.
 | English                                                | 中文                                                               | What it covers                                                                         |
 | ------------------------------------------------------ | ------------------------------------------------------------------ | -------------------------------------------------------------------------------------- |
 | [docs/vocabulary-system.md](docs/vocabulary-system.md) | [docs/vocabulary-system.zh-CN.md](docs/vocabulary-system.zh-CN.md) | The six tiers, confusion-pair types, cross-pack deduplication, the two authoring gates |
-| [docs/upgrade-plan.md](docs/upgrade-plan.md)           | [docs/upgrade-plan.zh-CN.md](docs/upgrade-plan.zh-CN.md)           | What is not built yet, and what is deliberately not being built                        |
+| [docs/backlog.md](docs/backlog.md)                     | [docs/backlog.zh-CN.md](docs/backlog.zh-CN.md)                     | What is not built yet, and what is deliberately not being built                        |
 
 ## License
 

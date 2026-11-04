@@ -70,7 +70,7 @@ pnpm run generate:icons   # 由 public/icon.svg 重建 PNG 图标（需要 rsvg-
 | 英文                                                   | 中文                                                               | 内容                                         |
 | ------------------------------------------------------ | ------------------------------------------------------------------ | -------------------------------------------- |
 | [docs/vocabulary-system.md](docs/vocabulary-system.md) | [docs/vocabulary-system.zh-CN.md](docs/vocabulary-system.zh-CN.md) | 六个层级、混淆对类型、跨包去重、两道作者门禁 |
-| [docs/upgrade-plan.md](docs/upgrade-plan.md)           | [docs/upgrade-plan.zh-CN.md](docs/upgrade-plan.zh-CN.md)           | 还没做的，以及明确不做的                     |
+| [docs/backlog.md](docs/backlog.md)                     | [docs/backlog.zh-CN.md](docs/backlog.zh-CN.md)                     | 还没做的，以及明确不做的                     |
 
 ## 许可
 
