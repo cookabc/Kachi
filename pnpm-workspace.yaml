@@ -4,6 +4,11 @@ allowBuilds:
 # GHSA-m5mm-p8h7-m29v：workbox-build → @rollup/plugin-terser 传递链钉在 7.1.2，
 # 用带区间选择器的 override 只抬脆弱实例，不碰其他消费者。
 overrides:
+  # GHSA-3g3m-2fjr-6pw4：workbox-build 声明 glob ^11，11.x 全线命中，修复版从 14.0.2 起，
+  # 用带区间选择器的 override 只抬该实例。
+  "glob@>=9.0.0 <=14.0.1": ^14.0.3
+  # GHSA-g3hv-75wg-m249：minimatch <11.0.1 命中（glob@11 的 ^10 与 filelist 的 ^10 链）。
+  "minimatch@<11.0.1": ^11.0.4
   "serialize-javascript@<7.1.3": ^7.1.4
 minimumReleaseAgeExclude:
   - "@biomejs/biome@2.6.2"
