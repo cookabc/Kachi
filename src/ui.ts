@@ -109,6 +109,7 @@ export interface UiText {
   lesson: {
     close: string;
     closeConfirm: string;
+    stay: string;
     newPair: string;
     recap: string;
     recapTitle: string;
@@ -268,6 +269,7 @@ export const UI: Record<Lang, UiText> = {
     lesson: {
       close: "退出",
       closeConfirm: "现在退出，这一课的进度不会保存。确定吗？",
+      stay: "继续上课",
       newPair: "新词对",
       recap: "单元挑战",
       recapTitle: "这些词对又见面了",
@@ -439,6 +441,7 @@ export const UI: Record<Lang, UiText> = {
     lesson: {
       close: "Quit lesson",
       closeConfirm: "Leave now? Progress in this lesson won’t be saved.",
+      stay: "Keep going",
       newPair: "New pair",
       recap: "Boss round",
       recapTitle: "These pairs are back",

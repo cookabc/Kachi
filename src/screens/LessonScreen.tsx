@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { type KeyboardEvent, useEffect, useRef, useState } from "react";
 import { artIdForLabel, prefersGeneratedArt, TermArt } from "../art";
 import { speak } from "../audio";
 import { Icon, Mascot } from "../chrome";
@@ -48,10 +48,70 @@ export interface LessonScreenProps {
   onClose: () => void;
 }
 
+/* 退出前的应用内确认。原生 window.confirm 与整屏手绘卡片风格割裂，也
+   读不到主题；这里走 ShareSheet 同一条 <dialog> 焦点契约。 */
+function QuitDialog({ t, onStay, onQuit }: { t: UiText; onStay: () => void; onQuit: () => void }) {
+  const sheetRef = useRef<HTMLDivElement>(null);
+  const dialogRef = useRef<HTMLDialogElement>(null);
+
+  useEffect(() => {
+    // Move focus into the dialog while it is open and hand it back on close.
+    const opener = document.activeElement as HTMLElement | null;
+    dialogRef.current?.showModal();
+    sheetRef.current?.focus();
+    return () => opener?.focus();
+  }, []);
+
+  const cycleFocus = (event: KeyboardEvent<HTMLDialogElement>) => {
+    if (event.key !== "Tab") return;
+    const controls = Array.from(
+      event.currentTarget.querySelectorAll<HTMLElement>(
+        'button:not([disabled]), a[href], input:not([disabled]), [tabindex="0"]',
+      ),
+    ).filter((element) => element.getClientRects().length > 0);
+    const first = controls[0],
+      last = controls.at(-1);
+    if (!first || !last) return;
+    if (event.shiftKey && (document.activeElement === first || document.activeElement === sheetRef.current)) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first.focus();
+    }
+  };
+
+  return (
+    <dialog
+      className="quit-backdrop"
+      ref={dialogRef}
+      onKeyDown={cycleFocus}
+      aria-label={t.lesson.close}
+      onCancel={(event) => {
+        event.preventDefault();
+        onStay();
+      }}
+    >
+      <div className="quit-sheet" ref={sheetRef} tabIndex={-1}>
+        <div className="sheet-grab" aria-hidden="true" />
+        <p className="quit-text">{t.lesson.closeConfirm}</p>
+        <button type="button" className="btn btn-sun btn-block" onClick={onStay}>
+          {t.lesson.stay}
+        </button>
+        <button type="button" className="btn btn-white btn-block" onClick={onQuit}>
+          {t.lesson.close}
+        </button>
+      </div>
+    </dialog>
+  );
+}
+
 export function LessonScreen(props: LessonScreenProps) {
   const { phase, presented, t } = props;
   const pct = props.total ? Math.min(100, (props.answered / props.total) * 100) : 0;
   const footRef = useRef<HTMLDivElement>(null);
+  // Teach 卡没有可丢的进度，直接退；进了题目才需要确认。
+  const [confirming, setConfirming] = useState(false);
 
   // Move focus to the primary control whenever the step changes, so keyboard
   // and screen-reader users land on what to do next. The step key is the
@@ -75,7 +135,8 @@ export function LessonScreen(props: LessonScreenProps) {
           className="icon-btn"
           aria-label={t.lesson.close}
           onClick={() => {
-            if (phase === "teach" || window.confirm(t.lesson.closeConfirm)) props.onClose();
+            if (phase === "teach") props.onClose();
+            else setConfirming(true);
           }}
         >
           <Icon name="close" />
@@ -164,6 +225,7 @@ export function LessonScreen(props: LessonScreenProps) {
           onContinue={props.onContinue}
         />
       )}
+      {confirming && <QuitDialog t={t} onStay={() => setConfirming(false)} onQuit={props.onClose} />}
     </main>
   );
 }
