@@ -2400,3 +2400,18 @@ html[lang="zh-CN"] .stat small,
 html[lang="zh-CN"] .got h2 {
   letter-spacing: 0;
 }
+
+/* 中英混排：中文页自动留白、行首标点挤压（Chromium 原生，不支持的浏览器忽略） */
+:lang(zh) {
+  text-autospace: normal;
+  text-spacing-trim: trim-start;
+}
+
+p {
+  text-wrap: pretty;
+}
+h1,
+h2,
+h3 {
+  text-wrap: balance;
+}
