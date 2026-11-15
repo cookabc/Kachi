@@ -30,3 +30,7 @@ Both headlines and articles come from public news and are **used only for word-f
 ## How the check uses it
 
 `scripts/validate-content.mjs` reads these files and checks that every pack's `concept.term` appears at least once in the corresponding corpus. When adding a pack, add the corpus first, then write the word list.
+
+## Investment foundation evidence
+
+`investing-basics/` contains short verbatim terminology excerpts from Investor.gov, not synthetic news or copied course content. Source URLs and access dates are registered in `content/packs/investing-basics/source.mjs`. The excerpts only establish that a term or alias is used; original definitions, hypothetical examples, and exercises are authored separately, with explicit reference mappings in `CITES`.

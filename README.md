@@ -7,7 +7,7 @@ coupon / yield, hedge / pledge. In a headline, one wrong word flips the story,
 so every word arrives beside the twin it gets confused with, and every question
 is decided by the difference.
 
-**6 levels · 238 concepts · 145 confusion pairs · 125 lessons · 1,697 prompts.**
+**1 foundation pack + 6 reading levels · 252 entries (215 distinct meanings) · 152 confusion pairs · 137 lessons · 1,803 prompts.**
 Offline PWA, no account, progress stays on the device. English interface by
 default, 中文 one tap away. Live at [kachi-game.vercel.app](https://kachi-game.vercel.app).
 
@@ -49,12 +49,13 @@ default, 中文 one tap away. Live at [kachi-game.vercel.app](https://kachi-game
 ## Levels
 
 Levels follow what you are reading, not which discipline a word belongs to.
-Every level is open; level 1 is where a new learner starts.
+Every course is open; level 1 remains the default. The optional level 0 foundation covers investment products and funds without renumbering the six reading courses.
 
 | Level | Pack                  | When it's done, you can…                          | Concepts |
 | ----- | --------------------- | ------------------------------------------------- | -------- |
+| 0     | `investing-basics`    | Distinguish products, fund types, NAV and costs   | 15       |
 | 1     | `t1-finance-news`     | Understand any finance app's headlines            | 42       |
-| 2     | `t2-company-earnings` | Tell whether a quarterly release is good news     | 49       |
+| 2     | `t2-company-earnings` | Tell whether a quarterly release is good news     | 48       |
 | 3     | `t3-bonds-rates`      | Follow yield, auction and maturity stories        | 38       |
 | 4     | `t4-forex-macro`      | Read currency, central-bank and policy news       | 37       |
 | 5     | `t5-quant-research`   | Spot which backtest claim does not hold           | 32       |
@@ -63,12 +64,14 @@ Every level is open; level 1 is where a new learner starts.
 Every word must appear in the level's real-news corpus before it is taught
 (`content/corpus`, enforced at build time). Course text is original: each pack
 ships `zh-CN` and `en-US` `course.json` files, generated from `source.mjs` for
-levels 1–5 and hand-written for level 6. The validator keeps the two locales
+the foundation and levels 1–5, and hand-written for level 6. The validator keeps the two locales
 structurally identical. Original headline drills live in
 `content/packs/*/headlines.mjs`; level 5's bilingual report cases live in
 `content/packs/t5-quant-research/audits.mjs`. Their figures are hypothetical,
 not quotations or actual fund results. Fill sentences for words whose corpus example
 never uses the term itself live in `content/packs/fill-overrides.mjs`.
+
+The 15 foundation entries include original bilingual worked examples, uses, and common traps, expandable in twin cards and pair details. ETF structure and index strategy are separate dimensions. Sources are traceable short Investor.gov excerpts, with US-specific mutual-fund usage labelled. Aliases share one identity; profit margin and trading collateral have separate ids. New headwords ship with MP3s recorded using installed macOS Samantha (US) and Daniel (GB) voices; existing recordings are reused.
 
 ## Commands
 
@@ -87,7 +90,7 @@ pnpm run generate:icons   # rebuild PNG icons from public/icon.svg (needs rsvg-c
 ## Notes
 
 - **Offline first.** Level 1's English edition is in the main bundle (about
-  509 kB initial JS against a 650 kB budget), so the first screen always
+  519 kB initial JS against a 650 kB budget), so the first screen always
   renders. Every other edition, including level 1 in Chinese, is a lazy chunk
   that the service worker precaches. If a stored Chinese preference cannot load,
   the app falls back to the bundled English.
@@ -110,10 +113,10 @@ pnpm run generate:icons   # rebuild PNG icons from public/icon.svg (needs rsvg-c
 
 The vocabulary guide is bilingual; the shared constraint reference is in Chinese.
 
-| English                                                  | 中文                                                               | What it covers                                                                         |
-| -------------------------------------------------------- | ------------------------------------------------------------------ | -------------------------------------------------------------------------------------- |
-| [docs/vocabulary-system.md](docs/vocabulary-system.md)   | [docs/vocabulary-system.zh-CN.md](docs/vocabulary-system.zh-CN.md) | The six tiers, confusion-pair types, cross-pack deduplication, the two authoring gates |
-| [docs/design-constraints.md](docs/design-constraints.md) | [docs/design-constraints.md](docs/design-constraints.md)           | Current product, storage, asset and release constraints                                |
+| English                                                  | 中文                                                               | What it covers                                                                      |
+| -------------------------------------------------------- | ------------------------------------------------------------------ | ----------------------------------------------------------------------------------- |
+| [docs/vocabulary-system.md](docs/vocabulary-system.md)   | [docs/vocabulary-system.zh-CN.md](docs/vocabulary-system.zh-CN.md) | Foundation, reading tiers, meaning identities, aliases, migration and content gates |
+| [docs/design-constraints.md](docs/design-constraints.md) | [docs/design-constraints.md](docs/design-constraints.md)           | Current product, storage, asset and release constraints                             |
 
 ## License
 

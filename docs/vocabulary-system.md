@@ -7,22 +7,23 @@ describes how the word list is organised, how the content is verified, and how
 to add a pack. Current counts come from `content/packs/index.json`; that
 registry is the single source of truth.
 
-## 1. Six packs, layered by what you read
+## 1. A foundation and six reading packs
 
 Layers follow _what you are reading_, not _which discipline a word belongs to_.
 Each layer has one explicit acceptance sentence: what you can read when it is
 done.
 
-| Pack                             | Concepts | Lessons | Acceptance                                                                 |
-| -------------------------------- | -------: | ------: | -------------------------------------------------------------------------- |
-| T1 · Read the finance front page |       42 |      21 | Open any finance app's first screen and understand every headline          |
-| T2 · Read an earnings release    |       49 |      21 | Read a quarterly earnings bulletin and know whether it is good or bad news |
-| T3 · Bonds and rates             |       38 |      21 | Follow bond-market news — yields, auctions, maturities                     |
-| T4 · FX and macro                |       37 |      21 | Understand news about exchange rates, central banks and policy             |
-| T5 · Research and quant          |       32 |      18 | Spot where a backtest conclusion does not hold up                          |
-| T6 · Borrow and hedge            |       40 |      23 | Read private-bank and structured-product material                          |
+| Pack                                       | Concepts | Lessons | Acceptance                                                                 |
+| ------------------------------------------ | -------: | ------: | -------------------------------------------------------------------------- |
+| Foundation · Investment products and funds |       15 |      12 | Distinguish products, fund types, NAV and costs                            |
+| T1 · Read the finance front page           |       42 |      21 | Open any finance app's first screen and understand every headline          |
+| T2 · Read an earnings release              |       48 |      21 | Read a quarterly earnings bulletin and know whether it is good or bad news |
+| T3 · Bonds and rates                       |       38 |      21 | Follow bond-market news — yields, auctions, maturities                     |
+| T4 · FX and macro                          |       37 |      21 | Understand news about exchange rates, central banks and policy             |
+| T5 · Research and quant                    |       32 |      18 | Spot where a backtest conclusion does not hold up                          |
+| T6 · Borrow and hedge                      |       40 |      23 | Read private-bank and structured-product material                          |
 
-**238 concepts / 201 unique words / 6 packs / 125 lessons.**
+**252 course entries / 215 distinct meanings / 7 packs / 137 lessons.**
 
 Word lists live in `content/packs/<id>/source.mjs` under `UNITS` and `CONCEPTS`.
 Read them there rather than here; a copy in prose goes stale.
@@ -57,8 +58,8 @@ the label directly, so an unlisted value would otherwise render nothing.
 
 ## 3. Cross-pack deduplication
 
-Of the 238 concepts, 201 are unique words: 37 entries repeat a word already
-taught in an earlier pack.
+The 252 entries contain 215 distinct concept ids and 37 cross-pack repeats.
+Different meanings must not share an id just because their spelling matches.
 
 Rules:
 
@@ -75,7 +76,7 @@ Both exist because the failure mode is not "the wrong words were chosen" but
 "nothing checked the words".
 
 1. **Every word must appear in its target corpus.** `scripts/validate-content.mjs`
-   reads `content/corpus/<pack>.txt` and requires each `concept.term` to hit at
+   reads `content/corpus/<pack>.txt` and requires each `concept.term` or one of its `aliases` to hit at
    least once. A word with no corpus either gets corpus added or an explanation
    of why it is taught anyway.
 2. **Every confusion pair must declare a type.** An empty `mixUpType` is
@@ -110,3 +111,19 @@ impression of having a citation.
 
 The `termZh` map in `localization.ts` is global and keyed by concept id, which is
 unique by construction, so a new pack needs no change there.
+
+## 6. Identities, aliases, and migration
+
+Profit margin retains id `margin` and sense `profit-margin`. Trading collateral uses `margin-collateral` and sense `trading-collateral`, while keeping the displayed headword margin. `capital expenditure` and its plural are aliases of `capex`, not extra concepts. The earnings pack keeps its 21 lesson ids.
+
+The identity gate rejects conflicting senses under one id and competing ids for a shared headword or alias unless distinct senses are explicit. Course-local lookup resolves aliases without selecting a meaning from another course.
+
+`src/vocabulary.ts` migrates old local and imported progress once. XP, streaks, completed lessons, event ids and answer results remain intact. Only concept references change. Old collateral exercises are distinguished from profit exercises; duplicate alias mastery keeps the latest evidence rather than adding streaks. A seen-only margin record without identifiable context does not award either meaning.
+
+## 7. Investment products and funds
+
+`content/packs/investing-basics/source.mjs` authors 4 units, 15 concepts (including the existing bond identity), 12 lessons and 112 prompts in both languages. Optional `learning.workedExample`, `learning.application` and `learning.misconception` fields expand in teach cards and pair details. Numerical examples are hypothetical.
+
+Short attributable Investor.gov excerpts in `content/corpus/investing-basics/` establish terminology. `SOURCES` holds the source URLs and `CITES` records conceptual coverage. All lesson prose is original. US open-end mutual-fund usage is labelled with jurisdiction and review dates.
+
+Art reuses registered assets. New headword clips are generated with installed macOS Samantha (US) and Daniel (GB) voices using `node scripts/generate-audio.mjs --pack investing-basics --local`; their provider is recorded per term in the audio manifest. MP3s are precached by the PWA. Example sentences still use runtime speech synthesis.

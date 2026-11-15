@@ -4,7 +4,7 @@
 
 Kachi 把财经英语里容易搞混的词**成对**来教：rally / selloff、revenue / earnings、coupon / yield、hedge / pledge。财经标题里错一个词，整条消息的意思就反了，所以每个词都和它的「双胞胎」一起出现，每道题都要靠分清两者才能答对。
 
-**6 个等级 · 238 个概念 · 145 组易混词对 · 125 节课 · 1697 道题。** 离线可用的 PWA，无需账号，学习进度只存在本机。界面默认英文，可一键切换中文。线上地址：[kachi-game.vercel.app](https://kachi-game.vercel.app)。
+**1 个入门课包 + 6 个阅读等级 · 252 条概念记录（215 个独立词义）· 152 组易混词对 · 137 节课 · 1803 道题。** 离线可用的 PWA，无需账号，学习进度只存在本机。界面默认英文，可一键切换中文。线上地址：[kachi-game.vercel.app](https://kachi-game.vercel.app)。
 
 <p align="center">
   <img src="docs/images/home.png" width="880" alt="Kachi 桌面端首页：等级选择、下一组词对（rally vs selloff）和学习路径，两侧是词对贴纸">
@@ -26,18 +26,21 @@ Kachi 把财经英语里容易搞混的词**成对**来教：rally / selloff、r
 
 ## 等级
 
-等级按「你在读什么」划分，不按词语所属的学科。所有等级都可以直接进入，新用户从第 1 级开始。
+等级按「你在读什么」划分，不按词语所属的学科。所有课程都可以直接进入，新用户默认从第 1 级开始；「投资品种与基金」作为第 0 级入门基础，可在选课面板直接打开。原有六级编号不变。
 
-| 等级 | 课包                  | 学完能做到               | 概念数 |
-| ---- | --------------------- | ------------------------ | ------ |
-| 1    | `t1-finance-news`     | 看懂财经 App 首屏的标题  | 42     |
-| 2    | `t2-company-earnings` | 判断一份季报是好是坏     | 49     |
-| 3    | `t3-bonds-rates`      | 读懂收益率、拍卖、期限   | 38     |
-| 4    | `t4-forex-macro`      | 看懂汇率、央行、政策     | 37     |
-| 5    | `t5-quant-research`   | 指出回测结论哪里站不住   | 32     |
-| 6    | `hedge-or-pledge`     | 读懂私行和结构性产品材料 | 40     |
+| 等级 | 课包                  | 学完能做到                         | 概念数 |
+| ---- | --------------------- | ---------------------------------- | ------ |
+| 0    | `investing-basics`    | 分清投资品种、基金类型、净值和费用 | 15     |
+| 1    | `t1-finance-news`     | 看懂财经 App 首屏的标题            | 42     |
+| 2    | `t2-company-earnings` | 判断一份季报是好是坏               | 48     |
+| 3    | `t3-bonds-rates`      | 读懂收益率、拍卖、期限             | 38     |
+| 4    | `t4-forex-macro`      | 看懂汇率、央行、政策               | 37     |
+| 5    | `t5-quant-research`   | 指出回测结论哪里站不住             | 32     |
+| 6    | `hedge-or-pledge`     | 读懂私行和结构性产品材料           | 40     |
 
-一个词必须先在该等级的真实新闻语料里出现过，才会被收进课程（语料在 `content/corpus`，构建时校验）。课程文字全部原创：每个课包都有 `zh-CN` 和 `en-US` 两份 `course.json`，第 1–5 级由 `source.mjs` 生成，第 6 级为手写，校验脚本保证两种语言的结构一致。原创的读新闻标题题放在 `content/packs/*/headlines.mjs`。第 5 级的双语研报案例放在 `content/packs/t5-quant-research/audits.mjs`，其中数字均为教学假设，不是原文摘录或真实基金业绩。有些词的语料例句里没有出现这个词本身，这些词的填空句放在 `content/packs/fill-overrides.mjs`。
+一个词或它的别名必须先在收录语料里出现过，才会被收进课程（语料在 `content/corpus`，构建时校验）。课程文字全部原创：每个课包都有 `zh-CN` 和 `en-US` 两份 `course.json`，入门课包和第 1–5 级由 `source.mjs` 生成，第 6 级为手写，校验脚本保证两种语言的结构一致。原创的读新闻标题题放在 `content/packs/*/headlines.mjs`。第 5 级的双语研报案例放在 `content/packs/t5-quant-research/audits.mjs`，其中数字均为教学假设，不是原文摘录或真实基金业绩。有些词的语料例句里没有出现这个词本身，这些词的填空句放在 `content/packs/fill-overrides.mjs`。
+
+新增入门课包的 15 个词条均有中英文原创算例、用途和常见误解，在教学卡与词对详情中展开「例子与用法」阅读。基金交易形式和投资策略分开讲解：ETF 不等于指数基金。来源采用 Investor.gov 的可追溯短摘录；共同基金的美国交易语境单独标明。别名不单独计算掌握度，`margin` 的利润率与保证金两种含义使用不同 ID。
 
 ## 命令
 
@@ -49,15 +52,17 @@ pnpm run check            # biome + 内容校验 + tsc + vitest + vite 构建 + 
 pnpm test:e2e             # 生产构建 + Playwright（桌面与手机）
 pnpm run generate:course  # 由 source.mjs 重新生成 content/packs/*/{zh-CN,en-US}/course.json
 pnpm run generate:art     # 生成缺失的词条插画（生成后自动去白底）
+pnpm run generate:audio -- --pack investing-basics --local  # macOS 本机双口音配音
 pnpm run strip:art        # 把插画转成透明底；可重复执行
 pnpm run generate:icons   # 由 public/icon.svg 重建 PNG 图标（需要 rsvg-convert）
 ```
 
 ## 说明
 
-- **离线优先**：第 1 级英文版打进主包（首屏 JS 约 509 kB，预算 650 kB），所以首屏总能显示。其余版本（包括第 1 级中文版）都是懒加载分块，由 service worker 预缓存。如果用户设置的是中文、但中文版加载不出来，会回落到内置的英文版。
+- **离线优先**：第 1 级英文版打进主包（首屏 JS 约 519 kB，预算 650 kB），所以首屏总能显示。其余版本（包括第 1 级中文版）都是懒加载分块，由 service worker 预缓存。如果用户设置的是中文、但中文版加载不出来，会回落到内置的英文版。
 - **切换是原子的**：只有课程加载成功后，等级和语言才会一起切换。加载失败时保留当前课程，并在等级面板里提供重试。选过的等级和语言都会被记住。
 - **数据归你**：学习进度存在本机的 IndexedDB 里，可以在「我的」里导出或导入，不会上传到任何地方。
+- **入门词头配音**：新增词使用 macOS Samantha（美式）和 Daniel（英式）预生成 MP3；已有词复用原录音。例句仍使用运行时语音。
 - **插画**：词条插画是透明底的 WebP。生成的插画由 `scripts/strip-art-background.mjs` 去掉白底，图内的白色保留，投影变成半透明的墨色。
 - **字体**：字体本地托管，标题用 Bricolage Grotesque，正文用 Figtree，中文使用系统字体。
 - **有意不做深色模式**：暖色纸面加墨线描边就是品牌风格。除非出现真实的夜间阅读需求，否则不做。
@@ -67,10 +72,10 @@ pnpm run generate:icons   # 由 public/icon.svg 重建 PNG 图标（需要 rsvg-
 
 词汇体系提供双语版本，当前约束共用一份中文说明。
 
-| 英文                                                     | 中文                                                               | 内容                                         |
-| -------------------------------------------------------- | ------------------------------------------------------------------ | -------------------------------------------- |
-| [docs/vocabulary-system.md](docs/vocabulary-system.md)   | [docs/vocabulary-system.zh-CN.md](docs/vocabulary-system.zh-CN.md) | 六个层级、混淆对类型、跨包去重、两道作者门禁 |
-| [docs/design-constraints.md](docs/design-constraints.md) | [docs/design-constraints.md](docs/design-constraints.md)           | 当前产品、存储、资源与发布约束               |
+| 英文                                                     | 中文                                                               | 内容                                           |
+| -------------------------------------------------------- | ------------------------------------------------------------------ | ---------------------------------------------- |
+| [docs/vocabulary-system.md](docs/vocabulary-system.md)   | [docs/vocabulary-system.zh-CN.md](docs/vocabulary-system.zh-CN.md) | 入门与六个阅读课包、词义与别名、迁移和内容门禁 |
+| [docs/design-constraints.md](docs/design-constraints.md) | [docs/design-constraints.md](docs/design-constraints.md)           | 当前产品、存储、资源与发布约束                 |
 
 ## 许可
 
