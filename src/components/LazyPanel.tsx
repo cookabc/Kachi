@@ -11,9 +11,9 @@ class ViewBoundary extends Component<{ children: ReactNode; t: UiText }, { faile
   render() {
     if (this.state.failed) {
       return (
-        <div className="course-alert" role="alert">
+        <div className="banner alert panel-failure" role="alert">
           <p>{this.props.t.panelLoadFailed}</p>
-          <button type="button" onClick={() => window.location.reload()}>
+          <button type="button" className="btn btn-white" onClick={() => window.location.reload()}>
             {this.props.t.reloadPage}
           </button>
         </div>

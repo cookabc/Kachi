@@ -1,5 +1,71 @@
 import { expect, test } from "@playwright/test";
 
+test("progress figures and captions remain readable on every colored tile", async ({ page }) => {
+  await page.goto("/");
+  await page.getByRole("button", { name: "Me", exact: true }).click();
+  await expect(page.locator(".stat")).toHaveCount(4);
+  const ratios = await page.locator(".stat").evaluateAll((tiles) => {
+    const color = (value: string) => value.match(/[\d.]+/g)!.map(Number);
+    const luminance = (rgb: number[]) =>
+      rgb
+        .slice(0, 3)
+        .map((value) => {
+          const channel = value / 255;
+          return channel <= 0.04045 ? channel / 12.92 : ((channel + 0.055) / 1.055) ** 2.4;
+        })
+        .reduce((sum, value, index) => sum + value * [0.2126, 0.7152, 0.0722][index], 0);
+    return tiles.flatMap((tile) => {
+      const background = color(getComputedStyle(tile).backgroundColor);
+      return [...tile.querySelectorAll("b,small,b span")].map((node) => {
+        const style = getComputedStyle(node);
+        const foreground = color(style.color);
+        const alpha = (foreground[3] ?? 1) * Number(style.opacity);
+        const blended = foreground
+          .slice(0, 3)
+          .map((value, index) => value * alpha + background[index] * (1 - alpha));
+        const a = luminance(blended),
+          b = luminance(background);
+        return { text: node.textContent, ratio: (Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05) };
+      });
+    });
+  });
+  expect(ratios.length).toBeGreaterThan(4);
+  for (const value of ratios)
+    expect(value.ratio, value.text ?? "progress caption").toBeGreaterThanOrEqual(4.5);
+});
+
+test("an empty album shows zero progress and file import keeps a visible keyboard focus", async ({
+  page,
+}) => {
+  await page.goto("/");
+  await page.getByRole("button", { name: "Pairs", exact: false }).click();
+  const meter = page.getByRole("progressbar");
+  await expect(meter).toHaveAttribute("aria-valuenow", "0");
+  await expect(meter.locator("i")).toHaveCount(0);
+  await page.getByRole("button", { name: "Me", exact: true }).click();
+  await page.locator(".file-btn input").focus();
+  const ring = await page.locator(".file-btn").evaluate((node) => {
+    const style = getComputedStyle(node);
+    return { style: style.outlineStyle, width: Number.parseFloat(style.outlineWidth) };
+  });
+  expect(ring.style).not.toBe("none");
+  expect(ring.width).toBeGreaterThanOrEqual(2);
+});
+
+test("pronunciation buttons remain usable touch targets on narrow teach cards", async ({ page }) => {
+  await page.setViewportSize({ width: 320, height: 844 });
+  await page.goto("/");
+  await page.locator(".today .btn").click();
+  const buttons = page.locator(".speak");
+  await expect(buttons).toHaveCount(2);
+  for (const button of await buttons.all()) {
+    const rect = await button.boundingBox();
+    expect(rect?.width).toBeGreaterThanOrEqual(44);
+    expect(rect?.height).toBeGreaterThanOrEqual(44);
+  }
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1)).toBe(true);
+});
+
 test("investment foundations keep twin practice and expose examples in both languages", async ({ page }) => {
   const errors: string[] = [];
   page.on("pageerror", (error) => errors.push(error.message));
@@ -107,6 +173,28 @@ test("an unavailable level leaves the current one and the language intact and of
   await page.unroute("**/assets/course-*.js");
   await page.getByRole("button", { name: "Try again", exact: true }).click();
   await expect(page.locator(".level-btn")).toContainText("Bonds and rates");
+});
+
+test("a failed page chunk provides a readable recovery panel and a usable reload action", async ({
+  page,
+}) => {
+  await page.route("**/sw.js", (route) => route.abort());
+  await page.route("**/assets/PairsScreen-*.js", (route) => route.abort());
+  await page.goto("/");
+  await page.getByRole("button", { name: "Pairs", exact: false }).click();
+  const alert = page.getByRole("alert");
+  await expect(alert).toContainText("This view couldn’t load");
+  const reload = alert.getByRole("button", { name: "Reload page", exact: true });
+  expect((await reload.boundingBox())?.height).toBeGreaterThanOrEqual(44);
+  await expect(alert).toHaveCSS("padding-top", "12px");
+  await reload.focus();
+  await expect(reload).toBeFocused();
+  await page.unroute("**/assets/PairsScreen-*.js");
+  await reload.click();
+  await expect(page.locator(".today")).toBeVisible();
+  await page.getByRole("button", { name: "Pairs", exact: false }).click();
+  await expect(page.locator(".album-unit").first()).toBeVisible();
+  await expect(page.getByRole("alert")).toHaveCount(0);
 });
 
 test("a service-worker controlled visit keeps the default level usable offline", async ({

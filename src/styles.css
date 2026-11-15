@@ -34,7 +34,8 @@
   --card: #ffffff;
   --ink: #211c3b;
   --ink-2: #5b5677;
-  --ink-3: #9a96b0;
+  --ink-3: #6c637d;
+  --disabled: #e3dee9;
   --line: #211c3b;
   --hair: rgba(33, 28, 59, 0.14);
   --a: #5ab4ff;
@@ -284,7 +285,9 @@ ol {
   box-shadow: 0 0 0 var(--line);
 }
 .btn:disabled {
-  opacity: 0.45;
+  opacity: 1;
+  background: var(--disabled);
+  color: var(--ink-2);
   box-shadow: none;
   transform: translateY(4px);
 }
@@ -301,7 +304,7 @@ ol {
 }
 .btn-tomato {
   background: var(--b);
-  color: #fff;
+  color: var(--ink);
 }
 .btn-white {
   background: var(--card);
@@ -351,6 +354,10 @@ ol {
   inset: 0;
   opacity: 0;
   cursor: pointer;
+}
+.file-btn:focus-within {
+  outline: 3px solid var(--ink);
+  outline-offset: 4px;
 }
 
 /* ───────── top bar & pills ───────── */
@@ -439,7 +446,7 @@ ol {
   padding: 0 5px;
   border-radius: 99px;
   background: var(--b);
-  color: #fff;
+  color: var(--ink);
   font-size: 12px;
   display: grid;
   place-items: center;
@@ -472,6 +479,11 @@ ol {
 .banner.in-sheet {
   margin: 0 0 12px;
   width: 100%;
+}
+.banner.panel-failure {
+  display: grid;
+  gap: 16px;
+  margin-top: 24px;
 }
 
 /* ───────── term art ───────── */
@@ -869,7 +881,7 @@ ol {
 }
 .node.boss.done {
   background: var(--lilac);
-  color: #fff;
+  color: var(--ink);
 }
 .node.locked {
   color: var(--ink-3);
@@ -1119,7 +1131,7 @@ fieldset {
   border-radius: 99px;
   border: 2px solid var(--line);
   background: var(--lilac);
-  color: #fff;
+  color: var(--ink);
   font-size: 11.5px;
   font-weight: 800;
 }
@@ -1336,14 +1348,14 @@ dialog.sheet::backdrop {
 }
 .stat b span {
   font-size: 18px;
-  opacity: 0.6;
+  opacity: 1;
 }
 .stat small {
   font-size: 11.5px;
   font-weight: 800;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: rgba(33, 28, 59, 0.7);
+  color: var(--ink);
 }
 .s-sun {
   background: var(--sun);
@@ -1353,10 +1365,10 @@ dialog.sheet::backdrop {
 }
 .s-lilac {
   background: var(--lilac);
-  color: #fff;
+  color: var(--ink);
 }
 .s-lilac small {
-  color: rgba(255, 255, 255, 0.88);
+  color: var(--ink);
 }
 .s-sky {
   background: var(--a);
@@ -1622,8 +1634,9 @@ dialog.sheet::backdrop {
   color: var(--ink);
 }
 .speak {
-  width: 32px;
-  height: 32px;
+  width: 44px;
+  height: 44px;
+  flex: none;
   border-radius: 10px;
   border: 2px solid var(--line);
   background: var(--card);
@@ -1645,6 +1658,7 @@ dialog.sheet::backdrop {
   translate: -50% 0;
   margin: 0;
   background: var(--b);
+  color: var(--ink);
   border-color: var(--paper);
   animation: spin-in 0.7s var(--spring) 0.2s both;
 }
@@ -1914,7 +1928,7 @@ dialog.sheet::backdrop {
   padding: 2px 8px;
   border-radius: 4px;
   background: var(--b);
-  color: #fff;
+  color: var(--ink);
   font-size: 11px;
   font-weight: 800;
   letter-spacing: 0.14em;
@@ -2021,7 +2035,7 @@ dialog.sheet::backdrop {
 }
 .opt.dim,
 .chip-btn.dim {
-  opacity: 0.45;
+  opacity: 0.75;
 }
 @keyframes yay {
   40% {
@@ -2124,7 +2138,7 @@ dialog.sheet::backdrop {
   border-radius: 40px;
   border: 2px solid var(--line);
   background: var(--a);
-  color: #fff;
+  color: var(--ink);
   box-shadow: 0 7px 0 var(--line);
   display: grid;
   place-items: center;
