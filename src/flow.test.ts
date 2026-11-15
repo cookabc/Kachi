@@ -108,9 +108,9 @@ describe("teachPlan", () => {
   it("turns a unit review into a recap of every pair in the unit", () => {
     const plan = teachPlan(lessonById("u1r"), course);
     expect(plan.mode).toBe("recap");
-    expect(plan.terms).toEqual(["hedge", "collateral", "margin", "margin call"]);
+    expect(plan.terms).toEqual(["hedge", "collateral", "margin-collateral", "margin call"]);
     expect(new Set(withTwins(course, plan.terms))).toEqual(
-      new Set(["hedge", "pledge", "collateral", "haircut", "margin", "leverage", "margin call"]),
+      new Set(["hedge", "pledge", "collateral", "haircut", "margin-collateral", "leverage", "margin call"]),
     );
   });
 });

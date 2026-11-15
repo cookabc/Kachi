@@ -44,7 +44,7 @@ export const TERM_ART: Record<string, string> = {
   collateral: termSvg(
     '<rect x="8" y="24" width="48" height="30" rx="6" fill="#FFC800"/><rect x="8" y="24" width="48" height="8" rx="4" fill="#E6A100"/><rect x="20" y="14" width="24" height="14" rx="3" fill="#1CB0F6"/><circle cx="32" cy="38" r="8" fill="#58CC02"/><rect x="29.5" y="36" width="5" height="9" rx="1.5" fill="#fff"/><circle cx="32" cy="35" r="2.2" fill="#fff"/>',
   ),
-  margin: termSvg(
+  "margin-collateral": termSvg(
     '<rect x="10" y="10" width="16" height="44" rx="5" fill="#58CC02"/><rect x="38" y="26" width="16" height="28" rx="5" fill="#1CB0F6"/><rect x="26" y="28" width="12" height="16" rx="6" fill="#FFC800"/>',
   ),
   leverage: termSvg(
@@ -158,6 +158,7 @@ export const TERM_ART: Record<string, string> = {
 };
 
 const ART_ALIASES: Record<string, string> = {
+  margin: "margin-collateral",
   "capital gain": "capital gains",
   future: "futures",
   short: "short selling",
@@ -217,7 +218,7 @@ export const HERO_ART: Record<string, string> = {
       GROUND +
       '<circle cx="24" cy="41" r="13" fill="#FFC800"/><circle cx="24" cy="41" r="8" fill="#FFE08A"/><polygon points="38,24 50,29 39,37" fill="#FFC800" stroke="#E6A100" stroke-width="2" stroke-linejoin="round"/><path d="M46 16 L32 32 M52 20 L36 34" stroke="#FF8A65" stroke-width="4.6" stroke-linecap="round"/><circle cx="47" cy="16" r="2.4" fill="#E56A48"/><circle cx="53" cy="10" r="4" fill="none" stroke="#FF8A65" stroke-width="3.2"/><circle cx="58" cy="17" r="4" fill="none" stroke="#FF8A65" stroke-width="3.2"/>',
   ),
-  margin: termSvg(
+  "margin-collateral": termSvg(
     halo("#E7FFD4") +
       GROUND +
       '<rect x="8" y="44" width="15" height="6" rx="3" fill="#FFC800"/><rect x="8" y="38" width="15" height="6" rx="3" fill="#FFD966"/><circle cx="15.5" cy="34" r="4" fill="#E6A100"/><path d="M28 42 L28 24" stroke="#46A302" stroke-width="4" stroke-linecap="round"/><path d="M23 29 L28 22 L33 29" fill="none" stroke="#46A302" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><rect x="38" y="12" width="18" height="38" rx="6" fill="#58CC02"/><rect x="38" y="30" width="18" height="20" rx="6" fill="#1CB0F6"/>',
@@ -425,8 +426,9 @@ export function prefersGeneratedArt(course: Course): boolean {
 
 export function artForSize(id: string, size: ArtSize, preferGenerated = false): string {
   const base = id.replace(/_u1intro$/, "");
-  const handDrawnHero = size === "hero" ? (HERO_ART[id] ?? HERO_ART[base]) : undefined;
-  const authored = TERM_ART[id] ?? TERM_ART[base];
+  const authoredId = base === "margin" ? "margin-collateral" : base;
+  const handDrawnHero = size === "hero" ? (HERO_ART[id] ?? HERO_ART[authoredId]) : undefined;
+  const authored = TERM_ART[id] ?? TERM_ART[authoredId];
 
   if (preferGenerated) {
     const asset = artAssetElement(id, size) ?? artAssetElement(base, size);

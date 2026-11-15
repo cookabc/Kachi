@@ -1,5 +1,6 @@
 import type { Concept, Course, Exercise, LearnerState, SessionState } from "./domain";
 import { duePairIds, isLessonUnlocked, recentMissTermIds } from "./engine";
+import { findConcept } from "./vocabulary";
 
 export const PRACTICE_ROUND = 10;
 
@@ -24,7 +25,7 @@ export interface Summary {
 export type TeachMode = "first" | "recap";
 
 export function conceptOf(course: Course, id: string): Concept | undefined {
-  return course.concepts.find((concept) => concept.id === id);
+  return findConcept(course, id);
 }
 
 export function realTermIds(prompt: Exercise, course: Course): string[] {

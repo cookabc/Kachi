@@ -31,6 +31,7 @@ export const WEAK_LATENCY_FLOOR_MS = 12_000;
 export function emptyLearnerState(): LearnerState {
   return {
     version: 2,
+    vocabularyRevision: 1,
     xp: 0,
     streak: 0,
     completedLessonIds: [],

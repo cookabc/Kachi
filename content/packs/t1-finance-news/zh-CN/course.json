@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
   "packId": "t1-finance-news",
-  "contentVersion": "2026.11.01-t1.2",
+  "contentVersion": "2026.11.15-t1.3",
   "locale": "zh-CN",
-  "generatedAt": "2026.11.01-t1.2",
+  "generatedAt": "2026.11.15-t1.3",
   "units": [
     {
       "id": 1,
@@ -387,6 +387,10 @@
       "id": "margin",
       "unit": 3,
       "term": "margin",
+      "aliases": [
+        "profit margin"
+      ],
+      "sense": "profit-margin",
       "caption": "每一块钱收入里剩下多少是利润。",
       "definition": "利润占收入的百分比，衡量盈利能力而非规模。",
       "example": "Higher funding costs are starting to affect margins.",

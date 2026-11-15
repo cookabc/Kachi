@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
   "packId": "t2-company-earnings",
-  "contentVersion": "2026.11.01-t2.2",
+  "contentVersion": "2026.11.15-t2.3",
   "locale": "en-US",
-  "generatedAt": "2026.11.01-t2.2",
+  "generatedAt": "2026.11.15-t2.3",
   "units": [
     {
       "id": 1,
@@ -155,6 +155,10 @@
       "id": "margin",
       "unit": 1,
       "term": "margin",
+      "aliases": [
+        "profit margin"
+      ],
+      "sense": "profit-margin",
       "caption": "How much of each dollar of sales survives as profit.",
       "definition": "Profit as a percentage of revenue — profitability, not size.",
       "example": "Gross margin expanded 180 basis points to 34%.",
@@ -262,6 +266,11 @@
       "id": "capex",
       "unit": 2,
       "term": "capex",
+      "aliases": [
+        "capital expenditure",
+        "capital expenditures"
+      ],
+      "sense": "capital-expenditure",
       "caption": "Big spending on plant and equipment that turns into assets.",
       "definition": "Capital expenditure on buying or upgrading long-lived assets.",
       "example": "2026 capital expenditure of $13.5 billion to $14 billion.",
@@ -269,7 +278,9 @@
       "mixUpWhy": "Capex builds an asset; opex is expensed in the period.",
       "mixUpType": "opposite",
       "sourceIds": [
-        "t2-src-adm-q2"
+        "t2-src-bp-q2",
+        "t2-src-adm-q2",
+        "t2-src-mmg-deal"
       ],
       "relations": [],
       "risk": "evergreen",
@@ -475,25 +486,6 @@
       "mixUp": "leverage",
       "mixUpWhy": "Net debt is an amount; leverage is that amount divided by earnings or equity.",
       "mixUpType": "scope",
-      "sourceIds": [
-        "t2-src-bp-q2",
-        "t2-src-adm-q2",
-        "t2-src-mmg-deal"
-      ],
-      "relations": [],
-      "risk": "evergreen",
-      "reviewStatus": "draft"
-    },
-    {
-      "id": "capital expenditure",
-      "unit": 4,
-      "term": "capital expenditure",
-      "caption": "The full name of capex: money spent on long-lived assets.",
-      "definition": "Spending to acquire or upgrade fixed assets, capitalised and depreciated over time.",
-      "example": "Capital expenditure is set to climb by more than $1 billion next year.",
-      "mixUp": "opex",
-      "mixUpWhy": "Capital expenditure creates an asset; opex is consumed in the period.",
-      "mixUpType": "opposite",
       "sourceIds": [
         "t2-src-bp-q2",
         "t2-src-adm-q2",
@@ -4469,8 +4461,8 @@
               "art": "net debt"
             },
             {
-              "text": "Spending to acquire or upgrade fixed assets, capitalised and depreciated over time.",
-              "art": "capital expenditure"
+              "text": "A demand to top up collateral after its value falls.",
+              "art": "margin call"
             }
           ],
           "answer": 0,
@@ -4498,41 +4490,12 @@
               "art": "net debt"
             },
             {
-              "text": "Spending to acquire or upgrade fixed assets, capitalised and depreciated over time.",
-              "art": "capital expenditure"
+              "text": "A demand to top up collateral after its value falls.",
+              "art": "margin call"
             }
           ],
           "answer": 0,
           "why": "Equity is the owners' residual claim; debt is a prior claim held by lenders."
-        },
-        {
-          "id": "u4l1-net debt-m",
-          "type": "meaning",
-          "termId": "net debt",
-          "termIds": [
-            "net debt"
-          ],
-          "stem": "What does net debt mean?",
-          "options": [
-            {
-              "text": "Total debt less cash and equivalents — the real burden.",
-              "art": "net debt"
-            },
-            {
-              "text": "Debt relative to equity or earnings — a measure of financial risk.",
-              "art": "leverage"
-            },
-            {
-              "text": "Borrowings and bonds the company owes.",
-              "art": "debt"
-            },
-            {
-              "text": "Assets minus liabilities — the book value attributable to shareholders.",
-              "art": "equity"
-            }
-          ],
-          "answer": 0,
-          "why": "Net debt is an amount; leverage is that amount divided by earnings or equity."
         },
         {
           "id": "u4l1-debt-s",
@@ -4557,8 +4520,8 @@
               "art": "net debt"
             },
             {
-              "text": "capital expenditure",
-              "art": "capital expenditure"
+              "text": "margin call",
+              "art": "margin call"
             }
           ],
           "answer": 0,
@@ -4587,42 +4550,12 @@
               "art": "net debt"
             },
             {
-              "text": "capital expenditure",
-              "art": "capital expenditure"
+              "text": "margin call",
+              "art": "margin call"
             }
           ],
           "answer": 0,
           "why": "equity: Assets minus liabilities — the book value attributable to shareholders."
-        },
-        {
-          "id": "u4l1-net debt-s",
-          "type": "scenario",
-          "termId": "net debt",
-          "termIds": [
-            "net debt"
-          ],
-          "story": "What is owed, minus the cash on hand.",
-          "stem": "Which word is this?",
-          "options": [
-            {
-              "text": "net debt",
-              "art": "net debt"
-            },
-            {
-              "text": "leverage",
-              "art": "leverage"
-            },
-            {
-              "text": "debt",
-              "art": "debt"
-            },
-            {
-              "text": "equity",
-              "art": "equity"
-            }
-          ],
-          "answer": 0,
-          "why": "net debt: Total debt less cash and equivalents — the real burden."
         },
         {
           "id": "u4l1-debt-t",
@@ -4647,17 +4580,6 @@
           "why": "Equity is the owners' residual claim; debt is a prior claim held by lenders."
         },
         {
-          "id": "u4l1-net debt-t",
-          "type": "truefalse",
-          "termId": "net debt",
-          "termIds": [
-            "net debt"
-          ],
-          "stem": "net debt means: What is owed, minus the cash on hand.",
-          "answer": true,
-          "why": "net debt: Total debt less cash and equivalents — the real burden."
-        },
-        {
           "id": "u4l1-debt-f",
           "type": "fill",
           "termId": "debt",
@@ -4667,8 +4589,7 @@
           "story": "Free cash flow covered the dividend and reduced net ____ to $12 billion.",
           "bank": [
             "debt",
-            "equity",
-            "net debt"
+            "equity"
           ],
           "answer": "debt",
           "why": "Debt must be repaid with interest; equity is the owners' money, never repaid but it gives up ownership."
@@ -4683,36 +4604,17 @@
           "story": "Return on ____ improved to 14%.",
           "bank": [
             "equity",
-            "debt",
-            "net debt"
+            "debt"
           ],
           "answer": "equity",
           "why": "Equity is the owners' residual claim; debt is a prior claim held by lenders."
-        },
-        {
-          "id": "u4l1-net debt-f",
-          "type": "fill",
-          "termId": "net debt",
-          "termIds": [
-            "net debt"
-          ],
-          "story": "____ at the end of the year stood at $8.69 billion, below target.",
-          "bank": [
-            "net debt",
-            "leverage",
-            "debt",
-            "equity"
-          ],
-          "answer": "net debt",
-          "why": "Net debt is an amount; leverage is that amount divided by earnings or equity."
         },
         {
           "id": "u4l1-match",
           "type": "match",
           "termIds": [
             "debt",
-            "equity",
-            "net debt"
+            "equity"
           ],
           "pairs": [
             {
@@ -4724,11 +4626,6 @@
               "id": "equity",
               "left": "equity",
               "right": "The part that actually belongs to shareholders."
-            },
-            {
-              "id": "net debt",
-              "left": "net debt",
-              "right": "What is owed, minus the cash on hand."
             }
           ],
           "why": "Match each term to what it means."
@@ -4749,10 +4646,6 @@
             {
               "text": "equity",
               "art": "equity"
-            },
-            {
-              "text": "net debt",
-              "art": "net debt"
             }
           ],
           "answer": 0,
@@ -4768,21 +4661,21 @@
       "review": false,
       "prompts": [
         {
-          "id": "u4l2-capital expenditure-m",
+          "id": "u4l2-net debt-m",
           "type": "meaning",
-          "termId": "capital expenditure",
+          "termId": "net debt",
           "termIds": [
-            "capital expenditure"
+            "net debt"
           ],
-          "stem": "What does capital expenditure mean?",
+          "stem": "What does net debt mean?",
           "options": [
             {
-              "text": "Spending to acquire or upgrade fixed assets, capitalised and depreciated over time.",
-              "art": "capital expenditure"
+              "text": "Total debt less cash and equivalents — the real burden.",
+              "art": "net debt"
             },
             {
-              "text": "Operating expenditure: day-to-day costs such as wages, rent and maintenance.",
-              "art": "opex"
+              "text": "Debt relative to equity or earnings — a measure of financial risk.",
+              "art": "leverage"
             },
             {
               "text": "Borrowings and bonds the company owes.",
@@ -4794,7 +4687,7 @@
             }
           ],
           "answer": 0,
-          "why": "Capital expenditure creates an asset; opex is consumed in the period."
+          "why": "Net debt is an amount; leverage is that amount divided by earnings or equity."
         },
         {
           "id": "u4l2-margin call-m",
@@ -4826,22 +4719,22 @@
           "why": "A margin call demands cash; a write-down is the company marking its own asset values down."
         },
         {
-          "id": "u4l2-capital expenditure-s",
+          "id": "u4l2-net debt-s",
           "type": "scenario",
-          "termId": "capital expenditure",
+          "termId": "net debt",
           "termIds": [
-            "capital expenditure"
+            "net debt"
           ],
-          "story": "The full name of capex: money spent on long-lived assets.",
+          "story": "What is owed, minus the cash on hand.",
           "stem": "Which word is this?",
           "options": [
             {
-              "text": "capital expenditure",
-              "art": "capital expenditure"
+              "text": "net debt",
+              "art": "net debt"
             },
             {
-              "text": "opex",
-              "art": "opex"
+              "text": "leverage",
+              "art": "leverage"
             },
             {
               "text": "debt",
@@ -4853,7 +4746,7 @@
             }
           ],
           "answer": 0,
-          "why": "capital expenditure: Spending to acquire or upgrade fixed assets, capitalised and depreciated over time."
+          "why": "net debt: Total debt less cash and equivalents — the real burden."
         },
         {
           "id": "u4l2-margin call-s",
@@ -4886,15 +4779,15 @@
           "why": "margin call: A demand to top up collateral after its value falls."
         },
         {
-          "id": "u4l2-capital expenditure-t",
+          "id": "u4l2-net debt-t",
           "type": "truefalse",
-          "termId": "capital expenditure",
+          "termId": "net debt",
           "termIds": [
-            "capital expenditure"
+            "net debt"
           ],
-          "stem": "capital expenditure means: The full name of capex: money spent on long-lived assets.",
+          "stem": "net debt means: What is owed, minus the cash on hand.",
           "answer": true,
-          "why": "capital expenditure: Spending to acquire or upgrade fixed assets, capitalised and depreciated over time."
+          "why": "net debt: Total debt less cash and equivalents — the real burden."
         },
         {
           "id": "u4l2-margin call-t",
@@ -4908,20 +4801,20 @@
           "why": "A margin call demands cash; a write-down is the company marking its own asset values down."
         },
         {
-          "id": "u4l2-capital expenditure-f",
+          "id": "u4l2-net debt-f",
           "type": "fill",
-          "termId": "capital expenditure",
+          "termId": "net debt",
           "termIds": [
-            "capital expenditure"
+            "net debt"
           ],
-          "story": "____ is set to climb by more than $1 billion next year.",
+          "story": "____ at the end of the year stood at $8.69 billion, below target.",
           "bank": [
-            "capital expenditure",
-            "opex",
+            "net debt",
+            "leverage",
             "margin call"
           ],
-          "answer": "capital expenditure",
-          "why": "Capital expenditure creates an asset; opex is consumed in the period."
+          "answer": "net debt",
+          "why": "Net debt is an amount; leverage is that amount divided by earnings or equity."
         },
         {
           "id": "u4l2-margin call-f",
@@ -4934,7 +4827,7 @@
           "bank": [
             "margin call",
             "write-down",
-            "capital expenditure"
+            "net debt"
           ],
           "answer": "margin call",
           "why": "A margin call demands cash; a write-down is the company marking its own asset values down."
@@ -4943,14 +4836,14 @@
           "id": "u4l2-match",
           "type": "match",
           "termIds": [
-            "capital expenditure",
+            "net debt",
             "margin call"
           ],
           "pairs": [
             {
-              "id": "capital expenditure",
-              "left": "capital expenditure",
-              "right": "The full name of capex: money spent on long-lived assets."
+              "id": "net debt",
+              "left": "net debt",
+              "right": "What is owed, minus the cash on hand."
             },
             {
               "id": "margin call",
@@ -4963,15 +4856,15 @@
         {
           "id": "u4l2-listen",
           "type": "listen",
-          "termId": "capital expenditure",
+          "termId": "net debt",
           "termIds": [
-            "capital expenditure"
+            "net debt"
           ],
           "stem": "Which term did you hear?",
           "options": [
             {
-              "text": "capital expenditure",
-              "art": "capital expenditure"
+              "text": "net debt",
+              "art": "net debt"
             },
             {
               "text": "margin call",
@@ -4979,7 +4872,7 @@
             }
           ],
           "answer": 0,
-          "why": "capital expenditure: Spending to acquire or upgrade fixed assets, capitalised and depreciated over time."
+          "why": "net debt: Total debt less cash and equivalents — the real burden."
         }
       ]
     },
@@ -5013,8 +4906,8 @@
               "art": "net debt"
             },
             {
-              "text": "capital expenditure",
-              "art": "capital expenditure"
+              "text": "margin call",
+              "art": "margin call"
             }
           ],
           "answer": 0,
@@ -5043,8 +4936,8 @@
               "art": "net debt"
             },
             {
-              "text": "capital expenditure",
-              "art": "capital expenditure"
+              "text": "margin call",
+              "art": "margin call"
             }
           ],
           "answer": 0,
@@ -5079,36 +4972,6 @@
           ],
           "answer": 0,
           "why": "net debt: Total debt less cash and equivalents — the real burden."
-        },
-        {
-          "id": "u4r-capital expenditure-s",
-          "type": "scenario",
-          "termId": "capital expenditure",
-          "termIds": [
-            "capital expenditure"
-          ],
-          "story": "The full name of capex: money spent on long-lived assets.",
-          "stem": "Which word is this?",
-          "options": [
-            {
-              "text": "capital expenditure",
-              "art": "capital expenditure"
-            },
-            {
-              "text": "opex",
-              "art": "opex"
-            },
-            {
-              "text": "debt",
-              "art": "debt"
-            },
-            {
-              "text": "equity",
-              "art": "equity"
-            }
-          ],
-          "answer": 0,
-          "why": "capital expenditure: Spending to acquire or upgrade fixed assets, capitalised and depreciated over time."
         },
         {
           "id": "u4r-margin call-s",
@@ -5174,26 +5037,15 @@
           "why": "net debt: Total debt less cash and equivalents — the real burden."
         },
         {
-          "id": "u4r-capital expenditure-t",
-          "type": "truefalse",
-          "termId": "capital expenditure",
-          "termIds": [
-            "capital expenditure"
-          ],
-          "stem": "capital expenditure means: The cost of keeping the lights on — it does not become an asset.",
-          "answer": false,
-          "why": "Capital expenditure creates an asset; opex is consumed in the period."
-        },
-        {
           "id": "u4r-margin call-t",
           "type": "truefalse",
           "termId": "margin call",
           "termIds": [
             "margin call"
           ],
-          "stem": "margin call means: The collateral fell, so the lender wants more cash.",
-          "answer": true,
-          "why": "margin call: A demand to top up collateral after its value falls."
+          "stem": "margin call means: Admitting an asset is worth less than the books say.",
+          "answer": false,
+          "why": "A margin call demands cash; a write-down is the company marking its own asset values down."
         },
         {
           "id": "u4r-match",
@@ -5202,7 +5054,6 @@
             "debt",
             "equity",
             "net debt",
-            "capital expenditure",
             "margin call"
           ],
           "pairs": [
@@ -5220,11 +5071,6 @@
               "id": "net debt",
               "left": "net debt",
               "right": "What is owed, minus the cash on hand."
-            },
-            {
-              "id": "capital expenditure",
-              "left": "capital expenditure",
-              "right": "The full name of capex: money spent on long-lived assets."
             },
             {
               "id": "margin call",
@@ -5256,8 +5102,8 @@
               "art": "net debt"
             },
             {
-              "text": "capital expenditure",
-              "art": "capital expenditure"
+              "text": "margin call",
+              "art": "margin call"
             }
           ],
           "answer": 0,

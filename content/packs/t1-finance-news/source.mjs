@@ -8,7 +8,7 @@
 
 export const PACK = {
   packId: "t1-finance-news",
-  contentVersion: "2026.11.01-t1.2",
+  contentVersion: "2026.11.15-t1.3",
   title: "读财经首页",
 };
 
@@ -276,6 +276,8 @@ export const CONCEPTS = [
   },
   {
     id: "margin",
+    sense: "profit-margin",
+    aliases: ["profit margin"],
     unit: 3,
     term: "margin",
     zh: "利润率",

@@ -4,7 +4,8 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fillLeaksAnswer } from "../src/fill.ts";
-import { validateCourse } from "../src/schema/index.ts";
+import { validateCourse, validateVocabularyIdentities } from "../src/schema/index.ts";
+import { corpusHasTerm } from "./corpus-terms.mjs";
 
 // Ids that carry art but are not concepts. Read as data: this script runs under
 // plain Node, which cannot resolve the app's extensionless TS imports.
@@ -62,6 +63,9 @@ const packs = packFiles.map((file) => {
 // zh-CN sibling, not some other pack's. Comparing across packs was the bug that
 // greeted the first multi-pack checkout.
 const byPack = new Map();
+for (const issue of validateVocabularyIdentities(packs.map((entry) => entry.course))) {
+  fail(`[identity] ${issue.path}: ${issue.message}`);
+}
 for (const entry of packs) {
   const list = byPack.get(entry.packId) ?? [];
   list.push(entry);
@@ -118,31 +122,6 @@ const corpusText = () => {
   return parts.length ? parts.join("\n").toLowerCase() : null;
 };
 
-/**
- * Does the corpus use this term?
- *
- * Two things the naive \b match got wrong:
- *  - Hyphenated terms ("write-down") — \b sits between "-" and a letter, so
- *    the pattern never matched even when the text said "write-down".
- *  - Compound terms whose words may carry other punctuation ("free cash flow"
- *    written across a line break or with different spacing).
- * The term is matched word-by-word, with the final word allowed to inflect.
- */
-export function corpusHasTerm(corpus, term) {
-  const words = term
-    .toLowerCase()
-    .split(/[\s-]+/)
-    .filter(Boolean);
-  if (!words.length) return false;
-  const escaped = words.map((w) => w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"));
-  const last = escaped.pop();
-  // Words may be separated by a space or a hyphen in the text.
-  const pattern = new RegExp(
-    `\\b${escaped.join("[\\s-]+")}${escaped.length ? "[\\s-]+" : ""}${last}(s|es|ed|ing)?\\b`,
-  );
-  return pattern.test(corpus);
-}
-
 const corpus = corpusText();
 
 // Vocabulary exemptions: a term may be taught without corpus evidence only if
@@ -193,7 +172,7 @@ if (!corpus) {
     let excused = 0;
     for (const concept of course.concepts) {
       const term = String(concept.term).toLowerCase();
-      if (corpusHasTerm(corpus, term)) continue;
+      if ([term, ...(concept.aliases ?? [])].some((word) => corpusHasTerm(corpus, word))) continue;
       const exempt = EXEMPT_TERMS.get(term);
       if (exempt) {
         // An exemption is per pack: the reason for teaching a term in T6 does
@@ -266,6 +245,8 @@ function comparePacks(a, b) {
     // identical across locales just like mixUp pairings.
     for (const field of [
       "unit",
+      "aliases",
+      "sense",
       "mixUp",
       "relations",
       "risk",

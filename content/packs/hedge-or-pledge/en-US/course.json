@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "packId": "hedge-or-pledge",
-  "contentVersion": "2026.11.01-en",
+  "contentVersion": "2026.11.15-en-US-identity.1",
   "locale": "en-US",
   "generatedAt": "2026-10-03T10:00:00.000Z",
   "units": [
@@ -113,7 +113,7 @@
       "caption": "The discount: $1M of stock gets treated as $700k before anyone lends a cent.",
       "definition": "The discount a lender applies to collateral before they'll lend against it.",
       "example": "$1M stock, 30% haircut → they treat it as $700k. That's the max loan.",
-      "mixUp": "margin",
+      "mixUp": "margin-collateral",
       "mixUpWhy": "Haircut is the discount on collateral. Margin is the cash cushion you must keep.",
       "mixUpType": "coexist",
       "sourceIds": [
@@ -123,7 +123,7 @@
       "reviewStatus": "unreviewed"
     },
     {
-      "id": "margin",
+      "id": "margin-collateral",
       "unit": 1,
       "term": "margin",
       "caption": "The cash cushion that has to stay in the account while the bet sits on top.",
@@ -142,7 +142,12 @@
         "finra-sec-sbloc-2015"
       ],
       "risk": "evergreen",
-      "reviewStatus": "unreviewed"
+      "reviewStatus": "unreviewed",
+      "sense": "trading-collateral",
+      "aliases": [
+        "trading margin"
+      ],
+      "termZh": "保证金"
     },
     {
       "id": "margin call",
@@ -157,7 +162,7 @@
       "relations": [
         {
           "type": "prereq",
-          "with": "margin"
+          "with": "margin-collateral"
         },
         {
           "type": "sibling",
@@ -177,7 +182,7 @@
       "caption": "A small pile of your own cash holding up a much bigger bet.",
       "definition": "Using borrowed money or derivatives to make a bigger bet than your cash.",
       "example": "$10k of yours plus $40k borrowed = 5× leverage. A 10% drop wipes half your cash.",
-      "mixUp": "margin",
+      "mixUp": "margin-collateral",
       "mixUpWhy": "Leverage is the multiplier. Margin is the cushion that makes the multiplier possible.",
       "mixUpType": "scope",
       "sourceIds": [
@@ -907,7 +912,7 @@
             },
             {
               "text": "The pile of cash a broker holds as a cushion.",
-              "art": "margin"
+              "art": "margin-collateral"
             }
           ],
           "answer": 0,
@@ -1015,7 +1020,7 @@
             },
             {
               "text": "Take out a margin loan",
-              "art": "margin"
+              "art": "margin-collateral"
             }
           ],
           "answer": 0,
@@ -1148,7 +1153,7 @@
             },
             {
               "text": "The cash cushion you must keep in a brokerage account.",
-              "art": "margin"
+              "art": "margin-collateral"
             },
             {
               "text": "When the bank already sold 30% of your stock.",
@@ -1348,15 +1353,15 @@
         {
           "id": "u1l3a",
           "type": "meaning",
-          "termId": "margin",
+          "termId": "margin-collateral",
           "termIds": [
-            "margin"
+            "margin-collateral"
           ],
           "stem": "What is margin?",
           "options": [
             {
               "text": "Cash or equity you must keep in the account as a cushion.",
-              "art": "margin"
+              "art": "margin-collateral"
             },
             {
               "text": "The multiplier on a borrowed bet.",
@@ -1406,9 +1411,9 @@
         {
           "id": "u1l3c",
           "type": "truefalse",
-          "termId": "margin",
+          "termId": "margin-collateral",
           "termIds": [
-            "margin"
+            "margin-collateral"
           ],
           "stem": "Margin and leverage are the same word.",
           "answer": false,
@@ -1417,9 +1422,9 @@
         {
           "id": "u1l3d",
           "type": "fill",
-          "termId": "margin",
+          "termId": "margin-collateral",
           "termIds": [
-            "margin"
+            "margin-collateral"
           ],
           "story": "You buy $10k of stock with $5k cash. That $5k cushion is ____.",
           "bank": [
@@ -1512,14 +1517,14 @@
           "id": "u1l3h",
           "type": "match",
           "termIds": [
-            "margin",
+            "margin-collateral",
             "margin call",
             "haircut",
             "hedge"
           ],
           "pairs": [
             {
-              "id": "margin",
+              "id": "margin-collateral",
               "left": "margin",
               "right": "The cushion you must keep"
             },
@@ -1731,7 +1736,7 @@
           "termIds": [
             "hedge",
             "pledge",
-            "margin",
+            "margin-collateral",
             "margin call"
           ],
           "pairs": [
@@ -1746,7 +1751,7 @@
               "right": "Borrow, keep the shares"
             },
             {
-              "id": "margin",
+              "id": "margin-collateral",
               "left": "margin",
               "right": "Required cushion"
             },
@@ -1761,16 +1766,16 @@
         {
           "id": "u1rh",
           "type": "scenario",
-          "termId": "margin",
+          "termId": "margin-collateral",
           "termIds": [
-            "margin"
+            "margin-collateral"
           ],
           "story": "Broker: you can buy $20k of stock if you deposit $10k. The $10k isn't a fee. It has to stay.",
           "stem": "The $10k is:",
           "options": [
             {
               "text": "Margin",
-              "art": "margin"
+              "art": "margin-collateral"
             },
             {
               "text": "A haircut",
@@ -1852,7 +1857,7 @@
             },
             {
               "text": "The cash cushion you must keep in the account.",
-              "art": "margin"
+              "art": "margin-collateral"
             },
             {
               "text": "The discount a lender applies to collateral.",
@@ -1889,7 +1894,7 @@
             },
             {
               "text": "The cash you posted as margin.",
-              "art": "margin"
+              "art": "margin-collateral"
             }
           ],
           "answer": 0,
@@ -2005,7 +2010,7 @@
           "type": "match",
           "termIds": [
             "leverage",
-            "margin",
+            "margin-collateral",
             "derivative",
             "hedge"
           ],
@@ -2016,7 +2021,7 @@
               "right": "Bigger bet than your cash"
             },
             {
-              "id": "margin",
+              "id": "margin-collateral",
               "left": "margin",
               "right": "The cushion under that bet"
             },
@@ -2105,7 +2110,7 @@
             },
             {
               "text": "The cash cushion in your account.",
-              "art": "margin"
+              "art": "margin-collateral"
             }
           ],
           "answer": 0,
@@ -5078,7 +5083,7 @@
             },
             {
               "text": "A margin loan",
-              "art": "margin"
+              "art": "margin-collateral"
             },
             {
               "text": "A swap",
@@ -5899,7 +5904,7 @@
             },
             {
               "text": "The interest charged on margin",
-              "art": "margin"
+              "art": "margin-collateral"
             },
             {
               "text": "The fee for an option",
@@ -5961,7 +5966,7 @@
             },
             {
               "text": "A margin loan",
-              "art": "margin"
+              "art": "margin-collateral"
             },
             {
               "text": "Basis risk",

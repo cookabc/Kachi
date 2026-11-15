@@ -17,12 +17,12 @@
  * 用法：node scripts/generate-course.mjs [--pack t2-company-earnings]
  *       不带 --pack 时生成全部有 source.mjs 的 pack。
  */
-import { existsSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
 import { FILL_OVERRIDES } from "../content/packs/fill-overrides.mjs";
 import { blankTerm, fillLeaksAnswer } from "../src/fill.ts";
-import { corpusHasTerm } from "./validate-content.mjs";
+import { corpusHasTerm } from "./corpus-terms.mjs";
 
 const ROOT = process.cwd();
 const PACKS_DIR = path.join(ROOT, "content/packs");
@@ -317,6 +317,9 @@ function buildCourse(locale) {
     id: c.id,
     unit: c.unit,
     term: c.term,
+    ...(c.aliases ? { aliases: c.aliases } : {}),
+    ...(c.sense ? { sense: c.sense } : {}),
+    ...(c.learning ? { learning: text(c, "learning", locale) } : {}),
     caption: text(c, "caption", locale),
     definition: text(c, "definition", locale),
     example: text(c, "example", locale),
@@ -329,7 +332,10 @@ function buildCourse(locale) {
     // term; the en pack has no use for it and omits the field.
     ...(locale === "zh-CN" && c.zh ? { termZh: c.zh } : {}),
     relations: c.relations ?? [],
-    risk: "evergreen",
+    risk: c.risk ?? "evergreen",
+    ...(c.jurisdiction ? { jurisdiction: c.jurisdiction } : {}),
+    ...(c.asOf ? { asOf: c.asOf } : {}),
+    ...(c.reviewDue ? { reviewDue: c.reviewDue } : {}),
     // Generated content has not been through review. "unreviewed" is reserved
     // for the hand-written pack that predates the review process.
     reviewStatus: "draft",
@@ -433,9 +439,14 @@ function provenanceFor(concepts) {
   // corpus file — but it is a stronger source than a headline, not a weaker one.
   const cites = CERTIFIES;
   for (const concept of concepts) {
-    const fromCorpus = sources
+    const fromCorpus = (PACK.citationMode === "explicit" ? [] : sources)
       .filter(
-        (entry) => entry.file && texts.has(entry.file) && corpusHasTerm(texts.get(entry.file), concept.term),
+        (entry) =>
+          entry.file &&
+          texts.has(entry.file) &&
+          [concept.term, ...(concept.aliases ?? [])].some((term) =>
+            corpusHasTerm(texts.get(entry.file), term),
+          ),
       )
       .map((entry) => entry.id);
     const fromCites = Object.entries(cites)
@@ -470,6 +481,7 @@ async function generatePack(packId) {
       }
     }
     const file = path.join(OUT_DIR, locale, "course.json");
+    mkdirSync(path.dirname(file), { recursive: true });
     writeFileSync(file, `${JSON.stringify(course, null, 2)}\n`);
     const promptCount = course.lessons.reduce((sum, l) => sum + l.prompts.length, 0);
     console.log(

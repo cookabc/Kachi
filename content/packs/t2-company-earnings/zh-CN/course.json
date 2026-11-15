@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
   "packId": "t2-company-earnings",
-  "contentVersion": "2026.11.01-t2.2",
+  "contentVersion": "2026.11.15-t2.3",
   "locale": "zh-CN",
-  "generatedAt": "2026.11.01-t2.2",
+  "generatedAt": "2026.11.15-t2.3",
   "units": [
     {
       "id": 1,
@@ -161,6 +161,10 @@
       "id": "margin",
       "unit": 1,
       "term": "margin",
+      "aliases": [
+        "profit margin"
+      ],
+      "sense": "profit-margin",
       "caption": "每一块钱收入里剩下多少是利润。",
       "definition": "利润占收入的百分比，衡量盈利能力而非规模。",
       "example": "Gross margin expanded 180 basis points to 34%.",
@@ -274,6 +278,11 @@
       "id": "capex",
       "unit": 2,
       "term": "capex",
+      "aliases": [
+        "capital expenditure",
+        "capital expenditures"
+      ],
+      "sense": "capital-expenditure",
       "caption": "买设备、建厂这类会变成资产的大笔支出。",
       "definition": "capital expenditure，用于购买或升级长期资产的支出。",
       "example": "2026 capital expenditure of $13.5 billion to $14 billion.",
@@ -281,7 +290,9 @@
       "mixUpWhy": "capex 形成资产、逐年折旧；opex 当期就计入费用。",
       "mixUpType": "opposite",
       "sourceIds": [
-        "t2-src-adm-q2"
+        "t2-src-bp-q2",
+        "t2-src-adm-q2",
+        "t2-src-mmg-deal"
       ],
       "termZh": "资本开支",
       "relations": [],
@@ -504,26 +515,6 @@
         "t2-src-mmg-deal"
       ],
       "termZh": "净负债",
-      "relations": [],
-      "risk": "evergreen",
-      "reviewStatus": "draft"
-    },
-    {
-      "id": "capital expenditure",
-      "unit": 4,
-      "term": "capital expenditure",
-      "caption": "capex 的全称，用于买长期资产的钱。",
-      "definition": "用于获取或升级固定资产的支出，会形成资产并逐年折旧。",
-      "example": "Capital expenditure is set to climb by more than $1 billion next year.",
-      "mixUp": "opex",
-      "mixUpWhy": "capital expenditure 形成资产；opex 是当期消耗掉的费用。",
-      "mixUpType": "opposite",
-      "sourceIds": [
-        "t2-src-bp-q2",
-        "t2-src-adm-q2",
-        "t2-src-mmg-deal"
-      ],
-      "termZh": "资本支出",
       "relations": [],
       "risk": "evergreen",
       "reviewStatus": "draft"
@@ -4518,8 +4509,8 @@
               "art": "net debt"
             },
             {
-              "text": "用于获取或升级固定资产的支出，会形成资产并逐年折旧。",
-              "art": "capital expenditure"
+              "text": "抵押物价值下跌时，出借人要求借款人补足保证金的通知。",
+              "art": "margin call"
             }
           ],
           "answer": 0,
@@ -4547,41 +4538,12 @@
               "art": "net debt"
             },
             {
-              "text": "用于获取或升级固定资产的支出，会形成资产并逐年折旧。",
-              "art": "capital expenditure"
+              "text": "抵押物价值下跌时，出借人要求借款人补足保证金的通知。",
+              "art": "margin call"
             }
           ],
           "answer": 0,
           "why": "equity 是股东的所有权剩余；debt 是债权人的优先索取权。"
-        },
-        {
-          "id": "u4l1-net debt-m",
-          "type": "meaning",
-          "termId": "net debt",
-          "termIds": [
-            "net debt"
-          ],
-          "stem": "net debt 是什么意思？",
-          "options": [
-            {
-              "text": "总债务减去现金及等价物，反映真实的负债压力。",
-              "art": "net debt"
-            },
-            {
-              "text": "债务相对于权益或盈利的比例，衡量财务风险。",
-              "art": "leverage"
-            },
-            {
-              "text": "公司需要偿还的借款与债券总额。",
-              "art": "debt"
-            },
-            {
-              "text": "资产减去负债后归属股东的账面价值。",
-              "art": "equity"
-            }
-          ],
-          "answer": 0,
-          "why": "net debt 是金额；leverage 是把这个金额除以盈利或权益后的比率。"
         },
         {
           "id": "u4l1-debt-s",
@@ -4606,8 +4568,8 @@
               "art": "net debt"
             },
             {
-              "text": "capital expenditure",
-              "art": "capital expenditure"
+              "text": "margin call",
+              "art": "margin call"
             }
           ],
           "answer": 0,
@@ -4636,42 +4598,12 @@
               "art": "net debt"
             },
             {
-              "text": "capital expenditure",
-              "art": "capital expenditure"
+              "text": "margin call",
+              "art": "margin call"
             }
           ],
           "answer": 0,
           "why": "equity：资产减去负债后归属股东的账面价值。"
-        },
-        {
-          "id": "u4l1-net debt-s",
-          "type": "scenario",
-          "termId": "net debt",
-          "termIds": [
-            "net debt"
-          ],
-          "story": "欠的钱减掉手上的现金。",
-          "stem": "这说的是哪个词？",
-          "options": [
-            {
-              "text": "net debt",
-              "art": "net debt"
-            },
-            {
-              "text": "leverage",
-              "art": "leverage"
-            },
-            {
-              "text": "debt",
-              "art": "debt"
-            },
-            {
-              "text": "equity",
-              "art": "equity"
-            }
-          ],
-          "answer": 0,
-          "why": "net debt：总债务减去现金及等价物，反映真实的负债压力。"
         },
         {
           "id": "u4l1-debt-t",
@@ -4696,17 +4628,6 @@
           "why": "equity 是「权益、股东权益」，不是「债务」。"
         },
         {
-          "id": "u4l1-net debt-t",
-          "type": "truefalse",
-          "termId": "net debt",
-          "termIds": [
-            "net debt"
-          ],
-          "stem": "net debt：净负债",
-          "answer": true,
-          "why": "net debt 确实是「净负债」。"
-        },
-        {
           "id": "u4l1-debt-f",
           "type": "fill",
           "termId": "debt",
@@ -4716,8 +4637,7 @@
           "story": "Free cash flow covered the dividend and reduced net ____ to $12 billion.",
           "bank": [
             "debt",
-            "equity",
-            "net debt"
+            "equity"
           ],
           "answer": "debt",
           "why": "debt 要还本付息；equity 是股东的钱，不用还但让出了所有权。"
@@ -4732,36 +4652,17 @@
           "story": "Return on ____ improved to 14%.",
           "bank": [
             "equity",
-            "debt",
-            "net debt"
+            "debt"
           ],
           "answer": "equity",
           "why": "equity 是股东的所有权剩余；debt 是债权人的优先索取权。"
-        },
-        {
-          "id": "u4l1-net debt-f",
-          "type": "fill",
-          "termId": "net debt",
-          "termIds": [
-            "net debt"
-          ],
-          "story": "____ at the end of the year stood at $8.69 billion, below target.",
-          "bank": [
-            "net debt",
-            "leverage",
-            "debt",
-            "equity"
-          ],
-          "answer": "net debt",
-          "why": "net debt 是金额；leverage 是把这个金额除以盈利或权益后的比率。"
         },
         {
           "id": "u4l1-match",
           "type": "match",
           "termIds": [
             "debt",
-            "equity",
-            "net debt"
+            "equity"
           ],
           "pairs": [
             {
@@ -4773,11 +4674,6 @@
               "id": "equity",
               "left": "equity",
               "right": "权益、股东权益"
-            },
-            {
-              "id": "net debt",
-              "left": "net debt",
-              "right": "净负债"
             }
           ],
           "why": "把每个词和它的意思对上。"
@@ -4798,10 +4694,6 @@
             {
               "text": "equity",
               "art": "equity"
-            },
-            {
-              "text": "net debt",
-              "art": "net debt"
             }
           ],
           "answer": 0,
@@ -4817,21 +4709,21 @@
       "review": false,
       "prompts": [
         {
-          "id": "u4l2-capital expenditure-m",
+          "id": "u4l2-net debt-m",
           "type": "meaning",
-          "termId": "capital expenditure",
+          "termId": "net debt",
           "termIds": [
-            "capital expenditure"
+            "net debt"
           ],
-          "stem": "capital expenditure 是什么意思？",
+          "stem": "net debt 是什么意思？",
           "options": [
             {
-              "text": "用于获取或升级固定资产的支出，会形成资产并逐年折旧。",
-              "art": "capital expenditure"
+              "text": "总债务减去现金及等价物，反映真实的负债压力。",
+              "art": "net debt"
             },
             {
-              "text": "operating expenditure，日常经营支出如工资、租金、维护费。",
-              "art": "opex"
+              "text": "债务相对于权益或盈利的比例，衡量财务风险。",
+              "art": "leverage"
             },
             {
               "text": "公司需要偿还的借款与债券总额。",
@@ -4843,7 +4735,7 @@
             }
           ],
           "answer": 0,
-          "why": "capital expenditure 形成资产；opex 是当期消耗掉的费用。"
+          "why": "net debt 是金额；leverage 是把这个金额除以盈利或权益后的比率。"
         },
         {
           "id": "u4l2-margin call-m",
@@ -4875,22 +4767,22 @@
           "why": "margin call 是要求补钱的通知；write-down 是公司主动把资产账面价值下调。"
         },
         {
-          "id": "u4l2-capital expenditure-s",
+          "id": "u4l2-net debt-s",
           "type": "scenario",
-          "termId": "capital expenditure",
+          "termId": "net debt",
           "termIds": [
-            "capital expenditure"
+            "net debt"
           ],
-          "story": "capex 的全称，用于买长期资产的钱。",
+          "story": "欠的钱减掉手上的现金。",
           "stem": "这说的是哪个词？",
           "options": [
             {
-              "text": "capital expenditure",
-              "art": "capital expenditure"
+              "text": "net debt",
+              "art": "net debt"
             },
             {
-              "text": "opex",
-              "art": "opex"
+              "text": "leverage",
+              "art": "leverage"
             },
             {
               "text": "debt",
@@ -4902,7 +4794,7 @@
             }
           ],
           "answer": 0,
-          "why": "capital expenditure：用于获取或升级固定资产的支出，会形成资产并逐年折旧。"
+          "why": "net debt：总债务减去现金及等价物，反映真实的负债压力。"
         },
         {
           "id": "u4l2-margin call-s",
@@ -4935,15 +4827,15 @@
           "why": "margin call：抵押物价值下跌时，出借人要求借款人补足保证金的通知。"
         },
         {
-          "id": "u4l2-capital expenditure-t",
+          "id": "u4l2-net debt-t",
           "type": "truefalse",
-          "termId": "capital expenditure",
+          "termId": "net debt",
           "termIds": [
-            "capital expenditure"
+            "net debt"
           ],
-          "stem": "capital expenditure：资本支出",
+          "stem": "net debt：净负债",
           "answer": true,
-          "why": "capital expenditure 确实是「资本支出」。"
+          "why": "net debt 确实是「净负债」。"
         },
         {
           "id": "u4l2-margin call-t",
@@ -4957,20 +4849,20 @@
           "why": "margin call 是「追加保证金通知」，不是「减值、账面下调」。"
         },
         {
-          "id": "u4l2-capital expenditure-f",
+          "id": "u4l2-net debt-f",
           "type": "fill",
-          "termId": "capital expenditure",
+          "termId": "net debt",
           "termIds": [
-            "capital expenditure"
+            "net debt"
           ],
-          "story": "____ is set to climb by more than $1 billion next year.",
+          "story": "____ at the end of the year stood at $8.69 billion, below target.",
           "bank": [
-            "capital expenditure",
-            "opex",
+            "net debt",
+            "leverage",
             "margin call"
           ],
-          "answer": "capital expenditure",
-          "why": "capital expenditure 形成资产；opex 是当期消耗掉的费用。"
+          "answer": "net debt",
+          "why": "net debt 是金额；leverage 是把这个金额除以盈利或权益后的比率。"
         },
         {
           "id": "u4l2-margin call-f",
@@ -4983,7 +4875,7 @@
           "bank": [
             "margin call",
             "write-down",
-            "capital expenditure"
+            "net debt"
           ],
           "answer": "margin call",
           "why": "margin call 是要求补钱的通知；write-down 是公司主动把资产账面价值下调。"
@@ -4992,14 +4884,14 @@
           "id": "u4l2-match",
           "type": "match",
           "termIds": [
-            "capital expenditure",
+            "net debt",
             "margin call"
           ],
           "pairs": [
             {
-              "id": "capital expenditure",
-              "left": "capital expenditure",
-              "right": "资本支出"
+              "id": "net debt",
+              "left": "net debt",
+              "right": "净负债"
             },
             {
               "id": "margin call",
@@ -5012,15 +4904,15 @@
         {
           "id": "u4l2-listen",
           "type": "listen",
-          "termId": "capital expenditure",
+          "termId": "net debt",
           "termIds": [
-            "capital expenditure"
+            "net debt"
           ],
           "stem": "你听到的是哪个词？",
           "options": [
             {
-              "text": "capital expenditure",
-              "art": "capital expenditure"
+              "text": "net debt",
+              "art": "net debt"
             },
             {
               "text": "margin call",
@@ -5028,7 +4920,7 @@
             }
           ],
           "answer": 0,
-          "why": "capital expenditure：用于获取或升级固定资产的支出，会形成资产并逐年折旧。"
+          "why": "net debt：总债务减去现金及等价物，反映真实的负债压力。"
         }
       ]
     },
@@ -5062,8 +4954,8 @@
               "art": "net debt"
             },
             {
-              "text": "capital expenditure",
-              "art": "capital expenditure"
+              "text": "margin call",
+              "art": "margin call"
             }
           ],
           "answer": 0,
@@ -5092,8 +4984,8 @@
               "art": "net debt"
             },
             {
-              "text": "capital expenditure",
-              "art": "capital expenditure"
+              "text": "margin call",
+              "art": "margin call"
             }
           ],
           "answer": 0,
@@ -5128,36 +5020,6 @@
           ],
           "answer": 0,
           "why": "net debt：总债务减去现金及等价物，反映真实的负债压力。"
-        },
-        {
-          "id": "u4r-capital expenditure-s",
-          "type": "scenario",
-          "termId": "capital expenditure",
-          "termIds": [
-            "capital expenditure"
-          ],
-          "story": "capex 的全称，用于买长期资产的钱。",
-          "stem": "这说的是哪个词？",
-          "options": [
-            {
-              "text": "capital expenditure",
-              "art": "capital expenditure"
-            },
-            {
-              "text": "opex",
-              "art": "opex"
-            },
-            {
-              "text": "debt",
-              "art": "debt"
-            },
-            {
-              "text": "equity",
-              "art": "equity"
-            }
-          ],
-          "answer": 0,
-          "why": "capital expenditure：用于获取或升级固定资产的支出，会形成资产并逐年折旧。"
         },
         {
           "id": "u4r-margin call-s",
@@ -5223,26 +5085,15 @@
           "why": "net debt 确实是「净负债」。"
         },
         {
-          "id": "u4r-capital expenditure-t",
-          "type": "truefalse",
-          "termId": "capital expenditure",
-          "termIds": [
-            "capital expenditure"
-          ],
-          "stem": "capital expenditure 就是 运营费用。",
-          "answer": false,
-          "why": "capital expenditure 是「资本支出」，不是「运营费用」。"
-        },
-        {
           "id": "u4r-margin call-t",
           "type": "truefalse",
           "termId": "margin call",
           "termIds": [
             "margin call"
           ],
-          "stem": "margin call：追加保证金通知",
-          "answer": true,
-          "why": "margin call 确实是「追加保证金通知」。"
+          "stem": "margin call 就是 减值、账面下调。",
+          "answer": false,
+          "why": "margin call 是「追加保证金通知」，不是「减值、账面下调」。"
         },
         {
           "id": "u4r-match",
@@ -5251,7 +5102,6 @@
             "debt",
             "equity",
             "net debt",
-            "capital expenditure",
             "margin call"
           ],
           "pairs": [
@@ -5269,11 +5119,6 @@
               "id": "net debt",
               "left": "net debt",
               "right": "净负债"
-            },
-            {
-              "id": "capital expenditure",
-              "left": "capital expenditure",
-              "right": "资本支出"
             },
             {
               "id": "margin call",
@@ -5305,8 +5150,8 @@
               "art": "net debt"
             },
             {
-              "text": "capital expenditure",
-              "art": "capital expenditure"
+              "text": "margin call",
+              "art": "margin call"
             }
           ],
           "answer": 0,

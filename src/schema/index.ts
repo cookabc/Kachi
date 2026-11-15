@@ -204,6 +204,30 @@ export function validateCourse(
   );
 
   course.concepts.forEach((concept) => {
+    if (concept.aliases !== undefined) {
+      if (
+        !Array.isArray(concept.aliases) ||
+        concept.aliases.some((alias) => typeof alias !== "string" || !alias.trim())
+      ) {
+        issues.push({ path: concept.id, message: "aliases must contain non-empty strings" });
+      } else {
+        const keys = [concept.term, ...concept.aliases].map((term) => term.trim().toLowerCase());
+        if (new Set(keys).size !== keys.length) {
+          issues.push({ path: concept.id, message: "aliases must not repeat the headword or each other" });
+        }
+      }
+    }
+    if (
+      concept.learning &&
+      [concept.learning.workedExample, concept.learning.application, concept.learning.misconception].some(
+        (value) => typeof value !== "string" || !value.trim(),
+      )
+    ) {
+      issues.push({
+        path: concept.id,
+        message: "learning needs a worked example, application, and misconception",
+      });
+    }
     if (!concept.mixUp || !conceptIds.has(concept.mixUp)) {
       issues.push({ path: concept.id, message: `Unknown mix-up concept: ${concept.mixUp}` });
     }
@@ -236,6 +260,39 @@ export function validateCourse(
   course.concepts.forEach((concept) => {
     issues.push(...conceptCoverageIssues(concept, course));
   });
+  return issues;
+}
+
+/** One identity per meaning across packs, with explicit senses for homographs. */
+export function validateVocabularyIdentities(courses: Course[]): ValidationIssue[] {
+  const issues: ValidationIssue[] = [];
+  const identities = new Map<string, Concept>();
+  const spellings = new Map<string, Concept[]>();
+  for (const course of courses) {
+    for (const concept of course.concepts) {
+      const previous = identities.get(concept.id);
+      if (previous && previous.sense !== concept.sense) {
+        issues.push({ path: concept.id, message: "The same concept id has different senses across packs" });
+      }
+      identities.set(concept.id, concept);
+      for (const spelling of [concept.term, ...(concept.aliases ?? [])]) {
+        const key = spelling.trim().toLowerCase();
+        const list = spellings.get(key) ?? [];
+        if (!list.some((item) => item.id === concept.id)) list.push(concept);
+        spellings.set(key, list);
+      }
+    }
+  }
+  for (const [spelling, list] of spellings) {
+    if (list.length < 2) continue;
+    const senses = list.map((item) => item.sense);
+    if (senses.some((sense) => !sense) || new Set(senses).size !== senses.length) {
+      issues.push({
+        path: spelling,
+        message: "Separate ids sharing a term or alias need distinct explicit senses",
+      });
+    }
+  }
   return issues;
 }
 

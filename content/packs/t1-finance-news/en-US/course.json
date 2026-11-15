@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
   "packId": "t1-finance-news",
-  "contentVersion": "2026.11.01-t1.2",
+  "contentVersion": "2026.11.15-t1.3",
   "locale": "en-US",
-  "generatedAt": "2026.11.01-t1.2",
+  "generatedAt": "2026.11.15-t1.3",
   "units": [
     {
       "id": 1,
@@ -371,6 +371,10 @@
       "id": "margin",
       "unit": 3,
       "term": "margin",
+      "aliases": [
+        "profit margin"
+      ],
+      "sense": "profit-margin",
       "caption": "How much of each dollar of sales survives as profit.",
       "definition": "Profit as a percentage of revenue — a measure of profitability, not size.",
       "example": "Higher funding costs are starting to affect margins.",

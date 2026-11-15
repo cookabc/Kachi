@@ -806,6 +806,10 @@
     "backtest": {
       "us": "/audio/backtest-us.mp3",
       "gb": "/audio/backtest-gb.mp3"
+    },
+    "margin-collateral": {
+      "us": "/audio/margin-us.mp3",
+      "gb": "/audio/margin-gb.mp3"
     }
   }
 }

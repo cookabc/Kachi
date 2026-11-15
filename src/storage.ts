@@ -1,5 +1,6 @@
 import type { AttemptEvent, ExerciseType, LearnerState, MasteryState } from "./domain";
 import { emptyLearnerState, REVIEW_INTERVAL_DAYS } from "./engine";
+import { migrateVocabulary } from "./vocabulary";
 
 const DATABASE_NAME = "kachi-learning";
 const DATABASE_VERSION = 1;
@@ -61,11 +62,16 @@ function openDatabase(): Promise<IDBDatabase> {
 
 export async function loadLearnerState(): Promise<LearnerState> {
   const database = await openDatabase();
-  const transaction = database.transaction([SNAPSHOT_STORE, META_STORE], "readwrite");
+  const transaction = database.transaction([SNAPSHOT_STORE, META_STORE, EVENT_STORE], "readwrite");
   const snapshot = (await request(transaction.objectStore(SNAPSHOT_STORE).get(PROFILE_KEY))) as unknown;
   if (isStoredState(snapshot)) {
+    const migrated = migrateVocabulary(snapshot);
+    if (migrated !== snapshot) {
+      transaction.objectStore(SNAPSHOT_STORE).put(migrated, PROFILE_KEY);
+      for (const event of migrated.attempts) transaction.objectStore(EVENT_STORE).put(event);
+    }
     await transactionDone(transaction);
-    return snapshot;
+    return migrated;
   }
 
   const recovered = emptyLearnerState();
@@ -208,6 +214,7 @@ function isStoredState(value: unknown): value is LearnerState {
   const state = value as LearnerState;
   return (
     state.version === 2 &&
+    (state.vocabularyRevision === undefined || isNonNegativeInteger(state.vocabularyRevision)) &&
     isNonNegativeInteger(state.xp) &&
     isNonNegativeInteger(state.streak) &&
     (state.lastLessonDate === undefined || typeof state.lastLessonDate === "string") &&
@@ -237,6 +244,7 @@ export async function importLearnerData(file: File): Promise<LearnerState> {
   if (envelope.schemaVersion !== 1 || !isStoredState(envelope.learnerState)) {
     throw new Error(INCOMPATIBLE_LEARNER_FILE);
   }
-  await saveLearnerState(envelope.learnerState);
-  return envelope.learnerState;
+  const migrated = migrateVocabulary(envelope.learnerState);
+  await saveLearnerState(migrated);
+  return migrated;
 }

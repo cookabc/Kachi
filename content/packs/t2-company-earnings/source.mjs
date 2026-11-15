@@ -1,6 +1,6 @@
 // T2 词库内容源：读公司财报。
 //
-// 与 T1 的关系：44 个词里有 13 个 T1 已教过（earnings/revenue/profit/margin/
+// 与 T1 的关系：48 个词里有 13 个 T1 已教过（earnings/revenue/profit/margin/
 // consensus/guidance/forecast/estimate/dividend/yield/valuation/p/e/market cap）。
 // 按 docs/vocabulary-system.md §四的规则：首次出现处教学，后续 pack 只作复习项。
 // 所以这些词在这里标记 review: true —— 它们照常出现在课程和题目里，但不重复
@@ -10,7 +10,7 @@
 
 export const PACK = {
   packId: "t2-company-earnings",
-  contentVersion: "2026.11.01-t2.2",
+  contentVersion: "2026.11.15-t2.3",
   title: "读公司财报",
 };
 
@@ -23,7 +23,7 @@ export const MIXUP_TYPES = {
   scope: "范围：一个是总额一个是比率/单位量",
 };
 
-// 6 单元 × 7–8 词，共 44。财报新闻读法：先看总量，再看质量，再看结构，
+// 7 单元，共 48 个概念。财报新闻读法：先看总量，再看质量，再看结构，
 // 再看前瞻，最后看公司动作与估值。
 export const UNITS = [
   {
@@ -78,7 +78,7 @@ export const UNITS = [
 ];
 
 // ---------------------------------------------------------------------------
-// 44 个概念。review: true 表示 T1 已教过，此处只作复习。
+// 48 个概念。review: true 表示 T1 已教过，此处只作复习。
 // ---------------------------------------------------------------------------
 export const CONCEPTS = [
   // ===== 单元 1：先看赚了多少 =====
@@ -171,6 +171,8 @@ export const CONCEPTS = [
   },
   {
     id: "margin",
+    sense: "profit-margin",
+    aliases: ["profit margin"],
     unit: 1,
     term: "margin",
     zh: "利润率",
@@ -258,6 +260,8 @@ export const CONCEPTS = [
   },
   {
     id: "capex",
+    sense: "capital-expenditure",
+    aliases: ["capital expenditure", "capital expenditures"],
     unit: 2,
     term: "capex",
     zh: "资本开支",
@@ -433,20 +437,6 @@ export const CONCEPTS = [
     mixUpType: "scope",
     review: true,
     tags: ["资本结构"],
-  },
-  {
-    id: "capital expenditure",
-    unit: 4,
-    term: "capital expenditure",
-    zh: "资本支出",
-    caption: "capex 的全称，用于买长期资产的钱。",
-    definition: "用于获取或升级固定资产的支出，会形成资产并逐年折旧。",
-    example: "Capital expenditure is set to climb by more than $1 billion next year.",
-    scene: "一台工业设备正在安装，旁边堆着包装箱",
-    mixUp: "opex",
-    mixUpWhy: "capital expenditure 形成资产；opex 是当期消耗掉的费用。",
-    mixUpType: "opposite",
-    tags: ["资本结构", "支出"],
   },
   {
     id: "margin call",

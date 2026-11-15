@@ -170,6 +170,23 @@ function sampleState(): LearnerState {
 }
 
 describe("learner storage", () => {
+  it("migrates old concept ids on load and when importing a legacy export", async () => {
+    const old = {
+      ...sampleState(),
+      vocabularyRevision: undefined,
+      seenConceptIds: ["capital expenditure", "margin"],
+      completedLessonIds: ["hedge-or-pledge/u1l3"],
+    };
+    fakeDatabase.seed("snapshots", "local-profile", old);
+    const loaded = await loadLearnerState();
+    expect(loaded.seenConceptIds).toEqual(["capex", "margin-collateral"]);
+    expect(loaded.xp).toBe(old.xp);
+    expect(fakeDatabase.read("snapshots", "local-profile")).toEqual(loaded);
+    const imported = await importLearnerData(fileOf({ schemaVersion: 1, learnerState: old }));
+    expect(imported).toEqual(loaded);
+    expect(await loadLearnerState()).toEqual(loaded);
+  });
+
   it("round-trips a saved learner state through IndexedDB", async () => {
     const state = sampleState();
     await saveLearnerState(state);

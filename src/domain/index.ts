@@ -73,6 +73,15 @@ export interface Concept {
   id: string;
   unit: number;
   term: string;
+  /** Alternate expressions for this meaning, never separate mastery records. */
+  aliases?: string[];
+  /** Stable meaning shared across packs; a different meaning needs its own id. */
+  sense?: string;
+  learning?: {
+    workedExample: string;
+    application: string;
+    misconception: string;
+  };
   caption: string;
   definition: string;
   example: string;
@@ -194,6 +203,7 @@ export interface MasteryState {
 export interface LearnerState {
   /** Current learner-state schema version. */
   version: 2;
+  vocabularyRevision?: number;
   xp: number;
   streak: number;
   lastLessonDate?: string;

@@ -59,7 +59,6 @@
     "debt": "/ˈdɛt/",
     "equity": "/ˈɛkwəti/",
     "net debt": "/ˈnɛt ˈdɛt/",
-    "capital expenditure": "/ˈkæpətəl ɪkˈspɛndətʃɝ/",
     "margin call": "/ˈmɑrdʒən ˈkɔl/",
     "buyback": "/ˈbaɪˌbæk/",
     "payout": "/ˈpeɪˌaʊt/",
@@ -201,6 +200,7 @@
     "basis": "/ˈbeɪsəs/",
     "contango": "/kənˈtæŋɡoʊ/",
     "backwardation": "/ˌbækwɝˈdeɪʃən/",
-    "cost of carry": "/ˈkɑst ˈʌv ˈkæri/"
+    "cost of carry": "/ˈkɑst ˈʌv ˈkæri/",
+    "margin-collateral": "/ˈmɑrdʒən/"
   }
 }

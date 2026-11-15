@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "packId": "hedge-or-pledge",
-  "contentVersion": "2026.11.01-zh",
+  "contentVersion": "2026.11.15-zh-CN-identity.1",
   "locale": "zh-CN",
   "generatedAt": "2026-10-27T07:00:00.000Z",
   "units": [
@@ -113,7 +113,7 @@
       "caption": "折扣：$1M 的股票在放款前只被当作 $700k。",
       "definition": "贷方在放款前对抵押品价值的打折。",
       "example": "$1M 的股票，30% 的 haircut → 按 $700k 计价。这就是贷款上限。",
-      "mixUp": "margin",
+      "mixUp": "margin-collateral",
       "mixUpWhy": "haircut 是对抵押品的折扣；margin 是你必须留着的现金缓冲。",
       "mixUpType": "coexist",
       "sourceIds": [
@@ -123,7 +123,7 @@
       "reviewStatus": "unreviewed"
     },
     {
-      "id": "margin",
+      "id": "margin-collateral",
       "unit": 1,
       "term": "margin",
       "caption": "赌注底下必须一直垫着的那层现金垫子。",
@@ -142,7 +142,12 @@
         "finra-sec-sbloc-2015"
       ],
       "risk": "evergreen",
-      "reviewStatus": "unreviewed"
+      "reviewStatus": "unreviewed",
+      "sense": "trading-collateral",
+      "aliases": [
+        "trading margin"
+      ],
+      "termZh": "保证金"
     },
     {
       "id": "margin call",
@@ -157,7 +162,7 @@
       "relations": [
         {
           "type": "prereq",
-          "with": "margin"
+          "with": "margin-collateral"
         },
         {
           "type": "sibling",
@@ -177,7 +182,7 @@
       "caption": "一小堆自己的现金，撑起一张大得多的赌注。",
       "definition": "用借来的钱或衍生品，做出比你现金更大的赌注。",
       "example": "$10k 自己的加 $40k 借的 = 5× 杠杆。跌 10% 就抹掉你一半现金。",
-      "mixUp": "margin",
+      "mixUp": "margin-collateral",
       "mixUpWhy": "leverage 是倍数；margin 是让这个倍数成为可能的缓冲。",
       "mixUpType": "scope",
       "sourceIds": [
@@ -907,7 +912,7 @@
             },
             {
               "text": "券商替你垫着的那堆现金。",
-              "art": "margin"
+              "art": "margin-collateral"
             }
           ],
           "answer": 0,
@@ -1015,7 +1020,7 @@
             },
             {
               "text": "用 margin 贷款",
-              "art": "margin"
+              "art": "margin-collateral"
             }
           ],
           "answer": 0,
@@ -1148,7 +1153,7 @@
             },
             {
               "text": "券商账户里必须留着的现金缓冲。",
-              "art": "margin"
+              "art": "margin-collateral"
             },
             {
               "text": "银行已经把你 30% 的股票卖掉了。",
@@ -1348,15 +1353,15 @@
         {
           "id": "u1l3a",
           "type": "meaning",
-          "termId": "margin",
+          "termId": "margin-collateral",
           "termIds": [
-            "margin"
+            "margin-collateral"
           ],
           "stem": "margin 是什么？",
           "options": [
             {
               "text": "你必须留在账户里的现金或权益缓冲。",
-              "art": "margin"
+              "art": "margin-collateral"
             },
             {
               "text": "借来的赌注的放大倍数。",
@@ -1406,9 +1411,9 @@
         {
           "id": "u1l3c",
           "type": "truefalse",
-          "termId": "margin",
+          "termId": "margin-collateral",
           "termIds": [
-            "margin"
+            "margin-collateral"
           ],
           "stem": "margin 和 leverage 是同一个词。",
           "answer": false,
@@ -1417,9 +1422,9 @@
         {
           "id": "u1l3d",
           "type": "fill",
-          "termId": "margin",
+          "termId": "margin-collateral",
           "termIds": [
-            "margin"
+            "margin-collateral"
           ],
           "story": "你用 $5k 现金买了 $10k 的股票。这 $5k 的缓冲就是 ____。",
           "bank": [
@@ -1512,14 +1517,14 @@
           "id": "u1l3h",
           "type": "match",
           "termIds": [
-            "margin",
+            "margin-collateral",
             "margin call",
             "haircut",
             "hedge"
           ],
           "pairs": [
             {
-              "id": "margin",
+              "id": "margin-collateral",
               "left": "margin",
               "right": "你必须留着的缓冲"
             },
@@ -1731,7 +1736,7 @@
           "termIds": [
             "hedge",
             "pledge",
-            "margin",
+            "margin-collateral",
             "margin call"
           ],
           "pairs": [
@@ -1746,7 +1751,7 @@
               "right": "借钱，股票留着"
             },
             {
-              "id": "margin",
+              "id": "margin-collateral",
               "left": "margin",
               "right": "必须留着的缓冲"
             },
@@ -1761,16 +1766,16 @@
         {
           "id": "u1rh",
           "type": "scenario",
-          "termId": "margin",
+          "termId": "margin-collateral",
           "termIds": [
-            "margin"
+            "margin-collateral"
           ],
           "story": "券商说：存 $10k 进来，就可以买 $20k 的股票。这 $10k 不是手续费，它必须一直留在账户里。",
           "stem": "这 $10k 是：",
           "options": [
             {
               "text": "Margin",
-              "art": "margin"
+              "art": "margin-collateral"
             },
             {
               "text": "A haircut",
@@ -1852,7 +1857,7 @@
             },
             {
               "text": "你必须留在账户里的现金缓冲。",
-              "art": "margin"
+              "art": "margin-collateral"
             },
             {
               "text": "贷方对抵押品打的折扣。",
@@ -1889,7 +1894,7 @@
             },
             {
               "text": "你交出去的那笔 margin 现金。",
-              "art": "margin"
+              "art": "margin-collateral"
             }
           ],
           "answer": 0,
@@ -2005,7 +2010,7 @@
           "type": "match",
           "termIds": [
             "leverage",
-            "margin",
+            "margin-collateral",
             "derivative",
             "hedge"
           ],
@@ -2016,7 +2021,7 @@
               "right": "比你的现金更大的赌注"
             },
             {
-              "id": "margin",
+              "id": "margin-collateral",
               "left": "margin",
               "right": "赌注底下那层缓冲"
             },
@@ -2105,7 +2110,7 @@
             },
             {
               "text": "你账户里的现金缓冲。",
-              "art": "margin"
+              "art": "margin-collateral"
             }
           ],
           "answer": 0,
@@ -5078,7 +5083,7 @@
             },
             {
               "text": "一笔保证金贷款",
-              "art": "margin"
+              "art": "margin-collateral"
             },
             {
               "text": "一笔互换",
@@ -5899,7 +5904,7 @@
             },
             {
               "text": "保证金的利息",
-              "art": "margin"
+              "art": "margin-collateral"
             },
             {
               "text": "期权的费用",
@@ -5961,7 +5966,7 @@
             },
             {
               "text": "保证金贷款",
-              "art": "margin"
+              "art": "margin-collateral"
             },
             {
               "text": "基差风险",
