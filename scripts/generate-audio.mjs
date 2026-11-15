@@ -12,10 +12,13 @@
  *
  * 用法：
  *   node scripts/generate-audio.mjs [--pack t1-finance-news] [--force] [--dry-run]
+ *   node scripts/generate-audio.mjs --pack investing-basics --local
+ *   --local 使用已安装的 macOS 美式 Samantha / 英式 Daniel 语音，不需要云端凭据。
  * 输出：public/audio/<slug>-us.mp3、<slug>-gb.mp3、content/audio-manifest.json
  */
 import { execFile } from "node:child_process";
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
 import path from "node:path";
 import { promisify } from "node:util";
 
@@ -23,14 +26,9 @@ const run = promisify(execFile);
 const ROOT = process.cwd();
 const AUDIO_DIR = path.join(ROOT, "public/audio");
 const MANIFEST = path.join(ROOT, "content/audio-manifest.json");
-const PACKS = [
-  "t1-finance-news",
-  "t2-company-earnings",
-  "t3-bonds-rates",
-  "t4-forex-macro",
-  "t5-quant-research",
-  "hedge-or-pledge",
-];
+const PACKS = JSON.parse(readFileSync(path.join(ROOT, "content/packs/index.json"), "utf8"))
+  .packs.filter((pack) => pack.status !== "planned")
+  .map((pack) => pack.id);
 
 // 039 项目验证过的音色，女声、清晰、适合教学。
 const VOICE = "bc9e47fd83a04010ad6617ed54b92ee3";
@@ -46,10 +44,11 @@ const slug = (id) =>
     .replace(/^-|-$/g, "");
 
 function parseArgs(argv) {
-  const out = { pack: null, force: false, dryRun: false };
+  const out = { pack: null, force: false, dryRun: false, local: false };
   for (let i = 0; i < argv.length; i += 1) {
     if (argv[i] === "--pack") out.pack = argv[++i];
     else if (argv[i] === "--force") out.force = true;
+    else if (argv[i] === "--local") out.local = true;
     else if (argv[i] === "--dry-run") out.dryRun = true;
   }
   return out;
@@ -115,7 +114,10 @@ async function synth(text, language, key, ip) {
       "%{http_code}",
     ],
     { maxBuffer: 8 * 1024 * 1024, encoding: "buffer" },
-  );
+  ).catch(() => {
+    // execFile errors embed the command, including its Authorization header.
+    throw new Error(`fish ${language}: audio request failed at the transport layer`);
+  });
   // -w 把状态码附在二进制之后；拆出来判断，音频部分才是 mp3。
   const buf = Buffer.isBuffer(stdout) ? stdout : Buffer.from(stdout);
   const tail = buf.subarray(-3).toString();
@@ -149,6 +151,22 @@ async function durationSeconds(file) {
  */
 const MAX_SECONDS = 4;
 
+// Offline authoring fallback on macOS. Record the provider per term so these
+// clips are not labelled as cloud recordings.
+const LOCAL_VOICES = { "en-US": "Samantha (English (US))", "en-GB": "Daniel (English (UK))" };
+async function synthLocal(text, language) {
+  const directory = mkdtempSync(path.join(tmpdir(), "kachi-audio-"));
+  const source = path.join(directory, "speech.aiff");
+  const target = path.join(directory, "speech.mp3");
+  try {
+    await run("say", ["-v", LOCAL_VOICES[language], "-r", "165", "-o", source, text]);
+    await run("ffmpeg", ["-v", "error", "-y", "-i", source, "-codec:a", "libmp3lame", "-q:a", "5", target]);
+    return readFileSync(target);
+  } finally {
+    rmSync(directory, { recursive: true, force: true });
+  }
+}
+
 /** 概念按 pack 去重收集；同一 id 在多个 pack 出现时只生成一次。 */
 function concepts(options) {
   const seen = new Map();
@@ -180,9 +198,9 @@ async function main() {
   console.log(`Pending: ${pending.length} of ${list.length} terms${options.dryRun ? " (dry run)" : ""}`);
   if (options.dryRun || !pending.length) return;
 
-  const key = credential();
-  const ip = await resolveApiIp();
-  console.log(`api.fish.audio → ${ip}`);
+  const key = options.local ? null : credential();
+  const ip = options.local ? null : await resolveApiIp();
+  console.log(options.local ? "Recording with installed macOS US/GB voices" : `api.fish.audio → ${ip}`);
   mkdirSync(AUDIO_DIR, { recursive: true });
 
   let done = 0;
@@ -199,7 +217,10 @@ async function main() {
         // Retry once on an implausible duration; a second failure is a real error.
         let seconds = 0;
         for (let attempt = 0; attempt < 2; attempt += 1) {
-          writeFileSync(target, await synth(term, lang, key, ip));
+          writeFileSync(
+            target,
+            options.local ? await synthLocal(term, lang) : await synth(term, lang, key, ip),
+          );
           seconds = await durationSeconds(target);
           if (seconds > 0 && seconds <= MAX_SECONDS) break;
           console.warn(`  [retry] ${id} ${accent}: ${seconds.toFixed(1)}s, regenerating`);
@@ -209,7 +230,10 @@ async function main() {
         }
         files[accent] = `/audio/${base}-${accent}.mp3`;
       }
-      manifest.words[id] = files;
+      manifest.words[id] = {
+        ...files,
+        ...(options.local ? { provider: "macOS say", voices: LOCAL_VOICES } : {}),
+      };
       writeFileSync(MANIFEST, `${JSON.stringify(manifest, null, 2)}\n`);
       done += 1;
       console.log(`  [${done}/${pending.length}] ${id}`);

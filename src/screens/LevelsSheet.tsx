@@ -13,7 +13,7 @@ export interface LevelChoice {
 }
 
 /**
- * The six levels. Every level is open — they are ordered by what you read,
+ * The foundation and six reading levels. Every level is open — they are ordered by what you read,
  * not gated, so an adult who already follows the front page can go straight to
  * bonds. The current one is marked; the counts say how much is new.
  */

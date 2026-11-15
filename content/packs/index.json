@@ -2,6 +2,16 @@
   "schemaVersion": 1,
   "packs": [
     {
+      "id": "investing-basics",
+      "level": 0,
+      "title": "投资品种与基金",
+      "goal": "分清股票、债券、基金类型、净值和费用",
+      "conceptCount": 15,
+      "status": "ready",
+      "titleEn": "Investment products and funds",
+      "goalEn": "Distinguish stocks, bonds, fund types, NAV, and costs"
+    },
+    {
       "id": "t1-finance-news",
       "level": 1,
       "title": "读财经首页",

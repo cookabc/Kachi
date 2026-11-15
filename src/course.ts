@@ -54,6 +54,8 @@ type CourseModule = { default: unknown };
 const asCourse = (module: CourseModule): Course => module.default as Course;
 
 const LOADERS: Record<string, () => Promise<CourseModule>> = {
+  "investing-basics/zh-CN": () => import("../content/packs/investing-basics/zh-CN/course.json"),
+  "investing-basics/en-US": () => import("../content/packs/investing-basics/en-US/course.json"),
   "t1-finance-news/zh-CN": () => import("../content/packs/t1-finance-news/zh-CN/course.json"),
   "hedge-or-pledge/zh-CN": () => import("../content/packs/hedge-or-pledge/zh-CN/course.json"),
   "hedge-or-pledge/en-US": () => import("../content/packs/hedge-or-pledge/en-US/course.json"),

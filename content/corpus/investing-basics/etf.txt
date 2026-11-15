@@ -1,0 +1,6 @@
+Exchange-Traded Funds (ETFs)
+Publisher: Investor.gov / US SEC
+Accessed: 2026-11-15
+Source URL: see basics-etf in investing-basics/source.mjs
+Short verbatim excerpt (terminology evidence only):
+ETF investors can trade their shares on the market at the market price whenever the market is open

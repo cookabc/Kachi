@@ -1,0 +1,6 @@
+Stocks - FAQs
+Publisher: Investor.gov / US SEC
+Accessed: 2026-11-15
+Source URL: see basics-stocks in investing-basics/source.mjs
+Short verbatim excerpt (terminology evidence only):
+There are two main kinds of stocks, common stock and preferred stock.

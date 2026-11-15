@@ -1,0 +1,6 @@
+Net Asset Value
+Publisher: Investor.gov / US SEC
+Accessed: 2026-11-15
+Source URL: see basics-nav in investing-basics/source.mjs
+Short verbatim excerpt (terminology evidence only):
+"Net asset value," or "NAV," of an investment company is the company's total assets minus its total liabilities.

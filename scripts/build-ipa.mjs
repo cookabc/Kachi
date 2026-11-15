@@ -20,14 +20,9 @@ import { existsSync, readFileSync as read, readFileSync, writeFileSync } from "n
 import path from "node:path";
 
 const ROOT = process.cwd();
-const PACKS = [
-  "t1-finance-news",
-  "t2-company-earnings",
-  "t3-bonds-rates",
-  "t4-forex-macro",
-  "t5-quant-research",
-  "hedge-or-pledge",
-];
+const PACKS = JSON.parse(readFileSync(path.join(ROOT, "content/packs/index.json"), "utf8"))
+  .packs.filter((pack) => pack.status !== "planned")
+  .map((pack) => pack.id);
 
 // ARPAbet → IPA。美式（CMU 是美音）。
 const ARPA = {

@@ -1,0 +1,6 @@
+Bond Funds and Income Funds
+Publisher: Investor.gov / US SEC
+Accessed: 2026-11-15
+Source URL: see basics-bond-fund in investing-basics/source.mjs
+Short verbatim excerpt (terminology evidence only):
+These funds invest primarily in bonds or other types of debt securities.

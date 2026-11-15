@@ -1653,6 +1653,56 @@ dialog.sheet::backdrop {
     transform: rotate(-180deg) scale(0);
   }
 }
+.term-aliases {
+  margin: 8px 0 0;
+  color: var(--ink-2);
+  font-size: 12px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+.concept-reading {
+  margin: 18px 0;
+}
+.concept-reading:empty {
+  display: none;
+}
+.concept-info {
+  border-top: 1px solid var(--line);
+  text-align: left;
+  font-size: 14px;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+.concept-info summary {
+  min-height: 44px;
+  padding: 10px 0;
+  cursor: pointer;
+  font-weight: 800;
+}
+.concept-info summary:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.concept-info dl,
+.concept-info p,
+.concept-info ul {
+  margin: 0 0 12px;
+}
+.concept-info dt {
+  margin-top: 12px;
+  font-weight: 800;
+}
+.concept-info dd {
+  margin: 2px 0 0;
+}
+.concept-info ul {
+  padding-left: 18px;
+}
+.concept-info a {
+  color: inherit;
+  text-underline-offset: 3px;
+}
+
 .trick {
   display: flex;
   gap: 12px;

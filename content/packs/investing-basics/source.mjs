@@ -1,0 +1,197 @@
+// Investment products and funds: an optional foundation before T1.
+// Explanations, examples and drills are original. The short corpus excerpts
+// establish terminology only; product mechanics are checked against Investor.gov.
+export const PACK = {
+  packId: "investing-basics",
+  contentVersion: "2026.11.15-basics.1",
+  title: "投资品种与基金",
+  citationMode: "explicit",
+};
+
+export const UNITS = [
+  { id: 1, title: "买的是股权还是债权", blurb: "先分清出资当股东，还是把钱借出去。", titleEn: "Owner or lender?", blurbEn: "Ownership, debt, and the two main kinds of shares." },
+  { id: 2, title: "基金怎么交易、怎么管理", blurb: "交易形式与投资策略是两个维度。美国基金术语按常见美国用法讲解。", titleEn: "How funds trade and invest", blurbEn: "Trading structure and investment strategy are different dimensions. Fund terminology follows common US usage." },
+  { id: 3, title: "基金里面装了什么", blurb: "看持仓，区分股票、债券和短期现金管理。", titleEn: "What does the fund hold?", blurbEn: "Equity, debt, and short-term cash management." },
+  { id: 4, title: "看懂净值、价格和费用", blurb: "同一只基金，账面值、成交价和收费口径各不相同。", titleEn: "Value, price, and costs", blurbEn: "Separate what assets are worth, what you pay, and how fees are charged." },
+];
+
+// Each meaning has one identity. Aliases are spellings of that meaning;
+// they do not become extra concepts or forced "confusable" pairs.
+export const CONCEPTS = [
+  {
+    id: "stock", term: "stock", aliases: ["share", "shares", "stocks"], unit: 1, zh: "股票",
+    caption: "买下一家公司的部分所有权。",
+    definition: "代表公司所有权的证券；持有人承担经营与价格风险，可能获得分红和资本利得。",
+    example: "Buying this stock makes you a part-owner, not a lender to the company.",
+    mixUp: "bond", mixUpType: "coexist",
+    mixUpWhy: "stock 是所有权；bond 是债权。股东分红不保证，债券偿付也有违约风险。share 在这里是股票份额的常见说法，不另算一种产品。",
+    learning: { workedExample: "教学假设：公司共有 1,000 股，你持有 10 股，就持有 1% 的股份。", application: "读产品说明时先判断拿到的是股东权益，还是还本付息的债权。", misconception: "买了股票不等于公司必须分红，也不保证将来能按买入价卖出。" },
+    en: { caption: "A slice of ownership in a business.", definition: "A security representing company ownership, with business and price risk and possible dividends or capital gains.", example: "Buying this stock makes you a part-owner, not a lender to the company.", mixUpWhy: "Stock means ownership; a bond is debt. Neither dividends nor repayment is risk-free. Share is a common ownership-unit expression, not another product here.", learning: { workedExample: "Hypothetical: owning 10 of a company's 1,000 shares gives you a 1% stake.", application: "Identify whether a product gives you ownership or a claim for repayment.", misconception: "Share ownership does not guarantee dividends or recovery of the purchase price." } },
+  },
+  {
+    id: "bond", term: "bond", unit: 1, zh: "债券",
+    caption: "把钱借给发行人，拿到约定偿付的凭证。",
+    definition: "发行人向投资者融资形成的债务证券，利息和本金按条款约定偿付，但存在违约与价格风险。",
+    example: "The bond promises repayment at maturity rather than ownership of the issuer.",
+    mixUp: "stock", mixUpType: "coexist", mixUpWhy: "bond 的持有人是债权人；stock 的持有人是股东。还本付息是合同义务，不是无风险保证。",
+    learning: { workedExample: "教学假设：面值 1,000 元、年票息 3% 的债券，每年约定利息为 30 元；这是票息，不一定是买入收益率。", application: "核对发行人、偿付条款与信用风险，再区分债券价格和面值。", misconception: "债券有到期日，也可能违约；提前卖出的价格可能低于买入价。" },
+    en: { caption: "Lend to an issuer under agreed repayment terms.", definition: "A debt security with contractual payment terms, exposed to default and market-price risk.", example: "The bond promises repayment at maturity rather than ownership of the issuer.", mixUpWhy: "Bondholders lend; stockholders own. A payment obligation is not a risk-free guarantee.", learning: { workedExample: "Hypothetical: a 1,000-face-value bond with a 3% annual coupon promises 30 a year. That coupon is not necessarily your purchase yield.", application: "Read the issuer and repayment terms, and distinguish face value from the trading price.", misconception: "A maturity date does not prevent default or a loss on an earlier sale." } },
+  },
+  {
+    id: "common stock", term: "common stock", aliases: ["ordinary shares"], unit: 1, zh: "普通股",
+    caption: "通常有投票权，清算时排在优先股后面。",
+    definition: "普通股权，通常附带投票权；分红由公司决定，清算剩余索取顺位低于债权人与优先股股东。",
+    example: "Common stock holders voted at the meeting but received no dividend this year.",
+    mixUp: "preferred stock", mixUpType: "coexist", mixUpWhy: "common stock 通常有投票权；preferred stock 通常在分红和清算分配上更优先。具体权利看发行条款。",
+    relations: [{ type: "prereq", with: "stock" }],
+    learning: { workedExample: "教学假设：公司清算后，偿还债务并满足优先股权利，普通股只能分到剩余部分，可能为零。", application: "读股份类别时核对投票权、分红安排和清算顺位。", misconception: "普通股股东有投票权，不代表能保证分红或控制公司。" },
+    en: { caption: "Usually carries votes, but ranks behind preferred shares in liquidation.", definition: "Ordinary ownership, usually with voting rights and discretionary dividends; residual claims rank behind creditors and preferred shareholders.", example: "Common stock holders voted at the meeting but received no dividend this year.", mixUpWhy: "Common stock usually carries votes; preferred stock usually has distribution priority. Read the issue terms.", learning: { workedExample: "Hypothetical: after creditors and preferred claims are satisfied, common shareholders divide what remains, possibly nothing.", application: "Check voting rights, distribution terms, and liquidation priority for the share class.", misconception: "A vote is not a guarantee of income or control." } },
+  },
+  {
+    id: "preferred stock", term: "preferred stock", aliases: ["preference shares", "preferred shares"], unit: 1, zh: "优先股",
+    caption: "分红和清算分配通常更优先，但仍然是股权。",
+    definition: "通常在分红与清算分配上优于普通股的股份，投票权往往受限；具体安排以发行条款为准。",
+    example: "Preferred stock ranks ahead of common shares for the stated distributions.",
+    mixUp: "common stock", mixUpType: "coexist", mixUpWhy: "preferred 的优先通常指相对普通股的分配顺位，不代表优于债权人，也不代表无风险。",
+    relations: [{ type: "prereq", with: "stock" }],
+    learning: { workedExample: "教学假设：可分配财产先偿还债务，再按条款满足优先股，最后才轮到普通股。", application: "查看股息是否可递延、是否可赎回，以及是否带有转换权。", misconception: "优先股不是银行存款；名称里的『优先』也不等于保本。" },
+    en: { caption: "Usually has distribution priority, while remaining equity.", definition: "Shares generally ranking ahead of common equity for dividends and liquidation, often with limited voting rights; terms vary.", example: "Preferred stock ranks ahead of common shares for the stated distributions.", mixUpWhy: "Preferred means priority over common equity, not over creditors and not protection from loss.", learning: { workedExample: "Hypothetical: available assets pay creditors, then preferred claims under their terms, then common shareholders.", application: "Read dividend deferral, redemption, and conversion provisions.", misconception: "Priority is not deposit protection or a capital guarantee." } },
+  },
+  {
+    id: "mutual fund", term: "mutual fund", aliases: ["open-end mutual fund"], unit: 2, zh: "共同基金（常见开放式基金）",
+    risk: "jurisdictional", jurisdiction: "US", asOf: "2026-11-15", reviewDue: "2027-05-15",
+    caption: "通常向基金申购或赎回，按下一次计算的净值定价。",
+    definition: "本课按美国常见开放式基金用法：汇集投资者资金，通常以接下来计算的单位净值办理申购赎回，另计适用费用。",
+    example: "The mutual fund processed the order using its next calculated per-share NAV.",
+    mixUp: "etf", mixUpType: "coexist", mixUpWhy: "mutual fund 通常按下一次净值申赎；ETF 在交易所按市价买卖。两者都可以采用主动或指数策略。",
+    learning: { workedExample: "教学假设：订单适用的下一次单位净值为 10 元，不计费用，1,000 元可买 100 份。", application: "阅读订单截止时间、净值计算与申赎费用；其他地区按当地规则和基金文件确认。", misconception: "mutual fund 不等于主动基金，也不能无条件等同于所有地区的『公募基金』。" },
+    en: { caption: "Usually bought or redeemed at the next calculated NAV.", definition: "In common US open-end usage, a pooled fund whose investor orders generally use the next calculated per-share NAV, with applicable fees.", example: "The mutual fund processed the order using its next calculated per-share NAV.", mixUpWhy: "Mutual funds generally use the next NAV; ETFs trade on an exchange at market prices. Either can use active or index strategies.", learning: { workedExample: "Hypothetical: an applicable next NAV of 10 buys 100 shares for 1,000 before fees.", application: "Check order cutoffs, valuation rules, and charges. Other jurisdictions and products can differ.", misconception: "Mutual fund does not mean actively managed, nor every public fund in every country." } },
+  },
+  {
+    id: "etf", term: "ETF", aliases: ["exchange-traded fund", "exchange traded fund"], unit: 2, zh: "交易所交易基金",
+    caption: "基金份额像股票一样在交易所买卖。",
+    definition: "份额在交易所交易的基金；成交价格由市场形成，可以高于或低于单位净值，策略可以是指数或主动管理。",
+    example: "The ETF traded at 10.10 while its reported per-share NAV was 10.00.",
+    mixUp: "mutual fund", mixUpType: "coexist", mixUpWhy: "ETF 描述交易形式，index fund 描述投资策略；ETF 不一定跟踪指数，也不一定充分分散。",
+    learning: { workedExample: "教学假设：单位净值 10 元，成交价 10.10 元，买入价格比净值高 1%。", application: "看交易价与净值的偏离、买卖价差及基金实际持仓。", misconception: "ETF 不是指数基金的同义词；某些 ETF 持仓集中，风险也可能很高。" },
+    en: { caption: "Fund shares bought and sold on an exchange.", definition: "A fund with exchange-traded shares. Market prices can differ from per-share NAV; strategies may be indexed or active.", example: "The ETF traded at 10.10 while its reported per-share NAV was 10.00.", mixUpWhy: "ETF describes the trading structure; index fund describes the strategy. Not every ETF tracks an index or is broadly diversified.", learning: { workedExample: "Hypothetical: a 10.10 purchase price against a NAV of 10 is a 1% premium.", application: "Check the price versus NAV, trading spread, and underlying holdings.", misconception: "An ETF label alone promises neither indexing nor broad diversification." } },
+  },
+  {
+    id: "index fund", term: "index fund", aliases: ["tracker fund"], unit: 2, zh: "指数基金",
+    caption: "按规则追踪一个指数，不靠经理逐只挑选来争取超额收益。",
+    definition: "以追踪特定市场指数为目标的基金，可采用 ETF 或共同基金形式；费用和跟踪误差会影响结果。",
+    example: "The index fund sought to follow the benchmark rather than beat it through stock picking.",
+    mixUp: "actively managed fund", mixUpType: "coexist", mixUpWhy: "index fund 按指数策略运作；actively managed fund 依赖管理人的主动判断。这个区别与是否在交易所交易是两回事。",
+    learning: { workedExample: "教学假设：指数涨 5%，基金涨 4.7%；跟踪目标不代表回报会完全相同。", application: "确认所跟踪的指数、持仓规则、费用与跟踪差异。", misconception: "指数基金也可能下跌；跟踪一个狭窄行业不等于充分分散。" },
+    en: { caption: "Seeks to follow an index rather than pick winners.", definition: "A fund seeking to track a market index, through an ETF or mutual-fund structure, subject to costs and tracking differences.", example: "The index fund sought to follow the benchmark rather than beat it through stock picking.", mixUpWhy: "Index funds follow index rules; active funds rely on manager decisions. Exchange trading is a separate distinction.", learning: { workedExample: "Hypothetical: the index rises 5% and the fund rises 4.7%. Tracking is an objective, not an exact-return promise.", application: "Identify the index, its holdings rules, fund costs, and tracking differences.", misconception: "An index can fall or concentrate on one narrow industry." } },
+  },
+  {
+    id: "actively managed fund", term: "actively managed fund", aliases: ["active fund"], unit: 2, zh: "主动管理基金",
+    caption: "管理人主动决定买什么、配多少，而非单纯照着指数配置。",
+    definition: "由管理人根据投资目标主动选择或调整持仓的基金，可以采用共同基金或 ETF 形式，并不保证跑赢基准。",
+    example: "The actively managed fund changed its holdings after the manager revised her outlook.",
+    mixUp: "index fund", mixUpType: "coexist", mixUpWhy: "主动管理看管理人的选择；指数策略看指数规则。不能用 mutual fund 和 ETF 直接代替主动与被动的划分。",
+    learning: { workedExample: "教学假设：经理主动减持某行业，该行业随后上涨，基金可能因此落后基准。", application: "核对投资目标、持仓变化与费用，比较相同风险范围内的基准。", misconception: "有人主动管理不代表一定能跑赢指数，ETF 也可以主动管理。" },
+    en: { caption: "A manager chooses investments rather than simply following index rules.", definition: "A fund whose manager selects or adjusts holdings toward an investment objective; it may be a mutual fund or ETF and can lag its benchmark.", example: "The actively managed fund changed its holdings after the manager revised her outlook.", mixUpWhy: "Active describes manager discretion; index describes rules-based tracking. Mutual fund versus ETF is a different axis.", learning: { workedExample: "Hypothetical: a manager cuts a sector before it rallies, leaving the fund behind its benchmark.", application: "Compare objectives, holdings changes, and costs against a relevant benchmark.", misconception: "Manager discretion does not guarantee outperformance; an ETF can also be active." } },
+  },
+  {
+    id: "stock fund", term: "stock fund", aliases: ["equity fund"], unit: 3, zh: "股票基金",
+    caption: "主要持有股票的一篮子投资。",
+    definition: "以股票为主要投资对象的基金；可以采用不同交易形式和管理策略，风险取决于实际持仓与集中程度。",
+    example: "The stock fund held shares in eighty companies rather than lending to those companies.",
+    mixUp: "bond fund", mixUpType: "coexist", mixUpWhy: "stock fund 主要持股权；bond fund 主要持债权。两者都可能亏损，基金名字不能代替持仓检查。",
+    relations: [{ type: "prereq", with: "stock" }],
+    learning: { workedExample: "教学假设：基金有 80% 资产配置股票、其余为现金；其主要风险仍来自股市和具体持仓。", application: "读持仓行业、地区和集中度，分清基金形式与资产类别。", misconception: "持有很多股票也可能集中在同一行业，不能只凭持仓数量判断分散程度。" },
+    en: { caption: "A fund investing primarily in company shares.", definition: "A fund mainly holding equities, in various structures and strategies, with risk depending on holdings and concentration.", example: "The stock fund held shares in eighty companies rather than lending to those companies.", mixUpWhy: "Stock funds mainly own equity; bond funds mainly hold debt. Both can lose money.", learning: { workedExample: "Hypothetical: 80% shares and 20% cash still leaves a fund mainly exposed to its equity holdings.", application: "Read sector, country, and position concentration, separately from fund structure.", misconception: "Many holdings in one industry may still be concentrated." } },
+  },
+  {
+    id: "bond fund", term: "bond fund", unit: 3, zh: "债券基金",
+    caption: "主要持有债务证券，份额价格仍然会上下波动。",
+    definition: "主要投资债券等债务证券的基金，承受利率、信用等风险；持有基金不等于持有一张约定到期偿付的债券。",
+    example: "The bond fund lost value when rising rates pushed down the prices of its holdings.",
+    mixUp: "stock fund", mixUpType: "coexist", mixUpWhy: "bond fund 主要投资债权，stock fund 主要投资股权；债券基金也不等于保本产品。",
+    relations: [{ type: "prereq", with: "bond" }],
+    learning: { workedExample: "教学假设：基金持有的债券市值从 100 降至 97，其他条件不变时，基金净资产也会减少。", application: "查看久期、信用质量和费用，判断基金主要承担哪类风险。", misconception: "普通债券基金通常没有像单张债券那样对投资者承诺的统一还本到期日；具体看产品结构。" },
+    en: { caption: "A debt portfolio whose share value can still move.", definition: "A fund mainly holding bonds or other debt, exposed to interest-rate and credit risk; a fund share is not a single bond with promised maturity payments.", example: "The bond fund lost value when rising rates pushed down the prices of its holdings.", mixUpWhy: "Bond funds mainly hold debt; stock funds mainly hold equity. A bond fund is not a capital guarantee.", learning: { workedExample: "Hypothetical: holdings fall in market value from 100 to 97. All else equal, fund net assets fall too.", application: "Check duration, credit quality, and fees to understand the main exposures.", misconception: "An ordinary bond fund generally does not promise you repayment on a single maturity date. Product structures vary." } },
+  },
+  {
+    id: "money market fund", term: "money market fund", aliases: ["MMF"], unit: 3, zh: "货币市场基金",
+    caption: "主要投资短期、流动性较高的货币市场工具。",
+    definition: "主要持有短期债务、现金或现金等价物的基金，常用于现金管理；不同于银行存款，也可能亏损。",
+    example: "The money market fund held short-term instruments instead of a portfolio of long-dated bonds.",
+    mixUp: "bond fund", mixUpType: "scope", mixUpWhy: "money market fund 侧重短期货币市场工具；bond fund 的债券期限与信用风险范围更广。低波动不等于保本。",
+    learning: { workedExample: "教学假设：短期利率下降后，基金到期资金只能投向收益更低的新工具，后续分配收益可能减少。", application: "检查所持工具、期限、流动性安排与费用。", misconception: "货币基金不是银行存款，不能把当地存款保障规则直接套到基金份额上。" },
+    en: { caption: "A fund focused on short-term money-market instruments.", definition: "A fund mainly holding short-term debt, cash, or cash equivalents, often for cash management. It is not a bank deposit and can lose money.", example: "The money market fund held short-term instruments instead of a portfolio of long-dated bonds.", mixUpWhy: "Money market funds focus on short-term instruments; bond funds cover a wider maturity and credit range. Low volatility is not a guarantee.", learning: { workedExample: "Hypothetical: falling short-term rates mean maturing holdings are replaced at lower yields, reducing later income.", application: "Check instruments, maturities, liquidity arrangements, and expenses.", misconception: "Do not transfer bank-deposit protection rules to fund shares." } },
+  },
+  {
+    id: "nav", term: "NAV", aliases: ["net asset value"], sense: "fund-net-assets", unit: 4, zh: "基金净资产值／单位净值",
+    caption: "资产扣掉负债；再除以份额数，才是每份净值。",
+    definition: "基金资产减去负债得到净资产值；除以流通份额数得到单位净值。基金报价中的 NAV 常指每份数值，应确认口径。",
+    example: "The fund reported NAV of 10 per share, based on net assets divided by shares outstanding.",
+    mixUp: "fund-market-price", mixUpType: "coexist", mixUpWhy: "NAV 来自资产负债估值；market price 来自实际交易。比较时要统一到每份口径，并核对估值时点。",
+    learning: { workedExample: "教学假设：资产 110 万元、负债 10 万元、共 10 万份，净资产为 100 万元，单位净值为 10 元。", application: "用同口径净值与交易价观察 ETF 折溢价，注意报价与估值时点。", misconception: "单位净值更低，不代表基金更便宜或未来回报更高。" },
+    en: { caption: "Assets less liabilities; divide again for the per-share value.", definition: "Fund assets minus liabilities give total NAV. Dividing by outstanding shares gives per-share NAV, often shortened to NAV in quotes.", example: "The fund reported NAV of 10 per share, based on net assets divided by shares outstanding.", mixUpWhy: "NAV comes from asset valuation; market price comes from trading. Compare per-share figures with compatible valuation times.", learning: { workedExample: "Hypothetical: assets of 1.1 million minus liabilities of 0.1 million, divided by 100,000 shares, give NAV of 10 per share.", application: "Compare compatible NAV and trade prices when examining an ETF premium or discount.", misconception: "A lower per-share NAV does not make a fund better value or predict higher returns." } },
+  },
+  {
+    id: "fund-market-price", term: "market price", sense: "fund-share-trading-price", unit: 4, zh: "基金份额市价",
+    caption: "在市场上实际买卖一份基金的价格。",
+    definition: "基金份额在交易所成交的价格，由买卖形成；与基金单位净值可能不同。",
+    example: "The market price was 9.90 per share even though the reported NAV was 10.00.",
+    mixUp: "nav", mixUpType: "coexist", mixUpWhy: "market price 是交易价格；NAV 是估值口径。买 ETF 时不能默认按净值成交。",
+    learning: { workedExample: "教学假设：单位净值 10 元、市价 9.90 元，市价相对净值折价 1%。", application: "在下单前检查交易报价，并核对净值时点、价差和费用。", misconception: "看到折价并不保证能套利，报价时点、交易成本与资产风险都可能影响结果。" },
+    en: { caption: "The price for a fund share in an exchange trade.", definition: "The traded price of an exchange-listed fund share, which can differ from per-share NAV.", example: "The market price was 9.90 per share even though the reported NAV was 10.00.", mixUpWhy: "Market price is what trades; NAV is an asset valuation. An ETF purchase need not occur at NAV.", learning: { workedExample: "Hypothetical: a price of 9.90 against NAV of 10 is a 1% discount.", application: "Check the quote, valuation timing, trading spread, and fees before comparing prices.", misconception: "A quoted discount alone is not a guaranteed arbitrage opportunity." } },
+  },
+  {
+    id: "expense ratio", term: "expense ratio", aliases: ["annual expense ratio"], unit: 4, zh: "基金年度费用率",
+    caption: "每年运营费用占平均净资产的比例。",
+    definition: "基金年度运营费用相对平均净资产的比例，通常包含管理等费用；它不是全部交易成本，也不等于单独的管理费率。",
+    example: "The expense ratio was 0.50% a year, rather than a charge only when shares were bought.",
+    mixUp: "sales load", mixUpType: "timing", mixUpWhy: "expense ratio 衡量持续运营费用；sales load 是买入或卖出时的销售收费。比较总成本时需要分别看。",
+    learning: { workedExample: "教学假设：平均持仓价值全年为 10,000 元、年度费用率 0.5%，对应约 50 元费用，实际随净值和计提变化。", application: "读基金费用表，区分管理费、年度运营费用、销售收费和交易成本。", misconception: "费用率 0.5% 不等于管理费之外还一定再收 0.5%；核对包含关系，也不要把已扣费用的收益再扣一次。" },
+    en: { caption: "Annual operating expenses as a share of average net assets.", definition: "A fund's annual operating-cost percentage, typically including management and other costs; it is neither just the management fee nor every trading cost.", example: "The expense ratio was 0.50% a year, rather than a charge only when shares were bought.", mixUpWhy: "Expense ratio measures ongoing operations; sales load is charged on a purchase or sale. Read them separately.", learning: { workedExample: "Hypothetical: a constant 10,000 average holding at 0.5% implies about 50 of annual expenses; actual accrual varies.", application: "Separate management costs, total operating expenses, sales charges, and trading costs.", misconception: "Do not automatically add a management fee twice or subtract expenses again from returns already net of them." } },
+  },
+  {
+    id: "sales load", term: "sales load", aliases: ["sales charge"], unit: 4, zh: "基金销售收费",
+    caption: "某些基金在买入或卖出时收取的销售费用。",
+    definition: "部分基金在申购或赎回时收取的销售收费，需与持续运营费用和其他申赎费用区分，具体以费用表为准。",
+    example: "A front-end sales load reduced the amount of the payment that was invested.",
+    mixUp: "expense ratio", mixUpType: "timing", mixUpWhy: "sales load 随申购或赎回发生；expense ratio 对应持续运营成本。没有销售收费也不等于没有其他费用。",
+    learning: { workedExample: "教学假设：投入总额 1,000 元，前端销售费按总额的 2% 收取，则费用 20 元，实际投入 980 元。", application: "确认收费基数、前端或后端安排，以及减免条件。其他地区的收费名称和规则可能不同。", misconception: "no-load 只说明没有这类销售收费，不代表基金运营费用为零。" },
+    en: { caption: "A sales charge on buying or redeeming some fund shares.", definition: "A sales-related purchase or redemption charge used by some funds, distinct from operating expenses and other transaction charges; read the fee table.", example: "A front-end sales load reduced the amount of the payment that was invested.", mixUpWhy: "A load is tied to purchase or redemption; expense ratio covers ongoing operations. No load does not mean no costs.", learning: { workedExample: "Hypothetical: a 2% front-end load on a 1,000 payment takes 20, leaving 980 invested.", application: "Check the fee base, purchase or redemption timing, and waivers. Local terminology and rules can differ.", misconception: "No-load funds can still charge operating and other expenses." } },
+  },
+];
+
+const BASE = "https://www.investor.gov/introduction-investing/investing-basics/";
+export const SOURCES = [
+  ["stocks", "Stocks - FAQs", "investment-products/stocks"],
+  ["bonds", "Bonds - FAQs", "investment-products/bonds-or-fixed-income-products/bonds"],
+  ["mutual", "Mutual Funds", "investment-products/mutual-funds-and-exchange-traded-funds-etfs/mutual-funds"],
+  ["etf", "Exchange-Traded Funds (ETFs)", "investment-products/mutual-funds-and-exchange-traded-2"],
+  ["index", "Index Funds", "investment-products/mutual-funds-and-exchange-traded-4"],
+  ["stock-fund", "Stock Fund", "glossary/stock-fund"],
+  ["bond-fund", "Bond Funds and Income Funds", "glossary/bond-funds-and-income-funds"],
+  ["money-market", "Money Market Funds", "investment-products/mutual-funds-and-exchange-traded-5"],
+  ["nav", "Net Asset Value", "glossary/net-asset-value"],
+  ["expense", "Expense Ratio", "glossary/expense-ratio"],
+  ["load", "Sales Charge or Sales Load", "glossary/sales-charge-or-load"],
+].map(([key, title, route]) => ({
+  id: `basics-${key}`, title, publisher: "SEC Office of Investor Education and Advocacy / Investor.gov",
+  url: `${BASE}${route}`, accessedAt: "2026-11-15", kind: "primary", rightsBasis: "facts-only",
+  file: `investing-basics/${key}.txt`,
+}));
+
+// Pin conceptual coverage instead of automatically citing any source that
+// happens to mention the headword. Short excerpts stay evidence, not lessons.
+export const CITES = {
+  "basics-stocks": ["stock", "common stock", "preferred stock"],
+  "basics-bonds": ["bond"],
+  "basics-mutual": ["mutual fund"],
+  "basics-etf": ["etf", "actively managed fund", "fund-market-price"],
+  "basics-index": ["index fund", "actively managed fund"],
+  "basics-stock-fund": ["stock fund"],
+  "basics-bond-fund": ["bond fund"],
+  "basics-money-market": ["money market fund"],
+  "basics-nav": ["nav"],
+  "basics-expense": ["expense ratio"],
+  "basics-load": ["sales load"],
+};

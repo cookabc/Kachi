@@ -810,6 +810,132 @@
     "margin-collateral": {
       "us": "/audio/margin-us.mp3",
       "gb": "/audio/margin-gb.mp3"
+    },
+    "stock": {
+      "us": "/audio/stock-us.mp3",
+      "gb": "/audio/stock-gb.mp3",
+      "provider": "macOS say",
+      "voices": {
+        "en-US": "Samantha (English (US))",
+        "en-GB": "Daniel (English (UK))"
+      }
+    },
+    "common stock": {
+      "us": "/audio/common-stock-us.mp3",
+      "gb": "/audio/common-stock-gb.mp3",
+      "provider": "macOS say",
+      "voices": {
+        "en-US": "Samantha (English (US))",
+        "en-GB": "Daniel (English (UK))"
+      }
+    },
+    "preferred stock": {
+      "us": "/audio/preferred-stock-us.mp3",
+      "gb": "/audio/preferred-stock-gb.mp3",
+      "provider": "macOS say",
+      "voices": {
+        "en-US": "Samantha (English (US))",
+        "en-GB": "Daniel (English (UK))"
+      }
+    },
+    "mutual fund": {
+      "us": "/audio/mutual-fund-us.mp3",
+      "gb": "/audio/mutual-fund-gb.mp3",
+      "provider": "macOS say",
+      "voices": {
+        "en-US": "Samantha (English (US))",
+        "en-GB": "Daniel (English (UK))"
+      }
+    },
+    "etf": {
+      "us": "/audio/etf-us.mp3",
+      "gb": "/audio/etf-gb.mp3",
+      "provider": "macOS say",
+      "voices": {
+        "en-US": "Samantha (English (US))",
+        "en-GB": "Daniel (English (UK))"
+      }
+    },
+    "index fund": {
+      "us": "/audio/index-fund-us.mp3",
+      "gb": "/audio/index-fund-gb.mp3",
+      "provider": "macOS say",
+      "voices": {
+        "en-US": "Samantha (English (US))",
+        "en-GB": "Daniel (English (UK))"
+      }
+    },
+    "actively managed fund": {
+      "us": "/audio/actively-managed-fund-us.mp3",
+      "gb": "/audio/actively-managed-fund-gb.mp3",
+      "provider": "macOS say",
+      "voices": {
+        "en-US": "Samantha (English (US))",
+        "en-GB": "Daniel (English (UK))"
+      }
+    },
+    "stock fund": {
+      "us": "/audio/stock-fund-us.mp3",
+      "gb": "/audio/stock-fund-gb.mp3",
+      "provider": "macOS say",
+      "voices": {
+        "en-US": "Samantha (English (US))",
+        "en-GB": "Daniel (English (UK))"
+      }
+    },
+    "bond fund": {
+      "us": "/audio/bond-fund-us.mp3",
+      "gb": "/audio/bond-fund-gb.mp3",
+      "provider": "macOS say",
+      "voices": {
+        "en-US": "Samantha (English (US))",
+        "en-GB": "Daniel (English (UK))"
+      }
+    },
+    "money market fund": {
+      "us": "/audio/money-market-fund-us.mp3",
+      "gb": "/audio/money-market-fund-gb.mp3",
+      "provider": "macOS say",
+      "voices": {
+        "en-US": "Samantha (English (US))",
+        "en-GB": "Daniel (English (UK))"
+      }
+    },
+    "nav": {
+      "us": "/audio/nav-us.mp3",
+      "gb": "/audio/nav-gb.mp3",
+      "provider": "macOS say",
+      "voices": {
+        "en-US": "Samantha (English (US))",
+        "en-GB": "Daniel (English (UK))"
+      }
+    },
+    "fund-market-price": {
+      "us": "/audio/fund-market-price-us.mp3",
+      "gb": "/audio/fund-market-price-gb.mp3",
+      "provider": "macOS say",
+      "voices": {
+        "en-US": "Samantha (English (US))",
+        "en-GB": "Daniel (English (UK))"
+      }
+    },
+    "expense ratio": {
+      "us": "/audio/expense-ratio-us.mp3",
+      "gb": "/audio/expense-ratio-gb.mp3",
+      "provider": "macOS say",
+      "voices": {
+        "en-US": "Samantha (English (US))",
+        "en-GB": "Daniel (English (UK))"
+      }
+    },
+    "sales load": {
+      "us": "/audio/sales-load-us.mp3",
+      "gb": "/audio/sales-load-gb.mp3",
+      "provider": "macOS say",
+      "voices": {
+        "en-US": "Samantha (English (US))",
+        "en-GB": "Daniel (English (UK))"
+      }
     }
   }
 }

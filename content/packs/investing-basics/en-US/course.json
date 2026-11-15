@@ -1,0 +1,3060 @@
+{
+  "schemaVersion": 1,
+  "packId": "investing-basics",
+  "contentVersion": "2026.11.15-basics.1",
+  "locale": "en-US",
+  "generatedAt": "2026.11.15-basics.1",
+  "units": [
+    {
+      "id": 1,
+      "title": "Owner or lender?",
+      "blurb": "Ownership, debt, and the two main kinds of shares."
+    },
+    {
+      "id": 2,
+      "title": "How funds trade and invest",
+      "blurb": "Trading structure and investment strategy are different dimensions. Fund terminology follows common US usage."
+    },
+    {
+      "id": 3,
+      "title": "What does the fund hold?",
+      "blurb": "Equity, debt, and short-term cash management."
+    },
+    {
+      "id": 4,
+      "title": "Value, price, and costs",
+      "blurb": "Separate what assets are worth, what you pay, and how fees are charged."
+    }
+  ],
+  "concepts": [
+    {
+      "id": "stock",
+      "unit": 1,
+      "term": "stock",
+      "aliases": [
+        "share",
+        "shares",
+        "stocks"
+      ],
+      "learning": {
+        "workedExample": "Hypothetical: owning 10 of a company's 1,000 shares gives you a 1% stake.",
+        "application": "Identify whether a product gives you ownership or a claim for repayment.",
+        "misconception": "Share ownership does not guarantee dividends or recovery of the purchase price."
+      },
+      "caption": "A slice of ownership in a business.",
+      "definition": "A security representing company ownership, with business and price risk and possible dividends or capital gains.",
+      "example": "Buying this stock makes you a part-owner, not a lender to the company.",
+      "mixUp": "bond",
+      "mixUpWhy": "Stock means ownership; a bond is debt. Neither dividends nor repayment is risk-free. Share is a common ownership-unit expression, not another product here.",
+      "mixUpType": "coexist",
+      "sourceIds": [
+        "basics-stocks"
+      ],
+      "relations": [],
+      "risk": "evergreen",
+      "reviewStatus": "draft"
+    },
+    {
+      "id": "bond",
+      "unit": 1,
+      "term": "bond",
+      "learning": {
+        "workedExample": "Hypothetical: a 1,000-face-value bond with a 3% annual coupon promises 30 a year. That coupon is not necessarily your purchase yield.",
+        "application": "Read the issuer and repayment terms, and distinguish face value from the trading price.",
+        "misconception": "A maturity date does not prevent default or a loss on an earlier sale."
+      },
+      "caption": "Lend to an issuer under agreed repayment terms.",
+      "definition": "A debt security with contractual payment terms, exposed to default and market-price risk.",
+      "example": "The bond promises repayment at maturity rather than ownership of the issuer.",
+      "mixUp": "stock",
+      "mixUpWhy": "Bondholders lend; stockholders own. A payment obligation is not a risk-free guarantee.",
+      "mixUpType": "coexist",
+      "sourceIds": [
+        "basics-bonds"
+      ],
+      "relations": [],
+      "risk": "evergreen",
+      "reviewStatus": "draft"
+    },
+    {
+      "id": "common stock",
+      "unit": 1,
+      "term": "common stock",
+      "aliases": [
+        "ordinary shares"
+      ],
+      "learning": {
+        "workedExample": "Hypothetical: after creditors and preferred claims are satisfied, common shareholders divide what remains, possibly nothing.",
+        "application": "Check voting rights, distribution terms, and liquidation priority for the share class.",
+        "misconception": "A vote is not a guarantee of income or control."
+      },
+      "caption": "Usually carries votes, but ranks behind preferred shares in liquidation.",
+      "definition": "Ordinary ownership, usually with voting rights and discretionary dividends; residual claims rank behind creditors and preferred shareholders.",
+      "example": "Common stock holders voted at the meeting but received no dividend this year.",
+      "mixUp": "preferred stock",
+      "mixUpWhy": "Common stock usually carries votes; preferred stock usually has distribution priority. Read the issue terms.",
+      "mixUpType": "coexist",
+      "sourceIds": [
+        "basics-stocks"
+      ],
+      "relations": [
+        {
+          "type": "prereq",
+          "with": "stock"
+        }
+      ],
+      "risk": "evergreen",
+      "reviewStatus": "draft"
+    },
+    {
+      "id": "preferred stock",
+      "unit": 1,
+      "term": "preferred stock",
+      "aliases": [
+        "preference shares",
+        "preferred shares"
+      ],
+      "learning": {
+        "workedExample": "Hypothetical: available assets pay creditors, then preferred claims under their terms, then common shareholders.",
+        "application": "Read dividend deferral, redemption, and conversion provisions.",
+        "misconception": "Priority is not deposit protection or a capital guarantee."
+      },
+      "caption": "Usually has distribution priority, while remaining equity.",
+      "definition": "Shares generally ranking ahead of common equity for dividends and liquidation, often with limited voting rights; terms vary.",
+      "example": "Preferred stock ranks ahead of common shares for the stated distributions.",
+      "mixUp": "common stock",
+      "mixUpWhy": "Preferred means priority over common equity, not over creditors and not protection from loss.",
+      "mixUpType": "coexist",
+      "sourceIds": [
+        "basics-stocks"
+      ],
+      "relations": [
+        {
+          "type": "prereq",
+          "with": "stock"
+        }
+      ],
+      "risk": "evergreen",
+      "reviewStatus": "draft"
+    },
+    {
+      "id": "mutual fund",
+      "unit": 2,
+      "term": "mutual fund",
+      "aliases": [
+        "open-end mutual fund"
+      ],
+      "learning": {
+        "workedExample": "Hypothetical: an applicable next NAV of 10 buys 100 shares for 1,000 before fees.",
+        "application": "Check order cutoffs, valuation rules, and charges. Other jurisdictions and products can differ.",
+        "misconception": "Mutual fund does not mean actively managed, nor every public fund in every country."
+      },
+      "caption": "Usually bought or redeemed at the next calculated NAV.",
+      "definition": "In common US open-end usage, a pooled fund whose investor orders generally use the next calculated per-share NAV, with applicable fees.",
+      "example": "The mutual fund processed the order using its next calculated per-share NAV.",
+      "mixUp": "etf",
+      "mixUpWhy": "Mutual funds generally use the next NAV; ETFs trade on an exchange at market prices. Either can use active or index strategies.",
+      "mixUpType": "coexist",
+      "sourceIds": [
+        "basics-mutual"
+      ],
+      "relations": [],
+      "risk": "jurisdictional",
+      "jurisdiction": "US",
+      "asOf": "2026-11-15",
+      "reviewDue": "2027-05-15",
+      "reviewStatus": "draft"
+    },
+    {
+      "id": "etf",
+      "unit": 2,
+      "term": "ETF",
+      "aliases": [
+        "exchange-traded fund",
+        "exchange traded fund"
+      ],
+      "learning": {
+        "workedExample": "Hypothetical: a 10.10 purchase price against a NAV of 10 is a 1% premium.",
+        "application": "Check the price versus NAV, trading spread, and underlying holdings.",
+        "misconception": "An ETF label alone promises neither indexing nor broad diversification."
+      },
+      "caption": "Fund shares bought and sold on an exchange.",
+      "definition": "A fund with exchange-traded shares. Market prices can differ from per-share NAV; strategies may be indexed or active.",
+      "example": "The ETF traded at 10.10 while its reported per-share NAV was 10.00.",
+      "mixUp": "mutual fund",
+      "mixUpWhy": "ETF describes the trading structure; index fund describes the strategy. Not every ETF tracks an index or is broadly diversified.",
+      "mixUpType": "coexist",
+      "sourceIds": [
+        "basics-etf"
+      ],
+      "relations": [],
+      "risk": "evergreen",
+      "reviewStatus": "draft"
+    },
+    {
+      "id": "index fund",
+      "unit": 2,
+      "term": "index fund",
+      "aliases": [
+        "tracker fund"
+      ],
+      "learning": {
+        "workedExample": "Hypothetical: the index rises 5% and the fund rises 4.7%. Tracking is an objective, not an exact-return promise.",
+        "application": "Identify the index, its holdings rules, fund costs, and tracking differences.",
+        "misconception": "An index can fall or concentrate on one narrow industry."
+      },
+      "caption": "Seeks to follow an index rather than pick winners.",
+      "definition": "A fund seeking to track a market index, through an ETF or mutual-fund structure, subject to costs and tracking differences.",
+      "example": "The index fund sought to follow the benchmark rather than beat it through stock picking.",
+      "mixUp": "actively managed fund",
+      "mixUpWhy": "Index funds follow index rules; active funds rely on manager decisions. Exchange trading is a separate distinction.",
+      "mixUpType": "coexist",
+      "sourceIds": [
+        "basics-index"
+      ],
+      "relations": [],
+      "risk": "evergreen",
+      "reviewStatus": "draft"
+    },
+    {
+      "id": "actively managed fund",
+      "unit": 2,
+      "term": "actively managed fund",
+      "aliases": [
+        "active fund"
+      ],
+      "learning": {
+        "workedExample": "Hypothetical: a manager cuts a sector before it rallies, leaving the fund behind its benchmark.",
+        "application": "Compare objectives, holdings changes, and costs against a relevant benchmark.",
+        "misconception": "Manager discretion does not guarantee outperformance; an ETF can also be active."
+      },
+      "caption": "A manager chooses investments rather than simply following index rules.",
+      "definition": "A fund whose manager selects or adjusts holdings toward an investment objective; it may be a mutual fund or ETF and can lag its benchmark.",
+      "example": "The actively managed fund changed its holdings after the manager revised her outlook.",
+      "mixUp": "index fund",
+      "mixUpWhy": "Active describes manager discretion; index describes rules-based tracking. Mutual fund versus ETF is a different axis.",
+      "mixUpType": "coexist",
+      "sourceIds": [
+        "basics-etf",
+        "basics-index"
+      ],
+      "relations": [],
+      "risk": "evergreen",
+      "reviewStatus": "draft"
+    },
+    {
+      "id": "stock fund",
+      "unit": 3,
+      "term": "stock fund",
+      "aliases": [
+        "equity fund"
+      ],
+      "learning": {
+        "workedExample": "Hypothetical: 80% shares and 20% cash still leaves a fund mainly exposed to its equity holdings.",
+        "application": "Read sector, country, and position concentration, separately from fund structure.",
+        "misconception": "Many holdings in one industry may still be concentrated."
+      },
+      "caption": "A fund investing primarily in company shares.",
+      "definition": "A fund mainly holding equities, in various structures and strategies, with risk depending on holdings and concentration.",
+      "example": "The stock fund held shares in eighty companies rather than lending to those companies.",
+      "mixUp": "bond fund",
+      "mixUpWhy": "Stock funds mainly own equity; bond funds mainly hold debt. Both can lose money.",
+      "mixUpType": "coexist",
+      "sourceIds": [
+        "basics-stock-fund"
+      ],
+      "relations": [
+        {
+          "type": "prereq",
+          "with": "stock"
+        }
+      ],
+      "risk": "evergreen",
+      "reviewStatus": "draft"
+    },
+    {
+      "id": "bond fund",
+      "unit": 3,
+      "term": "bond fund",
+      "learning": {
+        "workedExample": "Hypothetical: holdings fall in market value from 100 to 97. All else equal, fund net assets fall too.",
+        "application": "Check duration, credit quality, and fees to understand the main exposures.",
+        "misconception": "An ordinary bond fund generally does not promise you repayment on a single maturity date. Product structures vary."
+      },
+      "caption": "A debt portfolio whose share value can still move.",
+      "definition": "A fund mainly holding bonds or other debt, exposed to interest-rate and credit risk; a fund share is not a single bond with promised maturity payments.",
+      "example": "The bond fund lost value when rising rates pushed down the prices of its holdings.",
+      "mixUp": "stock fund",
+      "mixUpWhy": "Bond funds mainly hold debt; stock funds mainly hold equity. A bond fund is not a capital guarantee.",
+      "mixUpType": "coexist",
+      "sourceIds": [
+        "basics-bond-fund"
+      ],
+      "relations": [
+        {
+          "type": "prereq",
+          "with": "bond"
+        }
+      ],
+      "risk": "evergreen",
+      "reviewStatus": "draft"
+    },
+    {
+      "id": "money market fund",
+      "unit": 3,
+      "term": "money market fund",
+      "aliases": [
+        "MMF"
+      ],
+      "learning": {
+        "workedExample": "Hypothetical: falling short-term rates mean maturing holdings are replaced at lower yields, reducing later income.",
+        "application": "Check instruments, maturities, liquidity arrangements, and expenses.",
+        "misconception": "Do not transfer bank-deposit protection rules to fund shares."
+      },
+      "caption": "A fund focused on short-term money-market instruments.",
+      "definition": "A fund mainly holding short-term debt, cash, or cash equivalents, often for cash management. It is not a bank deposit and can lose money.",
+      "example": "The money market fund held short-term instruments instead of a portfolio of long-dated bonds.",
+      "mixUp": "bond fund",
+      "mixUpWhy": "Money market funds focus on short-term instruments; bond funds cover a wider maturity and credit range. Low volatility is not a guarantee.",
+      "mixUpType": "scope",
+      "sourceIds": [
+        "basics-money-market"
+      ],
+      "relations": [],
+      "risk": "evergreen",
+      "reviewStatus": "draft"
+    },
+    {
+      "id": "nav",
+      "unit": 4,
+      "term": "NAV",
+      "aliases": [
+        "net asset value"
+      ],
+      "sense": "fund-net-assets",
+      "learning": {
+        "workedExample": "Hypothetical: assets of 1.1 million minus liabilities of 0.1 million, divided by 100,000 shares, give NAV of 10 per share.",
+        "application": "Compare compatible NAV and trade prices when examining an ETF premium or discount.",
+        "misconception": "A lower per-share NAV does not make a fund better value or predict higher returns."
+      },
+      "caption": "Assets less liabilities; divide again for the per-share value.",
+      "definition": "Fund assets minus liabilities give total NAV. Dividing by outstanding shares gives per-share NAV, often shortened to NAV in quotes.",
+      "example": "The fund reported NAV of 10 per share, based on net assets divided by shares outstanding.",
+      "mixUp": "fund-market-price",
+      "mixUpWhy": "NAV comes from asset valuation; market price comes from trading. Compare per-share figures with compatible valuation times.",
+      "mixUpType": "coexist",
+      "sourceIds": [
+        "basics-nav"
+      ],
+      "relations": [],
+      "risk": "evergreen",
+      "reviewStatus": "draft"
+    },
+    {
+      "id": "fund-market-price",
+      "unit": 4,
+      "term": "market price",
+      "sense": "fund-share-trading-price",
+      "learning": {
+        "workedExample": "Hypothetical: a price of 9.90 against NAV of 10 is a 1% discount.",
+        "application": "Check the quote, valuation timing, trading spread, and fees before comparing prices.",
+        "misconception": "A quoted discount alone is not a guaranteed arbitrage opportunity."
+      },
+      "caption": "The price for a fund share in an exchange trade.",
+      "definition": "The traded price of an exchange-listed fund share, which can differ from per-share NAV.",
+      "example": "The market price was 9.90 per share even though the reported NAV was 10.00.",
+      "mixUp": "nav",
+      "mixUpWhy": "Market price is what trades; NAV is an asset valuation. An ETF purchase need not occur at NAV.",
+      "mixUpType": "coexist",
+      "sourceIds": [
+        "basics-etf"
+      ],
+      "relations": [],
+      "risk": "evergreen",
+      "reviewStatus": "draft"
+    },
+    {
+      "id": "expense ratio",
+      "unit": 4,
+      "term": "expense ratio",
+      "aliases": [
+        "annual expense ratio"
+      ],
+      "learning": {
+        "workedExample": "Hypothetical: a constant 10,000 average holding at 0.5% implies about 50 of annual expenses; actual accrual varies.",
+        "application": "Separate management costs, total operating expenses, sales charges, and trading costs.",
+        "misconception": "Do not automatically add a management fee twice or subtract expenses again from returns already net of them."
+      },
+      "caption": "Annual operating expenses as a share of average net assets.",
+      "definition": "A fund's annual operating-cost percentage, typically including management and other costs; it is neither just the management fee nor every trading cost.",
+      "example": "The expense ratio was 0.50% a year, rather than a charge only when shares were bought.",
+      "mixUp": "sales load",
+      "mixUpWhy": "Expense ratio measures ongoing operations; sales load is charged on a purchase or sale. Read them separately.",
+      "mixUpType": "timing",
+      "sourceIds": [
+        "basics-expense"
+      ],
+      "relations": [],
+      "risk": "evergreen",
+      "reviewStatus": "draft"
+    },
+    {
+      "id": "sales load",
+      "unit": 4,
+      "term": "sales load",
+      "aliases": [
+        "sales charge"
+      ],
+      "learning": {
+        "workedExample": "Hypothetical: a 2% front-end load on a 1,000 payment takes 20, leaving 980 invested.",
+        "application": "Check the fee base, purchase or redemption timing, and waivers. Local terminology and rules can differ.",
+        "misconception": "No-load funds can still charge operating and other expenses."
+      },
+      "caption": "A sales charge on buying or redeeming some fund shares.",
+      "definition": "A sales-related purchase or redemption charge used by some funds, distinct from operating expenses and other transaction charges; read the fee table.",
+      "example": "A front-end sales load reduced the amount of the payment that was invested.",
+      "mixUp": "expense ratio",
+      "mixUpWhy": "A load is tied to purchase or redemption; expense ratio covers ongoing operations. No load does not mean no costs.",
+      "mixUpType": "timing",
+      "sourceIds": [
+        "basics-load"
+      ],
+      "relations": [],
+      "risk": "evergreen",
+      "reviewStatus": "draft"
+    }
+  ],
+  "lessons": [
+    {
+      "id": "u1l1",
+      "unit": 1,
+      "title": "Owner or lender?",
+      "icon": "📈",
+      "review": false,
+      "prompts": [
+        {
+          "id": "u1l1-stock-m",
+          "type": "meaning",
+          "termId": "stock",
+          "termIds": [
+            "stock"
+          ],
+          "stem": "What does stock mean?",
+          "options": [
+            {
+              "text": "A security representing company ownership, with business and price risk and possible dividends or capital gains.",
+              "art": "stock"
+            },
+            {
+              "text": "A debt security with contractual payment terms, exposed to default and market-price risk.",
+              "art": "bond"
+            },
+            {
+              "text": "Ordinary ownership, usually with voting rights and discretionary dividends; residual claims rank behind creditors and preferred shareholders.",
+              "art": "common stock"
+            },
+            {
+              "text": "Shares generally ranking ahead of common equity for dividends and liquidation, often with limited voting rights; terms vary.",
+              "art": "preferred stock"
+            }
+          ],
+          "answer": 0,
+          "why": "Stock means ownership; a bond is debt. Neither dividends nor repayment is risk-free. Share is a common ownership-unit expression, not another product here."
+        },
+        {
+          "id": "u1l1-bond-m",
+          "type": "meaning",
+          "termId": "bond",
+          "termIds": [
+            "bond"
+          ],
+          "stem": "What does bond mean?",
+          "options": [
+            {
+              "text": "A debt security with contractual payment terms, exposed to default and market-price risk.",
+              "art": "bond"
+            },
+            {
+              "text": "A security representing company ownership, with business and price risk and possible dividends or capital gains.",
+              "art": "stock"
+            },
+            {
+              "text": "Ordinary ownership, usually with voting rights and discretionary dividends; residual claims rank behind creditors and preferred shareholders.",
+              "art": "common stock"
+            },
+            {
+              "text": "Shares generally ranking ahead of common equity for dividends and liquidation, often with limited voting rights; terms vary.",
+              "art": "preferred stock"
+            }
+          ],
+          "answer": 0,
+          "why": "Bondholders lend; stockholders own. A payment obligation is not a risk-free guarantee."
+        },
+        {
+          "id": "u1l1-stock-s",
+          "type": "scenario",
+          "termId": "stock",
+          "termIds": [
+            "stock"
+          ],
+          "story": "A slice of ownership in a business.",
+          "stem": "Which word is this?",
+          "options": [
+            {
+              "text": "stock",
+              "art": "stock"
+            },
+            {
+              "text": "bond",
+              "art": "bond"
+            },
+            {
+              "text": "common stock",
+              "art": "common stock"
+            },
+            {
+              "text": "preferred stock",
+              "art": "preferred stock"
+            }
+          ],
+          "answer": 0,
+          "why": "stock: A security representing company ownership, with business and price risk and possible dividends or capital gains."
+        },
+        {
+          "id": "u1l1-bond-s",
+          "type": "scenario",
+          "termId": "bond",
+          "termIds": [
+            "bond"
+          ],
+          "story": "Lend to an issuer under agreed repayment terms.",
+          "stem": "Which word is this?",
+          "options": [
+            {
+              "text": "bond",
+              "art": "bond"
+            },
+            {
+              "text": "stock",
+              "art": "stock"
+            },
+            {
+              "text": "common stock",
+              "art": "common stock"
+            },
+            {
+              "text": "preferred stock",
+              "art": "preferred stock"
+            }
+          ],
+          "answer": 0,
+          "why": "bond: A debt security with contractual payment terms, exposed to default and market-price risk."
+        },
+        {
+          "id": "u1l1-stock-t",
+          "type": "truefalse",
+          "termId": "stock",
+          "termIds": [
+            "stock"
+          ],
+          "stem": "stock means: A slice of ownership in a business.",
+          "answer": true,
+          "why": "stock: A security representing company ownership, with business and price risk and possible dividends or capital gains."
+        },
+        {
+          "id": "u1l1-bond-t",
+          "type": "truefalse",
+          "termId": "bond",
+          "termIds": [
+            "bond"
+          ],
+          "stem": "bond means: A slice of ownership in a business.",
+          "answer": false,
+          "why": "Bondholders lend; stockholders own. A payment obligation is not a risk-free guarantee."
+        },
+        {
+          "id": "u1l1-stock-f",
+          "type": "fill",
+          "termId": "stock",
+          "termIds": [
+            "stock"
+          ],
+          "story": "Buying this ____ makes you a part-owner, not a lender to the company.",
+          "bank": [
+            "stock",
+            "bond"
+          ],
+          "answer": "stock",
+          "why": "Stock means ownership; a bond is debt. Neither dividends nor repayment is risk-free. Share is a common ownership-unit expression, not another product here."
+        },
+        {
+          "id": "u1l1-bond-f",
+          "type": "fill",
+          "termId": "bond",
+          "termIds": [
+            "bond"
+          ],
+          "story": "The ____ promises repayment at maturity rather than ownership of the issuer.",
+          "bank": [
+            "bond",
+            "stock"
+          ],
+          "answer": "bond",
+          "why": "Bondholders lend; stockholders own. A payment obligation is not a risk-free guarantee."
+        },
+        {
+          "id": "u1l1-match",
+          "type": "match",
+          "termIds": [
+            "stock",
+            "bond"
+          ],
+          "pairs": [
+            {
+              "id": "stock",
+              "left": "stock",
+              "right": "A slice of ownership in a business."
+            },
+            {
+              "id": "bond",
+              "left": "bond",
+              "right": "Lend to an issuer under agreed repayment terms."
+            }
+          ],
+          "why": "Match each term to what it means."
+        },
+        {
+          "id": "u1l1-listen",
+          "type": "listen",
+          "termId": "stock",
+          "termIds": [
+            "stock"
+          ],
+          "stem": "Which term did you hear?",
+          "options": [
+            {
+              "text": "stock",
+              "art": "stock"
+            },
+            {
+              "text": "bond",
+              "art": "bond"
+            }
+          ],
+          "answer": 0,
+          "why": "stock: A security representing company ownership, with business and price risk and possible dividends or capital gains."
+        }
+      ]
+    },
+    {
+      "id": "u1l2",
+      "unit": 1,
+      "title": "Owner or lender?, continued",
+      "icon": "📈",
+      "review": false,
+      "prompts": [
+        {
+          "id": "u1l2-common stock-m",
+          "type": "meaning",
+          "termId": "common stock",
+          "termIds": [
+            "common stock"
+          ],
+          "stem": "What does common stock mean?",
+          "options": [
+            {
+              "text": "Ordinary ownership, usually with voting rights and discretionary dividends; residual claims rank behind creditors and preferred shareholders.",
+              "art": "common stock"
+            },
+            {
+              "text": "Shares generally ranking ahead of common equity for dividends and liquidation, often with limited voting rights; terms vary.",
+              "art": "preferred stock"
+            },
+            {
+              "text": "A security representing company ownership, with business and price risk and possible dividends or capital gains.",
+              "art": "stock"
+            },
+            {
+              "text": "A debt security with contractual payment terms, exposed to default and market-price risk.",
+              "art": "bond"
+            }
+          ],
+          "answer": 0,
+          "why": "Common stock usually carries votes; preferred stock usually has distribution priority. Read the issue terms."
+        },
+        {
+          "id": "u1l2-preferred stock-m",
+          "type": "meaning",
+          "termId": "preferred stock",
+          "termIds": [
+            "preferred stock"
+          ],
+          "stem": "What does preferred stock mean?",
+          "options": [
+            {
+              "text": "Shares generally ranking ahead of common equity for dividends and liquidation, often with limited voting rights; terms vary.",
+              "art": "preferred stock"
+            },
+            {
+              "text": "Ordinary ownership, usually with voting rights and discretionary dividends; residual claims rank behind creditors and preferred shareholders.",
+              "art": "common stock"
+            },
+            {
+              "text": "A security representing company ownership, with business and price risk and possible dividends or capital gains.",
+              "art": "stock"
+            },
+            {
+              "text": "A debt security with contractual payment terms, exposed to default and market-price risk.",
+              "art": "bond"
+            }
+          ],
+          "answer": 0,
+          "why": "Preferred means priority over common equity, not over creditors and not protection from loss."
+        },
+        {
+          "id": "u1l2-common stock-s",
+          "type": "scenario",
+          "termId": "common stock",
+          "termIds": [
+            "common stock"
+          ],
+          "story": "Usually carries votes, but ranks behind preferred shares in liquidation.",
+          "stem": "Which word is this?",
+          "options": [
+            {
+              "text": "common stock",
+              "art": "common stock"
+            },
+            {
+              "text": "preferred stock",
+              "art": "preferred stock"
+            },
+            {
+              "text": "stock",
+              "art": "stock"
+            },
+            {
+              "text": "bond",
+              "art": "bond"
+            }
+          ],
+          "answer": 0,
+          "why": "common stock: Ordinary ownership, usually with voting rights and discretionary dividends; residual claims rank behind creditors and preferred shareholders."
+        },
+        {
+          "id": "u1l2-preferred stock-s",
+          "type": "scenario",
+          "termId": "preferred stock",
+          "termIds": [
+            "preferred stock"
+          ],
+          "story": "Usually has distribution priority, while remaining equity.",
+          "stem": "Which word is this?",
+          "options": [
+            {
+              "text": "preferred stock",
+              "art": "preferred stock"
+            },
+            {
+              "text": "common stock",
+              "art": "common stock"
+            },
+            {
+              "text": "stock",
+              "art": "stock"
+            },
+            {
+              "text": "bond",
+              "art": "bond"
+            }
+          ],
+          "answer": 0,
+          "why": "preferred stock: Shares generally ranking ahead of common equity for dividends and liquidation, often with limited voting rights; terms vary."
+        },
+        {
+          "id": "u1l2-common stock-t",
+          "type": "truefalse",
+          "termId": "common stock",
+          "termIds": [
+            "common stock"
+          ],
+          "stem": "common stock means: Usually carries votes, but ranks behind preferred shares in liquidation.",
+          "answer": true,
+          "why": "common stock: Ordinary ownership, usually with voting rights and discretionary dividends; residual claims rank behind creditors and preferred shareholders."
+        },
+        {
+          "id": "u1l2-preferred stock-t",
+          "type": "truefalse",
+          "termId": "preferred stock",
+          "termIds": [
+            "preferred stock"
+          ],
+          "stem": "preferred stock means: Usually carries votes, but ranks behind preferred shares in liquidation.",
+          "answer": false,
+          "why": "Preferred means priority over common equity, not over creditors and not protection from loss."
+        },
+        {
+          "id": "u1l2-common stock-f",
+          "type": "fill",
+          "termId": "common stock",
+          "termIds": [
+            "common stock"
+          ],
+          "story": "____ holders voted at the meeting but received no dividend this year.",
+          "bank": [
+            "common stock",
+            "preferred stock"
+          ],
+          "answer": "common stock",
+          "why": "Common stock usually carries votes; preferred stock usually has distribution priority. Read the issue terms."
+        },
+        {
+          "id": "u1l2-preferred stock-f",
+          "type": "fill",
+          "termId": "preferred stock",
+          "termIds": [
+            "preferred stock"
+          ],
+          "story": "____ ranks ahead of common shares for the stated distributions.",
+          "bank": [
+            "preferred stock",
+            "common stock"
+          ],
+          "answer": "preferred stock",
+          "why": "Preferred means priority over common equity, not over creditors and not protection from loss."
+        },
+        {
+          "id": "u1l2-match",
+          "type": "match",
+          "termIds": [
+            "common stock",
+            "preferred stock"
+          ],
+          "pairs": [
+            {
+              "id": "common stock",
+              "left": "common stock",
+              "right": "Usually carries votes, but ranks behind preferred shares in liquidation."
+            },
+            {
+              "id": "preferred stock",
+              "left": "preferred stock",
+              "right": "Usually has distribution priority, while remaining equity."
+            }
+          ],
+          "why": "Match each term to what it means."
+        },
+        {
+          "id": "u1l2-listen",
+          "type": "listen",
+          "termId": "common stock",
+          "termIds": [
+            "common stock"
+          ],
+          "stem": "Which term did you hear?",
+          "options": [
+            {
+              "text": "common stock",
+              "art": "common stock"
+            },
+            {
+              "text": "preferred stock",
+              "art": "preferred stock"
+            }
+          ],
+          "answer": 0,
+          "why": "common stock: Ordinary ownership, usually with voting rights and discretionary dividends; residual claims rank behind creditors and preferred shareholders."
+        }
+      ]
+    },
+    {
+      "id": "u1r",
+      "unit": 1,
+      "title": "Owner or lender? · review",
+      "icon": "🏆",
+      "review": true,
+      "prompts": [
+        {
+          "id": "u1r-stock-s",
+          "type": "scenario",
+          "termId": "stock",
+          "termIds": [
+            "stock"
+          ],
+          "story": "A slice of ownership in a business.",
+          "stem": "Which word is this?",
+          "options": [
+            {
+              "text": "stock",
+              "art": "stock"
+            },
+            {
+              "text": "bond",
+              "art": "bond"
+            },
+            {
+              "text": "common stock",
+              "art": "common stock"
+            },
+            {
+              "text": "preferred stock",
+              "art": "preferred stock"
+            }
+          ],
+          "answer": 0,
+          "why": "stock: A security representing company ownership, with business and price risk and possible dividends or capital gains."
+        },
+        {
+          "id": "u1r-bond-s",
+          "type": "scenario",
+          "termId": "bond",
+          "termIds": [
+            "bond"
+          ],
+          "story": "Lend to an issuer under agreed repayment terms.",
+          "stem": "Which word is this?",
+          "options": [
+            {
+              "text": "bond",
+              "art": "bond"
+            },
+            {
+              "text": "stock",
+              "art": "stock"
+            },
+            {
+              "text": "common stock",
+              "art": "common stock"
+            },
+            {
+              "text": "preferred stock",
+              "art": "preferred stock"
+            }
+          ],
+          "answer": 0,
+          "why": "bond: A debt security with contractual payment terms, exposed to default and market-price risk."
+        },
+        {
+          "id": "u1r-common stock-s",
+          "type": "scenario",
+          "termId": "common stock",
+          "termIds": [
+            "common stock"
+          ],
+          "story": "Usually carries votes, but ranks behind preferred shares in liquidation.",
+          "stem": "Which word is this?",
+          "options": [
+            {
+              "text": "common stock",
+              "art": "common stock"
+            },
+            {
+              "text": "preferred stock",
+              "art": "preferred stock"
+            },
+            {
+              "text": "stock",
+              "art": "stock"
+            },
+            {
+              "text": "bond",
+              "art": "bond"
+            }
+          ],
+          "answer": 0,
+          "why": "common stock: Ordinary ownership, usually with voting rights and discretionary dividends; residual claims rank behind creditors and preferred shareholders."
+        },
+        {
+          "id": "u1r-preferred stock-s",
+          "type": "scenario",
+          "termId": "preferred stock",
+          "termIds": [
+            "preferred stock"
+          ],
+          "story": "Usually has distribution priority, while remaining equity.",
+          "stem": "Which word is this?",
+          "options": [
+            {
+              "text": "preferred stock",
+              "art": "preferred stock"
+            },
+            {
+              "text": "common stock",
+              "art": "common stock"
+            },
+            {
+              "text": "stock",
+              "art": "stock"
+            },
+            {
+              "text": "bond",
+              "art": "bond"
+            }
+          ],
+          "answer": 0,
+          "why": "preferred stock: Shares generally ranking ahead of common equity for dividends and liquidation, often with limited voting rights; terms vary."
+        },
+        {
+          "id": "u1r-stock-t",
+          "type": "truefalse",
+          "termId": "stock",
+          "termIds": [
+            "stock"
+          ],
+          "stem": "stock means: A slice of ownership in a business.",
+          "answer": true,
+          "why": "stock: A security representing company ownership, with business and price risk and possible dividends or capital gains."
+        },
+        {
+          "id": "u1r-bond-t",
+          "type": "truefalse",
+          "termId": "bond",
+          "termIds": [
+            "bond"
+          ],
+          "stem": "bond means: A slice of ownership in a business.",
+          "answer": false,
+          "why": "Bondholders lend; stockholders own. A payment obligation is not a risk-free guarantee."
+        },
+        {
+          "id": "u1r-common stock-t",
+          "type": "truefalse",
+          "termId": "common stock",
+          "termIds": [
+            "common stock"
+          ],
+          "stem": "common stock means: Usually carries votes, but ranks behind preferred shares in liquidation.",
+          "answer": true,
+          "why": "common stock: Ordinary ownership, usually with voting rights and discretionary dividends; residual claims rank behind creditors and preferred shareholders."
+        },
+        {
+          "id": "u1r-preferred stock-t",
+          "type": "truefalse",
+          "termId": "preferred stock",
+          "termIds": [
+            "preferred stock"
+          ],
+          "stem": "preferred stock means: Usually carries votes, but ranks behind preferred shares in liquidation.",
+          "answer": false,
+          "why": "Preferred means priority over common equity, not over creditors and not protection from loss."
+        },
+        {
+          "id": "u1r-match",
+          "type": "match",
+          "termIds": [
+            "stock",
+            "bond",
+            "common stock",
+            "preferred stock"
+          ],
+          "pairs": [
+            {
+              "id": "stock",
+              "left": "stock",
+              "right": "A slice of ownership in a business."
+            },
+            {
+              "id": "bond",
+              "left": "bond",
+              "right": "Lend to an issuer under agreed repayment terms."
+            },
+            {
+              "id": "common stock",
+              "left": "common stock",
+              "right": "Usually carries votes, but ranks behind preferred shares in liquidation."
+            },
+            {
+              "id": "preferred stock",
+              "left": "preferred stock",
+              "right": "Usually has distribution priority, while remaining equity."
+            }
+          ],
+          "why": "Match each term to what it means."
+        },
+        {
+          "id": "u1r-listen",
+          "type": "listen",
+          "termId": "stock",
+          "termIds": [
+            "stock"
+          ],
+          "stem": "Which term did you hear?",
+          "options": [
+            {
+              "text": "stock",
+              "art": "stock"
+            },
+            {
+              "text": "bond",
+              "art": "bond"
+            },
+            {
+              "text": "common stock",
+              "art": "common stock"
+            },
+            {
+              "text": "preferred stock",
+              "art": "preferred stock"
+            }
+          ],
+          "answer": 0,
+          "why": "stock: A security representing company ownership, with business and price risk and possible dividends or capital gains."
+        }
+      ]
+    },
+    {
+      "id": "u2l1",
+      "unit": 2,
+      "title": "How funds trade and invest",
+      "icon": "📈",
+      "review": false,
+      "prompts": [
+        {
+          "id": "u2l1-mutual fund-m",
+          "type": "meaning",
+          "termId": "mutual fund",
+          "termIds": [
+            "mutual fund"
+          ],
+          "stem": "What does mutual fund mean?",
+          "options": [
+            {
+              "text": "In common US open-end usage, a pooled fund whose investor orders generally use the next calculated per-share NAV, with applicable fees.",
+              "art": "mutual fund"
+            },
+            {
+              "text": "A fund with exchange-traded shares. Market prices can differ from per-share NAV; strategies may be indexed or active.",
+              "art": "etf"
+            },
+            {
+              "text": "A fund seeking to track a market index, through an ETF or mutual-fund structure, subject to costs and tracking differences.",
+              "art": "index fund"
+            },
+            {
+              "text": "A fund whose manager selects or adjusts holdings toward an investment objective; it may be a mutual fund or ETF and can lag its benchmark.",
+              "art": "actively managed fund"
+            }
+          ],
+          "answer": 0,
+          "why": "Mutual funds generally use the next NAV; ETFs trade on an exchange at market prices. Either can use active or index strategies."
+        },
+        {
+          "id": "u2l1-etf-m",
+          "type": "meaning",
+          "termId": "etf",
+          "termIds": [
+            "etf"
+          ],
+          "stem": "What does ETF mean?",
+          "options": [
+            {
+              "text": "A fund with exchange-traded shares. Market prices can differ from per-share NAV; strategies may be indexed or active.",
+              "art": "etf"
+            },
+            {
+              "text": "In common US open-end usage, a pooled fund whose investor orders generally use the next calculated per-share NAV, with applicable fees.",
+              "art": "mutual fund"
+            },
+            {
+              "text": "A fund seeking to track a market index, through an ETF or mutual-fund structure, subject to costs and tracking differences.",
+              "art": "index fund"
+            },
+            {
+              "text": "A fund whose manager selects or adjusts holdings toward an investment objective; it may be a mutual fund or ETF and can lag its benchmark.",
+              "art": "actively managed fund"
+            }
+          ],
+          "answer": 0,
+          "why": "ETF describes the trading structure; index fund describes the strategy. Not every ETF tracks an index or is broadly diversified."
+        },
+        {
+          "id": "u2l1-mutual fund-s",
+          "type": "scenario",
+          "termId": "mutual fund",
+          "termIds": [
+            "mutual fund"
+          ],
+          "story": "Usually bought or redeemed at the next calculated NAV.",
+          "stem": "Which word is this?",
+          "options": [
+            {
+              "text": "mutual fund",
+              "art": "mutual fund"
+            },
+            {
+              "text": "ETF",
+              "art": "etf"
+            },
+            {
+              "text": "index fund",
+              "art": "index fund"
+            },
+            {
+              "text": "actively managed fund",
+              "art": "actively managed fund"
+            }
+          ],
+          "answer": 0,
+          "why": "mutual fund: In common US open-end usage, a pooled fund whose investor orders generally use the next calculated per-share NAV, with applicable fees."
+        },
+        {
+          "id": "u2l1-etf-s",
+          "type": "scenario",
+          "termId": "etf",
+          "termIds": [
+            "etf"
+          ],
+          "story": "Fund shares bought and sold on an exchange.",
+          "stem": "Which word is this?",
+          "options": [
+            {
+              "text": "ETF",
+              "art": "etf"
+            },
+            {
+              "text": "mutual fund",
+              "art": "mutual fund"
+            },
+            {
+              "text": "index fund",
+              "art": "index fund"
+            },
+            {
+              "text": "actively managed fund",
+              "art": "actively managed fund"
+            }
+          ],
+          "answer": 0,
+          "why": "ETF: A fund with exchange-traded shares. Market prices can differ from per-share NAV; strategies may be indexed or active."
+        },
+        {
+          "id": "u2l1-mutual fund-t",
+          "type": "truefalse",
+          "termId": "mutual fund",
+          "termIds": [
+            "mutual fund"
+          ],
+          "stem": "mutual fund means: Usually bought or redeemed at the next calculated NAV.",
+          "answer": true,
+          "why": "mutual fund: In common US open-end usage, a pooled fund whose investor orders generally use the next calculated per-share NAV, with applicable fees."
+        },
+        {
+          "id": "u2l1-etf-t",
+          "type": "truefalse",
+          "termId": "etf",
+          "termIds": [
+            "etf"
+          ],
+          "stem": "ETF means: Usually bought or redeemed at the next calculated NAV.",
+          "answer": false,
+          "why": "ETF describes the trading structure; index fund describes the strategy. Not every ETF tracks an index or is broadly diversified."
+        },
+        {
+          "id": "u2l1-mutual fund-f",
+          "type": "fill",
+          "termId": "mutual fund",
+          "termIds": [
+            "mutual fund"
+          ],
+          "story": "The ____ processed the order using its next calculated per-share NAV.",
+          "bank": [
+            "mutual fund",
+            "ETF"
+          ],
+          "answer": "mutual fund",
+          "why": "Mutual funds generally use the next NAV; ETFs trade on an exchange at market prices. Either can use active or index strategies."
+        },
+        {
+          "id": "u2l1-etf-f",
+          "type": "fill",
+          "termId": "etf",
+          "termIds": [
+            "etf"
+          ],
+          "story": "The ____ traded at 10.10 while its reported per-share NAV was 10.00.",
+          "bank": [
+            "ETF",
+            "mutual fund"
+          ],
+          "answer": "ETF",
+          "why": "ETF describes the trading structure; index fund describes the strategy. Not every ETF tracks an index or is broadly diversified."
+        },
+        {
+          "id": "u2l1-match",
+          "type": "match",
+          "termIds": [
+            "mutual fund",
+            "etf"
+          ],
+          "pairs": [
+            {
+              "id": "mutual fund",
+              "left": "mutual fund",
+              "right": "Usually bought or redeemed at the next calculated NAV."
+            },
+            {
+              "id": "etf",
+              "left": "ETF",
+              "right": "Fund shares bought and sold on an exchange."
+            }
+          ],
+          "why": "Match each term to what it means."
+        },
+        {
+          "id": "u2l1-listen",
+          "type": "listen",
+          "termId": "mutual fund",
+          "termIds": [
+            "mutual fund"
+          ],
+          "stem": "Which term did you hear?",
+          "options": [
+            {
+              "text": "mutual fund",
+              "art": "mutual fund"
+            },
+            {
+              "text": "ETF",
+              "art": "etf"
+            }
+          ],
+          "answer": 0,
+          "why": "mutual fund: In common US open-end usage, a pooled fund whose investor orders generally use the next calculated per-share NAV, with applicable fees."
+        }
+      ]
+    },
+    {
+      "id": "u2l2",
+      "unit": 2,
+      "title": "How funds trade and invest, continued",
+      "icon": "📈",
+      "review": false,
+      "prompts": [
+        {
+          "id": "u2l2-index fund-m",
+          "type": "meaning",
+          "termId": "index fund",
+          "termIds": [
+            "index fund"
+          ],
+          "stem": "What does index fund mean?",
+          "options": [
+            {
+              "text": "A fund seeking to track a market index, through an ETF or mutual-fund structure, subject to costs and tracking differences.",
+              "art": "index fund"
+            },
+            {
+              "text": "A fund whose manager selects or adjusts holdings toward an investment objective; it may be a mutual fund or ETF and can lag its benchmark.",
+              "art": "actively managed fund"
+            },
+            {
+              "text": "In common US open-end usage, a pooled fund whose investor orders generally use the next calculated per-share NAV, with applicable fees.",
+              "art": "mutual fund"
+            },
+            {
+              "text": "A fund with exchange-traded shares. Market prices can differ from per-share NAV; strategies may be indexed or active.",
+              "art": "etf"
+            }
+          ],
+          "answer": 0,
+          "why": "Index funds follow index rules; active funds rely on manager decisions. Exchange trading is a separate distinction."
+        },
+        {
+          "id": "u2l2-actively managed fund-m",
+          "type": "meaning",
+          "termId": "actively managed fund",
+          "termIds": [
+            "actively managed fund"
+          ],
+          "stem": "What does actively managed fund mean?",
+          "options": [
+            {
+              "text": "A fund whose manager selects or adjusts holdings toward an investment objective; it may be a mutual fund or ETF and can lag its benchmark.",
+              "art": "actively managed fund"
+            },
+            {
+              "text": "A fund seeking to track a market index, through an ETF or mutual-fund structure, subject to costs and tracking differences.",
+              "art": "index fund"
+            },
+            {
+              "text": "In common US open-end usage, a pooled fund whose investor orders generally use the next calculated per-share NAV, with applicable fees.",
+              "art": "mutual fund"
+            },
+            {
+              "text": "A fund with exchange-traded shares. Market prices can differ from per-share NAV; strategies may be indexed or active.",
+              "art": "etf"
+            }
+          ],
+          "answer": 0,
+          "why": "Active describes manager discretion; index describes rules-based tracking. Mutual fund versus ETF is a different axis."
+        },
+        {
+          "id": "u2l2-index fund-s",
+          "type": "scenario",
+          "termId": "index fund",
+          "termIds": [
+            "index fund"
+          ],
+          "story": "Seeks to follow an index rather than pick winners.",
+          "stem": "Which word is this?",
+          "options": [
+            {
+              "text": "index fund",
+              "art": "index fund"
+            },
+            {
+              "text": "actively managed fund",
+              "art": "actively managed fund"
+            },
+            {
+              "text": "mutual fund",
+              "art": "mutual fund"
+            },
+            {
+              "text": "ETF",
+              "art": "etf"
+            }
+          ],
+          "answer": 0,
+          "why": "index fund: A fund seeking to track a market index, through an ETF or mutual-fund structure, subject to costs and tracking differences."
+        },
+        {
+          "id": "u2l2-actively managed fund-s",
+          "type": "scenario",
+          "termId": "actively managed fund",
+          "termIds": [
+            "actively managed fund"
+          ],
+          "story": "A manager chooses investments rather than simply following index rules.",
+          "stem": "Which word is this?",
+          "options": [
+            {
+              "text": "actively managed fund",
+              "art": "actively managed fund"
+            },
+            {
+              "text": "index fund",
+              "art": "index fund"
+            },
+            {
+              "text": "mutual fund",
+              "art": "mutual fund"
+            },
+            {
+              "text": "ETF",
+              "art": "etf"
+            }
+          ],
+          "answer": 0,
+          "why": "actively managed fund: A fund whose manager selects or adjusts holdings toward an investment objective; it may be a mutual fund or ETF and can lag its benchmark."
+        },
+        {
+          "id": "u2l2-index fund-t",
+          "type": "truefalse",
+          "termId": "index fund",
+          "termIds": [
+            "index fund"
+          ],
+          "stem": "index fund means: Seeks to follow an index rather than pick winners.",
+          "answer": true,
+          "why": "index fund: A fund seeking to track a market index, through an ETF or mutual-fund structure, subject to costs and tracking differences."
+        },
+        {
+          "id": "u2l2-actively managed fund-t",
+          "type": "truefalse",
+          "termId": "actively managed fund",
+          "termIds": [
+            "actively managed fund"
+          ],
+          "stem": "actively managed fund means: Seeks to follow an index rather than pick winners.",
+          "answer": false,
+          "why": "Active describes manager discretion; index describes rules-based tracking. Mutual fund versus ETF is a different axis."
+        },
+        {
+          "id": "u2l2-index fund-f",
+          "type": "fill",
+          "termId": "index fund",
+          "termIds": [
+            "index fund"
+          ],
+          "story": "The ____ sought to follow the benchmark rather than beat it through stock picking.",
+          "bank": [
+            "index fund",
+            "actively managed fund"
+          ],
+          "answer": "index fund",
+          "why": "Index funds follow index rules; active funds rely on manager decisions. Exchange trading is a separate distinction."
+        },
+        {
+          "id": "u2l2-actively managed fund-f",
+          "type": "fill",
+          "termId": "actively managed fund",
+          "termIds": [
+            "actively managed fund"
+          ],
+          "story": "The ____ changed its holdings after the manager revised her outlook.",
+          "bank": [
+            "actively managed fund",
+            "index fund"
+          ],
+          "answer": "actively managed fund",
+          "why": "Active describes manager discretion; index describes rules-based tracking. Mutual fund versus ETF is a different axis."
+        },
+        {
+          "id": "u2l2-match",
+          "type": "match",
+          "termIds": [
+            "index fund",
+            "actively managed fund"
+          ],
+          "pairs": [
+            {
+              "id": "index fund",
+              "left": "index fund",
+              "right": "Seeks to follow an index rather than pick winners."
+            },
+            {
+              "id": "actively managed fund",
+              "left": "actively managed fund",
+              "right": "A manager chooses investments rather than simply following index rules."
+            }
+          ],
+          "why": "Match each term to what it means."
+        },
+        {
+          "id": "u2l2-listen",
+          "type": "listen",
+          "termId": "index fund",
+          "termIds": [
+            "index fund"
+          ],
+          "stem": "Which term did you hear?",
+          "options": [
+            {
+              "text": "index fund",
+              "art": "index fund"
+            },
+            {
+              "text": "actively managed fund",
+              "art": "actively managed fund"
+            }
+          ],
+          "answer": 0,
+          "why": "index fund: A fund seeking to track a market index, through an ETF or mutual-fund structure, subject to costs and tracking differences."
+        }
+      ]
+    },
+    {
+      "id": "u2r",
+      "unit": 2,
+      "title": "How funds trade and invest · review",
+      "icon": "🏆",
+      "review": true,
+      "prompts": [
+        {
+          "id": "u2r-mutual fund-s",
+          "type": "scenario",
+          "termId": "mutual fund",
+          "termIds": [
+            "mutual fund"
+          ],
+          "story": "Usually bought or redeemed at the next calculated NAV.",
+          "stem": "Which word is this?",
+          "options": [
+            {
+              "text": "mutual fund",
+              "art": "mutual fund"
+            },
+            {
+              "text": "ETF",
+              "art": "etf"
+            },
+            {
+              "text": "index fund",
+              "art": "index fund"
+            },
+            {
+              "text": "actively managed fund",
+              "art": "actively managed fund"
+            }
+          ],
+          "answer": 0,
+          "why": "mutual fund: In common US open-end usage, a pooled fund whose investor orders generally use the next calculated per-share NAV, with applicable fees."
+        },
+        {
+          "id": "u2r-etf-s",
+          "type": "scenario",
+          "termId": "etf",
+          "termIds": [
+            "etf"
+          ],
+          "story": "Fund shares bought and sold on an exchange.",
+          "stem": "Which word is this?",
+          "options": [
+            {
+              "text": "ETF",
+              "art": "etf"
+            },
+            {
+              "text": "mutual fund",
+              "art": "mutual fund"
+            },
+            {
+              "text": "index fund",
+              "art": "index fund"
+            },
+            {
+              "text": "actively managed fund",
+              "art": "actively managed fund"
+            }
+          ],
+          "answer": 0,
+          "why": "ETF: A fund with exchange-traded shares. Market prices can differ from per-share NAV; strategies may be indexed or active."
+        },
+        {
+          "id": "u2r-index fund-s",
+          "type": "scenario",
+          "termId": "index fund",
+          "termIds": [
+            "index fund"
+          ],
+          "story": "Seeks to follow an index rather than pick winners.",
+          "stem": "Which word is this?",
+          "options": [
+            {
+              "text": "index fund",
+              "art": "index fund"
+            },
+            {
+              "text": "actively managed fund",
+              "art": "actively managed fund"
+            },
+            {
+              "text": "mutual fund",
+              "art": "mutual fund"
+            },
+            {
+              "text": "ETF",
+              "art": "etf"
+            }
+          ],
+          "answer": 0,
+          "why": "index fund: A fund seeking to track a market index, through an ETF or mutual-fund structure, subject to costs and tracking differences."
+        },
+        {
+          "id": "u2r-actively managed fund-s",
+          "type": "scenario",
+          "termId": "actively managed fund",
+          "termIds": [
+            "actively managed fund"
+          ],
+          "story": "A manager chooses investments rather than simply following index rules.",
+          "stem": "Which word is this?",
+          "options": [
+            {
+              "text": "actively managed fund",
+              "art": "actively managed fund"
+            },
+            {
+              "text": "index fund",
+              "art": "index fund"
+            },
+            {
+              "text": "mutual fund",
+              "art": "mutual fund"
+            },
+            {
+              "text": "ETF",
+              "art": "etf"
+            }
+          ],
+          "answer": 0,
+          "why": "actively managed fund: A fund whose manager selects or adjusts holdings toward an investment objective; it may be a mutual fund or ETF and can lag its benchmark."
+        },
+        {
+          "id": "u2r-mutual fund-t",
+          "type": "truefalse",
+          "termId": "mutual fund",
+          "termIds": [
+            "mutual fund"
+          ],
+          "stem": "mutual fund means: Usually bought or redeemed at the next calculated NAV.",
+          "answer": true,
+          "why": "mutual fund: In common US open-end usage, a pooled fund whose investor orders generally use the next calculated per-share NAV, with applicable fees."
+        },
+        {
+          "id": "u2r-etf-t",
+          "type": "truefalse",
+          "termId": "etf",
+          "termIds": [
+            "etf"
+          ],
+          "stem": "ETF means: Usually bought or redeemed at the next calculated NAV.",
+          "answer": false,
+          "why": "ETF describes the trading structure; index fund describes the strategy. Not every ETF tracks an index or is broadly diversified."
+        },
+        {
+          "id": "u2r-index fund-t",
+          "type": "truefalse",
+          "termId": "index fund",
+          "termIds": [
+            "index fund"
+          ],
+          "stem": "index fund means: Seeks to follow an index rather than pick winners.",
+          "answer": true,
+          "why": "index fund: A fund seeking to track a market index, through an ETF or mutual-fund structure, subject to costs and tracking differences."
+        },
+        {
+          "id": "u2r-actively managed fund-t",
+          "type": "truefalse",
+          "termId": "actively managed fund",
+          "termIds": [
+            "actively managed fund"
+          ],
+          "stem": "actively managed fund means: Seeks to follow an index rather than pick winners.",
+          "answer": false,
+          "why": "Active describes manager discretion; index describes rules-based tracking. Mutual fund versus ETF is a different axis."
+        },
+        {
+          "id": "u2r-match",
+          "type": "match",
+          "termIds": [
+            "mutual fund",
+            "etf",
+            "index fund",
+            "actively managed fund"
+          ],
+          "pairs": [
+            {
+              "id": "mutual fund",
+              "left": "mutual fund",
+              "right": "Usually bought or redeemed at the next calculated NAV."
+            },
+            {
+              "id": "etf",
+              "left": "ETF",
+              "right": "Fund shares bought and sold on an exchange."
+            },
+            {
+              "id": "index fund",
+              "left": "index fund",
+              "right": "Seeks to follow an index rather than pick winners."
+            },
+            {
+              "id": "actively managed fund",
+              "left": "actively managed fund",
+              "right": "A manager chooses investments rather than simply following index rules."
+            }
+          ],
+          "why": "Match each term to what it means."
+        },
+        {
+          "id": "u2r-listen",
+          "type": "listen",
+          "termId": "mutual fund",
+          "termIds": [
+            "mutual fund"
+          ],
+          "stem": "Which term did you hear?",
+          "options": [
+            {
+              "text": "mutual fund",
+              "art": "mutual fund"
+            },
+            {
+              "text": "ETF",
+              "art": "etf"
+            },
+            {
+              "text": "index fund",
+              "art": "index fund"
+            },
+            {
+              "text": "actively managed fund",
+              "art": "actively managed fund"
+            }
+          ],
+          "answer": 0,
+          "why": "mutual fund: In common US open-end usage, a pooled fund whose investor orders generally use the next calculated per-share NAV, with applicable fees."
+        }
+      ]
+    },
+    {
+      "id": "u3l1",
+      "unit": 3,
+      "title": "What does the fund hold?",
+      "icon": "📈",
+      "review": false,
+      "prompts": [
+        {
+          "id": "u3l1-stock fund-m",
+          "type": "meaning",
+          "termId": "stock fund",
+          "termIds": [
+            "stock fund"
+          ],
+          "stem": "What does stock fund mean?",
+          "options": [
+            {
+              "text": "A fund mainly holding equities, in various structures and strategies, with risk depending on holdings and concentration.",
+              "art": "stock fund"
+            },
+            {
+              "text": "A fund mainly holding bonds or other debt, exposed to interest-rate and credit risk; a fund share is not a single bond with promised maturity payments.",
+              "art": "bond fund"
+            },
+            {
+              "text": "A fund mainly holding short-term debt, cash, or cash equivalents, often for cash management. It is not a bank deposit and can lose money.",
+              "art": "money market fund"
+            },
+            {
+              "text": "In common US open-end usage, a pooled fund whose investor orders generally use the next calculated per-share NAV, with applicable fees.",
+              "art": "mutual fund"
+            }
+          ],
+          "answer": 0,
+          "why": "Stock funds mainly own equity; bond funds mainly hold debt. Both can lose money."
+        },
+        {
+          "id": "u3l1-bond fund-m",
+          "type": "meaning",
+          "termId": "bond fund",
+          "termIds": [
+            "bond fund"
+          ],
+          "stem": "What does bond fund mean?",
+          "options": [
+            {
+              "text": "A fund mainly holding bonds or other debt, exposed to interest-rate and credit risk; a fund share is not a single bond with promised maturity payments.",
+              "art": "bond fund"
+            },
+            {
+              "text": "A fund mainly holding equities, in various structures and strategies, with risk depending on holdings and concentration.",
+              "art": "stock fund"
+            },
+            {
+              "text": "A fund mainly holding short-term debt, cash, or cash equivalents, often for cash management. It is not a bank deposit and can lose money.",
+              "art": "money market fund"
+            },
+            {
+              "text": "In common US open-end usage, a pooled fund whose investor orders generally use the next calculated per-share NAV, with applicable fees.",
+              "art": "mutual fund"
+            }
+          ],
+          "answer": 0,
+          "why": "Bond funds mainly hold debt; stock funds mainly hold equity. A bond fund is not a capital guarantee."
+        },
+        {
+          "id": "u3l1-stock fund-s",
+          "type": "scenario",
+          "termId": "stock fund",
+          "termIds": [
+            "stock fund"
+          ],
+          "story": "A fund investing primarily in company shares.",
+          "stem": "Which word is this?",
+          "options": [
+            {
+              "text": "stock fund",
+              "art": "stock fund"
+            },
+            {
+              "text": "bond fund",
+              "art": "bond fund"
+            },
+            {
+              "text": "money market fund",
+              "art": "money market fund"
+            },
+            {
+              "text": "mutual fund",
+              "art": "mutual fund"
+            }
+          ],
+          "answer": 0,
+          "why": "stock fund: A fund mainly holding equities, in various structures and strategies, with risk depending on holdings and concentration."
+        },
+        {
+          "id": "u3l1-bond fund-s",
+          "type": "scenario",
+          "termId": "bond fund",
+          "termIds": [
+            "bond fund"
+          ],
+          "story": "A debt portfolio whose share value can still move.",
+          "stem": "Which word is this?",
+          "options": [
+            {
+              "text": "bond fund",
+              "art": "bond fund"
+            },
+            {
+              "text": "stock fund",
+              "art": "stock fund"
+            },
+            {
+              "text": "money market fund",
+              "art": "money market fund"
+            },
+            {
+              "text": "mutual fund",
+              "art": "mutual fund"
+            }
+          ],
+          "answer": 0,
+          "why": "bond fund: A fund mainly holding bonds or other debt, exposed to interest-rate and credit risk; a fund share is not a single bond with promised maturity payments."
+        },
+        {
+          "id": "u3l1-stock fund-t",
+          "type": "truefalse",
+          "termId": "stock fund",
+          "termIds": [
+            "stock fund"
+          ],
+          "stem": "stock fund means: A fund investing primarily in company shares.",
+          "answer": true,
+          "why": "stock fund: A fund mainly holding equities, in various structures and strategies, with risk depending on holdings and concentration."
+        },
+        {
+          "id": "u3l1-bond fund-t",
+          "type": "truefalse",
+          "termId": "bond fund",
+          "termIds": [
+            "bond fund"
+          ],
+          "stem": "bond fund means: A fund investing primarily in company shares.",
+          "answer": false,
+          "why": "Bond funds mainly hold debt; stock funds mainly hold equity. A bond fund is not a capital guarantee."
+        },
+        {
+          "id": "u3l1-stock fund-f",
+          "type": "fill",
+          "termId": "stock fund",
+          "termIds": [
+            "stock fund"
+          ],
+          "story": "The ____ held shares in eighty companies rather than lending to those companies.",
+          "bank": [
+            "stock fund",
+            "bond fund"
+          ],
+          "answer": "stock fund",
+          "why": "Stock funds mainly own equity; bond funds mainly hold debt. Both can lose money."
+        },
+        {
+          "id": "u3l1-bond fund-f",
+          "type": "fill",
+          "termId": "bond fund",
+          "termIds": [
+            "bond fund"
+          ],
+          "story": "The ____ lost value when rising rates pushed down the prices of its holdings.",
+          "bank": [
+            "bond fund",
+            "stock fund"
+          ],
+          "answer": "bond fund",
+          "why": "Bond funds mainly hold debt; stock funds mainly hold equity. A bond fund is not a capital guarantee."
+        },
+        {
+          "id": "u3l1-match",
+          "type": "match",
+          "termIds": [
+            "stock fund",
+            "bond fund"
+          ],
+          "pairs": [
+            {
+              "id": "stock fund",
+              "left": "stock fund",
+              "right": "A fund investing primarily in company shares."
+            },
+            {
+              "id": "bond fund",
+              "left": "bond fund",
+              "right": "A debt portfolio whose share value can still move."
+            }
+          ],
+          "why": "Match each term to what it means."
+        },
+        {
+          "id": "u3l1-listen",
+          "type": "listen",
+          "termId": "stock fund",
+          "termIds": [
+            "stock fund"
+          ],
+          "stem": "Which term did you hear?",
+          "options": [
+            {
+              "text": "stock fund",
+              "art": "stock fund"
+            },
+            {
+              "text": "bond fund",
+              "art": "bond fund"
+            }
+          ],
+          "answer": 0,
+          "why": "stock fund: A fund mainly holding equities, in various structures and strategies, with risk depending on holdings and concentration."
+        }
+      ]
+    },
+    {
+      "id": "u3l2",
+      "unit": 3,
+      "title": "What does the fund hold?, continued",
+      "icon": "📈",
+      "review": false,
+      "prompts": [
+        {
+          "id": "u3l2-money market fund-m",
+          "type": "meaning",
+          "termId": "money market fund",
+          "termIds": [
+            "money market fund"
+          ],
+          "stem": "What does money market fund mean?",
+          "options": [
+            {
+              "text": "A fund mainly holding short-term debt, cash, or cash equivalents, often for cash management. It is not a bank deposit and can lose money.",
+              "art": "money market fund"
+            },
+            {
+              "text": "A fund mainly holding bonds or other debt, exposed to interest-rate and credit risk; a fund share is not a single bond with promised maturity payments.",
+              "art": "bond fund"
+            },
+            {
+              "text": "A fund mainly holding equities, in various structures and strategies, with risk depending on holdings and concentration.",
+              "art": "stock fund"
+            },
+            {
+              "text": "In common US open-end usage, a pooled fund whose investor orders generally use the next calculated per-share NAV, with applicable fees.",
+              "art": "mutual fund"
+            }
+          ],
+          "answer": 0,
+          "why": "Money market funds focus on short-term instruments; bond funds cover a wider maturity and credit range. Low volatility is not a guarantee."
+        },
+        {
+          "id": "u3l2-money market fund-s",
+          "type": "scenario",
+          "termId": "money market fund",
+          "termIds": [
+            "money market fund"
+          ],
+          "story": "A fund focused on short-term money-market instruments.",
+          "stem": "Which word is this?",
+          "options": [
+            {
+              "text": "money market fund",
+              "art": "money market fund"
+            },
+            {
+              "text": "bond fund",
+              "art": "bond fund"
+            },
+            {
+              "text": "stock fund",
+              "art": "stock fund"
+            },
+            {
+              "text": "mutual fund",
+              "art": "mutual fund"
+            }
+          ],
+          "answer": 0,
+          "why": "money market fund: A fund mainly holding short-term debt, cash, or cash equivalents, often for cash management. It is not a bank deposit and can lose money."
+        },
+        {
+          "id": "u3l2-money market fund-t",
+          "type": "truefalse",
+          "termId": "money market fund",
+          "termIds": [
+            "money market fund"
+          ],
+          "stem": "money market fund means: A fund focused on short-term money-market instruments.",
+          "answer": true,
+          "why": "money market fund: A fund mainly holding short-term debt, cash, or cash equivalents, often for cash management. It is not a bank deposit and can lose money."
+        },
+        {
+          "id": "u3l2-money market fund-f",
+          "type": "fill",
+          "termId": "money market fund",
+          "termIds": [
+            "money market fund"
+          ],
+          "story": "The ____ held short-term instruments instead of a portfolio of long-dated bonds.",
+          "bank": [
+            "money market fund",
+            "bond fund"
+          ],
+          "answer": "money market fund",
+          "why": "Money market funds focus on short-term instruments; bond funds cover a wider maturity and credit range. Low volatility is not a guarantee."
+        }
+      ]
+    },
+    {
+      "id": "u3r",
+      "unit": 3,
+      "title": "What does the fund hold? · review",
+      "icon": "🏆",
+      "review": true,
+      "prompts": [
+        {
+          "id": "u3r-stock fund-s",
+          "type": "scenario",
+          "termId": "stock fund",
+          "termIds": [
+            "stock fund"
+          ],
+          "story": "A fund investing primarily in company shares.",
+          "stem": "Which word is this?",
+          "options": [
+            {
+              "text": "stock fund",
+              "art": "stock fund"
+            },
+            {
+              "text": "bond fund",
+              "art": "bond fund"
+            },
+            {
+              "text": "money market fund",
+              "art": "money market fund"
+            },
+            {
+              "text": "mutual fund",
+              "art": "mutual fund"
+            }
+          ],
+          "answer": 0,
+          "why": "stock fund: A fund mainly holding equities, in various structures and strategies, with risk depending on holdings and concentration."
+        },
+        {
+          "id": "u3r-bond fund-s",
+          "type": "scenario",
+          "termId": "bond fund",
+          "termIds": [
+            "bond fund"
+          ],
+          "story": "A debt portfolio whose share value can still move.",
+          "stem": "Which word is this?",
+          "options": [
+            {
+              "text": "bond fund",
+              "art": "bond fund"
+            },
+            {
+              "text": "stock fund",
+              "art": "stock fund"
+            },
+            {
+              "text": "money market fund",
+              "art": "money market fund"
+            },
+            {
+              "text": "mutual fund",
+              "art": "mutual fund"
+            }
+          ],
+          "answer": 0,
+          "why": "bond fund: A fund mainly holding bonds or other debt, exposed to interest-rate and credit risk; a fund share is not a single bond with promised maturity payments."
+        },
+        {
+          "id": "u3r-money market fund-s",
+          "type": "scenario",
+          "termId": "money market fund",
+          "termIds": [
+            "money market fund"
+          ],
+          "story": "A fund focused on short-term money-market instruments.",
+          "stem": "Which word is this?",
+          "options": [
+            {
+              "text": "money market fund",
+              "art": "money market fund"
+            },
+            {
+              "text": "bond fund",
+              "art": "bond fund"
+            },
+            {
+              "text": "stock fund",
+              "art": "stock fund"
+            },
+            {
+              "text": "mutual fund",
+              "art": "mutual fund"
+            }
+          ],
+          "answer": 0,
+          "why": "money market fund: A fund mainly holding short-term debt, cash, or cash equivalents, often for cash management. It is not a bank deposit and can lose money."
+        },
+        {
+          "id": "u3r-stock fund-t",
+          "type": "truefalse",
+          "termId": "stock fund",
+          "termIds": [
+            "stock fund"
+          ],
+          "stem": "stock fund means: A fund investing primarily in company shares.",
+          "answer": true,
+          "why": "stock fund: A fund mainly holding equities, in various structures and strategies, with risk depending on holdings and concentration."
+        },
+        {
+          "id": "u3r-bond fund-t",
+          "type": "truefalse",
+          "termId": "bond fund",
+          "termIds": [
+            "bond fund"
+          ],
+          "stem": "bond fund means: A fund investing primarily in company shares.",
+          "answer": false,
+          "why": "Bond funds mainly hold debt; stock funds mainly hold equity. A bond fund is not a capital guarantee."
+        },
+        {
+          "id": "u3r-money market fund-t",
+          "type": "truefalse",
+          "termId": "money market fund",
+          "termIds": [
+            "money market fund"
+          ],
+          "stem": "money market fund means: A fund focused on short-term money-market instruments.",
+          "answer": true,
+          "why": "money market fund: A fund mainly holding short-term debt, cash, or cash equivalents, often for cash management. It is not a bank deposit and can lose money."
+        },
+        {
+          "id": "u3r-match",
+          "type": "match",
+          "termIds": [
+            "stock fund",
+            "bond fund",
+            "money market fund"
+          ],
+          "pairs": [
+            {
+              "id": "stock fund",
+              "left": "stock fund",
+              "right": "A fund investing primarily in company shares."
+            },
+            {
+              "id": "bond fund",
+              "left": "bond fund",
+              "right": "A debt portfolio whose share value can still move."
+            },
+            {
+              "id": "money market fund",
+              "left": "money market fund",
+              "right": "A fund focused on short-term money-market instruments."
+            }
+          ],
+          "why": "Match each term to what it means."
+        },
+        {
+          "id": "u3r-listen",
+          "type": "listen",
+          "termId": "stock fund",
+          "termIds": [
+            "stock fund"
+          ],
+          "stem": "Which term did you hear?",
+          "options": [
+            {
+              "text": "stock fund",
+              "art": "stock fund"
+            },
+            {
+              "text": "bond fund",
+              "art": "bond fund"
+            },
+            {
+              "text": "money market fund",
+              "art": "money market fund"
+            }
+          ],
+          "answer": 0,
+          "why": "stock fund: A fund mainly holding equities, in various structures and strategies, with risk depending on holdings and concentration."
+        }
+      ]
+    },
+    {
+      "id": "u4l1",
+      "unit": 4,
+      "title": "Value, price, and costs",
+      "icon": "📈",
+      "review": false,
+      "prompts": [
+        {
+          "id": "u4l1-nav-m",
+          "type": "meaning",
+          "termId": "nav",
+          "termIds": [
+            "nav"
+          ],
+          "stem": "What does NAV mean?",
+          "options": [
+            {
+              "text": "Fund assets minus liabilities give total NAV. Dividing by outstanding shares gives per-share NAV, often shortened to NAV in quotes.",
+              "art": "nav"
+            },
+            {
+              "text": "The traded price of an exchange-listed fund share, which can differ from per-share NAV.",
+              "art": "fund-market-price"
+            },
+            {
+              "text": "A fund's annual operating-cost percentage, typically including management and other costs; it is neither just the management fee nor every trading cost.",
+              "art": "expense ratio"
+            },
+            {
+              "text": "A sales-related purchase or redemption charge used by some funds, distinct from operating expenses and other transaction charges; read the fee table.",
+              "art": "sales load"
+            }
+          ],
+          "answer": 0,
+          "why": "NAV comes from asset valuation; market price comes from trading. Compare per-share figures with compatible valuation times."
+        },
+        {
+          "id": "u4l1-fund-market-price-m",
+          "type": "meaning",
+          "termId": "fund-market-price",
+          "termIds": [
+            "fund-market-price"
+          ],
+          "stem": "What does market price mean?",
+          "options": [
+            {
+              "text": "The traded price of an exchange-listed fund share, which can differ from per-share NAV.",
+              "art": "fund-market-price"
+            },
+            {
+              "text": "Fund assets minus liabilities give total NAV. Dividing by outstanding shares gives per-share NAV, often shortened to NAV in quotes.",
+              "art": "nav"
+            },
+            {
+              "text": "A fund's annual operating-cost percentage, typically including management and other costs; it is neither just the management fee nor every trading cost.",
+              "art": "expense ratio"
+            },
+            {
+              "text": "A sales-related purchase or redemption charge used by some funds, distinct from operating expenses and other transaction charges; read the fee table.",
+              "art": "sales load"
+            }
+          ],
+          "answer": 0,
+          "why": "Market price is what trades; NAV is an asset valuation. An ETF purchase need not occur at NAV."
+        },
+        {
+          "id": "u4l1-nav-s",
+          "type": "scenario",
+          "termId": "nav",
+          "termIds": [
+            "nav"
+          ],
+          "story": "Assets less liabilities; divide again for the per-share value.",
+          "stem": "Which word is this?",
+          "options": [
+            {
+              "text": "NAV",
+              "art": "nav"
+            },
+            {
+              "text": "market price",
+              "art": "fund-market-price"
+            },
+            {
+              "text": "expense ratio",
+              "art": "expense ratio"
+            },
+            {
+              "text": "sales load",
+              "art": "sales load"
+            }
+          ],
+          "answer": 0,
+          "why": "NAV: Fund assets minus liabilities give total NAV. Dividing by outstanding shares gives per-share NAV, often shortened to NAV in quotes."
+        },
+        {
+          "id": "u4l1-fund-market-price-s",
+          "type": "scenario",
+          "termId": "fund-market-price",
+          "termIds": [
+            "fund-market-price"
+          ],
+          "story": "The price for a fund share in an exchange trade.",
+          "stem": "Which word is this?",
+          "options": [
+            {
+              "text": "market price",
+              "art": "fund-market-price"
+            },
+            {
+              "text": "NAV",
+              "art": "nav"
+            },
+            {
+              "text": "expense ratio",
+              "art": "expense ratio"
+            },
+            {
+              "text": "sales load",
+              "art": "sales load"
+            }
+          ],
+          "answer": 0,
+          "why": "market price: The traded price of an exchange-listed fund share, which can differ from per-share NAV."
+        },
+        {
+          "id": "u4l1-nav-t",
+          "type": "truefalse",
+          "termId": "nav",
+          "termIds": [
+            "nav"
+          ],
+          "stem": "NAV means: Assets less liabilities; divide again for the per-share value.",
+          "answer": true,
+          "why": "NAV: Fund assets minus liabilities give total NAV. Dividing by outstanding shares gives per-share NAV, often shortened to NAV in quotes."
+        },
+        {
+          "id": "u4l1-fund-market-price-t",
+          "type": "truefalse",
+          "termId": "fund-market-price",
+          "termIds": [
+            "fund-market-price"
+          ],
+          "stem": "market price means: Assets less liabilities; divide again for the per-share value.",
+          "answer": false,
+          "why": "Market price is what trades; NAV is an asset valuation. An ETF purchase need not occur at NAV."
+        },
+        {
+          "id": "u4l1-nav-f",
+          "type": "fill",
+          "termId": "nav",
+          "termIds": [
+            "nav"
+          ],
+          "story": "The fund reported ____ of 10 per share, based on net assets divided by shares outstanding.",
+          "bank": [
+            "NAV",
+            "market price"
+          ],
+          "answer": "NAV",
+          "why": "NAV comes from asset valuation; market price comes from trading. Compare per-share figures with compatible valuation times."
+        },
+        {
+          "id": "u4l1-fund-market-price-f",
+          "type": "fill",
+          "termId": "fund-market-price",
+          "termIds": [
+            "fund-market-price"
+          ],
+          "story": "The ____ was 9.90 per share even though the reported NAV was 10.00.",
+          "bank": [
+            "market price",
+            "NAV"
+          ],
+          "answer": "market price",
+          "why": "Market price is what trades; NAV is an asset valuation. An ETF purchase need not occur at NAV."
+        },
+        {
+          "id": "u4l1-match",
+          "type": "match",
+          "termIds": [
+            "nav",
+            "fund-market-price"
+          ],
+          "pairs": [
+            {
+              "id": "nav",
+              "left": "NAV",
+              "right": "Assets less liabilities; divide again for the per-share value."
+            },
+            {
+              "id": "fund-market-price",
+              "left": "market price",
+              "right": "The price for a fund share in an exchange trade."
+            }
+          ],
+          "why": "Match each term to what it means."
+        },
+        {
+          "id": "u4l1-listen",
+          "type": "listen",
+          "termId": "nav",
+          "termIds": [
+            "nav"
+          ],
+          "stem": "Which term did you hear?",
+          "options": [
+            {
+              "text": "NAV",
+              "art": "nav"
+            },
+            {
+              "text": "market price",
+              "art": "fund-market-price"
+            }
+          ],
+          "answer": 0,
+          "why": "NAV: Fund assets minus liabilities give total NAV. Dividing by outstanding shares gives per-share NAV, often shortened to NAV in quotes."
+        }
+      ]
+    },
+    {
+      "id": "u4l2",
+      "unit": 4,
+      "title": "Value, price, and costs, continued",
+      "icon": "📈",
+      "review": false,
+      "prompts": [
+        {
+          "id": "u4l2-expense ratio-m",
+          "type": "meaning",
+          "termId": "expense ratio",
+          "termIds": [
+            "expense ratio"
+          ],
+          "stem": "What does expense ratio mean?",
+          "options": [
+            {
+              "text": "A fund's annual operating-cost percentage, typically including management and other costs; it is neither just the management fee nor every trading cost.",
+              "art": "expense ratio"
+            },
+            {
+              "text": "A sales-related purchase or redemption charge used by some funds, distinct from operating expenses and other transaction charges; read the fee table.",
+              "art": "sales load"
+            },
+            {
+              "text": "Fund assets minus liabilities give total NAV. Dividing by outstanding shares gives per-share NAV, often shortened to NAV in quotes.",
+              "art": "nav"
+            },
+            {
+              "text": "The traded price of an exchange-listed fund share, which can differ from per-share NAV.",
+              "art": "fund-market-price"
+            }
+          ],
+          "answer": 0,
+          "why": "Expense ratio measures ongoing operations; sales load is charged on a purchase or sale. Read them separately."
+        },
+        {
+          "id": "u4l2-sales load-m",
+          "type": "meaning",
+          "termId": "sales load",
+          "termIds": [
+            "sales load"
+          ],
+          "stem": "What does sales load mean?",
+          "options": [
+            {
+              "text": "A sales-related purchase or redemption charge used by some funds, distinct from operating expenses and other transaction charges; read the fee table.",
+              "art": "sales load"
+            },
+            {
+              "text": "A fund's annual operating-cost percentage, typically including management and other costs; it is neither just the management fee nor every trading cost.",
+              "art": "expense ratio"
+            },
+            {
+              "text": "Fund assets minus liabilities give total NAV. Dividing by outstanding shares gives per-share NAV, often shortened to NAV in quotes.",
+              "art": "nav"
+            },
+            {
+              "text": "The traded price of an exchange-listed fund share, which can differ from per-share NAV.",
+              "art": "fund-market-price"
+            }
+          ],
+          "answer": 0,
+          "why": "A load is tied to purchase or redemption; expense ratio covers ongoing operations. No load does not mean no costs."
+        },
+        {
+          "id": "u4l2-expense ratio-s",
+          "type": "scenario",
+          "termId": "expense ratio",
+          "termIds": [
+            "expense ratio"
+          ],
+          "story": "Annual operating expenses as a share of average net assets.",
+          "stem": "Which word is this?",
+          "options": [
+            {
+              "text": "expense ratio",
+              "art": "expense ratio"
+            },
+            {
+              "text": "sales load",
+              "art": "sales load"
+            },
+            {
+              "text": "NAV",
+              "art": "nav"
+            },
+            {
+              "text": "market price",
+              "art": "fund-market-price"
+            }
+          ],
+          "answer": 0,
+          "why": "expense ratio: A fund's annual operating-cost percentage, typically including management and other costs; it is neither just the management fee nor every trading cost."
+        },
+        {
+          "id": "u4l2-sales load-s",
+          "type": "scenario",
+          "termId": "sales load",
+          "termIds": [
+            "sales load"
+          ],
+          "story": "A sales charge on buying or redeeming some fund shares.",
+          "stem": "Which word is this?",
+          "options": [
+            {
+              "text": "sales load",
+              "art": "sales load"
+            },
+            {
+              "text": "expense ratio",
+              "art": "expense ratio"
+            },
+            {
+              "text": "NAV",
+              "art": "nav"
+            },
+            {
+              "text": "market price",
+              "art": "fund-market-price"
+            }
+          ],
+          "answer": 0,
+          "why": "sales load: A sales-related purchase or redemption charge used by some funds, distinct from operating expenses and other transaction charges; read the fee table."
+        },
+        {
+          "id": "u4l2-expense ratio-t",
+          "type": "truefalse",
+          "termId": "expense ratio",
+          "termIds": [
+            "expense ratio"
+          ],
+          "stem": "expense ratio means: Annual operating expenses as a share of average net assets.",
+          "answer": true,
+          "why": "expense ratio: A fund's annual operating-cost percentage, typically including management and other costs; it is neither just the management fee nor every trading cost."
+        },
+        {
+          "id": "u4l2-sales load-t",
+          "type": "truefalse",
+          "termId": "sales load",
+          "termIds": [
+            "sales load"
+          ],
+          "stem": "sales load means: Annual operating expenses as a share of average net assets.",
+          "answer": false,
+          "why": "A load is tied to purchase or redemption; expense ratio covers ongoing operations. No load does not mean no costs."
+        },
+        {
+          "id": "u4l2-expense ratio-f",
+          "type": "fill",
+          "termId": "expense ratio",
+          "termIds": [
+            "expense ratio"
+          ],
+          "story": "The ____ was 0.50% a year, rather than a charge only when shares were bought.",
+          "bank": [
+            "expense ratio",
+            "sales load"
+          ],
+          "answer": "expense ratio",
+          "why": "Expense ratio measures ongoing operations; sales load is charged on a purchase or sale. Read them separately."
+        },
+        {
+          "id": "u4l2-sales load-f",
+          "type": "fill",
+          "termId": "sales load",
+          "termIds": [
+            "sales load"
+          ],
+          "story": "A front-end ____ reduced the amount of the payment that was invested.",
+          "bank": [
+            "sales load",
+            "expense ratio"
+          ],
+          "answer": "sales load",
+          "why": "A load is tied to purchase or redemption; expense ratio covers ongoing operations. No load does not mean no costs."
+        },
+        {
+          "id": "u4l2-match",
+          "type": "match",
+          "termIds": [
+            "expense ratio",
+            "sales load"
+          ],
+          "pairs": [
+            {
+              "id": "expense ratio",
+              "left": "expense ratio",
+              "right": "Annual operating expenses as a share of average net assets."
+            },
+            {
+              "id": "sales load",
+              "left": "sales load",
+              "right": "A sales charge on buying or redeeming some fund shares."
+            }
+          ],
+          "why": "Match each term to what it means."
+        },
+        {
+          "id": "u4l2-listen",
+          "type": "listen",
+          "termId": "expense ratio",
+          "termIds": [
+            "expense ratio"
+          ],
+          "stem": "Which term did you hear?",
+          "options": [
+            {
+              "text": "expense ratio",
+              "art": "expense ratio"
+            },
+            {
+              "text": "sales load",
+              "art": "sales load"
+            }
+          ],
+          "answer": 0,
+          "why": "expense ratio: A fund's annual operating-cost percentage, typically including management and other costs; it is neither just the management fee nor every trading cost."
+        }
+      ]
+    },
+    {
+      "id": "u4r",
+      "unit": 4,
+      "title": "Value, price, and costs · review",
+      "icon": "🏆",
+      "review": true,
+      "prompts": [
+        {
+          "id": "u4r-nav-s",
+          "type": "scenario",
+          "termId": "nav",
+          "termIds": [
+            "nav"
+          ],
+          "story": "Assets less liabilities; divide again for the per-share value.",
+          "stem": "Which word is this?",
+          "options": [
+            {
+              "text": "NAV",
+              "art": "nav"
+            },
+            {
+              "text": "market price",
+              "art": "fund-market-price"
+            },
+            {
+              "text": "expense ratio",
+              "art": "expense ratio"
+            },
+            {
+              "text": "sales load",
+              "art": "sales load"
+            }
+          ],
+          "answer": 0,
+          "why": "NAV: Fund assets minus liabilities give total NAV. Dividing by outstanding shares gives per-share NAV, often shortened to NAV in quotes."
+        },
+        {
+          "id": "u4r-fund-market-price-s",
+          "type": "scenario",
+          "termId": "fund-market-price",
+          "termIds": [
+            "fund-market-price"
+          ],
+          "story": "The price for a fund share in an exchange trade.",
+          "stem": "Which word is this?",
+          "options": [
+            {
+              "text": "market price",
+              "art": "fund-market-price"
+            },
+            {
+              "text": "NAV",
+              "art": "nav"
+            },
+            {
+              "text": "expense ratio",
+              "art": "expense ratio"
+            },
+            {
+              "text": "sales load",
+              "art": "sales load"
+            }
+          ],
+          "answer": 0,
+          "why": "market price: The traded price of an exchange-listed fund share, which can differ from per-share NAV."
+        },
+        {
+          "id": "u4r-expense ratio-s",
+          "type": "scenario",
+          "termId": "expense ratio",
+          "termIds": [
+            "expense ratio"
+          ],
+          "story": "Annual operating expenses as a share of average net assets.",
+          "stem": "Which word is this?",
+          "options": [
+            {
+              "text": "expense ratio",
+              "art": "expense ratio"
+            },
+            {
+              "text": "sales load",
+              "art": "sales load"
+            },
+            {
+              "text": "NAV",
+              "art": "nav"
+            },
+            {
+              "text": "market price",
+              "art": "fund-market-price"
+            }
+          ],
+          "answer": 0,
+          "why": "expense ratio: A fund's annual operating-cost percentage, typically including management and other costs; it is neither just the management fee nor every trading cost."
+        },
+        {
+          "id": "u4r-sales load-s",
+          "type": "scenario",
+          "termId": "sales load",
+          "termIds": [
+            "sales load"
+          ],
+          "story": "A sales charge on buying or redeeming some fund shares.",
+          "stem": "Which word is this?",
+          "options": [
+            {
+              "text": "sales load",
+              "art": "sales load"
+            },
+            {
+              "text": "expense ratio",
+              "art": "expense ratio"
+            },
+            {
+              "text": "NAV",
+              "art": "nav"
+            },
+            {
+              "text": "market price",
+              "art": "fund-market-price"
+            }
+          ],
+          "answer": 0,
+          "why": "sales load: A sales-related purchase or redemption charge used by some funds, distinct from operating expenses and other transaction charges; read the fee table."
+        },
+        {
+          "id": "u4r-nav-t",
+          "type": "truefalse",
+          "termId": "nav",
+          "termIds": [
+            "nav"
+          ],
+          "stem": "NAV means: Assets less liabilities; divide again for the per-share value.",
+          "answer": true,
+          "why": "NAV: Fund assets minus liabilities give total NAV. Dividing by outstanding shares gives per-share NAV, often shortened to NAV in quotes."
+        },
+        {
+          "id": "u4r-fund-market-price-t",
+          "type": "truefalse",
+          "termId": "fund-market-price",
+          "termIds": [
+            "fund-market-price"
+          ],
+          "stem": "market price means: Assets less liabilities; divide again for the per-share value.",
+          "answer": false,
+          "why": "Market price is what trades; NAV is an asset valuation. An ETF purchase need not occur at NAV."
+        },
+        {
+          "id": "u4r-expense ratio-t",
+          "type": "truefalse",
+          "termId": "expense ratio",
+          "termIds": [
+            "expense ratio"
+          ],
+          "stem": "expense ratio means: Annual operating expenses as a share of average net assets.",
+          "answer": true,
+          "why": "expense ratio: A fund's annual operating-cost percentage, typically including management and other costs; it is neither just the management fee nor every trading cost."
+        },
+        {
+          "id": "u4r-sales load-t",
+          "type": "truefalse",
+          "termId": "sales load",
+          "termIds": [
+            "sales load"
+          ],
+          "stem": "sales load means: Annual operating expenses as a share of average net assets.",
+          "answer": false,
+          "why": "A load is tied to purchase or redemption; expense ratio covers ongoing operations. No load does not mean no costs."
+        },
+        {
+          "id": "u4r-match",
+          "type": "match",
+          "termIds": [
+            "nav",
+            "fund-market-price",
+            "expense ratio",
+            "sales load"
+          ],
+          "pairs": [
+            {
+              "id": "nav",
+              "left": "NAV",
+              "right": "Assets less liabilities; divide again for the per-share value."
+            },
+            {
+              "id": "fund-market-price",
+              "left": "market price",
+              "right": "The price for a fund share in an exchange trade."
+            },
+            {
+              "id": "expense ratio",
+              "left": "expense ratio",
+              "right": "Annual operating expenses as a share of average net assets."
+            },
+            {
+              "id": "sales load",
+              "left": "sales load",
+              "right": "A sales charge on buying or redeeming some fund shares."
+            }
+          ],
+          "why": "Match each term to what it means."
+        },
+        {
+          "id": "u4r-listen",
+          "type": "listen",
+          "termId": "nav",
+          "termIds": [
+            "nav"
+          ],
+          "stem": "Which term did you hear?",
+          "options": [
+            {
+              "text": "NAV",
+              "art": "nav"
+            },
+            {
+              "text": "market price",
+              "art": "fund-market-price"
+            },
+            {
+              "text": "expense ratio",
+              "art": "expense ratio"
+            },
+            {
+              "text": "sales load",
+              "art": "sales load"
+            }
+          ],
+          "answer": 0,
+          "why": "NAV: Fund assets minus liabilities give total NAV. Dividing by outstanding shares gives per-share NAV, often shortened to NAV in quotes."
+        }
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "id": "basics-stocks",
+      "title": "Stocks - FAQs",
+      "publisher": "SEC Office of Investor Education and Advocacy / Investor.gov",
+      "url": "https://www.investor.gov/introduction-investing/investing-basics/investment-products/stocks",
+      "accessedAt": "2026-11-15",
+      "kind": "primary",
+      "rightsBasis": "facts-only"
+    },
+    {
+      "id": "basics-bonds",
+      "title": "Bonds - FAQs",
+      "publisher": "SEC Office of Investor Education and Advocacy / Investor.gov",
+      "url": "https://www.investor.gov/introduction-investing/investing-basics/investment-products/bonds-or-fixed-income-products/bonds",
+      "accessedAt": "2026-11-15",
+      "kind": "primary",
+      "rightsBasis": "facts-only"
+    },
+    {
+      "id": "basics-mutual",
+      "title": "Mutual Funds",
+      "publisher": "SEC Office of Investor Education and Advocacy / Investor.gov",
+      "url": "https://www.investor.gov/introduction-investing/investing-basics/investment-products/mutual-funds-and-exchange-traded-funds-etfs/mutual-funds",
+      "accessedAt": "2026-11-15",
+      "kind": "primary",
+      "rightsBasis": "facts-only"
+    },
+    {
+      "id": "basics-etf",
+      "title": "Exchange-Traded Funds (ETFs)",
+      "publisher": "SEC Office of Investor Education and Advocacy / Investor.gov",
+      "url": "https://www.investor.gov/introduction-investing/investing-basics/investment-products/mutual-funds-and-exchange-traded-2",
+      "accessedAt": "2026-11-15",
+      "kind": "primary",
+      "rightsBasis": "facts-only"
+    },
+    {
+      "id": "basics-index",
+      "title": "Index Funds",
+      "publisher": "SEC Office of Investor Education and Advocacy / Investor.gov",
+      "url": "https://www.investor.gov/introduction-investing/investing-basics/investment-products/mutual-funds-and-exchange-traded-4",
+      "accessedAt": "2026-11-15",
+      "kind": "primary",
+      "rightsBasis": "facts-only"
+    },
+    {
+      "id": "basics-stock-fund",
+      "title": "Stock Fund",
+      "publisher": "SEC Office of Investor Education and Advocacy / Investor.gov",
+      "url": "https://www.investor.gov/introduction-investing/investing-basics/glossary/stock-fund",
+      "accessedAt": "2026-11-15",
+      "kind": "primary",
+      "rightsBasis": "facts-only"
+    },
+    {
+      "id": "basics-bond-fund",
+      "title": "Bond Funds and Income Funds",
+      "publisher": "SEC Office of Investor Education and Advocacy / Investor.gov",
+      "url": "https://www.investor.gov/introduction-investing/investing-basics/glossary/bond-funds-and-income-funds",
+      "accessedAt": "2026-11-15",
+      "kind": "primary",
+      "rightsBasis": "facts-only"
+    },
+    {
+      "id": "basics-money-market",
+      "title": "Money Market Funds",
+      "publisher": "SEC Office of Investor Education and Advocacy / Investor.gov",
+      "url": "https://www.investor.gov/introduction-investing/investing-basics/investment-products/mutual-funds-and-exchange-traded-5",
+      "accessedAt": "2026-11-15",
+      "kind": "primary",
+      "rightsBasis": "facts-only"
+    },
+    {
+      "id": "basics-nav",
+      "title": "Net Asset Value",
+      "publisher": "SEC Office of Investor Education and Advocacy / Investor.gov",
+      "url": "https://www.investor.gov/introduction-investing/investing-basics/glossary/net-asset-value",
+      "accessedAt": "2026-11-15",
+      "kind": "primary",
+      "rightsBasis": "facts-only"
+    },
+    {
+      "id": "basics-expense",
+      "title": "Expense Ratio",
+      "publisher": "SEC Office of Investor Education and Advocacy / Investor.gov",
+      "url": "https://www.investor.gov/introduction-investing/investing-basics/glossary/expense-ratio",
+      "accessedAt": "2026-11-15",
+      "kind": "primary",
+      "rightsBasis": "facts-only"
+    },
+    {
+      "id": "basics-load",
+      "title": "Sales Charge or Sales Load",
+      "publisher": "SEC Office of Investor Education and Advocacy / Investor.gov",
+      "url": "https://www.investor.gov/introduction-investing/investing-basics/glossary/sales-charge-or-load",
+      "accessedAt": "2026-11-15",
+      "kind": "primary",
+      "rightsBasis": "facts-only"
+    }
+  ]
+}

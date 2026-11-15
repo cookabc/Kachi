@@ -2,6 +2,7 @@ import { useState } from "react";
 import { prefersGeneratedArt, TermArt } from "../art";
 import { speak } from "../audio";
 import { Icon, PairGlyph, TopBar } from "../chrome";
+import { ConceptInfo, TermAliases } from "../components/ConceptInfo";
 import type { Course, LearnerState, MixUpType } from "../domain";
 import { conceptOf } from "../flow";
 import { ipaFor } from "../ipa";
@@ -204,6 +205,7 @@ function PairDetail({
                 </button>
               </div>
               <p className="twin-cap">{concept.definition}</p>
+              <TermAliases concept={concept} lang={lang} />
             </div>
           ) : null,
         )}
@@ -221,6 +223,14 @@ function PairDetail({
           </b>
           <p>{pair.why}</p>
         </div>
+      </div>
+      <div className="concept-reading">
+        {sides.map(
+          (concept) =>
+            concept && (
+              <ConceptInfo key={concept.id} concept={concept} lang={lang} sources={course.sources} />
+            ),
+        )}
       </div>
       <p className="strength-line">
         <span className="stars">

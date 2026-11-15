@@ -1,0 +1,6 @@
+Index Funds
+Publisher: Investor.gov / US SEC
+Accessed: 2026-11-15
+Source URL: see basics-index in investing-basics/source.mjs
+Short verbatim excerpt (terminology evidence only):
+In contrast, an actively managed fund often seeks to outperform a market (usually measured by some kind of index)

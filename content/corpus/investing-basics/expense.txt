@@ -1,0 +1,6 @@
+Expense Ratio
+Publisher: Investor.gov / US SEC
+Accessed: 2026-11-15
+Source URL: see basics-expense in investing-basics/source.mjs
+Short verbatim excerpt (terminology evidence only):
+The percentage of a fund's average net assets used each year to pay the fund’s operating expenses

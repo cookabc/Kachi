@@ -1,0 +1,6 @@
+Bonds - FAQs
+Publisher: Investor.gov / US SEC
+Accessed: 2026-11-15
+Source URL: see basics-bonds in investing-basics/source.mjs
+Short verbatim excerpt (terminology evidence only):
+A bond is a debt security, like an IOU.

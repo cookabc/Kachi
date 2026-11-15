@@ -1,5 +1,34 @@
 import { expect, test } from "@playwright/test";
 
+test("investment foundations keep twin practice and expose examples in both languages", async ({ page }) => {
+  const errors: string[] = [];
+  page.on("pageerror", (error) => errors.push(error.message));
+  await page.goto("/");
+  await page.locator(".level-btn").click();
+  await page.locator(".level-item").filter({ hasText: "Investment products and funds" }).click();
+  await expect(page.locator(".today-title")).toHaveText("stock/bond");
+  await page.locator(".today .btn").click();
+  const stock = page.locator(".twin").filter({ has: page.locator(".twin-term", { hasText: /^stock$/ }) });
+  await expect(stock.locator(".term-aliases")).toContainText("shares");
+  await page.getByText("stock · Example & use", { exact: true }).click();
+  await expect(page.locator(".concept-info").first()).toContainText("1%");
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1)).toBe(true);
+  await page.getByRole("button", { name: "Got it!", exact: true }).click();
+  await expect(
+    page.locator(".q-meaning, .q-scenario, .q-truefalse, .q-fill, .q-listen, .q-match").first(),
+  ).toBeVisible();
+  await page.reload();
+  await expect(page.locator(".level-btn")).toContainText("Investment products and funds");
+  await page.getByRole("button", { name: "Me", exact: true }).click();
+  await page.getByRole("button", { name: "中文", exact: true }).click();
+  await page.getByRole("button", { name: "学习", exact: true }).click();
+  await expect(page.locator(".level-btn")).toContainText("投资品种与基金");
+  await page.locator(".today .btn").click();
+  await page.getByText("stock · 例子与用法", { exact: true }).click();
+  await expect(page.locator(".concept-info").first()).toContainText("教学假设");
+  expect(errors).toEqual([]);
+});
+
 test("a new learner meets a twin pair, plays a lesson through a miss, and keeps progress", async ({
   page,
 }) => {
@@ -96,6 +125,36 @@ test("a service-worker controlled visit keeps the default level usable offline",
   await page.getByRole("button", { name: "Me", exact: true }).click();
   await page.getByRole("button", { name: "中文", exact: true }).click();
   await expect(page.locator("html")).toHaveAttribute("lang", "zh-CN");
+  await context.setOffline(false);
+});
+
+test("foundation editions and new recorded pronunciation are available offline", async ({
+  page,
+  context,
+}) => {
+  test.setTimeout(60_000);
+  await page.goto("/");
+  await expect(page.locator(".today")).toBeVisible();
+  await page.evaluate(() => navigator.serviceWorker.ready);
+  await page.reload();
+  await page.waitForFunction(() => Boolean(navigator.serviceWorker.controller));
+  await context.setOffline(true);
+  await page.locator(".level-btn").click();
+  await page.locator(".level-item").filter({ hasText: "Investment products and funds" }).click();
+  await expect(page.locator(".today-title")).toHaveText("stock/bond");
+  const clips = await page.evaluate(async () => {
+    return Promise.all(
+      ["/audio/stock-us.mp3", "/audio/stock-gb.mp3"].map(async (url) => {
+        const response = await fetch(url);
+        return { ok: response.ok, size: (await response.arrayBuffer()).byteLength };
+      }),
+    );
+  });
+  expect(clips.every((clip) => clip.ok && clip.size > 1000)).toBe(true);
+  await page.getByRole("button", { name: "Me", exact: true }).click();
+  await page.getByRole("button", { name: "中文", exact: true }).click();
+  await page.getByRole("button", { name: "学习", exact: true }).click();
+  await expect(page.locator(".level-btn")).toContainText("投资品种与基金");
   await context.setOffline(false);
 });
 

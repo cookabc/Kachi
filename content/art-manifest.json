@@ -860,6 +860,76 @@
       "file": "/art/robustness.webp",
       "bg": "transparent",
       "pack": "t5-quant-research"
+    },
+    "stock": {
+      "file": "/art/equity.webp",
+      "bg": "transparent",
+      "pack": "investing-basics"
+    },
+    "common stock": {
+      "file": "/art/shareholder.webp",
+      "bg": "transparent",
+      "pack": "investing-basics"
+    },
+    "preferred stock": {
+      "file": "/art/dividend.webp",
+      "bg": "transparent",
+      "pack": "investing-basics"
+    },
+    "mutual fund": {
+      "file": "/art/capital-flow.webp",
+      "bg": "transparent",
+      "pack": "investing-basics"
+    },
+    "etf": {
+      "file": "/art/index.webp",
+      "bg": "transparent",
+      "pack": "investing-basics"
+    },
+    "index fund": {
+      "file": "/art/benchmark.webp",
+      "bg": "transparent",
+      "pack": "investing-basics"
+    },
+    "actively managed fund": {
+      "file": "/art/outlook.webp",
+      "bg": "transparent",
+      "pack": "investing-basics"
+    },
+    "stock fund": {
+      "file": "/art/market-cap.webp",
+      "bg": "transparent",
+      "pack": "investing-basics"
+    },
+    "bond fund": {
+      "file": "/art/corporate-bond.webp",
+      "bg": "transparent",
+      "pack": "investing-basics"
+    },
+    "money market fund": {
+      "file": "/art/commercial-paper.webp",
+      "bg": "transparent",
+      "pack": "investing-basics"
+    },
+    "nav": {
+      "file": "/art/book-value.webp",
+      "bg": "transparent",
+      "pack": "investing-basics"
+    },
+    "fund-market-price": {
+      "file": "/art/price.webp",
+      "bg": "transparent",
+      "pack": "investing-basics"
+    },
+    "expense ratio": {
+      "file": "/art/margin.webp",
+      "bg": "transparent",
+      "pack": "investing-basics"
+    },
+    "sales load": {
+      "file": "/art/transaction-cost.webp",
+      "bg": "transparent",
+      "pack": "investing-basics"
     }
   }
 }

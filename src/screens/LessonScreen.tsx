@@ -2,6 +2,7 @@ import { type KeyboardEvent, useEffect, useRef, useState } from "react";
 import { artIdForLabel, prefersGeneratedArt, TermArt } from "../art";
 import { speak } from "../audio";
 import { Icon, Mascot } from "../chrome";
+import { ConceptInfo, TermAliases } from "../components/ConceptInfo";
 import type { Concept, Course } from "../domain";
 import { fillPattern } from "../fill";
 import { conceptOf, type PresentedExercise, type TeachMode, twinOf } from "../flow";
@@ -272,6 +273,7 @@ function Twin({
         <SpeakButton concept={concept} t={t} />
       </div>
       <p className="twin-cap">{concept.caption}</p>
+      <TermAliases concept={concept} lang={lang} />
     </div>
   );
 }
@@ -352,6 +354,10 @@ function TwinCard({ lead, course, t, lang }: { lead: string; course: Course; t: 
           <span>“{highlight(a.example, a.term)}”</span>
         </button>
       )}
+      <div className="concept-reading">
+        <ConceptInfo concept={a} lang={lang} sources={course.sources} />
+        {b && <ConceptInfo concept={b} lang={lang} sources={course.sources} />}
+      </div>
     </section>
   );
 }
