@@ -1,11 +1,11 @@
 import { describe, expect, it } from "vitest";
 import { artForSize, prefersGeneratedArt } from "./art";
 import { artAssetElement, hasAsset } from "./art-assets";
-import { legacyCourse as course } from "./test-fixtures/legacy-course";
+import { authoredCourse as course } from "./test-fixtures/authored-course";
 
 // The rebuild replaces hand-drawn inline SVG with generated image files once a
 // pack grows past the hand-drawing scale. Both systems must coexist: a concept
-// with a generated asset renders an <img>, and every legacy concept keeps its
+// with a generated asset renders an <img>, and every hand-written concept keeps its
 // exact inline SVG so the current pack's look never changes.
 describe("generated art assets", () => {
   it("reports an empty manifest honestly instead of inventing a path", () => {
@@ -14,7 +14,7 @@ describe("generated art assets", () => {
     expect(artAssetElement("__probe", "hero")).toBeNull();
   });
 
-  it("keeps legacy inline SVG when no asset exists", () => {
+  it("keeps hand-written inline SVG when no asset exists", () => {
     expect(hasAsset("hedge")).toBe(false);
     expect(artForSize("hedge", "hero").startsWith("<svg")).toBe(true);
     expect(artForSize("hedge", "xs").startsWith("<svg")).toBe(true);
@@ -22,7 +22,7 @@ describe("generated art assets", () => {
 
   it("never falls back to the placeholder for a published concept", () => {
     // The whole art system's promise: a learner never sees the joke icon on a
-    // real term. This guards the legacy SVGs now and any generated set later.
+    // real term. This guards the authored SVGs now and any generated set later.
     const placeholders = course.concepts
       .filter((concept) => {
         const html = artForSize(concept.id, "hero");
@@ -43,12 +43,12 @@ describe("one art language per pack", () => {
     expect(html).toContain("<img");
   });
 
-  it("the legacy pack keeps hand-drawn art even for ids that also have a raster file", () => {
+  it("the hand-written pack keeps hand-drawn art even for ids that also have a raster file", () => {
     const html = artForSize("margin", "hero", false);
     expect(html.startsWith("<svg")).toBe(true);
   });
 
-  it("flags exactly the legacy pack as hand-drawn", () => {
+  it("flags exactly the hand-written pack as hand-drawn", () => {
     expect(prefersGeneratedArt({ packId: "hedge-or-pledge" } as never)).toBe(false);
     expect(prefersGeneratedArt({ packId: "t1-finance-news" } as never)).toBe(true);
     expect(prefersGeneratedArt({ packId: "t5-quant-research" } as never)).toBe(true);

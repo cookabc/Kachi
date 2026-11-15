@@ -310,7 +310,7 @@ function buildCourse(locale) {
   }));
   // Provenance: a concept cites the corpus articles that actually use its
   // term — the same evidence the corpus gate checks, wired into the record.
-  // Concepts no article covers keep legacy status; an invented source would be
+  // Concepts no article covers remain unreviewed; an invented source would be
   // worse than an empty field.
   const provenance = provenanceFor(CONCEPTS);
   const concepts = CONCEPTS.map((c) => ({
@@ -330,7 +330,7 @@ function buildCourse(locale) {
     ...(locale === "zh-CN" && c.zh ? { termZh: c.zh } : {}),
     relations: c.relations ?? [],
     risk: "evergreen",
-    // Generated content has not been through review. "legacy" is reserved
+    // Generated content has not been through review. "unreviewed" is reserved
     // for the hand-written pack that predates the review process.
     reviewStatus: "draft",
   }));

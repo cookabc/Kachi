@@ -2,11 +2,11 @@ import { describe, expect, it } from "vitest";
 import t1 from "../content/packs/t1-finance-news/zh-CN/course.json";
 import type { Course } from "./domain";
 import { zhTermFor } from "./localization";
-import { legacyCourse } from "./test-fixtures/legacy-course";
+import { authoredCourse } from "./test-fixtures/authored-course";
 
 // The glossary rendered every generated-pack term twice — `indexindex`,
 // `auctionauction` — because the Chinese gloss fell back to the concept id.
-// Generated packs carry termZh on the concept; the legacy pack keeps its
+// Generated packs carry termZh on the concept; the hand-written pack keeps its
 // glosses in a lookup table. Both must resolve, and a "translation" that is
 // just the English word must not be printed at all.
 const t1Course = t1 as unknown as Course;
@@ -18,8 +18,8 @@ describe("Chinese term lookup", () => {
     expect(zhTermFor(concept!)).toBe("指数");
   });
 
-  it("falls back to the hand-written gloss table for the legacy pack", () => {
-    const concept = legacyCourse.concepts.find((item) => item.id === "hedge");
+  it("falls back to the hand-written gloss table for the hand-written pack", () => {
+    const concept = authoredCourse.concepts.find((item) => item.id === "hedge");
     expect(concept?.termZh).toBeUndefined();
     expect(zhTermFor(concept!)).toBe("对冲");
   });

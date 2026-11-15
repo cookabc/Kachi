@@ -10,8 +10,7 @@ import type { Lang, UiText } from "../ui";
 
 /**
  * Me: progress, the words that trip you most, and the few settings that
- * matter (language, motion, your data). Settings used to be a whole tab; it is
- * three rows here because learners touch it a handful of times, ever.
+ * matter (language, motion, your data), grouped into three compact rows.
  */
 export function MeScreen({
   state,

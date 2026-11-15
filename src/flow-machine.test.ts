@@ -35,7 +35,7 @@ function concept(id: string, unit: number, mixUp: string) {
     mixUpWhy: "",
     sourceIds: [],
     risk: "evergreen" as const,
-    reviewStatus: "legacy" as const,
+    reviewStatus: "unreviewed" as const,
   };
 }
 

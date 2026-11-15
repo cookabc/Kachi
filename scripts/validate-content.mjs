@@ -1,7 +1,5 @@
 // Build-time content gate. Every locale pack must pass the shared
-// validateCourse rules from ../src/schema — a hand-rolled subset used
-// to live here, so an English pack could violate course rules while CI stayed
-// green — and the packs must stay structurally identical (ids, exercise types,
+// validateCourse rules from ../src/schema, and packs stay structurally identical (ids, exercise types,
 // answers, pairings) so one locale cannot drift from the other.
 import fs from "node:fs";
 import path from "node:path";
@@ -16,12 +14,8 @@ const outOfSyllabus = new Set(
 
 const root = process.cwd();
 const registryPath = path.join(root, "content/packs/index.json");
-const registry = fs.existsSync(registryPath) ? JSON.parse(fs.readFileSync(registryPath, "utf8")) : null;
-// With a registry, validate every registered pack; otherwise fall back to the
-// single legacy pack so an unregistered checkout still builds.
-const packRoots = registry
-  ? registry.packs.map((pack) => path.join(root, "content/packs", pack.id))
-  : [path.join(root, "content/packs/hedge-or-pledge")];
+const registry = JSON.parse(fs.readFileSync(registryPath, "utf8"));
+const packRoots = registry.packs.map((pack) => path.join(root, "content/packs", pack.id));
 const packFiles = [];
 for (const packRoot of packRoots) {
   if (!fs.existsSync(packRoot)) continue;

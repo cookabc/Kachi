@@ -39,7 +39,7 @@ const concept = (id: string, term: string, mixUp: string): Concept => ({
   relations: [],
   sourceIds: [],
   risk: "evergreen",
-  reviewStatus: "legacy",
+  reviewStatus: "unreviewed",
 });
 
 const pair = (term: string, id: string): Exercise[] => [

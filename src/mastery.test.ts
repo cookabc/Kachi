@@ -8,7 +8,7 @@ import {
   missHistory,
   startSession,
 } from "./engine";
-import { legacyCourse as course } from "./test-fixtures/legacy-course";
+import { authoredCourse as course } from "./test-fixtures/authored-course";
 
 // "Verified mastery" is a product promise: three correct answers in a row, in
 // at least two exercise formats, including a scenario the learner had never
@@ -107,7 +107,7 @@ describe("verified mastery is reachable", () => {
 
     const verified = Object.values(state.mastery).filter((entry) => isVerifiedMastery(entry));
     expect(verified.length).toBeGreaterThan(0);
-    // The strongest proof: the flag that used to be permanently false is set.
+    // The scenario evidence flag must be set.
     expect(Object.values(state.mastery).some((entry) => entry.unseenScenarioCorrect)).toBe(true);
   });
 

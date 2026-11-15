@@ -11,7 +11,7 @@ import {
   teachPlan,
   withTwins,
 } from "./flow";
-import { legacyCourse as course } from "./test-fixtures/legacy-course";
+import { authoredCourse as course } from "./test-fixtures/authored-course";
 
 const environmentNow = new Date("2026-08-29T08:00:00.000Z");
 
@@ -219,7 +219,7 @@ describe("practicePool", () => {
   });
 
   it("honors an explicit focus (Practice those)", () => {
-    // Lesson keys are pack-qualified; a bare id no longer means anything.
+    // Lesson keys are pack-qualified; a bare id is not a completion key.
     const state: LearnerState = {
       ...emptyLearnerState(),
       completedLessonIds: [lessonKey(course, "u1l1"), lessonKey(course, "u1l2")],

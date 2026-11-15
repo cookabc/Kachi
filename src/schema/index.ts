@@ -207,8 +207,7 @@ export function validateCourse(
     if (!concept.mixUp || !conceptIds.has(concept.mixUp)) {
       issues.push({ path: concept.id, message: `Unknown mix-up concept: ${concept.mixUp}` });
     }
-    // The teach card renders this label. An unlisted value used to pass
-    // validation and then render nothing, so every accepted type is named here.
+    // The teach card renders this label; accepted types must have a display name.
     if (concept.mixUpType && !MIX_UP_TYPES.includes(concept.mixUpType)) {
       issues.push({ path: concept.id, message: `Unknown mix-up type: ${concept.mixUpType}` });
     }
@@ -293,9 +292,9 @@ function conceptCoverageIssues(concept: Course["concepts"][number], course: Cour
   ];
 }
 
-// PRD §7 "Provenance and freshness" (amended 10 Sep 2026): governed content —
+// Provenance and freshness: governed content —
 // new drafts and anything promoted to reviewed — must carry the fields its
-// risk level relies on. Content marked legacy is exempt from the rule, so no
+// risk level relies on. Content marked unreviewed is exempt from the rule, so no
 // id allowlist is needed.
 const GOVERNED_REVIEW_STATUSES: ReadonlySet<Concept["reviewStatus"]> = new Set(["draft", "reviewed"]);
 

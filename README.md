@@ -108,12 +108,12 @@ pnpm run generate:icons   # rebuild PNG icons from public/icon.svg (needs rsvg-c
 
 ## Docs
 
-Every document leads in English, with a Chinese edition beside it.
+The vocabulary guide is bilingual; the shared constraint reference is in Chinese.
 
-| English                                                | 中文                                                               | What it covers                                                                         |
-| ------------------------------------------------------ | ------------------------------------------------------------------ | -------------------------------------------------------------------------------------- |
-| [docs/vocabulary-system.md](docs/vocabulary-system.md) | [docs/vocabulary-system.zh-CN.md](docs/vocabulary-system.zh-CN.md) | The six tiers, confusion-pair types, cross-pack deduplication, the two authoring gates |
-| [docs/backlog.md](docs/backlog.md)                     | [docs/backlog.zh-CN.md](docs/backlog.zh-CN.md)                     | What is not built yet, and what is deliberately not being built                        |
+| English                                                  | 中文                                                               | What it covers                                                                         |
+| -------------------------------------------------------- | ------------------------------------------------------------------ | -------------------------------------------------------------------------------------- |
+| [docs/vocabulary-system.md](docs/vocabulary-system.md)   | [docs/vocabulary-system.zh-CN.md](docs/vocabulary-system.zh-CN.md) | The six tiers, confusion-pair types, cross-pack deduplication, the two authoring gates |
+| [docs/design-constraints.md](docs/design-constraints.md) | [docs/design-constraints.md](docs/design-constraints.md)           | Current product, storage, asset and release constraints                                |
 
 ## License
 

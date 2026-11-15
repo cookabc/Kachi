@@ -1,9 +1,7 @@
-// Art asset manifest. The rebuild moves term art out of inline SVG strings
-// (art.tsx) and into generated image files, because 231 concepts is not a
-// hand-drawing scale. Legacy hand-drawn entries stay in art.tsx and win when
-// both exist, so the current pack keeps its exact look.
+// Art asset manifest for generated concept images. Authored SVG entries
+// are defined in art.tsx; artForSize selects the registered image when present.
 //
-// Resolution order in artForSize: asset manifest → legacy SVG → joke placeholder.
+// Resolution order in artForSize: asset manifest → authored SVG → joke placeholder.
 // Tests assert no *published concept* falls through to the placeholder.
 import artManifest from "../content/art-manifest.json";
 

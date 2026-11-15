@@ -28,7 +28,7 @@ export type ExerciseType =
   | "audit"
   | "listen";
 export type RiskLevel = "evergreen" | "time-sensitive" | "jurisdictional";
-export type ReviewStatus = "legacy" | "draft" | "reviewed";
+export type ReviewStatus = "unreviewed" | "draft" | "reviewed";
 
 /**
  * Why the canonical mix-up pair confuses. The taxonomy is the authoring gate
@@ -80,7 +80,7 @@ export interface Concept {
   mixUpWhy: string;
   mixUpType?: MixUpType;
   /** The term's Chinese name, when the pack's zh-CN data carries it natively
-   *  (generated packs do; the hand-written legacy pack keeps its glosses in
+   *  (generated packs do; the hand-written pack keeps its glosses in
    *  src/localization.ts and this field stays unset). */
   termZh?: string;
   relations?: ConceptRelation[];
@@ -172,8 +172,7 @@ export interface AttemptEvent {
    * True when this prompt had already been answered earlier in the same
    * session (a match mispair re-queues itself). A retry is a rehearsal, not
    * new evidence: it pays no XP, does not move the mastery ladder, and stays
-   * out of the accuracy denominator. Always present on records the current
-   * engine writes; upgrade.ts sets it on older ones.
+   * out of the accuracy denominator. True for rehearsals; omitted for first attempts.
    */
   isRetry?: boolean;
   latencyMs: number;
@@ -193,7 +192,7 @@ export interface MasteryState {
 }
 
 export interface LearnerState {
-  /** Bumped by upgrade.ts whenever the saved shape changes. */
+  /** Current learner-state schema version. */
   version: 2;
   xp: number;
   streak: number;

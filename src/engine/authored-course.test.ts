@@ -23,7 +23,7 @@ function correctAnswer(prompt: Exercise): string | boolean {
 }
 
 describe("migrated Hedge or Pledge course", () => {
-  it("has the expected legacy coverage and passes structural validation", () => {
+  it("has the expected authored coverage and passes structural validation", () => {
     // Units 1-5 are the original course; 6-7 (rates, commodities) extend it.
     expect(course.lessons).toHaveLength(23);
     expect(course.concepts).toHaveLength(40);

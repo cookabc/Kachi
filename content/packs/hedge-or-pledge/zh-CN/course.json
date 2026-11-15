@@ -66,7 +66,7 @@
         "hull-derivatives-11e-2021"
       ],
       "risk": "evergreen",
-      "reviewStatus": "legacy"
+      "reviewStatus": "unreviewed"
     },
     {
       "id": "pledge",
@@ -88,7 +88,7 @@
         "finra-sec-sbloc-2015"
       ],
       "risk": "evergreen",
-      "reviewStatus": "legacy"
+      "reviewStatus": "unreviewed"
     },
     {
       "id": "collateral",
@@ -104,7 +104,7 @@
         "finra-sec-sbloc-2015"
       ],
       "risk": "evergreen",
-      "reviewStatus": "legacy"
+      "reviewStatus": "unreviewed"
     },
     {
       "id": "haircut",
@@ -120,7 +120,7 @@
         "finra-sec-sbloc-2015"
       ],
       "risk": "evergreen",
-      "reviewStatus": "legacy"
+      "reviewStatus": "unreviewed"
     },
     {
       "id": "margin",
@@ -142,7 +142,7 @@
         "finra-sec-sbloc-2015"
       ],
       "risk": "evergreen",
-      "reviewStatus": "legacy"
+      "reviewStatus": "unreviewed"
     },
     {
       "id": "margin call",
@@ -168,7 +168,7 @@
         "finra-sec-sbloc-2015"
       ],
       "risk": "evergreen",
-      "reviewStatus": "legacy"
+      "reviewStatus": "unreviewed"
     },
     {
       "id": "leverage",
@@ -184,7 +184,7 @@
         "finra-sec-sbloc-2015"
       ],
       "risk": "evergreen",
-      "reviewStatus": "legacy"
+      "reviewStatus": "unreviewed"
     },
     {
       "id": "derivative",
@@ -210,7 +210,7 @@
         "hull-derivatives-11e-2021"
       ],
       "risk": "evergreen",
-      "reviewStatus": "legacy"
+      "reviewStatus": "unreviewed"
     },
     {
       "id": "option",
@@ -236,7 +236,7 @@
         "hull-derivatives-11e-2021"
       ],
       "risk": "evergreen",
-      "reviewStatus": "legacy"
+      "reviewStatus": "unreviewed"
     },
     {
       "id": "put",
@@ -252,7 +252,7 @@
         "hull-derivatives-11e-2021"
       ],
       "risk": "evergreen",
-      "reviewStatus": "legacy"
+      "reviewStatus": "unreviewed"
     },
     {
       "id": "call",
@@ -268,7 +268,7 @@
         "hull-derivatives-11e-2021"
       ],
       "risk": "evergreen",
-      "reviewStatus": "legacy"
+      "reviewStatus": "unreviewed"
     },
     {
       "id": "short selling",
@@ -284,7 +284,7 @@
         "hull-derivatives-11e-2021"
       ],
       "risk": "evergreen",
-      "reviewStatus": "legacy"
+      "reviewStatus": "unreviewed"
     },
     {
       "id": "liquidity",
@@ -300,7 +300,7 @@
         "finra-sec-sbloc-2015"
       ],
       "risk": "evergreen",
-      "reviewStatus": "legacy"
+      "reviewStatus": "unreviewed"
     },
     {
       "id": "notional",
@@ -322,7 +322,7 @@
         "hull-derivatives-11e-2021"
       ],
       "risk": "evergreen",
-      "reviewStatus": "legacy"
+      "reviewStatus": "unreviewed"
     },
     {
       "id": "premium",
@@ -344,7 +344,7 @@
         "hull-derivatives-11e-2021"
       ],
       "risk": "evergreen",
-      "reviewStatus": "legacy"
+      "reviewStatus": "unreviewed"
     },
     {
       "id": "yield",
@@ -360,7 +360,7 @@
         "hull-derivatives-11e-2021"
       ],
       "risk": "evergreen",
-      "reviewStatus": "legacy"
+      "reviewStatus": "unreviewed"
     },
     {
       "id": "duration",
@@ -376,7 +376,7 @@
         "hull-derivatives-11e-2021"
       ],
       "risk": "evergreen",
-      "reviewStatus": "legacy"
+      "reviewStatus": "unreviewed"
     },
     {
       "id": "basis risk",
@@ -392,7 +392,7 @@
         "hull-derivatives-11e-2021"
       ],
       "risk": "evergreen",
-      "reviewStatus": "legacy"
+      "reviewStatus": "unreviewed"
     },
     {
       "id": "long",
@@ -408,7 +408,7 @@
         "hull-derivatives-11e-2021"
       ],
       "risk": "evergreen",
-      "reviewStatus": "legacy"
+      "reviewStatus": "unreviewed"
     },
     {
       "id": "volatility",
@@ -424,7 +424,7 @@
         "hull-derivatives-11e-2021"
       ],
       "risk": "evergreen",
-      "reviewStatus": "legacy"
+      "reviewStatus": "unreviewed"
     },
     {
       "id": "diversification",
@@ -440,7 +440,7 @@
         "hull-derivatives-11e-2021"
       ],
       "risk": "evergreen",
-      "reviewStatus": "legacy"
+      "reviewStatus": "unreviewed"
     },
     {
       "id": "counterparty",
@@ -456,7 +456,7 @@
         "hull-derivatives-11e-2021"
       ],
       "risk": "evergreen",
-      "reviewStatus": "legacy"
+      "reviewStatus": "unreviewed"
     },
     {
       "id": "default",
@@ -478,7 +478,7 @@
         "hull-derivatives-11e-2021"
       ],
       "risk": "evergreen",
-      "reviewStatus": "legacy"
+      "reviewStatus": "unreviewed"
     },
     {
       "id": "mark-to-market",
@@ -494,7 +494,7 @@
         "hull-derivatives-11e-2021"
       ],
       "risk": "evergreen",
-      "reviewStatus": "legacy"
+      "reviewStatus": "unreviewed"
     },
     {
       "id": "securities-backed loan",
@@ -570,7 +570,7 @@
         "hull-derivatives-11e-2021"
       ],
       "risk": "evergreen",
-      "reviewStatus": "legacy"
+      "reviewStatus": "unreviewed"
     },
     {
       "id": "swap",
@@ -586,7 +586,7 @@
         "hull-derivatives-11e-2021"
       ],
       "risk": "evergreen",
-      "reviewStatus": "legacy"
+      "reviewStatus": "unreviewed"
     },
     {
       "id": "interest rate",
@@ -612,7 +612,7 @@
         "hull-derivatives-11e-2021"
       ],
       "risk": "evergreen",
-      "reviewStatus": "legacy"
+      "reviewStatus": "unreviewed"
     },
     {
       "id": "inflation",
@@ -628,7 +628,7 @@
         "imf-monetary-policy-basics"
       ],
       "risk": "evergreen",
-      "reviewStatus": "legacy"
+      "reviewStatus": "unreviewed"
     },
     {
       "id": "real rate",
@@ -654,7 +654,7 @@
         "hull-derivatives-11e-2021"
       ],
       "risk": "evergreen",
-      "reviewStatus": "legacy"
+      "reviewStatus": "unreviewed"
     },
     {
       "id": "bond",
@@ -680,7 +680,7 @@
         "hull-derivatives-11e-2021"
       ],
       "risk": "evergreen",
-      "reviewStatus": "legacy"
+      "reviewStatus": "unreviewed"
     },
     {
       "id": "yield curve",
@@ -706,7 +706,7 @@
         "hull-derivatives-11e-2021"
       ],
       "risk": "evergreen",
-      "reviewStatus": "legacy"
+      "reviewStatus": "unreviewed"
     },
     {
       "id": "quantitative easing",
@@ -732,7 +732,7 @@
         "imf-monetary-policy-basics"
       ],
       "risk": "evergreen",
-      "reviewStatus": "legacy"
+      "reviewStatus": "unreviewed"
     },
     {
       "id": "spot",
@@ -748,7 +748,7 @@
         "hull-derivatives-11e-2021"
       ],
       "risk": "evergreen",
-      "reviewStatus": "legacy"
+      "reviewStatus": "unreviewed"
     },
     {
       "id": "basis",
@@ -774,7 +774,7 @@
         "hull-derivatives-11e-2021"
       ],
       "risk": "evergreen",
-      "reviewStatus": "legacy"
+      "reviewStatus": "unreviewed"
     },
     {
       "id": "contango",
@@ -800,7 +800,7 @@
         "hull-derivatives-11e-2021"
       ],
       "risk": "evergreen",
-      "reviewStatus": "legacy"
+      "reviewStatus": "unreviewed"
     },
     {
       "id": "backwardation",
@@ -822,7 +822,7 @@
         "hull-derivatives-11e-2021"
       ],
       "risk": "evergreen",
-      "reviewStatus": "legacy"
+      "reviewStatus": "unreviewed"
     },
     {
       "id": "cost of carry",
@@ -844,7 +844,7 @@
         "hull-derivatives-11e-2021"
       ],
       "risk": "evergreen",
-      "reviewStatus": "legacy"
+      "reviewStatus": "unreviewed"
     }
   ],
   "lessons": [

@@ -51,15 +51,8 @@ export function pairIdForConcept(concept: Concept | undefined): string | undefin
 }
 
 /**
- * The pack whose saved lesson ids predate pack qualification. Kept as a
- * constant because upgrade.ts needs it to rewrite those ids; nothing else
- * branches on it.
- */
-export const LEGACY_PACK_ID = "hedge-or-pledge";
-
-/**
  * Storage key for a finished lesson. Lesson ids are only unique inside a pack —
- * both the legacy pack and T1 start at "u1l1" — so the pack id must prefix them
+ * different packs can start at "u1l1" — so the pack id must prefix them
  * or finishing one course silently unlocks the other.
  */
 export function lessonKey(course: Course, lessonId: string): string {
@@ -147,7 +140,7 @@ export function paidExerciseIds(state: LearnerState): string[] {
  * (`isFirstEncounter`), the attempt that already paid that exercise's XP, and
  * the latest graded attempt of a concept (`recentMissTermIds`). The tail stays
  * in order so a re-queued match and its retry remain neighbors, which is what
- * the latency median and the upgrade's retry inference both assume.
+ * the latency median requires.
  */
 export const MAX_ATTEMPT_LOG = 240;
 
@@ -274,10 +267,7 @@ export function evidenceQuality(state: LearnerState, attempt: AttemptEvent): Evi
 }
 
 /**
- * The mastery transition for one attempt. Exported so upgrade.ts can replay a
- * saved log through the same rules the live path uses — a second copy of this
- * logic would drift, and the upgraded record would not match what the learner
- * would have had.
+ * The mastery transition for one attempt, shared by the scheduler.
  */
 export function nextMasteryFor(
   previous: MasteryState | undefined,

@@ -640,6 +640,6 @@ export const SOURCES = [
   {file: "headlines.json",id: "t3-src-headlines",title: "Real financial headlines, 172 items (Aug-Oct 2026, commodities/forex/economics feed)",publishedAt: "2026-10-26",accessedAt: "2026-10-26",kind: "news",rightsBasis: "facts-only"},
   // 1.txt 以这篇真实债市报道为骨架，后续段落（covenant、refinancing、
   // term premium 等）为原创扩展——扩展句里的词命中语料但不引来源，
-  // 概念保持 legacy。
+  // 概念保持未审核状态。
   { file: "t3-bonds/1.txt", id: "t3-src-india-bonds", title: "India bonds: benchmark yield near three-year high as oil stokes inflation worries", publishedAt: "2026-10-21", accessedAt: "2026-10-27", kind: "news", rightsBasis: "facts-only" },
 ];

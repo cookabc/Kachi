@@ -963,7 +963,7 @@ for (const concept of CONCEPTS) {
 
 // 逐篇登记的真实语料文章（经商品资讯服务获取；只取事实，不搬原文）。
 // 7.txt 与 headlines.json 之外的原创综合稿不在此列——综合稿是教学内容，
-// 不是来源；命中不了真实文章的概念保持 legacy。
+// 不是来源；命中不了真实文章的概念保持未审核状态。
 export const SOURCES = [
   { file: "1.txt", id: "t1-src-banks-2026", title: "Asia-focused banks face capital squeeze due to inflation and bond market turbulence", publishedAt: "2026-10-26", accessedAt: "2026-10-26", kind: "news", rightsBasis: "facts-only" },
   { file: "2.txt", id: "t1-src-forex-weekly", title: "Euro slumps on French debt worries as yen set for weekly gain amid AI rout", publishedAt: "2026-10-23", accessedAt: "2026-10-26", kind: "news", rightsBasis: "facts-only" },

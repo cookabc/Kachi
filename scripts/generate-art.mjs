@@ -65,7 +65,6 @@ async function pendingConcepts(options) {
 
 function readPackIds() {
   const indexPath = path.join(ROOT, "content/packs/index.json");
-  if (!existsSync(indexPath)) return ["hedge-or-pledge"];
   return JSON.parse(readFileSync(indexPath, "utf8")).packs.map((pack) => pack.id);
 }
 

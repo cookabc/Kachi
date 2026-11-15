@@ -297,14 +297,13 @@ describe("learner storage", () => {
     expect(loaded.attempts).toHaveLength(state.attempts.length);
   });
 
-  it("accepts records written before the retry flag existed", async () => {
-    // Every saved attempt from engine 0.1.0 lacks isRetry. Rejecting them
-    // would wipe the learner's history on the first load after the upgrade.
-    const legacy = sampleState();
-    for (const attempt of legacy.attempts) delete (attempt as { isRetry?: boolean }).isRetry;
-    await saveLearnerState(legacy);
+  it("accepts first attempts without a retry marker", async () => {
+    // First attempts omit isRetry; loading must preserve that valid shape.
+    const authored = sampleState();
+    for (const attempt of authored.attempts) delete (attempt as { isRetry?: boolean }).isRetry;
+    await saveLearnerState(authored);
     const loaded = await loadLearnerState();
-    expect(loaded.attempts).toHaveLength(legacy.attempts.length);
+    expect(loaded.attempts).toHaveLength(authored.attempts.length);
     expect(loaded.attempts[0].isRetry).toBeUndefined();
   });
 
@@ -380,22 +379,21 @@ describe("learner storage", () => {
     expect(fakeDatabase.read("meta", "upgrade")).toBeUndefined();
   });
 
-  it("upgrades a readable v1 snapshot in place and does not park it as rejected", async () => {
-    const legacy = { ...sampleState(), version: 1 as const, completedLessonIds: ["u1l1"] };
-    fakeDatabase.seed("snapshots", "local-profile", legacy);
+  it("rejects a different state version without overwriting progress during import", async () => {
+    const current = sampleState();
+    await saveLearnerState(current);
+    const input = { ...current, version: 1, completedLessonIds: ["u1l1"] };
+    await expect(importLearnerData(fileOf({ schemaVersion: 1, learnerState: input }))).rejects.toThrow(
+      INCOMPATIBLE_LEARNER_FILE,
+    );
+    expect(await loadLearnerState()).toEqual(current);
+  });
 
-    const loaded = await loadLearnerState();
-    expect(loaded.version).toBe(2);
-    expect(loaded.completedLessonIds).toEqual(["hedge-or-pledge/u1l1"]);
-    expect(loaded.xp).toBe(legacy.xp);
-    expect(loaded.attempts).toEqual(legacy.attempts);
-    expect(fakeDatabase.read("snapshots", "local-profile")).toEqual(loaded);
-    expect(fakeDatabase.read("snapshots", REJECTED_PROFILE_KEY)).toBeUndefined();
-    expect(fakeDatabase.read("meta", "upgrade")).toMatchObject({ fromVersion: 1, qualifiedLessons: 1 });
-    expect(fakeDatabase.read("meta", "recovery")).toBeUndefined();
-
-    expect(await loadLearnerState()).toEqual(loaded);
-    expect(fakeDatabase.read("snapshots", REJECTED_PROFILE_KEY)).toBeUndefined();
+  it("preserves current progress exactly without inferring retries or lesson ownership", async () => {
+    const current = sampleState();
+    fakeDatabase.seed("snapshots", "local-profile", current);
+    expect(await loadLearnerState()).toEqual(current);
+    expect(fakeDatabase.read("snapshots", "local-profile")).toEqual(current);
   });
 });
 

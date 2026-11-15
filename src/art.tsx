@@ -402,17 +402,16 @@ export const HERO_ART: Record<string, string> = {
 /**
  * Resolve art for an id.
  *
- * Two systems coexist: hand-drawn inline SVG (the original pack) and generated
- * raster images (every pack since T1). Eleven ids exist in both, which used to
- * make a single pack render in two art styles side by side.
+ * Art uses hand-drawn inline SVG for the hand-written course and generated
+ * raster images for other packs. Eleven ids exist in both systems.
  *
  * The rule is per pack, not per id: a pack presents one visual language.
  * `preferGenerated` is set by callers that know which pack they are drawing
- * for, so the generated packs stay entirely raster and the legacy pack stays
+ * for, so the generated packs stay entirely raster and the hand-written pack stays
  * entirely hand-drawn — including the eleven ids the generator also covers.
  */
-/** The one pack whose concepts predate generated art. */
-const LEGACY_PACK = "hedge-or-pledge";
+/** The pack that uses hand-drawn art. */
+const HAND_DRAWN_PACK = "hedge-or-pledge";
 
 /**
  * Whether this pack should draw generated raster art.
@@ -421,20 +420,20 @@ const LEGACY_PACK = "hedge-or-pledge";
  * visual language; choosing per id made a single pack show two.
  */
 export function prefersGeneratedArt(course: Course): boolean {
-  return course.packId !== LEGACY_PACK;
+  return course.packId !== HAND_DRAWN_PACK;
 }
 
 export function artForSize(id: string, size: ArtSize, preferGenerated = false): string {
   const base = id.replace(/_u1intro$/, "");
-  const legacyHero = size === "hero" ? (HERO_ART[id] ?? HERO_ART[base]) : undefined;
-  const legacy = TERM_ART[id] ?? TERM_ART[base];
+  const handDrawnHero = size === "hero" ? (HERO_ART[id] ?? HERO_ART[base]) : undefined;
+  const authored = TERM_ART[id] ?? TERM_ART[base];
 
   if (preferGenerated) {
     const asset = artAssetElement(id, size) ?? artAssetElement(base, size);
     if (asset) return asset;
   }
-  if (legacyHero) return legacyHero;
-  if (legacy) return legacy;
+  if (handDrawnHero) return handDrawnHero;
+  if (authored) return authored;
   const asset = artAssetElement(id, size) ?? artAssetElement(base, size);
   if (asset) return asset;
   return TERM_ART.joke;

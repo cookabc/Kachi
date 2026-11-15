@@ -4,7 +4,7 @@ import { afterEach, describe, expect, it } from "vitest";
 import type { Summary } from "./flow";
 import { handleEnterShortcut, type ShortcutPhase } from "./keyboard";
 import { CompleteScreen } from "./screens/CompleteScreen";
-import { legacyCourse as course } from "./test-fixtures/legacy-course";
+import { authoredCourse as course } from "./test-fixtures/authored-course";
 import { UI } from "./ui";
 
 const summary: Summary = {

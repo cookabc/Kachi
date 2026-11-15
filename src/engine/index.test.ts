@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import type { AttemptEvent, Course, Environment, Exercise, LearnerState } from "../domain";
-import { legacyCourse as publishedCourse } from "../test-fixtures/legacy-course";
+import { authoredCourse as publishedCourse } from "../test-fixtures/authored-course";
 import {
   type ApplyOptions,
   applyAnswer,
@@ -43,7 +43,7 @@ const course: Course = {
       mixUpWhy: "",
       sourceIds: [],
       risk: "evergreen",
-      reviewStatus: "legacy",
+      reviewStatus: "unreviewed",
     },
   ],
   lessons: [
@@ -195,7 +195,7 @@ describe("learning engine", () => {
 
   it("keeps the streak across a DST spring-forward", () => {
     // 00:30 EST on 8 Mar, then 00:30 EDT on 9 Mar. Those instants are 23 hours
-    // apart, so "now minus 24 hours" falls on 7 Mar and used to reset the streak.
+    // apart, so a fixed 24-hour subtraction is not the previous calendar date.
     // The second finish has to be a different lesson: a repeated lesson no
     // longer counts as a new completion.
     const dstCourse: Course = {
@@ -545,9 +545,8 @@ describe("engine guards and grading", () => {
 
 describe("retries are rehearsals, not evidence", () => {
   // A match mispair re-queues its own prompt. The player then usually gets it
-  // right — that replay used to advance the mastery ladder, pay XP, and push
-  // the pair out of the review set, so one mistake could be laundered into
-  // progress by finishing the prompt you had just failed.
+  // right. This replay must not advance mastery, pay XP or remove the pair
+  // from the review set.
   function missThenReplay() {
     const session = startSession(course, "lesson", environment);
     const first = applyAnswer(course, emptyLearnerState(), session, "wrong", environment);
@@ -746,7 +745,7 @@ describe("match mispairs", () => {
         mixUpWhy: "",
         sourceIds: [],
         risk: "evergreen",
-        reviewStatus: "legacy",
+        reviewStatus: "unreviewed",
       },
     ],
     lessons: [
@@ -854,7 +853,7 @@ describe("match mispairs", () => {
           mixUpWhy: "",
           sourceIds: [],
           risk: "evergreen",
-          reviewStatus: "legacy",
+          reviewStatus: "unreviewed",
         },
       ],
     };

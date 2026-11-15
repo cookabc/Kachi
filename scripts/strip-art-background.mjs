@@ -3,9 +3,8 @@
  * strip-art-background.mjs — turn the generated term art's white square into
  * real transparency.
  *
- * The image model paints every illustration on a white ground. The UI used to
- * hide that with `mix-blend-mode: multiply`, which only works on light tints and
- * dims the colours a little. This pass removes the ground instead:
+ * The image model paints illustrations on a white ground. This pass removes
+ * the ground while preserving enclosed highlights and the subject colours:
  *
  *   1. decode the WebP to raw RGBA (dwebp -pam)
  *   2. flood-fill from the image border through pixels that are close to white

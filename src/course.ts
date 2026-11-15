@@ -25,7 +25,6 @@ interface PackMeta {
   goalEn: string;
   conceptCount: number;
   status: string;
-  legacy?: boolean;
 }
 
 /** Packs that have content on disk. Planned packs stay in the registry only. */

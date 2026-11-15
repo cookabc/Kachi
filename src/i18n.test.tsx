@@ -4,7 +4,7 @@ import { afterEach, describe, expect, it } from "vitest";
 import { course } from "./course";
 import { emptyLearnerState } from "./engine";
 import { LearnHome } from "./screens/LearnHome";
-import { legacyCourse } from "./test-fixtures/legacy-course";
+import { authoredCourse } from "./test-fixtures/authored-course";
 import { UI } from "./ui";
 
 function staticStrings(value: unknown): string[] {
@@ -92,7 +92,7 @@ describe("rendered home", () => {
     render(
       <LearnHome
         state={emptyLearnerState()}
-        course={legacyCourse}
+        course={authoredCourse}
         t={UI["en-US"]}
         level={level}
         now={new Date()}

@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import { course } from "./course";
 import { emptyLearnerState } from "./engine";
 import { coursePairs, duePairs, isPairMet, lessonPairs, pairStrength } from "./pairs";
-import { legacyCourse } from "./test-fixtures/legacy-course";
+import { authoredCourse } from "./test-fixtures/authored-course";
 
 describe("course pairs", () => {
   it("lists each confusion pair once, in teaching order", () => {
@@ -12,7 +12,7 @@ describe("course pairs", () => {
   });
 
   it("gives every hand-written pair a declared mix-up type", () => {
-    for (const concept of legacyCourse.concepts) expect(concept.mixUpType, concept.id).toBeTruthy();
+    for (const concept of authoredCourse.concepts) expect(concept.mixUpType, concept.id).toBeTruthy();
   });
 
   it("counts a pair as met only when both words were seen", () => {

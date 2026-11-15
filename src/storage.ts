@@ -1,6 +1,5 @@
 import type { AttemptEvent, ExerciseType, LearnerState, MasteryState } from "./domain";
 import { emptyLearnerState, REVIEW_INTERVAL_DAYS } from "./engine";
-import { STATE_VERSION, type StoredLearnerState, upgradeLearnerState } from "./upgrade";
 
 const DATABASE_NAME = "kachi-learning";
 const DATABASE_VERSION = 1;
@@ -65,26 +64,8 @@ export async function loadLearnerState(): Promise<LearnerState> {
   const transaction = database.transaction([SNAPSHOT_STORE, META_STORE], "readwrite");
   const snapshot = (await request(transaction.objectStore(SNAPSHOT_STORE).get(PROFILE_KEY))) as unknown;
   if (isStoredState(snapshot)) {
-    // A readable record is migrated in place. It is not a rejected snapshot:
-    // parking it under the backup key would hide a successful upgrade.
-    const report = upgradeLearnerState(snapshot);
-    if (report.changed) {
-      transaction.objectStore(SNAPSHOT_STORE).put(report.state, PROFILE_KEY);
-      transaction.objectStore(META_STORE).put(
-        {
-          upgradedAt: new Date().toISOString(),
-          fromVersion: snapshot.version,
-          qualifiedLessons: report.qualifiedLessons,
-          retries: report.retries,
-          loweredPairs: report.loweredPairs,
-        },
-        "upgrade",
-      );
-      await transactionDone(transaction);
-      return report.state;
-    }
     await transactionDone(transaction);
-    return report.state;
+    return snapshot;
   }
 
   const recovered = emptyLearnerState();
@@ -104,7 +85,7 @@ export async function loadLearnerState(): Promise<LearnerState> {
           reason: "invalid-snapshot",
           preservedKey: REJECTED_PROFILE_KEY,
         },
-    snapshot === undefined ? "migration" : "recovery",
+    snapshot === undefined ? "creation" : "recovery",
   );
   await transactionDone(transaction);
   return recovered;
@@ -145,8 +126,7 @@ export async function exportLearnerData(snapshot?: LearnerState): Promise<Blob> 
 // Every field the engine touches is validated before any IndexedDB
 // transaction starts.
 // Typed as a record so adding an ExerciseType without listing it here is a
-// compile error. A missing entry once silently rejected every saved profile
-// that had answered a listen or audit question, wiping progress on reload.
+// compile error. Every exercise type must be accepted when reading a profile.
 const EXERCISE_TYPE_TABLE: Record<ExerciseType, true> = {
   meaning: true,
   truefalse: true,
@@ -222,13 +202,12 @@ function isMasteryState(value: unknown): value is MasteryState {
   );
 }
 
-// Accepts every version this app has written. Upgrading happens once, right
-// after the check, so no reader downstream needs to know an older shape.
-function isStoredState(value: unknown): value is StoredLearnerState {
+// Accept only the current complete learner-state schema.
+function isStoredState(value: unknown): value is LearnerState {
   if (!value || typeof value !== "object") return false;
-  const state = value as StoredLearnerState;
+  const state = value as LearnerState;
   return (
-    (state.version === 1 || state.version === STATE_VERSION) &&
+    state.version === 2 &&
     isNonNegativeInteger(state.xp) &&
     isNonNegativeInteger(state.streak) &&
     (state.lastLessonDate === undefined || typeof state.lastLessonDate === "string") &&
@@ -258,7 +237,6 @@ export async function importLearnerData(file: File): Promise<LearnerState> {
   if (envelope.schemaVersion !== 1 || !isStoredState(envelope.learnerState)) {
     throw new Error(INCOMPATIBLE_LEARNER_FILE);
   }
-  const upgraded = upgradeLearnerState(envelope.learnerState).state;
-  await saveLearnerState(upgraded);
-  return upgraded;
+  await saveLearnerState(envelope.learnerState);
+  return envelope.learnerState;
 }

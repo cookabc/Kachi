@@ -65,12 +65,12 @@ pnpm run generate:icons   # 由 public/icon.svg 重建 PNG 图标（需要 rsvg-
 
 ## 文档
 
-每份文档以英文为主，中文版放在旁边。
+词汇体系提供双语版本，当前约束共用一份中文说明。
 
-| 英文                                                   | 中文                                                               | 内容                                         |
-| ------------------------------------------------------ | ------------------------------------------------------------------ | -------------------------------------------- |
-| [docs/vocabulary-system.md](docs/vocabulary-system.md) | [docs/vocabulary-system.zh-CN.md](docs/vocabulary-system.zh-CN.md) | 六个层级、混淆对类型、跨包去重、两道作者门禁 |
-| [docs/backlog.md](docs/backlog.md)                     | [docs/backlog.zh-CN.md](docs/backlog.zh-CN.md)                     | 还没做的，以及明确不做的                     |
+| 英文                                                     | 中文                                                               | 内容                                         |
+| -------------------------------------------------------- | ------------------------------------------------------------------ | -------------------------------------------- |
+| [docs/vocabulary-system.md](docs/vocabulary-system.md)   | [docs/vocabulary-system.zh-CN.md](docs/vocabulary-system.zh-CN.md) | 六个层级、混淆对类型、跨包去重、两道作者门禁 |
+| [docs/design-constraints.md](docs/design-constraints.md) | [docs/design-constraints.md](docs/design-constraints.md)           | 当前产品、存储、资源与发布约束               |
 
 ## 许可
 

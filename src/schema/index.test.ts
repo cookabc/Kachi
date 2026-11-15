@@ -28,7 +28,7 @@ function validCourse(): Course {
         mixUpWhy: "",
         sourceIds: [],
         risk: "evergreen",
-        reviewStatus: "legacy",
+        reviewStatus: "unreviewed",
       },
       {
         id: "b",
@@ -41,7 +41,7 @@ function validCourse(): Course {
         mixUpWhy: "",
         sourceIds: [],
         risk: "evergreen",
-        reviewStatus: "legacy",
+        reviewStatus: "unreviewed",
       },
       {
         id: "c",
@@ -54,7 +54,7 @@ function validCourse(): Course {
         mixUpWhy: "",
         sourceIds: [],
         risk: "evergreen",
-        reviewStatus: "legacy",
+        reviewStatus: "unreviewed",
       },
     ],
     lessons: [
@@ -173,7 +173,7 @@ describe("content validation", () => {
   it("flags a mix-up type the teach card cannot label", () => {
     const course = validCourse();
     // "scope" and "direction" are real types used by the shipped packs. A value
-    // outside the list used to pass validation and then render an empty label.
+    // outside the list must be rejected before rendering.
     course.concepts[0].mixUpType = "scope";
     expect(validateCourse(course)).toEqual([]);
 
@@ -326,11 +326,11 @@ describe("content validation", () => {
     expect(validateCourse(course)).toEqual([]);
   });
 
-  it("grandfathers a legacy jurisdictional term without provenance fields", () => {
+  it("allows an unreviewed term without audited provenance", () => {
     const course = validCourse();
     const term = course.concepts[0];
     term.risk = "jurisdictional";
-    term.reviewStatus = "legacy";
+    term.reviewStatus = "unreviewed";
     // Mirrors the shipped Unit 5 remediation debt: flagged risk, no fields yet.
     expect(validateCourse(course)).toEqual([]);
   });
@@ -359,7 +359,7 @@ describe("content validation", () => {
   });
 
   it("rejects the retired put_u1intro pseudo-id", () => {
-    // Content used to smuggle an art-only id through a hardcoded allowlist.
+    // An art-only id is not a course concept and must not pass validation.
     // It now resolves to the real concept id instead.
     const course = validCourse();
     course.lessons[0].prompts[1].termIds = ["put_u1intro"];

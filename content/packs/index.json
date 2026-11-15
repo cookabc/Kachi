@@ -58,7 +58,7 @@
       "goal": "读私人银行、结构性产品这类专业材料",
       "conceptCount": 40,
       "status": "ready",
-      "legacy": true,
+      "unreviewed": true,
       "titleEn": "Borrow and hedge",
       "goalEn": "Private-bank and structured-product material"
     }

@@ -1,5 +1,5 @@
 {
-  "_comment": "Generated art assets: concept id -> { file, bg }. Populated by scripts/generate-art.mjs. Concepts absent here resolve from the legacy hand-drawn SVGs in src/art.tsx.",
+  "_comment": "Generated art assets: concept id -> { file, bg }. Populated by scripts/generate-art.mjs. Concepts absent here resolve from the hand-drawn SVGs in src/art.tsx.",
   "concepts": {
     "rally": {
       "file": "/art/rally.webp",
