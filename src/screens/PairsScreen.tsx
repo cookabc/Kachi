@@ -61,7 +61,7 @@ export function PairsScreen({
         aria-valuenow={met}
         aria-label={t.pairs.count(met, pairs.length)}
       >
-        <i style={{ width: `${Math.max(2, (met / Math.max(pairs.length, 1)) * 100)}%` }} />
+        {met > 0 && <i style={{ width: `${(met / Math.max(pairs.length, 1)) * 100}%` }} />}
       </div>
       <fieldset className="filters" aria-label={t.pairs.all}>
         <button type="button" aria-pressed={filter === "all"} onClick={() => setFilter("all")}>

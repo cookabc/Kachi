@@ -392,7 +392,7 @@ export function buildPairCardSvg(input: PairCardInput): string {
   }
   parts.push(
     `<circle cx="${midX}" cy="${dy}" r="${STAMP_R}" fill="${COLOR.tomato}" stroke="${COLOR.paper}" stroke-width="7"/>`,
-    `<text x="${midX}" y="${dy + 15}" text-anchor="middle" font-family="${FONT_STACK}" font-size="40" font-weight="900" fill="#fff">vs</text>`,
+    `<text x="${midX}" y="${dy + 15}" text-anchor="middle" font-family="${FONT_STACK}" font-size="40" font-weight="900" fill="${COLOR.ink}">vs</text>`,
   );
 
   parts.push(emit(layout.termB, 900, COLOR.ink, ' text-anchor="middle"', midX));
