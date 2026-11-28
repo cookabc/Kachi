@@ -14,10 +14,6 @@
  * the reason audio exists. The word is never shown as text in the stem; the
  * ear has to do the work.
  */
-// "listen" is the ear task: the term is spoken, the options are terms. It is
-// the one exercise the product could not offer at all before synthesis — and
-// the reason audio exists. The word is never shown as text in the stem; the
-// ear does the work.
 export type ExerciseType =
   | "meaning"
   | "truefalse"
@@ -46,12 +42,6 @@ export interface SourceReference {
   accessedAt?: string;
   kind: "primary" | "academic" | "news" | "internal";
   rightsBasis: "facts-only" | "licensed" | "permission" | "quotation-exception" | "internal";
-}
-
-export interface LocalizedTerm {
-  termZh: string;
-  definitionZh: string;
-  mixUpWhyZh: string;
 }
 
 /**
@@ -153,18 +143,6 @@ export interface Course {
   sources: SourceReference[];
 }
 
-export interface ContentPackManifest {
-  schemaVersion: number;
-  packId: string;
-  contentVersion: string;
-  locale: string;
-  minEngineVersion: string;
-  generatedAt: string;
-  entry: string;
-  sha256: string;
-  assets: Array<{ path: string; sha256: string }>;
-}
-
 export interface AttemptEvent {
   eventId: string;
   deviceId: string;
@@ -237,10 +215,4 @@ export interface Environment {
   random: () => number;
   deviceId: string;
   eventId: () => string;
-}
-
-export type LearningEvent = AttemptEvent;
-
-export interface LearnerProjection {
-  state: LearnerState;
 }
