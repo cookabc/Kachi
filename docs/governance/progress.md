@@ -33,6 +33,15 @@
   本轮不另加守卫——该仓已有的单向守卫 + 动态类判定成本高于收益，明释记录于此。
 - 净变化：约 -140 行纯删除。
 
+## 第二遍（2026-11-28，R2）
+
+- 深扫复核：其余 9 个导出候选（hasAsset/unlockedUnitIds/blankTerm/lessonPair/validateCourse 等）
+  全部有真实消费方（首轮扫描语料漏了测试与生成脚本）——全语料复核是必须步骤。
+- HEDGEHOG_PATHS 删除：R1 删 Hedgehog 组件后其伴生 SVG 路径常量随之成孤（级联死代码，
+  二次扫描的价值所在）；termSvg 为非导出内部函数，保留。
+- 020_veryfunstudio.github.io 深扫同步执行：13 个候选全为误报（框架约定导出 +
+  测试消费方），无需改动。
+
 ## 轮次记录
 
 | 轮  | 内容 | Commit |
